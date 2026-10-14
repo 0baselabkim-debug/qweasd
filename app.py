@@ -2,6 +2,7 @@
 from pathlib import Path
 import html
 import hashlib
+import json
 import importlib
 import threading
 import pandas as pd
@@ -55,10 +56,14 @@ with scoring_module._dashboard_reload_lock:
 evaluate=scoring_module.evaluate
 manifest=Path(__file__).parent/'snapshot/manifest.json'
 data_version=hashlib.sha256(manifest.read_bytes() if manifest.exists() else b'local-db').hexdigest()
+publication=json.loads(manifest.read_text()) if manifest.exists() else {}
 with st.sidebar:
  st.markdown('### ◈ 자금 흐름 스크리너')
  st.caption('한국 주식 · 실제 데이터 탐색')
- st.caption('저장된 실제 자료를 조회합니다. 수집 환경과 웹 화면의 데이터 동기화는 별도입니다.')
+ st.caption('일일 수집 → 검증 통과 → 웹 자동 반영. 누락·검증 실패 시 이전 정상 자료를 유지합니다.' if publication.get('automatic_snapshot_sync') else '저장된 실제 자료를 조회합니다. 자동 게시 연결을 검증 중입니다.')
+ if publication.get('automatic_snapshot_sync'):
+  st.caption('한국시간 20:30 수집 시도 · 미완료분 23:30 재시도. 예약 실행은 지연될 수 있습니다.')
+  st.link_button('수집·게시 실행 상태','https://github.com/0baselabkim-debug/qweasd/actions/workflows/daily-dashboard.yml')
  asof=st.selectbox('데이터 기준일',dates(mtime,data_version))
  classification=st.radio('분류체계',['공식 업종','투자 테마'])
  market=st.selectbox('시장',['전체','KOSPI','KOSDAQ'])
@@ -116,6 +121,7 @@ def csv(frame):return frame.to_csv(index=False).encode('utf-8-sig')
 
 st.subheader('① 투자 테마별 자금 흐름' if theme_mode else '① 강세 섹터',anchor=False)
 if theme_mode:
+ st.info(f'부분 검증 테마 · 현재 조회 대상 {len(visible_stocks):,}종목 중 {theme_stats["unique_members"]:,}종목의 사업 근거를 확인했습니다. 전체 시장의 테마 분류는 아직 완료되지 않았습니다.')
  st.caption(f'사업 근거 확인 종목 {theme_stats["unique_members"]}개 · 중복 제거 순매수 {display_number(theme_stats["unique_net_amount"]/1e8,2)}억원 · 중복 소속 {theme_stats["overlap_count"]}건. 테마별 금액을 더해 전체 유입액으로 표시하지 않습니다.')
  if not theme_stats['unique_members']:st.info('선택한 기준일·시장에는 근거를 확인한 테마 구성 이력이 없습니다.')
  st.caption('테마는 별도 분류입니다. 확인된 구성 이력이 부족해 테마 종합 점수는 보류하며, 종목 점수는 기존 공식 업종 비교 기준을 유지합니다.')

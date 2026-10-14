@@ -3,7 +3,14 @@ stage = 2
 analysis_exchange_scope = "KRX"
 analysis_session_scope = "REGULAR_CLOSE"
 provider_scope_verified = false
-schedule_enabled = false
+schedule_enabled = true
+
+[daily_publication]
+start_kst = "20:30"
+retry_kst = "23:30"
+failure_policy = "keep_last_valid_snapshot"
+source_finality = "UNVERIFIED"
+membership_policy = "observed_same_day_only"
 
 [sector_weights]
 foreign_intensity = 40

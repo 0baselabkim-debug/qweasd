@@ -16,7 +16,8 @@ def test_published_snapshot_preserves_original_day_and_dates():
     data = load(packaged)
     assert len(data['flows']) == manifest['flow_rows']
     assert len(data['financials']) == manifest['financial_rows']
-    assert len(data['flows'][data['flows'].trade_date.dt.strftime('%Y-%m-%d')==manifest['asof']]) == 2430
+    assert len(data['flows'][data['flows'].trade_date.dt.strftime('%Y-%m-%d')=='2026-10-14']) == 2430
+    assert len(data['flows'][data['flows'].trade_date.dt.strftime('%Y-%m-%d')==manifest['asof']]) == manifest.get('current_day_flow_rows',2430)
     for table in ['flows', 'prices']:
         assert data[table].trade_date.max().strftime('%Y-%m-%d') == manifest['asof']
         assert set(data[table].exchange) == {'KRX'}
@@ -51,6 +52,7 @@ def test_sector_sort_and_details_are_interactive():
     from streamlit.testing.v1 import AppTest
     app = AppTest.from_file(str(ROOT / 'app.py'), default_timeout=90).run()
     assert not app.exception
+    next(w for w in app.selectbox if w.label == '데이터 기준일').select('2026-10-14');app.run()
     next(w for w in app.selectbox if w.label == '섹터 선택').select('KOSPI · IT 서비스')
     app.run()
     next(w for w in app.selectbox if w.label == '종목 정렬').select('종목명')

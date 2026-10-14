@@ -1,0 +1,96 @@
+{
+  "KRX_basic_info": [
+    {
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_isu_base_info",
+      "requested_date": "20260911",
+      "http": 200,
+      "rows": 943,
+      "fields": [
+        "ISU_CD",
+        "ISU_SRT_CD",
+        "ISU_NM",
+        "ISU_ABBRV",
+        "ISU_ENG_NM",
+        "LIST_DD",
+        "MKT_TP_NM",
+        "SECUGRP_NM",
+        "SECT_TP_NM",
+        "KIND_STKCERT_TP_NM",
+        "PARVAL",
+        "LIST_SHRS"
+      ],
+      "sha256": "b0fa2a9d4d8273f65d47559519c0a6bf409882e03492764e96f607ee395fabc6",
+      "sector_field_values": [
+        ""
+      ],
+      "limitation": "SECT_TP_NM is listing board/segment, not historical industry membership"
+    },
+    {
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_isu_base_info",
+      "requested_date": "20260911",
+      "http": 200,
+      "rows": 1822,
+      "fields": [
+        "ISU_CD",
+        "ISU_SRT_CD",
+        "ISU_NM",
+        "ISU_ABBRV",
+        "ISU_ENG_NM",
+        "LIST_DD",
+        "MKT_TP_NM",
+        "SECUGRP_NM",
+        "SECT_TP_NM",
+        "KIND_STKCERT_TP_NM",
+        "PARVAL",
+        "LIST_SHRS"
+      ],
+      "sha256": "5ac77a6997a8afb1268af47d102ac1491fbad2f9a14bc3a83cae8b9b4bb34344",
+      "sector_field_values": [
+        "SPAC(소속부없음)",
+        "관리종목(소속부없음)",
+        "기술성장기업부",
+        "벤처기업부",
+        "외국기업(소속부없음)",
+        "우량기업부",
+        "중견기업부",
+        "투자주의환기종목(소속부없음)"
+      ],
+      "limitation": "SECT_TP_NM is listing board/segment, not historical industry membership"
+    }
+  ],
+  "KRX_index": [
+    {
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/idx/kospi_dd_trd",
+      "requested_date": "20260911",
+      "http": 401,
+      "rows": 0,
+      "fields": [],
+      "sha256": "8830108300d289ede379b581ff48701c8bae6fe47f0a46e8ee964ba8b7c3b434"
+    },
+    {
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/idx/kosdaq_dd_trd",
+      "requested_date": "20260911",
+      "http": 401,
+      "rows": 0,
+      "fields": [],
+      "sha256": "8830108300d289ede379b581ff48701c8bae6fe47f0a46e8ee964ba8b7c3b434"
+    }
+  ],
+  "KIS_official_reference_commit": "2077773a69a428daf63e148182511f068cc45de3",
+  "observed_membership_start": "2026-10-14",
+  "historical_membership_confirmed": false,
+  "official_sources": [
+    {
+      "url": "https://github.com/koreainvestment/open-trading-api/blob/main/examples_llm/domestic_stock/inquire_daily_itemchartprice/inquire_daily_itemchartprice.py",
+      "verified": "J=KRX; FID_ORG_ADJ_PRC 0=adjusted; max 100 records per call"
+    },
+    {
+      "url": "https://github.com/koreainvestment/open-trading-api/blob/main/examples_llm/domestic_stock/inquire_daily_indexchartprice/inquire_daily_indexchartprice.py",
+      "verified": "U=index; 0001=KOSPI; index-code master identifies 1001=KOSDAQ"
+    },
+    {
+      "url": "https://github.com/koreainvestment/open-trading-api/blob/main/examples_llm/domestic_stock/inquire_index_category_price/inquire_index_category_price.py",
+      "verified": "Current index quotes; no historical constituent date parameter"
+    }
+  ]
+}

@@ -92,6 +92,7 @@ def test_actual_dashboard_and_filters():
  from streamlit.testing.v1 import AppTest
  at=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=60).run()
  assert not at.exception
+ next(s for s in at.selectbox if s.label=='데이터 기준일').select('2026-10-14');at.run()
  assert any(m.value=='2,430종목' for m in at.metric)
  market=next(s for s in at.selectbox if s.label=='시장');market.select('KOSDAQ');at.run()
  assert not at.exception and all(str(s).startswith('KOSDAQ') for s in next(s for s in at.selectbox if s.label=='섹터 선택').options)

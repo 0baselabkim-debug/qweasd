@@ -1,0 +1,131 @@
+name: Daily validated dashboard refresh
+on:
+  schedule:
+    - cron: '30 11 * * 1-5'
+    - cron: '30 14 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Collect today or replay preserved real observations without API calls'
+        type: choice
+        options: [collect, verify_saved]
+        default: collect
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 320
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt pytest==9.1.1
+      - name: Choose scheduled trading date and restore only its checkpoint
+        id: target
+        env:
+          MODE: ${{ inputs.mode || 'collect' }}
+        run: |
+          python - <<'PY'
+          import datetime as dt,json,os
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          now=dt.datetime.now(ZoneInfo('Asia/Seoul'))
+          # A queued late-evening run may start after midnight; never query that new day before its close.
+          day=(now-dt.timedelta(days=1)).date() if now.hour<9 else now.date()
+          if os.environ['MODE']=='verify_saved':day=dt.date.fromisoformat(json.loads(Path('snapshot/manifest.json').read_text())['asof'])
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('day='+day.strftime('%Y%m%d')+'\n')
+          Path('daily-results').mkdir(exist_ok=True)
+          PY
+      - name: Load checkpoint
+        env:
+          DAY: ${{ steps.target.outputs.day }}
+          MODE: ${{ inputs.mode || 'collect' }}
+        run: |
+          if [ "$MODE" = verify_saved ]; then
+            cp research/daily-replay.json.gz daily-results/bundle.json.gz
+          elif git ls-remote --exit-code --heads origin "data/daily-$DAY" >/dev/null 2>&1; then
+            git fetch origin "data/daily-$DAY"
+            git show FETCH_HEAD:daily-results/bundle.json.gz > daily-results/bundle.json.gz
+          fi
+      - name: Collect only missing stocks for this trading date
+        if: inputs.mode != 'verify_saved'
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          DAY: ${{ steps.target.outputs.day }}
+        run: python -u scripts/collect_daily_snapshot.py --date "$DAY"
+      - name: Preserve resume ledger independently of publication
+        if: always() && inputs.mode != 'verify_saved'
+        env:
+          DAY: ${{ steps.target.outputs.day }}
+        run: |
+          if [ ! -f daily-results/bundle.json.gz ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          cp daily-results/bundle.json.gz /tmp/daily-bundle.gz
+          head=$(git rev-parse HEAD)
+          if git ls-remote --exit-code --heads origin "data/daily-$DAY" >/dev/null 2>&1; then
+            git fetch origin "data/daily-$DAY"
+            git switch -C "data/daily-$DAY" FETCH_HEAD
+          else
+            git switch -c "data/daily-$DAY"
+          fi
+          mkdir -p daily-results
+          cp /tmp/daily-bundle.gz daily-results/bundle.json.gz
+          git add -f daily-results/bundle.json.gz
+          git diff --cached --quiet || git commit -m "Preserve KRX collection checkpoint $DAY"
+          git push origin "HEAD:data/daily-$DAY"
+          git switch --detach "$head"
+          mkdir -p daily-results
+          cp /tmp/daily-bundle.gz daily-results/bundle.json.gz
+      - name: Build from latest main and validate without touching published files
+        run: |
+          git fetch origin main
+          git merge --ff-only origin/main
+          python scripts/prepare_daily_publish.py --bundle daily-results/bundle.json.gz
+          python -m pytest -q tests/test_dashboard.py tests/test_enrichment.py tests/test_daily.py
+      - name: Publish validated snapshot in one Git commit
+        env:
+          DAY: ${{ steps.target.outputs.day }}
+          MODE: ${{ inputs.mode || 'collect' }}
+        run: |
+          if [ ! -f daily-candidate/manifest.json ]; then exit 0; fi
+          python - <<'PY'
+          import json,os,shutil
+          from pathlib import Path
+          new=json.loads(Path('daily-candidate/manifest.json').read_text());old=json.loads(Path('snapshot/manifest.json').read_text())
+          if new['asof']<old['asof']:raise SystemExit('Refuse date rollback')
+          # Once a date has a validated publication, later schedules retain it without a second completion.
+          ledger=Path('snapshot/publication-ledger.json')
+          entries=json.loads(ledger.read_text()) if ledger.exists() else {}
+          day=new['asof']
+          if day in entries:
+              print('Trading date already published; existing snapshot retained')
+              raise SystemExit(0)
+          for name in ['dashboard.duckdb','manifest.json']:shutil.copy2(Path('daily-candidate')/name,Path('snapshot')/name)
+          shutil.copy2('daily-candidate/validation.json','snapshot/daily-validation.json')
+          entries[day]={'run_id':os.environ['GITHUB_RUN_ID'],'mode':os.environ['MODE'],'sha256':new['sha256'],'validation':new['daily_validation']}
+          ledger.write_text(json.dumps(entries,ensure_ascii=False,indent=2)+'\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add snapshot/dashboard.duckdb snapshot/manifest.json snapshot/daily-validation.json snapshot/publication-ledger.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Publish validated KRX snapshot $DAY"
+          # A concurrent main change causes a safe push rejection; the previous snapshot remains published.
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daily-validation-${{ steps.target.outputs.day }}
+          path: |
+            daily-candidate/validation.json
+            daily-results/bundle.json.gz
+          retention-days: 7
+          if-no-files-found: ignore
