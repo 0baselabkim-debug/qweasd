@@ -1,5 +1,7 @@
 # 섹터 자료·테마 확대·일일 자동 반영 결과
 
+> 이 단계 이후 추가된 별도의 현재 구성 기준 수급 추이는 [후속 검증 결과](../flow-trends/REPORT.md)를 참고하세요.
+
 분석 기준일 **2026-10-14**. [실제 대시보드](https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/)
 
 | 작업 | 결과 | 확인 내용 |

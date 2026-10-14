@@ -15,3 +15,5 @@
 최종 배포에서는 재무 2,415종목, 20거래일 수급 2,427종목, 종합 평가 1,161종목을 확인했습니다. [업종 화면](dashboard-preview.png) · [테마 화면](dashboard-theme.png) · [종목 상세 화면](dashboard-detail.png).
 
 최신 [실제 게시 실행](https://github.com/0baselabkim-debug/qweasd/actions/runs/38650326964)과 [외부 브라우저 검증](https://github.com/0baselabkim-debug/qweasd/actions/runs/38650545213)이 성공했습니다. HTTP 200, 재무 2,415개·20일 수급 2,427개·종목 종합 평가 1,161개, 자동 게시 상태·39개 테마 기업과 선택/정렬/상세/다운로드를 확인했습니다.
+
+5·20거래일 수급 추이를 기존 앱에 반영했습니다. 최신 [검증 보고서](../reports/flow-trends/REPORT.md), [실제 브라우저 실행](https://github.com/0baselabkim-debug/qweasd/actions/runs/38655148553), [배포 코드 검사](https://github.com/0baselabkim-debug/qweasd/actions/runs/38655147831)를 확인할 수 있습니다. DB와 기존 종목 점수는 유지했습니다.
