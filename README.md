@@ -4,6 +4,8 @@
 
 ## 웹 배포: 코드 수정 없이
 
+바로가기: [이 저장소로 배포 화면 열기](https://share.streamlit.io/deploy?repository=0baselabkim-debug%2Fqweasd&branch=main&mainModule=app.py). Streamlit의 내장 Deploy 버튼과 같은 형식의 링크입니다. 로그인 후 입력값이 유지되지 않으면 아래 순서를 사용하세요. 이 링크는 대시보드 접속 주소가 아니라 배포 설정 화면입니다.
+
 1. [Streamlit Community Cloud](https://share.streamlit.io)에 로그인합니다.
 2. GitHub 연결이 없다면 **Workspaces → Connect GitHub account → Authorize streamlit**을 선택합니다. GitHub 계정은 `0baselabkim-debug`입니다.
 3. **Create app → Yup, I have an app → Paste GitHub URL**을 선택하고 아래 주소를 붙여 넣습니다.
@@ -41,3 +43,9 @@ Python 3.12에서 `requirements.txt`를 설치하고 `streamlit run app.py`로 �
 [Dashboard deployment check](https://github.com/0baselabkim-debug/qweasd/actions/workflows/dashboard-check.yml)는 인증정보 없이 의존성 설치, 실제 자료 무결성, 점수 경계 사례, 화면 조작, HTTP 상태를 검사합니다.
 
 공식 배포 안내: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy
+
+## 확인한 실행 화면
+
+아래는 동일한 배포 파일로 로컬 Chromium에서 실행한 화면입니다. 공개 서비스의 접속 성공을 나타내는 이미지는 아닙니다.
+
+![실제 데이터 대시보드](docs/dashboard-preview.png)
