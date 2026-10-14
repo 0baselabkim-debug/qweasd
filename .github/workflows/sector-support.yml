@@ -1,0 +1,46 @@
+name: Official sector support data
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install duckdb==1.5.6
+      - name: Restore public checkpoint
+        run: |
+          if git ls-remote --exit-code --heads origin data/sector-support >/dev/null 2>&1; then
+            git fetch origin data/sector-support
+            git show FETCH_HEAD:staging/sector_support.json.gz > staging/sector_support.json.gz
+          fi
+      - name: Collect verified adjusted prices and KOSPI / KOSDAQ indices
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -u scripts/collect_sector_support.py
+      - name: Save checkpoint on a data branch
+        if: always()
+        run: |
+          test -f staging/sector_support.json.gz
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git ls-remote --exit-code --heads origin data/sector-support >/dev/null 2>&1; then
+            cp staging/sector_support.json.gz /tmp/support.gz
+            git fetch origin data/sector-support
+            git switch -C data/sector-support FETCH_HEAD
+            cp /tmp/support.gz staging/sector_support.json.gz
+          else
+            git switch -c data/sector-support
+          fi
+          git add staging/sector_support.json.gz
+          git diff --cached --quiet || git commit -m 'Preserve official adjusted prices and benchmark responses'
+          git push origin HEAD:data/sector-support
