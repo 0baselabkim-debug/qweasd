@@ -1,0 +1,63 @@
+{
+  "asof": "2026-10-14",
+  "actual_flow_rows": 2430,
+  "formal_sectors": 43,
+  "unmapped_symbols": 232,
+  "financial_rows": 2388,
+  "usable_revenue_rows": 2311,
+  "growth_scored_rows": 1605,
+  "ocf_rows": 3,
+  "financial_missing_rows": 119,
+  "complete_scores": 0,
+  "three_stock_checks": [
+    {
+      "symbol": "005930",
+      "name": "삼성전자",
+      "net_amount_krw": -190064000000,
+      "revenue_growth": 0.10880093313642895,
+      "op_growth": 0.33230773574533073,
+      "roe": 0.10782620417446012,
+      "debt_ratio": 0.2993712690499687,
+      "disclosed_on": "2026-03-10",
+      "score_growth": 14.915254237288133
+    },
+    {
+      "symbol": "000660",
+      "name": "SK하이닉스",
+      "net_amount_krw": -707528000000,
+      "revenue_growth": 0.4676285061130368,
+      "op_growth": 1.0115769935202228,
+      "roe": 0.4414365313666127,
+      "debt_ratio": 0.4594547175634156,
+      "disclosed_on": "2026-03-17",
+      "score_growth": 20.728813559322035
+    },
+    {
+      "symbol": "035420",
+      "name": "NAVER",
+      "net_amount_krw": 4795000000,
+      "revenue_growth": 0.12081596867588137,
+      "op_growth": 0.11563642585579287,
+      "roe": 0.06500871218815403,
+      "debt_ratio": 0.4190058840693555,
+      "disclosed_on": "2026-03-13",
+      "score_growth": 10.714285714285715
+    }
+  ],
+  "two_sector_checks": [
+    {
+      "market": "KOSPI",
+      "sector": "전기·전자",
+      "members": 65,
+      "net_amount_krw": -1000355000000
+    },
+    {
+      "market": "KOSPI",
+      "sector": "IT 서비스",
+      "members": 25,
+      "net_amount_krw": 25487000000
+    }
+  ],
+  "original_bundle_sha256": "fc83a24d495868e001341974434e5d43d880517649f154ed424fe37a6cc62cb4",
+  "finality": "UNVERIFIED"
+}

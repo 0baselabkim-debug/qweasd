@@ -1,0 +1,38 @@
+name: Existing Streamlit app browser verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install playwright==1.58.0
+          python -m playwright install --with-deps chromium
+      - name: Verify existing public app without credentials
+        run: python scripts/check_live_dashboard.py
+      - name: Preserve official market field specification
+        if: always()
+        run: python scripts/read_public_market_specs.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-dashboard-verification
+          path: reports/live-dashboard
+          retention-days: 30
+      - name: Preserve public UI evidence
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          branch="evidence/dashboard-${GITHUB_RUN_ID}"
+          git switch -c "$branch"
+          git add reports/live-dashboard
+          git commit -m "Verify existing public Streamlit app" || true
+          git push origin "HEAD:refs/heads/$branch"

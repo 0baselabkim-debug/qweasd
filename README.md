@@ -1,51 +1,57 @@
 # 한국 주식 · 자금 흐름 스크리너
 
-2026-10-14에 수집한 실제 KRX 기준 외국인 수급 2,430종목과 공시일을 확인한 OpenDART 연간 재무 2,388종목을 조회하는 Streamlit 대시보드입니다. 투자 후보 탐색용이며 매수 추천·주문 기능은 없습니다.
+[기존 대시보드 열기](https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/)
 
-## 웹 배포: 코드 수정 없이
+2026-10-14의 실제 KRX 기준 외국인 수급 **2,430종목**을 보존한 Streamlit 대시보드입니다. OpenDART 재무와 과거 수급·시세를 종목코드와 날짜로 연결합니다. 투자 후보 탐색용이며 주문·미래 실적 예측 기능은 없습니다.
 
-바로가기: [이 저장소로 배포 화면 열기](https://share.streamlit.io/deploy?repository=0baselabkim-debug%2Fqweasd&branch=main&mainModule=app.py). Streamlit의 내장 Deploy 버튼과 같은 형식의 링크입니다. 로그인 후 입력값이 유지되지 않으면 아래 순서를 사용하세요. 이 링크는 대시보드 접속 주소가 아니라 배포 설정 화면입니다.
+## 화면 사용
 
-1. [Streamlit Community Cloud](https://share.streamlit.io)에 로그인합니다.
-2. GitHub 연결이 없다면 **Workspaces → Connect GitHub account → Authorize streamlit**을 선택합니다. GitHub 계정은 `0baselabkim-debug`입니다.
-3. **Create app → Yup, I have an app → Paste GitHub URL**을 선택하고 아래 주소를 붙여 넣습니다.
+왼쪽에서 **공식 업종 / 투자 테마**와 시장을 선택합니다. 아래 영역에서 업종 또는 테마, 종목 정렬, 종목 상세정보를 조작할 수 있습니다. 상세정보에 재무 회계기간·실제 공시일, 시가총액 출처, 테마 사업 근거를 표시합니다. 선택 결과는 CSV로 내려받을 수 있습니다.
 
-   `https://github.com/0baselabkim-debug/qweasd/blob/main/app.py`
+- 영업현금흐름: **2,415종목**, 기준일 시가총액: **2,430종목**
+- 직접 계산 가능한 PER **1,447개**, PBR **2,375개**, ROE **2,397개**. 적자 PER를 낮은 배수로 표시하지 않습니다.
+- 기존 공식 업종은 유지하고 미분류 **232개를 보완**했습니다. KIS 업종이 없는 경우 KRX KIND의 분류를 `표준산업 · …`로 구분합니다.
+- AIDC·전력 인프라·반도체·로봇·방산·원전은 별도 테마입니다. 사업 근거를 확인한 **11개 기업, 12개 소속 관계**부터 제공합니다. 미검토 기업은 ‘확인 필요’입니다.
+- 과거 수급 확보 범위와 20일 충족 종목 수는 화면과 [검증 결과](reports/enrichment/coverage.json), [날짜별 수급 품질 보고서](reports/enrichment/history-quality.json)에 표시합니다. 전체 확대는 10종목 검증 후 사용자 승인을 받고 실행했습니다.
 
-   개별 항목으로 입력하는 화면이면 Repository `0baselabkim-debug/qweasd`, Branch `main`, Main file path `app.py`입니다.
-4. **Advanced settings**에서 Python **3.12**를 선택합니다. **Secrets는 비워 두고 Save**를 누릅니다. 이 화면은 저장된 자료만 조회하므로 API 키가 필요하지 않습니다.
-5. **Deploy**를 클릭합니다. 완료 후 브라우저에 표시되는 `https://…streamlit.app` 주소가 실제 대시보드 URL입니다.
+## 평가와 데이터 원칙
 
-App URL 항목을 비워 두면 서비스가 사용 가능한 주소를 자동으로 정합니다. 이 저장소는 공개 저장소이며, 기본 배포 화면도 공개입니다. Community Cloud 무료 호스팅을 사용하며 유료 리소스는 만들지 않습니다.
+섹터 가중치 **40/30/20/10**, 종목 가중치 **30/25/25/15/5**를 유지합니다. 같은 시장·공식 업종의 기업을 비교하고, 재무 항목은 같은 회계기간 및 연결/별도 범위끼리 비교합니다. 비교 기업이 3개 미만이면 해당 점수를 보류합니다.
 
-## 화면에서 확인할 내용
+결측값은 0으로 채우지 않고 부족한 항목의 배점을 다른 항목으로 넘기지 않습니다. 20일 수급, 25일 거래대금 등 필요한 관측이 충족되면 종목 점수에 반영됩니다. 과거 업종 구성은 2026-10-14 이전으로 소급하지 않습니다. 당시 구성·조정주가·기준지수가 부족한 **섹터 시계열 점수와 종합 순위는 보류**합니다. 당일 순매수 규모를 확정 강세 순위로 표시하지 않습니다.
 
-- 기준일 `2026-10-14`, 실제 수급 `2,430종목`, 공시일 확인 재무 `2,388종목`
-- 시장 선택, 업종 선택, 종목 검색·정렬, 종목 상세 재무 및 항목별 점수, CSV 다운로드
-- `KOSPI · 전기·전자 → 삼성전자`: 당일 외국인 순매수 **-1,900.64억원**
-- `KOSPI · IT 서비스 → NAVER`: 당일 외국인 순매수 **47.95억원**
+테마 소속은 중복될 수 있지만 전체 테마 합집합 순매수는 종목코드로 중복을 제거합니다. 테마 화면에서도 종목 점수는 공식 업종 내 비교 기준을 유지합니다.
 
-5·20일 평가에 필요한 이력이 부족하므로 종합 점수·순위는 **데이터 축적 중**입니다. 빈 점수의 가중치는 다른 항목으로 재배분하지 않습니다. 원천 최종 확정 상태는 **미검증**으로 표시합니다.
+## 원천·단위·기준일
 
-## 보존과 데이터 범위
+- 수급: KIS `FHPTJ04160001`, `FID_COND_MRKT_DIV_CODE=J`(KRX). `frgn_ntby_tr_pbmn`은 **백만원 × 1,000,000 = 원**. `frgn_ntby_qty`는 주. 수량×종가로 금액을 만들지 않습니다. 공급원의 최종 확정 여부는 여전히 **미검증**입니다.
+- 과거 시세·시총: **거래일이 명시된 KRX 공식 API**. KRX/NXT 통합값과 혼합하지 않습니다.
+- 당일 시총: KRX 당일 응답은 재확인에서도 빈 결과였습니다. KIS 공식 현재가 API의 `hts_avls`를 원화로 환산하되, 보존된 KRX 종가·거래량, 당일 마스터의 주식수, 종가×주식수, 수신 시각을 대조한 값만 사용합니다. **KIS 응답 자체에는 거래일 필드가 없습니다.** 당일 마감 후부터 다음 날 09:00 이전 수신만 허용하며 이 자료를 이전 날짜로 소급하지 않습니다. 시총의 원천 정밀도는 억원입니다.
+- 재무: **2025년 연간 / 2024년 비교**, 원화·실제 공시일 확인. 비12월 결산도 실제 회계기간을 보존합니다. 최신 분기나 TTM 자료라고 표시하지 않습니다.
+- PER/PBR: 연결이면 **지배주주 귀속 순이익/자본**, 별도이면 해당 기업 순이익/자본을 사용합니다. ROE는 **총순이익 ÷ 기초·기말 평균 총자본**, 부채비율은 부채총계/자본총계입니다. 각 정의는 상세 화면에 공개합니다. 지배지분이 따로 표시되지 않으면 같은 공시의 총액과 비지배지분이 모두 명시된 경우만 차감 계산하고, 사용한 두 계정과 계산 방법을 보관합니다. 비지배지분 누락을 0으로 가정하지 않습니다.
+- OpenDART 다중회사 주요계정 API에는 현금흐름표가 없어 **전체계정 API**를 별도로 수집했습니다. 표준 계정코드 우선, 같은 공시·같은 범위의 정확한 계정명만 보완합니다. 원문 대조 예외 2건은 [근거와 적용 범위](account_overrides.json)를 공개합니다.
 
-- `snapshot/dashboard.duckdb`는 기존 로컬 대시보드 DB를 변경 없이 복사한 공개 조회용 자료입니다. 해시는 `snapshot/manifest.json`에 기록했습니다.
-- `snapshot/verification.json`에는 기존 독립 검증의 3종목·2업종 비교 결과가 있습니다.
-- KRX 공식 당일 시세 API가 빈 응답이어서 표시 종가는 기존 KIS 수급 응답의 **KRX 종가**입니다. 시가총액·PER·PBR은 확보 전까지 평가 보류입니다. KRX/NXT 통합 자료로 표시하지 않습니다.
-- 재무는 **2025년 연간 및 2024년 비교**, 실제 공시일 기준입니다. 최신 분기 자료와 구분합니다.
-- 이번 배포는 **2026-10-14 저장 자료**를 제공합니다. GitHub Actions의 추가 수집 결과가 웹 화면으로 자동 동기화되는 기능은 아직 연결하지 않았습니다. 날짜를 새로 꾸미거나 외부 API를 다시 호출하지 않습니다.
-- 기존 KIS 수집 워크플로와 KRX·OpenDART 연동 코드는 변경하지 않았습니다. `.env`, 토큰, 계좌 정보는 배포 자료에 포함하지 않습니다. GitHub Secrets를 Streamlit에 복사할 필요가 없습니다.
+## 보존·운영
 
-## 개발자 검증
+기존 수집 워크플로와 API 키는 유지했습니다. 추가 KIS 수집은 GitHub Actions에서 실행하고 별도 데이터 브랜치에 체크포인트를 저장합니다. 기존 10월 14일 수급 2,430행은 재수집하거나 덮어쓰지 않았습니다. 실패 요청만 제한적으로 재시도합니다.
 
-Python 3.12에서 `requirements.txt`를 설치하고 `streamlit run app.py`로 실행합니다. 로컬 `data/dashboard.duckdb`가 있으면 사용하고, 없으면 GitHub에 포함된 스냅샷을 읽습니다. 읽기 전용 연결이며 DB를 웹 화면에서 수정하지 않습니다.
+`main`의 `snapshot/dashboard.duckdb`는 검증된 공개 조회용 사본입니다. 해시는 [manifest](snapshot/manifest.json), 3종목·2업종 독립 계산은 [verification](snapshot/verification.json)에 있습니다. 웹 화면은 읽기 전용이며 API 인증키가 필요하지 않습니다. `.env`와 토큰은 포함하지 않습니다. 실제 자료와 테스트용 자료는 분리합니다.
 
-[Dashboard deployment check](https://github.com/0baselabkim-debug/qweasd/actions/workflows/dashboard-check.yml)는 인증정보 없이 의존성 설치, 실제 자료 무결성, 점수 경계 사례, 화면 조작, HTTP 상태를 검사합니다.
+이 스냅샷의 분석일은 **2026-10-14**입니다. 기존 수집 결과를 매일 웹 스냅샷으로 자동 게시하는 기능은 아직 연결하지 않았습니다. 웹 화면에서 날짜를 현재 날짜로 꾸미지 않습니다.
 
-공식 배포 안내: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy
+## 개발자 재현
 
-## 확인한 실행 화면
+Python 3.12, `requirements.txt`, `streamlit run app.py`. 로컬 `data/dashboard.duckdb`가 없으면 저장소의 검증된 스냅샷을 읽습니다.
 
-아래는 동일한 배포 파일로 로컬 Chromium에서 실행한 화면입니다. 공개 서비스의 접속 성공을 나타내는 이미지는 아닙니다.
+보존된 원천 자료가 있는 작업 공간에서는 다음 순서로 재현합니다. 원본 DB와 다른 출력 파일을 사용합니다.
 
-![실제 데이터 대시보드](docs/dashboard-preview.png)
+```bash
+python scripts/enrich_snapshot.py --source-dir /path/to/preserved/enrichment --baseline /path/to/original/dashboard.duckdb
+python scripts/verify_enrichment.py --raw /path/to/preserved/enrichment
+python scripts/publish_snapshot.py --raw /path/to/preserved/enrichment
+python -m pytest -q tests/test_dashboard.py tests/test_dashboard_deployment.py tests/test_enrichment.py
+```
+
+전체 과거 수급과 시총의 원문 응답은 `staging/`에, 계정별 매핑 근거는 `reports/enrichment/account-provenance.json.gz`에 보관합니다. 원천 공시 문서는 각 종목의 DART 원문 링크로 확인할 수 있습니다.
+
+[자동 테스트](https://github.com/0baselabkim-debug/qweasd/actions/workflows/dashboard-check.yml) · [기존 앱 브라우저 검증](https://github.com/0baselabkim-debug/qweasd/actions/workflows/dashboard-live-check.yml)

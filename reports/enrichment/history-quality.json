@@ -1,0 +1,132 @@
+{
+  "asof": "2026-10-14",
+  "expected_stock_dates": 48600,
+  "missing_count": 45980,
+  "missing_types": {
+    "pending_full_collection": 45947,
+    "pre_listing": 33
+  },
+  "missing_detail_file": "history-missing.json.gz",
+  "collection_status": "in_progress_after_user_approval",
+  "coverage_by_date": [
+    {
+      "trade_date": "2026-09-11 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-14 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-15 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-16 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-17 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-18 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-21 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-22 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-23 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-28 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-29 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-09-30 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-10-01 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-10-02 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-10-06 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-10-07 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-10-08 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-10-12 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-10-13 00:00:00",
+      "rows": 10,
+      "symbols": 10
+    },
+    {
+      "trade_date": "2026-10-14 00:00:00",
+      "rows": 2430,
+      "symbols": 2430
+    }
+  ],
+  "duplicate_keys": 0,
+  "missing_amount": 0,
+  "flow_rows": 2620,
+  "full_20d_symbols": 10,
+  "start": "2026-09-11",
+  "end": "2026-10-14",
+  "flow_finality": "UNVERIFIED",
+  "collected_modes": {
+    "quotes": {
+      "run_id": "38588849816",
+      "success": 2430,
+      "failed": 0,
+      "failures": {},
+      "elapsed_seconds": 2529.587,
+      "requests": 2422,
+      "rate_limit_responses": 1,
+      "ending_interval_seconds": 1.05
+    }
+  }
+}

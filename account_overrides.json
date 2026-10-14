@@ -1,0 +1,31 @@
+{
+  "overrides": [
+    {
+      "symbol": "294630",
+      "scope": "OFS",
+      "receipt": "20260318001099",
+      "field": "ocf",
+      "account_id": "ifrs-full_OtherInflowsOutflowsOfCashClassifiedAsOperatingActivities",
+      "account_name": "영업활동순현금흐름",
+      "expected_value": -1908386327,
+      "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260318001099",
+      "evidence": "2025년 별도 현금흐름표 및 유동성 현황에 영업활동순현금흐름 (1,908,386,327)원으로 직접 표시. 분류코드는 OtherInflows지만 표의 총액과 대조 확인.",
+      "document_sha256": "6de10ec54eeac485e6f7b9cd431088979cd7f0b361661405460b9bcbf221a5df",
+      "kind": "account"
+    },
+    {
+      "kind": "filing_text",
+      "symbol": "477380",
+      "scope": "OFS",
+      "receipt": "20260306000789",
+      "field": "ocf",
+      "account_id": "original_document_cash_flow_total",
+      "account_name": "영업활동순현금흐름",
+      "expected_value": 435672918,
+      "previous_value": -38521550,
+      "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260306000789",
+      "evidence": "API에는 영업에서 창출된 현금만 있으나 동일 공시의 별도 감사보고서 현금흐름표 및 유동성 표에 영업활동순현금흐름 435,672,918 (38,521,550) 원으로 직접 표시됨. 합산 추정값이 아님.",
+      "document_sha256": "f18775cb3f8d5332b7d34b24e9cb83fb85ca35b39047f0d5b3f07b04c375c948"
+    }
+  ]
+}

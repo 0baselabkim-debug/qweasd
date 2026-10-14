@@ -1,10 +1,24 @@
 {
   "asof": "2026-10-14",
-  "flow_rows": 2430,
-  "financial_rows": 2388,
+  "flow_rows": 2620,
+  "preserved_asof_flow_rows": 2430,
+  "financial_rows": 2415,
+  "price_rows": 63128,
   "exchange": "KRX",
   "source_run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38560757360",
-  "sha256": "1873274ce0bc98dddfd4cb48adc0ab9529dc14a6138c777c98b7d9ce004e2478",
+  "enrichment_runs": {
+    "quotes": {
+      "run_id": "38588849816",
+      "success": 2430,
+      "failed": 0,
+      "failures": {},
+      "elapsed_seconds": 2529.587,
+      "requests": 2422,
+      "rate_limit_responses": 1,
+      "ending_interval_seconds": 1.05
+    }
+  },
+  "sha256": "4dc033b3de1b920665e091dda46262753ed369ee31e6801deaa0e6737899522f",
   "finality": "UNVERIFIED",
   "automatic_snapshot_sync": false,
   "secrets_required": false

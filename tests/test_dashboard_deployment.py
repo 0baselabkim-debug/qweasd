@@ -9,15 +9,16 @@ from screener.scoring import evaluate
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_published_snapshot_is_unchanged_and_date_consistent():
+def test_published_snapshot_preserves_original_day_and_dates():
     manifest = json.loads((ROOT / 'snapshot/manifest.json').read_text())
     packaged = ROOT / 'snapshot/dashboard.duckdb'
     assert hashlib.sha256(packaged.read_bytes()).hexdigest() == manifest['sha256']
     data = load(packaged)
-    assert len(data['flows']) == manifest['flow_rows'] == 2430
-    assert len(data['financials']) == manifest['financial_rows'] == 2388
+    assert len(data['flows']) == manifest['flow_rows']
+    assert len(data['financials']) == manifest['financial_rows']
+    assert len(data['flows'][data['flows'].trade_date.dt.strftime('%Y-%m-%d')==manifest['asof']]) == 2430
     for table in ['flows', 'prices']:
-        assert set(data[table].trade_date.dt.strftime('%Y-%m-%d')) == {manifest['asof']}
+        assert data[table].trade_date.max().strftime('%Y-%m-%d') == manifest['asof']
         assert set(data[table].exchange) == {'KRX'}
     assert not data['flows'][['symbol', 'trade_date']].duplicated().any()
     assert data['flows'].net_amount.notna().all()
@@ -28,8 +29,8 @@ def test_three_stocks_and_two_sectors_match_verified_real_values():
     expected = json.loads((ROOT / 'snapshot/verification.json').read_text())
     stocks, sectors, _ = evaluate(load(ROOT / 'snapshot/dashboard.duckdb'), expected['asof'])
     assert len(stocks) == 2430
-    assert stocks.total_score.isna().all()
-    assert sectors.total_score.isna().all()
+    assert stocks.total_score.notna().sum() == expected['complete_scores']
+    assert sectors.total_score.notna().sum() == expected['complete_sector_scores']
     for row in expected['three_stock_checks']:
         actual = stocks.set_index('symbol').loc[row['symbol']]
         assert actual.net_amount == row['net_amount_krw']
@@ -58,6 +59,6 @@ def test_sector_sort_and_details_are_interactive():
     app.run()
     assert not app.exception
     assert any('NAVER' in w.value for w in app.markdown)
-    stock_table = app.dataframe[1].value
+    stock_table = next(w.value for w in app.dataframe if '코드' in w.value.columns)
     assert stock_table['종목명'].tolist() == sorted(stock_table['종목명'].tolist())
     assert stock_table['코드'].astype(str).str.zfill(6).eq('035420').any()
