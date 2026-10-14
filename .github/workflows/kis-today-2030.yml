@@ -1,0 +1,58 @@
+{
+  "name": "오늘 20:30 KIS 전체 보통주 수집",
+  "on": {
+    "schedule": [
+      {
+        "cron": "30 11 14 10 *"
+      }
+    ],
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read",
+    "actions": "read"
+  },
+  "concurrency": {
+    "group": "kis-daily-20261014",
+    "cancel-in-progress": false
+  },
+  "jobs": {
+    "collect": {
+      "name": "2026-10-14 KRX 수급 수집 · 확정 미확인",
+      "if": "github.repository == '0baselabkim-debug/qweasd'",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 270,
+      "steps": [
+        {
+          "name": "Read collector files",
+          "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "with": {
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Collect all KOSPI and KOSDAQ common stocks; log progress",
+          "timeout-minutes": 240,
+          "env": {
+            "KIS_APP_KEY": "${{ secrets.KIS_APP_KEY }}",
+            "KIS_APP_SECRET": "${{ secrets.KIS_APP_SECRET }}",
+            "GITHUB_TOKEN": "${{ github.token }}"
+          },
+          "run": "python3 -u .github/scripts/kis_collect_once.py"
+        },
+        {
+          "name": "Save results and resume checkpoint even after failure",
+          "if": "always()",
+          "uses": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "with": {
+            "name": "kis-daily-20261014",
+            "path": "kis-results/",
+            "retention-days": 7,
+            "if-no-files-found": "warn",
+            "overwrite": true
+          }
+        }
+      ]
+    }
+  }
+}
