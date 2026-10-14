@@ -69,6 +69,7 @@ def test_parent_basis_and_loss_are_not_replaced_by_total_profit(history):
     assert _financial(row)['per']==25 and _financial(row)['pbr']==2.5
     row['parent_net_income']=-10
     assert pd.isna(_financial(row)['per'])
+    assert '지배주주' in _financial(row)['financial_hold']
 
 def test_sector_flow_needs_20_flow_days_not_25(history):
     dates=history['calendar'].trade_date.iloc[-20:]
@@ -163,3 +164,44 @@ def test_total_profit_can_be_recovered_only_from_two_explicit_interests():
     p['response']['list']=rows[:1]
     assert parse_full_response(p,'receipt','CFS')['net_income']['value'] is None
     assert select_account([account('ifrs-full_ProfitLossFromOperatingActivities','영업이익','100',statement='CIS')],'operating_profit')['value']==100
+
+
+def test_legacy_import_preserves_enriched_rows_and_accepts_new_dates(tmp_path):
+    from screener.store import connect,insert_frame
+    with connect(tmp_path/'test-only.duckdb') as c:
+        for field in ['market_cap_source','market_cap_quality','market_cap_observed_at']:
+            c.execute(f'ALTER TABLE prices ADD COLUMN IF NOT EXISTS {field} VARCHAR')
+        old=dict(symbol='000001',trade_date=pd.Timestamp('2026-10-14'),close=100,adjusted_close=None,turnover=200,volume=2,market_cap=None,source='TEST ONLY legacy',exchange='KRX')
+        enriched=old|{'market_cap':10000,'market_cap_source':'TEST ONLY verified','market_cap_quality':'EXPLICIT_DATE','market_cap_observed_at':None}
+        insert_frame(c,'prices',pd.DataFrame([enriched]))
+        insert_frame(c,'prices',pd.DataFrame([old]),preserve_existing=True)
+        assert c.execute('select market_cap,market_cap_source from prices').fetchone()==(10000,'TEST ONLY verified')
+        insert_frame(c,'prices',pd.DataFrame([old|{'trade_date':pd.Timestamp('2026-10-15')}]),preserve_existing=True)
+        assert c.execute("select market_cap from prices where trade_date='2026-10-15'").fetchone()==(None,)
+        assert c.execute('select count(*) from prices').fetchone()[0]==2
+
+
+def test_running_app_refreshes_an_old_imported_calculator(monkeypatch):
+    import streamlit as st
+    import screener.scoring as scoring
+    from streamlit.testing.v1 import AppTest
+    from pathlib import Path
+    st.cache_data.clear()
+    def stale(*args,**kwargs):
+        raise AssertionError('previous deployment calculator was retained')
+    monkeypatch.setattr(scoring,'evaluate',stale)
+    monkeypatch.setattr(scoring,'_dashboard_loaded_version','old-deployment',raising=False)
+    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=90).run()
+    assert not app.exception
+    assert any(m.value=='2,415종목' for m in app.metric)
+
+
+def test_historical_date_does_not_backdate_theme_membership():
+    from pathlib import Path
+    from streamlit.testing.v1 import AppTest
+    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=90).run()
+    next(w for w in app.selectbox if w.label=='데이터 기준일').select('2026-10-13');app.run()
+    next(w for w in app.radio if w.label=='분류체계').set_value('투자 테마');app.run()
+    assert not app.exception
+    assert any('테마 구성 이력이 없습니다' in w.value for w in app.info)
+    assert not any(w.label=='테마 선택' for w in app.selectbox)

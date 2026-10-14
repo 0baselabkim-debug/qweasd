@@ -1,0 +1,60 @@
+{
+  "different_fields": {
+    "close": 390,
+    "volume": 75
+  },
+  "symbol_count": 39,
+  "zero_volume_rows": 315,
+  "active_rows": 75,
+  "examples": [
+    {
+      "symbol": "002630",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    }
+  ],
+  "active_price_volume_product_max_relative_difference": 0.0006072822117045851,
+  "turnover_difference_rows": 0,
+  "interpretation": "Close and volume inverse scaling is consistent with corporate-action adjustment, but the exact provider adjustment policy is not established. Use KRX explicit-date prices and turnover. Historical KIS net quantity is retained as provider-reported; cash-flow scores use only net amount.",
+  "official_parameter_source": "https://github.com/koreainvestment/open-trading-api/blob/2077773a69a428daf63e148182511f068cc45de3/examples_llm/domestic_stock/investor_trade_by_stock_daily/investor_trade_by_stock_daily.py",
+  "official_adjustment_parameter_instruction": "FID_ORG_ADJ_PRC: 공란 입력; undocumented alternatives were not requested"
+}

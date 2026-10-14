@@ -1,108 +1,107 @@
 {
   "asof": "2026-10-14",
   "expected_stock_dates": 48600,
-  "missing_count": 45980,
+  "missing_count": 33,
   "missing_types": {
-    "pending_full_collection": 45947,
     "pre_listing": 33
   },
   "missing_detail_file": "history-missing.json.gz",
-  "collection_status": "in_progress_after_user_approval",
+  "collection_status": "full_response_available",
   "coverage_by_date": [
     {
       "trade_date": "2026-09-11 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-14 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-15 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-16 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-17 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-18 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-21 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-22 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-23 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-28 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2427,
+      "symbols": 2427
     },
     {
       "trade_date": "2026-09-29 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2428,
+      "symbols": 2428
     },
     {
       "trade_date": "2026-09-30 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2429,
+      "symbols": 2429
     },
     {
       "trade_date": "2026-10-01 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2430,
+      "symbols": 2430
     },
     {
       "trade_date": "2026-10-02 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2430,
+      "symbols": 2430
     },
     {
       "trade_date": "2026-10-06 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2430,
+      "symbols": 2430
     },
     {
       "trade_date": "2026-10-07 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2430,
+      "symbols": 2430
     },
     {
       "trade_date": "2026-10-08 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2430,
+      "symbols": 2430
     },
     {
       "trade_date": "2026-10-12 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2430,
+      "symbols": 2430
     },
     {
       "trade_date": "2026-10-13 00:00:00",
-      "rows": 10,
-      "symbols": 10
+      "rows": 2430,
+      "symbols": 2430
     },
     {
       "trade_date": "2026-10-14 00:00:00",
@@ -112,8 +111,8 @@
   ],
   "duplicate_keys": 0,
   "missing_amount": 0,
-  "flow_rows": 2620,
-  "full_20d_symbols": 10,
+  "flow_rows": 48567,
+  "full_20d_symbols": 2427,
   "start": "2026-09-11",
   "end": "2026-10-14",
   "flow_finality": "UNVERIFIED",
@@ -127,6 +126,4612 @@
       "requests": 2422,
       "rate_limit_responses": 1,
       "ending_interval_seconds": 1.05
+    },
+    "history": {
+      "run_id": "38593812905",
+      "success": 2430,
+      "failed": 0,
+      "failures": {},
+      "elapsed_seconds": 2542.041,
+      "requests": 2421,
+      "rate_limit_responses": 0,
+      "ending_interval_seconds": 1.05
     }
-  }
+  },
+  "all_imported_historical_amounts_and_quantities_checked": 46137,
+  "duplicate_raw_dates": 0,
+  "kis_krx_price_difference_rows": 390,
+  "kis_krx_price_differences": [
+    {
+      "symbol": "002630",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "002630",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 1936,
+          "krx": 913.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "004920",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 9070,
+          "krx": 907.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "007110",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 3015,
+          "krx": 603.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009620",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 4350,
+          "krx": 870.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009620",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 4350,
+          "krx": 870.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009620",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 4350,
+          "krx": 870.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009620",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 4350,
+          "krx": 870.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-10-08",
+      "differences": {
+        "close": {
+          "kis": 1695,
+          "krx": 2075.0
+        },
+        "volume": {
+          "kis": 164883,
+          "krx": 134767
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-10-07",
+      "differences": {
+        "close": {
+          "kis": 1628,
+          "krx": 1993.0
+        },
+        "volume": {
+          "kis": 58080,
+          "krx": 47472
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 1628,
+          "krx": 1993.0
+        },
+        "volume": {
+          "kis": 17635,
+          "krx": 14414
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 1630,
+          "krx": 1995.0
+        },
+        "volume": {
+          "kis": 38517,
+          "krx": 31482
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 1671,
+          "krx": 2045.0
+        },
+        "volume": {
+          "kis": 35676,
+          "krx": 29160
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 1708,
+          "krx": 2090.0
+        },
+        "volume": {
+          "kis": 64298,
+          "krx": 52554
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 1659,
+          "krx": 2030.0
+        },
+        "volume": {
+          "kis": 13513,
+          "krx": 11045
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 1633,
+          "krx": 1999.0
+        },
+        "volume": {
+          "kis": 43130,
+          "krx": 35253
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 1603,
+          "krx": 1962.0
+        },
+        "volume": {
+          "kis": 45843,
+          "krx": 37470
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 1633,
+          "krx": 1998.0
+        },
+        "volume": {
+          "kis": 116596,
+          "krx": 95300
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 1633,
+          "krx": 1998.0
+        },
+        "volume": {
+          "kis": 47590,
+          "krx": 38898
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 1769,
+          "krx": 2165.0
+        },
+        "volume": {
+          "kis": 60748,
+          "krx": 49653
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 1716,
+          "krx": 2100.0
+        },
+        "volume": {
+          "kis": 66540,
+          "krx": 54387
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 1618,
+          "krx": 1980.0
+        },
+        "volume": {
+          "kis": 29503,
+          "krx": 24115
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 1626,
+          "krx": 1990.0
+        },
+        "volume": {
+          "kis": 87310,
+          "krx": 71363
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 1765,
+          "krx": 2160.0
+        },
+        "volume": {
+          "kis": 274517,
+          "krx": 224377
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "009730",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2059,
+          "krx": 2520.0
+        },
+        "volume": {
+          "kis": 113739,
+          "krx": 92965
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-10-08",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-10-07",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 3275,
+          "krx": 655.0
+        },
+        "volume": {
+          "kis": 40752,
+          "krx": 203761
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 3200,
+          "krx": 640.0
+        },
+        "volume": {
+          "kis": 37689,
+          "krx": 188445
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 3285,
+          "krx": 657.0
+        },
+        "volume": {
+          "kis": 19634,
+          "krx": 98170
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "014160",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 3355,
+          "krx": 671.0
+        },
+        "volume": {
+          "kis": 16622,
+          "krx": 83111
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-10-12",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-10-08",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-10-07",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        },
+        "volume": {
+          "kis": 97429,
+          "krx": 19486
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 2160,
+          "krx": 10800.0
+        },
+        "volume": {
+          "kis": 11374,
+          "krx": 2275
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2156,
+          "krx": 10780.0
+        },
+        "volume": {
+          "kis": 17624,
+          "krx": 3525
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2174,
+          "krx": 10870.0
+        },
+        "volume": {
+          "kis": 285059,
+          "krx": 57012
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "017650",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2170,
+          "krx": 10850.0
+        },
+        "volume": {
+          "kis": 76154,
+          "krx": 15231
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-10-12",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-10-08",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-10-07",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2020,
+          "krx": 1010.0
+        },
+        "volume": {
+          "kis": 10668,
+          "krx": 21337
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "032080",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2074,
+          "krx": 1037.0
+        },
+        "volume": {
+          "kis": 6036,
+          "krx": 12072
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-10-13",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-10-12",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-10-08",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-10-07",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "033340",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2399,
+          "krx": 460.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-10-12",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-10-08",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-10-07",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 1378,
+          "krx": 689.0
+        },
+        "volume": {
+          "kis": 351885,
+          "krx": 703770
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038060",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 1556,
+          "krx": 778.0
+        },
+        "volume": {
+          "kis": 183507,
+          "krx": 367014
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038530",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 4995,
+          "krx": 999.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038530",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 4995,
+          "krx": 999.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038530",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 4995,
+          "krx": 999.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038530",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 4995,
+          "krx": 999.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038530",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 4995,
+          "krx": 999.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "038530",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 4995,
+          "krx": 999.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "042940",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 5680,
+          "krx": 5900.0
+        },
+        "volume": {
+          "kis": 56857,
+          "krx": 54737
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "042940",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 5564,
+          "krx": 5780.0
+        },
+        "volume": {
+          "kis": 22267,
+          "krx": 21437
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "042940",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 5525,
+          "krx": 5740.0
+        },
+        "volume": {
+          "kis": 21130,
+          "krx": 20343
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "042940",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 5516,
+          "krx": 5730.0
+        },
+        "volume": {
+          "kis": 15975,
+          "krx": 15380
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "042940",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 5516,
+          "krx": 5730.0
+        },
+        "volume": {
+          "kis": 18997,
+          "krx": 18289
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "042940",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 5554,
+          "krx": 5770.0
+        },
+        "volume": {
+          "kis": 27626,
+          "krx": 26596
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "042940",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 5708,
+          "krx": 5930.0
+        },
+        "volume": {
+          "kis": 18603,
+          "krx": 17910
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "050110",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 5400,
+          "krx": 1079.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "051980",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 10350,
+          "krx": 1035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "056090",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 5950,
+          "krx": 1190.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "083640",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 5440,
+          "krx": 1087.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084440",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 5980,
+          "krx": 1196.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084440",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 5980,
+          "krx": 1196.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084440",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 5980,
+          "krx": 1196.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084440",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 5980,
+          "krx": 1196.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084440",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 5980,
+          "krx": 1196.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084650",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 2500,
+          "krx": 500.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084650",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 2500,
+          "krx": 500.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084650",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 2500,
+          "krx": 500.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084650",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 2500,
+          "krx": 500.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084650",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 2500,
+          "krx": 500.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084650",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2500,
+          "krx": 500.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084650",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2500,
+          "krx": 500.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084650",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2500,
+          "krx": 500.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "084680",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2660,
+          "krx": 532.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "099220",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 5110,
+          "krx": 511.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "099220",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 5110,
+          "krx": 511.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "099220",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 5110,
+          "krx": 511.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "099220",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 5110,
+          "krx": 511.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "099220",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 5110,
+          "krx": 511.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "109070",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 7750,
+          "krx": 1550.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "131400",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 8500,
+          "krx": 766.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "154040",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 10550,
+          "krx": 1055.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "196450",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 3950,
+          "krx": 790.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 1417999,
+          "krx": 1429000.0
+        },
+        "volume": {
+          "kis": 56108,
+          "krx": 55677
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 1380292,
+          "krx": 1391000.0
+        },
+        "volume": {
+          "kis": 49344,
+          "krx": 48965
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 1374338,
+          "krx": 1385000.0
+        },
+        "volume": {
+          "kis": 31109,
+          "krx": 30870
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 1389222,
+          "krx": 1400000.0
+        },
+        "volume": {
+          "kis": 49235,
+          "krx": 48856
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 1355484,
+          "krx": 1366000.0
+        },
+        "volume": {
+          "kis": 39249,
+          "krx": 38947
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 1380292,
+          "krx": 1391000.0
+        },
+        "volume": {
+          "kis": 30349,
+          "krx": 30116
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 1391207,
+          "krx": 1402000.0
+        },
+        "volume": {
+          "kis": 30414,
+          "krx": 30180
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 1387238,
+          "krx": 1398000.0
+        },
+        "volume": {
+          "kis": 34941,
+          "krx": 34673
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 1385253,
+          "krx": 1396000.0
+        },
+        "volume": {
+          "kis": 30588,
+          "krx": 30353
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 1398153,
+          "krx": 1409000.0
+        },
+        "volume": {
+          "kis": 33853,
+          "krx": 33593
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 1401130,
+          "krx": 1412000.0
+        },
+        "volume": {
+          "kis": 25325,
+          "krx": 25131
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 1409068,
+          "krx": 1420000.0
+        },
+        "volume": {
+          "kis": 32768,
+          "krx": 32516
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "207940",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 1404107,
+          "krx": 1415000.0
+        },
+        "volume": {
+          "kis": 27093,
+          "krx": 26885
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "208860",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 13030,
+          "krx": 1303.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "220100",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 6749,
+          "krx": 8100.0
+        },
+        "volume": {
+          "kis": 87601,
+          "krx": 73001
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "220100",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 6891,
+          "krx": 8270.0
+        },
+        "volume": {
+          "kis": 46432,
+          "krx": 38694
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "220100",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 6791,
+          "krx": 8150.0
+        },
+        "volume": {
+          "kis": 64849,
+          "krx": 54041
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "220100",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 6741,
+          "krx": 8090.0
+        },
+        "volume": {
+          "kis": 41353,
+          "krx": 34461
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "225190",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 4105,
+          "krx": 821.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "239340",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 2520,
+          "krx": 504.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "239340",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 2520,
+          "krx": 504.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "239340",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 2520,
+          "krx": 504.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "239340",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2520,
+          "krx": 504.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "239340",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2520,
+          "krx": 504.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "239340",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2520,
+          "krx": 504.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "297570",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 4345,
+          "krx": 869.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-10-12",
+      "differences": {
+        "close": {
+          "kis": 3934,
+          "krx": 5900.0
+        },
+        "volume": {
+          "kis": 112959,
+          "krx": 75338
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-10-08",
+      "differences": {
+        "close": {
+          "kis": 3955,
+          "krx": 5930.0
+        },
+        "volume": {
+          "kis": 42207,
+          "krx": 28150
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-10-07",
+      "differences": {
+        "close": {
+          "kis": 3934,
+          "krx": 5900.0
+        },
+        "volume": {
+          "kis": 47033,
+          "krx": 31369
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 3888,
+          "krx": 5830.0
+        },
+        "volume": {
+          "kis": 78271,
+          "krx": 52203
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 3955,
+          "krx": 5930.0
+        },
+        "volume": {
+          "kis": 74343,
+          "krx": 49583
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 4021,
+          "krx": 6030.0
+        },
+        "volume": {
+          "kis": 115812,
+          "krx": 77241
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 3901,
+          "krx": 5850.0
+        },
+        "volume": {
+          "kis": 268693,
+          "krx": 179205
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 3828,
+          "krx": 5740.0
+        },
+        "volume": {
+          "kis": 667304,
+          "krx": 445058
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 3534,
+          "krx": 5300.0
+        },
+        "volume": {
+          "kis": 67077,
+          "krx": 44737
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 3574,
+          "krx": 5360.0
+        },
+        "volume": {
+          "kis": 8023,
+          "krx": 5351
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 3554,
+          "krx": 5330.0
+        },
+        "volume": {
+          "kis": 23725,
+          "krx": 15824
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 3568,
+          "krx": 5350.0
+        },
+        "volume": {
+          "kis": 39041,
+          "krx": 26039
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 3514,
+          "krx": 5270.0
+        },
+        "volume": {
+          "kis": 11029,
+          "krx": 7356
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 3528,
+          "krx": 5290.0
+        },
+        "volume": {
+          "kis": 56368,
+          "krx": 37595
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 3468,
+          "krx": 5200.0
+        },
+        "volume": {
+          "kis": 15143,
+          "krx": 10100
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 3501,
+          "krx": 5250.0
+        },
+        "volume": {
+          "kis": 17870,
+          "krx": 11919
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 3581,
+          "krx": 5370.0
+        },
+        "volume": {
+          "kis": 63070,
+          "krx": 42065
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "303360",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 3501,
+          "krx": 5250.0
+        },
+        "volume": {
+          "kis": 24171,
+          "krx": 16121
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "332290",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 4485,
+          "krx": 897.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-10-06",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-10-02",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "340440",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 3780,
+          "krx": 756.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "365590",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 1566,
+          "krx": 783.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "365590",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 1566,
+          "krx": 783.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "365590",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 1566,
+          "krx": 783.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "378800",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2550,
+          "krx": 510.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469480",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 3300,
+          "krx": 2130.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-10-01",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-30",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-29",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "469750",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 4955,
+          "krx": 991.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "475460",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2764,
+          "krx": 8290.0
+        },
+        "volume": {
+          "kis": 286057,
+          "krx": 95410
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "475460",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2908,
+          "krx": 8720.0
+        },
+        "volume": {
+          "kis": 247081,
+          "krx": 82410
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "475460",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2891,
+          "krx": 8670.0
+        },
+        "volume": {
+          "kis": 139023,
+          "krx": 46369
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-28",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-23",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-22",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-21",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-18",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-17",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-16",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-15",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-14",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    },
+    {
+      "symbol": "498390",
+      "date": "2026-09-11",
+      "differences": {
+        "close": {
+          "kis": 2479,
+          "krx": 2035.0
+        }
+      },
+      "retained_source": "KRX official daily"
+    }
+  ],
+  "completeness_excluding_prelisting_percent": 100.0
 }

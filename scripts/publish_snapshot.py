@@ -36,6 +36,30 @@ for mode in ['quotes','history']:
    'requests':len(metrics),'rate_limit_responses':sum(m['http']==429 or m['code']=='EGW00201' for m in metrics),'ending_interval_seconds':v['ending_interval']}
 assert quality['duplicate_keys']==0 and quality['missing_amount']==0
 assert checks['original_rows_preserved']==2430
+if full_history:
+    raw_history=read(ROOT/'staging/kis_history_20261014.json.gz')
+    observed=data['flows'].set_index(['symbol','trade_date'])
+    reviewed=0;price_differences=[];duplicate_raw_dates=0
+    for code,record in raw_history['records'].items():
+        raw_dates=[r['stck_bsop_date'] for r in record['rows']]
+        duplicate_raw_dates+=len(raw_dates)-len(set(raw_dates))
+        for r in record['rows']:
+            day=pd.Timestamp(r['stck_bsop_date']);key=(code,day)
+            if key not in observed.index or day==asof:continue
+            row=observed.loc[key]
+            assert row.net_amount==int(r['frgn_ntby_tr_pbmn'])*1000000 and row.net_quantity==int(r['frgn_ntby_qty'])
+            reviewed+=1
+            if key in price_lookup:
+                p=price_lookup[key]
+                differences={k:{'kis':int(r[field]),'krx':getattr(p,k)} for k,field in [('close','stck_clpr'),('volume','acml_vol'),('turnover','acml_tr_pbmn')] if int(r[field])!=getattr(p,k)}
+                if differences:price_differences.append({'symbol':code,'date':str(day.date()),'differences':differences,'retained_source':'KRX official daily'})
+    assert duplicate_raw_dates==0
+    assert reviewed==len(data['flows'])-2430
+    quality['all_imported_historical_amounts_and_quantities_checked']=reviewed
+    quality['duplicate_raw_dates']=duplicate_raw_dates
+    quality['kis_krx_price_difference_rows']=len(price_differences)
+    quality['kis_krx_price_differences']=price_differences
+quality['completeness_excluding_prelisting_percent']=round(100*(quality['expected_stock_dates']-quality['missing_count'])/(quality['expected_stock_dates']-quality['missing_types'].get('pre_listing',0)),4)
 summary={k:v for k,v in audit.items() if k not in ['accounts']}
 write(ROOT/'reports/enrichment/coverage.json',summary);write(ROOT/'reports/enrichment/history-quality.json',quality)
 (ROOT/'reports/enrichment/history-missing.json.gz').write_bytes(gzip.compress(json.dumps(missing,ensure_ascii=False,separators=(',',':')).encode(),mtime=0))

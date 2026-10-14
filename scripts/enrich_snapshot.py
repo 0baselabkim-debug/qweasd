@@ -159,6 +159,8 @@ def main():
     audit['stock_components']={k:int(stocks['score_'+k].notna().sum()) for k in meta['config']['stock_weights']}
     audit['sector_components']={k:int(sectors['score_'+k].notna().sum()) for k in meta['config']['sector_weights']}
     audit['complete_stock_scores']=int(stocks.total_score.notna().sum());audit['complete_sector_scores']=int(sectors.total_score.notna().sum())
+    audit['turnaround_symbols']=int(stocks.turnaround.sum())
+    audit['financial_hold_reasons']=stocks.financial_hold.replace('','기초 재무 조건 충족').value_counts().to_dict()
     audit['themes']=themes[['sector','members']].to_dict('records');audit['theme_overlap']=theme_stats
     report=ROOT/'data/enrichment-audit.json';report.write_text(json.dumps(audit,ensure_ascii=False,indent=2,default=str)+'\n')
     print(json.dumps({k:v for k,v in audit.items() if k not in ['accounts','financial_changes','mapping_changes','price_conflicts']},ensure_ascii=False,indent=2,default=str))

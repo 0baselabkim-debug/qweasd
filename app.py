@@ -84,15 +84,16 @@ st.markdown('<div class="lead">외국인 수급으로 업종을 살펴보고, �
 history_days=int(stocks.flow_observations.max()) if len(stocks) else 0
 complete_flow=int((stocks.flow_observations>=20).sum())
 sector_ready=visible_sectors.total_score.notna().any()
-status_label='가설 점수 산출' if sector_ready else '최종 평가 대기'
+status_label='섹터 가설 점수 산출' if sector_ready else '섹터 최종 평가 대기'
 st.markdown(f'<span class="chip">실제 수급 {asof}</span><span class="chip">KRX 시장 기준</span><span class="chip chip-wait">{status_label} · 수급 20일 충족 {complete_flow:,}종목</span><span class="chip chip-wait">원천 최종 확정 미검증</span>',unsafe_allow_html=True)
 columns=st.columns(4)
 columns[0].metric('정상 거래 · 실제 수급',f'{len(stocks):,}종목')
 columns[1].metric('공식 업종 매핑',f'{len(sectors[sectors.sector!="업종 미분류"]):,}개',help='시장별 중분류 우선, 없으면 대분류. 종목별 하나의 업종만 사용합니다.')
 columns[2].metric('공시일 확인된 연간 재무',f'{stocks.period_end.notna().sum():,}종목',help='2025년 연간 재무와 2024년 비교. 원화 표시, 연결 우선. 실제 DART 공시일이 기준일 이전인 자료만 사용합니다.')
-columns[3].metric('20일 수급 충족',f'{complete_flow:,} / {len(stocks):,}종목',help='종목별 수급 완전성을 확인합니다. 일부 표본의 이력이 전체 시장 이력으로 표시되지 않습니다.')
+columns[3].metric('20일 수급 충족',f'{complete_flow:,}종목',help='종목별 수급 완전성을 확인합니다. 일부 표본의 이력이 전체 시장 이력으로 표시되지 않습니다.')
+columns[3].caption(f'{complete_flow:,} / {len(stocks):,}종목')
 krx_count=data['metadata'].get('snapshots',{}).get(asof.replace('-',''),{}).get('official_krx_price_rows',0)
-note='계산에 필요한 이력이 충족된 항목의 가설 점수를 표시합니다.' if sector_ready else '필요한 수급·업종 구성·가격 이력이 부족한 항목은 <b>데이터 축적 중</b>입니다. 모든 항목을 갖추기 전에는 종합 점수와 순위를 만들지 않습니다.'
+note='계산에 필요한 이력이 충족된 항목의 가설 점수를 표시합니다.' if sector_ready else '섹터의 당시 업종 구성·가격 이력이 부족한 항목은 <b>데이터 축적 중</b>입니다. 종목은 모든 평가 항목을 갖춘 경우에만 종합 점수와 순위를 표시합니다.'
 st.markdown(f'<div class="note">확인 가능한 당일 순매수와 공개 재무를 표시합니다. {note} 빈 점수의 가중치를 다른 항목에 배분하지 않습니다.</div>',unsafe_allow_html=True)
 with st.sidebar.expander('데이터 상태 · 출처'):
  st.write(f'외국인 수급: {len(stocks):,}개 / KIS')
@@ -115,7 +116,8 @@ def csv(frame):return frame.to_csv(index=False).encode('utf-8-sig')
 
 st.subheader('① 투자 테마별 자금 흐름' if theme_mode else '① 강세 섹터',anchor=False)
 if theme_mode:
- st.caption(f'사업 근거 확인 종목 {theme_stats["unique_members"]}개 · 중복 제거 순매수 {theme_stats["unique_net_amount"]/1e8:,.2f}억원 · 중복 소속 {theme_stats["overlap_count"]}건. 테마별 금액을 더해 전체 유입액으로 표시하지 않습니다.')
+ st.caption(f'사업 근거 확인 종목 {theme_stats["unique_members"]}개 · 중복 제거 순매수 {display_number(theme_stats["unique_net_amount"]/1e8,2)}억원 · 중복 소속 {theme_stats["overlap_count"]}건. 테마별 금액을 더해 전체 유입액으로 표시하지 않습니다.')
+ if not theme_stats['unique_members']:st.info('선택한 기준일·시장에는 근거를 확인한 테마 구성 이력이 없습니다.')
  st.caption('테마는 별도 분류입니다. 확인된 구성 이력이 부족해 테마 종합 점수는 보류하며, 종목 점수는 기존 공식 업종 비교 기준을 유지합니다.')
 st.caption('같은 시장 안의 업종별 가설 점수입니다. 원천 최종 확정 상태를 함께 확인하세요.' if sector_ready else '오늘은 당일 외국인 순매수 순으로 탐색합니다. 강세 종합 순위는 데이터 축적 후 표시됩니다.')
 left,right=st.columns([1.55,1],gap='large')
@@ -135,18 +137,18 @@ with right:
 st.divider()
 st.subheader('② 선택한 테마의 종목' if theme_mode else '② 강세 섹터 내 우수 종목',anchor=False)
 st.caption('종가와 당일 수급, 공시된 재무를 비교합니다. 가격은 실시간 현재가가 아닙니다. 미완성 점수는 순위를 부여하지 않습니다.')
-st.caption(f'기준일 시가총액 {stocks.market_cap.notna().sum():,}개 · PER {stocks.per.notna().sum():,}개 · PBR {stocks.pbr.notna().sum():,}개. 결측은 빈칸으로 유지하며 0으로 바꾸지 않습니다.')
+st.caption(f'종목 종합 평가 가능 {stocks.total_score.notna().sum():,}개 · 기준일 시가총액 {stocks.market_cap.notna().sum():,}개 · PER {stocks.per.notna().sum():,}개 · PBR {stocks.pbr.notna().sum():,}개. 결측은 빈칸으로 유지하며 0으로 바꾸지 않습니다.')
 options=sorted(theme_stocks.loc[theme_stocks.symbol.isin(searched.symbol),'theme'].unique()) if theme_mode else (searched.market+' · '+searched.sector).drop_duplicates().sort_values().tolist()
 if not options:st.info('검색 조건에 맞는 종목이 없습니다.');st.stop()
 default='KOSPI · 전기·전자' if 'KOSPI · 전기·전자' in options else options[0]
 a,b=st.columns([2,1])
 choice=a.selectbox('테마 선택' if theme_mode else '섹터 선택',options,index=options.index(default))
-sort=b.selectbox('종목 정렬',['당일 외국인 순매수','종합 점수','실적 성장성 점수','수익성·건전성 점수','가치평가 점수','거래 활성도 점수','매출 성장률','영업이익 성장률','ROE','종목명'])
 selected=searched[searched.symbol.isin(theme_stocks.loc[theme_stocks.theme==choice,'symbol'])].copy() if theme_mode else searched[(searched.market+' · '+searched.sector)==choice].copy()
+sort=b.selectbox('종목 정렬',['당일 외국인 순매수','종합 점수','실적 성장성 점수','수익성·건전성 점수','가치평가 점수','거래 활성도 점수','매출 성장률','영업이익 성장률','ROE','종목명'],index=1 if selected.total_score.notna().any() else 0)
 key={'당일 외국인 순매수':'net_amount','종합 점수':'total_score','매출 성장률':'revenue_growth','영업이익 성장률':'op_growth','ROE':'roe','종목명':'name','실적 성장성 점수':'score_growth','수익성·건전성 점수':'score_profitability_health','가치평가 점수':'score_valuation','거래 활성도 점수':'score_activity'}[sort]
 selected=selected.sort_values([key,'symbol'],ascending=[key=='name',True],na_position='last')
 if sort=='종합 점수' and selected.total_score.isna().all():st.info('종합 점수는 데이터 축적 중입니다. 현재 종목코드 순으로 표시합니다.')
-view=pd.DataFrame({'종목명':selected.name,'코드':selected.symbol,'종가(원)':selected.close,'시가총액(억원)':selected.market_cap/1e8,'외국인 순매수(억원)':selected.net_amount/1e8,'매출 성장률':selected.revenue_growth.map(lambda v:display_number(v*100,1,'%')),'영업이익 성장률':['흑자전환' if t else display_number(v*100,1,'%') for v,t in zip(selected.op_growth,selected.turnaround)],'ROE':selected.roe.map(lambda v:display_number(v*100,1,'%')),'부채비율':selected.debt_ratio.map(lambda v:display_number(v*100,1,'%')),'PER':selected.per.map(lambda v:display_number(v,1,'배')),'PBR':selected.pbr.map(lambda v:display_number(v,1,'배')),'종합 점수':selected.total_score.map(lambda v:'데이터 축적 중' if pd.isna(v) else f'{v:.1f}'),'확보 배점':selected.available_weight.map(lambda v:f'{int(v)}/100'),'수급 이력':selected.flow_observations.map(lambda v:f'{int(v)}/20일'),'재무 상태':selected.financial_hold.replace('', '확인 완료')})
+view=pd.DataFrame({'종목명':selected.name,'코드':selected.symbol,'종가(원)':selected.close,'시가총액(억원)':selected.market_cap/1e8,'외국인 순매수(억원)':selected.net_amount/1e8,'매출 성장률':selected.revenue_growth.map(lambda v:display_number(v*100,1,'%')),'영업이익 성장률':['흑자전환' if t else display_number(v*100,1,'%') for v,t in zip(selected.op_growth,selected.turnaround)],'ROE':selected.roe.map(lambda v:display_number(v*100,1,'%')),'부채비율':selected.debt_ratio.map(lambda v:display_number(v*100,1,'%')),'PER':selected.per.map(lambda v:display_number(v,1,'배')),'PBR':selected.pbr.map(lambda v:display_number(v,1,'배')),'종합 점수':selected.total_score.map(lambda v:'데이터 축적 중' if pd.isna(v) else f'{v:.1f}'),'업종 내 평가 순위':selected.evaluation_rank.map(lambda v:'—' if pd.isna(v) else f'{v:.0f}'),'확보 배점':selected.available_weight.map(lambda v:f'{int(v)}/100'),'수급 이력':selected.flow_observations.map(lambda v:f'{int(v)}/20일'),'재무 상태':selected.financial_hold.replace('', '확인 완료')})
 st.dataframe(view,hide_index=True,width='stretch',height=300,column_config={'종가(원)':st.column_config.NumberColumn(format='%d'),'외국인 순매수(억원)':st.column_config.NumberColumn(format='%.2f')})
 st.download_button('선택 종목 CSV',csv(view),f'stocks_{asof}.csv','text/csv',key='stocks_download')
 labels={r.symbol:f'{r["name"]} · {r.symbol}' for _,r in selected.iterrows()}
@@ -159,6 +161,7 @@ with st.container(border=True):
  with info:
   st.markdown('**확인 가능한 근거**')
   st.write(f'당일 외국인 {"순매수" if r.net_amount>=0 else "순매도"} **{abs(r.net_amount)/1e8:,.2f}억원** · {abs(r.net_quantity):,}주')
+  if asof<'2026-10-14':st.caption('과거 수량은 KIS 원문 값입니다. 분할·병합 반영 기준은 미확인이며, 평가에는 수량 대신 순매수 금액을 사용합니다.')
   if pd.notna(r.period_end):
    st.write(f'매출 **{display_number(r.revenue/1e8,0)}억원** · 영업이익 **{display_number(r.operating_profit/1e8,0)}억원**')
    st.write(f'영업현금흐름 **{display_number(r.ocf/1e8,0)}억원** · 자본총계 **{display_number(r.equity/1e8,0)}억원**')

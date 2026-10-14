@@ -12,6 +12,18 @@ data=load(args.db);stocks,sectors,_=evaluate(data,'2026-10-14');stocks=stocks.se
 quotes_file=ROOT/'staging/kis_quotes_20261014.json.gz'
 sample=read(args.raw/'kis_history_sample.json')
 quotes=read(quotes_file)['records'] if quotes_file.exists() else {r['symbol']:r for r in sample['records']}
+history_file=ROOT/'staging/kis_history_20261014.json.gz'
+histories=read(history_file)['records'] if history_file.exists() else {r['symbol']:r for r in sample['records']}
+original=read(args.raw.parent/'raw/kis_snapshot_20261014.json')
+original_amounts={r['symbol']:r['foreign_net_amount_krw'] for r in original['rows']}
+window={pd.strftime('%Y%m%d') for pd in sorted(data['calendar'].trade_date.unique())[-20:]}
+independent_flow={}
+for symbol,record in histories.items():
+ amounts={r['stck_bsop_date']:int(r['frgn_ntby_tr_pbmn'])*1000000 for r in record['rows']}
+ amounts['20261014']=original_amounts[symbol]
+ if window.issubset(amounts) and symbol in quotes:
+  values=[amounts[d] for d in window];cap=int(quotes[symbol]['quote']['hts_avls'])*100000000
+  if cap>0:independent_flow[symbol]={'flow_intensity':sum(values)/cap,'flow_persistence':sum(v>0 for v in values)/20}
 for code in ['005930','000660','035420']:
  p=next((args.raw/'dart_full').glob(code+'_CFS_2025.json.gz'));rows=read(p)['response']['list']
  def val(account,statement,key='thstrm_amount'):
@@ -26,6 +38,15 @@ for code in ['005930','000660','035420']:
  cap=int(quotes[code]['quote']['hts_avls'])*100000000
  parent_ni=val('ifrs-full_ProfitLossAttributableToOwnersOfParent','IS');parent_eq=val('ifrs-full_EquityAttributableToOwnersOfParent','BS')
  expected={'revenue_growth':revenue/previous_revenue-1,'op_growth':op/prev_op-1,'roe':ni/((equity+prev_eq)/2),'debt_ratio':liabilities/equity,'ocf':ocf,'per':cap/parent_ni,'pbr':cap/parent_eq}
+ expected.update(independent_flow[code])
+ peer_codes=stocks[(stocks.market==stocks.loc[code,'market'])&(stocks.sector==stocks.loc[code,'sector'])].index
+ peers=[independent_flow[c] for c in peer_codes if c in independent_flow]
+ if len(peers)>=3:
+  def rank(metric):
+   value=independent_flow[code][metric]
+   below=sum(p[metric]<value for p in peers);ties=sum(p[metric]==value for p in peers)
+   return (below+(ties-1)/2)/(len(peers)-1)
+  expected['score_foreign_flow']=(rank('flow_intensity')+rank('flow_persistence'))/2*30
  for key,value in expected.items():assert math.isclose(stocks.loc[code,key],value,rel_tol=1e-10),(code,key,stocks.loc[code,key],value)
  out['stocks'].append({'symbol':code,**expected})
 with duckdb.connect(str(args.db),read_only=True) as c:

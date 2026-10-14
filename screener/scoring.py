@@ -55,6 +55,8 @@ def _financial(row):
     if row.get('special',False):reason='업종 특수기업·별도 평가 필요'
     elif not finite('equity') or equity<=0:reason='자본총계 0 이하 또는 누락'
     elif not finite('net_income') or ni<=0 or not finite('operating_profit') or op<=0:reason='적자 또는 손익 누락'
+    elif row.get('scope')=='CFS' and pd.notna(val_eq) and val_eq<=0:reason='지배주주 귀속 자본 0 이하'
+    elif row.get('scope')=='CFS' and pd.notna(val_ni) and val_ni<=0:reason='지배주주 귀속 순손익 적자'
     elif not finite('ocf'):reason='영업현금흐름 누락'
     elif not finite('revenue'):reason='매출 계정 미확보'
     else:reason=''

@@ -6,6 +6,11 @@ from playwright.sync_api import sync_playwright
 URL=os.environ.get('DASHBOARD_CHECK_URL','https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/')
 out=Path(os.environ.get('DASHBOARD_CHECK_OUTPUT','reports/live-dashboard'));out.mkdir(parents=True,exist_ok=True)
 report={'url':URL,'success':False,'checks':[]}
+root=Path(__file__).resolve().parents[1]
+expected=json.loads((root/'reports/enrichment/coverage.json').read_text())
+financial_count=expected['metrics']['ocf']['count']
+full_history_count=expected['complete_20d_symbols']
+complete_scores=expected['complete_stock_scores']
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,**({'executable_path':os.environ['BROWSER_EXECUTABLE'],'args':['--no-sandbox','--disable-dev-shm-usage']} if os.environ.get('BROWSER_EXECUTABLE') else {}))
  page=browser.new_page(viewport={'width':1540,'height':2100},device_scale_factor=1)
@@ -29,8 +34,11 @@ with sync_playwright() as p:
   ui.get_by_text('오늘의 자금 흐름, 다음 관찰 후보',exact=True).wait_for(timeout=90000)
   ui.get_by_text('분류체계',exact=True).wait_for(timeout=60000)
   ui.get_by_text('공시일 확인된 연간 재무',exact=True).wait_for()
-  assert '2,415종목' in ui.locator('body').inner_text(),'updated_financial_count_not_visible'
-  report['checks'].append('Updated financial snapshot: 2,415 companies')
+  body=ui.locator('body').inner_text()
+  assert f'{financial_count:,}종목' in body,'updated_financial_count_not_visible'
+  assert f'{full_history_count:,} / 2,430종목' in body,'updated_20day_coverage_not_visible'
+  assert f'종목 종합 평가 가능 {complete_scores:,}개' in body,'updated_score_coverage_not_visible'
+  report['checks'].append(f'Financial snapshot: {financial_count}; 20-day flow: {full_history_count}; complete scores: {complete_scores}')
   page.screenshot(path=str(out/'official.png'),full_page=True)
   ui.get_by_text('투자 테마',exact=True).click()
   ui.get_by_text('① 투자 테마별 자금 흐름',exact=True).wait_for(timeout=30000)

@@ -1,6 +1,6 @@
 {
   "asof": "2026-10-14",
-  "flow_rows": 2620,
+  "flow_rows": 48567,
   "preserved_asof_flow_rows": 2430,
   "financial_rows": 2415,
   "price_rows": 63128,
@@ -16,9 +16,19 @@
       "requests": 2422,
       "rate_limit_responses": 1,
       "ending_interval_seconds": 1.05
+    },
+    "history": {
+      "run_id": "38593812905",
+      "success": 2430,
+      "failed": 0,
+      "failures": {},
+      "elapsed_seconds": 2542.041,
+      "requests": 2421,
+      "rate_limit_responses": 0,
+      "ending_interval_seconds": 1.05
     }
   },
-  "sha256": "4dc033b3de1b920665e091dda46262753ed369ee31e6801deaa0e6737899522f",
+  "sha256": "3318308b1e7a8d986fec9f041a6d16c22384eb08fa3c10cea0fba06112ae1123",
   "finality": "UNVERIFIED",
   "automatic_snapshot_sync": false,
   "secrets_required": false
