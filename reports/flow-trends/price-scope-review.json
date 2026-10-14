@@ -1,0 +1,47 @@
+{
+  "api_recollection_calls": 0,
+  "review_sources": [
+    "reports/enrichment/official-market-specs.json",
+    ".github/scripts/kis_collect_once.py",
+    ".github/scripts/kis_enrich_collect.py",
+    "scripts/kis_public_client.py",
+    "scripts/probe_adjusted_consistency.py"
+  ],
+  "documented_market_codes": {
+    "J": "KRX",
+    "NX": "NXT",
+    "UN": "통합"
+  },
+  "all_saved_request_paths_use": "J",
+  "mismatch_symbols": 2042,
+  "conclusion": "KRX/NXT request mixing is not evidenced. Actual server aggregation or revision cause cannot be established from saved data. Preserve originals; no NXT/UN comparative responses collected.",
+  "samples": [
+    {
+      "symbol": "005930",
+      "preserved_close": 234500.0,
+      "requeried_raw_close": 232000,
+      "requeried_adjusted_close": 232000,
+      "requeried_flow_close": 232000,
+      "foreign_amount_unchanged": true,
+      "foreign_quantity_unchanged": true
+    },
+    {
+      "symbol": "000660",
+      "preserved_close": 1425000.0,
+      "requeried_raw_close": 1419000,
+      "requeried_adjusted_close": 1419000,
+      "requeried_flow_close": 1419000,
+      "foreign_amount_unchanged": true,
+      "foreign_quantity_unchanged": true
+    },
+    {
+      "symbol": "035420",
+      "preserved_close": 180000.0,
+      "requeried_raw_close": 179400,
+      "requeried_adjusted_close": 179400,
+      "requeried_flow_close": 179400,
+      "foreign_amount_unchanged": true,
+      "foreign_quantity_unchanged": true
+    }
+  ]
+}

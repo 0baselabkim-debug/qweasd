@@ -17,9 +17,6 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Verify existing public app without credentials
         run: python scripts/check_live_dashboard.py
-      - name: Preserve official market field specification
-        if: always()
-        run: python scripts/read_public_market_specs.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
