@@ -28,8 +28,27 @@
       "ending_interval_seconds": 1.05
     }
   },
-  "sha256": "3318308b1e7a8d986fec9f041a6d16c22384eb08fa3c10cea0fba06112ae1123",
+  "sha256": "58f7f23797ada71e80a067ecd8c410a66125b72a163d17751f8cb0ee65054bf8",
   "finality": "UNVERIFIED",
-  "automatic_snapshot_sync": false,
-  "secrets_required": false
+  "automatic_snapshot_sync": true,
+  "secrets_required": false,
+  "current_day_flow_rows": 2430,
+  "daily_run": "38560757360",
+  "daily_validation": {
+    "trade_date": "2026-10-14",
+    "records": 2430,
+    "excluded": 113,
+    "adjusted_updates": 63128,
+    "source_run": "38560757360",
+    "planned_start_at": null,
+    "collection_started_at": null,
+    "collection_completed_at": null,
+    "input_mode": "saved_real_responses_replay",
+    "adjusted_close_conflict_symbols": 2042,
+    "complete_stock_scores": 1161,
+    "complete_sector_scores": 0,
+    "full_20d_symbols": 2427,
+    "preservation_verified": true,
+    "sha256": "58f7f23797ada71e80a067ecd8c410a66125b72a163d17751f8cb0ee65054bf8"
+  }
 }
