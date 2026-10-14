@@ -1,0 +1,38 @@
+{
+  "name": "KIS Samsung foreign-flow sample",
+  "on": {
+    "push": {
+      "branches": [
+        "main"
+      ],
+      "paths": [
+        ".github/workflows/kis-samsung-sample.yml"
+      ]
+    },
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "concurrency": {
+    "group": "kis-samsung-sample",
+    "cancel-in-progress": false
+  },
+  "jobs": {
+    "sample": {
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 3,
+      "steps": [
+        {
+          "name": "Authenticate and query one Samsung foreign-flow record",
+          "shell": "bash",
+          "env": {
+            "KIS_APP_KEY": "${{ secrets.KIS_APP_KEY }}",
+            "KIS_APP_SECRET": "${{ secrets.KIS_APP_SECRET }}"
+          },
+          "run": "python3 - <<'PY'\nimport datetime as dt\nimport json\nimport os\nimport re\nimport sys\nimport urllib.error\nimport urllib.parse\nimport urllib.request\nfrom pathlib import Path\nfrom zoneinfo import ZoneInfo\n\nBASE = 'https://openapi.koreainvestment.com:9443'\nsecrets = [os.environ.get('KIS_APP_KEY', ''), os.environ.get('KIS_APP_SECRET', '')]\n\ndef escaped(value):\n    return value.replace('%', '%25').replace('\\r', '%0D').replace('\\n', '%0A')\n\nfor value in secrets:\n    if value:\n        print('::add-mask::' + escaped(value), flush=True)\n\ndef emit(record):\n    raw = json.dumps(record, ensure_ascii=True, separators=(',', ':'))\n    for secret in secrets:\n        if secret:\n            raw = raw.replace(secret, '[REDACTED]')\n    print('::notice title=KIS sample evidence::' + escaped(raw), flush=True)\n    with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as out:\n        out.write('```json\\n' + raw + '\\n```\\n')\n\ndef call(path, headers, body=None):\n    request = urllib.request.Request(BASE + path, data=body, headers=headers)\n    try:\n        with urllib.request.urlopen(request, timeout=30) as response:\n            status, data = response.status, response.read()\n    except urllib.error.HTTPError as exc:\n        status, data = exc.code, exc.read()\n    except Exception as exc:\n        return None, {'transport_error_type': type(exc).__name__}\n    try:\n        payload = json.loads(data)\n    except (ValueError, UnicodeError):\n        payload = {'non_json_response': True}\n    return status, payload if isinstance(payload, dict) else {'unexpected_json_type': True}\n\ndef code(value):\n    text = str(value)\n    return text if re.fullmatch(r'[A-Za-z0-9_-]{1,40}', text) else 'not_reported'\n\nemit({'stage': 'configuration', 'app_key_present': bool(secrets[0]), 'app_secret_present': bool(secrets[1]), 'checked_at_utc': dt.datetime.now(dt.timezone.utc).isoformat(), 'run_id': os.environ.get('GITHUB_RUN_ID')})\nif not all(secrets):\n    sys.exit(1)\nstatus, payload = call('/oauth2/tokenP', {'Content-Type': 'application/json'}, json.dumps({'grant_type': 'client_credentials', 'appkey': secrets[0], 'appsecret': secrets[1]}).encode())\ntoken = payload.get('access_token')\nvalid_token = status == 200 and isinstance(token, str) and bool(token)\nif valid_token:\n    secrets.append(token)\n    print('::add-mask::' + escaped(token), flush=True)\nemit({'stage': 'authentication', 'http_status': status, 'token_received': valid_token, 'error_code': code(payload.get('error_code', 'none')), 'transport_error_type': payload.get('transport_error_type'), 'non_json_response': payload.get('non_json_response', False)})\nif not valid_token:\n    sys.exit(1)\nend_date = (dt.datetime.now(ZoneInfo('Asia/Seoul')).date() - dt.timedelta(days=1)).strftime('%Y%m%d')\nparams = {'FID_COND_MRKT_DIV_CODE': 'J', 'FID_INPUT_ISCD': '005930', 'FID_INPUT_DATE_1': end_date, 'FID_ORG_ADJ_PRC': '', 'FID_ETC_CLS_CODE': ''}\nheaders = {'Content-Type': 'application/json; charset=utf-8', 'authorization': 'Bearer ' + token, 'appkey': secrets[0], 'appsecret': secrets[1], 'tr_id': 'FHPTJ04160001', 'custtype': 'P'}\nstatus, payload = call('/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily?' + urllib.parse.urlencode(params), headers)\nrows = payload.get('output2', [])\nif isinstance(rows, dict):\n    rows = [rows]\nif not isinstance(rows, list):\n    rows = []\nselected = []\nfields = ['stck_bsop_date', 'stck_clpr', 'acml_tr_pbmn', 'frgn_ntby_qty', 'frgn_ntby_tr_pbmn', 'frgn_seln_tr_pbmn', 'frgn_shnu_tr_pbmn', 'frgn_seln_vol', 'frgn_shnu_vol']\nfor row in rows:\n    if not isinstance(row, dict):\n        continue\n    date = str(row.get('stck_bsop_date', ''))\n    if not re.fullmatch(r'\\d{8}', date) or date > end_date:\n        continue\n    safe = {key: str(row[key]) for key in fields if key in row and re.fullmatch(r'-?\\d+(?:\\.\\d+)?', str(row[key]))}\n    if 'frgn_ntby_tr_pbmn' in safe and 'frgn_ntby_qty' in safe:\n        selected.append(safe)\nselected.sort(key=lambda row: row['stck_bsop_date'], reverse=True)\nsuccess = status == 200 and payload.get('rt_cd') == '0' and bool(selected)\nrecord = {'stage': 'foreign_flow', 'http_status': status, 'rt_cd': code(payload.get('rt_cd', 'missing')), 'msg_cd': code(payload.get('msg_cd', 'missing')), 'symbol': '005930', 'market_code': 'J', 'market_scope_from_official_example': 'KRX', 'requested_end_date': end_date, 'received_rows': len(rows), 'sample_received': success, 'amount_unit': 'pending_official_spec_verification', 'transport_error_type': payload.get('transport_error_type'), 'non_json_response': payload.get('non_json_response', False)}\nif success:\n    record['sample'] = selected[0]\n    sample = selected[0]\n    if all(key in sample for key in ['frgn_shnu_tr_pbmn', 'frgn_seln_tr_pbmn', 'frgn_ntby_tr_pbmn']):\n        record['buy_minus_sell_equals_net'] = int(sample['frgn_shnu_tr_pbmn']) - int(sample['frgn_seln_tr_pbmn']) == int(sample['frgn_ntby_tr_pbmn'])\nemit(record)\nsys.exit(0 if success else 1)\nPY\n"
+        }
+      ]
+    }
+  }
+}
