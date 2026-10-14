@@ -1,0 +1,30 @@
+{
+  "name": "Read saved KIS collection status (no market calls)",
+  "on": {
+    "push": {
+      "paths": [
+        ".github/workflows/kis-saved-status.yml"
+      ]
+    },
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "actions": "read",
+    "contents": "read"
+  },
+  "jobs": {
+    "report": {
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 5,
+      "steps": [
+        {
+          "name": "Read existing artifact and report counts",
+          "env": {
+            "GH_TOKEN": "${{ github.token }}"
+          },
+          "run": "python3 - <<'PY'\nimport os, json, urllib.request, urllib.parse, zipfile, io, collections\nclass SafeRedirect(urllib.request.HTTPRedirectHandler):\n def redirect_request(self, req, fp, code, msg, headers, newurl):\n  result=super().redirect_request(req,fp,code,msg,headers,newurl)\n  if result and urllib.parse.urlparse(req.full_url).hostname != urllib.parse.urlparse(newurl).hostname:\n   result.remove_header('Authorization')\n  return result\nopener=urllib.request.build_opener(SafeRedirect())\nurl='https://api.github.com/repos/0baselabkim-debug/qweasd/actions/artifacts/11895319157/zip'\nreq=urllib.request.Request(url,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})\nwith opener.open(req,timeout=60) as r: raw=r.read()\nwith zipfile.ZipFile(io.BytesIO(raw)) as z:\n def read(name):\n  return json.loads(z.read(next(n for n in z.namelist() if n==name or n.endswith('/'+name))))\n status=read('status.json'); state=read('state.json')\n report={k:status.get(k) for k in ['trade_date','exchange','status','target_symbols','successful_symbols','failed_symbols','pending_symbols','coverage_percent','first_collection_started_at','run_collection_completed_at','last_reason','finality']}\n failures=state.get('failures',{})\n report['failure_reasons']=dict(collections.Counter(r.get('reason') for r in failures.values()))\n report['failure_api_codes']=dict(collections.Counter(r.get('api_code') for r in failures.values()))\n report['markets']=dict(collections.Counter(r['market'] for r in state['universe']))\n report['attempts_distribution']=dict(collections.Counter(state['attempts'].values()))\n report['failure_examples']=[{k:r.get(k) for k in ['symbol','name','reason','api_code','http_status','attempts','latest_received_date','difference_million_krw']} for r in list(failures.values())[:8]]\n report['sample_success']=[{k:r.get(k) for k in ['symbol','trade_date','foreign_net_amount_krw','received_at']} for r in state['successes'].values() if r['symbol']=='005930']\n text=json.dumps(report,ensure_ascii=False)\n print('::notice title=Saved collection result::'+text.replace('%','%25').replace('\\n','%0A').replace('\\r','%0D'))\n\nPY"
+        }
+      ]
+    }
+  }
+}
