@@ -1,0 +1,25 @@
+name: Verify adjusted price consistency
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python scripts/probe_adjusted_consistency.py
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/adjustment-${GITHUB_RUN_ID}"
+          git add reports/sector/adjustment-consistency-probe.json
+          git commit -m 'Record official adjusted and raw chart comparison'
+          git push origin HEAD
