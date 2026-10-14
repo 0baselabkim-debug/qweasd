@@ -1,6 +1,7 @@
 """Real-data investment candidate explorer. No orders, forecasts, or demo rows."""
 from pathlib import Path
 import html
+import hashlib
 import pandas as pd
 import numpy as np
 import altair as alt
@@ -32,17 +33,22 @@ h3{font-size:1.05rem!important}
 if not DB.exists():
  st.error('실제 데이터 DB가 없습니다. scripts/build_dashboard_data.py로 보존된 실제 자료를 불러와야 합니다.');st.stop()
 @st.cache_data(show_spinner=False)
-def snapshot(mtime,asof,config_mtime):
- data=load();return data,*evaluate(data,asof)
+def snapshot(mtime,asof,config_mtime,calculation_version,data_version):
+ data=load()
+ stocks,sectors,metadata=evaluate(data,asof)
+ return data,stocks,sectors,metadata
 @st.cache_data(show_spinner=False)
-def dates(mtime):
+def dates(mtime,data_version):
  d=load();return sorted(d['flows'].trade_date.dt.strftime('%Y-%m-%d').unique(),reverse=True)
 mtime=DB.stat().st_mtime_ns
+calculation_version=hashlib.sha256(b''.join((Path(__file__).parent/p).read_bytes() for p in ['screener/scoring.py','screener/store.py','config.toml'])+b'enriched-schema-v2').hexdigest()
+manifest=Path(__file__).parent/'snapshot/manifest.json'
+data_version=hashlib.sha256(manifest.read_bytes() if manifest.exists() else b'local-db').hexdigest()
 with st.sidebar:
  st.markdown('### ◈ 자금 흐름 스크리너')
  st.caption('한국 주식 · 실제 데이터 탐색')
  st.caption('저장된 실제 자료를 조회합니다. 수집 환경과 웹 화면의 데이터 동기화는 별도입니다.')
- asof=st.selectbox('데이터 기준일',dates(mtime))
+ asof=st.selectbox('데이터 기준일',dates(mtime,data_version))
  classification=st.radio('분류체계',['공식 업종','투자 테마'])
  market=st.selectbox('시장',['전체','KOSPI','KOSDAQ'])
  query=st.text_input('종목 검색',placeholder='종목명 또는 6자리 코드')
@@ -54,7 +60,7 @@ with st.sidebar:
  st.divider()
  st.caption('투자 후보 탐색용\n자동 주문·목표주가 예측 없음')
 with st.spinner('실제 수급과 공시 데이터를 연결하고 있습니다…'):
- data,stocks,sectors,meta=snapshot(mtime,asof,CONFIG.stat().st_mtime_ns)
+ data,stocks,sectors,meta=snapshot(mtime,asof,CONFIG.stat().st_mtime_ns,calculation_version,data_version)
 visible_sectors=sectors if market=='전체' else sectors[sectors.market==market]
 visible_stocks=stocks if market=='전체' else stocks[stocks.market==market]
 theme_mode=classification=='투자 테마'
