@@ -81,3 +81,22 @@ def test_delisting_must_match_market_and_not_apply_to_relisting(bundle):
     assert validate_bundle(bundle)[1]==[]
     bundle['universe'][0]['listing_date']='20261015'
     with pytest.raises(ValueError,match='relisted'):validate_bundle(bundle)
+
+
+def test_live_close_conflict_blocks_publication(bundle,baseline,tmp_path):
+    before=baseline.read_bytes()
+    bundle['records']['000001']['adjusted_prices'][0]['stck_clpr']='9900'
+    with pytest.raises(ValueError,match='does not match close'):build_candidate(bundle,baseline,tmp_path/'bad.duckdb')
+    assert baseline.read_bytes()==before
+
+
+def test_archive_replay_only_preserves_existing_date_and_values(bundle,baseline,tmp_path):
+    published=tmp_path/'published.duckdb';build_candidate(bundle,baseline,published)
+    bundle['input_mode']='saved_real_responses_replay'
+    bundle['records']['000001']['adjusted_prices'][0]['stck_clpr']='9900'
+    with pytest.raises(ValueError,match='new trading date'):build_candidate(bundle,baseline,tmp_path/'newday.duckdb')
+    destination=tmp_path/'replayed.duckdb';audit=build_candidate(bundle,published,destination)
+    d=load(destination)
+    assert audit['adjusted_close_conflict_symbols']==1
+    assert d['prices'].set_index('trade_date').loc['2026-10-15','close']==10000
+    assert d['metadata']['adjusted_price_conflicts']['2026-10-15'][0]['symbol']=='000001'

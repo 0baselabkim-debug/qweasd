@@ -110,6 +110,8 @@ with st.sidebar.expander('데이터 상태 · 출처'):
  historical_prices=data['prices'][data['prices'].trade_date<=pd.Timestamp(asof)]
  historical_indices=data['benchmarks'][data['benchmarks'].trade_date<=pd.Timestamp(asof)]
  st.write(f'수정주가 관측: {historical_prices.adjusted_close.notna().sum():,}행 · 기준지수: {len(historical_indices):,}행')
+ conflicts=data['metadata'].get('adjusted_price_conflicts',{}).get(asof,[])
+ if conflicts:st.warning(f'수정주가 재조회 시 {len(conflicts):,}종목의 종가가 기존 관측값과 다릅니다. 기존 가격·시총·종목 평가를 유지하며 해당 관측은 섹터 수익률 평가에서 보류합니다.')
  st.caption(f'확인된 업종 구성 시작일: {data["memberships"].valid_from.min().date()} · 이전 구성은 미확보입니다.')
  st.caption('KIS 현재가 응답에는 거래일 필드가 없습니다. 시총의 수신 시점과 가격 기준일을 구분하며, 과거 날짜로 소급하지 않습니다.')
  st.caption(f'매출 계정 확인 {stocks.revenue.notna().sum():,}개 · 영업현금흐름 확인 {stocks.ocf.notna().sum():,}개')

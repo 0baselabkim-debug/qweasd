@@ -100,3 +100,13 @@ def test_actual_dashboard_and_filters():
  next(t for t in at.text_input if t.label=='종목 검색').input('005930');at.run()
  assert not at.exception
  assert next(s for s in at.selectbox if s.label=='종목 상세정보').value=='005930'
+
+
+def test_unresolved_adjusted_source_revision_holds_only_affected_sector(history):
+ day=history['calendar'].trade_date.max()
+ before,_,_=evaluate(history)
+ history['metadata']['adjusted_price_conflicts']={str(day.date()):[{'symbol':'000001'}]}
+ after,sectors,_=evaluate(history)
+ assert sectors.loc[sectors.sector=='A','relative_strength'].isna().all()
+ assert sectors.loc[sectors.sector!='A','relative_strength'].notna().all()
+ assert before.total_score.tolist()==after.total_score.tolist()

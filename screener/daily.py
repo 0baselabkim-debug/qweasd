@@ -44,9 +44,11 @@ def validate_bundle(b):
             d=dt.datetime.strptime(v['stck_bsop_date'],'%Y%m%d').date()
             if d>day or not math.isfinite(float(v['stck_clpr'])) or float(v['stck_clpr'])<=0:raise ValueError('Adjusted series invalid date/value')
         latest=next(v for v in r['adjusted_prices'] if v['stck_bsop_date']==b['trade_date'])
-        if integer(latest['stck_clpr'])!=fields['stck_clpr'] or integer(latest['acml_vol'])!=fields['acml_vol']:raise ValueError('Daily adjusted endpoint does not match close/volume')
+        if integer(latest['acml_vol'])!=fields['acml_vol']:raise ValueError('Daily adjusted endpoint does not match volume')
+        close_conflict=integer(latest['stck_clpr'])!=fields['stck_clpr']
+        if close_conflict and b.get('input_mode')!='saved_real_responses_replay':raise ValueError('Daily adjusted endpoint does not match close')
         sector=instrument.get('sector') or q.get('bstp_kor_isnm') or b.get('kind_industries',{}).get(code) or '업종 미분류'
-        normalized.append({'symbol':code,'day':day,'instrument':instrument,'record':r,'fields':fields,'cap':cap,'sector':sector})
+        normalized.append({'symbol':code,'day':day,'instrument':instrument,'record':r,'fields':fields,'cap':cap,'sector':sector,'adjusted_close_conflict':close_conflict})
     for code,e in excluded.items():
         if e['reason']=='official_delisting':
             field='kosdaq_mket_lstg_abol_dt' if u[code]['market']=='KOSDAQ' else 'scts_mket_lstg_abol_dt'
@@ -76,6 +78,7 @@ def build_candidate(b,baseline,destination):
         with duckdb.connect(str(temp)) as c:
             previous=c.execute('select max(trade_date) from flows').fetchone()[0]
             if day<previous:raise ValueError('Refuse stale snapshot rollback')
+            if b.get('input_mode')=='saved_real_responses_replay' and day!=previous:raise ValueError('Archive replay cannot introduce a new trading date')
             previous_count=c.execute('select count(*) from flows where trade_date=?',[previous]).fetchone()[0]
             if len(rows)<previous_count*.9:raise ValueError('Evaluated coverage dropped by more than 10%')
             c.execute('BEGIN')
@@ -84,6 +87,7 @@ def build_candidate(b,baseline,destination):
                 old=c.execute('select net_amount,net_quantity from flows where symbol=? and trade_date=?',[code,day]).fetchone()
                 values=(f['frgn_ntby_tr_pbmn']*1000000,f['frgn_ntby_qty'])
                 if old and old!=values:raise ValueError('Existing flow revision requires review '+code)
+                if b.get('input_mode')=='saved_real_responses_replay' and not old:raise ValueError('Archive replay cannot add a stock observation')
                 special=i.get('spac',False) or any(w in sector for w in ['금융','보험','증권','부동산','리츠']) or '리츠' in i['name']
                 existing=c.execute('select market,special from instruments where symbol=?',[code]).fetchone()
                 if existing and existing!=(i['market'],special):raise ValueError('Instrument classification change requires review '+code)
@@ -119,6 +123,12 @@ def build_candidate(b,baseline,destination):
                     if old and old[0]!=value:raise ValueError('Historical benchmark revision requires review')
                     c.execute('insert or ignore into benchmarks values (?,?,?)',[market,d,value])
                     c.execute('insert or ignore into calendar values (?,?)',[market,d])
+            conflicts=[{'symbol':r['symbol'],'preserved_close':r['fields']['stck_clpr'],'received_adjusted_close':integer(next(v for v in r['record']['adjusted_prices'] if v['stck_bsop_date']==b['trade_date'])['stck_clpr'])} for r in rows if r['adjusted_close_conflict']]
+            stored=c.execute("select value from metadata where key='adjusted_price_conflicts'").fetchone()
+            all_conflicts=json.loads(stored[0]) if stored else {}
+            if conflicts:all_conflicts[str(day)]=conflicts
+            c.execute('insert or replace into metadata values (?,?)',['adjusted_price_conflicts',json.dumps(all_conflicts)])
+            audit['adjusted_close_conflict_symbols']=len(conflicts)
             c.execute('insert or replace into metadata values (?,?)',['daily_'+str(day),json.dumps(audit)])
             registry=c.execute("select value from metadata where key='verified_delistings'").fetchone()
             registry=json.loads(registry[0]) if registry else {}

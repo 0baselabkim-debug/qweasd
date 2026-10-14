@@ -19,7 +19,7 @@ def build(source,baseline,destination):
     if set(response['records'])!=targets or response['failures']:raise ValueError('Incomplete adjusted universe')
     if Path(baseline).resolve()==Path(destination).resolve():raise ValueError('Use a candidate')
     old={(r.symbol,str(r.trade_date.date())):r for r in before['prices'].itertuples()}
-    updates=[];missing_price_keys=[];end_checks=0
+    updates=[];missing_price_keys=[];end_checks=0;close_conflicts=[]
     for code,record in response['records'].items():
         dates=[r['stck_bsop_date'] for r in record['rows']]
         if len(dates)!=len(set(dates)):raise ValueError('Duplicate adjusted dates')
@@ -29,7 +29,8 @@ def build(source,baseline,destination):
             if not start<=day<=asof or not math.isfinite(close) or close<=0:raise ValueError('Invalid adjusted observation')
             if (code,day) not in old:missing_price_keys.append({'symbol':code,'date':day});continue
             if day==asof:
-                if close!=old[code,day].close:raise ValueError('Latest adjusted close mismatch '+code)
+                if close!=old[code,day].close:close_conflicts.append({'symbol':code,'preserved_close':old[code,day].close,'received_adjusted_close':close})
+                if int(r['acml_vol'])!=old[code,day].volume:raise ValueError('Latest volume mismatch '+code)
                 end_checks+=1
             updates.append((close,code,day))
     benchmark=[]
@@ -49,18 +50,19 @@ def build(source,baseline,destination):
             c.executemany('insert or ignore into benchmarks values (?,?,?)',benchmark)
             c.executemany('insert or ignore into calendar values (?,?)',[(m,d) for m,d,v in benchmark])
             c.execute('insert or replace into metadata values (?,?)',['sector_support',json.dumps({'source_run':response['run_id'],'adjusted_price_source':'KIS J FHKST03010100 FID_ORG_ADJ_PRC=0','benchmark_source':'KIS U FHKUP03500100 0001/1001','start':start,'asof':asof,'historical_membership':'NOT_OBTAINED; never backfilled','adjustment_vintage':'response at collection time, not archived historical vintage'})])
+            c.execute('insert or replace into metadata values (?,?)',['adjusted_price_conflicts',json.dumps({asof:close_conflicts})])
             c.execute('COMMIT');c.execute('CHECKPOINT')
         after=load(temp);score_after,x,s=fingerprint(after,asof)
         if score_before!=score_after:raise ValueError('Existing stock scores changed')
         for table in ['flows','financials','memberships','instruments','exclusions']:
             keys={'flows':['symbol','trade_date'],'financials':['symbol','period_end','receipt'],'memberships':['symbol','valid_from'],'instruments':['symbol'],'exclusions':['symbol','trade_date']}[table]
-            if before[table].sort_values(keys).reset_index(drop=True).to_json()!=after[table].sort_values(keys).reset_index(drop=True).to_json():raise ValueError('Existing data changed '+table)
+            if before[table].sort_values(keys).reset_index(drop=True).to_json(date_format='iso')!=after[table].sort_values(keys).reset_index(drop=True).to_json(date_format='iso'):raise ValueError('Existing data changed '+table)
         pcols=[c for c in before['prices'] if c!='adjusted_close']
-        if before['prices'][pcols].sort_values(['symbol','trade_date']).reset_index(drop=True).to_json()!=after['prices'][pcols].sort_values(['symbol','trade_date']).reset_index(drop=True).to_json():raise ValueError('Raw prices changed')
+        if before['prices'][pcols].sort_values(['symbol','trade_date']).reset_index(drop=True).to_json(date_format='iso')!=after['prices'][pcols].sort_values(['symbol','trade_date']).reset_index(drop=True).to_json(date_format='iso'):raise ValueError('Raw prices changed')
         # A missing historic industry must remain missing even with all price data available.
         if before['memberships'].valid_from.min().strftime('%Y-%m-%d')==asof and s.total_score.notna().any():raise ValueError('Historical membership was assumed')
         audit={'asof':asof,'source_run':response['run_id'],'adjusted_symbols':len(targets),'adjusted_rows':len(updates),'benchmark_rows':len(benchmark),'benchmark_markets':sorted(response['benchmarks']),
-               'latest_close_checks':end_checks,'missing_raw_price_keys':missing_price_keys,'elapsed_seconds':response['elapsed_seconds'],'requests':len(response['metrics']),
+               'latest_volume_checks':end_checks,'latest_close_conflict_symbols':len(close_conflicts),'adjusted_evaluation_status':'HOLD_SOURCE_REVISION' if close_conflicts else 'VALIDATED','missing_raw_price_keys':missing_price_keys,'elapsed_seconds':response['elapsed_seconds'],'requests':len(response['metrics']),
                'rate_limit_responses':sum(m['http']==429 or m['code']=='EGW00201' for m in response['metrics']),
                'stock_score_sha256_before':score_before,'stock_score_sha256_after':score_after,'complete_stock_scores':int(x.total_score.notna().sum()),'complete_sector_scores':int(s.total_score.notna().sum()),
                'raw_observations_preserved':True,'historical_membership_obtained':False,'sector_components':{k:int(s['score_'+k].notna().sum()) for k in ['foreign_intensity','foreign_persistence','relative_strength','activity']}}

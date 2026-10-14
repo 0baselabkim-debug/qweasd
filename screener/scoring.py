@@ -143,6 +143,9 @@ def evaluate(data,asof=None,cfg=None):
                 before=price[(price.trade_date==prev)&price.symbol.isin(symbols)].set_index('symbol')
                 after=price[(price.trade_date==day)&price.symbol.isin(symbols)].set_index('symbol')
                 if not symbols or set(before.index)!=symbols or set(after.index)!=symbols:break
+                conflicts=data.get('metadata',{}).get('adjusted_price_conflicts',{})
+                affected={r['symbol'] for d in [str(prev.date()),str(day.date())] for r in conflicts.get(d,[])}
+                if symbols & affected:break # source revision remains unresolved; never silently combine vintages
                 cols=before[['adjusted_close','market_cap']]
                 if cols.isna().any().any() or (cols<=0).any().any() or after.adjusted_close.isna().any() or (after.adjusted_close<=0).any():break
                 weights=before.market_cap/before.market_cap.sum()
