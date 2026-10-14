@@ -1,0 +1,17 @@
+name: Official reference metadata probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python .github/scripts/kis_reference_probe.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: official-listing-reference
+          path: kind-company-list.xls
+          if-no-files-found: ignore
