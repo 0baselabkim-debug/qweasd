@@ -1,0 +1,44 @@
+{
+  "name": "Confirm listing status of five unresolved symbols",
+  "on": {
+    "push": {
+      "paths": [
+        ".github/workflows/kis-five-status.yml"
+      ]
+    },
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "jobs": {
+    "report": {
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 5,
+      "steps": [
+        {
+          "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "with": {
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Read official listing and delisting dates for five stocks",
+          "env": {
+            "KIS_APP_KEY": "${{ secrets.KIS_APP_KEY }}",
+            "KIS_APP_SECRET": "${{ secrets.KIS_APP_SECRET }}"
+          },
+          "run": "python3 - <<'PY'\nimport sys,json,urllib.parse\nsys.path.insert(0,'.github/scripts')\nimport kis_missing_analysis as k\npayload,meta=k.api('/oauth2/tokenP',{'Content-Type':'application/json'},json.dumps({'grant_type':'client_credentials','appkey':k.SECRETS[1],'appsecret':k.SECRETS[2]}).encode())\ntoken=payload.get('access_token')\nif meta['http_status']!=200 or not token:\n k.emit('Stock status authentication failed',meta);sys.exit(1)\nk.SECRETS.append(token);print('::add-mask::'+k.escape(token))\nheaders={'authorization':'Bearer '+token,'appkey':k.SECRETS[1],'appsecret':k.SECRETS[2],'custtype':'P','tr_id':'CTPF1002R'}\nrows=[]\nfor code in ['196490','469900','472230','473050','005030']:\n data,meta=k.api('/uapi/domestic-stock/v1/quotations/search-stock-info?'+urllib.parse.urlencode({'PRDT_TYPE_CD':'300','PDNO':code}),headers)\n out=data.get('output',{});out=out if isinstance(out,dict) else {}\n fields=['prdt_name','scts_mket_lstg_dt','scts_mket_lstg_abol_dt','kosdaq_mket_lstg_dt','kosdaq_mket_lstg_abol_dt','lstg_abol_dt','tr_stop_yn']\n r={'symbol':code,'request':meta,'fields':{x:out.get(x) for x in fields}}\n rows.append(r)\nk.save('five-stock-status.json',rows)\nk.emit('Five stock status',rows)\n\nPY"
+        },
+        {
+          "uses": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "with": {
+            "name": "kis-five-stock-status-20261014",
+            "path": "missing-analysis/five-stock-status.json",
+            "retention-days": 7
+          }
+        }
+      ]
+    }
+  }
+}
