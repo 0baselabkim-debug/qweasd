@@ -11,6 +11,8 @@ expected=json.loads((root/'reports/enrichment/coverage.json').read_text())
 financial_count=expected['metrics']['ocf']['count']
 full_history_count=expected['complete_20d_symbols']
 complete_scores=expected['complete_stock_scores']
+theme_count=len({r['symbol'] for r in json.loads((root/'theme_mapping.json').read_text())['memberships'] if r['status']=='confirmed'})
+publication=json.loads((root/'snapshot/manifest.json').read_text())
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,**({'executable_path':os.environ['BROWSER_EXECUTABLE'],'args':['--no-sandbox','--disable-dev-shm-usage']} if os.environ.get('BROWSER_EXECUTABLE') else {}))
  page=browser.new_page(viewport={'width':1540,'height':2100},device_scale_factor=1)
@@ -34,20 +36,29 @@ with sync_playwright() as p:
   ui.get_by_text('오늘의 자금 흐름, 다음 관찰 후보',exact=True).wait_for(timeout=90000)
   ui.get_by_text('분류체계',exact=True).wait_for(timeout=60000)
   ui.get_by_text('공시일 확인된 연간 재무',exact=True).wait_for()
+  choose('데이터 기준일',expected['asof'])
   body=ui.locator('body').inner_text()
   assert f'{financial_count:,}종목' in body,'updated_financial_count_not_visible'
   assert f'{full_history_count:,} / 2,430종목' in body,'updated_20day_coverage_not_visible'
   assert f'종목 종합 평가 가능 {complete_scores:,}개' in body,'updated_score_coverage_not_visible'
   report['checks'].append(f'Financial snapshot: {financial_count}; 20-day flow: {full_history_count}; complete scores: {complete_scores}')
+  if publication.get('automatic_snapshot_sync'):
+   assert '웹 자동 반영' in body,'automatic_publication_status_not_visible'
+   report['checks'].append('Validated automatic publication enabled; existing date is explicit')
   page.screenshot(path=str(out/'official.png'),full_page=True)
   ui.get_by_text('투자 테마',exact=True).click()
   ui.get_by_text('① 투자 테마별 자금 흐름',exact=True).wait_for(timeout=30000)
+  assert '부분 검증 테마' in ui.locator('body').inner_text()
+  assert f'사업 근거 확인 종목 {theme_count}개' in ui.locator('body').inner_text()
   choose('테마 선택','원전')
   choose('종목 상세정보','두산에너빌리티 · 034020')
   ui.get_by_text('② 선택한 테마의 종목',exact=True).wait_for()
   page.wait_for_timeout(2000)
   assert '두산에너빌리티' in ui.locator('body').inner_text(),'nuclear_theme_member_missing'
   report['checks'].append('Theme selector: nuclear and Doosan Enerbility')
+  choose('종목 상세정보','현대건설 · 000720')
+  assert '신한울원자력' in ui.locator('body').inner_text() or '현대건설' in ui.locator('body').inner_text()
+  report['checks'].append(f'Expanded partial themes: {theme_count} verified companies; Hyundai Engineering & Construction detail')
   page.screenshot(path=str(out/'theme.png'),full_page=True)
   ui.get_by_text('공식 업종',exact=True).click()
   ui.get_by_role('combobox',name='섹터 선택').wait_for()

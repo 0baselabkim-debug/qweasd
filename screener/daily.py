@@ -32,6 +32,7 @@ def validate_bundle(b):
         if f['stck_bsop_date']!=b['trade_date'] or q['stck_shrn_iscd']!=code:raise ValueError('Source date/symbol mismatch')
         fields={k:integer(f.get(k)) for k in ['frgn_ntby_tr_pbmn','frgn_ntby_qty','frgn_shnu_vol','frgn_seln_vol','frgn_shnu_tr_pbmn','frgn_seln_tr_pbmn','stck_clpr','acml_vol','acml_tr_pbmn']}
         if fields['frgn_shnu_vol']-fields['frgn_seln_vol']!=fields['frgn_ntby_qty']:raise ValueError('Quantity identity mismatch')
+        if any(fields[k]<0 for k in ['frgn_shnu_vol','frgn_seln_vol','frgn_shnu_tr_pbmn','frgn_seln_tr_pbmn']):raise ValueError('Negative gross flow')
         if abs(fields['frgn_shnu_tr_pbmn']-fields['frgn_seln_tr_pbmn']-fields['frgn_ntby_tr_pbmn'])>1:raise ValueError('Amount unit mismatch')
         if any(fields[k]<=0 for k in ['stck_clpr','acml_vol','acml_tr_pbmn']):raise ValueError('Non-trading stock in evaluated set')
         archived={'close':fields['stck_clpr'],'volume':fields['acml_vol']}
@@ -47,6 +48,11 @@ def validate_bundle(b):
         sector=instrument.get('sector') or q.get('bstp_kor_isnm') or b.get('kind_industries',{}).get(code) or '업종 미분류'
         normalized.append({'symbol':code,'day':day,'instrument':instrument,'record':r,'fields':fields,'cap':cap,'sector':sector})
     for code,e in excluded.items():
+        if e['reason']=='official_delisting':
+            field='kosdaq_mket_lstg_abol_dt' if u[code]['market']=='KOSDAQ' else 'scts_mket_lstg_abol_dt'
+            date=e.get('fields',{}).get('lstg_abol_dt','')
+            if re.fullmatch(r'\d{8}',date) and u[code]['listing_date']<=date<=b['trade_date'] and e['fields'].get(field)==date and e.get('market')==u[code]['market']:continue
+            raise ValueError('Unverified delisting or relisted symbol '+code)
         if e['reason']=='official_master_halt' and u[code].get('halt')=='Y':continue
         if e['reason']=='dated_zero_volume' and e.get('evidence',{}).get('stck_bsop_date')==b['trade_date'] and integer(e['evidence'].get('acml_vol'))==0:continue
         raise ValueError('Unsupported exclusion '+code)
@@ -63,7 +69,9 @@ def build_candidate(b,baseline,destination):
     if baseline.resolve()==destination.resolve():raise ValueError('Candidate must be separate from published DB')
     destination.parent.mkdir(parents=True,exist_ok=True);temp=destination.with_suffix('.building.duckdb')
     shutil.copy2(baseline,temp)
-    audit={'trade_date':str(day),'records':len(rows),'excluded':len(b['excluded']),'adjusted_updates':0,'source_run':b.get('source_run')}
+    audit={'trade_date':str(day),'records':len(rows),'excluded':len(b['excluded']),'adjusted_updates':0,'source_run':b.get('source_run'),
+           'planned_start_at':b.get('planned_start_at'),'collection_started_at':b.get('started_at'),'collection_completed_at':b.get('completed_at'),
+           'input_mode':b.get('input_mode','live_daily_collection')}
     try:
         with duckdb.connect(str(temp)) as c:
             previous=c.execute('select max(trade_date) from flows').fetchone()[0]
@@ -79,6 +87,8 @@ def build_candidate(b,baseline,destination):
                 special=i.get('spac',False) or any(w in sector for w in ['금융','보험','증권','부동산','리츠']) or '리츠' in i['name']
                 existing=c.execute('select market,special from instruments where symbol=?',[code]).fetchone()
                 if existing and existing!=(i['market'],special):raise ValueError('Instrument classification change requires review '+code)
+                prior_sector=c.execute('select sector from memberships where symbol=? and valid_from<? order by valid_from desc limit 1',[code,day]).fetchone()
+                if sector=='업종 미분류' and prior_sector and prior_sector[0]!='업종 미분류':raise ValueError('Current official industry missing '+code)
                 c.execute('insert or ignore into instruments values (?,?,?,?,?)',[code,i['name'],i['market'],dt.datetime.strptime(i['listing_date'],'%Y%m%d').date(),special])
                 old_map=c.execute('select sector from memberships where symbol=? and valid_from<=? and (valid_to is null or valid_to>=?)',[code,day,day]).fetchall()
                 if old_map and (len(old_map)!=1 or old_map[0][0]!=sector):raise ValueError('Conflicting dated industry '+code)
@@ -91,7 +101,17 @@ def build_candidate(b,baseline,destination):
                     d=dt.datetime.strptime(v['stck_bsop_date'],'%Y%m%d').date()
                     c.execute('update prices set adjusted_close=? where symbol=? and trade_date=?',[float(v['stck_clpr']),code,d]);audit['adjusted_updates']+=1
                 c.execute('insert or ignore into calendar values (?,?)',[i['market'],day])
-            for code,r in b['excluded'].items():c.execute('insert or ignore into exclusions values (?,?,?,?)',[code,r['name'],day,r['reason']])
+            for code,r in b['excluded'].items():
+                c.execute('insert or ignore into exclusions values (?,?,?,?)',[code,r['name'],day,r['reason']])
+                observations=r.get('adjusted_prices',[]);seen=set()
+                for v in observations:
+                    d=dt.datetime.strptime(v['stck_bsop_date'],'%Y%m%d').date();adj=float(v['stck_clpr'])
+                    if d in seen or d>day or not math.isfinite(adj) or adj<=0:raise ValueError('Invalid excluded price series')
+                    seen.add(d)
+                    if d==day:
+                        # Do not invent a raw close/cap for an excluded company.
+                        c.execute('insert or ignore into prices(symbol,trade_date,adjusted_close,volume,turnover,source,exchange) values (?,?,?,?,?,?,?)',[code,day,adj,integer(v['acml_vol']),integer(v['acml_tr_pbmn']),'KIS J adjusted chart; excluded from stock evaluation','KRX'])
+                    c.execute('update prices set adjusted_close=? where symbol=? and trade_date=?',[adj,code,d])
             for market,response in b['benchmarks'].items():
                 for r in response['output2']:
                     d=dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date();value=float(r['bstp_nmix_prpr'])
@@ -100,6 +120,11 @@ def build_candidate(b,baseline,destination):
                     c.execute('insert or ignore into benchmarks values (?,?,?)',[market,d,value])
                     c.execute('insert or ignore into calendar values (?,?)',[market,d])
             c.execute('insert or replace into metadata values (?,?)',['daily_'+str(day),json.dumps(audit)])
+            registry=c.execute("select value from metadata where key='verified_delistings'").fetchone()
+            registry=json.loads(registry[0]) if registry else {}
+            registry.update({code:r for code,r in b['excluded'].items() if r['reason']=='official_delisting'})
+            c.execute('insert or replace into metadata values (?,?)',['verified_delistings',json.dumps(registry,ensure_ascii=False)])
+            c.execute('insert or replace into metadata values (?,?)',['adjusted_price_provenance',json.dumps({'source':'KIS J FHKST03010100','parameter':'FID_ORG_ADJ_PRC=0','requested_end':str(day),'quote_observation_rule':'after close, before next calendar-day open','adjustment_vintage':'provider response at collection time; not a historical adjustment-vintage archive','run':b.get('source_run')})])
             c.execute('COMMIT');c.execute('CHECKPOINT')
         # Independent preservation comparison: no old flows, financials or unadjusted prices disappear/change.
         with duckdb.connect(str(temp),read_only=True) as c:

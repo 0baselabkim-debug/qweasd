@@ -6,6 +6,7 @@ from html.parser import HTMLParser
 from kis_public_client import KIS
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from screener.daily import validate_bundle
+import duckdb
 
 ZONE=ZoneInfo('Asia/Seoul')
 def utcnow():return dt.datetime.now(dt.timezone.utc).isoformat()
@@ -77,6 +78,11 @@ def collect(day,out):
     if 'universe' not in result and today.date()!=target:
         raise ValueError('No same-day observed industry master; preserve published snapshot')
     api=KIS()
+    with duckdb.connect('snapshot/dashboard.duckdb',read_only=True) as c:
+        known_industry={r[0] for r in c.execute("select distinct symbol from memberships where sector!='업종 미분류'").fetchall()}
+        entry=c.execute("select value from metadata where key='verified_delistings'").fetchone()
+    registry=json.loads(Path('research/verified-delistings.json').read_text())
+    if entry:registry.update(json.loads(entry[0]))
     def save():
         result.update(updated_at=utcnow(),elapsed_seconds=round(time.monotonic()-started,3),metrics=api.metrics)
         raw=json.dumps(result,ensure_ascii=False,separators=(',',':'))
@@ -91,14 +97,32 @@ def collect(day,out):
     if result['holiday'].get('opnd_yn')!='Y':raise ValueError('Unverified trading day')
     if 'universe' not in result:
         result['universe'],result['master_sources']=master(day)
-        try:result['kind_industries']=kind_industries()
-        except Exception:result['kind_industries']={} # missing mapping stays unknown, never carried forward
+        save()
+    if 'kind_industries' not in result or result.get('kind_error'):
+        try:result['kind_industries']=kind_industries();result.pop('kind_error',None)
+        except Exception:result['kind_industries']={};result['kind_error']=True
         save()
     since=(target-dt.timedelta(days=60)).strftime('%Y%m%d')
     if 'benchmarks' not in result:
         result['benchmarks']={m:api.benchmark(code,since,day) for m,code in [('KOSPI','0001'),('KOSDAQ','1001')]};save()
+    def delisted(row,info):
+        field='kosdaq_mket_lstg_abol_dt' if row['market']=='KOSDAQ' else 'scts_mket_lstg_abol_dt'
+        date=info.get('lstg_abol_dt','')
+        return bool(re.fullmatch(r'\d{8}',date) and row['listing_date']<=date<=day and info.get(field)==date)
     for row in result['universe']:
-        if row['halt']=='Y':result['excluded'][row['symbol']]={'reason':'official_master_halt','name':row['name']}
+        previous=registry.get(row['symbol'])
+        if previous and previous['market']==row['market'] and delisted(row,previous['fields']):result['excluded'][row['symbol']]=previous
+    # Halted companies are not scored, but an explicit dated close can be needed
+    # to value yesterday's sector holdings. Missing dates remain missing.
+    def halted_prices(row):
+        e={'reason':'official_master_halt','name':row['name']}
+        try:e['adjusted_prices']=api.prices(row['symbol'],since,day)['output2']
+        except Exception as error:e['price_error']=type(error).__name__
+        return row['symbol'],e
+    halted=[r for r in result['universe'] if r['halt']=='Y' and r['symbol'] not in result['excluded']]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+        for code,e in pool.map(halted_prices,halted):result['excluded'][code]=e
+    save()
     def fetch(row):
         code=row['symbol']
         try:
@@ -109,15 +133,21 @@ def collect(day,out):
             price=[r for r in series.get('output2',[]) if r.get('stck_bsop_date')==day]
             matched=[r for r in flow.get('output2',[]) if r.get('stck_bsop_date')==day]
             if len(price)==1 and int(price[0]['acml_vol'])==0:
-                return code,None,{'reason':'dated_zero_volume','name':row['name'],'evidence':price[0]},None
-            if len(matched)!=1 or len(price)!=1:raise ValueError('Target date missing or duplicate')
+                return code,None,{'reason':'dated_zero_volume','name':row['name'],'evidence':price[0],'adjusted_prices':series['output2']},None
+            if len(matched)!=1 or len(price)!=1:
+                info=api.request('/uapi/domestic-stock/v1/quotations/search-stock-info',{'PRDT_TYPE_CD':'300','PDNO':code},'CTPF1002R')['output']
+                if delisted(row,info):
+                    fields={k:info.get(k,'') for k in ['lstg_abol_dt','kosdaq_mket_lstg_abol_dt','scts_mket_lstg_abol_dt']}
+                    return code,None,{'reason':'official_delisting','name':row['name'],'market':row['market'],'fields':fields,'observed_at':utcnow(),'source_run':os.environ.get('GITHUB_RUN_ID')},None
+                raise ValueError('Target date missing or duplicate')
             quote=api.request('/uapi/domestic-stock/v1/quotations/inquire-price',{'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':code},'FHKST01010100')['output']
             observed=utcnow()
             if dt.datetime.now(ZONE)>=cutoff:raise ValueError('Quote date window expired')
             keep=['stck_shrn_iscd','stck_prpr','acml_vol','lstn_stcn','hts_avls','bstp_kor_isnm','iscd_stat_cls_code']
             record={'flow':matched[0],'adjusted_prices':series['output2'],'quote':{k:quote.get(k) for k in keep},'observed_at':observed}
             # Invalid units/alignment remain retryable failures, never durable successes.
-            validate_bundle({**result,'records':{code:record},'universe':[row],'excluded':{},'failures':{},'status':'complete'})
+            _,checked=validate_bundle({**result,'records':{code:record},'universe':[row],'excluded':{},'failures':{},'status':'complete'})
+            if code in known_industry and checked[0]['sector']=='업종 미분류':raise ValueError('Current official industry missing')
             return code,record,None,None
         except Exception as e:return code,None,None,type(e).__name__+': '+str(e)
     for attempt in range(2):

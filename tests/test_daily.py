@@ -58,3 +58,26 @@ def test_existing_success_cannot_be_overwritten(bundle,baseline,tmp_path):
     r=bundle['records']['000001']['flow'];r['frgn_ntby_tr_pbmn']='4';r['frgn_shnu_tr_pbmn']='6'
     with pytest.raises(ValueError,match='revision'):build_candidate(bundle,path,tmp_path/'bad.duckdb')
     assert path.read_bytes()==before
+
+def test_halted_previous_member_keeps_explicit_dated_adjusted_price(bundle,baseline,tmp_path):
+    instrument=copy.deepcopy(bundle['universe'][0]);instrument.update(symbol='000002',name='SECOND TEST')
+    bundle['universe'][0]['halt']='Y';bundle['universe'].append(instrument)
+    r=bundle['records'].pop('000001');r['quote']['stck_shrn_iscd']='000002';bundle['records']['000002']=r
+    bundle['excluded']['000001']={'reason':'official_master_halt','name':'TEST ONLY','adjusted_prices':[{'stck_bsop_date':'20261015','stck_clpr':'9900','acml_vol':'0','acml_tr_pbmn':'0'}]}
+    dest=tmp_path/'candidate.duckdb';build_candidate(bundle,baseline,dest)
+    data=load(dest);stocks,_,_=evaluate(data,'2026-10-15')
+    assert set(stocks.symbol)=={'000002'}
+    assert data['prices'].set_index(['symbol','trade_date']).loc[('000001','2026-10-15'),'adjusted_close']==9900
+    assert len(data['memberships'])==2 # no active membership invented for halted stock
+
+def test_missing_current_industry_does_not_carry_previous_mapping(bundle,baseline,tmp_path):
+    bundle['universe'][0]['sector']=None
+    with pytest.raises(ValueError,match='industry missing'):build_candidate(bundle,baseline,tmp_path/'bad.duckdb')
+
+def test_delisting_must_match_market_and_not_apply_to_relisting(bundle):
+    bundle['records'].clear()
+    e={'reason':'official_delisting','name':'TEST ONLY','market':'KOSPI','fields':{'lstg_abol_dt':'20261014','scts_mket_lstg_abol_dt':'20261014'}}
+    bundle['excluded']['000001']=e
+    assert validate_bundle(bundle)[1]==[]
+    bundle['universe'][0]['listing_date']='20261015'
+    with pytest.raises(ValueError,match='relisted'):validate_bundle(bundle)

@@ -98,7 +98,7 @@ columns[2].metric('공시일 확인된 연간 재무',f'{stocks.period_end.notna
 columns[3].metric('20일 수급 충족',f'{complete_flow:,}종목',help='종목별 수급 완전성을 확인합니다. 일부 표본의 이력이 전체 시장 이력으로 표시되지 않습니다.')
 columns[3].caption(f'{complete_flow:,} / {len(stocks):,}종목')
 krx_count=data['metadata'].get('snapshots',{}).get(asof.replace('-',''),{}).get('official_krx_price_rows',0)
-note='계산에 필요한 이력이 충족된 항목의 가설 점수를 표시합니다.' if sector_ready else '섹터의 당시 업종 구성·가격 이력이 부족한 항목은 <b>데이터 축적 중</b>입니다. 종목은 모든 평가 항목을 갖춘 경우에만 종합 점수와 순위를 표시합니다.'
+note='계산에 필요한 이력이 충족된 항목의 가설 점수를 표시합니다.' if sector_ready else '평가 기간에 맞는 업종 구성·수정주가·기준지수를 모두 갖추지 못한 섹터는 <b>데이터 축적 중</b>입니다. 과거 업종 구성을 현재 구성으로 추정하지 않습니다. 종목은 모든 평가 항목을 갖춘 경우에만 종합 점수와 순위를 표시합니다.'
 st.markdown(f'<div class="note">확인 가능한 당일 순매수와 공개 재무를 표시합니다. {note} 빈 점수의 가중치를 다른 항목에 배분하지 않습니다.</div>',unsafe_allow_html=True)
 with st.sidebar.expander('데이터 상태 · 출처'):
  st.write(f'외국인 수급: {len(stocks):,}개 / KIS')
@@ -106,7 +106,11 @@ with st.sidebar.expander('데이터 상태 · 출처'):
  st.write(f'선택일 제외 기록: {len(excluded):,}개')
  st.write(f'공식 업종 미분류: {(stocks.sector=="업종 미분류").sum()}개')
  st.write(f'KRX 공식 당일 시세: {krx_count}개')
- st.caption('당일 종가는 보존된 KIS·KRX 수급 응답입니다. 과거 시세는 KRX 공식 API입니다. 당일 시총은 공식 당일 자료를 우선하며, KIS 대체 자료는 종가·거래량·당시 상장주식수 범위·단위를 대조한 경우만 사용합니다.')
+ st.caption('초기 과거 시세는 KRX 공식 API, 일일 추가 자료는 KIS의 KRX 기준 응답입니다. 수정주가는 KIS 공식 수정주가 옵션, 기준지수는 KOSPI·KOSDAQ 지수입니다. KIS 시총은 종가·거래량·당시 상장주식수 범위·단위를 대조한 경우만 사용합니다.')
+ historical_prices=data['prices'][data['prices'].trade_date<=pd.Timestamp(asof)]
+ historical_indices=data['benchmarks'][data['benchmarks'].trade_date<=pd.Timestamp(asof)]
+ st.write(f'수정주가 관측: {historical_prices.adjusted_close.notna().sum():,}행 · 기준지수: {len(historical_indices):,}행')
+ st.caption(f'확인된 업종 구성 시작일: {data["memberships"].valid_from.min().date()} · 이전 구성은 미확보입니다.')
  st.caption('KIS 현재가 응답에는 거래일 필드가 없습니다. 시총의 수신 시점과 가격 기준일을 구분하며, 과거 날짜로 소급하지 않습니다.')
  st.caption(f'매출 계정 확인 {stocks.revenue.notna().sum():,}개 · 영업현금흐름 확인 {stocks.ocf.notna().sum():,}개')
  st.caption('OpenDART: 2025년 연간/2024년 비교, 동일 공시·연결/별도 범위·원화 확인. PER·PBR은 연결이면 지배지분, 별도이면 해당 기업 손익·자본 기준으로 직접 계산합니다. 공급자의 TTM PER과 구분합니다. ROE는 총순이익/평균 총자본 기준입니다.')
