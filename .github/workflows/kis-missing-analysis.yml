@@ -1,0 +1,63 @@
+{
+  "name": "Diagnose only missing KIS records (113 symbols)",
+  "on": {
+    "push": {
+      "paths": [
+        ".github/workflows/kis-missing-analysis.yml"
+      ]
+    },
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read",
+    "actions": "read"
+  },
+  "concurrency": {
+    "group": "kis-missing-analysis-20261014",
+    "cancel-in-progress": false
+  },
+  "jobs": {
+    "diagnose": {
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 20,
+      "steps": [
+        {
+          "uses": "actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "with": {
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Inspect saved failures and official master flags",
+          "env": {
+            "GH_TOKEN": "${{ github.token }}"
+          },
+          "run": "python3 -u .github/scripts/kis_missing_analysis.py inspect"
+        },
+        {
+          "name": "Check target-date volumes and bounded missing flow sample",
+          "env": {
+            "KIS_APP_KEY": "${{ secrets.KIS_APP_KEY }}",
+            "KIS_APP_SECRET": "${{ secrets.KIS_APP_SECRET }}"
+          },
+          "run": "python3 -u .github/scripts/kis_missing_analysis.py probe"
+        },
+        {
+          "name": "Export sanitized diagnostic evidence",
+          "if": "always()",
+          "run": "python3 -u .github/scripts/kis_missing_analysis.py export"
+        },
+        {
+          "name": "Save separate diagnostic artifact",
+          "if": "always()",
+          "uses": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "with": {
+            "name": "kis-missing-diagnosis-20261014",
+            "path": "missing-analysis/",
+            "retention-days": 7
+          }
+        }
+      ]
+    }
+  }
+}
