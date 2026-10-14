@@ -105,17 +105,21 @@ with sync_playwright() as p:
   assert '선택 종목 20거래일 일별·누적 순매수' in ui.locator('body').inner_text()
   charts=ui.locator('[data-testid="stVegaLiteChart"]')
   assert charts.count()==2,'two_flow_charts_missing'
-  canvas=charts.first.locator('canvas').first
-  canvas.scroll_into_view_if_needed();box=canvas.bounding_box();assert box
-  # Move across actual marks until Vega renders the date/amount tooltip.
+  assert charts.first.get_by_text('일별 순매수(억원)',exact=True).count()==1,'duplicate_daily_axis'
+  assert charts.first.get_by_text('누적 순매수(억원)',exact=True).count()==1,'missing_cumulative_axis'
+  plot=charts.first.locator('svg').first
+  plot.scroll_into_view_if_needed()
+  bars=plot.locator('g.mark-rect.role-mark path')
+  assert bars.count()==20,'expected_twenty_actual_daily_bars'
   tooltip=False
-  for fraction in [.15,.25,.35,.45,.55,.65,.75,.85]:
-   for height in [.25,.45,.65,.8]:
-    page.mouse.move(box['x']+box['width']*fraction,box['y']+box['height']*height)
-    page.wait_for_timeout(80)
+  for i in range(min(bars.count(),20)):
+   box=bars.nth(i).bounding_box()
+   if box and box['width']>0 and box['height']>0:
+    bars.nth(i).hover(force=True);page.wait_for_timeout(200)
     if ui.locator('#vg-tooltip-element').is_visible():tooltip=True;break
-   if tooltip:break
   assert tooltip,'flow_chart_hover_tooltip_missing'
+  charts.first.screenshot(path=str(out/'flow-sector.png'))
+  charts.nth(1).screenshot(path=str(out/'flow-stock.png'))
   page.screenshot(path=str(out/'flow-trends.png'),full_page=True)
   report['checks'].append('5/20-day controls, sector intensity/amount sorting, all-stock 20-day ranking, two real charts and hover tooltip')
   report['success']=True
