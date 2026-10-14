@@ -25,6 +25,21 @@ jobs:
           Path('reports/sector/daily-master-check.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
           print(json.dumps({k:v for k,v in report.items() if k!='samples'},ensure_ascii=False))
           PY
+      - name: Verify current KIND industry fallback
+        run: |
+          python - <<'PYCODE'
+          import sys,json,datetime as dt
+          from pathlib import Path
+          sys.path.insert(0,'scripts')
+          from collect_daily_snapshot import kind_industries
+          result={'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'source':'KRX KIND current company list; not historical membership'}
+          try:
+              rows=kind_industries()
+              result.update(status='success' if rows else 'empty',rows=len(rows))
+          except Exception as e:result.update(status='failed',error_type=type(e).__name__,http=getattr(e,'code',None))
+          Path('reports/sector/kind-current-probe.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+          print(json.dumps(result,ensure_ascii=False))
+          PYCODE
       - run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
