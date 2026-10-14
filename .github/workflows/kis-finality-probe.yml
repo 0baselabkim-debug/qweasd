@@ -1,0 +1,38 @@
+{
+  "name": "KIS finality observation only",
+  "on": {
+    "push": {
+      "branches": [
+        "main"
+      ],
+      "paths": [
+        ".github/workflows/kis-finality-probe.yml"
+      ]
+    },
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "concurrency": {
+    "group": "kis-validation-auth",
+    "cancel-in-progress": false
+  },
+  "jobs": {
+    "observe": {
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 5,
+      "steps": [
+        {
+          "name": "Check official finality contract and two representative snapshots",
+          "shell": "bash",
+          "env": {
+            "KIS_APP_KEY": "${{ secrets.KIS_APP_KEY }}",
+            "KIS_APP_SECRET": "${{ secrets.KIS_APP_SECRET }}"
+          },
+          "run": "python3 - <<'PY'\n\"\"\"Two bounded representative snapshots. Never authorizes full collection.\"\"\"\nimport datetime as dt\nimport hashlib\nimport json\nimport os\nimport re\nimport sys\nimport time\nimport urllib.error\nimport urllib.parse\nimport urllib.request\nfrom zoneinfo import ZoneInfo\nfrom pathlib import Path\nZONE=ZoneInfo('Asia/Seoul')\nBASE='https://openapi.koreainvestment.com:9443'\nPORTAL='https://apiportal.koreainvestment.com'\nSYMBOLS=[('KOSPI','005930'),('KOSPI','000660'),('KOSDAQ','196170'),('KOSDAQ','247540')]\nSECRETS=[os.environ.get('KIS_APP_KEY',''),os.environ.get('KIS_APP_SECRET','')]\ndef stamp():return dt.datetime.now(ZONE).isoformat()\ndef escape(s):return s.replace('%','%25').replace('\\r','%0D').replace('\\n','%0A')\ndef emit(x):\n s=json.dumps(x,ensure_ascii=True,separators=(',',':'))\n for v in SECRETS:\n  if v:s=s.replace(v,'[REDACTED]')\n print('::notice title=KIS finality evidence::'+escape(s),flush=True)\n with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as f:f.write('```json\\n'+s+'\\n```\\n')\ndef request(url,headers=None,data=None):\n try:\n  with urllib.request.urlopen(urllib.request.Request(url,headers=headers or {},data=data),timeout=20) as r:return r.status,json.load(r)\n except urllib.error.HTTPError as e:\n  try:body=json.load(e)\n  except Exception:body={}\n  return e.code,{'error_code':body.get('error_code',body.get('msg_cd','unknown'))}\n except Exception as e:return None,{'transport_error_type':type(e).__name__}\nstarted=stamp()\nfor v in SECRETS:\n if v:print('::add-mask::'+escape(v),flush=True)\n# Only public, read-only documentation endpoints discovered from the official site.\npath='/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily'\nstatus,doc=request(PORTAL+'/api/apis/public/detail?'+urllib.parse.urlencode({'accessUrl':path}))\nprops=[]\nif status==200 and isinstance(doc,dict) and re.fullmatch(r'[0-9a-f-]{36}',str(doc.get('id',''))):\n ps,props=request(PORTAL+'/api/apis/guide/property/'+doc['id'])\n if ps!=200 or not isinstance(props,list):props=[]\ncandidates=[]\nfor p in props:\n text=str(p.get('propertyNm',''))+' '+str(p.get('description',''))\n if any(k in text for k in ['최종','확정','가집계','BOLD']):\n  candidates.append({k:p.get(k) for k in ['propertyCd','propertyNm','description','bodyType']})\nemit({'stage':'official_document','http_status':status,'api_summary':doc.get('apiSummary') if isinstance(doc,dict) else None,'field_count':len(props),'finality_related_descriptions':candidates,'checked_at':stamp()})\nif not all(SECRETS):emit({'stage':'auth','secrets_present':False});sys.exit(1)\nstatus,auth=request(BASE+'/oauth2/tokenP',{'Content-Type':'application/json'},json.dumps({'grant_type':'client_credentials','appkey':SECRETS[0],'appsecret':SECRETS[1]}).encode())\ntoken=auth.get('access_token') if isinstance(auth,dict) else None\nok=status==200 and isinstance(token,str) and bool(token)\nif ok:SECRETS.append(token);print('::add-mask::'+escape(token),flush=True)\nemit({'stage':'auth','success':ok,'http_status':status,'run_id':os.environ.get('GITHUB_RUN_ID'),'actual_job_started_at':started})\nif not ok:sys.exit(1)\nheaders={'authorization':'Bearer '+token,'appkey':SECRETS[0],'appsecret':SECRETS[1],'tr_id':'FHPTJ04160001','custtype':'P','Content-Type':'application/json'}\ntrade_date=dt.datetime.now(ZONE).strftime('%Y%m%d')\nrounds=[]\nfirst_start=time.monotonic()\nfor round_number in range(2):\n if round_number:\n  time.sleep(max(0,60-(time.monotonic()-first_start)))\n record={'stage':'observation','round':round_number+1,'requested_trade_date':trade_date,'actual_started_at':stamp(),'samples':[]}\n for market,symbol in SYMBOLS:\n  q={'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':symbol,'FID_INPUT_DATE_1':trade_date,'FID_ORG_ADJ_PRC':'','FID_ETC_CLS_CODE':''}\n  req_start=stamp();status,body=request(BASE+path+'?'+urllib.parse.urlencode(q),headers);req_end=stamp()\n  rows=body.get('output2',[]) if isinstance(body,dict) else []\n  if not isinstance(rows,list):rows=[]\n  selected=[r for r in rows if isinstance(r,dict) and r.get('stck_bsop_date')==trade_date]\n  wanted=['stck_bsop_date','frgn_ntby_qty','frgn_ntby_tr_pbmn','frgn_shnu_tr_pbmn','frgn_seln_tr_pbmn','stck_clpr','bold_yn']\n  safe={k:str(selected[0][k]) for k in wanted if k in selected[0] and re.fullmatch(r'[A-Za-z0-9.+-]{1,40}',str(selected[0][k]))} if len(selected)==1 else {}\n  fields=sorted(selected[0]) if len(selected)==1 else []\n  record['samples'].append({'market':market,'symbol':symbol,'exchange':'KRX','http_status':status,'rt_cd':str(body.get('rt_cd','missing'))[:10],'msg_cd':str(body.get('msg_cd',body.get('error_code','missing')))[:40],'actual_started_at':req_start,'actual_completed_at':req_end,'same_day_row_received':bool(safe),'fields':safe,'response_field_count':len(fields),'finality_named_fields':[k for k in fields if re.search(r'final|confirm|settle|fix|update|time',k,re.I)]})\n  time.sleep(1)\n record['actual_completed_at']=stamp();rounds.append(record);emit(record)\nchanges=[]\nfor a,b in zip(rounds[0]['samples'],rounds[1]['samples']):\n if a['fields']!=b['fields']:changes.append(a['symbol'])\nemit({'stage':'decision','requested_trade_date':trade_date,'actual_completed_at':stamp(),'rounds':2,'observed_changed_symbols':changes,'all_same_day_rows_received':all(s['same_day_row_received'] and s['rt_cd']=='0' for r in rounds for s in r['samples']),'finality':'UNVERIFIED','full_collection_allowed':False,'full_collection_started':False,'verified_trading_days':0,'reason':'Unchanged observations are not evidence of official finality; no whole-market collector is invoked.'})\nsys.exit(0 if all(s['same_day_row_received'] and s['rt_cd']=='0' for r in rounds for s in r['samples']) else 1)\nPY\n"
+        }
+      ]
+    }
+  }
+}
