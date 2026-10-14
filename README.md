@@ -11,7 +11,7 @@
 - 영업현금흐름: **2,415종목**, 기준일 시가총액: **2,430종목**
 - 직접 계산 가능한 PER **1,447개**, PBR **2,375개**, ROE **2,397개**. 적자 PER를 낮은 배수로 표시하지 않습니다.
 - 기존 공식 업종은 유지하고 미분류 **232개를 보완**했습니다. KIS 업종이 없는 경우 KRX KIND의 분류를 `표준산업 · …`로 구분합니다.
-- AIDC·전력 인프라·반도체·로봇·방산·원전은 별도 테마입니다. 사업 근거를 확인한 **11개 기업, 12개 소속 관계**부터 제공합니다. 미검토 기업은 ‘확인 필요’입니다.
+- AIDC·전력 인프라·반도체·로봇·방산·원전은 별도 테마입니다. 사업 근거를 확인한 **39개 기업, 42개 소속 관계**를 제공합니다. 전체 시장 테마 분류는 미완성이므로 부분 검증 테마로 구분합니다. 미검토 기업은 ‘확인 필요’입니다.
 - 과거 수급 확보 범위와 20일 충족 종목 수는 화면과 [검증 결과](reports/enrichment/coverage.json), [날짜별 수급 품질 보고서](reports/enrichment/history-quality.json)에 표시합니다. 전체 확대는 10종목 검증 후 사용자 승인을 받고 실행했습니다.
 
 ## 평가와 데이터 원칙
@@ -37,7 +37,7 @@
 
 `main`의 `snapshot/dashboard.duckdb`는 검증된 공개 조회용 사본입니다. 해시는 [manifest](snapshot/manifest.json), 3종목·2업종 독립 계산은 [verification](snapshot/verification.json)에 있습니다. 웹 화면은 읽기 전용이며 API 인증키가 필요하지 않습니다. `.env`와 토큰은 포함하지 않습니다. 실제 자료와 테스트용 자료는 분리합니다.
 
-이 스냅샷의 분석일은 **2026-10-14**입니다. 기존 수집 결과를 매일 웹 스냅샷으로 자동 게시하는 기능은 아직 연결하지 않았습니다. 웹 화면에서 날짜를 현재 날짜로 꾸미지 않습니다.
+이 스냅샷의 분석일은 **2026-10-14**입니다. GitHub Actions가 한국시간 20:30에 수집을 시도하고, 23:30에 미완료분을 재시도합니다. 검증 통과 후에만 웹 스냅샷을 게시하며 실패 시 기존 자료를 유지합니다. 실제 보존 자료로 게시 경로를 검증했으며 새 거래일 연속 운영은 아직 확인 전입니다. 웹 화면에서 날짜를 현재 날짜로 꾸미지 않습니다.
 
 ## 개발자 재현
 
@@ -57,3 +57,5 @@ python -m pytest -q tests/test_dashboard.py tests/test_dashboard_deployment.py t
 전체 과거 수급과 시총의 원문 응답은 `staging/`에, 계정별 매핑 근거는 `reports/enrichment/account-provenance.json.gz`에 보관합니다. 원천 공시 문서는 각 종목의 DART 원문 링크로 확인할 수 있습니다.
 
 [자동 테스트](https://github.com/0baselabkim-debug/qweasd/actions/workflows/dashboard-check.yml) · [기존 앱 브라우저 검증](https://github.com/0baselabkim-debug/qweasd/actions/workflows/dashboard-live-check.yml)
+
+최신 결과는 [섹터·테마·자동 게시 보고서](reports/sector/REPORT.md)를 확인하세요. KIS 수정주가 63,128행과 기준지수 52행을 수신했으나, 과거 업종 구성 미확보 및 2,042종목의 종가 재조회 차이로 섹터 종합 순위는 보류합니다. 기존 원시 가격·시총·종목 평가 1,161개를 유지했습니다. [일일 운영·보존 규칙](docs/daily-publication.md)

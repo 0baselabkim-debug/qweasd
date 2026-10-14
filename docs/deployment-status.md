@@ -8,8 +8,10 @@
 
 첫 배포에서 실행 중인 구버전 계산 모듈/캐시 때문에 `flow_observations`를 찾지 못하는 오류를 발견했습니다. 소스·데이터 버전에 따라 모듈과 캐시를 갱신하도록 수정하고 실제 공개 앱에서 재검증했습니다. 이후 배포에서도 구버전 모듈을 강제로 남겨 재현하는 자동 테스트를 수행합니다.
 
-최신 확보 수·시계열 범위·검증 결과는 [데이터 보완 보고서](../reports/enrichment/REPORT.md), [배포 데이터 해시](../snapshot/manifest.json), [자동 테스트](https://github.com/0baselabkim-debug/qweasd/actions/workflows/dashboard-check.yml)에서 확인할 수 있습니다.
+최신 확보 수·시계열 범위·검증 결과는 [섹터·테마·자동 게시 보고서](../reports/sector/REPORT.md), [배포 데이터 해시](../snapshot/manifest.json), [자동 테스트](https://github.com/0baselabkim-debug/qweasd/actions/workflows/dashboard-check.yml)에서 확인할 수 있습니다.
 
-화면의 분석일은 2026-10-14입니다. 일일 수집 결과를 웹 스냅샷으로 자동 게시하는 기능은 아직 연결하지 않았습니다. 자료를 현재 날짜로 가장하지 않습니다.
+화면의 분석일은 2026-10-14입니다. 일일 수집 결과를 검증 후 웹 스냅샷으로 자동 게시하도록 연결했습니다. 실제 보존 자료의 재처리·게시로 경로를 확인했으며, 새 거래일 전체 수집과 3거래일 연속 운영은 미검증입니다. 자료를 현재 날짜로 가장하지 않습니다.
 
 최종 배포에서는 재무 2,415종목, 20거래일 수급 2,427종목, 종합 평가 1,161종목을 확인했습니다. [업종 화면](dashboard-preview.png) · [테마 화면](dashboard-theme.png) · [종목 상세 화면](dashboard-detail.png).
+
+최신 [실제 게시 실행](https://github.com/0baselabkim-debug/qweasd/actions/runs/38650326964)과 [외부 브라우저 검증](https://github.com/0baselabkim-debug/qweasd/actions/runs/38650545213)이 성공했습니다. HTTP 200, 재무 2,415개·20일 수급 2,427개·종목 종합 평가 1,161개, 자동 게시 상태·39개 테마 기업과 선택/정렬/상세/다운로드를 확인했습니다.
