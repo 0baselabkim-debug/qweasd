@@ -1,0 +1,19 @@
+name: Historical official membership availability
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/probe_historical_membership.py
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/membership-${GITHUB_RUN_ID}"
+          git add reports/sector
+          git commit -m 'Record official historical industry access evidence'
+          git push origin HEAD
