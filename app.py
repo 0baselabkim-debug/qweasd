@@ -2,12 +2,15 @@
 from pathlib import Path
 import html
 import hashlib
+import importlib
+import threading
 import pandas as pd
 import numpy as np
 import altair as alt
 import streamlit as st
 from screener.store import DB,load
 from screener.scoring import evaluate, CONFIG
+import screener.scoring as scoring_module
 from screener.themes import aggregate as aggregate_themes, members as theme_members
 
 st.set_page_config(page_title='한국 주식 · 자금 흐름 스크리너',page_icon='◈',layout='wide',initial_sidebar_state='expanded')
@@ -32,16 +35,24 @@ h3{font-size:1.05rem!important}
 </style>''',unsafe_allow_html=True)
 if not DB.exists():
  st.error('실제 데이터 DB가 없습니다. scripts/build_dashboard_data.py로 보존된 실제 자료를 불러와야 합니다.');st.stop()
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False,max_entries=3)
 def snapshot(mtime,asof,config_mtime,calculation_version,data_version):
  data=load()
  stocks,sectors,metadata=evaluate(data,asof)
  return data,stocks,sectors,metadata
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False,max_entries=2)
 def dates(mtime,data_version):
  d=load();return sorted(d['flows'].trade_date.dt.strftime('%Y-%m-%d').unique(),reverse=True)
 mtime=DB.stat().st_mtime_ns
-calculation_version=hashlib.sha256(b''.join((Path(__file__).parent/p).read_bytes() for p in ['screener/scoring.py','screener/store.py','config.toml'])+b'enriched-schema-v2').hexdigest()
+calculation_version=hashlib.sha256(b''.join((Path(__file__).parent/p).read_bytes() for p in ['screener/scoring.py','screener/store.py','config.toml'])+b'enriched-schema-v3').hexdigest()
+# Community Cloud can rerun app.py while retaining an imported dependency.
+# Refresh once per source version before caching its results.
+if not hasattr(scoring_module,'_dashboard_reload_lock'):scoring_module._dashboard_reload_lock=threading.RLock()
+with scoring_module._dashboard_reload_lock:
+ if getattr(scoring_module,'_dashboard_loaded_version',None)!=calculation_version:
+  importlib.reload(scoring_module)
+  scoring_module._dashboard_loaded_version=calculation_version
+evaluate=scoring_module.evaluate
 manifest=Path(__file__).parent/'snapshot/manifest.json'
 data_version=hashlib.sha256(manifest.read_bytes() if manifest.exists() else b'local-db').hexdigest()
 with st.sidebar:
