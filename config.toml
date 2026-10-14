@@ -1,0 +1,35 @@
+timezone = "Asia/Seoul"
+stage = 2
+analysis_exchange_scope = "KRX"
+analysis_session_scope = "REGULAR_CLOSE"
+provider_scope_verified = false
+schedule_enabled = false
+
+[sector_weights]
+foreign_intensity = 40
+foreign_persistence = 30
+relative_strength = 20
+activity = 10
+
+[stock_weights]
+foreign_flow = 30
+growth = 25
+profitability_health = 25
+valuation = 15
+activity = 5
+
+[scoring]
+minimum_peers = 3
+flow_days = 20
+recent_days = 5
+activity_prior_days = 20
+# Percentile: average tied rank, then (rank - 1) / (n - 1); all equal => 0.5.
+percentile_method = "average_rank_zero_to_one"
+missing_weight_policy = "no_redistribution"
+financial_period = "annual"
+turnaround_value = 10.0
+sector_index = "previous_close_market_cap_weighted"
+rebalance = "daily_previous_close"
+return_price = "adjusted_close"
+sector_mapping = "point_in_time_official_industry"
+themes_enabled = false

@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+.venv/
+__pycache__/
+.pytest_cache/
+data/
+*.duckdb*
+!snapshot/dashboard.duckdb
+*.log
+test-results/
