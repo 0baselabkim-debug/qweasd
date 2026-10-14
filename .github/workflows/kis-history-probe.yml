@@ -1,0 +1,24 @@
+name: KIS ten-stock historical flow probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read historical KRX flow and public quotes
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python .github/scripts/kis_history_probe.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kis-ten-stock-history
+          path: kis-history-probe.json
+          retention-days: 30
