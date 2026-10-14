@@ -1,0 +1,11 @@
+{
+  "url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "success": false,
+  "checks": [],
+  "http_status": 200,
+  "error_type": "TimeoutError",
+  "error": "Locator.wait_for: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_text(\"공시일 확인된 연간 재무\", exact=True) to be visible\n",
+  "final_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "app_frame_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/~/+/",
+  "visible_text": "◈ 자금 흐름 스크리너\n\n한국 주식 · 실제 데이터 탐색\n\n저장된 실제 자료를 조회합니다. 수집 환경과 웹 화면의 데이터 동기화는 별도입니다.\n\n데이터 기준일\n\n분류체계\n\n공식 업종\n\n투자 테마\n\n시장\n\n종목 검색\n\n평가 기준\n\n섹터: 수급 40 · 지속성 30 상대강도 20 · 거래 활성도 10\n\n종목: 수급 30 · 성장 25 수익성·건전성 25 · 가치 15 · 거래 5\n\n점수는 초기 가설입니다. 같은 시장·업종 안에서 비교합니다.\n\n투자 후보 탐색용 자동 주문·목표주가 예측 없음\n\nFork\nKOREA EQUITY · DAILY FLOW MONITOR\n오늘의 자금 흐름, 다음 관찰 후보\n외국인 수급으로 업종을 살펴보고, 공개된 실적으로 기업을 비교합니다.\nAttributeError: This app has encountered an error. The original error message is redacted to prevent data leaks. Full error details have been recorded in the logs (if you're on Streamlit Cloud, click on 'Manage app' in the lower right of your app).\nTraceback:\nFile \"/mount/src/qweasd/app.py\", line 73, in <module>\n    history_days=int(stocks.flow_observations.max()) if len(stocks) else 0\n                     ^^^^^^^^^^^^^^^^^^^^^^^^\nFile \"/home/adminuser/venv/lib/python3.12/site-packages/pandas/core/generic.py\", line 6194, in __getattr__\n    return object.__getattribute__(self, name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+}
