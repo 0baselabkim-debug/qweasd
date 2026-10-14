@@ -71,3 +71,5 @@ KRX 공식 당일 API는 두 시장 모두 HTTP 200, 0행이었습니다. KIS �
 - 테스트용 가상 자료는 테스트 파일에만 존재합니다. 배포 DB에는 실제 자료만 있습니다. 기존 API 키 값의 저장소/배포 파일 일치 0건을 검사했습니다.
 - 공개 앱에서 배포 후 구버전 계산 모듈이 남는 오류를 발견해 소스·데이터 버전에 따른 모듈 및 캐시 갱신으로 수정했습니다. 실제 외부 브라우저의 업종/테마 선택, 정렬, 상세 조회, CSV 다운로드 검증 기록은 Actions에 남겼습니다.
 - 데이터 자동 수집 워크플로는 유지했습니다. 수집 결과를 매일 웹 스냅샷으로 자동 게시하는 연결은 이번에 추가하지 않았으며 화면 기준일은 2026-10-14입니다.
+
+최종 코드의 [GitHub Actions 테스트](https://github.com/0baselabkim-debug/qweasd/actions/runs/38603069311)는 **40개 통과**했습니다. [실제 공개 앱 브라우저 검증](https://github.com/0baselabkim-debug/qweasd/actions/runs/38603069672)도 HTTP 200 및 업종·테마 선택, 정렬, 상세 조회, CSV 다운로드가 모두 통과했습니다. [실제 화면](../../docs/dashboard-preview.png) · [검증 기록](live-final-verification.json).
