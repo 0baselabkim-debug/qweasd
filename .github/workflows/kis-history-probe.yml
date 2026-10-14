@@ -16,8 +16,20 @@ jobs:
         env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python .github/scripts/kis_history_probe.py
+        run: |
+          python - <<'PY'
+          import runpy,traceback,json,os
+          try:runpy.run_path('.github/scripts/kis_history_probe.py',run_name='__main__')
+          except Exception:
+              message=traceback.format_exc()
+              for name in ['KIS_APP_KEY','KIS_APP_SECRET']:
+                  value=os.environ.get(name)
+                  if value:message=message.replace(value,'[REDACTED]')
+              print('::error title=Probe diagnostic::'+message.replace('%','%25').replace('\n','%0A').replace('\r','%0D'),flush=True)
+              raise SystemExit(1)
+          PY
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: kis-ten-stock-history
           path: kis-history-probe.json

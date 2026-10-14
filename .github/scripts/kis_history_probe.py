@@ -50,6 +50,8 @@ for symbol in SYMBOLS:
     required=['stck_bsop_date','frgn_ntby_tr_pbmn','frgn_ntby_qty','stck_clpr','acml_vol','acml_tr_pbmn']
     valid=[r for r in rows if all(re.fullmatch(r'-?\d+',str(r.get(k,''))) for k in required) and str(r['stck_bsop_date'])<='20261013']
     dates=[r['stck_bsop_date'] for r in valid]
+    fields=required+['frgn_shnu_tr_pbmn','frgn_seln_tr_pbmn','frgn_shnu_vol','frgn_seln_vol']
+    valid=[{k:r[k] for k in fields if k in r} for r in valid]
     record={'symbol':symbol,'exchange':'KRX','history_request_date':'20261013','history_metric':hm,'quote_metric':qm,'rows':valid,'output1':history.get('output1',{}),'quote':quote.get('output',{}),'invalid_rows':len(rows)-len(valid),'duplicate_dates':len(dates)-len(set(dates)),'seconds':round(time.monotonic()-begin,4)}
     records.append(record)
 old,om=call('/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily',{'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':'005930','FID_INPUT_DATE_1':'20260911','FID_ORG_ADJ_PRC':'','FID_ETC_CLS_CODE':''},'FHPTJ04160001')
