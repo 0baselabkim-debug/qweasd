@@ -1,0 +1,30 @@
+{
+  "name": "KIS official field documentation",
+  "on": {
+    "push": {
+      "branches": [
+        "main"
+      ],
+      "paths": [
+        ".github/workflows/kis-field-docs.yml"
+      ]
+    },
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "jobs": {
+    "docs": {
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 2,
+      "steps": [
+        {
+          "name": "Read public official field documentation without credentials",
+          "shell": "bash",
+          "run": "python3 - <<'PY'\nimport urllib.request, json, re, html\nurl='https://apiportal.koreainvestment.com/apiservice/apiservice-domestic-stock-quotations'\ntry:\n with urllib.request.urlopen(url,timeout=25) as r:\n  source=r.read().decode('utf-8');status=r.status\n snippets=[]\n for match in re.finditer('frgn_ntby_tr_pbmn|FHPTJ04160001|\ubc31\ub9cc|investor-trade-by-stock-daily',source):\n  snippets.append(html.unescape(re.sub('<[^>]*>',' ',source[max(0,match.start()-300):match.end()+500])))\n assets=re.findall(r'<script[^>]+src=[\\\"\\x27]([^\\\"\\x27]+)',source)\n record={'stage':'official_document','http_status':status,'bytes':len(source),'snippets':snippets[:15],'scripts':assets[:25]}\nexcept Exception as exc:\n record={'stage':'official_document','error_type':type(exc).__name__}\nraw=json.dumps(record,ensure_ascii=True).replace('%','%25').replace('\\n','%0A').replace('\\r','%0D')\nprint('::notice title=KIS official document::'+raw)\nPY\n"
+        }
+      ]
+    }
+  }
+}
