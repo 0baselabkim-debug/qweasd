@@ -6,6 +6,16 @@ def main():
     out=Path('reports/sector');out.mkdir(parents=True,exist_ok=True)
     result={'checked_at':dt.datetime.now(dt.timezone.utc).isoformat(),'source':'https://data.krx.co.kr/','attempts':[],'usable_history':False}
     opener=urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    # Test the ordinary public page/session path before attributing a POST 403
+    # to unavailable historical data. No authentication or restriction bypass.
+    try:
+        with opener.open('https://data.krx.co.kr/contents/MDC/MAIN/main/index.cmd',timeout=30) as r:
+            raw=r.read(1000000);result['public_page']={'http':r.status,'final_url':r.url,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+        if 'login' in result['public_page']['final_url'].lower():raise RuntimeError('Login required')
+    except Exception as error:
+        result['public_page']={'error':type(error).__name__,'http':getattr(error,'code',None)}
+        (out/'historical-membership-probe.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+        print(json.dumps(result,ensure_ascii=False));return
     for market in ['STK','KSQ']:
         for day in ['20260911','20261014']:
             params={'bld':'dbms/MDC/STAT/standard/MDCSTAT03901','mktId':market,'trdDd':day,'money':'1','csvxls_isNo':'false'}
