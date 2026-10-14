@@ -31,43 +31,51 @@
         },
         {
           "name": "Export public market data batch 1",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(0,min(0+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(0,min(0+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 2",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(8,min(8+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(8,min(8+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 3",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(16,min(16+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(16,min(16+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 4",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(24,min(24+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(24,min(24+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 5",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(32,min(32+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(32,min(32+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 6",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(40,min(40+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(40,min(40+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 7",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(48,min(48+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(48,min(48+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 8",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(56,min(56+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(56,min(56+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 9",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(64,min(64+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(64,min(64+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         },
         {
           "name": "Export public market data batch 10",
-          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=80\nfor i in range(72,min(72+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(72,min(72+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+        },
+        {
+          "name": "Export public market data batch 11",
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(80,min(80+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
+        },
+        {
+          "name": "Export public market data batch 12",
+          "run": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\ns=Path('dashboard-bundle.b64').read_text();chunks=[s[i:i+2800] for i in range(0,len(s),2800)]\nassert len(chunks)<=96\nfor i in range(88,min(88+8,len(chunks))):print('::notice title=Dashboard data chunk::'+json.dumps({'part':i,'parts':len(chunks),'data':chunks[i]}))\n\nPY"
         }
       ]
     }
