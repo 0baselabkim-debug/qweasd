@@ -39,7 +39,7 @@ try:
     result['kind']={'url':url,'sha256':hashlib.sha256(raw).hexdigest(),'header':table.rows[:1],'records':[]}
     for row in table.rows[1:]:
         if len(row)>4 and re.fullmatch(r'\d{6}',row[1]):
-            result['kind']['records'].append({'symbol':row[1],'name':row[0],'industry':row[2],'products':row[3][:200],'listing_date':row[4]})
+            result['kind']['records'].append({'symbol':row[1],'industry':row[2],'listing_date':row[4]})
 except Exception as e:print('::notice title=KRX listing download::'+json.dumps({'error':type(e).__name__}))
 
 packed=base64.b64encode(gzip.compress(json.dumps(result,ensure_ascii=False,separators=(',',':')).encode(),mtime=0)).decode()
