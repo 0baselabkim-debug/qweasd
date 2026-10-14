@@ -10,6 +10,114 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python .github/scripts/kis_reference_probe.py
+      - name: Export reference batch 1
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(0,min(8,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 2
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(8,min(16,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 3
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(16,min(24,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 4
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(24,min(32,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 5
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(32,min(40,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 6
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(40,min(48,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 7
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(48,min(56,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 8
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(56,min(64,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 9
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(64,min(72,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 10
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(72,min(80,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 11
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(80,min(88,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
+      - name: Export reference batch 12
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=Path('reference-data.b64').read_text();c=[s[i:i+2800] for i in range(0,len(s),2800)]
+          assert len(c)<=96
+          for i in range(88,min(96,len(c))):print('::notice title=Reference data::'+json.dumps({'part':i,'parts':len(c),'data':c[i]}))
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: official-listing-reference
