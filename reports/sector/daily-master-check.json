@@ -1,0 +1,60 @@
+{
+  "observed_on": "20261015",
+  "universe": 2545,
+  "halted": 109,
+  "missing_master_industry": 245,
+  "sources": [
+    {
+      "name": "industry index names",
+      "sha256": "2417200233a9914339d6a3ab7715a3b6693e84cca4c1437dd4ca915c6b7c8ba1",
+      "observed_at": "2026-10-14T22:13:49.983210+00:00"
+    },
+    {
+      "market": "KOSPI",
+      "url": "https://new.real.download.dws.co.kr/common/master/kospi_code.mst.zip",
+      "sha256": "0dec92b3a6404d9b7a596474b876e953a2f23446d4e3fbbaa1ac98cd851ffd25",
+      "observed_at": "2026-10-14T22:13:50.290711+00:00"
+    },
+    {
+      "market": "KOSDAQ",
+      "url": "https://new.real.download.dws.co.kr/common/master/kosdaq_code.mst.zip",
+      "sha256": "3b4d588293770c2d8b733677b3185bcac8ef133f4f0047555295c52cc185c9f1",
+      "observed_at": "2026-10-14T22:13:50.852991+00:00"
+    }
+  ],
+  "samples": [
+    {
+      "symbol": "000660",
+      "name": "SK하이닉스",
+      "market": "KOSPI",
+      "listing_date": "19961226",
+      "halt": "N",
+      "sector": "전기·전자",
+      "industry_code": "0013",
+      "shares_thousands": "000000000730492",
+      "spac": false
+    },
+    {
+      "symbol": "005930",
+      "name": "삼성전자",
+      "market": "KOSPI",
+      "listing_date": "19750611",
+      "halt": "N",
+      "sector": "전기·전자",
+      "industry_code": "0013",
+      "shares_thousands": "000000005846278",
+      "spac": false
+    },
+    {
+      "symbol": "035420",
+      "name": "NAVER",
+      "market": "KOSPI",
+      "listing_date": "20081128",
+      "halt": "N",
+      "sector": "IT 서비스",
+      "industry_code": "0029",
+      "shares_thousands": "000000000152108",
+      "spac": false
+    }
+  ]
+}
