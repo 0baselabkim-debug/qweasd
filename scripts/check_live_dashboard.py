@@ -15,8 +15,9 @@ import sys,datetime as dt
 from zoneinfo import ZoneInfo
 sys.path.insert(0,str(root))
 from screener.themes import members
-theme_count=members(str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date())).symbol.nunique()
 publication=json.loads((root/'snapshot/manifest.json').read_text())
+theme_date=max(expected['asof'],str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date())) if expected['asof']==publication['asof'] else expected['asof']
+theme_count=members(theme_date).symbol.nunique()
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,**({'executable_path':os.environ['BROWSER_EXECUTABLE'],'args':['--no-sandbox','--disable-dev-shm-usage']} if os.environ.get('BROWSER_EXECUTABLE') else {}))
  page=browser.new_page(viewport={'width':1540,'height':2100},device_scale_factor=1)
