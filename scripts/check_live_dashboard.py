@@ -137,6 +137,7 @@ with sync_playwright() as p:
    key=next(k for k,m in catalog().items() if m['name']==row['지표']);match(row['최신 공표값'],state['indicators'][key]['value']);assert row['기준일']==state['indicators'][key]['date']
   clean();readability('macro');page.screenshot(path=str(out/'macro.png'),full_page=True)
   report['checks'].append('Default macro, fixed sidebar-only title/menu, 12 unchanged actual values, three columns, rates bp, dates/provenance, six separate investor rows')
+  click('매매일지');assert ui.get_by_role('button',name='+ 추가',exact=True).is_disabled();assert ui.get_by_text('매매현황',exact=True).count()==1;clean();page.screenshot(path=str(out/'journal-unconfigured-or-loggedout.png'),full_page=True)
   click('수급 필터');choose('시장','KOSPI');radio('지난 5일');radio('전체 섹터');choose('섹터 정렬','시총 대비 순매수 강도')
   rows=download('섹터 현황 CSV','sectors.csv');expected=sectors[sectors.market=='KOSPI'].set_index('sector');assert len(rows)==len(expected)
   for row in rows:
@@ -155,6 +156,7 @@ with sync_playwright() as p:
   rows=download('선택 종목 CSV','stocks.csv');naver=next(r for r in rows if r['코드']=='035420');match(naver['선택 기간 순매수(억원)'],stocks.set_index('symbol').loc['035420','net_20d']/1e8)
   name_cell('NAVER').click();page.wait_for_timeout(400);assert ui.get_by_text('KOSPI · IT 서비스 · 종목 수급',exact=True).count()==1
   readability('stocks');page.screenshot(path=str(out/'stocks.png'),full_page=True);double('NAVER');assert ui.get_by_text('NAVER · 035420',exact=True).count()==1
+  guide=ui.locator('.buy-guide');assert guide.inner_text().startswith('매수 가이드: 판정 보류');assert guide.bounding_box()['y']+guide.bounding_box()['height']<=ui.locator('.st-key-stock_kpis .kpi').nth(3).bounding_box()['y']+2
   assert ui.locator('.st-key-hierarchy button:visible').all_text_contents()==['전체섹터 조회','IT 서비스','×','NAVER','×']
   # Desktop close controls appear on hover / keyboard focus only.
   ui.locator('.st-key-header').hover();page.wait_for_timeout(200);assert float(ui.locator('.st-key-close_stock').evaluate('e=>getComputedStyle(e).opacity'))==0

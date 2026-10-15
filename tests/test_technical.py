@@ -14,7 +14,7 @@ def bundle():
     for i,d in enumerate(dates):
         close=100+i*.08+5*math.sin(i/5)
         bars.append(dict(trade_date=d,open=close-.2,high=close+1,low=close-1,close=close,volume=1000,turnover=close*1000))
-    return dict(symbol='999999',asof=dates[-1],exchange='KRX',adjustment='adjusted',bars=bars,calendar=dates,flows=[{'trade_date':d,'net_amount':1 if i%2 else -1} for i,d in enumerate(dates[-20:])],finality='VERIFIED',finality_evidence='Synthetic unit test fixture only',price_conflicts=[])
+    return dict(symbol='999999',asof=dates[-1],exchange='KRX',adjustment='adjusted',bars=bars,calendar=dates,flows=[{'trade_date':d,'net_amount':1 if i%2 else -1} for i,d in enumerate(dates[-20:])],finality='VERIFIED',finality_evidence='Synthetic unit test fixture only',price_conflicts=[],corporate_actions_verified=True)
 
 def test_sma_ichimoku_wilder_independent(bundle):
     f=t.indicators(bundle['bars']);bars=bundle['bars'];last=f.iloc[-1]
@@ -84,3 +84,9 @@ def test_actual_pilot_metrics_independently_and_original_preserved():
         for n in [5,20,60,120]:assert f.iloc[-1][f'ma{n}']==pytest.approx(sum(r['close'] for r in b['bars'][-n:])/n)
         for k,v in b['computed'].items():assert f.iloc[-1][k]==pytest.approx(v)
         assert t.buy_guide(b)['status']=='판정 보류'
+
+
+def test_sell_rejects_unverified_corporate_actions(bundle):
+    bundle['corporate_actions_verified']=False
+    result=t.sell_guide(bundle,{'average_price':100,'buy_date':bundle['bars'][200]['trade_date']})
+    assert result['status']=='판정 보류' and '기업행사' in result['reasons'][0]

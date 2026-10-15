@@ -69,6 +69,8 @@ class ServiceStore:
     def call(self,name,body):return http(self.url,self.key,'/rest/v1/rpc/'+name,'POST',body,self.key)
     def targets(self,asof):return self.call('technical_targets',{'p_asof':asof}) or []
     def publish(self,symbol,bundle):self.call('publish_technical',{'p_symbol':symbol,'p_bundle':bundle,'p_error':None})
+    def positions(self,symbol):return self.call('worker_positions',{'p_symbol':symbol}) or []
+    def save_signal(self,position,result):self.call('save_worker_signal',{'p_user':position['user_id'],'p_symbol':position['symbol'],'p_signature':position['purchase_signature'],'p_result':result})
     def fail(self,symbol,message):self.call('publish_technical',{'p_symbol':symbol,'p_bundle':None,'p_error':message})
 
 def validate_purchase(symbol,date,price,quantity):

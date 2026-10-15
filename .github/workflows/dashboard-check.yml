@@ -9,6 +9,9 @@ on:
       - 'eligibility_rules.json'
       - 'tests/test_indicators.py'
       - 'tests/test_exploration_ui.py'
+      - 'tests/test_technical.py'
+      - 'tests/test_journal.py'
+      - 'technical_rules.json'
       - 'screener/**'
       - 'snapshot/**'
       - 'config.toml'
@@ -40,7 +43,7 @@ jobs:
       - name: Install dashboard dependencies
         run: python -m pip install -r requirements.txt pytest==9.1.1
       - name: Test real snapshot, calculations, and UI without API secrets
-        run: python -m pytest -q tests/test_dashboard.py tests/test_dashboard_deployment.py tests/test_enrichment.py tests/test_daily.py tests/test_flow_trends.py tests/test_corporate.py tests/test_indicators.py tests/test_exploration_ui.py
+        run: python -m pytest -q tests/test_dashboard.py tests/test_dashboard_deployment.py tests/test_enrichment.py tests/test_daily.py tests/test_flow_trends.py tests/test_corporate.py tests/test_indicators.py tests/test_exploration_ui.py tests/test_technical.py tests/test_journal.py
       - name: Start and check HTTP server
         shell: bash
         run: |

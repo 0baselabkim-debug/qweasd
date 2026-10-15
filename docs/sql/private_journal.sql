@@ -100,3 +100,32 @@ grant execute on function public.technical_targets(date),public.publish_technica
 revoke insert,update on public.technical_requests from authenticated;
 
 grant all on public.journal_purchases,public.journal_audit,public.technical_requests,public.technical_cache,public.journal_risk_state to service_role;
+
+-- Private scheduled guidance results; never published to GitHub.
+create table if not exists public.journal_signals (
+ user_id uuid not null references auth.users(id) on delete cascade,symbol text not null,
+ purchase_signature text not null,result jsonb not null,calculated_at timestamptz not null default now(),primary key(user_id,symbol)
+);
+alter table public.journal_signals enable row level security;
+revoke all on public.journal_signals from anon,authenticated;
+grant select on public.journal_signals to authenticated;
+grant all on public.journal_signals to service_role;
+create policy signals_owner on public.journal_signals for select to authenticated using(user_id=auth.uid());
+create or replace function public.worker_positions(p_symbol text) returns table(user_id uuid,symbol text,buy_date date,average_price numeric,quantity numeric,purchase_signature text,risk jsonb) language sql security definer set search_path=public as $$
+ select p.user_id,p.symbol,min(p.buy_date),sum(p.average_price*p.quantity)/sum(p.quantity),sum(p.quantity),md5(string_agg(p.id::text||':'||p.revision::text,',' order by p.id)),coalesce((select to_jsonb(r) from journal_risk_state r where r.user_id=p.user_id and r.symbol=p.symbol),'{}'::jsonb)
+ from journal_purchases p where p.symbol=p_symbol group by p.user_id,p.symbol
+$$;
+create or replace function public.save_worker_signal(p_user uuid,p_symbol text,p_signature text,p_result jsonb) returns void language plpgsql security definer set search_path=public as $$
+declare current_signature text;
+begin
+ select md5(string_agg(id::text||':'||revision::text,',' order by id)) into current_signature from journal_purchases where user_id=p_user and symbol=p_symbol;
+ if current_signature is distinct from p_signature then return;end if;
+ insert into journal_signals(user_id,symbol,purchase_signature,result) values(p_user,p_symbol,p_signature,p_result)
+ on conflict(user_id,symbol) do update set purchase_signature=excluded.purchase_signature,result=excluded.result,calculated_at=now();
+ if p_result ? 'trailing_stop' and p_result->>'asof' is not null then
+  insert into journal_risk_state(user_id,symbol,trailing_stop,activated,asof) values(p_user,p_symbol,(p_result->>'trailing_stop')::numeric,(p_result->>'activated')::boolean,(p_result->>'asof')::date)
+  on conflict(user_id,symbol) do update set trailing_stop=greatest(journal_risk_state.trailing_stop,excluded.trailing_stop),activated=journal_risk_state.activated or excluded.activated,asof=greatest(journal_risk_state.asof,excluded.asof);
+ end if;
+end $$;
+revoke all on function public.worker_positions(text),public.save_worker_signal(uuid,text,text,jsonb) from public,anon,authenticated;
+grant execute on function public.worker_positions(text),public.save_worker_signal(uuid,text,text,jsonb) to service_role;

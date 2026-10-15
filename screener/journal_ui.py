@@ -27,7 +27,9 @@ def signed_store():
 def _finish(message):
     st.session_state['journal_notice']=message;st.session_state['journal_action']=None;st.rerun()
 
-@st.dialog('매수 기록 등록·수정',width='small')
+def _dismiss():st.session_state['journal_action']=None
+
+@st.dialog('매수 기록 등록·수정',width='small',on_dismiss=_dismiss)
 def purchase_dialog(store,instruments,record=None):
     master=instruments[instruments.market.isin(['KOSPI','KOSDAQ'])].drop_duplicates('symbol');codes=master.symbol.tolist();names=master.set_index('symbol')['name'].to_dict()
     with st.form('purchase_form',clear_on_submit=False):
@@ -45,7 +47,7 @@ def purchase_dialog(store,instruments,record=None):
         # Purchase table itself is the worker's target list, so queue failure cannot undo a successful save.
         _finish('매수 기록을 저장했습니다.')
 
-@st.dialog('매수 기록 삭제')
+@st.dialog('매수 기록 삭제',on_dismiss=_dismiss)
 def delete_dialog(store,record,name):
     st.write(f"{name} · {record['buy_date']} · {record['quantity']}주 기록을 삭제합니다.")
     a,b=st.columns(2)
@@ -56,6 +58,7 @@ def delete_dialog(store,record,name):
         _finish('선택한 매수 기록을 삭제했습니다.')
 
 def render(instruments):
+    if st.session_state.pop('journal_clear_password',False):st.session_state.pop('journal_password',None)
     explorer.reading_layout('journal')
     store=signed_store();a,b=st.columns([5,1],vertical_alignment='center')
     with a:st.subheader('매매현황')
@@ -70,7 +73,6 @@ def render(instruments):
         st.dataframe(empty,hide_index=True,width='stretch');return
     if store is None:
         st.write('개인 매매 기록은 로그인한 사용자에게만 표시됩니다.')
-        if st.session_state.pop('journal_clear_password',False):st.session_state.pop('journal_password',None)
         with st.form('journal_login'):
             email=st.text_input('이메일');password=st.text_input('비밀번호',type='password',key='journal_password')
             submit=st.form_submit_button('로그인',type='primary')

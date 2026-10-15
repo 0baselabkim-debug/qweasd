@@ -1,5 +1,6 @@
 """Separate, fail-closed technical rules. Never alters the screening snapshot."""
 import json, math
+from decimal import Decimal
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -108,6 +109,12 @@ def sell_guide(bundle,position,state=None,cfg=None):
     cfg=cfg or rules();errors=validate(bundle);state=state or {};out={'status':'판정 보류','reasons':errors,'asof':bundle.get('asof') if bundle else None,'costs_applied':False}
     if errors:return out
     f=indicators(bundle['bars'],cfg);r=f.iloc[-1];c=cfg['sell'];entry=float(position['average_price']);date=str(position['buy_date'])
+    if state.get('asof','')>bundle['asof']:
+        out['reasons']=['저장된 위험 기준보다 오래된 시세'];return out
+    if not bundle.get('corporate_actions_verified'):
+        out['reasons']=['매수 이후 기업행사 검증 미완료'];return out
+    if any(a['trade_date']>=date for a in bundle.get('corporate_actions',[])):
+        out['reasons']=['매수 이후 기업행사 · 수량·평균단가 조정 확인 필요'];return out
     history=f[f.trade_date<date]
     if len(history)<cfg['min_bars']:out['reasons']=['매수 직전 160일 기준 지지·저항 미확보'];return out
     anchor=levels(history,cfg)
@@ -134,7 +141,7 @@ def sell_guide(bundle,position,state=None,cfg=None):
     if not reason:out.update(status='보유',reasons=[]);return out
     costs=c.get('costs')
     if costs is None:out['reasons']=[reason,'거래비용 미설정 · 순손익 분류 보류'];return out
-    net=float(r.close)*(1-float(costs['sell_rate'])-float(costs['tax_rate']))-entry*(1+float(costs['buy_rate']))
+    net=Decimal(str(r.close))*(1-Decimal(str(costs['sell_rate']))-Decimal(str(costs['tax_rate'])))-Decimal(str(position['average_price']))*(1+Decimal(str(costs['buy_rate'])))
     if net==0:out['reasons']=[reason,'거래비용 반영 순손익 0 · 분류 보류'];return out
-    out.update(status='익절' if net>0 else '손절',reasons=[reason],costs_applied=True,net_per_share=net)
+    out.update(status='익절' if net>0 else '손절',reasons=[reason],costs_applied=True,net_per_share=float(net))
     return out

@@ -4,7 +4,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from scripts.kis_public_client import KIS
-from screener.technical import validate,indicators,rules
+from screener.technical import validate,indicators,rules,sell_guide
 from screener.store import load
 
 PILOT=['005930','000660','035420']
@@ -16,9 +16,12 @@ def paged(api,symbol,end,index=False,count=320):
         rows=d.get('output2',[]);rows=[r for r in rows if r.get('stck_bsop_date')]
         if not rows:break
         before=len(records)
+        if len({r['stck_bsop_date'] for r in rows})!=len(rows):raise ValueError('Duplicate dates within provider page')
         for r in rows:
             day=r['stck_bsop_date'];iso=dt.datetime.strptime(day,'%Y%m%d').date().isoformat()
-            if iso<=end:records[iso]=r
+            if iso<=end:
+                if iso in records and records[iso]!=r:raise ValueError('Conflicting pagination observations')
+                records[iso]=r
         if len(records)>=count:break
         if len(records)==before:break
         cursor=(dt.datetime.strptime(min(r['stck_bsop_date'] for r in rows),'%Y%m%d').date()-dt.timedelta(days=1)).strftime('%Y%m%d')
@@ -40,7 +43,7 @@ def fetch(api,symbol,asof,calendar,original=None):
     conflicts=[]
     if not bars or latest_raw is None or bars[-1]['close']!=latest_raw:conflicts.append('Adjusted chart / same-date KRX investor close mismatch')
     if original is not None and bars and bars[-1]['close']!=original:conflicts.append('Preserved dashboard close differs; original untouched')
-    bundle={'schema':1,'symbol':symbol,'asof':asof,'exchange':'KRX','adjustment':'adjusted','source':'KIS FHKST03010100 / J / FID_ORG_ADJ_PRC=0','flow_source':'KIS FHPTJ04160001 / J / million KRW multiplied by 1000000','calendar_source':'KIS KOSPI daily index observations','bars':bars,'flows':flows,'calendar':calendar,'finality':'UNVERIFIED','finality_evidence':None,'price_conflicts':conflicts,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat()}
+    bundle={'schema':1,'symbol':symbol,'asof':asof,'exchange':'KRX','adjustment':'adjusted','source':'KIS FHKST03010100 / J / FID_ORG_ADJ_PRC=0','flow_source':'KIS FHPTJ04160001 / J / million KRW multiplied by 1000000','calendar_source':'KIS KOSPI daily index observations','bars':bars,'flows':flows,'calendar':calendar,'finality':'UNVERIFIED','finality_evidence':None,'price_conflicts':conflicts,'corporate_actions_verified':all(r.get('prtt_rate') not in [None,''] and 'revl_issu_reas' in r for d,r in raw),'corporate_actions':[{'trade_date':d,'rate':r.get('prtt_rate'),'reason':r.get('revl_issu_reas')} for d,r in raw if float(r.get('prtt_rate') or 0)!=0 or r.get('revl_issu_reas')],'observed_at':dt.datetime.now(dt.timezone.utc).isoformat()}
     bundle['validation']=validate(bundle,asof)
     structural=validate({**bundle,'price_conflicts':[]},asof,require_final=False)
     bundle['structure_valid']=not structural;bundle['structure_errors']=structural
@@ -67,6 +70,9 @@ def main():
             bundle=fetch(api,code,asof,calendar,original)
             if args.mode=='private':
                 store.publish(code,bundle)
+                for position in store.positions(code):
+                    result=sell_guide(bundle,position,position.get('risk') or {})
+                    store.save_signal(position,result)
             else:bundles[code]=bundle
         except Exception:
             failed+=1
