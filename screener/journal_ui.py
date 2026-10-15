@@ -58,7 +58,7 @@ def delete_dialog(store,record,name):
         _finish('선택한 매수 기록을 삭제했습니다.')
 
 @st.fragment(run_every=300)
-def render(instruments):
+def render(instruments,asof=None):
     if st.session_state.pop('journal_clear_password',False):st.session_state.pop('journal_password',None)
     explorer.reading_layout('journal')
     store=signed_store();a,b=st.columns([5,1],vertical_alignment='center')
@@ -92,15 +92,19 @@ def render(instruments):
     except StoreError as e:st.error(str(e));return
     names=instruments.drop_duplicates('symbol').set_index('symbol')['name'].to_dict();rows=[];details={}
     for position in aggregate(records):
-        code=position['symbol'];error=None;bundle=None
+        code=position['symbol'];error=None;bundle=None;evaluation_date=asof
         try:
             bundle,error=technical_cache.get_bundle(code,store=store);risk=store.risk(code)
-            guide=technical.sell_guide(bundle,position,risk)
+            # A newer self-contained cache can arrive during the five-minute
+            # fragment refresh; the dashboard date is a freshness floor.
+            evaluation_date=max(asof or '',bundle.get('asof','') if bundle else '') or None
+            issues=technical.validate(bundle,evaluation_date)
+            guide={'status':'판정 보류','reasons':issues} if issues else technical.sell_guide(bundle,position,risk)
             if 'trailing_stop' in guide:store.save_risk(code,guide)
         except StoreError:
             guide={'status':'판정 보류','reasons':['비공개 시세·위험 기준 저장 연결 오류']}
         if error:guide={'status':'판정 보류','reasons':[error,'이전 정상 데이터 보존']}
-        close=technical_cache.verified_close(bundle);v=valuation(position,close);details[code]=guide
+        close=technical_cache.verified_close(bundle,evaluation_date);v=valuation(position,close);details[code]=guide
         rows.append({'종목명':f"{names.get(code,code)} ({code})",'매수일':position['buy_date'],'보유수량':position['quantity'],'평균매수가':display_decimal(position['average_price'])+'원','현재 종가':display_decimal(close)+'원' if close is not None else '검증 대기','종가 기준일':bundle['asof'] if bundle else '미확보','평가손익':display_decimal(v['pnl'])+'원' if v['pnl'] is not None else '미확보','수익률':display_decimal(v['return'])+'%' if v['return'] is not None else '미확보','매도 가이드':guide['status']})
     st.dataframe(pd.DataFrame(rows,columns=['종목명','매수일','보유수량','평균매수가','현재 종가','종가 기준일','평가손익','수익률','매도 가이드']),hide_index=True,width='stretch',row_height=44)
     st.caption('평가손익·수익률은 거래비용 제외. 최신 검증 종가가 없으면 계산 보류. 자동 매도 주문은 실행하지 않습니다.')
@@ -117,16 +121,21 @@ def render(instruments):
         else:purchase_dialog(store,instruments,action[1])
 
 def buy_result(symbol,asof):
-    store=signed_store();error=None
+    store=signed_store();error=None;warnings=[]
     try:
         bundle,error=technical_cache.get_bundle(symbol,asof,store)
-        if store:
-            # RPC updates at most once per day. Market data is collected only by the scheduled worker.
-            request_key=f'technical_request:{symbol}:{asof}'
-            if not st.session_state.get(request_key):store.request(symbol);st.session_state[request_key]=True
-    except StoreError:bundle=None;error='기술 데이터 연결 오류'
+    except StoreError:
+        bundle,error=technical_cache.get_bundle(symbol,asof)
+        warnings.append('비공개 기술 데이터 연결 오류 · 공개 자료만 평가합니다.')
+    if store:
+        # Queue delivery is independent of evidence already read successfully.
+        request_key=f'technical_request:{symbol}:{asof}'
+        if not st.session_state.get(request_key):
+            try:store.request(symbol);st.session_state[request_key]=True
+            except StoreError:warnings.append('기술 데이터 갱신 요청 실패 · 다음 조회에서 재시도합니다.')
     result=technical.buy_guide(bundle,asof)
     if error:result.update(status='판정 보류',reasons=[error])
+    if warnings:result['warnings']=warnings
     return result,bundle
 
 def buy_label(result):
@@ -137,6 +146,7 @@ def technical_details(result,bundle):
     with st.expander('매수 가이드 · 기술 지표 근거'):
         st.write('기준일: '+str(result.get('asof') or '미확보')+' · KRX 수정주가 · 규칙 v'+str(technical.rules()['version']))
         for reason in result.get('reasons',[]):st.write(reason)
+        for warning in result.get('warnings',[]):st.warning(warning)
         st.write('160거래일 OHLCV·동일 날짜 수급과 공식 확정 또는 일별 교차검증 근거가 필요합니다.')
         if result.get('checks'):st.json(result['checks'])
         metrics=result.get('indicators') or (bundle.get('computed') if bundle and bundle.get('indicator_ready',bundle.get('structure_valid')) else None)

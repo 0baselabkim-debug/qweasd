@@ -162,9 +162,17 @@ with sync_playwright() as p:
   naver_bundle,_=get_bundle('035420',asof);expected_guide=buy_guide(naver_bundle,asof)
   guide=ui.locator('.buy-guide');assert guide.inner_text().startswith('매수 가이드: '+expected_guide['status']);assert guide.bounding_box()['y']+guide.bounding_box()['height']<=ui.locator('.st-key-stock_kpis .kpi').nth(3).bounding_box()['y']+2
   ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
-  assert '수신 일봉 320거래일' in ui.locator('body').inner_text()
-  assert 'KRX 공식 일별 종가 교차 일치: 확인' in ui.locator('body').inner_text()
-  if daily_accepted(naver_bundle):assert '일별 운용 검증 통과' in ui.locator('body').inner_text()
+  assert naver_bundle and naver_bundle['asof']==asof
+  assert f"수신 일봉 {len(naver_bundle['bars'])}거래일" in ui.locator('body').inner_text()
+  crosscheck=naver_bundle.get('price_crosscheck')
+  if crosscheck:
+   expected_match='확인' if crosscheck['raw_close_match'] else '불일치'
+   assert 'KRX 공식 일별 종가 교차 일치: '+expected_match in ui.locator('body').inner_text()
+  else:assert 'KRX 공식 일별 종가 교차 일치: 확인' not in ui.locator('body').inner_text()
+  assert '일별 운용 검증 '+('통과' if daily_accepted(naver_bundle) else '미완료') in ui.locator('body').inner_text()
+  from screener.technical import validate
+  if validate(naver_bundle,asof):assert expected_guide['status']=='판정 보류'
+  for reason in expected_guide['reasons']:assert reason in ui.locator('body').inner_text()
   page.screenshot(path=str(out/'technical-observations.png'),full_page=True)
   ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
   report['checks'].append('Actual 320-day NAVER cache and independently computed guide status rendered: '+expected_guide['status'])

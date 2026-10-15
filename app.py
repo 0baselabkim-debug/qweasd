@@ -83,7 +83,7 @@ with st.sidebar:
  market=select('시장',['전체','KOSPI','KOSDAQ'],'market')
  classification=radio('분류체계',['공식 업종','투자 테마'],'classification')
 if ss.stage=='journal':
- journal_ui.render(data['instruments']);st.stop()
+ journal_ui.render(data['instruments'],str(data['flows'].trade_date.max().date()));st.stop()
 if ss.stage!='macro':
  with st.container(key='header'):
   a,b=st.columns([4,1.5],vertical_alignment='center')

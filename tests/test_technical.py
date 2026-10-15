@@ -90,3 +90,95 @@ def test_sell_rejects_unverified_corporate_actions(bundle):
     bundle['corporate_actions_verified']=False
     result=t.sell_guide(bundle,{'average_price':100,'buy_date':bundle['bars'][200]['trade_date']})
     assert result['status']=='판정 보류' and '기업행사' in result['reasons'][0]
+
+
+def test_cache_same_date_prefers_verified_long_private_history(bundle,monkeypatch,tmp_path):
+    from screener import technical_cache as cache
+    monkeypatch.setattr(cache,'ROOT',tmp_path)
+    shorter=copy.deepcopy(bundle);shorter['bars']=shorter['bars'][-160:]
+    monkeypatch.setattr(cache,'public_bundles',lambda:{shorter['symbol']:shorter})
+    class Store:
+        def cache(self,symbol):return {'bundle':bundle}
+    selected,error=cache.get_bundle(bundle['symbol'],bundle['asof'],Store())
+    assert selected is bundle and not error
+    assert len(selected['bars'])==360
+    # Longer but unverified data must not displace usable same-date evidence.
+    bundle['finality']='UNVERIFIED'
+    assert cache.get_bundle(bundle['symbol'],bundle['asof'],Store())[0] is shorter
+    # A new unverified day must not masquerade as an older verified close.
+    bundle['asof']='2026-10-15'
+    assert cache.get_bundle(bundle['symbol'],store=Store())[0] is bundle
+    assert cache.verified_close(bundle) is None
+    assert cache.verified_close(shorter,'2026-10-15') is None
+    bundle['symbol']='000001'
+    assert cache.get_bundle('999999',store=Store())[0] is shorter
+
+
+def test_cache_conflicting_private_observations_do_not_bypass_gate(bundle,monkeypatch,tmp_path):
+    from screener import technical_cache as cache
+    monkeypatch.setattr(cache,'ROOT',tmp_path)
+    public=copy.deepcopy(bundle)
+    monkeypatch.setattr(cache,'public_bundles',lambda:{public['symbol']:public})
+    class Store:
+        def cache(self,symbol):return {'bundle':bundle}
+    bundle['bars'][-1]['close']+=.1
+    selected,error=cache.get_bundle(bundle['symbol'],store=Store())
+    assert selected is None and '불일치' in error
+
+
+def test_buy_request_failure_retains_evaluated_bundle_and_retries(bundle,monkeypatch):
+    from screener import journal_ui as ui
+    from screener.journal_store import StoreError
+    class Store:
+        calls=0
+        def request(self,symbol):
+            self.calls+=1
+            if self.calls==1:raise StoreError('synthetic queue failure')
+    store=Store();session={}
+    monkeypatch.setattr(ui,'signed_store',lambda:store)
+    monkeypatch.setattr(ui.st,'session_state',session)
+    monkeypatch.setattr(ui.technical_cache,'get_bundle',lambda *a,**k:(bundle,None))
+    expected=t.buy_guide(bundle,bundle['asof'])
+    result,selected=ui.buy_result(bundle['symbol'],bundle['asof'])
+    assert selected is bundle and result['status']==expected['status']
+    assert result['reasons']==expected['reasons'] and result['warnings']
+    assert not session
+    result,_=ui.buy_result(bundle['symbol'],bundle['asof'])
+    assert 'warnings' not in result and session and store.calls==2
+
+
+def test_buy_private_read_failure_keeps_public_gate(bundle,monkeypatch):
+    from screener import journal_ui as ui
+    from screener.journal_store import StoreError
+    class Store:
+        def request(self,symbol):pass
+    monkeypatch.setattr(ui,'signed_store',lambda:Store())
+    monkeypatch.setattr(ui.st,'session_state',{})
+    def get(symbol,asof,store=None):
+        if store:raise StoreError('synthetic private outage')
+        return bundle,None
+    monkeypatch.setattr(ui.technical_cache,'get_bundle',get)
+    result,selected=ui.buy_result(bundle['symbol'],bundle['asof'])
+    assert selected is bundle and result['status']==t.buy_guide(bundle)['status']
+    assert result['warnings']
+    bundle['finality']='UNVERIFIED'
+    assert ui.buy_result(bundle['symbol'],bundle['asof'])[0]['status']=='판정 보류'
+
+
+@pytest.mark.parametrize('floor,available',[('2026-10-15',False),('2024-01-01',True)])
+def test_journal_refresh_uses_new_cache_but_never_stale_valuation(bundle,monkeypatch,floor,available):
+    from streamlit.testing.v1 import AppTest
+    from screener import journal_ui as ui
+    class Store:
+        def purchases(self):return [{'id':'synthetic','symbol':bundle['symbol'],'buy_date':'2025-01-02','average_price':'100','quantity':1,'revision':1}]
+        def risk(self,symbol):return {}
+        def save_risk(self,*args):pass
+    monkeypatch.setattr(ui,'signed_store',lambda:Store())
+    monkeypatch.setattr(ui,'settings',lambda:('https://test.supabase.co','TEST_ONLY'))
+    monkeypatch.setattr(ui.technical_cache,'get_bundle',lambda *a,**k:(bundle,None))
+    app=AppTest.from_string("import pandas as pd\nfrom screener import journal_ui as ui\nui.render(pd.DataFrame([{'symbol':'999999','name':'Synthetic','market':'KOSPI'}]),"+repr(floor)+")").run()
+    assert not app.exception
+    row=app.dataframe[0].value.iloc[0]
+    assert (row['현재 종가']!='검증 대기')==available
+    assert (row['평가손익']!='미확보')==available
+    if not available:assert row['매도 가이드']=='판정 보류'

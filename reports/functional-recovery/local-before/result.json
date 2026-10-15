@@ -1,0 +1,60 @@
+{
+  "url": "http://127.0.0.1:8501",
+  "success": false,
+  "checks": [
+    "Default macro, fixed sidebar-only title/menu, 12 unchanged actual values, three columns, rates bp, dates/provenance, six separate investor rows"
+  ],
+  "asof": "2026-10-15",
+  "http_status": 200,
+  "layout_measurements": [
+    {
+      "viewport": 1920,
+      "stage": "macro",
+      "available_width": 1650,
+      "content_width": 1155,
+      "row_heights": [
+        46
+      ],
+      "header_heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "viewport": 1920,
+      "stage": "sectors",
+      "available_width": 1650,
+      "content_width": 1402.5,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 1359,
+        "full": 1628
+      }
+    },
+    {
+      "viewport": 1920,
+      "stage": "stocks",
+      "available_width": 1650,
+      "content_width": 1402.5,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 1359,
+        "full": 1454
+      }
+    }
+  ],
+  "error_type": "AssertionError",
+  "error": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/workspace/qweasd/scripts/check_live_dashboard.py\", line 166, in <module>\n    assert 'KRX 공식 일별 종가 교차 일치: 확인' in ui.locator('body').inner_text()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "visible_text": "7 options available.\n1 option available.\n7 options available.\n한국 증시 수급 필터\n\n매크로 지표\n\n수급 필터\n\n매매일지\n\n조회 조건\n\n수급 기준일\n\n시장\n\n분류체계\n\n공식 업종\n\n투자 테마\n\nDeploy\n수급 기준일\n2026-10-15\n\n↻ 업데이트 상태\n\n전체섹터 조회\n\nIT 서비스\n\n×\n\nNAVER\n\n×\n\nNAVER · 035420\nKOSPI\nIT 서비스\n투자 적격성: 판정 보류\n종가 171,400원\n1일 순매수\n-69.02 억원\n5일 누적 순매수\n-359.46 억원\n20일 누적 순매수\n-1,948.01 억원\n매수 가이드: 판정 보류\n20일 순매수 발생일\n7 일\nkeyboard_arrow_down\n\n매수 가이드 · 기술 지표 근거\n\n기준일: 2026-10-15 · KRX 수정주가 · 규칙 v1\n\n공식 확정 또는 일별 교차검증 근거 미확보\n\n160거래일 OHLCV·동일 날짜 수급과 공식 확정 또는 일별 교차검증 근거가 필요합니다.\n\n관측 일봉 계산값 · 매매 판정에는 사용하지 않음\n\n관측 지지·저항 · 최종 검증 전 참고값\n\n{\n\"levels\":{\n\"support\":[]\n\"resistance\":[\n0:{\n\"price\":183650\n\"lower\":182114.77871020598\n\"upper\":185185.22128979402\n\"touches\":2\n\"confirmed_on\":\"2026-07-22\"\n\"confluence\":[]\n}\n1:{\n\"price\":190550\n\"lower\":189014.77871020598\n\"upper\":192085.22128979402\n\"touches\":2\n\"confirmed_on\":\"2026-06-30\"\n\"confluence\":[]\n}\n]\n\"all\":[\n0:{\n\"price\":183650\n\"lower\":182114.77871020598\n\"upper\":185185.22128979402\n\"touches\":2\n\"confirmed_on\":\"2026-07-22\"\n\"confluence\":[]\n}\n1:{\n\"price\":190550\n\"lower\":189014.77871020598\n\"upper\":192085.22128979402\n\"touches\":2\n\"confirmed_on\":\"2026-06-30\"\n\"confluence\":[]\n}\n2:{\n\"price\":195220\n\"lower\":193684.77871020598\n\"upper\":196755.22128979402\n\"touches\":5\n\"confirmed_on\":\"2026-10-08\"\n\"confluence\":[\n0:\"kijun\"\n]\n}\n3:{\n\"price\":204916.66666666666\n\"lower\":203381.44537687264\n\"upper\":206451.88795646068\n\"touches\":6\n\"confirmed_on\":\"2026-09-28\"\n\"confluence\":[\n0:\"ma60\"\n]\n}\n4:{\n\"price\":210000\n\"lower\":208464.77871020598\n\"upper\":211535.22128979402\n\"touches\":3\n\"confirmed_on\":\"2026-09-17\"\n\"confluence\":[]\n}\n5:{\n\"price\":218900\n\"lower\":217364.77871020598\n\"upper\":220435.22128979402\n\"touches\":5\n\"confirmed_on\":\"2026-09-09\"\n\"confluence\":[]\n}\n6:{\n\"price\":228250\n\"lower\":226714.77871020598\n\"upper\":229785.22128979402\n\"touches\":2\n\"confirmed_on\":\"2026-09-01\"\n\"confluence\":[]\n}\n7:{\n\"price\":234000\n\"lower\":232464.77871020598\n\"upper\":235535.22128979402\n\"touches\":4\n\"confirmed_on\":\"2026-08-26\"\n\"confluence\":[]\n}\n]\n}\n\"reward_risk\":NULL\n}\n\n현재 구름대는 26거래일 이전 계산값, 미래 구름대는 현재 계산 후 26거래일 앞에 표시하는 값입니다. 기준은 개발 기본값이며 수익을 보장하지 않습니다.\n\n수신 일봉 320거래일 · 공식 최종 확정 UNVERIFIED · 일별 운용 검증 미완료\n\n기술적 판정 규칙\n\n외국인 순매수 추이 · 최근 20거래일\n\n일별 순매수\n\n누적 순매수\n\n함께 보기\n\n09-14\n09-15\n09-16\n09-17\n09-18\n09-21\n09-22\n09-23\n09-28\n09-29\n09-30\n10-01\n10-02\n10-06\n10-07\n10-08\n10-12\n10-13\n10-14\n10-15\n−600\n−400\n−200\n0\n200\n400\n순매수 (억원)\n\n일별 수급 CSV\n\n5일 평균 거래대금\n\n미확보\n\n거래 활성도\n\n미확보\n\n시가총액\n\n260,715.00억원\n\n투자 적격성 · 재무 판단 근거\n판정 보류\n최종 판정 기준·임계값 승인 대기\n감사의견·중대한 재무 위험 정보 미확보\n회계기간 2025-12-31\n실제 공시 2026-03-13\nCFS\n\n연간 DART 원문\n\nkeyboard_arrow_right\n\n최신 공시 재무 · 사업 테마 검토\n\n실제 사업 내용 · 투자 테마\n\n검증된 테마 소속 없음 · 사업 근거 확인 필요\n\nkeyboard_arrow_right\n\n추가 사업보고서 조사 기록\n\nkeyboard_arrow_right\n\n상세 출처 · 판정 규칙",
+  "final_url": "http://127.0.0.1:8501/",
+  "app_frame_url": "http://127.0.0.1:8501/"
+}
