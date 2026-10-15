@@ -88,21 +88,7 @@ jobs:
           python -u scripts/collect_corporate.py --state corporate-candidate/state.json.gz --db corporate-candidate/corporate.duckdb --limit "$COMPANY_LIMIT" --max-calls 600 --max-seconds 2100 --symbols "$PILOT_SYMBOLS"
       - name: Preserve progress independently of publication
         if: always() && inputs.mode != 'probe'
-        run: |
-          if [ ! -f corporate-candidate/state.json.gz ]; then exit 0; fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if git ls-remote --exit-code --heads origin data/corporate-checkpoint >/dev/null 2>&1; then
-            git fetch origin data/corporate-checkpoint
-            git worktree add --detach /tmp/corporate-checkpoint FETCH_HEAD
-          else
-            git worktree add --detach /tmp/corporate-checkpoint HEAD
-          fi
-          cp corporate-candidate/state.json.gz /tmp/corporate-checkpoint/corporate-checkpoint.json.gz
-          git -C /tmp/corporate-checkpoint add -f corporate-checkpoint.json.gz
-          git -C /tmp/corporate-checkpoint diff --cached --quiet || git -C /tmp/corporate-checkpoint commit -m 'Preserve disclosure collection progress'
-          git -C /tmp/corporate-checkpoint push origin HEAD:data/corporate-checkpoint
-          git worktree remove /tmp/corporate-checkpoint
+        run: python scripts/checkpoint_corporate.py
       - name: Validate append-only corporate records
         if: inputs.mode != 'probe'
         run: |
@@ -139,3 +125,18 @@ jobs:
           git add corporate-probe.json
           git commit -m 'Record sanitized DART authentication result'
           git push origin "HEAD:evidence/corporate-$GITHUB_RUN_ID"
+
+      - name: Preserve collection and publication evidence
+        if: always() && inputs.mode != 'probe'
+        run: |
+          mkdir -p reports/corporate-run
+          for name in corporate-run.json corporate-checkpoint-result.json; do
+            if [ -f "$name" ]; then cp "$name" reports/corporate-run/; fi
+          done
+          if [ -f corporate-candidate/state.json.gz ]; then cp corporate-candidate/state.json.gz reports/corporate-run/state.json.gz; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/corporate-$GITHUB_RUN_ID"
+          git add reports/corporate-run
+          git diff --cached --quiet || git commit -m 'Record corporate collection and publication evidence'
+          git push origin "HEAD:refs/heads/evidence/corporate-$GITHUB_RUN_ID"
