@@ -18,11 +18,12 @@ import screener.exploration_ui as explorer
 import screener.journal_ui as journal_ui
 import screener.technical as technical_guide
 import screener.technical_cache as technical_cache
+import screener.technical_quality as technical_quality
 from screener.flow_trends import screen_flows,stock_series
 
 ROOT=Path(__file__).parent
 st.set_page_config(page_title='한국 증시 수급 필터',page_icon='◈',layout='wide',initial_sidebar_state='expanded')
-for module in [indicators,eligibility,macro,ui,corporate_ui,themes,flow_ui,explorer,technical_guide,technical_cache,journal_ui]:importlib.reload(module)
+for module in [indicators,eligibility,macro,ui,corporate_ui,themes,flow_ui,explorer,technical_quality,technical_guide,technical_cache,journal_ui]:importlib.reload(module)
 ui.install()
 explorer.install()
 st.markdown('''<style>

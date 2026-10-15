@@ -7,6 +7,9 @@ from screener.store import load
 from screener.indicators import universe,stock_activity,sector_indicators
 from screener.macro import read as macro_read,catalog
 from screener.exploration_ui import macro_rows
+from screener.technical_cache import get_bundle
+from screener.technical import buy_guide
+from screener.technical_quality import daily_accepted
 URL=os.environ.get('DASHBOARD_CHECK_URL','https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/')
 out=Path(os.environ.get('DASHBOARD_CHECK_OUTPUT','reports/live-dashboard'));out.mkdir(parents=True,exist_ok=True)
 data=load();asof=str(data['flows'].trade_date.max().date());stocks,matrix=universe(data,asof);stocks=stock_activity(data,stocks,asof);sectors,_=sector_indicators(data,stocks,matrix,asof)
@@ -156,13 +159,15 @@ with sync_playwright() as p:
   rows=download('선택 종목 CSV','stocks.csv');naver=next(r for r in rows if r['코드']=='035420');match(naver['선택 기간 순매수(억원)'],stocks.set_index('symbol').loc['035420','net_20d']/1e8)
   name_cell('NAVER').click();page.wait_for_timeout(400);assert ui.get_by_text('KOSPI · IT 서비스 · 종목 수급',exact=True).count()==1
   readability('stocks');page.screenshot(path=str(out/'stocks.png'),full_page=True);double('NAVER');assert ui.get_by_text('NAVER · 035420',exact=True).count()==1
-  guide=ui.locator('.buy-guide');assert guide.inner_text().startswith('매수 가이드: 판정 보류');assert guide.bounding_box()['y']+guide.bounding_box()['height']<=ui.locator('.st-key-stock_kpis .kpi').nth(3).bounding_box()['y']+2
+  naver_bundle,_=get_bundle('035420',asof);expected_guide=buy_guide(naver_bundle,asof)
+  guide=ui.locator('.buy-guide');assert guide.inner_text().startswith('매수 가이드: '+expected_guide['status']);assert guide.bounding_box()['y']+guide.bounding_box()['height']<=ui.locator('.st-key-stock_kpis .kpi').nth(3).bounding_box()['y']+2
   ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
   assert '수신 일봉 320거래일' in ui.locator('body').inner_text()
   assert 'KRX 공식 일별 종가 교차 일치: 확인' in ui.locator('body').inner_text()
+  if daily_accepted(naver_bundle):assert '일별 운용 검증 통과' in ui.locator('body').inner_text()
   page.screenshot(path=str(out/'technical-observations.png'),full_page=True)
   ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
-  report['checks'].append('Actual 320-day NAVER technical cache, independent KRX crosscheck, held signal and observed levels rendered')
+  report['checks'].append('Actual 320-day NAVER cache and independently computed guide status rendered: '+expected_guide['status'])
   assert ui.locator('.st-key-hierarchy button:visible').all_text_contents()==['전체섹터 조회','IT 서비스','×','NAVER','×']
   # Desktop close controls appear on hover / keyboard focus only.
   ui.locator('.st-key-header').hover();page.wait_for_timeout(200);assert float(ui.locator('.st-key-close_stock').evaluate('e=>getComputedStyle(e).opacity'))==0

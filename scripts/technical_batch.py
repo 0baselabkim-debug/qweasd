@@ -54,6 +54,8 @@ def action_present(event):
     return float(event.get('rate') or 0)!=0 or str(event.get('reason') or '').strip() not in ('','0','00')
 
 def price_rows(api,symbol,asof,old,paged,count=320):
+    if old and old.get('bars') and old.get('asof')==asof:
+        return old['bars'],old.get('corporate_action_observations',[]),'same_date_cache_reused'
     if old and old.get('bars') and old.get('asof','')<asof:
         start=old['bars'][-min(10,len(old['bars']))]['trade_date']
         fresh=parsed(chart(api,symbol,start,asof).get('output2',[]),asof)
@@ -62,6 +64,8 @@ def price_rows(api,symbol,asof,old,paged,count=320):
         revised=any(oldrows[d]!=fresh[d]['bar'] for d in overlap)
         events=any(action_present(v['event']) for v in fresh.values())
         new_dates=sorted(d for d in fresh if d>old['asof'])
+        if overlap and not new_dates and not revised and not events:
+            return old['bars'],old.get('corporate_action_observations',[]),'incremental_no_new_date'
         if overlap and new_dates and not revised and not events:
             merged=oldrows|{d:v['bar'] for d,v in fresh.items()}
             dates=sorted(merged)[-count:]
@@ -126,6 +130,11 @@ def run(api,data,paged,limit=150,budget=900,probe=False):
         try:
             b=make_bundle(api,code,asof,calendar,data,old,paged)
             b=crosscheck(b,references,scopes.get('symbols',{}).get(code))
+            # Price acquisition survives a failed supplementary flow recheck.
+            try:
+                from scripts.technical_acceptance import verify_bundle
+                b=verify_bundle(api,b,references)
+            except Exception as exc:b['acceptance_error']=type(exc).__name__
             listing=data['instruments'].set_index('symbol').loc[code,'listing_date']
             category=classify(b,str(listing)[:10] if str(listing)!='NaT' else None)
             # Preserve valid previous observations when an incoming window is incomplete or invalid.
@@ -149,7 +158,32 @@ def run(api,data,paged,limit=150,budget=900,probe=False):
     summary['official_daily_crosschecked']=sum(b.get('price_crosscheck',{}).get('raw_close_match',False) for b in current)
     summary['cache_bytes']=sum(p.stat().st_size for p in CACHE.glob('*.gz'))
     summary['remaining']=len(universe)-summary['completed_current_asof'];state['runs']=(state.get('runs',[])+[summary])[-60:];write(STATE,state);write(ROOT/'summary.json',summary)
+    refresh_summary(asof)
+    summary=read(ROOT/'summary.json',summary)
     print(json.dumps(summary,ensure_ascii=False));return summary
+
+def refresh_summary(asof):
+    """Recompute evidence/guide counts from saved observations, never inferred jobs."""
+    from screener.technical_quality import daily_accepted,blocking_conflicts
+    state=read(STATE,{'symbols':{},'runs':[]});summary=read(ROOT/'summary.json',{})
+    current=[read(p) for p in CACHE.glob('*.json.gz')];current=[b for b in current if b and b['asof']==asof]
+    guides={b['symbol']:buy_guide(b,asof) for b in current}
+    for b in current:
+        if b['symbol'] in state['symbols']:
+            state['symbols'][b['symbol']].update(reasons=validate(b,asof),signal_ready=not validate(b,asof))
+    summary.update(quality_reviewed_at=dt.datetime.now(dt.timezone.utc).isoformat(),
+        daily_accepted=sum(daily_accepted(b) for b in current),signal_ready=sum(not validate(b,asof) for b in current),
+        guide_status_counts=dict(collections.Counter(g['status'] for g in guides.values())),
+        guide_hold_reasons=dict(collections.Counter(x for g in guides.values() if g['status']=='판정 보류' for x in g['reasons'])),
+        hold_reasons=dict(collections.Counter(x for b in current for x in validate(b,asof))),
+        price_conflicts=sum(bool(b.get('price_conflicts')) for b in current),
+        blocking_price_conflicts=sum(bool(blocking_conflicts(b)) for b in current),
+        finality_verified=sum(b.get('finality')=='VERIFIED' for b in current),
+        official_ohlcv_crosschecked=sum(len(b.get('price_crosscheck',{}).get('ohlcv_fields_match',{}))==6 and all(b['price_crosscheck']['ohlcv_fields_match'].values()) for b in current),
+        corporate_event_symbols=sum(bool(b.get('official_corporate_action_observations')) for b in current))
+    if state.get('runs') and state['runs'][-1].get('run_id')==summary.get('run_id'):
+        state['runs'][-1]=summary
+    write(ROOT/'summary.json',summary);write(STATE,state)
 
 def krx_reference(asof):
     """Official, independently issued daily unadjusted OHLCV; no finality inference."""
@@ -157,7 +191,10 @@ def krx_reference(asof):
     key=os.getenv('KRX_API_KEY');result={};status={}
     for market,code in [('KOSPI','stk'),('KOSDAQ','ksq')]:
         path=ROOT/'reference'/(market+'.json.gz');cached=read(path,{})
-        if cached.get('asof')==asof:
+        now=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat()
+        observed=cached.get('observed_at','')
+        cached_day=dt.datetime.fromisoformat(observed).astimezone(ZoneInfo('Asia/Seoul')).date().isoformat() if observed else ''
+        if cached.get('asof')==asof and not (now>asof and cached_day<=asof):
             rows=cached['rows'];status[market]='cached_same_date'
         elif key:
             try:
@@ -168,7 +205,8 @@ def krx_reference(asof):
                 write(path,{'asof':asof,'url':url,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'rows':rows});status[market]='received'
             except Exception as exc:rows=[];status[market]=type(exc).__name__
         else:rows=[];status[market]='credential_not_bound'
-        for row in rows:result[row['ISU_CD']]=row
+        metadata=read(path,{})
+        for row in rows:result[row['ISU_CD']]={**row,'_retrieved_at':metadata.get('observed_at'),'_source_url':metadata.get('url')}
     return result,status
 
 def crosscheck(b,reference,scope_evidence=None):

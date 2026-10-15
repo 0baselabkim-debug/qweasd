@@ -137,7 +137,7 @@ def technical_details(result,bundle):
     with st.expander('매수 가이드 · 기술 지표 근거'):
         st.write('기준일: '+str(result.get('asof') or '미확보')+' · KRX 수정주가 · 규칙 v'+str(technical.rules()['version']))
         for reason in result.get('reasons',[]):st.write(reason)
-        st.write('검증된 160거래일 OHLCV·동일 날짜 수급·장마감 확정 근거가 모두 필요합니다.')
+        st.write('160거래일 OHLCV·동일 날짜 수급과 공식 확정 또는 일별 교차검증 근거가 필요합니다.')
         if result.get('checks'):st.json(result['checks'])
         metrics=result.get('indicators') or (bundle.get('computed') if bundle and bundle.get('indicator_ready',bundle.get('structure_valid')) else None)
         if metrics:
@@ -151,6 +151,10 @@ def technical_details(result,bundle):
             st.write('KRX 공식 일별 종가 교차 일치: '+('확인' if bundle['price_crosscheck']['raw_close_match'] else '불일치')+' · 최종 확정과 별도')
         if bundle and bundle.get('legacy_price_discrepancy'):
             st.write('기존 종가는 통합 시장 관측값과 일치. 기술 분석은 별도 KRX 가격 사용 · 기존 원본 보존.')
+        elif bundle and any(x.startswith('Preserved raw close differs') for x in bundle.get('price_conflicts',[])):
+            st.write('기존 종가 차이는 원인 조사 중. 기술 분석은 독립 대조한 별도 KRX 일봉만 사용하며 기존 원본은 보존합니다.')
         st.caption('현재 구름대는 26거래일 이전 계산값, 미래 구름대는 현재 계산 후 26거래일 앞에 표시하는 값입니다. 기준은 개발 기본값이며 수익을 보장하지 않습니다.')
-        if bundle:st.write(f"수신 일봉 {len(bundle.get('bars',[]))}거래일 · 최종 확정 {bundle.get('finality','미확인')}")
+        if bundle:
+            from screener.technical_quality import daily_accepted
+            st.write(f"수신 일봉 {len(bundle.get('bars',[]))}거래일 · 공식 최종 확정 {bundle.get('finality','미확인')} · 일별 운용 검증 {'통과' if daily_accepted(bundle) else '미완료'}")
         st.link_button('기술적 판정 규칙', 'https://github.com/0baselabkim-debug/qweasd/blob/main/docs/trading-guidelines.md')

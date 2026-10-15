@@ -29,6 +29,10 @@ def test_incremental_and_adjustment_rebuild():
     bars,_,mode=c.price_rows(API([raw('20261013',5),raw('20261014',5)]),'000001','2026-10-14',old,rebuild)
     assert mode=='full_window' and calls and bars[0]['close']==5
     assert old['bars'][0]['close']==10
+    unchanged=c.price_rows(API([]),'000001','2026-10-13',old,forbidden)
+    assert unchanged[2]=='same_date_cache_reused' and unchanged[0]==old['bars']
+    delayed=c.price_rows(API([raw('20261013')]),'000001','2026-10-14',old,forbidden)
+    assert delayed[2]=='incremental_no_new_date' and delayed[0]==old['bars']
 
 def test_nonfinite_duplicate_and_action_unknown():
     import pytest
@@ -94,3 +98,68 @@ def test_corporate_failure_and_shifted_page_keep_known_records():
     assert failed['rows']==old['rows'] and failed['last_success_through']=='2026-10-14'
     newer=merge_corporate_source(old,{'status':'received','through':'2026-10-15','rows':[{'sht_cd':'000002','record_date':'20261015'}]})
     assert len(newer['rows'])==2 and newer['last_success_through']=='2026-10-15'
+
+
+def accepted_fixture():
+    """Synthetic unit-test observations only; never written into public caches."""
+    from screener.technical_quality import POLICY,FIELDS,digest,LEGACY_CONFLICT
+    dates=pd.bdate_range('2020-01-01',periods=200).strftime('%Y-%m-%d').tolist()
+    bars=[dict(trade_date=d,open=100.,high=110.,low=90.,close=100.,volume=20.,turnover=2000.) for d in dates]
+    flows=[dict(trade_date=d,net_amount=0) for d in dates[-20:]]
+    day=dates[-1];url='https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd='+day.replace('-','')
+    b=dict(symbol='999999',market='KOSPI',asof=day,exchange='KRX',adjustment='adjusted',
+           bars=bars,calendar=dates,flows=flows,finality='UNVERIFIED',finality_evidence=None,
+           price_comparison={'kis_unadjusted':100},price_conflicts=[LEGACY_CONFLICT])
+    row={v:str(bars[-1][k]) for k,v in FIELDS.items()}
+    row.update(ISU_CD='999999',BAS_DD=day.replace('-',''),_retrieved_at='2020-12-31T00:00:00+00:00',_source_url=url)
+    b['daily_acceptance']=dict(policy=POLICY,symbol='999999',asof=day,observed_at='2020-12-31T00:00:00+00:00',
+        krx_row=row,krx_url=url,bars_sha256=digest(bars),flows_sha256=digest(flows),requeried_flows=copy.deepcopy(flows),
+        flow_endpoint='KIS FHPTJ04160001 / J / million KRW to KRW')
+    return b
+
+
+def test_daily_acceptance_is_distinct_from_finality_and_preserves_legacy_conflict():
+    from screener.technical import validate,buy_guide
+    from screener.technical_quality import daily_accepted,LEGACY_CONFLICT
+    b=accepted_fixture()
+    assert daily_accepted(b) and not validate(b)
+    assert b['finality']=='UNVERIFIED' and b['price_conflicts']==[LEGACY_CONFLICT]
+    assert buy_guide(b)['status']=='관망'
+    b['price_conflicts'].append('KIS raw / independent KRX daily close mismatch')
+    assert validate(b) and buy_guide(b)['status']=='판정 보류'
+
+
+def test_daily_acceptance_rejects_missing_or_modified_evidence():
+    from screener.technical_quality import daily_accepted,digest
+    changes=[lambda b:b['bars'][-2].update(close=101),
+        lambda b:b['flows'][-1].update(net_amount=1),
+        lambda b:b['daily_acceptance']['krx_row'].update(ACC_TRDVOL='21'),
+        lambda b:b['daily_acceptance']['krx_row'].update(ISU_CD='000001'),
+        lambda b:b['daily_acceptance']['krx_row'].update(_source_url='https://example.com'),
+        lambda b:b['daily_acceptance']['krx_row'].update(_retrieved_at=b['asof']+'T10:00:00+00:00'),
+        lambda b:b['daily_acceptance'].update(observed_at=b['asof']+'T10:00:00+00:00'),
+        lambda b:b['daily_acceptance'].update(krx_url='https://example.com'),
+        lambda b:b['daily_acceptance'].update(flow_endpoint='UN'),
+        lambda b:b['daily_acceptance'].update(requeried_flows=[]),
+        lambda b:b.update(asof='2021-01-01'),lambda b:b.update(exchange='UN')]
+    for change in changes:
+        b=accepted_fixture();change(b);assert not daily_accepted(b)
+    b=accepted_fixture();b['flows'][-1]['net_amount']=None;b['daily_acceptance']['flows_sha256']=digest(b['flows'])
+    assert not daily_accepted(b)
+    assert daily_accepted(accepted_fixture()) # Actual zero is a valid observation.
+
+
+def test_requery_mismatch_does_not_replace_original_flow():
+    from scripts.technical_acceptance import verify_bundle
+    from screener.technical_quality import daily_accepted
+    b=accepted_fixture();b['price_comparison']['kis_adjusted']=100
+    row=b['daily_acceptance']['krx_row'];original=copy.deepcopy(b['flows'])
+    response=[{'stck_bsop_date':r['trade_date'].replace('-',''),'frgn_ntby_tr_pbmn':'0'} for r in original]
+    api=API([]);api.request=lambda *a,**kw:{'output2':response}
+    good=verify_bundle(api,b,{'999999':row});assert daily_accepted(good)
+    response[-1]['frgn_ntby_tr_pbmn']='1'
+    bad=verify_bundle(api,b,{'999999':row})
+    assert not daily_accepted(bad) and bad['flows']==original
+    response.append(response[-1])
+    import pytest
+    with pytest.raises(ValueError):verify_bundle(api,b,{'999999':row})

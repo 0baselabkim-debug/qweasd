@@ -2,6 +2,7 @@
 import json, math
 from decimal import Decimal
 from pathlib import Path
+from screener.technical_quality import daily_accepted, blocking_conflicts
 import numpy as np
 import pandas as pd
 ROOT=Path(__file__).resolve().parents[1]
@@ -12,8 +13,8 @@ def validate(bundle,asof=None,require_final=True):
     cfg=rules();issues=[]
     if not bundle:return ['검증된 OHLCV 미확보']
     if bundle.get('exchange')!='KRX' or bundle.get('adjustment')!='adjusted':issues.append('시장 범위·수정주가 기준 불일치')
-    if require_final and (bundle.get('finality')!='VERIFIED' or not bundle.get('finality_evidence')):issues.append('장마감 최종 확정 근거 미확인')
-    if bundle.get('price_conflicts'):issues.append('기존 원본과 종가 불일치 · 원본 보존')
+    if require_final and (bundle.get('finality')!='VERIFIED' or not bundle.get('finality_evidence')) and not daily_accepted(bundle):issues.append('공식 확정 또는 일별 교차검증 근거 미확보')
+    if blocking_conflicts(bundle):issues.append('시세 정합성 미확인 · 기존 원본 보존')
     if asof and bundle.get('asof')!=str(asof):issues.append('시세·수급·조회 기준일 불일치')
     try:
         f=pd.DataFrame(bundle['bars'])

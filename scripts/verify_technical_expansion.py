@@ -1,5 +1,5 @@
 """Independent arithmetic from received OHLCV; no synthetic production observations."""
-import hashlib,json,math,subprocess,sys
+import ast,hashlib,json,math,subprocess,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from scripts.technical_batch import read,write,CACHE,PRIORITY
@@ -67,10 +67,15 @@ def main():
         assert result['flow_matches_original']
         result.update(name=names.get(code),bars=len(b['bars']),first=b['bars'][0]['trade_date'],last=b['bars'][-1]['trade_date'],buy=buy_guide(b),price_comparison=b['price_comparison'],finality=b['finality'],corporate_actions=b['corporate_actions'])
         report['symbols'][code]=result
-    paths=['snapshot/dashboard.duckdb','snapshot/corporate.duckdb','snapshot/macro.json','theme_mapping.json','config.toml','technical_rules.json','screener/technical.py','.github/workflows/daily-dashboard.yml','.github/workflows/corporate-refresh.yml','.github/workflows/macro-refresh.yml']
+    paths=['snapshot/dashboard.duckdb','snapshot/corporate.duckdb','snapshot/macro.json','theme_mapping.json','config.toml','technical_rules.json','.github/workflows/daily-dashboard.yml','.github/workflows/corporate-refresh.yml','.github/workflows/macro-refresh.yml']
     for path in paths:
         if Path(path).exists():report['preserved'][path]=hashlib.sha256(subprocess.check_output(['git','show','d75da76:'+path])).hexdigest()==hashlib.sha256(Path(path).read_bytes()).hexdigest()
     assert all(report['preserved'].values())
+    original_engine=ast.parse(subprocess.check_output(['git','show','141dcb7:screener/technical.py']).decode())
+    current_engine=ast.parse(Path('screener/technical.py').read_text())
+    functions=lambda tree:{n.name:ast.dump(n,include_attributes=False) for n in tree.body if isinstance(n,ast.FunctionDef) and n.name!='validate'}
+    report['preserved']['technical_calculation_and_signal_functions']=functions(original_engine)==functions(current_engine)
+    assert report['preserved']['technical_calculation_and_signal_functions']
     reference=read(Path('reports/technical-expansion/local-krx-crosscheck.json'),{})
     rows={r['ISU_CD']:r for m in reference.get('markets',{}).values() for r in m.get('samples',[])}
     for code in PRIORITY:

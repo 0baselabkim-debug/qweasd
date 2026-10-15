@@ -4,7 +4,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [public, pilot, private, evidence]
+        options: [public, pilot, private, evidence, verify]
         default: public
       limit:
         description: Public symbols per checkpointed batch (max 600)
@@ -15,7 +15,9 @@ on:
         type: boolean
         default: false
   schedule:
-    - cron: '45 14,15,16,17 * * 1-5'
+    # Bounded overnight checkpoints, KST 23:45 through 07:45 next morning.
+    # No calls for a fully collected/verified date. Shared auth lock serializes daily jobs.
+    - cron: '45 14-22 * * 1-5'
   workflow_run:
     workflows: ['Daily validated dashboard refresh']
     types: [completed]
@@ -39,7 +41,7 @@ jobs:
           python-version: '3.12'
       - run: pip install -r requirements.txt
       - name: Private priority queue (no personal artifacts or logs)
-        if: inputs.mode != 'pilot' && inputs.mode != 'evidence'
+        if: inputs.mode != 'pilot' && inputs.mode != 'evidence' && inputs.mode != 'verify'
         continue-on-error: true
         env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
