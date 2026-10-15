@@ -107,7 +107,7 @@ with sync_playwright() as p:
   boxes=[c.bounding_box() for c in cards.all()]
   assert abs((boxes[1]['x']-boxes[0]['x']-boxes[0]['width'])-(boxes[2]['y']-boxes[0]['y']-boxes[0]['height']))<3
   assert abs(cards.nth(2).bounding_box()['y']-cards.nth(3).bounding_box()['y'])<3
-  assert ui.locator('.macro-card th,.macro-card td:first-child,.investor-table td:nth-child(2)').evaluate_all('es=>es.every(e=>getComputedStyle(e).textAlign==="center")')
+  assert ui.locator('.macro-card th,.macro-table td:first-child,.investor-market,.investor-name').evaluate_all('es=>es.every(e=>getComputedStyle(e).textAlign==="center")')
   state=macro_read()
   for group in ['금리','환율·원자재','미국 증시','한국 증시']:
    for expected in macro_rows(state,catalog(),group):
@@ -115,6 +115,9 @@ with sync_playwright() as p:
     assert row.locator('td').all_text_contents()==[expected[c] for c in ['항목명','최신 데이터 값','전일 대비']]
     assert expected['date'] in row.get_attribute('title')
   assert ui.locator('.investor-table tbody tr').count()==6
+  assert ui.locator('.investor-table td[rowspan="3"]').all_text_contents()==['KOSPI','KOSDAQ']
+  assert ui.locator('.investor-table .investor-name').all_text_contents()==['개인','외국인','기관']*2
+  assert ui.locator('.investor-table td.num').count()==6
   rows=download('매크로 현황 CSV','macro.csv');assert len(rows)==12
   for row in rows:
    key=next(k for k,m in catalog().items() if m['name']==row['지표']);match(row['최신 공표값'],state['indicators'][key]['value']);assert row['기준일']==state['indicators'][key]['date']

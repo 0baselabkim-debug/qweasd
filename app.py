@@ -96,7 +96,8 @@ if ss.stage=='macro':
     r=state.get('investors',{}).get(market_name,{})
     for investor in ['개인','외국인','기관']:
      value=r.get('amounts',{}).get(investor)
-     rows.append('<tr><td>'+market_name+'</td><td>'+investor+'</td><td class="num">'+('미확보' if value is None else f'{value:+,.2f}')+'</td></tr>')
+     market_cell='<td class="investor-market" rowspan="3">'+market_name+'</td>' if investor=='개인' else ''
+     rows.append('<tr>'+market_cell+'<td class="investor-name">'+investor+'</td><td class="num">'+('미확보' if value is None else f'{value:+,.2f}')+'</td></tr>')
    st.markdown('<section class="macro-card"><div class="macro-card-head"><h3>투자자별 거래 동향</h3></div><div class="mini-scroll investor-table"><table class="mini-table"><thead><tr><th>시장</th><th>투자자</th><th class="num">당일 순매수(억원)</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div></section>',unsafe_allow_html=True)
   cols=st.columns(2)
   for col,group,title in zip(cols,['금리','환율·원자재'],['금리','기타 경제지표']):
