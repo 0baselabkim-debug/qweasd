@@ -27,3 +27,14 @@ preservation.json: 데이터 원본·계산·판정·테마·모든 GitHub Actio
 변경 전1920px 화면은 screenshots/before-*.png. 공개 배포 후 스크린샷과 실행 기록은 아래 최종 검증 기록 참조.
 
 대시보드: https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/
+
+개발 중 기존 공시 자동화가 b225936에서 corporate 스냅샷 3개를 별도로 갱신했습니다. 해당 정상 갱신을 그대로 병합·보존했습니다. UI 변경이 보호 파일38개를 수정하지 않았음은 최신 공시 게시 커밋 b225936과의 동일 해시로도 확인했습니다.
+
+## 공개 배포 최종 검증
+
+- UI 커밋76df6a4, 기존 공시 갱신 보존 후 배포 커밋2e8a793.
+- [자동 테스트110개 및 HTTP 검사 통과](https://github.com/0baselabkim-debug/qweasd/actions/runs/38689546170).
+- [공개 웹 실제 조작·레이아웃 검증 통과](https://github.com/0baselabkim-debug/qweasd/actions/runs/38689546059). 실제값/정밀도/CSV, 더블클릭 및 터치, 정렬·검색·탭, 1920/1440/768/390px 본문 폭·행 높이·글자14px·내부 스크롤·비겹침 확인.
+- 최종 실측은 public-verification.json. 공개 웹에서 매크로 헤더44px/행46px, 수급 표 헤더45px/기본 행44px. 긴 섹터명 줄바꿈 행67px.
+- 공개 웹 스크린샷: screenshots/macro-1920.png, sectors-1920.png, detail-1920.png, macro-1440.png, macro-390.png, detail-390.png. 전체 해상도별 화면은 evidence/dashboard-38689546059 브랜치 reports/live-dashboard에 보존.
+- GitHub Actions 설정은 변경하지 않았으며 기존 수집/재시도를 실행하거나 수정하지 않음. 사용자 추가 설정 없음.
