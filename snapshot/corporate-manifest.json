@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-15T05:52:32.998445+00:00",
-  "filings": 8355,
-  "financial_versions": 2591,
-  "business_companies": 176,
+  "updated_at": "2026-10-15T10:19:07.309826+00:00",
+  "filings": 8356,
+  "financial_versions": 2631,
+  "business_companies": 217,
   "universe": 2430,
   "last_run": {
-    "id": "38688068774-1792043534673247189",
-    "started_at": "2026-10-15T05:41:08.154309+00:00",
-    "completed_at": "2026-10-15T05:52:14.673257+00:00",
-    "calls": 379,
-    "seconds": 666.52,
-    "processed_filings": 238,
-    "budget_exhausted": false,
+    "id": "38714989849-1792059528791888113",
+    "started_at": "2026-10-15T09:43:33.035048+00:00",
+    "completed_at": "2026-10-15T10:18:48.791897+00:00",
+    "calls": 141,
+    "seconds": 2115.76,
+    "processed_filings": 88,
+    "budget_exhausted": true,
     "discovery_through": "2026-10-15",
     "discovery_error": null,
     "failed_jobs": {
@@ -41,14 +41,24 @@
       },
       "20260605000456": {
         "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260331003904": {
+        "business_error": "document_xml_missing"
+      },
+      "20260331003871": {
+        "business_error": "document_xml_missing"
+      },
+      "20260730000175": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
       }
     },
     "scope": "entire_universe",
-    "pending_filings": 4499,
+    "pending_filings": 4421,
     "unavailable_financials": [],
     "held_financials": []
   },
   "annual_score_policy": "preserved_2025_baseline",
   "quarterly_score_policy": "hold_until_comparable_TTM_validation",
-  "state_sha256": "31e41c80a5f2394459b837c0bb74a61011a9a2373ed77fb8fe08d7f805657071"
+  "state_sha256": "2547e8c690eb9b6a4022d1e67b8b96ed85d6b1cf8bdee07eb7435187d1143b0c"
 }
