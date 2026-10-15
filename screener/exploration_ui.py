@@ -40,14 +40,17 @@ def macro_rows(state,catalog,group):
         rows.append({'항목명':('WTI' if key=='wti' else meta['name']),'최신 데이터 값':value,'전일 대비':change,'date':r.get('date') if r else None,'change':r.get('change') if r else None,'provider':r.get('provider') if r else meta['provider']})
     return rows
 
-def macro_card(title,rows):
+def macro_card_html(title,rows):
     body=[]
     for row in rows:
         tone='positive' if row['change'] is not None and row['change']>0 else 'negative' if row['change'] is not None and row['change']<0 else ''
         provenance=f"기준일 {row['date'] or '미확보'} · {row['provider']}"
         body.append('<tr title="'+html.escape(provenance,quote=True)+'"><td>'+html.escape(row['항목명'])+'</td><td class="num">'+html.escape(row['최신 데이터 값'])+'</td><td class="num '+tone+'">'+html.escape(row['전일 대비'])+'</td></tr>')
     card_class='macro-card economy-card' if title=='기타 경제지표' else 'macro-card'
-    st.markdown('<section class="'+card_class+'"><div class="macro-card-head"><h3>'+html.escape(title)+'</h3></div><div class="mini-scroll"><table class="mini-table macro-table"><thead><tr><th>항목명</th><th class="num">최신 데이터 값</th><th class="num">전일 대비</th></tr></thead><tbody>'+''.join(body)+'</tbody></table></div></section>',unsafe_allow_html=True)
+    return '<section class="'+card_class+'"><div class="macro-card-head"><h3>'+html.escape(title)+'</h3></div><div class="mini-scroll"><table class="mini-table macro-table"><thead><tr><th>항목명</th><th class="num">최신 데이터 값</th><th class="num">전일 대비</th></tr></thead><tbody>'+''.join(body)+'</tbody></table></div></section>'
+
+def macro_card(title,rows):
+    st.markdown(macro_card_html(title,rows),unsafe_allow_html=True)
 
 CSS='''<style>
 [data-testid="stSidebarHeader"],[data-testid="stSidebarCollapseButton"],[data-testid="stExpandSidebarButton"],[data-testid="stSidebarCollapsedControl"],[data-testid="stSidebar"] [data-testid="stLogoSpacer"]{display:none!important}
@@ -76,8 +79,11 @@ def install():st.markdown(CSS,unsafe_allow_html=True)
 
 READABILITY_CSS='''
 [data-testid="stMain"] .block-container{width:100%!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important}
-.macro-card{padding:14px;margin:0!important;min-height:410px;box-sizing:border-box}.macro-card-head{margin-bottom:12px}.st-key-macro_cards .macro-card .macro-card-head h3{font-size:20px!important;font-weight:700!important;line-height:1.4!important;color:#edf3ff!important}
-.st-key-macro_cards div:has(>.macro-card){margin-bottom:0!important}
+.macro-card{padding:14px;margin:0!important;min-height:0;box-sizing:border-box}.macro-card-head{margin-bottom:12px}.st-key-macro_cards .macro-card .macro-card-head h3{font-size:20px!important;font-weight:700!important;line-height:1.4!important;color:#edf3ff!important}
+.st-key-macro_cards div:has(>.macro-card-grid){margin-bottom:0!important}
+.macro-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:stretch}
+.macro-card-grid>.macro-card{min-width:0}
+@media(max-width:1180px){.macro-card-grid{grid-template-columns:minmax(0,1fr)}}
 .st-key-macro_cards,.st-key-macro_cards [data-testid="stHorizontalBlock"]{gap:22px!important}
 .macro-card .mini-scroll,.investor-table{width:fit-content;max-width:100%;margin-left:auto;margin-right:auto}
 .macro-table,.investor-table .mini-table{width:max-content;min-width:0;table-layout:auto}

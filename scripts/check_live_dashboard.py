@@ -66,7 +66,10 @@ with sync_playwright() as p:
   if stage=='macro':
    panels=[c.bounding_box() for c in ui.locator('.macro-card').all()]
    if width>1180:
-    assert max(c['height'] for c in panels)-min(c['height'] for c in panels)<2
+    assert abs(panels[0]['height']-panels[1]['height'])<2
+    assert abs(panels[2]['height']-panels[3]['height'])<2
+    assert panels[2]['height']<panels[0]['height']-100
+    assert abs(panels[0]['y']+panels[0]['height']-panels[1]['y']-panels[1]['height'])<2
     assert abs(panels[0]['x']-panels[2]['x'])<2 and abs(panels[1]['x']-panels[3]['x'])<2
     assert abs(panels[0]['y']-panels[1]['y'])<2 and abs(panels[2]['y']-panels[3]['y'])<2
    else:

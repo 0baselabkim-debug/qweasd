@@ -87,21 +87,18 @@ if ss.stage=='macro':
  explorer.reading_layout('macro')
  state=macro.read();macro_frames=[]
  with st.container(key='macro_cards'):
-  cols=st.columns(2)
-  with cols[0]:
-   explorer.macro_card('증시 지수',explorer.macro_rows(state,macro.catalog(),'미국 증시')+explorer.macro_rows(state,macro.catalog(),'한국 증시'))
-  with cols[1]:
-   rows=[]
-   for market_name in ['KOSPI','KOSDAQ']:
-    r=state.get('investors',{}).get(market_name,{})
-    for investor in ['개인','외국인','기관']:
-     value=r.get('amounts',{}).get(investor)
-     market_cell='<td class="investor-market" rowspan="3">'+market_name+'</td>' if investor=='개인' else ''
-     rows.append('<tr>'+market_cell+'<td class="investor-name">'+investor+'</td><td class="num">'+('미확보' if value is None else f'{value:+,.2f}')+'</td></tr>')
-   st.markdown('<section class="macro-card"><div class="macro-card-head"><h3>투자자별 거래 동향</h3></div><div class="mini-scroll investor-table"><table class="mini-table"><thead><tr><th>시장</th><th>투자자</th><th class="num">당일 순매수(억원)</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div></section>',unsafe_allow_html=True)
-  cols=st.columns(2)
-  for col,group,title in zip(cols,['금리','환율·원자재'],['금리','기타 경제지표']):
-   with col:explorer.macro_card(title,explorer.macro_rows(state,macro.catalog(),group))
+  cards=[explorer.macro_card_html('증시 지수',explorer.macro_rows(state,macro.catalog(),'미국 증시')+explorer.macro_rows(state,macro.catalog(),'한국 증시'))]
+  rows=[]
+  for market_name in ['KOSPI','KOSDAQ']:
+   r=state.get('investors',{}).get(market_name,{})
+   for investor in ['개인','외국인','기관']:
+    value=r.get('amounts',{}).get(investor)
+    market_cell='<td class="investor-market" rowspan="3">'+market_name+'</td>' if investor=='개인' else ''
+    rows.append('<tr>'+market_cell+'<td class="investor-name">'+investor+'</td><td class="num">'+('미확보' if value is None else f'{value:+,.2f}')+'</td></tr>')
+  cards.append('<section class="macro-card"><div class="macro-card-head"><h3>투자자별 거래 동향</h3></div><div class="mini-scroll investor-table"><table class="mini-table"><thead><tr><th>시장</th><th>투자자</th><th class="num">당일 순매수(억원)</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div></section>')
+  for group,title in [('금리','금리'),('환율·원자재','기타 경제지표')]:
+   cards.append(explorer.macro_card_html(title,explorer.macro_rows(state,macro.catalog(),group)))
+  st.markdown('<div class="macro-card-grid">'+''.join(cards)+'</div>',unsafe_allow_html=True)
   for key,meta in macro.catalog().items():
    r=state.get('indicators',{}).get(key,{})
    macro_frames.append({'지표':meta['name'],'최신 공표값':r.get('value'),'단위':meta['unit'],'직전 공표값':r.get('previous_value'),'전일 대비':r.get('change'),'변화 단위':r.get('change_unit'),'등락률(%)':r.get('change_percent'),'기준일':r.get('date'),'직전 기준일':r.get('previous_date'),'공급원':r.get('provider',meta['provider']),'갱신 상태':('공표값 확보' if state.get('attempts',{}).get(key,{}).get('status')=='success' else '이전 정상 자료 유지') if r else '미확보'})
