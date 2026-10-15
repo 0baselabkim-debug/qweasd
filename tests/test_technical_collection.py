@@ -113,8 +113,9 @@ def accepted_fixture():
     row={v:str(bars[-1][k]) for k,v in FIELDS.items()}
     row.update(ISU_CD='999999',BAS_DD=day.replace('-',''),_retrieved_at='2020-12-31T00:00:00+00:00',_source_url=url)
     b['daily_acceptance']=dict(policy=POLICY,symbol='999999',asof=day,observed_at='2020-12-31T00:00:00+00:00',
-        krx_row=row,krx_url=url,bars_sha256=digest(bars),flows_sha256=digest(flows),requeried_flows=copy.deepcopy(flows),
+        krx_row=row,krx_url=url,bars_sha256=digest(bars),flows_sha256=digest(flows),checked_flows=copy.deepcopy(flows),
         flow_endpoint='KIS FHPTJ04160001 / J / million KRW to KRW')
+    b['daily_acceptance'].update(flow_check_kind='live_requery',raw_flow_rows=[{'stck_bsop_date':r['trade_date'].replace('-',''),'frgn_ntby_tr_pbmn':'0'} for r in flows])
     return b
 
 
@@ -140,7 +141,9 @@ def test_daily_acceptance_rejects_missing_or_modified_evidence():
         lambda b:b['daily_acceptance'].update(observed_at=b['asof']+'T10:00:00+00:00'),
         lambda b:b['daily_acceptance'].update(krx_url='https://example.com'),
         lambda b:b['daily_acceptance'].update(flow_endpoint='UN'),
-        lambda b:b['daily_acceptance'].update(requeried_flows=[]),
+        lambda b:b['daily_acceptance'].update(checked_flows=[]),
+        lambda b:b['daily_acceptance'].update(raw_flow_rows=[]),
+        lambda b:b['daily_acceptance'].update(flow_check_kind='unknown'),
         lambda b:b.update(asof='2021-01-01'),lambda b:b.update(exchange='UN')]
     for change in changes:
         b=accepted_fixture();change(b);assert not daily_accepted(b)
@@ -212,3 +215,15 @@ def test_completed_public_date_needs_no_authentication(tmp_path,monkeypatch):
     monkeypatch.setattr(collect_technical,'KIS',forbidden);monkeypatch.setattr(c,'refresh_summary',lambda *a:None)
     monkeypatch.setattr(sys,'argv',['collect_technical.py','--mode','public'])
     collect_technical.main()
+
+
+def test_saved_response_acceptance_keeps_replay_distinct_from_new_calls():
+    from scripts.technical_acceptance import accept_saved_responses
+    from screener.technical_quality import daily_accepted
+    b=accepted_fixture();b['price_comparison']['kis_adjusted']=100
+    e=b['daily_acceptance'];sources=[{'kind':'unit_test_fixture_only'}]
+    result=accept_saved_responses(b,{'999999':e['krx_row']},e['raw_flow_rows'],sources)
+    assert daily_accepted(result) and result['finality']=='UNVERIFIED'
+    assert result['daily_acceptance']['flow_check_kind']=='saved_api_response_replay'
+    assert result['bars']==b['bars'] and result['flows']==b['flows']
+    result['daily_acceptance']['flow_sources']=[];assert not daily_accepted(result)

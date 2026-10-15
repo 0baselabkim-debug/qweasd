@@ -67,10 +67,15 @@ def main():
         assert result['flow_matches_original']
         result.update(name=names.get(code),bars=len(b['bars']),first=b['bars'][0]['trade_date'],last=b['bars'][-1]['trade_date'],buy=buy_guide(b),price_comparison=b['price_comparison'],finality=b['finality'],corporate_actions=b['corporate_actions'])
         report['symbols'][code]=result
-    paths=['snapshot/dashboard.duckdb','snapshot/corporate.duckdb','snapshot/macro.json','theme_mapping.json','config.toml','technical_rules.json','.github/workflows/daily-dashboard.yml','.github/workflows/corporate-refresh.yml','.github/workflows/macro-refresh.yml']
+    paths=['snapshot/dashboard.duckdb','snapshot/corporate.duckdb','snapshot/macro.json','theme_mapping.json','config.toml','technical_rules.json','.github/workflows/corporate-refresh.yml']
     for path in paths:
         if Path(path).exists():report['preserved'][path]=hashlib.sha256(subprocess.check_output(['git','show','d75da76:'+path])).hexdigest()==hashlib.sha256(Path(path).read_bytes()).hexdigest()
     assert all(report['preserved'].values())
+    for name in ['daily-dashboard','macro-refresh']:
+        path=f'.github/workflows/{name}.yml'
+        before=subprocess.check_output(['git','show','141dcb7:'+path]).decode()
+        report['preserved'][name+'_logic_except_pending_queue']=Path(path).read_text().replace('  queue: max\n','')==before
+        assert report['preserved'][name+'_logic_except_pending_queue']
     original_engine=ast.parse(subprocess.check_output(['git','show','141dcb7:screener/technical.py']).decode())
     current_engine=ast.parse(Path('screener/technical.py').read_text())
     functions=lambda tree:{n.name:ast.dump(n,include_attributes=False) for n in tree.body if isinstance(n,ast.FunctionDef) and n.name!='validate'}

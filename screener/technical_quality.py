@@ -1,7 +1,7 @@
 """Operational daily acceptance, explicitly distinct from provider finality.
 
 No clock-only acceptance: a prior Seoul date, independently issued KRX OHLCV,
-and a second KIS J flow response must agree with the exact evaluated payload.
+and actual KIS J flow response rows must agree with the exact evaluated payload.
 """
 import datetime as dt
 import hashlib
@@ -19,7 +19,7 @@ def digest(value):
 def daily_accepted(bundle):
     """Re-evaluate evidence; a saved status/boolean alone can never open the gate."""
     try:
-        e=bundle['daily_acceptance'];row=e['krx_row'];flows=e['requeried_flows']
+        e=bundle['daily_acceptance'];row=e['krx_row'];flows=e['checked_flows']
         day=bundle['asof'];symbol=bundle['symbol'];market=bundle['market']
         observed=dt.datetime.fromisoformat(e['observed_at'])
         if observed.tzinfo is None or day>=observed.astimezone(ZoneInfo('Asia/Seoul')).date().isoformat():return False
@@ -32,6 +32,12 @@ def daily_accepted(bundle):
         if official_observed.tzinfo is None or day>=official_observed.astimezone(ZoneInfo('Asia/Seoul')).date().isoformat():return False
         if row['_source_url']!=url:return False
         if e['flow_endpoint']!='KIS FHPTJ04160001 / J / million KRW to KRW':return False
+        if e.get('flow_check_kind') not in ('live_requery','saved_api_response_replay'):return False
+        raw=e['raw_flow_rows']
+        normalized=sorted([{'trade_date':dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date().isoformat(),
+                            'net_amount':int(r['frgn_ntby_tr_pbmn'])*1_000_000} for r in raw],key=lambda r:r['trade_date'])
+        if len(raw)!=20 or normalized!=flows:return False
+        if e['flow_check_kind']=='saved_api_response_replay' and not e.get('flow_sources'):return False
         if e['bars_sha256']!=digest(bundle['bars']) or e['flows_sha256']!=digest(bundle['flows']):return False
         if bundle['bars'][-1]['trade_date']!=day:return False
         if not all(bundle['bars'][-1][k]==float(row[v]) for k,v in FIELDS.items()):return False

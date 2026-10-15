@@ -6,6 +6,7 @@ permissions:
 concurrency:
   group: kis-validation-auth
   cancel-in-progress: false
+  queue: max
 jobs:
   probe:
     runs-on: ubuntu-latest

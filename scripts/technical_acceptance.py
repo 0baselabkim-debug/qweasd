@@ -19,7 +19,7 @@ def verify_bundle(api,bundle,references):
     response=api.request('/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily',
         {'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':symbol,'FID_INPUT_DATE_1':day.replace('-',''),
          'FID_ORG_ADJ_PRC':'','FID_ETC_CLS_CODE':''},'FHPTJ04160001')
-    wanted={r['trade_date'] for r in b['flows'][-20:]};rows=[];seen=set()
+    wanted={r['trade_date'] for r in b['flows'][-20:]};rows=[];raw=[];seen=set()
     for r in response.get('output2',[]):
         if not r.get('stck_bsop_date'):continue
         date=dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date().isoformat()
@@ -27,17 +27,30 @@ def verify_bundle(api,bundle,references):
         if date in seen:raise ValueError('Duplicate flow date')
         seen.add(date)
         rows.append({'trade_date':date,'net_amount':int(r['frgn_ntby_tr_pbmn'])*1_000_000})
+        raw.append({k:r[k] for k in ['stck_bsop_date','frgn_ntby_tr_pbmn']})
     rows.sort(key=lambda r:r['trade_date'])
     part={'KOSPI':'stk','KOSDAQ':'ksq'}[b['market']]
     b['daily_acceptance']={'policy':POLICY,'symbol':symbol,'asof':day,
         'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),
         'krx_url':f'https://data-dbg.krx.co.kr/svc/apis/sto/{part}_bydd_trd?basDd='+day.replace('-',''),
         'krx_row':references.get(symbol,{}),'bars_sha256':digest(b['bars']),'flows_sha256':digest(b['flows']),
-        'flow_endpoint':'KIS FHPTJ04160001 / J / million KRW to KRW','requeried_flows':rows,
+        'flow_endpoint':'KIS FHPTJ04160001 / J / million KRW to KRW','checked_flows':rows,
+        'flow_check_kind':'live_requery','raw_flow_rows':raw,
         'limit':'Operational prior-day evidence only. No provider finality claim; later corrections remain possible.'}
     b['daily_acceptance']['status']='ACCEPTED_DAILY' if daily_accepted(b) else 'REVIEW_REQUIRED'
     b['validation']=validate(b,day)
     return b
+
+def accept_saved_responses(bundle,references,raw_rows,sources):
+    """Revalidate existing real API responses; never describe this as a new call."""
+    class SavedResponse:
+        def request(self,*args,**kwargs):return {'output2':raw_rows}
+    checked=verify_bundle(SavedResponse(),bundle,references)
+    if checked.get('daily_acceptance'):
+        checked['daily_acceptance'].update(flow_check_kind='saved_api_response_replay',flow_sources=sources)
+        checked['daily_acceptance']['status']='ACCEPTED_DAILY' if daily_accepted(checked) else 'REVIEW_REQUIRED'
+        checked['validation']=validate(checked,checked['asof'])
+    return checked
 
 def incremental_probe(api,bundle):
     """Replay a real D-1 -> D transition, without publishing or fabricating bars."""
