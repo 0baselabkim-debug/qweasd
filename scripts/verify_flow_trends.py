@@ -37,19 +37,19 @@ for (market,sector),group in x.groupby(['market','sector']):
         amount=sum(values) if all(v is not None for v in values) else None
         assert equal(frame.loc[frame.trade_date==day,'net_amount'].item(),amount);checks+=1;complete.append(amount)
     r=g[(g.market==market)&(g.sector==sector)].iloc[0]
-    for n in [5,20]:
+    for n in [1,5,20]:
         values=complete[-n:];expected=sum(values) if len(values)==n and all(v is not None for v in values) else None
         assert equal(r[f'net_{n}d'],expected)
 for code in x.symbol:
-    for n in [5,20]:
+    for n in [1,5,20]:
         values=[original.get((code,day)) for day in dates[-n:]]
         expected=sum(values) if len(values)==n and all(v is not None for v in values) else None
         assert equal(m.loc[code,f'net_{n}d'],expected)
 for table in [m,g]:
-    for n in [5,20]:
+    for n in [1,5,20]:
         vals=table[f'net_{n}d'];expected=vals.map(lambda v:1+sum(w>v for w in vals.dropna()) if pd.notna(v) else float('nan'))
         assert ((expected==table[f'net_{n}d_rank'])|(expected.isna()&table[f'net_{n}d_rank'].isna())).all()
-report={'asof':asof,'api_recollection_calls':0,'database_sha256_unchanged':dbhash,'stock_score_sha256_unchanged':sha,'original_flow_rows_verified':len(d['flows']),
+report={'verified_window_trading_days':[1,5,20],'asof':asof,'api_recollection_calls':0,'database_sha256_unchanged':dbhash,'stock_score_sha256_unchanged':sha,'original_flow_rows_verified':len(d['flows']),
  'start':str(dates[0].date()),'end':str(dates[-1].date()),'days':len(dates),'stock_count':len(x),'sector_count':len(g),'sector_day_checks':checks,
  'complete_stock_scores_preserved':int(x.total_score.notna().sum()),'full_sector_scores':int(s.total_score.notna().sum()),
  'stocks_5d':int(m.net_5d.notna().sum()),'stocks_20d':int(m.net_20d.notna().sum()),'sectors_5d':int(g.net_5d.notna().sum()),'sectors_20d':int(g.net_20d.notna().sum()),'sectors_partial_flow_points':int(g.flow_points.notna().sum()),

@@ -76,31 +76,44 @@ with sync_playwright() as p:
   page.screenshot(path=str(out/'detail.png'),full_page=True)
   # Flow feature checks use only the existing web snapshot and downloads, never provider APIs.
   assert '현재 구성 기준 수급 추이' in ui.locator('body').inner_text()
-  choose('수급 기간','5거래일')
-  choose('섹터 수급 정렬','시가총액 대비 순매수 강도')
-  assert '선택 섹터 5거래일 일별·누적 순매수' in ui.locator('body').inner_text()
-  with page.expect_download(timeout=30000) as download:
-   ui.get_by_role('button',name='섹터 현황 CSV',exact=True).click()
-  download.value.save_as(str(out/'flow-sectors-5d.csv'))
-  choose('종목 범위','전체 시장')
-  choose('종목 정렬','20일 외국인 순매수')
-  with page.expect_download(timeout=30000) as download:
-   ui.get_by_role('button',name='선택 종목 CSV',exact=True).click()
-  download.value.save_as(str(out/'flow-stocks-20d.csv'))
   import csv as csv_module
-  rows=list(csv_module.DictReader((out/'flow-stocks-20d.csv').read_text(encoding='utf-8-sig').splitlines()))
-  values=[float(r['20일 순매수(억원)']) for r in rows if r['20일 순매수(억원)']]
-  assert len(rows)==2430 and values==sorted(values,reverse=True) and len(values)==2427
-  choose('수급 기간','20거래일')
-  choose('섹터 수급 정렬','누적 순매수 금액')
-  with page.expect_download(timeout=30000) as download:
-   ui.get_by_role('button',name='섹터 현황 CSV',exact=True).click()
-  download.value.save_as(str(out/'flow-sectors-20d.csv'))
-  sectors=list(csv_module.DictReader((out/'flow-sectors-20d.csv').read_text(encoding='utf-8-sig').splitlines()))
-  expected_flow=json.loads((root/'reports/flow-trends/validation.json').read_text())
-  top=expected_flow['sector_top_20d'][0]
-  assert sectors[0]['시장']==top['market'] and sectors[0]['섹터']==top['sector']
-  assert abs(float(sectors[0]['20일 순매수(억원)'])*1e8-top['net_20d'])<1
+  def tab(section,label):
+   ui.locator('.st-key-'+section+'_period').get_by_role('tab',name=label,exact=True).click()
+   page.wait_for_timeout(2500)
+   assert ui.locator('.st-key-'+section+'_period').get_by_role('tab',name=label,exact=True).get_attribute('aria-selected')=='true'
+  def download_csv(button,name):
+   with page.expect_download(timeout=30000) as download:
+    ui.get_by_role('button',name=button,exact=True).click()
+   destination=out/name;download.value.save_as(str(destination))
+   return list(csv_module.DictReader(destination.read_text(encoding='utf-8-sig').splitlines()))
+  expected_sectors=list(csv_module.DictReader((root/'reports/flow-trends/sector-flows.csv').read_text().splitlines()))
+  expected_stocks=list(csv_module.DictReader((root/'reports/flow-trends/stock-flows.csv').read_text().splitlines()))
+  choose('종목 범위','전체 시장');choose('종목 정렬','누적 순매수 금액')
+  for label,days in [('오늘',1),('지난 5일',5),('지난 20일',20)]:
+   tab('sector',label)
+   if days==5:
+    assert ui.locator('.st-key-stock_period').get_by_role('tab',name='오늘',exact=True).get_attribute('aria-selected')=='true','stock_period_must_be_independent'
+   tab('stock',label)
+   assert '누적 순매수 금액' in ui.locator('.st-key-stock_sort').inner_text()
+   assert '누적 순매수 금액' in ui.locator('.st-key-sector_sort').inner_text()
+   for button,name,original,keys in [('섹터 현황 CSV','sectors',expected_sectors,['market','sector']),('선택 종목 CSV','stocks',expected_stocks,['symbol'])]:
+    rows=download_csv(button,f'flow-{name}-{days}d.csv')
+    assert len(rows)==len(original)
+    actual_keys=['시장','섹터'] if name=='sectors' else ['코드']
+    lookup={tuple(r[k] for k in keys):r[f'net_{days}d'] for r in original}
+    amounts=[]
+    for row in rows:
+     expected_value=lookup[tuple(row[k] for k in actual_keys)]
+     value=row['선택 기간 순매수(억원)']
+     assert bool(value)==bool(expected_value),'missing_value_mismatch'
+     if value:
+      assert abs(float(value)*1e8-float(expected_value))<1
+      amounts.append(float(value))
+    assert amounts==sorted(amounts,reverse=True),'selected_period_rank_not_descending'
+   report['checks'].append(f'{label}: real sector and stock CSV amounts all match preserved source; descending selected-period ranking')
+   if days<20:
+    choose('섹터 수급 정렬','시가총액 대비 순매수 강도');choose('종목 정렬','종합 점수')
+  report['checks'].append('Period tabs independently switch and reset custom sorting to selected-period flow amount')
   choose('종목 상세정보','삼성전자 · 005930')
   assert '선택 종목 20거래일 일별·누적 순매수' in ui.locator('body').inner_text()
   charts=ui.locator('[data-testid="stVegaLiteChart"]')
@@ -121,7 +134,7 @@ with sync_playwright() as p:
   charts.first.screenshot(path=str(out/'flow-sector.png'))
   charts.nth(1).screenshot(path=str(out/'flow-stock.png'))
   page.screenshot(path=str(out/'flow-trends.png'),full_page=True)
-  report['checks'].append('5/20-day controls, sector intensity/amount sorting, all-stock 20-day ranking, two real charts and hover tooltip')
+  report['checks'].append('Today/5/20-day tabs, all-stock ranking, two real charts and hover tooltip')
   report['success']=True
  except Exception as e:
   report['error_type']=type(e).__name__;report['error']=str(e)[:1800]

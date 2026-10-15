@@ -17,7 +17,7 @@ def summarize(values,cap=np.nan):
     a,b,c=total(5),total(5,5),total(20)
     valid_cap=pd.notna(cap) and np.isfinite(cap) and cap>0
     full=len(values)==20 and values.notna().all()
-    return {'net_5d':a,'previous_5d':b,'change_5d':a-b,'net_20d':c,
+    return {'net_1d':total(1),'intensity_1d':total(1)/cap if valid_cap else np.nan,'net_5d':a,'previous_5d':b,'change_5d':a-b,'net_20d':c,
             'positive_days_20d':int((values>0).sum()) if full else np.nan,
             'observed_days_20d':int(values.notna().sum()),
             'intensity_5d':a/cap if valid_cap else np.nan,'intensity_20d':c/cap if valid_cap else np.nan,
@@ -34,8 +34,8 @@ def stock_trends(data,stocks,asof):
     for r in stocks.itertuples():
         own_days=calendar_days(data,asof,[r.market])
         rows.append({'symbol':r.symbol,**summarize(matrix[r.symbol].reindex(own_days),r.market_cap)})
-    metrics=pd.DataFrame(rows).set_index('symbol')
-    for n in [5,20]:metrics[f'net_{n}d_rank']=metrics[f'net_{n}d'].rank(ascending=False,method='min')
+    metrics=pd.DataFrame(rows).set_index('symbol').drop(columns=['intensity_1d'])
+    for n in [1,5,20]:metrics[f'net_{n}d_rank']=metrics[f'net_{n}d'].rank(ascending=False,method='min')
     return metrics,matrix
 
 
@@ -58,7 +58,7 @@ def group_trends(data,stocks,matrix,asof,theme_members=None):
         rows.append({'market':market,'sector':sector,'members':len(codes),'market_cap':cap,**summarize(daily,cap)})
     columns=['market','sector','members','market_cap',*summarize(pd.Series(dtype=float))]
     result=pd.DataFrame(rows,columns=columns)
-    for n in [5,20]:result[f'net_{n}d_rank']=result[f'net_{n}d'].rank(ascending=False,method='min')
+    for n in [1,5,20]:result[f'net_{n}d_rank']=result[f'net_{n}d'].rank(ascending=False,method='min')
     cfg=config();minimum=cfg['scoring']['minimum_peers']
     def rank(metric):
         v=result[metric].mask(result.sector=='업종 미분류')
