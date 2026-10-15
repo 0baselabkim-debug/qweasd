@@ -176,6 +176,12 @@ def crosscheck(b,reference,scope_evidence=None):
     official=float(row['TDD_CLSPRC']);comparison['krx_official_unadjusted']=official
     b['price_crosscheck']={'source':'KRX official daily trading statistics','trade_date':b['asof'],'raw_close_match':comparison.get('kis_unadjusted')==official,'adjusted_latest_equals_raw':comparison.get('kis_adjusted')==official}
     b['price_finality']='CROSS_VALIDATED_DAILY' if b['price_crosscheck']['raw_close_match'] else 'CONFLICT'
+    mapping={'open':'TDD_OPNPRC','high':'TDD_HGPRC','low':'TDD_LWPRC','close':'TDD_CLSPRC','volume':'ACC_TRDVOL','turnover':'ACC_TRDVAL'}
+    if b.get('bars') and b['bars'][-1]['trade_date']==b['asof'] and all(k in row for k in mapping.values()) and b['price_crosscheck']['adjusted_latest_equals_raw']:
+        b['price_crosscheck']['ohlcv_fields_match']={k:b['bars'][-1][k]==float(row[field]) for k,field in mapping.items()}
+        if not all(b['price_crosscheck']['ohlcv_fields_match'].values()):
+            b['price_conflicts'].append('Same-date KIS / KRX official OHLCV fields differ')
+            b['price_finality']='CONFLICT'
     # Resolves only a documented market-basis discrepancy; never grants finality.
     scope=scope_evidence or {};integrated=scope.get('UN_1');krx=scope.get('J_1')
     if isinstance(integrated,list) and len(integrated)==1 and isinstance(krx,list) and len(krx)==1:

@@ -71,6 +71,15 @@ def main():
     for path in paths:
         if Path(path).exists():report['preserved'][path]=hashlib.sha256(subprocess.check_output(['git','show','d75da76:'+path])).hexdigest()==hashlib.sha256(Path(path).read_bytes()).hexdigest()
     assert all(report['preserved'].values())
+    reference=read(Path('reports/technical-expansion/local-krx-crosscheck.json'),{})
+    rows={r['ISU_CD']:r for m in reference.get('markets',{}).values() for r in m.get('samples',[])}
+    for code in PRIORITY:
+        b=read(CACHE/(code+'.json.gz'));r=rows.get(code)
+        if b and r and r['BAS_DD']==b['asof'].replace('-',''):
+            mapping={'open':'TDD_OPNPRC','high':'TDD_HGPRC','low':'TDD_LWPRC','close':'TDD_CLSPRC','volume':'ACC_TRDVOL','turnover':'ACC_TRDVAL'}
+            checked=all(b['bars'][-1][k]==float(r[field]) for k,field in mapping.items())
+            report['symbols'][code]['independent_krx_ohlcv_match']=checked
+            assert checked
     report['cache_bytes']=sum(p.stat().st_size for p in CACHE.glob('*.gz'))
     write(Path('reports/technical-expansion/independent-verification.json'),report)
     print(json.dumps({'symbols_verified':len(report['symbols']),'preserved':report['preserved'],'cache_bytes':report['cache_bytes']},ensure_ascii=False))
