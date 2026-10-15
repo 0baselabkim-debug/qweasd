@@ -139,7 +139,7 @@ def technical_details(result,bundle):
         for reason in result.get('reasons',[]):st.write(reason)
         st.write('검증된 160거래일 OHLCV·동일 날짜 수급·장마감 확정 근거가 모두 필요합니다.')
         if result.get('checks'):st.json(result['checks'])
-        metrics=result.get('indicators') or (bundle.get('computed') if bundle and bundle.get('structure_valid') else None)
+        metrics=result.get('indicators') or (bundle.get('computed') if bundle and bundle.get('indicator_ready',bundle.get('structure_valid')) else None)
         if metrics:
             if result['status']=='판정 보류':st.write('관측 일봉 계산값 · 매매 판정에는 사용하지 않음')
             st.dataframe(pd.DataFrame([{'지표':k,'값':v} for k,v in metrics.items()]),hide_index=True)

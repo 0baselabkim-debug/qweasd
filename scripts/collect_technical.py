@@ -10,8 +10,8 @@ from screener.store import load
 PILOT=['005930','000660','035420']
 
 def paged(api,symbol,end,index=False,count=320):
-    earliest=(dt.date.fromisoformat(end)-dt.timedelta(days=900)).strftime('%Y%m%d');cursor=end.replace('-','');records={}
-    for _ in range(12):
+    earliest=(dt.date.fromisoformat(end)-dt.timedelta(days=max(900,count*2+90))).strftime('%Y%m%d');cursor=end.replace('-','');records={}
+    for _ in range(min(60, (count+99)//100+3)):
         d=api.benchmark('0001',earliest,cursor) if index else api.prices(symbol,earliest,cursor)
         rows=d.get('output2',[]);rows=[r for r in rows if r.get('stck_bsop_date')]
         if not rows:break
@@ -53,8 +53,15 @@ def fetch(api,symbol,asof,calendar,original=None):
     return bundle
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--mode',choices=['pilot','private'],default='pilot');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--mode',choices=['pilot','private','public'],default='public');p.add_argument('--limit',type=int,default=150);p.add_argument('--budget',type=int,default=900);p.add_argument('--probe',action='store_true');args=p.parse_args()
     started=time.monotonic();data=load();asof=str(data['flows'].trade_date.max().date())
+    if args.mode=='public':
+        from scripts.technical_batch import run
+        api=KIS();run(api,data,paged,max(1,min(300,args.limit)),max(60,min(1500,args.budget)))
+        if args.probe:
+            from scripts.technical_evidence import run as probe
+            probe(api,data)
+        return
     if args.mode=='private':
         from screener.journal_store import ServiceStore
         store=ServiceStore.from_env()
@@ -67,10 +74,19 @@ def main():
         try:
             p=data['prices'];old=p[(p.symbol==code)&(p.trade_date.astype(str)==asof)]
             original=float(old.close.iloc[0]) if len(old)==1 else None
-            bundle=fetch(api,code,asof,calendar,original)
+            if args.mode=='private':
+                from scripts.technical_batch import make_bundle
+                positions=store.positions(code)
+                earliest=min((str(p['buy_date']) for p in positions),default=asof)
+                # Calendar days upper-bound trading days; enough pre-entry history without logging positions.
+                count=max(320,(dt.date.fromisoformat(asof)-dt.date.fromisoformat(earliest)).days+200)
+                count=min(count,5500)
+                private_calendar=[d for d,r in paged(api,'0001',asof,index=True,count=count)]
+                bundle=make_bundle(api,code,asof,private_calendar,data,None,paged,count=count)
+            else:bundle=fetch(api,code,asof,calendar,original)
             if args.mode=='private':
                 store.publish(code,bundle)
-                for position in store.positions(code):
+                for position in positions:
                     result=sell_guide(bundle,position,position.get('risk') or {})
                     store.save_signal(position,result)
             else:bundles[code]=bundle

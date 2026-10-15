@@ -4,8 +4,16 @@ on:
     inputs:
       mode:
         type: choice
-        options: [pilot, private]
-        default: private
+        options: [public, pilot, private]
+        default: public
+      limit:
+        description: Public symbols per checkpointed batch (max 300)
+        default: '150'
+        type: string
+      probe:
+        description: Seven-symbol market/adjustment/documentation probe
+        type: boolean
+        default: false
   schedule:
     - cron: '45 14 * * 1-5'
   workflow_run:
@@ -20,29 +28,50 @@ jobs:
   refresh:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
-      - name: Collect separate market-data cache without personal logs
+      - name: Private priority queue (no personal artifacts or logs)
+        if: inputs.mode != 'pilot'
+        continue-on-error: true
         env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          MODE: ${{ inputs.mode || 'private' }}
-        run: python scripts/collect_technical.py --mode "$MODE"
-      - name: Publish only fixed public pilot observations
-        if: inputs.mode == 'pilot'
+        run: timeout 600 python scripts/collect_technical.py --mode private
+      - name: Public checkpointed market collection
+        if: inputs.mode != 'private'
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          MODE: ${{ inputs.mode || 'public' }}
+          LIMIT: ${{ inputs.limit || '150' }}
+          PROBE: ${{ inputs.probe || 'false' }}
+        shell: bash
         run: |
-          test -f technical/pilot.json.gz
+          # Separate processes share credentials: respect the one-minute token issuance interval.
+          sleep 65
+          args=()
+          if [ "$PROBE" = true ]; then args+=(--probe); fi
+          python scripts/collect_technical.py --mode "$MODE" --limit "$LIMIT" --budget 900 "${args[@]}"
+      - name: Publish only public observations and checkpoints
+        if: always() && inputs.mode != 'private'
+        run: |
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]'
-          git add technical/pilot.json.gz
-          git diff --cached --quiet || git commit -m 'Preserve fixed three-symbol technical OHLCV pilot'
-          git push origin HEAD:main
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add technical
+          if [ -d reports/technical-expansion ]; then git add reports/technical-expansion; fi
+          if ! git diff --cached --quiet; then
+            git commit -m 'Checkpoint separate public KRX technical observations'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

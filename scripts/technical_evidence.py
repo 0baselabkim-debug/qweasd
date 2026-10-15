@@ -1,0 +1,48 @@
+"""Bounded seven-symbol diagnostics. Only public market fields are persisted."""
+import datetime as dt,json,os,urllib.request,urllib.parse
+from pathlib import Path
+from scripts.technical_batch import PRIORITY,chart,read,write,CACHE
+
+def run(api,data):
+    asof=str(data['flows'].trade_date.max().date());out={'asof':asof,'run_id':os.getenv('GITHUB_RUN_ID'),'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'official_documents':[],'symbols':{},'krx':{}}
+    base='https://apiportal.koreainvestment.com'
+    for endpoint in ['inquire-daily-itemchartprice','investor-trade-by-stock-daily']:
+        url=base+'/api/apis/public/detail?'+urllib.parse.urlencode({'accessUrl':'/uapi/domestic-stock/v1/quotations/'+endpoint})
+        try:
+            with urllib.request.urlopen(url,timeout=20) as r:d=json.load(r)
+            fields_url=base+'/api/apis/guide/property/'+d['id']
+            with urllib.request.urlopen(fields_url,timeout=20) as r:fields=json.load(r)
+            out['official_documents'].append({'url':url,'fields_url':fields_url,'summary':d.get('apiSummary'),'fields':[{k:x.get(k) for k in ['propertyCd','propertyNm','description','bodyType']} for x in fields],'finality_field_candidates':[x.get('propertyCd') for x in fields if any(w in str(x.get('propertyNm',''))+str(x.get('description','')) for w in ['확정','최종'])]})
+        except Exception as e:out['official_documents'].append({'url':url,'error_type':type(e).__name__,'http':getattr(e,'code',None)})
+    for symbol in PRIORITY:
+        item={};b=read(CACHE/(symbol+'.json.gz'),{})
+        for market,flag in [('J','0'),('J','1'),('NX','1'),('UN','1')]:
+            try:
+                d=chart(api,symbol,asof,asof,market,flag);rows=[r for r in d.get('output2',[]) if r.get('stck_bsop_date')==asof.replace('-','')]
+                item[market+'_'+flag]=[{k:r.get(k) for k in ['stck_bsop_date','stck_clpr','stck_oprc','stck_hgpr','stck_lwpr','prtt_rate','revl_issu_reas','acml_vol','acml_tr_pbmn']} for r in rows]
+            except Exception as e:item[market+'_'+flag]={'error_type':type(e).__name__}
+        try:
+            d=api.request('/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily',{'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':symbol,'FID_INPUT_DATE_1':asof.replace('-',''),'FID_ORG_ADJ_PRC':'','FID_ETC_CLS_CODE':''},'FHPTJ04160001')
+            rows=[r for r in d.get('output2',[]) if r.get('stck_bsop_date')]
+            mapped={dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date().isoformat():r for r in rows}
+            item['flow_mismatches']=[r['trade_date'] for r in b.get('flows',[]) if r['trade_date'] not in mapped or int(mapped[r['trade_date']]['frgn_ntby_tr_pbmn'])*1000000!=r['net_amount']]
+            item['flow_latest_close']=mapped.get(asof,{}).get('stck_clpr');item['flow_checked_dates']=len(b.get('flows',[]))
+            if item['flow_mismatches']:
+                b['price_conflicts'].append('Requeried KRX flow differs from preserved source')
+                from screener.technical import validate
+                b['validation']=validate(b,asof);write(CACHE/(symbol+'.json.gz'),b)
+        except Exception as e:item['flow_check_error']=type(e).__name__
+        item['preserved_comparison']=b.get('price_comparison');out['symbols'][symbol]=item
+    # Independent official KRX daily data, only if an existing key is bound. Never rotate/request keys here.
+    key=os.environ.get('KRX_API_KEY')
+    for market,path in [('KOSPI','stk'),('KOSDAQ','ksq')]:
+        url='https://data-dbg.krx.co.kr/svc/apis/sto/'+path+'_bydd_trd?basDd='+asof.replace('-','')
+        if not key:out['krx'][market]={'status':'credential_not_bound'};continue
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url,headers={'AUTH_KEY':key}),timeout=25) as r:d=json.load(r)
+            rows=d.get('OutBlock_1',[]);out['krx'][market]={'url':url,'received_rows':len(rows),'samples':[r for r in rows if r.get('ISU_SRT_CD') in PRIORITY]}
+        except Exception as e:out['krx'][market]={'url':url,'error_type':type(e).__name__,'http':getattr(e,'code',None)}
+    out['requests_including_collection']=len(api.metrics);out['api_metrics']=api.metrics
+    serialized=json.dumps(out,ensure_ascii=False)
+    assert all(v not in serialized for v in [api.key,api.secret,api.token])
+    write(Path('reports/technical-expansion/provider-evidence.json'),out)

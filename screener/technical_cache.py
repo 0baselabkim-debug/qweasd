@@ -12,6 +12,12 @@ def public_bundles():
 def get_bundle(symbol,asof=None,store=None):
     candidates=[];error=None
     public=public_bundles().get(symbol)
+    if len(str(symbol))==6 and str(symbol).isdigit():
+        path=ROOT/'technical/market'/(str(symbol)+'.json.gz')
+        try:
+            market=json.loads(gzip.decompress(path.read_bytes()))
+            if not asof or market.get('asof','')<=str(asof):public=market
+        except (OSError,ValueError,EOFError):pass
     if public:candidates.append(public)
     if store:
         record=store.cache(symbol);error=record.get('last_error')
