@@ -1,27 +1,54 @@
 {
-  "updated_at": "2026-10-15T01:54:31.042188+00:00",
-  "filings": 8354,
-  "financial_versions": 2472,
-  "business_companies": 58,
+  "updated_at": "2026-10-15T05:52:32.998445+00:00",
+  "filings": 8355,
+  "financial_versions": 2591,
+  "business_companies": 176,
   "universe": 2430,
   "last_run": {
-    "id": "38664929115-1792029254615625433",
-    "started_at": "2026-10-15T01:18:57.688342+00:00",
-    "completed_at": "2026-10-15T01:54:14.615630+00:00",
-    "calls": 237,
-    "seconds": 2116.93,
-    "processed_filings": 91,
-    "budget_exhausted": true,
+    "id": "38688068774-1792043534673247189",
+    "started_at": "2026-10-15T05:41:08.154309+00:00",
+    "completed_at": "2026-10-15T05:52:14.673257+00:00",
+    "calls": 379,
+    "seconds": 666.52,
+    "processed_filings": 238,
+    "budget_exhausted": false,
     "discovery_through": "2026-10-15",
     "discovery_error": null,
     "failed_jobs": {
       "20260325000430": {
         "business_error": "business_section_not_unique",
         "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260330001721": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260320000348": {
+        "business_error": "business_section_not_unique",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260806000296": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260430000135": {
+        "business_error": "business_section_not_unique",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260319000150": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260605000456": {
+        "financial_error": "receipt_or_period_mismatch"
       }
-    }
+    },
+    "scope": "entire_universe",
+    "pending_filings": 4499,
+    "unavailable_financials": [],
+    "held_financials": []
   },
   "annual_score_policy": "preserved_2025_baseline",
   "quarterly_score_policy": "hold_until_comparable_TTM_validation",
-  "state_sha256": "8168b191438b9ca5a6c8f4b4c0312715947d55522a241478c1d0cab84a2e4d28"
+  "state_sha256": "31e41c80a5f2394459b837c0bb74a61011a9a2373ed77fb8fe08d7f805657071"
 }
