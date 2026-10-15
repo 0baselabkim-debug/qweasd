@@ -1,22 +1,27 @@
 {
-  "updated_at": "2026-10-15T01:17:53.994009+00:00",
-  "filings": 2441,
-  "financial_versions": 2427,
-  "business_companies": 12,
+  "updated_at": "2026-10-15T01:54:31.042188+00:00",
+  "filings": 8354,
+  "financial_versions": 2472,
+  "business_companies": 58,
   "universe": 2430,
   "last_run": {
-    "id": "38664780678-1792027057435691536",
-    "started_at": "2026-10-15T01:17:23.159926+00:00",
-    "completed_at": "2026-10-15T01:17:37.435699+00:00",
-    "calls": 8,
-    "seconds": 14.28,
-    "processed_filings": 4,
-    "budget_exhausted": false,
-    "discovery_through": null,
+    "id": "38664929115-1792029254615625433",
+    "started_at": "2026-10-15T01:18:57.688342+00:00",
+    "completed_at": "2026-10-15T01:54:14.615630+00:00",
+    "calls": 237,
+    "seconds": 2116.93,
+    "processed_filings": 91,
+    "budget_exhausted": true,
+    "discovery_through": "2026-10-15",
     "discovery_error": null,
-    "failed_jobs": {}
+    "failed_jobs": {
+      "20260325000430": {
+        "business_error": "business_section_not_unique",
+        "financial_error": "receipt_or_period_mismatch"
+      }
+    }
   },
   "annual_score_policy": "preserved_2025_baseline",
   "quarterly_score_policy": "hold_until_comparable_TTM_validation",
-  "state_sha256": "2f205d97c45c394bbb461f22f0a1acc85c482548f1445bcf99c7de0b23fff7a6"
+  "state_sha256": "8168b191438b9ca5a6c8f4b4c0312715947d55522a241478c1d0cab84a2e4d28"
 }
