@@ -57,6 +57,7 @@ def delete_dialog(store,record,name):
         except StoreError as e:st.error(str(e));return
         _finish('선택한 매수 기록을 삭제했습니다.')
 
+@st.fragment(run_every=300)
 def render(instruments):
     if st.session_state.pop('journal_clear_password',False):st.session_state.pop('journal_password',None)
     explorer.reading_layout('journal')

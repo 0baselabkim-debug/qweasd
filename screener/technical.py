@@ -97,7 +97,7 @@ def buy_guide(bundle,asof=None,cfg=None):
     checks={
       '추세전환형':{'3개 선 위 2일':two_above,'5일 수급 양수':net5>0,'5일 수급 개선':change>0,'손익비 2 이상':rr_ok},
       '눌림목형':{'20일선 > 60일선':r.ma20>r.ma60,'20일선 상승':r.ma20>f.ma20.iloc[-1-b['slope_days']],'현재 구름대 상단 위':r.close>max(r.cloud_a,r.cloud_b),'전일 지지 부근 조정·전일 고가 돌파':near and r.close>p.high,'5일 수급 양수':net5>0,'손익비 2 이상':rr_ok},
-      '돌파형':{'확인 저항 돌파':breakout if prior['resistance'] else None,'거래대금 1.5배':r.turnover>=b['turnover_multiple']*r.prior_turnover20,'당일 수급 양수':flows[-1]>0,'5일 수급 양수':net5>0,'손익비 2 이상':rr_ok}}
+      '돌파형':{'확인 저항 돌파':breakout if prior['resistance'] else None,'거래대금 1.5배':(r.turnover>=b['turnover_multiple']*r.prior_turnover20) if r.prior_turnover20>0 else None,'당일 수급 양수':flows[-1]>0,'5일 수급 양수':net5>0,'손익비 2 이상':rr_ok}}
     checks={k:{a:None if v is None else bool(v) for a,v in d.items()} for k,d in checks.items()}
     matches=[k for k,v in checks.items() if all(x is True for x in v.values())]
     unknown=any(all(x is not False for x in v.values()) and any(x is None for x in v.values()) for v in checks.values())

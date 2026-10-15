@@ -54,6 +54,7 @@ create or replace function public.journal_audit_change() returns trigger languag
 begin
  insert into journal_audit(user_id,purchase_id,action,old_record,new_record)
  values(coalesce(new.user_id,old.user_id),coalesce(new.id,old.id),TG_OP,to_jsonb(old),to_jsonb(new));
+ delete from journal_signals where user_id=coalesce(new.user_id,old.user_id) and symbol=coalesce(new.symbol,old.symbol);
  if TG_OP='DELETE' and not exists(select 1 from journal_purchases where user_id=old.user_id and symbol=old.symbol) then
   delete from journal_risk_state where user_id=old.user_id and symbol=old.symbol;
  end if;
