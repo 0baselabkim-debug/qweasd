@@ -4,7 +4,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [public, pilot, private]
+        options: [public, pilot, private, evidence]
         default: public
       limit:
         description: Public symbols per checkpointed batch (max 600)
@@ -39,7 +39,7 @@ jobs:
           python-version: '3.12'
       - run: pip install -r requirements.txt
       - name: Private priority queue (no personal artifacts or logs)
-        if: inputs.mode != 'pilot'
+        if: inputs.mode != 'pilot' && inputs.mode != 'evidence'
         continue-on-error: true
         env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}

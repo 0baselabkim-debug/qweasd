@@ -66,3 +66,16 @@ def test_official_crosscheck_never_implies_finality():
     scope['flow_mismatches']=['2026-10-14']
     assert c.crosscheck(copy.deepcopy(b),ref,scope)['price_conflicts']
     assert c.crosscheck(copy.deepcopy(b),{'000001':{'BAS_DD':'20261013','TDD_CLSPRC':'10'}},scope)==b
+
+def test_only_documented_public_corporate_endpoints_are_allowed():
+    from scripts.kis_public_client import KIS,CORPORATE_PATHS
+    import pytest
+    api=object.__new__(KIS)
+    assert len(CORPORATE_PATHS)==4
+    for path in ['/uapi/domestic-stock/v1/trading/period-rights','/uapi/domestic-stock/v1/trading/order-cash','/uapi/domestic-stock/v1/ksdinfo/unknown']:
+        with pytest.raises(ValueError):api.request(path)
+    with pytest.raises(ValueError):api.request(next(iter(CORPORATE_PATHS)),body={'unsupported':'post'})
+
+def test_new_history_and_stale_refresh_both_progress():
+    state={'000001':{'completed_asof':'2026-10-13','attempted_at':'2026-10-13'}}
+    assert set(c.select_targets(['000001','000002'],state,'2026-10-14',2))=={'000001','000002'}

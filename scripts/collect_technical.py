@@ -53,12 +53,17 @@ def fetch(api,symbol,asof,calendar,original=None):
     return bundle
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--mode',choices=['pilot','private','public'],default='public');p.add_argument('--limit',type=int,default=150);p.add_argument('--budget',type=int,default=900);p.add_argument('--probe',action='store_true');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--mode',choices=['pilot','private','public','evidence'],default='public');p.add_argument('--limit',type=int,default=150);p.add_argument('--budget',type=int,default=900);p.add_argument('--probe',action='store_true');args=p.parse_args()
     started=time.monotonic();data=load();asof=str(data['flows'].trade_date.max().date())
+    if args.mode=='evidence':
+        from scripts.technical_evidence import run as probe
+        probe(KIS(),data);return
     if args.mode=='public':
         from scripts.technical_batch import run
         api=KIS();run(api,data,paged,max(1,min(600,args.limit)),max(60,min(1500,args.budget)))
-        if args.probe:
+        from scripts.technical_batch import read
+        previous_evidence=read(Path('reports/technical-expansion/provider-evidence.json'),{})
+        if args.probe or previous_evidence.get('asof')!=asof:
             from scripts.technical_evidence import run as probe
             probe(api,data)
         return
@@ -82,7 +87,10 @@ def main():
                 count=max(320,(dt.date.fromisoformat(asof)-dt.date.fromisoformat(earliest)).days+200)
                 count=min(count,5500)
                 private_calendar=[d for d,r in paged(api,'0001',asof,index=True,count=count)]
-                bundle=make_bundle(api,code,asof,private_calendar,data,None,paged,count=count)
+                previous=store.cache(code)
+                if previous and sum(r['trade_date']<earliest for r in previous.get('bars',[]))<160:previous=None
+                bundle=make_bundle(api,code,asof,private_calendar,data,previous,paged,count=count)
+                bundle['private_history_requirement']={'pre_purchase_days':sum(r['trade_date']<earliest for r in bundle['bars']),'required':160,'lookback_cap':5500}
             else:bundle=fetch(api,code,asof,calendar,original)
             if args.mode=='private':
                 store.publish(code,bundle)

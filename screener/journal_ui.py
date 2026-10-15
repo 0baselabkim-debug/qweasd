@@ -144,6 +144,13 @@ def technical_details(result,bundle):
             if result['status']=='판정 보류':st.write('관측 일봉 계산값 · 매매 판정에는 사용하지 않음')
             st.dataframe(pd.DataFrame([{'지표':k,'값':v} for k,v in metrics.items()]),hide_index=True)
         if result.get('levels'):st.json({k:result.get(k) for k in ['levels','entry','stop','target','reward_risk']})
+        elif bundle and bundle.get('observed_levels'):
+            st.write('관측 지지·저항 · 최종 검증 전 참고값')
+            st.json({'levels':bundle['observed_levels'],'reward_risk':bundle.get('observed_reward_risk')})
+        if bundle and bundle.get('price_crosscheck'):
+            st.write('KRX 공식 일별 종가 교차 일치: '+('확인' if bundle['price_crosscheck']['raw_close_match'] else '불일치')+' · 최종 확정과 별도')
+        if bundle and bundle.get('legacy_price_discrepancy'):
+            st.write('기존 종가는 통합 시장 관측값과 일치. 기술 분석은 별도 KRX 가격 사용 · 기존 원본 보존.')
         st.caption('현재 구름대는 26거래일 이전 계산값, 미래 구름대는 현재 계산 후 26거래일 앞에 표시하는 값입니다. 기준은 개발 기본값이며 수익을 보장하지 않습니다.')
         if bundle:st.write(f"수신 일봉 {len(bundle.get('bars',[]))}거래일 · 최종 확정 {bundle.get('finality','미확인')}")
         st.link_button('기술적 판정 규칙', 'https://github.com/0baselabkim-debug/qweasd/blob/main/docs/trading-guidelines.md')

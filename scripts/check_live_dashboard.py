@@ -157,6 +157,12 @@ with sync_playwright() as p:
   name_cell('NAVER').click();page.wait_for_timeout(400);assert ui.get_by_text('KOSPI · IT 서비스 · 종목 수급',exact=True).count()==1
   readability('stocks');page.screenshot(path=str(out/'stocks.png'),full_page=True);double('NAVER');assert ui.get_by_text('NAVER · 035420',exact=True).count()==1
   guide=ui.locator('.buy-guide');assert guide.inner_text().startswith('매수 가이드: 판정 보류');assert guide.bounding_box()['y']+guide.bounding_box()['height']<=ui.locator('.st-key-stock_kpis .kpi').nth(3).bounding_box()['y']+2
+  ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
+  assert '수신 일봉 320거래일' in ui.locator('body').inner_text()
+  assert 'KRX 공식 일별 종가 교차 일치: 확인' in ui.locator('body').inner_text()
+  page.screenshot(path=str(out/'technical-observations.png'),full_page=True)
+  ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
+  report['checks'].append('Actual 320-day NAVER technical cache, independent KRX crosscheck, held signal and observed levels rendered')
   assert ui.locator('.st-key-hierarchy button:visible').all_text_contents()==['전체섹터 조회','IT 서비스','×','NAVER','×']
   # Desktop close controls appear on hover / keyboard focus only.
   ui.locator('.st-key-header').hover();page.wait_for_timeout(200);assert float(ui.locator('.st-key-close_stock').evaluate('e=>getComputedStyle(e).opacity'))==0

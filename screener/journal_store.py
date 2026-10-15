@@ -68,6 +68,9 @@ class ServiceStore:
         return cls(url,key) if url and key else None
     def call(self,name,body):return http(self.url,self.key,'/rest/v1/rpc/'+name,'POST',body,self.key)
     def targets(self,asof):return self.call('technical_targets',{'p_asof':asof}) or []
+    def cache(self,symbol):
+        rows=http(self.url,self.key,'/rest/v1/technical_cache?'+urllib.parse.urlencode({'symbol':'eq.'+symbol,'select':'bundle'}),token=self.key) or []
+        return rows[0].get('bundle') if rows else None
     def publish(self,symbol,bundle):self.call('publish_technical',{'p_symbol':symbol,'p_bundle':bundle,'p_error':None})
     def positions(self,symbol):return self.call('worker_positions',{'p_symbol':symbol}) or []
     def save_signal(self,position,result):self.call('save_worker_signal',{'p_user':position['user_id'],'p_symbol':position['symbol'],'p_signature':position['purchase_signature'],'p_result':result})

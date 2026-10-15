@@ -47,7 +47,37 @@ def run(api,data):
     for symbol in PRIORITY:
         bundle=read(CACHE/(symbol+'.json.gz'))
         if bundle:write(CACHE/(symbol+'.json.gz'),crosscheck(bundle,references,out['symbols'].get(symbol)))
+    out['corporate_probe']=corporate_probe(api,asof)
     out['requests_including_collection']=len(api.metrics);out['api_metrics']=api.metrics
     serialized=json.dumps(out,ensure_ascii=False)
     assert all(v not in serialized for v in [api.key,api.secret,api.token])
     write(Path('reports/technical-expansion/provider-evidence.json'),out)
+
+def corporate_probe(api,asof):
+    """Public KSD schedule feed, not an account-rights query. Incomplete coverage is explicit."""
+    from scripts.technical_batch import ROOT
+    start=(dt.date.fromisoformat(asof)-dt.timedelta(days=900)).strftime('%Y%m%d');records=[]
+    for name,tr in [('rev-split','HHKDB669105C0'),('merger-split','HHKDB669104C0'),('bonus-issue','HHKDB669101C0'),('cap-dcrs','HHKDB669106C0')]:
+        path='/uapi/domestic-stock/v1/ksdinfo/'+name
+        params={'SHT_CD':'','CTS':'','F_DT':start,'T_DT':asof.replace('-','')}
+        if name=='rev-split':params['MARKET_GB']='0'
+        record={'endpoint':path,'from':start,'through':asof,'official_example':'https://github.com/koreainvestment/open-trading-api/tree/main/examples_llm/domestic_stock/ksdinfo_'+name.replace('-','_')}
+        try:
+            d=api.request(path,params,tr);rows=d.get('output1',[])
+            if isinstance(rows,dict):rows=[rows]
+            record.update(rows=rows,received=len(rows),continuation=getattr(api,'last_continuation',None),coverage='FIRST_PAGE_ONLY_NOT_COMPLETE_ACTION_LEDGER',status='received')
+        except Exception as exc:record.update(status='failed',error_type=type(exc).__name__)
+        records.append(record)
+    result={'asof':asof,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'sources':records,'complete':False,'reason':'Pagination and complete split/rights coverage require verification; personal quantities/costs never adjusted'}
+    raw=json.dumps(result,ensure_ascii=False);assert all(v not in raw for v in [api.key,api.secret,api.token])
+    write(ROOT/'corporate-actions.json.gz',result)
+    for code in PRIORITY:
+        b=read(CACHE/(code+'.json.gz'))
+        if not b:continue
+        matched=[]
+        for rec in records:
+            for row in rec.get('rows',[]):
+                if any(str(v)==code for v in row.values()):matched.append({'endpoint':rec['endpoint'],'record':row})
+        b['official_corporate_action_observations']=matched;b['corporate_actions_verified']=False
+        write(CACHE/(code+'.json.gz'),b)
+    return {'received':sum(r.get('received',0) for r in records),'failed_endpoints':sum(r['status']=='failed' for r in records),'complete':False}

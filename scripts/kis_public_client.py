@@ -1,6 +1,8 @@
 """Market-data-only KIS transport; credentials and tokens never enter results."""
 import json, os, threading, time, urllib.error, urllib.parse, urllib.request
 
+CORPORATE_PATHS={f'/uapi/domestic-stock/v1/ksdinfo/{name}' for name in ['rev-split','merger-split','bonus-issue','cap-dcrs']}
+
 class KIS:
     def __init__(self, interval=1.05):
         self.key=os.environ['KIS_APP_KEY']; self.secret=os.environ['KIS_APP_SECRET']
@@ -10,7 +12,7 @@ class KIS:
         if not self.token: raise RuntimeError('KIS authentication failed')
 
     def request(self,path,params=None,tr=None,body=None):
-        if not (path=='/oauth2/tokenP' or path.startswith('/uapi/domestic-stock/v1/quotations/')):
+        if not (path=='/oauth2/tokenP' or path.startswith('/uapi/domestic-stock/v1/quotations/') or (body is None and path in CORPORATE_PATHS)):
             raise ValueError('Market-data endpoint only')
         for attempt in range(3):
             with self.lock:
@@ -21,7 +23,8 @@ class KIS:
             status=None; d={}; started=time.monotonic()
             try:
                 req=urllib.request.Request(url,headers=headers,data=json.dumps(body).encode() if body else None)
-                with urllib.request.urlopen(req,timeout=30) as r: status=r.status; d=json.load(r)
+                with urllib.request.urlopen(req,timeout=30) as r:
+                    status=r.status; d=json.load(r); self.last_continuation=r.headers.get('tr_cont','')
             except urllib.error.HTTPError as e:
                 status=e.code
                 try:d=json.load(e)
