@@ -105,7 +105,7 @@ jobs:
             git fetch origin "data/daily-$DAY"
             git switch -C "data/daily-$DAY" FETCH_HEAD
           else
-            git switch -c "data/daily-$DAY"
+            git switch --orphan "data/daily-$DAY"
           fi
           mkdir -p daily-results
           cp /tmp/daily-bundle.gz daily-results/bundle.json.gz
