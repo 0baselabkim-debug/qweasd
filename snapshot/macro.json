@@ -1,0 +1,1501 @@
+{
+  "schema": 1,
+  "indicators": {
+    "us2y": {
+      "id": "us2y",
+      "name": "미국 국채 2년",
+      "group": "금리",
+      "provider": "FRED",
+      "series": "DGS2",
+      "unit": "%",
+      "rate": true,
+      "timezone": "America/New_York",
+      "basis": "",
+      "official_title": "Market Yield on U.S. Treasury Securities at 2-Year Constant Maturity, Quoted on an Investment Basis",
+      "official_unit": "Percent",
+      "source_url": "https://fred.stlouisfed.org/series/DGS2",
+      "observations": [
+        {
+          "date": "2026-09-02",
+          "value": 4.39
+        },
+        {
+          "date": "2026-09-03",
+          "value": 4.34
+        },
+        {
+          "date": "2026-09-04",
+          "value": 4.37
+        },
+        {
+          "date": "2026-09-08",
+          "value": 4.39
+        },
+        {
+          "date": "2026-09-09",
+          "value": 4.43
+        },
+        {
+          "date": "2026-09-10",
+          "value": 4.56
+        },
+        {
+          "date": "2026-09-11",
+          "value": 4.63
+        },
+        {
+          "date": "2026-09-14",
+          "value": 4.65
+        },
+        {
+          "date": "2026-09-15",
+          "value": 4.67
+        },
+        {
+          "date": "2026-09-16",
+          "value": 4.74
+        },
+        {
+          "date": "2026-09-17",
+          "value": 4.67
+        },
+        {
+          "date": "2026-09-18",
+          "value": 4.76
+        },
+        {
+          "date": "2026-09-21",
+          "value": 4.76
+        },
+        {
+          "date": "2026-09-22",
+          "value": 4.71
+        },
+        {
+          "date": "2026-09-23",
+          "value": 4.85
+        },
+        {
+          "date": "2026-09-24",
+          "value": 4.87
+        },
+        {
+          "date": "2026-09-25",
+          "value": 4.81
+        },
+        {
+          "date": "2026-09-28",
+          "value": 4.92
+        },
+        {
+          "date": "2026-09-29",
+          "value": 4.89
+        },
+        {
+          "date": "2026-09-30",
+          "value": 4.88
+        },
+        {
+          "date": "2026-10-01",
+          "value": 4.78
+        },
+        {
+          "date": "2026-10-02",
+          "value": 4.83
+        },
+        {
+          "date": "2026-10-05",
+          "value": 4.84
+        },
+        {
+          "date": "2026-10-06",
+          "value": 4.79
+        },
+        {
+          "date": "2026-10-07",
+          "value": 4.77
+        },
+        {
+          "date": "2026-10-08",
+          "value": 4.75
+        },
+        {
+          "date": "2026-10-09",
+          "value": 4.8
+        },
+        {
+          "date": "2026-10-13",
+          "value": 4.79
+        }
+      ],
+      "date": "2026-10-13",
+      "value": 4.79,
+      "previous_date": "2026-10-09",
+      "previous_value": 4.8,
+      "change": -0.9999999999999787,
+      "change_unit": "bp",
+      "change_percent": null,
+      "observed_at": "2026-10-15T04:27:34.414226+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "us10y": {
+      "id": "us10y",
+      "name": "미국 국채 10년",
+      "group": "금리",
+      "provider": "FRED",
+      "series": "DGS10",
+      "unit": "%",
+      "rate": true,
+      "timezone": "America/New_York",
+      "basis": "",
+      "official_title": "Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity, Quoted on an Investment Basis",
+      "official_unit": "Percent",
+      "source_url": "https://fred.stlouisfed.org/series/DGS10",
+      "observations": [
+        {
+          "date": "2026-09-02",
+          "value": 4.79
+        },
+        {
+          "date": "2026-09-03",
+          "value": 4.77
+        },
+        {
+          "date": "2026-09-04",
+          "value": 4.78
+        },
+        {
+          "date": "2026-09-08",
+          "value": 4.8
+        },
+        {
+          "date": "2026-09-09",
+          "value": 4.83
+        },
+        {
+          "date": "2026-09-10",
+          "value": 4.95
+        },
+        {
+          "date": "2026-09-11",
+          "value": 4.96
+        },
+        {
+          "date": "2026-09-14",
+          "value": 4.97
+        },
+        {
+          "date": "2026-09-15",
+          "value": 5.0
+        },
+        {
+          "date": "2026-09-16",
+          "value": 5.01
+        },
+        {
+          "date": "2026-09-17",
+          "value": 4.94
+        },
+        {
+          "date": "2026-09-18",
+          "value": 5.01
+        },
+        {
+          "date": "2026-09-21",
+          "value": 4.96
+        },
+        {
+          "date": "2026-09-22",
+          "value": 4.96
+        },
+        {
+          "date": "2026-09-23",
+          "value": 5.11
+        },
+        {
+          "date": "2026-09-24",
+          "value": 5.18
+        },
+        {
+          "date": "2026-09-25",
+          "value": 5.17
+        },
+        {
+          "date": "2026-09-28",
+          "value": 5.24
+        },
+        {
+          "date": "2026-09-29",
+          "value": 5.26
+        },
+        {
+          "date": "2026-09-30",
+          "value": 5.29
+        },
+        {
+          "date": "2026-10-01",
+          "value": 5.24
+        },
+        {
+          "date": "2026-10-02",
+          "value": 5.28
+        },
+        {
+          "date": "2026-10-05",
+          "value": 5.31
+        },
+        {
+          "date": "2026-10-06",
+          "value": 5.27
+        },
+        {
+          "date": "2026-10-07",
+          "value": 5.28
+        },
+        {
+          "date": "2026-10-08",
+          "value": 5.22
+        },
+        {
+          "date": "2026-10-09",
+          "value": 5.24
+        },
+        {
+          "date": "2026-10-13",
+          "value": 5.21
+        }
+      ],
+      "date": "2026-10-13",
+      "value": 5.21,
+      "previous_date": "2026-10-09",
+      "previous_value": 5.24,
+      "change": -3.000000000000025,
+      "change_unit": "bp",
+      "change_percent": null,
+      "observed_at": "2026-10-15T04:27:35.447333+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "kr3y": {
+      "id": "kr3y",
+      "name": "한국 국고채 3년",
+      "group": "금리",
+      "provider": "ECOS",
+      "series": "817Y002/010200000",
+      "unit": "%",
+      "rate": true,
+      "timezone": "Asia/Seoul",
+      "basis": "",
+      "source_url": "https://ecos.bok.or.kr/",
+      "official_unit": "연%",
+      "observations": [
+        {
+          "date": "2026-08-11",
+          "value": 3.808
+        },
+        {
+          "date": "2026-08-12",
+          "value": 3.791
+        },
+        {
+          "date": "2026-08-13",
+          "value": 3.781
+        },
+        {
+          "date": "2026-08-14",
+          "value": 3.796
+        },
+        {
+          "date": "2026-08-18",
+          "value": 3.847
+        },
+        {
+          "date": "2026-08-19",
+          "value": 3.798
+        },
+        {
+          "date": "2026-08-20",
+          "value": 3.811
+        },
+        {
+          "date": "2026-08-21",
+          "value": 3.854
+        },
+        {
+          "date": "2026-08-24",
+          "value": 3.836
+        },
+        {
+          "date": "2026-08-25",
+          "value": 3.83
+        },
+        {
+          "date": "2026-08-26",
+          "value": 3.816
+        },
+        {
+          "date": "2026-08-27",
+          "value": 3.755
+        },
+        {
+          "date": "2026-08-28",
+          "value": 3.788
+        },
+        {
+          "date": "2026-08-31",
+          "value": 3.838
+        },
+        {
+          "date": "2026-09-01",
+          "value": 3.878
+        },
+        {
+          "date": "2026-09-02",
+          "value": 3.93
+        },
+        {
+          "date": "2026-09-03",
+          "value": 3.888
+        },
+        {
+          "date": "2026-09-04",
+          "value": 3.884
+        },
+        {
+          "date": "2026-09-07",
+          "value": 3.9
+        },
+        {
+          "date": "2026-09-08",
+          "value": 3.901
+        },
+        {
+          "date": "2026-09-09",
+          "value": 3.91
+        },
+        {
+          "date": "2026-09-10",
+          "value": 3.93
+        },
+        {
+          "date": "2026-09-11",
+          "value": 4.014
+        },
+        {
+          "date": "2026-09-14",
+          "value": 4.025
+        },
+        {
+          "date": "2026-09-15",
+          "value": 4.091
+        },
+        {
+          "date": "2026-09-16",
+          "value": 4.053
+        },
+        {
+          "date": "2026-09-17",
+          "value": 4.063
+        },
+        {
+          "date": "2026-09-18",
+          "value": 4.035
+        },
+        {
+          "date": "2026-09-21",
+          "value": 4.056
+        },
+        {
+          "date": "2026-09-22",
+          "value": 4.04
+        },
+        {
+          "date": "2026-09-23",
+          "value": 4.006
+        },
+        {
+          "date": "2026-09-28",
+          "value": 4.119
+        },
+        {
+          "date": "2026-09-29",
+          "value": 4.076
+        },
+        {
+          "date": "2026-09-30",
+          "value": 4.011
+        },
+        {
+          "date": "2026-10-01",
+          "value": 4.01
+        },
+        {
+          "date": "2026-10-02",
+          "value": 3.937
+        },
+        {
+          "date": "2026-10-06",
+          "value": 3.933
+        },
+        {
+          "date": "2026-10-07",
+          "value": 3.961
+        },
+        {
+          "date": "2026-10-08",
+          "value": 3.983
+        },
+        {
+          "date": "2026-10-12",
+          "value": 3.921
+        },
+        {
+          "date": "2026-10-13",
+          "value": 3.857
+        },
+        {
+          "date": "2026-10-14",
+          "value": 3.883
+        }
+      ],
+      "date": "2026-10-14",
+      "value": 3.883,
+      "previous_date": "2026-10-13",
+      "previous_value": 3.857,
+      "change": 2.59999999999998,
+      "change_unit": "bp",
+      "change_percent": null,
+      "observed_at": "2026-10-15T04:27:36.935536+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "usdkrw": {
+      "id": "usdkrw",
+      "name": "USD/KRW",
+      "group": "환율·원자재",
+      "provider": "FRED",
+      "series": "DEXKOUS",
+      "unit": "원",
+      "rate": false,
+      "timezone": "America/New_York",
+      "basis": "미 연준 뉴욕 정오 매입환율, 시장 종가와 구분",
+      "official_title": "South Korean Won to U.S. Dollar Spot Exchange Rate",
+      "official_unit": "South Korean Won to One U.S. Dollar",
+      "source_url": "https://fred.stlouisfed.org/series/DEXKOUS",
+      "observations": [
+        {
+          "date": "2026-08-31",
+          "value": 1368.25
+        },
+        {
+          "date": "2026-09-01",
+          "value": 1371.76
+        },
+        {
+          "date": "2026-09-02",
+          "value": 1358.85
+        },
+        {
+          "date": "2026-09-03",
+          "value": 1356.89
+        },
+        {
+          "date": "2026-09-04",
+          "value": 1346.51
+        },
+        {
+          "date": "2026-09-08",
+          "value": 1341.22
+        },
+        {
+          "date": "2026-09-09",
+          "value": 1339.81
+        },
+        {
+          "date": "2026-09-10",
+          "value": 1345.63
+        },
+        {
+          "date": "2026-09-11",
+          "value": 1340.3
+        },
+        {
+          "date": "2026-09-14",
+          "value": 1346.6
+        },
+        {
+          "date": "2026-09-15",
+          "value": 1361.84
+        },
+        {
+          "date": "2026-09-16",
+          "value": 1367.65
+        },
+        {
+          "date": "2026-09-17",
+          "value": 1380.46
+        },
+        {
+          "date": "2026-09-18",
+          "value": 1387.97
+        },
+        {
+          "date": "2026-09-21",
+          "value": 1374.81
+        },
+        {
+          "date": "2026-09-22",
+          "value": 1359.06
+        },
+        {
+          "date": "2026-09-23",
+          "value": 1366.99
+        },
+        {
+          "date": "2026-09-24",
+          "value": 1369.44
+        },
+        {
+          "date": "2026-09-25",
+          "value": 1356.51
+        },
+        {
+          "date": "2026-09-28",
+          "value": 1359.78
+        },
+        {
+          "date": "2026-09-29",
+          "value": 1355.4
+        },
+        {
+          "date": "2026-09-30",
+          "value": 1355.91
+        },
+        {
+          "date": "2026-10-01",
+          "value": 1364.83
+        },
+        {
+          "date": "2026-10-02",
+          "value": 1345.75
+        },
+        {
+          "date": "2026-10-05",
+          "value": 1341.7
+        },
+        {
+          "date": "2026-10-06",
+          "value": 1337.88
+        },
+        {
+          "date": "2026-10-07",
+          "value": 1339.12
+        },
+        {
+          "date": "2026-10-08",
+          "value": 1343.34
+        },
+        {
+          "date": "2026-10-09",
+          "value": 1342.13
+        }
+      ],
+      "date": "2026-10-09",
+      "value": 1342.13,
+      "previous_date": "2026-10-08",
+      "previous_value": 1343.34,
+      "change": -1.209999999999809,
+      "change_unit": "원",
+      "change_percent": -0.09007399466998742,
+      "observed_at": "2026-10-15T04:27:37.740764+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "vix": {
+      "id": "vix",
+      "name": "VIX",
+      "group": "환율·원자재",
+      "provider": "FRED",
+      "series": "VIXCLS",
+      "unit": "포인트",
+      "rate": false,
+      "timezone": "America/New_York",
+      "basis": "CBOE 일별 종가",
+      "official_title": "CBOE Volatility Index: VIX",
+      "official_unit": "Index",
+      "source_url": "https://fred.stlouisfed.org/series/VIXCLS",
+      "observations": [
+        {
+          "date": "2026-09-02",
+          "value": 15.2
+        },
+        {
+          "date": "2026-09-03",
+          "value": 14.32
+        },
+        {
+          "date": "2026-09-04",
+          "value": 14.53
+        },
+        {
+          "date": "2026-09-07",
+          "value": 15.3
+        },
+        {
+          "date": "2026-09-08",
+          "value": 15.72
+        },
+        {
+          "date": "2026-09-09",
+          "value": 16.46
+        },
+        {
+          "date": "2026-09-10",
+          "value": 17.84
+        },
+        {
+          "date": "2026-09-11",
+          "value": 15.84
+        },
+        {
+          "date": "2026-09-14",
+          "value": 17.1
+        },
+        {
+          "date": "2026-09-15",
+          "value": 17.2
+        },
+        {
+          "date": "2026-09-16",
+          "value": 17.71
+        },
+        {
+          "date": "2026-09-17",
+          "value": 15.44
+        },
+        {
+          "date": "2026-09-18",
+          "value": 14.81
+        },
+        {
+          "date": "2026-09-21",
+          "value": 14.87
+        },
+        {
+          "date": "2026-09-22",
+          "value": 14.21
+        },
+        {
+          "date": "2026-09-23",
+          "value": 15.18
+        },
+        {
+          "date": "2026-09-24",
+          "value": 15.67
+        },
+        {
+          "date": "2026-09-25",
+          "value": 14.87
+        },
+        {
+          "date": "2026-09-28",
+          "value": 16.07
+        },
+        {
+          "date": "2026-09-29",
+          "value": 16.04
+        },
+        {
+          "date": "2026-09-30",
+          "value": 16.34
+        },
+        {
+          "date": "2026-10-01",
+          "value": 16.39
+        },
+        {
+          "date": "2026-10-02",
+          "value": 15.31
+        },
+        {
+          "date": "2026-10-05",
+          "value": 15.52
+        },
+        {
+          "date": "2026-10-06",
+          "value": 15.01
+        },
+        {
+          "date": "2026-10-07",
+          "value": 15.08
+        },
+        {
+          "date": "2026-10-08",
+          "value": 15.41
+        },
+        {
+          "date": "2026-10-09",
+          "value": 14.84
+        },
+        {
+          "date": "2026-10-12",
+          "value": 15.21
+        },
+        {
+          "date": "2026-10-13",
+          "value": 15.27
+        }
+      ],
+      "date": "2026-10-13",
+      "value": 15.27,
+      "previous_date": "2026-10-12",
+      "previous_value": 15.21,
+      "change": 0.05999999999999872,
+      "change_unit": "포인트",
+      "change_percent": 0.3944773175542322,
+      "observed_at": "2026-10-15T04:27:38.691843+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "wti": {
+      "id": "wti",
+      "name": "WTI 현물",
+      "group": "환율·원자재",
+      "provider": "FRED",
+      "series": "DCOILWTICO",
+      "unit": "달러/배럴",
+      "rate": false,
+      "timezone": "America/New_York",
+      "basis": "EIA Cushing WTI 현물, 선물 아님",
+      "official_title": "Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma",
+      "official_unit": "Dollars per Barrel",
+      "source_url": "https://fred.stlouisfed.org/series/DCOILWTICO",
+      "observations": [
+        {
+          "date": "2026-08-26",
+          "value": 83.46
+        },
+        {
+          "date": "2026-08-27",
+          "value": 84.81
+        },
+        {
+          "date": "2026-08-28",
+          "value": 84.57
+        },
+        {
+          "date": "2026-08-31",
+          "value": 87.03
+        },
+        {
+          "date": "2026-09-01",
+          "value": 91.48
+        },
+        {
+          "date": "2026-09-02",
+          "value": 92.15
+        },
+        {
+          "date": "2026-09-03",
+          "value": 92.55
+        },
+        {
+          "date": "2026-09-04",
+          "value": 92.69
+        },
+        {
+          "date": "2026-09-08",
+          "value": 94.21
+        },
+        {
+          "date": "2026-09-09",
+          "value": 97.26
+        },
+        {
+          "date": "2026-09-10",
+          "value": 103.57
+        },
+        {
+          "date": "2026-09-11",
+          "value": 101.27
+        },
+        {
+          "date": "2026-09-14",
+          "value": 102.42
+        },
+        {
+          "date": "2026-09-15",
+          "value": 107.02
+        },
+        {
+          "date": "2026-09-16",
+          "value": 103.62
+        },
+        {
+          "date": "2026-09-17",
+          "value": 103.21
+        },
+        {
+          "date": "2026-09-18",
+          "value": 101.44
+        },
+        {
+          "date": "2026-09-21",
+          "value": 96.97
+        },
+        {
+          "date": "2026-09-22",
+          "value": 96.41
+        },
+        {
+          "date": "2026-09-23",
+          "value": 93.38
+        },
+        {
+          "date": "2026-09-24",
+          "value": 95.88
+        },
+        {
+          "date": "2026-09-25",
+          "value": 85.23
+        },
+        {
+          "date": "2026-09-28",
+          "value": 99.37
+        },
+        {
+          "date": "2026-09-29",
+          "value": 96.16
+        },
+        {
+          "date": "2026-09-30",
+          "value": 97.18
+        },
+        {
+          "date": "2026-10-01",
+          "value": 99.77
+        },
+        {
+          "date": "2026-10-02",
+          "value": 97.89
+        },
+        {
+          "date": "2026-10-05",
+          "value": 96.13
+        },
+        {
+          "date": "2026-10-06",
+          "value": 96.24
+        }
+      ],
+      "date": "2026-10-06",
+      "value": 96.24,
+      "previous_date": "2026-10-05",
+      "previous_value": 96.13,
+      "change": 0.10999999999999943,
+      "change_unit": "달러/배럴",
+      "change_percent": 0.1144283782378024,
+      "observed_at": "2026-10-15T04:27:39.575139+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "sp500": {
+      "id": "sp500",
+      "name": "S&P 500",
+      "group": "미국 증시",
+      "provider": "FRED",
+      "series": "SP500",
+      "unit": "포인트",
+      "rate": false,
+      "timezone": "America/New_York",
+      "basis": "일별 종가",
+      "official_title": "S&P 500",
+      "official_unit": "Index",
+      "source_url": "https://fred.stlouisfed.org/series/SP500",
+      "observations": [
+        {
+          "date": "2026-09-03",
+          "value": 7747.71
+        },
+        {
+          "date": "2026-09-04",
+          "value": 7718.6
+        },
+        {
+          "date": "2026-09-08",
+          "value": 7673.52
+        },
+        {
+          "date": "2026-09-09",
+          "value": 7636.36
+        },
+        {
+          "date": "2026-09-10",
+          "value": 7591.7
+        },
+        {
+          "date": "2026-09-11",
+          "value": 7656.98
+        },
+        {
+          "date": "2026-09-14",
+          "value": 7619.98
+        },
+        {
+          "date": "2026-09-15",
+          "value": 7585.73
+        },
+        {
+          "date": "2026-09-16",
+          "value": 7551.81
+        },
+        {
+          "date": "2026-09-17",
+          "value": 7637.76
+        },
+        {
+          "date": "2026-09-18",
+          "value": 7650.5
+        },
+        {
+          "date": "2026-09-21",
+          "value": 7764.7
+        },
+        {
+          "date": "2026-09-22",
+          "value": 7764.64
+        },
+        {
+          "date": "2026-09-23",
+          "value": 7706.03
+        },
+        {
+          "date": "2026-09-24",
+          "value": 7704.13
+        },
+        {
+          "date": "2026-09-25",
+          "value": 7743.41
+        },
+        {
+          "date": "2026-09-28",
+          "value": 7683.69
+        },
+        {
+          "date": "2026-09-29",
+          "value": 7670.84
+        },
+        {
+          "date": "2026-09-30",
+          "value": 7651.54
+        },
+        {
+          "date": "2026-10-01",
+          "value": 7666.45
+        },
+        {
+          "date": "2026-10-02",
+          "value": 7722.72
+        },
+        {
+          "date": "2026-10-05",
+          "value": 7773.95
+        },
+        {
+          "date": "2026-10-06",
+          "value": 7818.93
+        },
+        {
+          "date": "2026-10-07",
+          "value": 7801.77
+        },
+        {
+          "date": "2026-10-08",
+          "value": 7765.36
+        },
+        {
+          "date": "2026-10-09",
+          "value": 7811.54
+        },
+        {
+          "date": "2026-10-12",
+          "value": 7807.24
+        },
+        {
+          "date": "2026-10-13",
+          "value": 7805.45
+        },
+        {
+          "date": "2026-10-14",
+          "value": 7718.94
+        }
+      ],
+      "date": "2026-10-14",
+      "value": 7718.94,
+      "previous_date": "2026-10-13",
+      "previous_value": 7805.45,
+      "change": -86.51000000000022,
+      "change_unit": "포인트",
+      "change_percent": -1.10832815532737,
+      "observed_at": "2026-10-15T04:27:40.514153+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "nasdaq": {
+      "id": "nasdaq",
+      "name": "나스닥 종합",
+      "group": "미국 증시",
+      "provider": "FRED",
+      "series": "NASDAQCOM",
+      "unit": "포인트",
+      "rate": false,
+      "timezone": "America/New_York",
+      "basis": "일별 종가",
+      "official_title": "NASDAQ Composite",
+      "official_unit": "Index Feb 5, 1971=100",
+      "source_url": "https://fred.stlouisfed.org/series/NASDAQCOM",
+      "observations": [
+        {
+          "date": "2026-09-02",
+          "value": 26217.83
+        },
+        {
+          "date": "2026-09-03",
+          "value": 26584.06
+        },
+        {
+          "date": "2026-09-04",
+          "value": 26506.99
+        },
+        {
+          "date": "2026-09-08",
+          "value": 26421.41
+        },
+        {
+          "date": "2026-09-09",
+          "value": 26253.34
+        },
+        {
+          "date": "2026-09-10",
+          "value": 26081.72
+        },
+        {
+          "date": "2026-09-11",
+          "value": 26333.04
+        },
+        {
+          "date": "2026-09-14",
+          "value": 26186.41
+        },
+        {
+          "date": "2026-09-15",
+          "value": 25981.57
+        },
+        {
+          "date": "2026-09-16",
+          "value": 25978.42
+        },
+        {
+          "date": "2026-09-17",
+          "value": 26418.3
+        },
+        {
+          "date": "2026-09-18",
+          "value": 26522.55
+        },
+        {
+          "date": "2026-09-21",
+          "value": 27122.09
+        },
+        {
+          "date": "2026-09-22",
+          "value": 27244.28
+        },
+        {
+          "date": "2026-09-23",
+          "value": 26936.04
+        },
+        {
+          "date": "2026-09-24",
+          "value": 26939.37
+        },
+        {
+          "date": "2026-09-25",
+          "value": 27068.72
+        },
+        {
+          "date": "2026-09-28",
+          "value": 26820.38
+        },
+        {
+          "date": "2026-09-29",
+          "value": 26797.54
+        },
+        {
+          "date": "2026-09-30",
+          "value": 26861.06
+        },
+        {
+          "date": "2026-10-01",
+          "value": 26871.6
+        },
+        {
+          "date": "2026-10-02",
+          "value": 27190.86
+        },
+        {
+          "date": "2026-10-05",
+          "value": 27477.31
+        },
+        {
+          "date": "2026-10-06",
+          "value": 27599.89
+        },
+        {
+          "date": "2026-10-07",
+          "value": 27538.69
+        },
+        {
+          "date": "2026-10-08",
+          "value": 27193.34
+        },
+        {
+          "date": "2026-10-09",
+          "value": 27366.17
+        },
+        {
+          "date": "2026-10-12",
+          "value": 27245.9
+        },
+        {
+          "date": "2026-10-13",
+          "value": 27204.38
+        },
+        {
+          "date": "2026-10-14",
+          "value": 26692.87
+        }
+      ],
+      "date": "2026-10-14",
+      "value": 26692.87,
+      "previous_date": "2026-10-13",
+      "previous_value": 27204.38,
+      "change": -511.51000000000204,
+      "change_unit": "포인트",
+      "change_percent": -1.8802486952468758,
+      "observed_at": "2026-10-15T04:27:41.728797+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "sox": {
+      "id": "sox",
+      "name": "필라델피아 반도체",
+      "group": "미국 증시",
+      "provider": "FRED",
+      "series": "NASDAQSOX",
+      "unit": "포인트",
+      "rate": false,
+      "timezone": "America/New_York",
+      "basis": "일별 종가",
+      "official_title": "PHLX Semiconductor",
+      "official_unit": "Index",
+      "source_url": "https://fred.stlouisfed.org/series/NASDAQSOX",
+      "observations": [
+        {
+          "date": "2026-09-03",
+          "value": 11352.13
+        },
+        {
+          "date": "2026-09-04",
+          "value": 11735.26
+        },
+        {
+          "date": "2026-09-08",
+          "value": 11887.87
+        },
+        {
+          "date": "2026-09-09",
+          "value": 11931.32
+        },
+        {
+          "date": "2026-09-10",
+          "value": 11614.17
+        },
+        {
+          "date": "2026-09-11",
+          "value": 11824.0
+        },
+        {
+          "date": "2026-09-14",
+          "value": 11131.28
+        },
+        {
+          "date": "2026-09-15",
+          "value": 11175.55
+        },
+        {
+          "date": "2026-09-16",
+          "value": 11246.11
+        },
+        {
+          "date": "2026-09-17",
+          "value": 11599.49
+        },
+        {
+          "date": "2026-09-18",
+          "value": 11921.69
+        },
+        {
+          "date": "2026-09-21",
+          "value": 12433.17
+        },
+        {
+          "date": "2026-09-22",
+          "value": 12689.82
+        },
+        {
+          "date": "2026-09-23",
+          "value": 12534.27
+        },
+        {
+          "date": "2026-09-24",
+          "value": 12492.54
+        },
+        {
+          "date": "2026-09-25",
+          "value": 12668.93
+        },
+        {
+          "date": "2026-09-28",
+          "value": 12465.24
+        },
+        {
+          "date": "2026-09-29",
+          "value": 12629.16
+        },
+        {
+          "date": "2026-09-30",
+          "value": 12628.62
+        },
+        {
+          "date": "2026-10-01",
+          "value": 12829.0
+        },
+        {
+          "date": "2026-10-02",
+          "value": 13136.67
+        },
+        {
+          "date": "2026-10-05",
+          "value": 13172.74
+        },
+        {
+          "date": "2026-10-06",
+          "value": 13217.82
+        },
+        {
+          "date": "2026-10-07",
+          "value": 13066.15
+        },
+        {
+          "date": "2026-10-08",
+          "value": 12623.71
+        },
+        {
+          "date": "2026-10-09",
+          "value": 12572.42
+        },
+        {
+          "date": "2026-10-12",
+          "value": 12236.79
+        },
+        {
+          "date": "2026-10-13",
+          "value": 12208.79
+        },
+        {
+          "date": "2026-10-14",
+          "value": 11684.38
+        }
+      ],
+      "date": "2026-10-14",
+      "value": 11684.38,
+      "previous_date": "2026-10-13",
+      "previous_value": 12208.79,
+      "change": -524.4100000000017,
+      "change_unit": "포인트",
+      "change_percent": -4.295347860025454,
+      "observed_at": "2026-10-15T04:27:43.132022+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "dow": {
+      "id": "dow",
+      "name": "다우존스 산업평균",
+      "group": "미국 증시",
+      "provider": "FRED",
+      "series": "DJIA",
+      "unit": "포인트",
+      "rate": false,
+      "timezone": "America/New_York",
+      "basis": "일별 종가",
+      "official_title": "Dow Jones Industrial Average",
+      "official_unit": "Index",
+      "source_url": "https://fred.stlouisfed.org/series/DJIA",
+      "observations": [
+        {
+          "date": "2026-09-03",
+          "value": 53686.11
+        },
+        {
+          "date": "2026-09-04",
+          "value": 53414.25
+        },
+        {
+          "date": "2026-09-08",
+          "value": 52786.07
+        },
+        {
+          "date": "2026-09-09",
+          "value": 52380.66
+        },
+        {
+          "date": "2026-09-10",
+          "value": 52064.1
+        },
+        {
+          "date": "2026-09-11",
+          "value": 52573.29
+        },
+        {
+          "date": "2026-09-14",
+          "value": 52421.2
+        },
+        {
+          "date": "2026-09-15",
+          "value": 52093.11
+        },
+        {
+          "date": "2026-09-16",
+          "value": 51461.9
+        },
+        {
+          "date": "2026-09-17",
+          "value": 51778.04
+        },
+        {
+          "date": "2026-09-18",
+          "value": 51682.64
+        },
+        {
+          "date": "2026-09-21",
+          "value": 52048.83
+        },
+        {
+          "date": "2026-09-22",
+          "value": 51863.69
+        },
+        {
+          "date": "2026-09-23",
+          "value": 51511.59
+        },
+        {
+          "date": "2026-09-24",
+          "value": 51349.98
+        },
+        {
+          "date": "2026-09-25",
+          "value": 51828.62
+        },
+        {
+          "date": "2026-09-28",
+          "value": 51481.51
+        },
+        {
+          "date": "2026-09-29",
+          "value": 51349.92
+        },
+        {
+          "date": "2026-09-30",
+          "value": 50906.05
+        },
+        {
+          "date": "2026-10-01",
+          "value": 50926.56
+        },
+        {
+          "date": "2026-10-02",
+          "value": 51176.96
+        },
+        {
+          "date": "2026-10-05",
+          "value": 51267.9
+        },
+        {
+          "date": "2026-10-06",
+          "value": 51521.28
+        },
+        {
+          "date": "2026-10-07",
+          "value": 51179.87
+        },
+        {
+          "date": "2026-10-08",
+          "value": 51231.64
+        },
+        {
+          "date": "2026-10-09",
+          "value": 51654.95
+        },
+        {
+          "date": "2026-10-12",
+          "value": 51850.55
+        },
+        {
+          "date": "2026-10-13",
+          "value": 51670.1
+        },
+        {
+          "date": "2026-10-14",
+          "value": 51621.48
+        }
+      ],
+      "date": "2026-10-14",
+      "value": 51621.48,
+      "previous_date": "2026-10-13",
+      "previous_value": 51670.1,
+      "change": -48.61999999999534,
+      "change_unit": "포인트",
+      "change_percent": -0.09409697291082336,
+      "observed_at": "2026-10-15T04:27:43.634534+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    }
+  },
+  "investors": {},
+  "attempts": {
+    "us2y": {
+      "status": "success"
+    },
+    "us10y": {
+      "status": "success"
+    },
+    "kr3y": {
+      "status": "success"
+    },
+    "usdkrw": {
+      "status": "success"
+    },
+    "vix": {
+      "status": "success"
+    },
+    "wti": {
+      "status": "success"
+    },
+    "sp500": {
+      "status": "success"
+    },
+    "nasdaq": {
+      "status": "success"
+    },
+    "sox": {
+      "status": "success"
+    },
+    "dow": {
+      "status": "success"
+    }
+  },
+  "history": [],
+  "last_attempt_at": "2026-10-15T04:27:33.172152+00:00"
+}

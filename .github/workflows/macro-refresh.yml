@@ -1,0 +1,69 @@
+name: Independent published macro refresh
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 0,13 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  macro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect bounded macro observations independently
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python scripts/collect_macro.py
+      - name: Retrieve official market statistics specification
+        run: |
+          python - <<'PY'
+          import urllib.request,urllib.parse,json
+          from pathlib import Path
+          out={};base='https://apiportal.koreainvestment.com'
+          try:
+            path='/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market'
+            d=json.load(urllib.request.urlopen(base+'/api/apis/public/detail?'+urllib.parse.urlencode({'accessUrl':path}),timeout=25))
+            fields=json.load(urllib.request.urlopen(base+'/api/apis/guide/property/'+d['id'],timeout=25))
+            out={'summary':d.get('apiSummary'),'properties':fields,'endpoint':path}
+          except Exception as e:out={'error_type':type(e).__name__,'http':getattr(e,'code',None)}
+          Path('macro-spec.json').write_text(json.dumps(out,ensure_ascii=False,indent=2))
+          PY
+      - name: Merge only valid observations without touching stock publication
+        run: |
+          git fetch origin main
+          git merge --ff-only origin/main
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from screener.macro import read,merge
+          candidate=json.loads(Path('macro-candidate.json').read_text())
+          target=Path('snapshot/macro.json');tmp=target.with_suffix('.tmp')
+          tmp.write_text(json.dumps(merge(read(),candidate),ensure_ascii=False,indent=2)+'\n');tmp.replace(target)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add snapshot/macro.json
+          git diff --cached --quiet || git commit -m 'Publish independently validated macro observations'
+          git push origin HEAD:main
+      - name: Save sanitized actual response evidence
+        if: always()
+        run: |
+          mkdir -p reports/macro-run
+          cp macro-candidate.json reports/macro-run/ || true
+          cp macro-spec.json reports/macro-run/ || true
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/macro-${GITHUB_RUN_ID}"
+          git add reports/macro-run
+          git diff --cached --quiet || git commit -m 'Record sanitized macro collection evidence'
+          git push origin "HEAD:refs/heads/evidence/macro-${GITHUB_RUN_ID}"
