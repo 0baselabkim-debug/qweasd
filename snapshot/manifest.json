@@ -1,9 +1,9 @@
 {
-  "asof": "2026-10-14",
-  "flow_rows": 48567,
+  "asof": "2026-10-15",
+  "flow_rows": 50997,
   "preserved_asof_flow_rows": 2430,
   "financial_rows": 2415,
-  "price_rows": 63128,
+  "price_rows": 65667,
   "exchange": "KRX",
   "source_run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38560757360",
   "enrichment_runs": {
@@ -28,27 +28,27 @@
       "ending_interval_seconds": 1.05
     }
   },
-  "sha256": "58f7f23797ada71e80a067ecd8c410a66125b72a163d17751f8cb0ee65054bf8",
+  "sha256": "595df2fc434a99590409d39a43b4dab3e366c4a16d1f25acdaf5edd1adfb7738",
   "finality": "UNVERIFIED",
   "automatic_snapshot_sync": true,
   "secrets_required": false,
   "current_day_flow_rows": 2430,
-  "daily_run": "38560757360",
+  "daily_run": "38731200188",
   "daily_validation": {
-    "trade_date": "2026-10-14",
+    "trade_date": "2026-10-15",
     "records": 2430,
-    "excluded": 113,
-    "adjusted_updates": 63128,
-    "source_run": "38560757360",
-    "planned_start_at": null,
-    "collection_started_at": null,
-    "collection_completed_at": null,
-    "input_mode": "saved_real_responses_replay",
-    "adjusted_close_conflict_symbols": 2042,
+    "excluded": 115,
+    "adjusted_updates": 94625,
+    "source_run": "38731200188",
+    "planned_start_at": "2026-10-15T20:30:00+09:00",
+    "collection_started_at": "2026-10-15T12:04:34.443686+00:00",
+    "collection_completed_at": "2026-10-15T14:14:26.777611+00:00",
+    "input_mode": "live_daily_collection",
+    "adjusted_close_conflict_symbols": 0,
     "complete_stock_scores": 1161,
     "complete_sector_scores": 0,
-    "full_20d_symbols": 2427,
+    "full_20d_symbols": 2425,
     "preservation_verified": true,
-    "sha256": "58f7f23797ada71e80a067ecd8c410a66125b72a163d17751f8cb0ee65054bf8"
+    "sha256": "595df2fc434a99590409d39a43b4dab3e366c4a16d1f25acdaf5edd1adfb7738"
   }
 }
