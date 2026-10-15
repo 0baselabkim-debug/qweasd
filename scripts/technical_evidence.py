@@ -57,6 +57,7 @@ def corporate_probe(api,asof):
     """Public KSD schedule feed, not an account-rights query. Incomplete coverage is explicit."""
     from scripts.technical_batch import ROOT
     start=(dt.date.fromisoformat(asof)-dt.timedelta(days=900)).strftime('%Y%m%d');records=[]
+    previous={s['endpoint']:s for s in read(ROOT/'corporate-actions.json.gz',{}).get('sources',[])}
     for name,tr in [('rev-split','HHKDB669105C0'),('merger-split','HHKDB669104C0'),('bonus-issue','HHKDB669101C0'),('cap-dcrs','HHKDB669106C0')]:
         path='/uapi/domestic-stock/v1/ksdinfo/'+name
         params={'SHT_CD':'','CTS':'','F_DT':start,'T_DT':asof.replace('-','')}
@@ -67,6 +68,7 @@ def corporate_probe(api,asof):
             if isinstance(rows,dict):rows=[rows]
             record.update(rows=rows,received=len(rows),continuation=getattr(api,'last_continuation',None),coverage='FIRST_PAGE_ONLY_NOT_COMPLETE_ACTION_LEDGER',status='received')
         except Exception as exc:record.update(status='failed',error_type=type(exc).__name__)
+        record=merge_corporate_source(previous.get(path),record)
         records.append(record)
     result={'asof':asof,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'sources':records,'complete':False,'reason':'Pagination and complete split/rights coverage require verification; personal quantities/costs never adjusted'}
     raw=json.dumps(result,ensure_ascii=False);assert all(v not in raw for v in [api.key,api.secret,api.token])
@@ -81,3 +83,13 @@ def corporate_probe(api,asof):
         b['official_corporate_action_observations']=matched;b['corporate_actions_verified']=False
         write(CACHE/(code+'.json.gz'),b)
     return {'received':sum(r.get('received',0) for r in records),'failed_endpoints':sum(r['status']=='failed' for r in records),'complete':False}
+
+
+def merge_corporate_source(previous,current):
+    """Keep already received facts even if a subsequent schedule page fails or shifts."""
+    previous=previous or {};known={json.dumps(r,sort_keys=True,ensure_ascii=False):r for r in previous.get('rows',[])}
+    known.update({json.dumps(r,sort_keys=True,ensure_ascii=False):r for r in current.get('rows',[])})
+    current['rows']=list(known.values());current['stored_rows']=len(known)
+    current['previous_rows_preserved']=len(previous.get('rows',[]))
+    current['last_success_through']=current['through'] if current.get('status')=='received' else previous.get('last_success_through',previous.get('through'))
+    return current

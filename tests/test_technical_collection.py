@@ -79,3 +79,18 @@ def test_only_documented_public_corporate_endpoints_are_allowed():
 def test_new_history_and_stale_refresh_both_progress():
     state={'000001':{'completed_asof':'2026-10-13','attempted_at':'2026-10-13'}}
     assert set(c.select_targets(['000001','000002'],state,'2026-10-14',2))=={'000001','000002'}
+
+def test_corporate_dates_are_not_assumed_effective_dates(tmp_path,monkeypatch):
+    monkeypatch.setattr(c,'ROOT',tmp_path)
+    c.write(tmp_path/'corporate-actions.json.gz',{'sources':[{'endpoint':'official-test-fixture','rows':[{'sht_cd':'000001','record_date':'20261014'},{'sht_cd':'000001','record_date':'20261015'},{'sht_cd':'000002','record_date':'20261014'},{'sht_cd':'000001','record_date':'bad'}]}]})
+    rows=c.corporate_observations('000001','2026-10-14')
+    assert len(rows)==1 and rows[0]['record_date']=='2026-10-14'
+    assert rows[0]['status']=='REVIEW_REQUIRED' and 'not_assumed' in rows[0]['date_kind']
+
+def test_corporate_failure_and_shifted_page_keep_known_records():
+    from scripts.technical_evidence import merge_corporate_source
+    old={'rows':[{'sht_cd':'000001','record_date':'20260101'}],'through':'2026-10-14'}
+    failed=merge_corporate_source(old,{'status':'failed','through':'2026-10-15'})
+    assert failed['rows']==old['rows'] and failed['last_success_through']=='2026-10-14'
+    newer=merge_corporate_source(old,{'status':'received','through':'2026-10-15','rows':[{'sht_cd':'000002','record_date':'20261015'}]})
+    assert len(newer['rows'])==2 and newer['last_success_through']=='2026-10-15'

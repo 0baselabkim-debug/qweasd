@@ -87,6 +87,7 @@ def make_bundle(api,symbol,asof,calendar,data,old,paged,count=320):
     if raw_close is None:conflicts.append('Same-date unadjusted KRX close unavailable')
     today=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat()
     b={'schema':2,'symbol':symbol,'market':str(data['instruments'].set_index('symbol').loc[symbol,'market']) if 'instruments' in data else None,'units':{'price':'KRW','volume':'shares','turnover':'KRW','foreign_net':'KRW'},'adjustment_asof':asof,'asof':asof,'exchange':'KRX','adjustment':'adjusted','adjustment_basis':'KIS FID_ORG_ADJ_PRC=0; provider adjustment factors retained','source':'KIS FHKST03010100 / J','flow_source':'Preserved snapshot KIS FHPTJ04160001 / J / KRW','calendar_source':'KIS KOSPI daily index observations','bars':bars,'flows':flows,'calendar':calendar,'finality':'UNVERIFIED','finality_evidence':None,'price_finality':'UNVERIFIED','flow_finality':sorted(set(flow.finality)),'finality_review':{'past_seoul_date':asof<today,'reason':'No documented final-confirmation field; elapsed time or repeated price equality is insufficient'},'price_conflicts':conflicts,'price_comparison':{'preserved_unadjusted':original,'kis_unadjusted':raw_close,'kis_adjusted':bars[-1]['close'] if bars else None,'adjustment_difference':bool(bars and raw_close is not None and raw_close!=bars[-1]['close'])},'corporate_action_observations':events,'corporate_actions':[e for e in events if action_present(e)],'corporate_actions_verified':False,'corporate_action_review':'KIS adjustment flags retained; not a complete official entitlement/corporate-action ledger','observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'collection_mode':mode}
+    b['official_corporate_action_observations']=corporate_observations(symbol,asof)
     b['validation']=validate(b,asof)
     structural=validate({**b,'price_conflicts':[]},asof,require_final=False)
     b['structure_valid']=not structural;b['structure_errors']=structural
@@ -192,3 +193,15 @@ def crosscheck(b,reference,scope_evidence=None):
     if not b['price_crosscheck']['raw_close_match']:
         if 'KIS raw / independent KRX daily close mismatch' not in b['price_conflicts']:b['price_conflicts'].append('KIS raw / independent KRX daily close mismatch')
     b['validation']=validate(b,b['asof']);return b
+
+
+def corporate_observations(symbol,asof):
+    ledger=read(ROOT/'corporate-actions.json.gz',{});observations=[]
+    for source in ledger.get('sources',[]):
+        for row in source.get('rows',[]):
+            if row.get('sht_cd')!=symbol:continue
+            value=str(row.get('record_date',''))
+            try:day=dt.datetime.strptime(value,'%Y%m%d').date().isoformat()
+            except ValueError:continue
+            if day<=asof:observations.append({'symbol':symbol,'record_date':day,'date_kind':'provider_record_date_not_assumed_effective_trading_date','endpoint':source['endpoint'],'official_example':source.get('official_example'),'record':row,'status':'REVIEW_REQUIRED'})
+    return observations
