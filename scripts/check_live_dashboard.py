@@ -94,8 +94,8 @@ with sync_playwright() as p:
    if days==5:
     assert ui.locator('.st-key-stock_period').get_by_role('tab',name='오늘',exact=True).get_attribute('aria-selected')=='true','stock_period_must_be_independent'
    tab('stock',label)
-   assert '누적 순매수 금액' in ui.locator('.st-key-stock_sort').inner_text()
-   assert '누적 순매수 금액' in ui.locator('.st-key-sector_sort').inner_text()
+   assert ui.get_by_role('combobox',name='종목 정렬',exact=True).input_value()=='누적 순매수 금액', 'stock_sort_reset_missing'
+   assert ui.get_by_role('combobox',name='섹터 수급 정렬',exact=True).input_value()=='누적 순매수 금액', 'sector_sort_reset_missing'
    for button,name,original,keys in [('섹터 현황 CSV','sectors',expected_sectors,['market','sector']),('선택 종목 CSV','stocks',expected_stocks,['symbol'])]:
     rows=download_csv(button,f'flow-{name}-{days}d.csv')
     assert len(rows)==len(original)
@@ -137,7 +137,7 @@ with sync_playwright() as p:
   report['checks'].append('Today/5/20-day tabs, all-stock ranking, two real charts and hover tooltip')
   report['success']=True
  except Exception as e:
-  report['error_type']=type(e).__name__;report['error']=str(e)[:1800]
+  report['error_type']=type(e).__name__;report['error']=str(e)[:1800];report['traceback']=traceback.format_exc()[-4000:]
   page.screenshot(path=str(out/'failure.png'),full_page=True)
  finally:
   report['final_url']=page.url
