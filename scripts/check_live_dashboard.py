@@ -64,6 +64,14 @@ with sync_playwright() as p:
   assert abs((content['x']-area['x'])-(area['width']-content['width'])/2)<3,(stage,content,area)
   record={'viewport':width,'stage':stage,'available_width':area['width'],'content_width':content['width']}
   if stage=='macro':
+   panels=[c.bounding_box() for c in ui.locator('.macro-card').all()]
+   if width>1180:
+    assert max(c['height'] for c in panels)-min(c['height'] for c in panels)<2
+    assert abs(panels[0]['x']-panels[2]['x'])<2 and abs(panels[1]['x']-panels[3]['x'])<2
+    assert abs(panels[0]['y']-panels[1]['y'])<2 and abs(panels[2]['y']-panels[3]['y'])<2
+   else:
+    assert max(c['x'] for c in panels)-min(c['x'] for c in panels)<2
+    assert all(b['y']>=a['y']+a['height'] for a,b in zip(panels,panels[1:]))
    for card in ui.locator('.macro-card').all():
     panel=card.bounding_box();tablebox=card.locator('.mini-scroll').bounding_box()
     assert abs((tablebox['x']-panel['x'])-(panel['width']-tablebox['width'])/2)<3
