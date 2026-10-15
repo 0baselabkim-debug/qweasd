@@ -11,7 +11,10 @@ with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,**({'executable_path':os.environ['BROWSER_EXECUTABLE'],'args':['--no-sandbox','--disable-dev-shm-usage']} if os.environ.get('BROWSER_EXECUTABLE') else {}))
  page=browser.new_page(viewport={'width':1500,'height':1100},device_scale_factor=1)
  ui=page
- def pause():page.wait_for_timeout(1200)
+ def pause():
+  page.wait_for_timeout(700)
+  ui.locator('.stApp[data-test-script-state="notRunning"]').wait_for(timeout=90000)
+  page.wait_for_timeout(500)
  def main(section):
   label='강세 섹터' if section=='sector' else '강세 섹터 내 우수 종목'
   ui.get_by_role('tab',name=label,exact=True).click();pause()
@@ -52,6 +55,7 @@ with sync_playwright() as p:
   assert right['x']>left['x']+left['width']-2 and abs(right['y']-left['y'])<5
   report['checks'].append('Dark desktop: two side-by-side panels, two main tabs, removed prose/expanders')
   choose('종목 범위','전체 시장')
+  assert ui.get_by_role('combobox',name='종목 범위',exact=True).input_value()=='전체 시장'
   score_baseline=None
   for label,days in [('오늘',1),('지난 5일',5),('지난 20일',20)]:
    for section in ['sector','stock']:
@@ -62,7 +66,7 @@ with sync_playwright() as p:
     if section=='sector':originals=[r for r in originals if r[f'net_{days}d'] and float(r[f'net_{days}d'])>0]
     keys=['market','sector'] if section=='sector' else ['symbol'];actual=['시장','섹터'] if section=='sector' else ['코드']
     lookup={tuple(r[k] for k in keys):r[f'net_{days}d'] for r in originals}
-    assert len(rows)==len(lookup)
+    assert len(rows)==len(lookup),f'{section} {days}d: actual {len(rows)}, expected {len(lookup)}'
     amounts=[]
     for r in rows:
      source=lookup[tuple(r[k] for k in actual)];value=r['선택 기간 순매수(억원)']

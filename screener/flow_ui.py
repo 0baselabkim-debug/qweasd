@@ -12,7 +12,7 @@ def chart(frame,period,key,title):
     if title:st.markdown('**'+title+'**')
     mode=st.radio('차트 표시', ['일별 순매수','누적 순매수','함께 보기'],horizontal=True,key=key+'_mode',label_visibility='collapsed')
     base=alt.Chart(f).encode(x=alt.X('거래일:O',sort=None,axis=alt.Axis(labelAngle=-35,labelExpr="slice(datum.label, 5)"),title=None))
-    bars=base.mark_bar(size=20).encode(y=alt.Y('일별 순매수(억원):Q',title='순매수 (억원)'),color=alt.condition(alt.datum['일별 순매수(억원)']>=0,alt.value('#ff5279'),alt.value('#287bff')),
+    bars=base.mark_bar(size=alt.ExprRef(expr="min(24, bandwidth('x') * 0.72)")).encode(y=alt.Y('일별 순매수(억원):Q',title='순매수 (억원)'),color=alt.condition(alt.datum['일별 순매수(억원)']>=0,alt.value('#ff5279'),alt.value('#287bff')),
           tooltip=['거래일',alt.Tooltip('일별 순매수(억원):Q',format=',.2f'),'수신/대상'])
     line=base.mark_line(color='#58a6ff',point=True,invalid='break-paths-show-domains').encode(y=alt.Y('누적 순매수(억원):Q',title='누적 (억원)'),tooltip=['거래일',alt.Tooltip('누적 순매수(억원):Q',format=',.2f')])
     view=bars if mode=='일별 순매수' else line if mode=='누적 순매수' else alt.layer(bars,line).resolve_scale(y='independent')

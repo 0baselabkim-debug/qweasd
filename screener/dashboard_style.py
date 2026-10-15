@@ -30,7 +30,7 @@ h3{font-size:1.05rem!important;letter-spacing:-.025em}
 [data-testid="stButton"] button:hover,[data-testid="stDownloadButton"] button:hover,[data-testid="stLinkButton"] a:hover{border-color:#4a8aff;background:#142c50;color:white}
 [data-testid="stRadio"] [role="radiogroup"]{gap:12px}
 [data-testid="stExpander"]{background:#0c1729;border-color:#233c5d;border-radius:8px}
-[data-testid="stVegaLiteChart"]{background:#091422;border:1px solid #1c304a;border-radius:8px;padding:8px 6px 0}
+[data-testid="stVegaLiteChart"]{background:#091422;border:1px solid #1c304a;border-radius:8px;padding:0;box-sizing:border-box}
 .date-label{height:42px;display:flex;align-items:center;justify-content:flex-end;font-size:14px;color:#d6e5ff;white-space:nowrap}
 .status-line{display:flex;gap:7px;flex-wrap:wrap;margin:2px 0 7px}
 .badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:11px;line-height:1.7;font-weight:650;border:1px solid #284a76;color:#a9c9ff;background:#112a4c;white-space:nowrap}
