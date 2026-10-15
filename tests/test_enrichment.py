@@ -193,6 +193,9 @@ def test_running_app_refreshes_an_old_imported_calculator(monkeypatch):
     monkeypatch.setattr(scoring,'_dashboard_loaded_version','old-deployment',raising=False)
     app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app_legacy.py'),default_timeout=90).run()
     assert not app.exception
+    # This verified financial-count fixture belongs to October 14, not the latest date.
+    next(w for w in app.selectbox if w.label=='데이터 기준일').select('2026-10-14');app.run()
+    assert not app.exception
     assert any(m.value=='2,415종목' for m in app.metric)
 
 

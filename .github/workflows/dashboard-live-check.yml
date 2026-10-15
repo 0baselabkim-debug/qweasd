@@ -1,8 +1,5 @@
 name: Existing Streamlit app browser verification
 on:
-  workflow_run:
-    workflows: ['Recover validated daily snapshot 20261015']
-    types: [completed]
   workflow_dispatch:
     inputs:
       check:
@@ -13,7 +10,6 @@ permissions:
   contents: write
 jobs:
   browser:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
