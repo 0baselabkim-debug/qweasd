@@ -135,14 +135,19 @@ def run(api,data,paged,limit=150,budget=900,probe=False):
                 from scripts.technical_acceptance import verify_bundle
                 b=verify_bundle(api,b,references)
             except Exception as exc:b['acceptance_error']=type(exc).__name__
+            if b['indicator_ready']:
+                from scripts.verify_technical_expansion import verify
+                b['independent_checks']=verify(b)['checks']
             listing=data['instruments'].set_index('symbol').loc[code,'listing_date']
             category=classify(b,str(listing)[:10] if str(listing)!='NaT' else None)
             # Preserve valid previous observations when an incoming window is incomplete or invalid.
             good=not old or b['indicator_ready'] or (not old.get('indicator_ready') and len(b['bars'])>=len(old['bars']))
+            # A current-source conflict cannot replace previously usable prices.
+            if old and old.get('indicator_ready') and b.get('price_finality')=='CONFLICT':good=False
             if good:write(CACHE/(code+'.json.gz'),b)
             else:write(ROOT/'rejected'/(code+'.json.gz'),b)
             record.update(status=category,bars=len(b['bars']),indicator_ready=b['indicator_ready'],structure_valid=b['structure_valid'],signal_ready=not b['validation'],reasons=b['validation'],previous_preserved=not good)
-            if category=='collected':record['completed_asof']=asof;succeeded+=1
+            if category=='collected' and good:record['completed_asof']=asof;succeeded+=1
             else:failed+=1
         except Exception as exc:
             failed+=1;record.update(status='api_or_schema_error',error_type=type(exc).__name__,previous_preserved=old is not None)
