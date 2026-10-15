@@ -77,32 +77,34 @@ with st.sidebar:
  asof=select('수급 기준일',sorted(data['flows'].trade_date.dt.strftime('%Y-%m-%d').unique(),reverse=True),'asof')
  market=select('시장',['전체','KOSPI','KOSDAQ'],'market')
  classification=radio('분류체계',['공식 업종','투자 테마'],'classification')
-with st.container(key='header'):
- a,b=st.columns([4,1.5],vertical_alignment='center')
- with a:st.markdown(f'<div class="date-label">수급 기준일 <b>{asof}</b></div>',unsafe_allow_html=True)
- with b:st.link_button('↻ 업데이트 상태','https://github.com/0baselabkim-debug/qweasd/actions',width='stretch')
+if ss.stage!='macro':
+ with st.container(key='header'):
+  a,b=st.columns([4,1.5],vertical_alignment='center')
+  with a:st.markdown(f'<div class="date-label">수급 기준일 <b>{asof}</b></div>',unsafe_allow_html=True)
+  with b:st.link_button('↻ 업데이트 상태','https://github.com/0baselabkim-debug/qweasd/actions',width='stretch')
 
 if ss.stage=='macro':
  explorer.reading_layout('macro')
  st.subheader('매크로 지표')
  state=macro.read();macro_frames=[]
  with st.container(key='macro_cards'):
-  groups_order=['금리','환율·원자재','미국 증시','한국 증시']
-  for start in [0,2]:
-   cols=st.columns(2)
-   for i,group in enumerate(groups_order[start:start+2]):
-    with cols[i]:explorer.macro_card(group,explorer.macro_rows(state,macro.catalog(),group))
+  cols=st.columns(2)
+  for col,group in zip(cols,['금리','환율·원자재']):
+   with col:explorer.macro_card(group,explorer.macro_rows(state,macro.catalog(),group))
+  cols=st.columns(2)
+  with cols[0]:
+   explorer.macro_card('증시 지수',explorer.macro_rows(state,macro.catalog(),'미국 증시')+explorer.macro_rows(state,macro.catalog(),'한국 증시'))
+  with cols[1]:
+   rows=[]
+   for market_name in ['KOSPI','KOSDAQ']:
+    r=state.get('investors',{}).get(market_name,{})
+    for investor in ['개인','외국인','기관']:
+     value=r.get('amounts',{}).get(investor)
+     rows.append('<tr><td>'+market_name+'</td><td>'+investor+'</td><td class="num">'+('미확보' if value is None else f'{value:+,.2f}')+'</td></tr>')
+   st.markdown('<section class="macro-card"><div class="macro-card-head"><h3>투자자별 당일 순매수</h3></div><div class="mini-scroll investor-table"><table class="mini-table"><thead><tr><th>시장</th><th>투자자</th><th class="num">당일 순매수(억원)</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div></section>',unsafe_allow_html=True)
   for key,meta in macro.catalog().items():
    r=state.get('indicators',{}).get(key,{})
    macro_frames.append({'지표':meta['name'],'최신 공표값':r.get('value'),'단위':meta['unit'],'직전 공표값':r.get('previous_value'),'전일 대비':r.get('change'),'변화 단위':r.get('change_unit'),'등락률(%)':r.get('change_percent'),'기준일':r.get('date'),'직전 기준일':r.get('previous_date'),'공급원':r.get('provider',meta['provider']),'갱신 상태':('공표값 확보' if state.get('attempts',{}).get(key,{}).get('status')=='success' else '이전 정상 자료 유지') if r else '미확보'})
- st.markdown('<h3>투자자별 당일 순매수</h3>',unsafe_allow_html=True)
- rows=[]
- for market_name in ['KOSPI','KOSDAQ']:
-  r=state.get('investors',{}).get(market_name,{})
-  for investor in ['개인','외국인','기관']:
-   value=r.get('amounts',{}).get(investor)
-   rows.append('<tr><td>'+market_name+'</td><td>'+investor+'</td><td class="num">'+('미확보' if value is None else f'{value:+,.2f}')+'</td></tr>')
- st.markdown('<div class="mini-scroll investor-table"><table class="mini-table"><thead><tr><th>시장</th><th>투자자</th><th class="num">당일 순매수(억원)</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div>',unsafe_allow_html=True)
  csv_button('매크로 현황 CSV',pd.DataFrame(macro_frames),'macro_download')
  st.stop()
 

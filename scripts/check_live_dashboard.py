@@ -64,6 +64,9 @@ with sync_playwright() as p:
   assert abs((content['x']-area['x'])-(area['width']-content['width'])/2)<3,(stage,content,area)
   record={'viewport':width,'stage':stage,'available_width':area['width'],'content_width':content['width']}
   if stage=='macro':
+   for card in ui.locator('.macro-card').all():
+    panel=card.bounding_box();tablebox=card.locator('.mini-scroll').bounding_box()
+    assert abs((tablebox['x']-panel['x'])-(panel['width']-tablebox['width'])/2)<3
    rows=ui.locator('.macro-table tbody tr,.investor-table tbody tr').evaluate_all('es=>es.map(e=>e.getBoundingClientRect().height)')
    assert rows and all(44<=v<=48 for v in rows),rows
    assert ui.locator('.macro-table td').evaluate_all('es=>es.every(e=>parseFloat(getComputedStyle(e).fontSize)>=14)')
@@ -93,11 +96,18 @@ with sync_playwright() as p:
   assert ui.locator('[data-testid="stSidebar"] .sidebar-title').inner_text()=='한국 증시 수급 필터'
   assert not ui.locator('[data-testid="stMain"] h1').count();layout()
   cards=ui.locator('.macro-card');assert cards.count()==4
-  for card in cards.all():assert card.locator('th').all_text_contents()==['항목명','최신 데이터 값','전일 대비']
+  for card in cards.filter(has=ui.locator('.macro-table')).all():assert card.locator('th').all_text_contents()==['항목명','최신 데이터 값','전일 대비']
+  main=ui.locator('[data-testid="stMain"]')
+  assert '공표 기준' not in main.inner_text() and '수급 기준일' not in main.inner_text() and '업데이트 상태' not in main.inner_text()
+  assert cards.locator('h3').all_text_contents()==['금리','환율·원자재','증시 지수','투자자별 당일 순매수']
+  assert cards.nth(2).locator('tbody tr').count()==6
+  boxes=[c.bounding_box() for c in cards.all()]
+  assert abs((boxes[1]['x']-boxes[0]['x']-boxes[0]['width'])-(boxes[2]['y']-boxes[0]['y']-boxes[0]['height']))<3
+  assert abs(cards.nth(2).bounding_box()['y']-cards.nth(3).bounding_box()['y'])<3
   state=macro_read()
   for group in ['금리','환율·원자재','미국 증시','한국 증시']:
    for expected in macro_rows(state,catalog(),group):
-    row=ui.locator('.macro-card tr').filter(has=ui.get_by_role('cell',name=expected['항목명'],exact=True))
+    row=ui.locator('.macro-table tr').filter(has=ui.get_by_role('cell',name=expected['항목명'],exact=True))
     assert row.locator('td').all_text_contents()==[expected[c] for c in ['항목명','최신 데이터 값','전일 대비']]
     assert expected['date'] in row.get_attribute('title')
   assert ui.locator('.investor-table tbody tr').count()==6

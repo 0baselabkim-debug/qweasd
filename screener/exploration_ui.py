@@ -46,10 +46,7 @@ def macro_card(title,rows):
         tone='positive' if row['change'] is not None and row['change']>0 else 'negative' if row['change'] is not None and row['change']<0 else ''
         provenance=f"기준일 {row['date'] or '미확보'} · {row['provider']}"
         body.append('<tr title="'+html.escape(provenance,quote=True)+'"><td>'+html.escape(row['항목명'])+'</td><td class="num">'+html.escape(row['최신 데이터 값'])+'</td><td class="num '+tone+'">'+html.escape(row['전일 대비'])+'</td></tr>')
-    dates=sorted({r['date'] for r in rows if r['date']})
-    # Small provenance range prevents lagged publications being mistaken for today's close.
-    stamp='공표 기준 '+(' ~ '.join([dates[0],dates[-1]]) if len(dates)>1 else dates[0] if dates else '미확보')
-    st.markdown('<section class="macro-card"><div class="macro-card-head"><h3>'+html.escape(title)+'</h3><span>'+stamp+'</span></div><div class="mini-scroll"><table class="mini-table macro-table"><thead><tr><th>항목명</th><th class="num">최신 데이터 값</th><th class="num">전일 대비</th></tr></thead><tbody>'+''.join(body)+'</tbody></table></div></section>',unsafe_allow_html=True)
+    st.markdown('<section class="macro-card"><div class="macro-card-head"><h3>'+html.escape(title)+'</h3></div><div class="mini-scroll"><table class="mini-table macro-table"><thead><tr><th>항목명</th><th class="num">최신 데이터 값</th><th class="num">전일 대비</th></tr></thead><tbody>'+''.join(body)+'</tbody></table></div></section>',unsafe_allow_html=True)
 
 CSS='''<style>
 [data-testid="stSidebarHeader"],[data-testid="stSidebarCollapseButton"],[data-testid="stExpandSidebarButton"],[data-testid="stSidebarCollapsedControl"],[data-testid="stSidebar"] [data-testid="stLogoSpacer"]{display:none!important}
@@ -78,9 +75,10 @@ def install():st.markdown(CSS,unsafe_allow_html=True)
 
 READABILITY_CSS='''
 [data-testid="stMain"] .block-container{width:100%!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important}
-.macro-card{padding:14px;margin-bottom:12px}.macro-card-head{margin-bottom:12px}.macro-card h3{font-size:16px!important}.macro-card-head span{font-size:11px}
-.st-key-macro_cards>[data-testid="stHorizontalBlock"]{gap:22px!important}
-.macro-card .mini-scroll,.investor-table{width:fit-content;max-width:100%}
+.macro-card{padding:14px;margin:0!important}.macro-card-head{margin-bottom:12px}.macro-card h3{font-size:16px!important}.macro-card-head span{font-size:11px}
+.st-key-macro_cards div:has(>.macro-card){margin-bottom:0!important}
+.st-key-macro_cards,.st-key-macro_cards [data-testid="stHorizontalBlock"]{gap:22px!important}
+.macro-card .mini-scroll,.investor-table{width:fit-content;max-width:100%;margin-left:auto;margin-right:auto}
 .macro-table,.investor-table .mini-table{width:max-content;min-width:0;table-layout:auto}
 .macro-table th,.investor-table th{height:44px;padding:10px;font-size:14px;line-height:22px}
 .macro-table td,.investor-table td{height:46px;padding:11px 10px!important;font-size:14px!important;line-height:23px;vertical-align:middle}
