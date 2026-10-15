@@ -22,3 +22,14 @@ scripts/check_live_dashboard.py: 실제 Playwright 마우스 더블클릭/단일
 scripts/check_corporate_dashboard.py: 기존 공시/사업 데이터 게시와 최신 재무 패널 검증 경로를 새 탐색 UI에 맞춤.
 
 실제 테스트 자료와 수집 데이터는 합치지 않으며, 이번 작업에서 데이터 수집은 실행하지 않음.
+
+## 최종 결과
+
+- UI 배포 커밋: f09accc.
+- [자동 테스트 110개 및 HTTP 배포 검사 통과](https://github.com/0baselabkim-debug/qweasd/actions/runs/38687151496).
+- [실제 공개 웹 전체 조작 검증 통과](https://github.com/0baselabkim-debug/qweasd/actions/runs/38687156342): PC 1500px, 터치 768px/390px, 모바일→PC 리사이즈. 단일 클릭/다른 셀 더블클릭에서는 이동 없음. 이름 더블클릭에서만 이동. X hover/키보드 focus 및 실제 닫기 검증.
+- [공시·재무·사업 테마 공개 웹 보존 검증 통과](https://github.com/0baselabkim-debug/qweasd/actions/runs/38687159830). 실제 게시된 조사 기업 수/재무 버전/공시일 확인.
+- 수급·매크로 CSV와 원본 실제 값 일치. 보호 파일 37개 해시 동일. API 재수집 및 기존 수집 예약 변경 없음.
+- 공개 웹 스크린샷: screenshots/macro.png, screenshots/sectors.png, screenshots/mobile.png. 추가 스크린샷은 evidence/dashboard-38687156342 브랜치 reports/live-dashboard에 보존.
+
+사용자가 직접 수정하거나 추가 등록할 설정은 없음.
