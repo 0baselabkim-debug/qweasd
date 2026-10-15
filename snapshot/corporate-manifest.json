@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-15T18:16:01.239750+00:00",
+  "updated_at": "2026-10-15T23:47:00.394539+00:00",
   "filings": 8356,
-  "financial_versions": 2664,
-  "business_companies": 250,
+  "financial_versions": 2772,
+  "business_companies": 357,
   "universe": 2430,
   "last_run": {
-    "id": "38779194650-1792088140802656228",
-    "started_at": "2026-10-15T17:40:19.524967+00:00",
-    "completed_at": "2026-10-15T18:15:40.802664+00:00",
-    "calls": 125,
-    "seconds": 2121.28,
-    "processed_filings": 76,
-    "budget_exhausted": true,
+    "id": "38824532538-1792107994709301068",
+    "started_at": "2026-10-15T23:36:26.008748+00:00",
+    "completed_at": "2026-10-15T23:46:34.709309+00:00",
+    "calls": 363,
+    "seconds": 608.7,
+    "processed_filings": 227,
+    "budget_exhausted": false,
     "discovery_through": "2026-10-16",
     "discovery_error": null,
     "failed_jobs": {
@@ -57,14 +57,34 @@
       },
       "20260605000334": {
         "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260508000660": {
+        "business_error": "business_section_not_unique",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260319000744": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260814002982": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260403000835": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260730000551": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
       }
     },
     "scope": "entire_universe",
-    "pending_filings": 4357,
+    "pending_filings": 4147,
     "unavailable_financials": [],
     "held_financials": []
   },
   "annual_score_policy": "preserved_2025_baseline",
   "quarterly_score_policy": "hold_until_comparable_TTM_validation",
-  "state_sha256": "49aba42a4d742446fd0d49e638e500991f24a5e73b231bb22b75cafcce69f332"
+  "state_sha256": "dc3dbbf72619f08fd631b2147b0b4dd4a0ddca53d8a3e0cf7440bd64020c7a4b"
 }
