@@ -57,6 +57,13 @@ with sync_playwright() as p:
   ui.get_by_text('① 투자 테마별 자금 흐름',exact=True).wait_for(timeout=30000)
   assert '부분 검증 테마' in ui.locator('body').inner_text()
   assert f'사업 근거 확인 종목 {theme_count}개' in ui.locator('body').inner_text()
+  choose('테마 선택','반도체')
+  choose('종목 상세정보','원익IPS · 240810')
+  ui.get_by_text('최신 공시 재무 · 사업 테마 검토',exact=True).click()
+  page.wait_for_timeout(1000)
+  assert '2026-06-30' in ui.locator('body').inner_text() and '2026-08-14' in ui.locator('body').inner_text(),'actual_interim_disclosure_missing'
+  report['checks'].append('Wonik IPS actual 2026 half-year statement and disclosure date visible; annual scoring kept separate')
+  page.screenshot(path=str(out/'corporate.png'),full_page=True)
   choose('테마 선택','원전')
   choose('종목 상세정보','두산에너빌리티 · 034020')
   ui.get_by_text('② 선택한 테마의 종목',exact=True).wait_for()

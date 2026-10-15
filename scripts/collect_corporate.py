@@ -136,8 +136,10 @@ def main():
     j=state['jobs'].get(f['receipt'],{})
     if j.get('business_status')!='success' or (j.get('financial_status') not in ['success','held_nondec_fiscal_period'] and j.get('retry_after','')<=str(dt.date.today())):pending.append(f)
   codes=list(dict.fromkeys(f['symbol'] for f in pending))[:a.limit]
+  fiscal_month={r['symbol']:r.get('fiscal_month') for r in universe}
   for f in pending:
    if f['symbol'] not in codes:continue
+   if str(fiscal_month.get(f['symbol'])) not in ['12','12.0']:f={**f,'report_code':None}
    process(api,state,f,a.cache);processed.append(f['receipt']);save_state(state,a.state)
  except BudgetExceeded:budget=True
  except Exception as e:state['last_discovery_error']=str(e)[:100] if isinstance(e,ValueError) else type(e).__name__

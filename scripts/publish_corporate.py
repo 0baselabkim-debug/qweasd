@@ -18,7 +18,13 @@ def validate(old,new):
 def main():
  p=argparse.ArgumentParser();p.add_argument('--validate-only',action='store_true');a=p.parse_args()
  old=load_state();new=load_state('corporate-candidate/state.json.gz');validate(old,new)
- if a.validate_only:print('Corporate append-only validation passed');return
+ import duckdb
+ with duckdb.connect('corporate-candidate/corporate.duckdb',read_only=True) as c:
+  for table,key in [('filings','receipt'),('financial_versions','id'),('theme_reviews','id')]:
+   state_key={'filings':'filings','financial_versions':'financials','theme_reviews':'reviews'}[table]
+   actual={k:json.loads(v) for k,v in c.execute(f'select {key},payload from {table}').fetchall()}
+   if actual!=new[state_key]:raise ValueError('sidecar_database_mismatch_'+table)
+ if a.validate_only:print('Corporate append-only and DuckDB validation passed');return
  latest=new['runs'][-1] if new['runs'] else {}
  manifest={'updated_at':dt.datetime.now(dt.timezone.utc).isoformat(),'filings':len(new['filings']),'financial_versions':len(new['financials']),
  'business_companies':len({new['filings'][k]['symbol'] for k,j in new['jobs'].items() if j.get('business_status')=='success'}),'universe':2430,
