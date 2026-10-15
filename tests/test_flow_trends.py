@@ -76,7 +76,7 @@ def test_real_app_period_sort_and_whole_market():
     def table(column):return next(w.value for w in app.dataframe if column in w.value.columns)
     select('데이터 기준일','2026-10-14');select('종목 범위','전체 시장')
     original=table('20일 수급 전체 순위').set_index('코드')[['종합 점수','업종 내 평가 순위']].sort_index()
-    assert [t.label for t in app.tabs]==['오늘','지난 5일','지난 20일']*2
+    assert [t.label for t in app.tabs if t.label not in ['강세 섹터','강세 섹터 내 우수 종목']]==['오늘','지난 5일','지난 20일']*2
     for label,days in [('오늘',1),('지난 5일',5),('지난 20일',20)]:
         tab('sector',label);tab('stock',label)
         sector=table('수급 정렬 순위');stock=table('20일 수급 전체 순위')
@@ -155,3 +155,23 @@ def test_new_trading_day_rolls_windows_without_future_leakage(history):
     assert new.loc['000001','previous_5d']==sum(range(16,21))
     assert new.loc['000001','net_20d']==sum(range(6,26))
     assert len(matrix.index)==20 and matrix.index.max()==current
+
+
+@pytest.mark.parametrize('mode',['일별 순매수','누적 순매수','함께 보기'])
+def test_chart_mode_preserves_real_zero_and_missing_gaps(monkeypatch,mode):
+    """Presentation switches must never silently complete an incomplete cumulative sum."""
+    import io
+    from screener import flow_ui
+    frame=pd.DataFrame({'trade_date':pd.date_range('2026-01-01',periods=3),
+                        'net_amount':[100.,np.nan,0.],'observed_members':[1,0,1],'expected_members':[1,1,1]})
+    original=frame.copy(deep=True);captured={}
+    monkeypatch.setattr(flow_ui.st,'markdown',lambda *a,**k:None)
+    monkeypatch.setattr(flow_ui.st,'radio',lambda *a,**k:mode)
+    monkeypatch.setattr(flow_ui.st,'altair_chart',lambda chart,**kwargs:captured.update(chart=chart.to_dict()))
+    monkeypatch.setattr(flow_ui.st,'download_button',lambda label,data,*a,**k:captured.update(csv=data))
+    flow_ui.chart(frame,3,'test_only','')
+    result=pd.read_csv(io.BytesIO(captured['csv']))
+    assert result.net_amount.iloc[0]==100 and pd.isna(result.net_amount.iloc[1]) and result.net_amount.iloc[2]==0
+    assert result.cumulative_amount.iloc[0]==100 and result.cumulative_amount.iloc[1:].isna().all()
+    assert ('layer' in captured['chart'])==(mode=='함께 보기')
+    pd.testing.assert_frame_equal(frame,original)

@@ -1,10 +1,18 @@
 [theme]
-base = "light"
-primaryColor = "#117c73"
-backgroundColor = "#f6f8fb"
-secondaryBackgroundColor = "#ffffff"
-textColor = "#182c40"
+base = "dark"
+primaryColor = "#256bff"
+backgroundColor = "#070f1b"
+secondaryBackgroundColor = "#101d30"
+textColor = "#edf4ff"
+borderColor = "#263e5f"
+dataframeBorderColor = "#203653"
+dataframeHeaderBackgroundColor = "#162b48"
+dataframeHeaderTextColor = "#dceaff"
+baseRadius = "0.5rem"
+buttonRadius = "0.4rem"
+showWidgetBorder = true
 font = "sans serif"
+chartCategoricalColors = ["#ff5279", "#4387ff", "#40c7ff"]
 [server]
 headless = true
 [browser]

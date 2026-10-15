@@ -16,6 +16,7 @@ with sync_playwright() as p:
    wake=page.get_by_role('button',name='Yes, get this app back up!')
    if wake.count():wake.click()
    page.wait_for_timeout(5000)
+  ui.locator('[data-testid="stExpandSidebarButton"]').click();page.wait_for_timeout(700)
   ui.get_by_text('공시 자동화 · 운영 검증',exact=True).click();page.wait_for_timeout(1500)
   text=ui.locator('body').inner_text()
   assert f'사업 내용 조사 {manifest["business_companies"]:,} / 2,430기업' in text,'Actions snapshot not yet visible'
@@ -24,7 +25,10 @@ with sync_playwright() as p:
   report['checks'].append('Exact Actions-published company count, financial versions and actual collection timestamp visible')
   assert '신규 거래일 실제 수집·게시 검증 0/3거래일' in text
   report['checks'].append('Replay is displayed separately and does not count as a new trading day')
+  ui.locator('[data-testid="stSidebarCollapseButton"] button').click();page.wait_for_timeout(700)
   def choose(label,value):
+   if label=='종목 범위':
+    ui.get_by_role('tab',name='강세 섹터 내 우수 종목',exact=True).click();page.wait_for_timeout(1200)
    box=ui.get_by_role('combobox',name=label,exact=True);box.click();box.fill(value)
    ui.get_by_role('option',name=value,exact=True).click(force=True);page.wait_for_timeout(2200)
   choose('섹터 수급 정렬','종합 강세 점수')
