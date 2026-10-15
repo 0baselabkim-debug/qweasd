@@ -1,7 +1,7 @@
 """Receive public evidence before applying operational (not finality) acceptance."""
 import copy
 import datetime as dt
-import time
+import os,time
 from pathlib import Path
 from screener.technical_quality import POLICY,digest,daily_accepted
 from screener.technical import validate,buy_guide
@@ -67,6 +67,19 @@ def scope_probe(api,bundle):
     result['limit']='Matching a current market series does not prove the historic request route.'
     return result
 
+def review_pending(api,references,asof,limit=100,budget=150):
+    from scripts.technical_batch import CACHE,read,write
+    started=time.monotonic();pending=[]
+    for path in CACHE.glob('*.json.gz'):
+        b=read(path)
+        if b and b['asof']==asof and not daily_accepted(b):pending.append((path,b))
+    pending.sort(key=lambda pair:(pair[1].get('acceptance_attempted_at',''),pair[1]['symbol']))
+    for path,b in pending[:limit]:
+        if time.monotonic()-started>=budget:break
+        try:b=verify_bundle(api,b,references)
+        except Exception as e:b['acceptance_error']=type(e).__name__
+        b['acceptance_attempted_at']=dt.datetime.now(dt.timezone.utc).isoformat();write(path,b)
+
 def run(api,data,limit=600,budget=1500):
     from scripts.technical_batch import CACHE,ROOT,PRIORITY,read,write,krx_reference,refresh_summary
     start=time.monotonic();day=str(data['flows'].trade_date.max().date());refs,status=krx_reference(day)
@@ -89,7 +102,9 @@ def run(api,data,limit=600,budget=1500):
                 report['incremental'][b['symbol']]=incremental_probe(api,b)
         except Exception as e:report['symbols'][b['symbol']]={'asof':day,'accepted':False,'error_type':type(e).__name__}
         write(ROOT/'acceptance-audit.json',report)
-    report.update(asof=day,finished_at=dt.datetime.now(dt.timezone.utc).isoformat(),requests=len(api.metrics),elapsed_seconds=round(time.monotonic()-start,2),krx_status=status)
+    report.update(asof=day,run_id=os.getenv('GITHUB_RUN_ID'),finished_at=dt.datetime.now(dt.timezone.utc).isoformat(),requests=len(api.metrics),
+        api_errors=sum(m['http']!=200 or m['code'] not in ('','MCA00000') for m in api.metrics),
+        rate_limit_errors=sum(m['code']=='EGW00201' for m in api.metrics),elapsed_seconds=round(time.monotonic()-start,2),krx_status=status)
     write(ROOT/'acceptance-audit.json',report)
     refresh_summary(day)
     print({'verified':sum(r.get('accepted',False) for r in report['symbols'].values()),'requests':len(api.metrics)})

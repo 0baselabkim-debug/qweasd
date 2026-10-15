@@ -121,6 +121,12 @@ def run(api,data,paged,limit=150,budget=900,probe=False):
     universe=[s for s in universe if s not in excluded];tasks=select_targets(universe,state['symbols'],asof,limit)
     calendar=[d for d,r in paged(api,'0001',asof,index=True)] if tasks else []
     references,reference_status=krx_reference(asof) if tasks else ({},{})
+    # Earlier checkpoints may predate the acceptance policy or were collected on D.
+    # Review them on D+1 without fetching their historical OHLCV again, even while
+    # other symbols still need backfill. Least recently attempted avoids starvation.
+    if tasks and asof<dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat():
+        from scripts.technical_acceptance import review_pending
+        review_pending(api,references,asof,limit=100,budget=min(150,budget/5))
     scopes=read(Path('reports/technical-expansion/provider-evidence.json'),{})
     if scopes.get('asof')!=asof:scopes={}
     succeeded=failed=0
@@ -147,6 +153,7 @@ def run(api,data,paged,limit=150,budget=900,probe=False):
             if good:write(CACHE/(code+'.json.gz'),b)
             else:write(ROOT/'rejected'/(code+'.json.gz'),b)
             record.update(status=category,bars=len(b['bars']),indicator_ready=b['indicator_ready'],structure_valid=b['structure_valid'],signal_ready=not b['validation'],reasons=b['validation'],previous_preserved=not good)
+            if not good and b.get('price_finality')=='CONFLICT':record['status']='source_conflict'
             if category=='collected' and good:record['completed_asof']=asof;succeeded+=1
             else:failed+=1
         except Exception as exc:

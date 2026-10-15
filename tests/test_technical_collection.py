@@ -163,3 +163,52 @@ def test_requery_mismatch_does_not_replace_original_flow():
     response.append(response[-1])
     import pytest
     with pytest.raises(ValueError):verify_bundle(api,b,{'999999':row})
+
+
+def test_failed_crosscheck_preserves_prior_cache_and_does_not_complete(tmp_path,monkeypatch):
+    from scripts import technical_acceptance
+    from screener.technical import validate
+    b=accepted_fixture();b.update(indicator_ready=True,structure_valid=True,structure_errors=[],price_finality='CROSS_VALIDATED_DAILY')
+    b['validation']=validate(b)
+    monkeypatch.setattr(c,'ROOT',tmp_path);monkeypatch.setattr(c,'CACHE',tmp_path/'market');monkeypatch.setattr(c,'STATE',tmp_path/'state.json')
+    path=c.CACHE/'999999.json.gz';c.write(path,b);before=path.read_bytes()
+    candidate=copy.deepcopy(b);candidate.update(price_finality='CONFLICT',price_conflicts=['Current KIS / KRX conflict'])
+    candidate['validation']=validate(candidate)
+    monkeypatch.setattr(c,'make_bundle',lambda *a,**kw:copy.deepcopy(candidate))
+    monkeypatch.setattr(c,'crosscheck',lambda b,*a,**kw:b)
+    monkeypatch.setattr(technical_acceptance,'verify_bundle',lambda api,b,refs:b)
+    monkeypatch.setattr(c,'krx_reference',lambda day:({},{}))
+    data={'flows':pd.DataFrame([{'trade_date':pd.Timestamp(b['asof'])}]),
+          'instruments':pd.DataFrame([{'symbol':'999999','listing_date':pd.Timestamp('2010-01-01')}]),
+          'exclusions':pd.DataFrame(columns=['symbol','trade_date'])}
+    api=API([]);api.metrics=[]
+    summary=c.run(api,data,lambda *a,**kw:[],limit=1)
+    assert path.read_bytes()==before and (tmp_path/'rejected/999999.json.gz').exists()
+    assert summary['batch_collected']==0 and summary['completed_current_asof']==0 and summary['remaining']==1
+    assert c.read(c.STATE)['symbols']['999999']['status']=='source_conflict'
+
+
+def test_evidence_queue_failure_rotates_without_refetching_history(tmp_path,monkeypatch):
+    from scripts import technical_acceptance
+    monkeypatch.setattr(c,'CACHE',tmp_path)
+    for code in ['000001','000002']:
+        b=accepted_fixture();b['symbol']=code;b.pop('daily_acceptance');c.write(tmp_path/(code+'.json.gz'),b)
+    calls=[]
+    def failing(api,b,refs):calls.append(b['symbol']);raise TimeoutError()
+    monkeypatch.setattr(technical_acceptance,'verify_bundle',failing)
+    for _ in range(2):technical_acceptance.review_pending(None,{},b['asof'],limit=1)
+    assert calls==['000001','000002']
+    assert all(c.read(p)['acceptance_error']=='TimeoutError' for p in tmp_path.glob('*.gz'))
+
+
+def test_completed_public_date_needs_no_authentication(tmp_path,monkeypatch):
+    from scripts import collect_technical
+    import sys
+    b=accepted_fixture();monkeypatch.setattr(c,'CACHE',tmp_path);monkeypatch.setattr(c,'STATE',tmp_path/'state.json')
+    c.write(tmp_path/'999999.json.gz',b);c.write(c.STATE,{'symbols':{'999999':{'completed_asof':b['asof']}}})
+    data={'flows':pd.DataFrame([{'trade_date':pd.Timestamp(b['asof'])}]),'instruments':pd.DataFrame([{'symbol':'999999'}])}
+    monkeypatch.setattr(collect_technical,'load',lambda:data)
+    def forbidden():raise AssertionError('No authentication or API calls for a completed date')
+    monkeypatch.setattr(collect_technical,'KIS',forbidden);monkeypatch.setattr(c,'refresh_summary',lambda *a:None)
+    monkeypatch.setattr(sys,'argv',['collect_technical.py','--mode','public'])
+    collect_technical.main()
