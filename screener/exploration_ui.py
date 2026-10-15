@@ -96,6 +96,7 @@ READABILITY_CSS='''
 .macro-table td,.investor-table td{height:46px;padding:11px 10px!important;font-size:14px!important;line-height:23px;vertical-align:middle}
 .macro-table td:first-child{min-width:0;white-space:nowrap}
 .st-key-macro_cards .mini-table th,.st-key-macro_cards .macro-table td:first-child,.st-key-macro_cards .investor-market,.st-key-macro_cards .investor-name{text-align:center!important}
+.buy-guide,.buy-guide-spacer{height:48px;display:flex;align-items:flex-end;margin-bottom:5px;font-size:16px!important;line-height:22px;color:#f4cf68;font-weight:650;overflow-wrap:anywhere}
 .st-key-stock_kpis{margin:6px 0 16px}.kpi{height:96px;padding:14px 16px}.kpi-label{font-size:13px;white-space:normal}.kpi-value{white-space:normal;overflow-wrap:break-word}
 .st-key-detail_metrics{margin:16px 0 20px}.st-key-detail_metrics [data-testid="stMetricValue"]>div{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
 @media(min-width:1360px){[data-testid="stMain"] .block-container{width:min(100%,max(var(--reading-min),var(--reading-width)))!important}}
@@ -104,5 +105,5 @@ READABILITY_CSS='''
 
 def reading_layout(stage):
     """Only the presentation viewport varies by current page; state/navigation is unchanged."""
-    percent,minimum={'macro':('70%','1050px'),'sectors':('85%','980px'),'stocks':('85%','980px'),'detail':('75%','980px')}.get(stage,('100%','0px'))
+    percent,minimum={'macro':('70%','1050px'),'sectors':('85%','980px'),'stocks':('85%','980px'),'detail':('75%','980px'),'journal':('85%','980px')}.get(stage,('100%','0px'))
     st.markdown('<style>:root{--reading-width:'+percent+';--reading-min:'+minimum+'}'+READABILITY_CSS+'</style>',unsafe_allow_html=True)

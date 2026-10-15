@@ -15,6 +15,7 @@ import screener.corporate_ui as corporate_ui
 import screener.themes as themes
 import screener.flow_ui as flow_ui
 import screener.exploration_ui as explorer
+import screener.journal_ui as journal_ui
 from screener.flow_trends import screen_flows,stock_series
 
 ROOT=Path(__file__).parent
@@ -71,12 +72,15 @@ with st.sidebar:
  st.markdown('<div class="sidebar-title">한국 증시 수급 필터</div>',unsafe_allow_html=True)
  with st.container(key='sidebar_menu'):
   st.button('매크로 지표',type='primary' if ss.stage=='macro' else 'secondary',width='stretch',on_click=go,args=('macro',))
-  st.button('수급 필터',type='primary' if ss.stage!='macro' else 'secondary',width='stretch',on_click=go,args=('sectors',))
+  st.button('수급 필터',type='primary' if ss.stage in ['sectors','stocks','detail'] else 'secondary',width='stretch',on_click=go,args=('sectors',))
+  st.button('매매일지',type='primary' if ss.stage=='journal' else 'secondary',width='stretch',on_click=go,args=('journal',))
  st.divider()
  st.subheader('조회 조건')
  asof=select('수급 기준일',sorted(data['flows'].trade_date.dt.strftime('%Y-%m-%d').unique(),reverse=True),'asof')
  market=select('시장',['전체','KOSPI','KOSDAQ'],'market')
  classification=radio('분류체계',['공식 업종','투자 테마'],'classification')
+if ss.stage=='journal':
+ journal_ui.render(data['instruments']);st.stop()
 if ss.stage!='macro':
  with st.container(key='header'):
   a,b=st.columns([4,1.5],vertical_alignment='center')
@@ -172,11 +176,17 @@ if ss.symbol not in selected.symbol.values:st.info('현재 조건에서 선택 �
 r=selected[selected.symbol==ss.symbol].iloc[0];assessment=eligibility.assess(r)
 st.subheader(r['name']+' · '+r.symbol)
 ui.badges([r.market,r.sector,('투자 적격성: '+assessment['status'],'hold'),f'종가 {ui.number(r.close,0)}원'])
+buy_result,technical_bundle=journal_ui.buy_result(r.symbol,asof)
 with st.container(key='stock_kpis'):
  cols=st.columns(4)
  for col,days in zip(cols[:3],[1,5,20]):
-  with col:ui.kpi(f'{days}일 '+('순매수' if days==1 else '누적 순매수'),ui.number(r[f'net_{days}d']/1e8),'억원',ui.tone(r[f'net_{days}d']))
- with cols[3]:ui.kpi('20일 순매수 발생일',ui.number(r.positive_days_20d,0),'일')
+  with col:
+   st.markdown('<div class="buy-guide-spacer"></div>',unsafe_allow_html=True)
+   ui.kpi(f'{days}일 '+('순매수' if days==1 else '누적 순매수'),ui.number(r[f'net_{days}d']/1e8),'억원',ui.tone(r[f'net_{days}d']))
+ with cols[3]:
+  journal_ui.buy_label(buy_result)
+  ui.kpi('20일 순매수 발생일',ui.number(r.positive_days_20d,0),'일')
+journal_ui.technical_details(buy_result,technical_bundle)
 flow_ui.chart(stock_series(matrix,r.symbol),20,'stock_flow_chart','외국인 순매수 추이 · 최근 20거래일')
 with st.container(key='detail_metrics'):
  a,b,c=st.columns(3)

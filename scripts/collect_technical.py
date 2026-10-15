@@ -56,7 +56,7 @@ def main():
         from screener.journal_store import ServiceStore
         store=ServiceStore.from_env()
         if store is None:print('Private worker not configured; no private data accessed');return
-        tasks=store.targets();targets=[r['symbol'] for r in tasks][:30]
+        tasks=store.targets(asof);targets=[r['symbol'] for r in tasks][:30]
         if not targets:print('No pending private market-data tasks');return
     else:targets=PILOT
     api=KIS();calendar=[d for d,r in paged(api,'0001',asof,index=True)];bundles={};failed=0
