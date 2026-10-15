@@ -107,6 +107,7 @@ def test_actual_indicators_reconcile_original_raw_values_and_scores():
 
 def test_new_app_navigation_preserves_sort_and_has_no_scores():
  from streamlit.testing.v1 import AppTest
+ from screener.exploration_ui import navigate
  app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=120).run();assert not app.exception
  def click(label):
   next(b for b in app.button if b.label==label).click();app.run();assert not app.exception
@@ -114,13 +115,14 @@ def test_new_app_navigation_preserves_sort_and_has_no_scores():
   next(w for w in app.selectbox if w.label==label).select(value);app.run();assert not app.exception
  def mode(label,value):
   next(w for w in app.radio if w.label==label).set_value(value);app.run();assert not app.exception
- assert any('최신 공표값' in w.value.columns for w in app.dataframe)
- click('전체 섹터');mode('기간','지난 5일');choose('섹터 정렬','시총 대비 순매수 강도')
- choose('섹터 선택','KOSPI · IT 서비스');click('선택 섹터의 종목 보기')
- choose('종목 정렬','종목명');choose('종목 선택','NAVER · 035420');click('선택 종목 상세 보기')
+ assert app.session_state['stage']=='macro'
+ click('수급 필터');mode('기간','지난 5일');choose('섹터 정렬','시총 대비 순매수 강도')
+ navigate(app.session_state,'sector',('KOSPI','IT 서비스'));app.run();assert not app.exception
+ choose('종목 정렬','종목명');navigate(app.session_state,'stock','035420');app.run();assert not app.exception
  assert app.session_state['stage']=='detail' and any('NAVER' in w.value for w in app.subheader)
  assert any('판정 보류' in w.value for w in app.markdown)
  for w in app.dataframe:assert not any('점수' in str(c) for c in w.value.columns)
- click('← 이전 화면');assert next(w for w in app.selectbox if w.label=='종목 정렬').value=='종목명'
- click('← 이전 화면');assert next(w for w in app.radio if w.label=='기간').value=='지난 5일'
+ click('IT 서비스');assert next(w for w in app.selectbox if w.label=='종목 정렬').value=='종목명'
+ click('전체섹터 조회');assert next(w for w in app.radio if w.label=='기간').value=='지난 5일'
  assert next(w for w in app.selectbox if w.label=='섹터 정렬').value=='시총 대비 순매수 강도'
+ assert any(b.label=='NAVER' for b in app.button)

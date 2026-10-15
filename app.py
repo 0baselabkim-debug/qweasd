@@ -14,12 +14,14 @@ import screener.dashboard_style as ui
 import screener.corporate_ui as corporate_ui
 import screener.themes as themes
 import screener.flow_ui as flow_ui
+import screener.exploration_ui as explorer
 from screener.flow_trends import screen_flows,stock_series
 
 ROOT=Path(__file__).parent
-st.set_page_config(page_title='한국 증시 수급 필터',page_icon='◈',layout='wide',initial_sidebar_state='collapsed')
-for module in [indicators,eligibility,macro,ui,corporate_ui,themes,flow_ui]:importlib.reload(module)
+st.set_page_config(page_title='한국 증시 수급 필터',page_icon='◈',layout='wide',initial_sidebar_state='expanded')
+for module in [indicators,eligibility,macro,ui,corporate_ui,themes,flow_ui,explorer]:importlib.reload(module)
 ui.install()
+explorer.install()
 st.markdown('''<style>
 .st-key-main_navigation button{min-height:46px;font-weight:700}
 .st-key-main_navigation button[kind="primary"]{background:linear-gradient(120deg,#287bff,#1856ed)}
@@ -28,10 +30,12 @@ st.markdown('''<style>
 .breadcrumb{font-size:14px;color:#b0caff;margin:7px 0 12px}
 </style>''',unsafe_allow_html=True)
 ss=st.session_state
-for key,value in {'stage':'macro','nav_epoch':0,'preferences':{},'group':None,'symbol':None}.items():
+for key,value in {'stage':'macro','nav_epoch':0,'preferences':{},'group':None,'symbol':None,'sector_open':False,'stock_open':False}.items():
  if key not in ss:ss[key]=value
 
-def go(stage):ss.stage=stage;ss.nav_epoch+=1
+def go(stage):explorer.navigate(ss,stage)
+def choose_group(g):explorer.navigate(ss,'sector',g)
+def choose_stock(code):explorer.navigate(ss,'stock',code)
 
 def remember(key):ss.preferences[key]=ss['ui_'+key]
 def select(label,options,key,default=None):
@@ -64,11 +68,17 @@ def groups(stamp,asof,version,market,theme_mode,theme_date,theme_version):
 
 stamp=DB.stat().st_mtime_ns;data=raw_data(stamp)
 with st.sidebar:
+ st.markdown('<div class="sidebar-title">한국 증시 수급 필터</div>',unsafe_allow_html=True)
+ with st.container(key='sidebar_menu'):
+  st.button('매크로 지표',type='primary' if ss.stage=='macro' else 'secondary',width='stretch',on_click=go,args=('macro',))
+  st.button('수급 필터',type='primary' if ss.stage!='macro' else 'secondary',width='stretch',on_click=go,args=('sectors',))
+ st.divider()
  st.subheader('조회 조건')
  asof=select('수급 기준일',sorted(data['flows'].trade_date.dt.strftime('%Y-%m-%d').unique(),reverse=True),'asof')
  market=select('시장',['전체','KOSPI','KOSDAQ'],'market')
  classification=radio('분류체계',['공식 업종','투자 테마'],'classification')
  query=st.text_input('종목 검색',key='global_search',placeholder='종목명 또는 코드')
+ st.divider()
  st.link_button('수집·게시 상태','https://github.com/0baselabkim-debug/qweasd/actions/workflows/daily-dashboard.yml')
  corporate_ui.status_panel()
  with st.expander('데이터 출처 · 계산 기준'):
@@ -78,42 +88,42 @@ with st.sidebar:
   st.write('수급 원천 최종 확정 여부와 기존 종가 불일치는 계속 별도 관리합니다. 공시된 연간 재무와 최신 분기 자료를 혼합하지 않습니다.')
   st.write('매크로: 각 공급원이 공표한 일별값. 직전값은 직전 유효 공표값이며 실제 날짜를 함께 표시합니다. 공표 지연과 추후 수정이 가능하며 시장 휴장일은 서로 다릅니다.')
 
+  state=macro.read()
+  st.dataframe(pd.DataFrame([{'지표':v['name'],'기준일':v['date'],'직전 기준일':v['previous_date'],'공급원':v['provider'],'기준':v.get('basis',''),'최신 공표값':v['value'],'직전 공표값':v['previous_value']} for v in state.get('indicators',{}).values()]),hide_index=True)
+  for key,meta in macro.catalog().items():
+   r=state.get('indicators',{}).get(key,{})
+   if r.get('source_url'):st.link_button(meta['provider']+' 원문 · '+meta['name'],r['source_url'],key='source_'+key)
+  st.write('매크로 수집 시도: '+str(state.get('last_attempt_at','미실행')))
+  st.json(state.get('attempts',{}))
+  if state.get('investors'):st.json(state['investors'])
+  st.link_button('매크로 갱신 기록','https://github.com/0baselabkim-debug/qweasd/actions/workflows/macro-refresh.yml')
+
 with st.container(key='header'):
- a,b,c=st.columns([6,2,1.7],vertical_alignment='center')
- with a:st.title('한국 증시 수급 필터')
- with b:st.markdown(f'<div class="date-label">수급 기준일 <b>{asof}</b></div>',unsafe_allow_html=True)
- with c:st.link_button('↻ 업데이트 상태','https://github.com/0baselabkim-debug/qweasd/actions',width='stretch')
-with st.container(key='main_navigation'):
- a,b=st.columns(2)
- a.button('매크로 현황',type='primary' if ss.stage=='macro' else 'secondary',width='stretch',on_click=go,args=('macro',))
- b.button('전체 섹터',type='primary' if ss.stage!='macro' else 'secondary',width='stretch',on_click=go,args=('sectors',))
+ a,b=st.columns([4,1.5],vertical_alignment='center')
+ with a:st.markdown(f'<div class="date-label">수급 기준일 <b>{asof}</b></div>',unsafe_allow_html=True)
+ with b:st.link_button('↻ 업데이트 상태','https://github.com/0baselabkim-debug/qweasd/actions',width='stretch')
 
 if ss.stage=='macro':
+ st.subheader('매크로 지표')
  state=macro.read();macro_frames=[]
- for group in ['금리','환율·원자재','미국 증시','한국 증시']:
-  st.subheader(group)
-  rows=[]
+ with st.container(key='macro_cards'):
+  groups_order=['금리','환율·원자재','미국 증시','한국 증시']
+  for start in [0,2]:
+   cols=st.columns(2)
+   for i,group in enumerate(groups_order[start:start+2]):
+    with cols[i]:explorer.macro_card(group,explorer.macro_rows(state,macro.catalog(),group))
   for key,meta in macro.catalog().items():
-   if meta['group']!=group:continue
-   r=state.get('indicators',{}).get(key);attempt=state.get('attempts',{}).get(key,{})
-   rows.append({'지표':meta['name'],'최신 공표값':r['value'] if r else np.nan,'단위':meta['unit'],'직전 공표값':r['previous_value'] if r else np.nan,'전일 대비':r['change'] if r else np.nan,'변화 단위':'bp' if meta['rate'] else meta['unit'],'등락률(%)':r.get('change_percent') if r else np.nan,'기준일':r['date'] if r else '미확보','직전 기준일':r['previous_date'] if r else '미확보','공급원':r.get('provider',meta['provider']) if r else meta['provider'],'갱신 상태':('공표값 확보' if attempt.get('status')=='success' else '이전 정상 자료 유지') if r else '미확보'})
-  frame=pd.DataFrame(rows);macro_frames.append(frame);st.dataframe(frame.drop(columns=['등락률(%)']) if group=='금리' else frame,hide_index=True,width='stretch',column_config={c:st.column_config.NumberColumn(format='%.3f' if group=='금리' and c in ['최신 공표값','직전 공표값'] else '%.2f') for c in ['최신 공표값','직전 공표값','전일 대비','등락률(%)']})
- csv_button('매크로 현황 CSV',pd.concat(macro_frames,ignore_index=True),'macro_download')
- st.subheader('투자자별 당일 순매수')
+   r=state.get('indicators',{}).get(key,{})
+   macro_frames.append({'지표':meta['name'],'최신 공표값':r.get('value'),'단위':meta['unit'],'직전 공표값':r.get('previous_value'),'전일 대비':r.get('change'),'변화 단위':r.get('change_unit'),'등락률(%)':r.get('change_percent'),'기준일':r.get('date'),'직전 기준일':r.get('previous_date'),'공급원':r.get('provider',meta['provider']),'갱신 상태':('공표값 확보' if state.get('attempts',{}).get(key,{}).get('status')=='success' else '이전 정상 자료 유지') if r else '미확보'})
+ st.markdown('<h3>투자자별 당일 순매수</h3>',unsafe_allow_html=True)
  rows=[]
  for market_name in ['KOSPI','KOSDAQ']:
   r=state.get('investors',{}).get(market_name,{})
   for investor in ['개인','외국인','기관']:
-   rows.append({'시장':market_name,'투자자':investor,'순매수(억원)':r.get('amounts',{}).get(investor,np.nan),'기준일':r.get('date','미확보'),'시장 범위':r.get('scope','미확인'),'상태':'확보' if r else {'unit_scope_pending':'원문 수신 · 단위·시장 범위 확인 대기','missing_credential':'인증정보 미확보','failed':'수집 실패'}.get(state.get('attempts',{}).get('investor_'+market_name,{}).get('status'),'미확보')})
- st.dataframe(pd.DataFrame(rows),hide_index=True,width='stretch')
- with st.expander('매크로 출처 · 공표 기준 · 갱신 결과'):
-  for key,meta in macro.catalog().items():
-   r=state.get('indicators',{}).get(key,{})
-   st.write(meta['name']+' · '+(r.get('basis') or meta['basis'])+' · '+str(r.get('official_unit',meta['unit'])))
-   if r.get('source_url'):st.link_button(meta['provider']+' 원문 · '+meta['name'],r['source_url'],key='source_'+key)
-  st.write('매크로 수집 시도: '+str(state.get('last_attempt_at','미실행')))
-  st.json(state.get('attempts',{}))
-  st.link_button('매크로 갱신 기록','https://github.com/0baselabkim-debug/qweasd/actions/workflows/macro-refresh.yml')
+   value=r.get('amounts',{}).get(investor)
+   rows.append('<tr><td>'+market_name+'</td><td>'+investor+'</td><td class="num">'+('미확보' if value is None else f'{value:+,.2f}')+'</td></tr>')
+ st.markdown('<div class="mini-scroll investor-table"><table class="mini-table"><thead><tr><th>시장</th><th>투자자</th><th class="num">당일 순매수(억원)</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div>',unsafe_allow_html=True)
+ csv_button('매크로 현황 CSV',pd.DataFrame(macro_frames),'macro_download')
  st.stop()
 
 stocks,matrix=stock_data(stamp,asof,version)
@@ -124,20 +134,26 @@ sector_table,sector_series=groups(stamp,asof,version,market,theme_mode,theme_dat
 if sector_table.empty:st.info('이 기준일에 확인된 구성 이력이 없습니다.');st.stop()
 options={(r.market,r.sector):f'{r.market} · {r.sector}' for r in sector_table.itertuples()}
 if ss.group not in options:
- ss.group=next(iter(options))
+ ss.group=next(iter(options));ss.sector_open=False;ss.stock_open=False;ss.symbol=None
  if ss.stage in ['stocks','detail']:ss.stage='sectors'
 group=ss.group
 if theme_mode:
  codes=set(themes.members(theme_date).loc[lambda f:f.theme==group[1],'symbol'])
  selected=visible[visible.symbol.isin(codes)].copy()
 else:selected=visible[(visible.market==group[0])&(visible.sector==group[1])].copy()
-crumb='전체 섹터'+(' > '+options[group] if ss.stage in ['stocks','detail'] else '')
-if ss.stage=='detail' and ss.symbol in selected.symbol.values:crumb+=' > '+selected.set_index('symbol').loc[ss.symbol,'name']
-st.markdown('<div class="breadcrumb">'+html.escape(crumb)+'</div>',unsafe_allow_html=True)
-if ss.stage in ['stocks','detail']:st.button('← 이전 화면',on_click=go,args=('sectors' if ss.stage=='stocks' else 'stocks',))
-
-def choose_group(g):ss.group=g;ss.symbol=None;go('stocks')
-def choose_stock(code):ss.symbol=code;go('detail')
+if ss.stock_open and ss.symbol not in selected.symbol.values:
+ ss.stock_open=False;ss.symbol=None
+ if ss.stage=='detail':ss.stage='stocks'
+with st.container(horizontal=True,key='hierarchy'):
+ st.button('전체섹터 조회',key='tab_all',type='primary' if ss.stage=='sectors' else 'secondary',on_click=go,args=('sectors',))
+ if ss.sector_open:
+  with st.container(horizontal=True,width='content',key='hierarchy_sector'):
+   st.button(group[1],key='tab_sector',help=options[group],type='primary' if ss.stage=='stocks' else 'secondary',on_click=go,args=('stocks',))
+   st.button('×',key='close_sector',help='섹터 탭 닫기',on_click=go,args=('close_sector',))
+ if ss.stock_open:
+  with st.container(horizontal=True,width='content',key='hierarchy_stock'):
+   st.button(str(selected.set_index('symbol').loc[ss.symbol,'name']),key='tab_stock',help=ss.symbol,type='primary' if ss.stage=='detail' else 'secondary',on_click=go,args=('detail',))
+   st.button('×',key='close_stock',help='종목 탭 닫기',on_click=go,args=('close_stock',))
 
 if ss.stage=='sectors':
  st.subheader('전체 섹터 수급')
@@ -149,12 +165,11 @@ if ss.stage=='sectors':
  key=mapping[sort];ascending=mode=='자금 이탈' and key in [f'net_{days}d','change_5d',f'intensity_{days}d']
  ordered=screen_flows(sector_table,mode,days).sort_values([key,'market','sector'],ascending=[ascending,True,True],na_position='last').reset_index(drop=True)
  frame=pd.DataFrame({'시장':ordered.market,'섹터':ordered.sector,'선택 기간 순매수(억원)':ordered[f'net_{days}d']/1e8,'오늘 순매수(억원)':ordered.net_1d/1e8,'5일 순매수(억원)':ordered.net_5d/1e8,'20일 순매수(억원)':ordered.net_20d/1e8,'5일 변화(억원)':ordered.change_5d/1e8,'수급 변화':ordered.change_state,'확산율(%)':ordered[f'breadth_{days}d'],'순매수 종목':ordered[f'positive_{days}d'],'평가 가능 종목':ordered[f'evaluable_{days}d'],'전체 대상':ordered.members,'20일 순매수 발생일':ordered.positive_days_20d,'거래 활성도(배)':ordered.activity_ratio,'순매수 강도(%)':ordered[f'intensity_{days}d']*100})
- event=st.dataframe(ui.styled(frame),key='sector_grid_'+str(ss.nav_epoch),on_select='rerun',selection_mode='single-row',hide_index=True,width='stretch',height=540,column_config={'시장':st.column_config.TextColumn(width='small'),'섹터':st.column_config.TextColumn(width='medium')})
- if event.selection.rows:
-  row=ordered.iloc[event.selection.rows[0]];choose_group((row.market,row.sector));st.rerun()
+ ids=[json.dumps([r.market,r.sector],ensure_ascii=False) for r in ordered.itertuples()]
+ event=explorer.table(frame,ids,'섹터','sector_grid_'+str(ss.nav_epoch),f'sectors:{asof}:{market}:{classification}:{days}:{sort}:{mode}')
+ if event and event.get('interaction') in ['double_click','touch','keyboard'] and event.get('id') in ids:
+  choose_group(json.loads(event['id']));st.rerun()
  csv_button('섹터 현황 CSV',frame,'sector_download')
- choices=list(options.values());choice=select('섹터 선택',choices,'sector_fallback',options.get(ss.group))
- st.button('선택 섹터의 종목 보기',on_click=choose_group,args=(next(k for k,v in options.items() if v==choice),))
  st.stop()
 
 if ss.stage=='stocks':
@@ -167,13 +182,11 @@ if ss.stage=='stocks':
  key=mapping[sort];ascending=key=='name' or (mode=='자금 이탈' and key in [f'net_{days}d','change_5d',f'intensity_{days}d'])
  ordered=screen_flows(selected,mode,days).sort_values([key,'symbol'],ascending=[ascending,True],na_position='last').reset_index(drop=True)
  frame=pd.DataFrame({'종목명':ordered.name,'코드':ordered.symbol,'선택 기간 순매수(억원)':ordered[f'net_{days}d']/1e8,'오늘 순매수(억원)':ordered.net_1d/1e8,'5일 순매수(억원)':ordered.net_5d/1e8,'20일 순매수(억원)':ordered.net_20d/1e8,'5일 변화(억원)':ordered.change_5d/1e8,'수급 변화':ordered.change_state,'20일 순매수 발생일':ordered.positive_days_20d,'순매수 강도(%)':ordered[f'intensity_{days}d']*100,'거래 활성도(배)':ordered.activity_ratio,'5일 평균 거래대금(억원)':ordered.average_turnover/1e8,'투자 적격성':ordered.eligibility})
- event=st.dataframe(ui.styled(frame),key='stock_grid_'+str(ss.nav_epoch),on_select='rerun',selection_mode='single-row',hide_index=True,width='stretch',height=540)
- if event.selection.rows:choose_stock(ordered.iloc[event.selection.rows[0]].symbol);st.rerun()
+ ids=ordered.symbol.tolist()
+ event=explorer.table(frame,ids,'종목명','stock_grid_'+str(ss.nav_epoch),f'stocks:{asof}:{market}:{classification}:{group}:{days}:{sort}:{mode}:{query}')
+ if event and event.get('interaction') in ['double_click','touch','keyboard'] and event.get('id') in ids:
+  choose_stock(event['id']);st.rerun()
  csv_button('선택 종목 CSV',frame,'stocks_download')
- if len(ordered):
-  labels={r.symbol:f'{r["name"]} · {r.symbol}' for _,r in ordered.iterrows()}
-  label=select('종목 선택',labels.values(),'stock_fallback');st.button('선택 종목 상세 보기',on_click=choose_stock,args=(next(k for k,v in labels.items() if v==label),))
- else:st.info('선택 조건을 충족하는 종목이 없습니다.')
  st.stop()
 
 if ss.symbol not in selected.symbol.values:st.info('현재 조건에서 선택 종목을 조회할 수 없습니다.');st.stop()
@@ -186,8 +199,9 @@ with st.container(key='stock_kpis'):
   with col:ui.kpi(f'{days}일 '+('순매수' if days==1 else '누적 순매수'),ui.number(r[f'net_{days}d']/1e8),'억원',ui.tone(r[f'net_{days}d']))
  with cols[3]:ui.kpi('20일 순매수 발생일',ui.number(r.positive_days_20d,0),'일')
 flow_ui.chart(stock_series(matrix,r.symbol),20,'stock_flow_chart','외국인 순매수 추이 · 최근 20거래일')
-a,b,c=st.columns(3)
-a.metric('5일 평균 거래대금',amount(r.average_turnover/1e8));b.metric('거래 활성도',amount(r.activity_ratio,'배'));c.metric('시가총액',amount(r.market_cap/1e8))
+with st.container(key='detail_metrics'):
+ a,b,c=st.columns(3)
+ a.metric('5일 평균 거래대금',amount(r.average_turnover/1e8));b.metric('거래 활성도',amount(r.activity_ratio,'배'));c.metric('시가총액',amount(r.market_cap/1e8))
 st.subheader('투자 적격성 · 재무 판단 근거')
 ui.badges([(assessment['status'],'hold'),*assessment['reasons'][:1],('감사의견·중대한 재무 위험 정보 미확보','hold')])
 financial={'매출액':(r.revenue/1e8,'억원'),'영업이익':(r.operating_profit/1e8,'억원'),'전년 영업이익':(r.previous_operating_profit/1e8,'억원'),'당기순이익':(r.net_income/1e8,'억원'),'자본총계':(r.equity/1e8,'억원'),'부채총계':(r.liabilities/1e8,'억원'),'영업현금흐름':(r.ocf/1e8,'억원'),'매출 성장률':(r.revenue_growth*100,'%'),'영업이익 성장률':(r.op_growth*100,'%'),'ROE':(r.roe*100,'%'),'부채비율':(r.debt_ratio*100,'%'),'PER':(r.per,'배'),'PBR':(r.pbr,'배')}

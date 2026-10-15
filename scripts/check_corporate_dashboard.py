@@ -16,7 +16,6 @@ with sync_playwright() as p:
    wake=page.get_by_role('button',name='Yes, get this app back up!')
    if wake.count():wake.click()
    page.wait_for_timeout(5000)
-  ui.locator('[data-testid="stExpandSidebarButton"]').click();page.wait_for_timeout(700)
   ui.get_by_text('공시 자동화 · 운영 검증',exact=True).click();page.wait_for_timeout(1500)
   text=ui.locator('body').inner_text()
   assert f'사업 내용 조사 {manifest["business_companies"]:,} / 2,430기업' in text,'Actions snapshot not yet visible'
@@ -25,16 +24,17 @@ with sync_playwright() as p:
   report['checks'].append('Exact Actions-published company count, financial versions and actual collection timestamp visible')
   assert '신규 거래일 실제 수집·게시 검증 0/3거래일' in text
   report['checks'].append('Replay is displayed separately and does not count as a new trading day')
-  ui.locator('[data-testid="stSidebarCollapseButton"] button').click();page.wait_for_timeout(700)
   def choose(label,value):
    box=ui.get_by_role('combobox',name=label,exact=True);box.click();box.fill(value)
    ui.get_by_role('option',name=value,exact=True).click();page.wait_for_timeout(2500)
    ui.locator('body').press('Escape')
-  ui.get_by_role('button',name='전체 섹터',exact=True).click();page.wait_for_timeout(6000)
-  choose('섹터 선택','KOSDAQ · 기계·장비')
-  ui.get_by_role('button',name='선택 섹터의 종목 보기',exact=True).click();page.wait_for_timeout(2500)
-  choose('종목 선택','원익IPS · 240810')
-  ui.get_by_role('button',name='선택 종목 상세 보기',exact=True).click();page.wait_for_timeout(2500)
+  ui.get_by_role('button',name='수급 필터',exact=True).click();page.wait_for_timeout(6000)
+  choose('시장','KOSDAQ')
+  ui.get_by_role('radio',name='전체 섹터',exact=True).check(force=True);page.wait_for_timeout(2000)
+  def double(name):
+   frame=next(f for f in page.frames if 'exploration_ui.flow_explorer' in f.url)
+   frame.get_by_role('cell',name=name,exact=True).dblclick();page.wait_for_timeout(2500)
+  double('기계·장비');double('원익IPS')
   ui.get_by_text('최신 공시 재무 · 사업 테마 검토',exact=True).click();page.wait_for_timeout(1000)
   panel=ui.locator('[data-testid="stExpander"]').filter(has=ui.get_by_text('최신 공시 재무 · 사업 테마 검토',exact=True))
   assert '2026-06-30' in panel.inner_text() and '2026-08-14' in panel.inner_text()
