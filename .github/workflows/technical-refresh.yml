@@ -64,7 +64,8 @@ jobs:
           sleep 65
           args=()
           if [ "$PROBE" = true ]; then args+=(--probe); fi
-          python scripts/collect_technical.py --mode "$MODE" --limit "$LIMIT" --budget 1500 "${args[@]}"
+          # Leave time for the always-publish step even when provider calls hang.
+          timeout 1800 python scripts/collect_technical.py --mode "$MODE" --limit "$LIMIT" --budget 1500 "${args[@]}"
       - name: Publish only public observations and checkpoints
         if: always() && inputs.mode != 'private'
         run: |
