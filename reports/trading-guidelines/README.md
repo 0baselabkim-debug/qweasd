@@ -37,6 +37,9 @@
 
 ## 검증
 
+- [최종 배포·134개 테스트 통과](https://github.com/0baselabkim-debug/qweasd/actions/runs/38712880046)
+- [공개 웹 실제 조작 통과](https://github.com/0baselabkim-debug/qweasd/actions/runs/38712880616) · [검증 JSON](public-browser.json)
+
 - 기존110개 + 기술·매매일지24개 = **134개 자동 테스트**. 기존 데이터·수급·재무·테마 및 주요 수집 워크플로 해시 일치: [실제 검증 자료](actual-data.json).
 - 실제 데이터 기반 로컬 브라우저1920/1440/768/390px: 매크로, 섹터·종목 더블클릭, 탭·정렬·CSV, 금색 가이드 위치, 미로그인 매매일지 저장 차단 확인.
 - 별도 **가상 저장소** 브라우저: 추가·부분 검색·저장실패 후 팝업 유지·재시도·취소·수정·삭제·복수 매수·로그아웃·다른 테스트 사용자 표시 분리·모바일 팝업 확인. [테스트 기록](journal-synthetic-browser.json). 이는 실제 Supabase 인증/RLS/영구 저장 검증을 대신하지 않음.
