@@ -27,7 +27,10 @@ with sync_playwright() as p:
   if label in ['데이터 기준일','시장']:sidebar(True)
   box=ui.get_by_role('combobox',name=label,exact=True)
   box.click();box.fill(value);page.wait_for_timeout(300)
-  ui.get_by_role('option',name=value,exact=True).click(force=True);pause()
+  ui.get_by_role('option',name=value,exact=True).click();pause()
+  # React Aria may reopen a selected option's popover after a server rerender.
+  # Close it with the same Escape key available to a browser user.
+  ui.locator('body').press('Escape');page.wait_for_timeout(200)
  def tab(section,label):
   main(section);ui.locator('.st-key-'+section+'_period').get_by_role('tab',name=label,exact=True).click();pause()
  def download(button,name,section=None):
@@ -139,6 +142,7 @@ with sync_playwright() as p:
   assert not ui.locator('[data-testid="stException"]').count()
   report['success']=True
  except Exception as e:
+  report['visible_text']=ui.locator('body').inner_text()[-12000:]
   report['error_type']=type(e).__name__;report['error']=str(e)[:1800];report['traceback']=traceback.format_exc()[-4000:]
   page.screenshot(path=str(out/'failure.png'),full_page=True)
  finally:
