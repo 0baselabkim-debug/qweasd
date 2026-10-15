@@ -12,6 +12,7 @@ on:
         default: collect
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: kis-validation-auth
   cancel-in-progress: false
@@ -26,6 +27,12 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -r requirements.txt pytest==9.1.1
+      - name: Record actual runner start
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          started=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs" --jq '.jobs[] | select(.name == "refresh") | .started_at' | head -1)
+          echo "JOB_STARTED_AT=$started" >> "$GITHUB_ENV"
       - name: Choose scheduled trading date and restore only its checkpoint
         id: target
         env:
@@ -156,4 +163,30 @@ jobs:
             daily-results/bundle.json.gz
             daily-results/calendar-check.json
           retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Record this attempt without changing market data
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DAY: ${{ steps.target.outputs.day }}
+          MODE: ${{ inputs.mode || 'collect' }}
+          EVENT: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python scripts/record_market_run.py
+          python - <<'PY'
+          import base64,json,os
+          from pathlib import Path
+          name=os.environ['GITHUB_RUN_ID']+'-'+os.environ['GITHUB_RUN_ATTEMPT']+'.json'
+          payload={'message':'Record market collection attempt '+name,'content':base64.b64encode((Path('operations/market-runs')/name).read_bytes()).decode()}
+          Path('/tmp/market-operation-payload.json').write_text(json.dumps(payload))
+          PY
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/operations/market-runs/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.json" --input /tmp/market-operation-payload.json --jq '.commit.sha'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: market-attempt-${{ github.run_id }}-${{ github.run_attempt }}
+          path: operations/market-runs
           if-no-files-found: ignore

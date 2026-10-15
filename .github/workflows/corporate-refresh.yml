@@ -40,9 +40,19 @@ jobs:
           from collect_corporate import Dart
           universe=json.loads(Path('corporate/universe.json').read_text())
           company=next(r for r in universe if r['symbol']=='005930')
-          r=Dart(max_calls=1).get('list.json',{'corp_code':company['corp_code'],'bgn_de':'20260101','end_de':dt.date.today().strftime('%Y%m%d'),'pblntf_ty':'A','page_count':100})
-          assert r['status']=='000' and r.get('list'),'No actual filing received'
-          print(json.dumps({'authenticated':True,'status':r['status'],'filings_received':len(r['list']),'latest_receipt':r['list'][0]['rcept_no']}))
+          import os
+          result={'key_present':bool(os.environ.get('DART_API_KEY')),'authenticated':False}
+          try:
+              r=Dart(max_calls=1).get('list.json',{'corp_code':company['corp_code'],'bgn_de':'20260101','end_de':dt.date.today().strftime('%Y%m%d'),'pblntf_ty':'A','page_count':100})
+              assert r['status']=='000' and r.get('list'),'No actual filing received'
+              result.update(authenticated=True,status=r['status'],filings_received=len(r['list']),latest_receipt=r['list'][0]['rcept_no'])
+          except Exception as e:
+              result['error']=str(e) if isinstance(e,ValueError) else type(e).__name__
+          Path('corporate-probe.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps(result))
+          if not result['authenticated']:
+              print('::error::DART probe '+str(result.get('error')))
+              raise SystemExit(1)
           PY
       - name: Collect changed disclosures and resume unfinished companies
         if: inputs.mode != 'probe'
@@ -78,3 +88,14 @@ jobs:
             corporate-candidate/state.json.gz
           if-no-files-found: ignore
           retention-days: 7
+
+      - name: Preserve bounded credential probe evidence
+        if: always() && inputs.mode == 'probe'
+        run: |
+          if [ ! -f corporate-probe.json ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/corporate-$GITHUB_RUN_ID"
+          git add corporate-probe.json
+          git commit -m 'Record sanitized DART authentication result'
+          git push origin "HEAD:evidence/corporate-$GITHUB_RUN_ID"
