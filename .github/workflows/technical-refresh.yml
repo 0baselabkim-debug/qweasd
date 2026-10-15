@@ -1,0 +1,48 @@
+name: Separate technical OHLCV cache
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [pilot, private]
+        default: private
+  schedule:
+    - cron: '45 14 * * 1-5'
+  workflow_run:
+    workflows: ['Daily validated dashboard refresh']
+    types: [completed]
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  refresh:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Collect separate market-data cache without personal logs
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          MODE: ${{ inputs.mode || 'private' }}
+        run: python scripts/collect_technical.py --mode "$MODE"
+      - name: Publish only fixed public pilot observations
+        if: inputs.mode == 'pilot'
+        run: |
+          test -f technical/pilot.json.gz
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]'
+          git add technical/pilot.json.gz
+          git diff --cached --quiet || git commit -m 'Preserve fixed three-symbol technical OHLCV pilot'
+          git push origin HEAD:main
