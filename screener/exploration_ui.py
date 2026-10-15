@@ -77,7 +77,7 @@ CSS='''<style>
 def install():st.markdown(CSS,unsafe_allow_html=True)
 
 READABILITY_CSS='''
-[data-testid="stMain"] .block-container{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:auto!important}
+[data-testid="stMain"] .block-container{width:100%!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important}
 .macro-card{padding:14px;margin-bottom:12px}.macro-card-head{margin-bottom:12px}.macro-card h3{font-size:16px!important}.macro-card-head span{font-size:11px}
 .st-key-macro_cards>[data-testid="stHorizontalBlock"]{gap:22px!important}
 .macro-card .mini-scroll,.investor-table{width:fit-content;max-width:100%}

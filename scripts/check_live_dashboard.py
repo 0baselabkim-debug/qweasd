@@ -49,6 +49,7 @@ with sync_playwright() as p:
  def layout(mobile=False):
   ui.locator('[data-testid="stAppViewContainer"]').evaluate('e=>e.scrollTop=0')
   side=ui.locator('[data-testid="stSidebar"]');assert side.is_visible()
+  for label in ['종목 검색','수집·게시 상태','공시 자동화 · 운영 검증','데이터 출처 · 계산 기준']:assert label not in side.inner_text()
   for selector in ['stSidebarCollapseButton','stExpandSidebarButton']:
    x=ui.locator('[data-testid="'+selector+'"]');assert not x.count() or not x.is_visible()
   a=side.bounding_box();b=ui.locator('[data-testid="stMain"]').bounding_box()
@@ -60,7 +61,7 @@ with sync_playwright() as p:
   ratio,minimum={'macro':(.70,1050),'sectors':(.85,980),'stocks':(.85,980),'detail':(.75,980)}[stage]
   expected=min(area['width'],max(minimum,area['width']*ratio)) if width>=1360 else area['width']
   assert abs(content['width']-expected)<3,(stage,content,expected)
-  assert abs(content['x']-area['x'])<3,(stage,content,area)
+  assert abs((content['x']-area['x'])-(area['width']-content['width'])/2)<3,(stage,content,area)
   record={'viewport':width,'stage':stage,'available_width':area['width'],'content_width':content['width']}
   if stage=='macro':
    rows=ui.locator('.macro-table tbody tr,.investor-table tbody tr').evaluate_all('es=>es.map(e=>e.getBoundingClientRect().height)')
@@ -119,8 +120,8 @@ with sync_playwright() as p:
   table().get_by_role('textbox',name='표 내 검색').fill('');double('IT 서비스')
   assert 'KOSPI · IT 서비스 · 종목 수급' in ui.locator('body').inner_text()
   assert ui.locator('.st-key-tab_sector button:visible').inner_text()=='IT 서비스'
-  radio('지난 20일');choose('종목 정렬','매수세 개선액');ui.get_by_role('textbox',name='종목 검색',exact=True).fill('NAVER');ui.get_by_role('textbox',name='종목 검색',exact=True).press('Enter');pause()
-  rows=download('선택 종목 CSV','stocks.csv');assert len(rows)==1 and rows[0]['코드']=='035420';match(rows[0]['선택 기간 순매수(억원)'],stocks.set_index('symbol').loc['035420','net_20d']/1e8)
+  radio('지난 20일');choose('종목 정렬','매수세 개선액');table().get_by_role('textbox',name='표 내 검색').fill('NAVER')
+  rows=download('선택 종목 CSV','stocks.csv');naver=next(r for r in rows if r['코드']=='035420');match(naver['선택 기간 순매수(억원)'],stocks.set_index('symbol').loc['035420','net_20d']/1e8)
   name_cell('NAVER').click();page.wait_for_timeout(400);assert ui.get_by_text('KOSPI · IT 서비스 · 종목 수급',exact=True).count()==1
   readability('stocks');page.screenshot(path=str(out/'stocks.png'),full_page=True);double('NAVER');assert ui.get_by_text('NAVER · 035420',exact=True).count()==1
   assert ui.locator('.st-key-hierarchy button:visible').all_text_contents()==['전체섹터 조회','IT 서비스','×','NAVER','×']
@@ -136,14 +137,14 @@ with sync_playwright() as p:
   assert ui.get_by_role('radio',name='지난 5일',exact=True).is_checked();assert ui.get_by_role('combobox',name='섹터 정렬',exact=True).input_value()=='시총 대비 순매수 강도'
   assert table().locator('th[aria-sort="ascending"]').count()==1
   page.screenshot(path=str(out/'sectors.png'),full_page=True)
-  click('IT 서비스');assert ui.get_by_role('radio',name='지난 20일',exact=True).is_checked();assert ui.get_by_role('combobox',name='종목 정렬',exact=True).input_value()=='매수세 개선액';assert ui.get_by_role('textbox',name='종목 검색',exact=True).input_value()=='NAVER'
+  click('IT 서비스');assert ui.get_by_role('radio',name='지난 20일',exact=True).is_checked();assert ui.get_by_role('combobox',name='종목 정렬',exact=True).input_value()=='매수세 개선액'
   click('NAVER');close('stock');assert ui.get_by_text('KOSPI · IT 서비스 · 종목 수급',exact=True).count()==1;assert not ui.locator('.st-key-tab_stock').count()
   double('NAVER');close('sector');assert not ui.locator('.st-key-tab_sector').count() and not ui.locator('.st-key-tab_stock').count();assert ui.get_by_text('전체 섹터 수급',exact=True).count()==1
   choose('시장','KOSDAQ');double('IT 서비스');assert ui.get_by_text('KOSDAQ · IT 서비스 · 종목 수급',exact=True).count()==1
   report['checks'].append('Genuine sector/name double click; mouse single click and other-cell double click do not navigate; client sort/filter; matching raw CSV; KOSPI/KOSDAQ identity')
   report['checks'].append('Hierarchy retains child tabs on upward navigation; active stock close goes to sector; sector close removes descendants; hover X; periods, market, sorts and search retained')
   # Existing corporate publication and verified business evidence remain accessible.
-  ui.get_by_role('textbox',name='종목 검색',exact=True).fill('');ui.get_by_role('textbox',name='종목 검색',exact=True).press('Enter');pause();choose('시장','전체');radio('투자 테마');click('전체섹터 조회');double('원전');double('두산에너빌리티')
+  choose('시장','전체');radio('투자 테마');click('전체섹터 조회');double('원전');double('두산에너빌리티')
   ui.get_by_text('원전 · 검증된 사업 근거',exact=True).click();assert 'DART' in ui.locator('body').inner_text();clean()
   report['checks'].append('Actual financial eligibility, daily chart, existing theme business evidence and DART retained')
   for width in [1440,768,390]:

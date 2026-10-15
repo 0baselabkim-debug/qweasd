@@ -77,27 +77,6 @@ with st.sidebar:
  asof=select('수급 기준일',sorted(data['flows'].trade_date.dt.strftime('%Y-%m-%d').unique(),reverse=True),'asof')
  market=select('시장',['전체','KOSPI','KOSDAQ'],'market')
  classification=radio('분류체계',['공식 업종','투자 테마'],'classification')
- query=st.text_input('종목 검색',key='global_search',placeholder='종목명 또는 코드')
- st.divider()
- st.link_button('수집·게시 상태','https://github.com/0baselabkim-debug/qweasd/actions/workflows/daily-dashboard.yml')
- corporate_ui.status_panel()
- with st.expander('데이터 출처 · 계산 기준'):
-  st.write('수급: KIS KRX 금액. 현재 확인된 업종 구성으로 과거 수급을 합산합니다. 테마는 검증된 부분 분류이며 중복 소속을 허용합니다. 테마 합계를 전체 시장 합계로 사용하지 않습니다.')
-  st.write('거래 활성도: 최근 5거래일 평균 거래대금 / 겹치지 않는 직전 20거래일 평균. 날짜·시장 범위가 불확실한 가격 관측은 사용하지 않습니다.')
-  st.write('확산율: 선택 기간 순매수가 양수인 종목 수 / 해당 기간 수급이 완전한 종목 수. 0원도 평가 가능 종목에 포함합니다.')
-  st.write('수급 원천 최종 확정 여부와 기존 종가 불일치는 계속 별도 관리합니다. 공시된 연간 재무와 최신 분기 자료를 혼합하지 않습니다.')
-  st.write('매크로: 각 공급원이 공표한 일별값. 직전값은 직전 유효 공표값이며 실제 날짜를 함께 표시합니다. 공표 지연과 추후 수정이 가능하며 시장 휴장일은 서로 다릅니다.')
-
-  state=macro.read()
-  st.dataframe(pd.DataFrame([{'지표':v['name'],'기준일':v['date'],'직전 기준일':v['previous_date'],'공급원':v['provider'],'기준':v.get('basis',''),'최신 공표값':v['value'],'직전 공표값':v['previous_value']} for v in state.get('indicators',{}).values()]),hide_index=True)
-  for key,meta in macro.catalog().items():
-   r=state.get('indicators',{}).get(key,{})
-   if r.get('source_url'):st.link_button(meta['provider']+' 원문 · '+meta['name'],r['source_url'],key='source_'+key)
-  st.write('매크로 수집 시도: '+str(state.get('last_attempt_at','미실행')))
-  st.json(state.get('attempts',{}))
-  if state.get('investors'):st.json(state['investors'])
-  st.link_button('매크로 갱신 기록','https://github.com/0baselabkim-debug/qweasd/actions/workflows/macro-refresh.yml')
-
 with st.container(key='header'):
  a,b=st.columns([4,1.5],vertical_alignment='center')
  with a:st.markdown(f'<div class="date-label">수급 기준일 <b>{asof}</b></div>',unsafe_allow_html=True)
@@ -180,12 +159,11 @@ if ss.stage=='stocks':
  with a:mode=radio('종목 보기',['전체 종목','매수세 강화','꾸준한 순매수','자금 이탈'],'stock_view')
  mapping={'순매수 금액':f'net_{days}d','매수세 개선액':'change_5d','시총 대비 순매수 강도':f'intensity_{days}d','순매수 지속일수':'positive_days_20d','거래 활성도':'activity_ratio','평균 거래대금':'average_turnover','종목명':'name'}
  with b:sort=select('종목 정렬',mapping,'stock_sort')
- if query:selected=selected[selected.name.str.contains(query,case=False,regex=False)|selected.symbol.str.contains(query,regex=False)]
  key=mapping[sort];ascending=key=='name' or (mode=='자금 이탈' and key in [f'net_{days}d','change_5d',f'intensity_{days}d'])
  ordered=screen_flows(selected,mode,days).sort_values([key,'symbol'],ascending=[ascending,True],na_position='last').reset_index(drop=True)
  frame=pd.DataFrame({'종목명':ordered.name,'코드':ordered.symbol,'선택 기간 순매수(억원)':ordered[f'net_{days}d']/1e8,'오늘 순매수(억원)':ordered.net_1d/1e8,'5일 순매수(억원)':ordered.net_5d/1e8,'20일 순매수(억원)':ordered.net_20d/1e8,'5일 변화(억원)':ordered.change_5d/1e8,'수급 변화':ordered.change_state,'20일 순매수 발생일':ordered.positive_days_20d,'순매수 강도(%)':ordered[f'intensity_{days}d']*100,'거래 활성도(배)':ordered.activity_ratio,'5일 평균 거래대금(억원)':ordered.average_turnover/1e8,'투자 적격성':ordered.eligibility})
  ids=ordered.symbol.tolist()
- event=explorer.table(frame,ids,'종목명','stock_grid_'+str(ss.nav_epoch),f'stocks:{asof}:{market}:{classification}:{group}:{days}:{sort}:{mode}:{query}')
+ event=explorer.table(frame,ids,'종목명','stock_grid_'+str(ss.nav_epoch),f'stocks:{asof}:{market}:{classification}:{group}:{days}:{sort}:{mode}')
  if event and event.get('interaction') in ['double_click','touch','keyboard'] and event.get('id') in ids:
   choose_stock(event['id']);st.rerun()
  csv_button('선택 종목 CSV',frame,'stocks_download')
