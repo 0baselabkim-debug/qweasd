@@ -73,15 +73,13 @@ def corporate_probe(api,asof):
     result={'asof':asof,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'sources':records,'complete':False,'reason':'Pagination and complete split/rights coverage require verification; personal quantities/costs never adjusted'}
     raw=json.dumps(result,ensure_ascii=False);assert all(v not in raw for v in [api.key,api.secret,api.token])
     write(ROOT/'corporate-actions.json.gz',result)
-    for code in PRIORITY:
-        b=read(CACHE/(code+'.json.gz'))
+    from scripts.technical_batch import corporate_observations
+    for path in CACHE.glob('*.json.gz'):
+        b=read(path)
         if not b:continue
-        matched=[]
-        for rec in records:
-            for row in rec.get('rows',[]):
-                if any(str(v)==code for v in row.values()):matched.append({'endpoint':rec['endpoint'],'record':row})
-        b['official_corporate_action_observations']=matched;b['corporate_actions_verified']=False
-        write(CACHE/(code+'.json.gz'),b)
+        b['official_corporate_action_observations']=corporate_observations(b['symbol'],b['asof'])
+        b['corporate_actions_verified']=False
+        write(path,b)
     return {'received':sum(r.get('received',0) for r in records),'failed_endpoints':sum(r['status']=='failed' for r in records),'complete':False}
 
 

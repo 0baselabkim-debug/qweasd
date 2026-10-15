@@ -67,7 +67,7 @@ def main():
         assert result['flow_matches_original']
         result.update(name=names.get(code),bars=len(b['bars']),first=b['bars'][0]['trade_date'],last=b['bars'][-1]['trade_date'],buy=buy_guide(b),price_comparison=b['price_comparison'],finality=b['finality'],corporate_actions=b['corporate_actions'])
         report['symbols'][code]=result
-    paths=['snapshot/dashboard.duckdb','snapshot/corporate.duckdb','snapshot/macro.json','theme_mapping.json','config.toml','technical_rules.json','.github/workflows/daily-dashboard.yml','.github/workflows/corporate-refresh.yml','.github/workflows/macro-refresh.yml']
+    paths=['snapshot/dashboard.duckdb','snapshot/corporate.duckdb','snapshot/macro.json','theme_mapping.json','config.toml','technical_rules.json','screener/technical.py','.github/workflows/daily-dashboard.yml','.github/workflows/corporate-refresh.yml','.github/workflows/macro-refresh.yml']
     for path in paths:
         if Path(path).exists():report['preserved'][path]=hashlib.sha256(subprocess.check_output(['git','show','d75da76:'+path])).hexdigest()==hashlib.sha256(Path(path).read_bytes()).hexdigest()
     assert all(report['preserved'].values())
