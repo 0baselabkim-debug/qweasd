@@ -184,6 +184,8 @@ def refresh_summary(asof):
         if b['symbol'] in state['symbols']:
             state['symbols'][b['symbol']].update(reasons=validate(b,asof),signal_ready=not validate(b,asof))
     summary.update(quality_reviewed_at=dt.datetime.now(dt.timezone.utc).isoformat(),
+        full_320_symbols=sum(len(b.get('bars',[]))>=320 for b in current),
+        short_history_symbols=sum(len(b.get('bars',[]))<320 for b in current),
         daily_accepted=sum(daily_accepted(b) for b in current),signal_ready=sum(not validate(b,asof) for b in current),
         guide_status_counts=dict(collections.Counter(g['status'] for g in guides.values())),
         guide_hold_reasons=dict(collections.Counter(x for g in guides.values() if g['status']=='판정 보류' for x in g['reasons'])),
