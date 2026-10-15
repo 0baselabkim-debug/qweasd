@@ -20,5 +20,11 @@
     "short_history_below_160": 22,
     "source_price_conflicts": 387
   },
-  "live_reference_result": "WAITING_REFERENCE; both markets HTTP 200 zero rows; no KIS calls"
+  "live_reference_result": "WAITING_REFERENCE; both markets HTTP 200 zero rows; no KIS calls",
+  "github_regression": {
+    "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38819765390",
+    "conclusion": "success",
+    "suite_cases": 159,
+    "includes": "Full regression suite and Streamlit HTTP health check"
+  }
 }
