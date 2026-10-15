@@ -40,3 +40,13 @@ KIS: 국내 업종 일별 지수 0001/1001(KOSPI/KOSDAQ, KRX).
 로컬 실제 브라우저에서 행 선택, 뒤로 이동 조건 보존, CSV 원본 대조, 실제 차트/툴팁, 테마 DART 근거 확인. PC/768px/390px에서 페이지 가로 넘침 없음(넓은 표 내부 스크롤 지원).
 
 공개 앱: https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/
+
+## 공개 배포 검증 기록
+
+- 코드 배포: f66578d. [배포 검사 성공](https://github.com/0baselabkim-debug/qweasd/actions/runs/38683491732).
+- [공개 웹 실제 브라우저 검증 성공](https://github.com/0baselabkim-debug/qweasd/actions/runs/38683541156): 12개 매크로 실제값 대조, 50업종 수급 CSV, 종목 원본 수급 대조, 행 선택 이동/뒤로 조건 보존, 실제 차트·툴팁, DART 테마 근거, 768/390px 조작 및 가로 넘침 검사. 스크린샷은 evidence/dashboard-38683541156 브랜치의 reports/live-dashboard에 보존.
+- [매크로 자동 수집·검증·게시 성공](https://github.com/0baselabkim-debug/qweasd/actions/runs/38683536976): 한국시간 2026-10-15 13:50:07~13:50:33, 실제 12지표. 지표별 날짜는 macro-verification.json 참조.
+- DB SHA-256: `58f7f23797ada71e80a067ecd8c410a66125b72a163d17751f8cb0ee65054bf8` (변경 전후 동일). 기존 일일 수급/공시 수집 워크플로·점수 코드·재무·테마 원본은 수정하지 않음.
+- 미래 거래일 예약 실행과 3거래일 연속 운영은 아직 검증 완료로 간주하지 않음.
+
+- [공시 자동화 패널 공개 웹 검증 성공](https://github.com/0baselabkim-debug/qweasd/actions/runs/38683702199): 실제 게시된 기업 조사 수·재무 버전·수집 시각, 원익IPS 2026-06-30 반기/2026-08-14 공시일, 사업 검토 및 평가 보류 확인.

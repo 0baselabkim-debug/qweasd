@@ -1,0 +1,221 @@
+{
+  "run_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38683536976",
+  "last_attempt_at": "2026-10-15T04:50:10.582167+00:00",
+  "indicators": [
+    {
+      "id": "us2y",
+      "name": "미국 국채 2년",
+      "provider": "FRED",
+      "series": "DGS2",
+      "value": 4.79,
+      "date": "2026-10-13",
+      "previous_value": 4.8,
+      "previous_date": "2026-10-09",
+      "unit": "%",
+      "change": -0.9999999999999787,
+      "change_unit": "bp",
+      "basis": ""
+    },
+    {
+      "id": "us10y",
+      "name": "미국 국채 10년",
+      "provider": "FRED",
+      "series": "DGS10",
+      "value": 5.21,
+      "date": "2026-10-13",
+      "previous_value": 5.24,
+      "previous_date": "2026-10-09",
+      "unit": "%",
+      "change": -3.000000000000025,
+      "change_unit": "bp",
+      "basis": ""
+    },
+    {
+      "id": "kr3y",
+      "name": "한국 국고채 3년",
+      "provider": "ECOS",
+      "series": "817Y002/010200000",
+      "value": 3.883,
+      "date": "2026-10-14",
+      "previous_value": 3.857,
+      "previous_date": "2026-10-13",
+      "unit": "%",
+      "change": 2.59999999999998,
+      "change_unit": "bp",
+      "basis": ""
+    },
+    {
+      "id": "usdkrw",
+      "name": "USD/KRW",
+      "provider": "ECOS",
+      "series": "731Y001/0000001",
+      "value": 1338.6,
+      "date": "2026-10-15",
+      "previous_value": 1340.5,
+      "previous_date": "2026-10-14",
+      "unit": "원",
+      "change": -1.900000000000091,
+      "change_unit": "원",
+      "basis": "한국은행 공표 매매기준율 · 시장 종가와 구분"
+    },
+    {
+      "id": "vix",
+      "name": "VIX",
+      "provider": "FRED",
+      "series": "VIXCLS",
+      "value": 15.27,
+      "date": "2026-10-13",
+      "previous_value": 15.21,
+      "previous_date": "2026-10-12",
+      "unit": "포인트",
+      "change": 0.05999999999999872,
+      "change_unit": "포인트",
+      "basis": "CBOE 일별 종가"
+    },
+    {
+      "id": "wti",
+      "name": "WTI 현물",
+      "provider": "FRED",
+      "series": "DCOILWTICO",
+      "value": 96.24,
+      "date": "2026-10-06",
+      "previous_value": 96.13,
+      "previous_date": "2026-10-05",
+      "unit": "달러/배럴",
+      "change": 0.10999999999999943,
+      "change_unit": "달러/배럴",
+      "basis": "EIA Cushing WTI 현물, 선물 아님"
+    },
+    {
+      "id": "sp500",
+      "name": "S&P 500",
+      "provider": "FRED",
+      "series": "SP500",
+      "value": 7718.94,
+      "date": "2026-10-14",
+      "previous_value": 7805.45,
+      "previous_date": "2026-10-13",
+      "unit": "포인트",
+      "change": -86.51000000000022,
+      "change_unit": "포인트",
+      "basis": "일별 종가"
+    },
+    {
+      "id": "nasdaq",
+      "name": "나스닥 종합",
+      "provider": "FRED",
+      "series": "NASDAQCOM",
+      "value": 26692.87,
+      "date": "2026-10-14",
+      "previous_value": 27204.38,
+      "previous_date": "2026-10-13",
+      "unit": "포인트",
+      "change": -511.51000000000204,
+      "change_unit": "포인트",
+      "basis": "일별 종가"
+    },
+    {
+      "id": "sox",
+      "name": "필라델피아 반도체",
+      "provider": "FRED",
+      "series": "NASDAQSOX",
+      "value": 11684.38,
+      "date": "2026-10-14",
+      "previous_value": 12208.79,
+      "previous_date": "2026-10-13",
+      "unit": "포인트",
+      "change": -524.4100000000017,
+      "change_unit": "포인트",
+      "basis": "일별 종가"
+    },
+    {
+      "id": "dow",
+      "name": "다우존스 산업평균",
+      "provider": "FRED",
+      "series": "DJIA",
+      "value": 51621.48,
+      "date": "2026-10-14",
+      "previous_value": 51670.1,
+      "previous_date": "2026-10-13",
+      "unit": "포인트",
+      "change": -48.61999999999534,
+      "change_unit": "포인트",
+      "basis": "일별 종가"
+    },
+    {
+      "id": "kospi",
+      "name": "KOSPI",
+      "provider": "KIS",
+      "series": "0001",
+      "value": 6008.81,
+      "date": "2026-10-14",
+      "previous_value": 6035.35,
+      "previous_date": "2026-10-13",
+      "unit": "포인트",
+      "change": -26.539999999999964,
+      "change_unit": "포인트",
+      "basis": "KRX"
+    },
+    {
+      "id": "kosdaq",
+      "name": "KOSDAQ",
+      "provider": "KIS",
+      "series": "1001",
+      "value": 823.88,
+      "date": "2026-10-14",
+      "previous_value": 837.03,
+      "previous_date": "2026-10-13",
+      "unit": "포인트",
+      "change": -13.149999999999977,
+      "change_unit": "포인트",
+      "basis": "KRX"
+    }
+  ],
+  "attempts": {
+    "us2y": {
+      "status": "success"
+    },
+    "us10y": {
+      "status": "success"
+    },
+    "kr3y": {
+      "status": "success"
+    },
+    "usdkrw": {
+      "status": "success"
+    },
+    "vix": {
+      "status": "success"
+    },
+    "wti": {
+      "status": "success"
+    },
+    "sp500": {
+      "status": "success"
+    },
+    "nasdaq": {
+      "status": "success"
+    },
+    "sox": {
+      "status": "success"
+    },
+    "dow": {
+      "status": "success"
+    },
+    "kospi": {
+      "status": "success"
+    },
+    "kosdaq": {
+      "status": "success"
+    },
+    "investor_KOSPI": {
+      "status": "unit_scope_pending",
+      "data_date": "20261014"
+    },
+    "investor_KOSDAQ": {
+      "status": "unit_scope_pending",
+      "data_date": "20261014"
+    }
+  },
+  "stock_database_sha256": "58f7f23797ada71e80a067ecd8c410a66125b72a163d17751f8cb0ee65054bf8"
+}
