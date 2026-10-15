@@ -138,7 +138,10 @@ def technical_details(result,bundle):
         for reason in result.get('reasons',[]):st.write(reason)
         st.write('검증된 160거래일 OHLCV·동일 날짜 수급·장마감 확정 근거가 모두 필요합니다.')
         if result.get('checks'):st.json(result['checks'])
-        if result.get('indicators'):st.dataframe(pd.DataFrame([{'지표':k,'값':v} for k,v in result['indicators'].items()]),hide_index=True)
+        metrics=result.get('indicators') or (bundle.get('computed') if bundle and bundle.get('structure_valid') else None)
+        if metrics:
+            if result['status']=='판정 보류':st.write('관측 일봉 계산값 · 매매 판정에는 사용하지 않음')
+            st.dataframe(pd.DataFrame([{'지표':k,'값':v} for k,v in metrics.items()]),hide_index=True)
         if result.get('levels'):st.json({k:result.get(k) for k in ['levels','entry','stop','target','reward_risk']})
         st.caption('현재 구름대는 26거래일 이전 계산값, 미래 구름대는 현재 계산 후 26거래일 앞에 표시하는 값입니다. 기준은 개발 기본값이며 수익을 보장하지 않습니다.')
         if bundle:st.write(f"수신 일봉 {len(bundle.get('bars',[]))}거래일 · 최종 확정 {bundle.get('finality','미확인')}")
