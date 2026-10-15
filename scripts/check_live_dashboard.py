@@ -11,7 +11,11 @@ expected=json.loads((root/'reports/enrichment/coverage.json').read_text())
 financial_count=expected['metrics']['ocf']['count']
 full_history_count=expected['complete_20d_symbols']
 complete_scores=expected['complete_stock_scores']
-theme_count=len({r['symbol'] for r in json.loads((root/'theme_mapping.json').read_text())['memberships'] if r['status']=='confirmed'})
+import sys,datetime as dt
+from zoneinfo import ZoneInfo
+sys.path.insert(0,str(root))
+from screener.themes import members
+theme_count=members(str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date())).symbol.nunique()
 publication=json.loads((root/'snapshot/manifest.json').read_text())
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,**({'executable_path':os.environ['BROWSER_EXECUTABLE'],'args':['--no-sandbox','--disable-dev-shm-usage']} if os.environ.get('BROWSER_EXECUTABLE') else {}))
@@ -41,6 +45,8 @@ with sync_playwright() as p:
   assert f'{financial_count:,}종목' in body,'updated_financial_count_not_visible'
   assert f'{full_history_count:,} / 2,430종목' in body,'updated_20day_coverage_not_visible'
   assert f'종목 종합 평가 가능 {complete_scores:,}개' in body,'updated_score_coverage_not_visible'
+  assert '공시 자동화 · 운영 검증' in body and '최신 공시 재무 · 사업 테마 검토' in body,'corporate_panels_missing'
+  report['checks'].append('Corporate disclosure panels and actual operational evidence visible')
   report['checks'].append(f'Financial snapshot: {financial_count}; 20-day flow: {full_history_count}; complete scores: {complete_scores}')
   if publication.get('automatic_snapshot_sync'):
    assert '웹 자동 반영' in body,'automatic_publication_status_not_visible'

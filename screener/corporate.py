@@ -9,7 +9,7 @@ THEMES={
  'AIDC':['GPUaaS','AI 데이터센터','AI데이터센터','GPU 클라우드','GPU클라우드'],
  '전력 인프라':['변압기','전력케이블','전력 케이블','차단기','배전반','송배전'],
  '반도체':['반도체','웨이퍼','웨이퍼 테스트','프로브 카드'],
- '로봇':['산업용 로봇','산업용로봇','협동로봇','협동 로봇','로봇 감속기','로봇감속기'],
+ '로봇':['산업용 Robot','로봇 등을 제조','산업용 로봇','산업용로봇','협동로봇','협동 로봇','로봇 감속기','로봇감속기'],
  '방산':['방위산업','방산','군용','유도무기','전투기'],
  '원전':['원자력','원전','핵연료']}
 KINDS={'사업보고서':('annual','11011'),'반기보고서':('half','11012'),'분기보고서':('quarter',None)}
@@ -49,6 +49,7 @@ def business_candidates(text,filing,document_sha):
  rows=[]
  for theme,words in THEMES.items():
   matches=[p for p in text.splitlines() if any(w.lower() in p.lower() for w in words)]
+  matches.sort(key=lambda p:not (any(w in p for w in ['당사','당사의','당사는']) and any(w in p for w in ['제조','판매','공급','매출'])))
   excerpts=[]
   for p in matches:
    at=min([p.lower().find(w.lower()) for w in words if w.lower() in p.lower()]);excerpts.append(p[max(0,at-180):at+700])
@@ -126,13 +127,15 @@ def latest_financials(state,asof):
  return result
 
 
-def apply_review(state,decision):
+def apply_review(state,decision,business_text=None):
     key=decision['receipt']+'_'+decision['theme'];old=state['reviews'][key]
     if decision['symbol']!=old['symbol']:raise ValueError('review_symbol_mismatch')
     if decision['status'] not in ['confirmed','not_applicable','review_required','removed']:raise ValueError('review_status_invalid')
     if not decision.get('rationale') or not decision.get('reviewer') or not decision.get('reviewed_on'):raise ValueError('review_audit_missing')
     excerpt=decision.get('excerpt','')
-    if decision['status'] in ['confirmed','not_applicable'] and (len(excerpt)<20 or not any(excerpt in p for p in old['excerpts'])):raise ValueError('review_excerpt_not_in_document_evidence')
+    from_saved=any(excerpt in p for p in old['excerpts'])
+    from_section=business_text is not None and hashlib.sha256(business_text.encode()).hexdigest()==old.get('section_sha256') and excerpt in business_text
+    if decision['status'] in ['confirmed','not_applicable'] and (len(excerpt)<20 or not (from_saved or from_section)):raise ValueError('review_excerpt_not_in_document_evidence')
     new={**old,**decision,'effective_from':decision['reviewed_on']}
     if old==new:return
     state['events'].append({'type':'theme_review','symbol':old['symbol'],'theme':old['theme'],'receipt':old['receipt'],

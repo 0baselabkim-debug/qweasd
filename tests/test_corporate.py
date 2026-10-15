@@ -57,12 +57,13 @@ def test_theme_confirmation_requires_exact_evidence_and_keeps_event():
 
 def test_market_replay_and_skip_do_not_count_as_three_day_operation():
  from scripts.record_market_run import make_record
- env={'DAY':'20261014','GITHUB_RUN_ID':'1','MODE':'verify_saved'}
+ env={'JOB_STATUS':'success','DAY':'20261014','GITHUB_RUN_ID':'1','MODE':'verify_saved'}
  ledger={'2026-10-14':{'run_id':'1','mode':'verify_saved','published_at_utc':'2026-10-15'}}
  b={'status':'complete','records':{'000001':{}},'failures':{},'excluded':{}}
  assert not make_record(env,b,ledger)['new_trading_day_published']
  env['MODE']='collect';ledger['2026-10-14']['mode']='collect';assert make_record(env,b,ledger)['new_trading_day_published']
- env['GITHUB_RUN_ID']='2';assert not make_record(env,b,ledger)['new_trading_day_published']
+ env['JOB_STATUS']='failure';assert not make_record(env,b,ledger)['new_trading_day_published']
+ env['JOB_STATUS']='success';env['GITHUB_RUN_ID']='2';assert not make_record(env,b,ledger)['new_trading_day_published']
 
 def test_existing_financial_versions_cannot_be_changed():
  from scripts.publish_corporate import validate
@@ -77,3 +78,28 @@ def test_three_day_gate_counts_distinct_actual_dates_only():
     {**row,'trade_date':'2026-10-16'},{**row,'trade_date':'2026-10-13','mode':'verify_saved'}]
  assert not summarize_runs(r,'2026-10-15')['verified_three_days']
  assert summarize_runs(r,'2026-10-16')['verified_three_days']
+
+def test_unreviewed_new_disclosure_holds_previous_theme_and_no_backdating():
+ from screener.corporate import theme_memberships
+ old={'symbol':'000001','theme':'반도체','receipt':'20260301000001','disclosed_on':'2026-03-01','effective_from':'2026-10-14','status':'confirmed'}
+ new={**old,'receipt':'20260814000001','disclosed_on':'2026-08-14','effective_from':'2026-10-15','status':'review_required'}
+ s={'reviews':{'old':old,'new':new}}
+ assert not theme_memberships(s,'2026-10-13')
+ assert theme_memberships(s,'2026-10-14')['000001','반도체']['status']=='confirmed'
+ assert theme_memberships(s,'2026-10-15')['000001','반도체']['status']=='review_required'
+
+def test_interim_missing_equity_loss_and_zero_not_filled():
+ r=financial_record(response(),filing(),'CFS');r['values'].update(equity=0,revenue=0,operating_profit=0,parent_equity=-5,parent_net_income=-2)
+ m=metrics(r,1000)
+ assert m['revenue_growth']==-1 and m['margin'] is None and m['debt_ratio'] is None and m['pbr'] is None and m['per'] is None
+
+def test_real_pilot_preserves_scores_and_separates_periods():
+ import hashlib
+ from screener.corporate import ROOT
+ s=load_state()
+ if not s['runs']:pytest.skip('Corporate pilot not yet published')
+ assert hashlib.sha256((ROOT/'snapshot/dashboard.duckdb').read_bytes()).hexdigest()=='58f7f23797ada71e80a067ecd8c410a66125b72a163d17751f8cb0ee65054bf8' or __import__('json').loads((ROOT/'snapshot/manifest.json').read_text())['asof']>'2026-10-14'
+ records=[r for r in s['financials'].values() if r['symbol']=='240810' and r['receipt']=='20260814001845']
+ assert len(records)==1
+ r=records[0];assert r['values']['revenue']==381372590019 and r['standalone_quarter']['revenue']==216471641903
+ assert r['values']['ocf']==49194134963 and metrics(r)['roe'] is None

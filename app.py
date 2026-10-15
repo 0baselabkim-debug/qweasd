@@ -5,6 +5,11 @@ import hashlib
 import json
 import importlib
 import threading
+import datetime as dt
+from zoneinfo import ZoneInfo
+import screener.themes as themes_module
+import screener.corporate as corporate_module
+import screener.corporate_ui as corporate_ui_module
 import pandas as pd
 import numpy as np
 import altair as alt
@@ -50,16 +55,22 @@ def flow_snapshot(mtime,asof,config_mtime,calculation_version,data_version):
  data,stocks,_,_=snapshot(mtime,asof,config_mtime,calculation_version,data_version)
  return stock_trends(data,stocks,asof)
 @st.cache_data(show_spinner=False,max_entries=8)
-def flow_groups(mtime,asof,config_mtime,calculation_version,data_version,market,theme_mode,theme_version):
- data,stocks,_,_=snapshot(mtime,asof,config_mtime,calculation_version,data_version)
+def flow_groups(mtime,asof,config_mtime,calculation_version,data_version,market,theme_mode,theme_version,theme_asof):
+ data,stocks,formal,_=snapshot(mtime,asof,config_mtime,calculation_version,data_version)
  _,matrix=flow_snapshot(mtime,asof,config_mtime,calculation_version,data_version)
  subset=stocks if market=='전체' else stocks[stocks.market==market]
- return group_trends(data,subset,matrix,asof,theme_members(asof) if theme_mode else None)
+ groups,series=group_trends(data,subset,matrix,asof,theme_members(theme_asof) if theme_mode else None)
+ if not theme_mode:
+  cols=['market','sector','total_score','evaluation_rank','score_relative_strength','score_activity','available_weight']
+  groups=groups.merge(formal[cols].rename(columns={c:'formal_'+c for c in cols if c not in ['market','sector']}),on=['market','sector'],how='left',validate='one_to_one')
+ else:
+  for c in ['total_score','evaluation_rank','score_relative_strength','score_activity','available_weight']:groups['formal_'+c]=np.nan
+ return groups,series
 @st.cache_data(show_spinner=False,max_entries=2)
 def dates(mtime,data_version):
  d=load();return sorted(d['flows'].trade_date.dt.strftime('%Y-%m-%d').unique(),reverse=True)
 mtime=DB.stat().st_mtime_ns
-calculation_version=hashlib.sha256(b''.join((Path(__file__).parent/p).read_bytes() for p in ['screener/scoring.py','screener/store.py','config.toml','screener/flow_trends.py','screener/flow_ui.py'])+b'enriched-schema-v3').hexdigest()
+calculation_version=hashlib.sha256(b''.join((Path(__file__).parent/p).read_bytes() for p in ['screener/scoring.py','screener/store.py','config.toml','screener/flow_trends.py','screener/flow_ui.py','screener/themes.py','screener/corporate.py','screener/corporate_ui.py'])+corporate_ui_module.version().encode()+b'enriched-schema-v3').hexdigest()
 # Community Cloud can rerun app.py while retaining an imported dependency.
 # Refresh once per source version before caching its results.
 if not hasattr(scoring_module,'_dashboard_reload_lock'):scoring_module._dashboard_reload_lock=threading.RLock()
@@ -68,10 +79,14 @@ with scoring_module._dashboard_reload_lock:
   importlib.reload(scoring_module)
   importlib.reload(flow_module)
   importlib.reload(flow_ui_module)
+  importlib.reload(corporate_module)
+  importlib.reload(corporate_ui_module)
+  importlib.reload(themes_module)
   scoring_module._dashboard_loaded_version=calculation_version
 evaluate=scoring_module.evaluate
 stock_trends=flow_module.stock_trends;group_trends=flow_module.group_trends;stock_series=flow_module.stock_series;screen_flows=flow_module.screen_flows
 flow_chart=flow_ui_module.chart
+theme_members=themes_module.members;aggregate_themes=themes_module.aggregate
 manifest=Path(__file__).parent/'snapshot/manifest.json'
 data_version=hashlib.sha256(manifest.read_bytes() if manifest.exists() else b'local-db').hexdigest()
 publication=json.loads(manifest.read_text()) if manifest.exists() else {}
@@ -100,7 +115,9 @@ stocks=stocks.join(flow_metrics,on='symbol',validate='one_to_one')
 visible_sectors=sectors if market=='전체' else sectors[sectors.market==market]
 visible_stocks=stocks if market=='전체' else stocks[stocks.market==market]
 theme_mode=classification=='투자 테마'
-theme_table,theme_stocks,theme_stats=aggregate_themes(visible_stocks,asof)
+theme_asof=max(asof,str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date())) if asof==dates(mtime,data_version)[0] else asof
+theme_table,theme_stocks,theme_stats=aggregate_themes(visible_stocks,theme_asof)
+corporate_ui_module.status_panel()
 if theme_mode:visible_sectors=theme_table
 searched=visible_stocks[visible_stocks.name.str.contains(query,case=False,regex=False)|visible_stocks.symbol.str.contains(query,regex=False)] if query else visible_stocks
 st.markdown('<div class="eyebrow">KOREA EQUITY · DAILY FLOW MONITOR</div>',unsafe_allow_html=True)
@@ -130,7 +147,9 @@ with st.sidebar.expander('데이터 상태 · 출처'):
  historical_indices=data['benchmarks'][data['benchmarks'].trade_date<=pd.Timestamp(asof)]
  st.write(f'수정주가 관측: {historical_prices.adjusted_close.notna().sum():,}행 · 기준지수: {len(historical_indices):,}행')
  conflicts=data['metadata'].get('adjusted_price_conflicts',{}).get(asof,[])
- if conflicts:st.warning(f'수정주가 재조회 시 {len(conflicts):,}종목의 종가가 기존 관측값과 다릅니다. 기존 가격·시총·종목 평가를 유지하며 해당 관측은 섹터 수익률 평가에서 보류합니다.')
+ if conflicts:
+  st.warning(f'수정주가 재조회 시 {len(conflicts):,}종목의 종가가 기존 관측값과 다릅니다. 기존 가격·시총·종목 평가를 유지하며 해당 관측은 섹터 수익률 평가에서 보류합니다.')
+  st.caption('3종목 실측: 보존 종가는 NXT·통합 종가와 일치하고 KRX 종가와 달랐습니다. 전체 종목의 동일 원인은 미확인입니다. 수급은 KRX 금액을 유지합니다.')
  st.caption(f'확인된 업종 구성 시작일: {data["memberships"].valid_from.min().date()} · 이전 구성은 미확보입니다.')
  st.caption('KIS 현재가 응답에는 거래일 필드가 없습니다. 시총의 수신 시점과 가격 기준일을 구분하며, 과거 날짜로 소급하지 않습니다.')
  st.caption(f'매출 계정 확인 {stocks.revenue.notna().sum():,}개 · 영업현금흐름 확인 {stocks.ocf.notna().sum():,}개')
@@ -174,6 +193,7 @@ def analysis_mode(prefix,options):
 
 st.subheader('① 투자 테마별 자금 흐름' if theme_mode else '① 강세 섹터',anchor=False)
 if theme_mode:
+ st.caption(f'테마 검증 기준일 {theme_asof} · 가격·수급 기준일 {asof} · 현재 검증 구성으로 과거 수급을 합산합니다.')
  st.info(f'부분 검증 테마 · 현재 조회 대상 {len(visible_stocks):,}종목 중 {theme_stats["unique_members"]:,}종목의 사업 근거를 확인했습니다. 전체 시장의 테마 분류는 아직 완료되지 않았습니다.')
  st.caption(f'사업 근거 확인 종목 {theme_stats["unique_members"]}개 · 중복 제거 순매수 {display_number(theme_stats["unique_net_amount"]/1e8,2)}억원 · 중복 소속 {theme_stats["overlap_count"]}건. 테마별 금액을 더해 전체 유입액으로 표시하지 않습니다.')
  if not theme_stats['unique_members']:st.info('선택한 기준일·시장에는 근거를 확인한 테마 구성 이력이 없습니다.')
@@ -183,16 +203,16 @@ with st.expander('수급 변화 해석 · 집계 기준'):
  st.write('강화는 최근 5일 순매수 − 직전 5일 순매수가 양수인 경우입니다. 순매수 증가·순매도 축소·순매수 전환을 구분하며, 실제 0원은 중립으로 처리합니다.')
  st.write('꾸준한 순매수: 최근 20일 중 15일 이상 순매수이고 최근·직전 5일 합계가 모두 양수. 관찰용 분류이며 기존 점수에는 반영하지 않습니다.')
  st.write('순매수 개선은 신규 자금 유입이나 향후 주가 상승을 입증하지 않습니다. 현재 구성 기준으로 합산하며 결측은 0원으로 채우지 않습니다. 강도는 보존된 기준일 시총 대비 값입니다. 종가·시총 정합성 문제는 별도로 관리합니다.')
-group_flows,group_series=flow_groups(mtime,asof,CONFIG.stat().st_mtime_ns,calculation_version,data_version,market,theme_mode,(Path(__file__).parent/'theme_mapping.json').stat().st_mtime_ns)
+group_flows,group_series=flow_groups(mtime,asof,CONFIG.stat().st_mtime_ns,calculation_version,data_version,market,theme_mode,(Path(__file__).parent/'theme_mapping.json').stat().st_mtime_ns,theme_asof)
 sector_tab,period_days=period_tabs('sector','sector_sort')
 with sector_tab:
  period_caption(period_days)
  sector_mode=analysis_mode('sector',['자금 유입 상위','매수세 강화','자금 이탈'])
  st.caption({'자금 유입 상위':'선택 기간 합계가 양수인 섹터 · 큰 순매수부터 확인','매수세 강화':'최근 5일 − 직전 5일 > 0 · 순매도 축소도 포함','자금 이탈':'선택 기간 합계가 음수인 섹터 · 순매도 규모가 큰 순서'}[sector_mode])
- sector_sort=st.selectbox('섹터 수급 정렬',['누적 순매수 금액','시가총액 대비 순매수 강도','최근 5일 순매수 증감','수급 부분 점수'],key='sector_sort')
- sector_key={'누적 순매수 금액':f'net_{period_days}d','시가총액 대비 순매수 강도':f'intensity_{period_days}d','최근 5일 순매수 증감':'change_5d','수급 부분 점수':'flow_points'}[sector_sort]
- sector_ascending=sector_mode=='자금 이탈' and sector_key!='flow_points'
- ordered=screen_flows(group_flows,sector_mode,period_days).sort_values([sector_key,'market','sector'],ascending=[sector_ascending,True,True],na_position='last')
+ sector_sort=st.selectbox('섹터 수급 정렬',['누적 순매수 금액','시가총액 대비 순매수 강도','최근 5일 순매수 증감','수급 부분 점수','종합 강세 점수'],key='sector_sort')
+ sector_key={'누적 순매수 금액':f'net_{period_days}d','시가총액 대비 순매수 강도':f'intensity_{period_days}d','최근 5일 순매수 증감':'change_5d','수급 부분 점수':'flow_points','종합 강세 점수':'formal_total_score'}[sector_sort]
+ sector_ascending=sector_mode=='자금 이탈' and sector_key not in ['flow_points','formal_total_score']
+ ordered=(group_flows if sector_key=='formal_total_score' else screen_flows(group_flows,sector_mode,period_days)).sort_values([sector_key,'market','sector'],ascending=[sector_ascending,True,True],na_position='last')
  ordered['sort_rank']=ordered[sector_key].rank(ascending=sector_ascending,method='min')
  if ordered.empty:st.info('선택 조건을 충족하는 섹터가 없습니다. 다른 보기나 기간을 선택하세요.')
  table=pd.DataFrame({'시장':ordered.market,'섹터':ordered.sector,'종목 수':ordered.members,'수급 변화':ordered.change_direction+' · '+ordered.change_state,'매수 지속':ordered.buying_pattern,'수급 정렬 순위':ordered.sort_rank,
@@ -200,13 +220,13 @@ with sector_tab:
   '5일 순매수(억원)':ordered.net_5d/1e8,'20일 순매수(억원)':ordered.net_20d/1e8,'직전 5일(억원)':ordered.previous_5d/1e8,'5일 증감(억원)':ordered.change_5d/1e8,
   '선택 기간 강도(%)':ordered[f'intensity_{period_days}d']*100,'20일 순매수 일수':ordered.positive_days_20d,
   '유입 강도 점수 /40':ordered.flow_intensity_points,'지속성 점수 /30':ordered.flow_persistence_points,'수급 부분 점수 /70':ordered.flow_points,
-  '20일 중 완전 수신 일수':ordered.observed_days_20d,'상대강도 /20':'평가 보류','거래 활성도 /10':'평가 보류','종합 강세 점수 /100':'평가 보류','종합 강세 순위':'평가 보류'})
+  '20일 중 완전 수신 일수':ordered.observed_days_20d,'상대강도 /20':ordered.formal_score_relative_strength.map(lambda v:display_number(v) if pd.notna(v) else '평가 보류'),'거래 활성도 /10':ordered.formal_score_activity.map(lambda v:display_number(v) if pd.notna(v) else '평가 보류'),'종합 강세 점수 /100':ordered.formal_total_score.map(lambda v:display_number(v) if pd.notna(v) else '평가 보류'),'종합 강세 순위':ordered.formal_evaluation_rank.map(lambda v:display_number(v,0) if pd.notna(v) else '평가 보류')})
  st.dataframe(table,hide_index=True,height=320,width='stretch',column_order=['수급 정렬 순위','시장','섹터','수급 변화','선택 기간 순매수(억원)','5일 증감(억원)','선택 기간 강도(%)','수급 부분 점수 /70','종합 강세 점수 /100'],column_config={c:st.column_config.NumberColumn(format='%.2f') for c in table if any(t in c for t in ['(억원)','강도(%)','점수 /'])})
  with st.expander('섹터 상세 지표 · 5일/20일 비교'):
   st.dataframe(table,hide_index=True,width='stretch')
  st.caption(f'완전한 기간 합계: 5일 {group_flows.net_5d.notna().sum()}/{len(group_flows)}개 · 20일 {group_flows.net_20d.notna().sum()}/{len(group_flows)}개. 구성 종목 중 하나라도 해당 기간 자료가 부족하면 전체 기간 합계를 보류합니다.')
  st.download_button('섹터 현황 CSV',csv(table),f'sectors_{asof}_{period_days}d.csv','text/csv',key='sector_download')
- st.caption('수급 부분 점수 70점 = 강도 40 + 지속성 30. 상대강도·거래 활성도는 보류, 종합 100점으로 환산하지 않습니다.')
+ st.caption(f'수급 부분 점수 70점과 정식 종합 점수 100점은 별도입니다. 실제 날짜별 구성·가격·지수·거래대금 조건 충족 {group_flows.formal_total_score.notna().sum()}/{len(group_flows)}업종. 미확보 배점은 보류합니다.')
  options=sorted(group_flows.sector.unique()) if theme_mode else (group_flows.market+' · '+group_flows.sector).sort_values().tolist()
  if not options:st.info('조회 가능한 구성 종목이 없습니다.');st.stop()
  default='KOSPI · 전기·전자' if 'KOSPI · 전기·전자' in options else options[0]
@@ -270,7 +290,7 @@ with stock_tab:
     valuation_ni=r.get('parent_net_income',np.nan) if r.scope=='CFS' else r.net_income
     valuation_equity=r.get('parent_equity',np.nan) if r.scope=='CFS' else r.equity
     st.caption('PER·PBR 분모: '+('지배주주 귀속' if r.scope=='CFS' else '별도')+f' 순이익 {display_number(valuation_ni/1e8,0)}억원 / 자본 {display_number(valuation_equity/1e8,0)}억원')
-   evidence=theme_members(asof);evidence=evidence[evidence.symbol==code]
+   evidence=theme_members(theme_asof);evidence=evidence[evidence.symbol==code]
    with st.expander('투자 테마 소속 · 확인 근거'):
     if evidence.empty:st.write('확인 필요 · 사업 근거를 검토하기 전에는 테마를 임의로 부여하지 않습니다.')
     for _,item in evidence.iterrows():
@@ -286,6 +306,7 @@ with stock_tab:
     v=r['score_'+k];rows.append({'항목':names[k],'배점':weight,'점수':f'{v:.1f}' if pd.notna(v) else '데이터 축적 중 / 평가 보류'})
    st.dataframe(rows,hide_index=True,width='stretch')
    st.caption(f'계산 가능한 배점 {int(r.available_weight)}/100 · 부분 점수를 100점으로 환산하지 않습니다.')
+corporate_ui_module.company_panel(code,asof,r.market_cap)
 with st.expander('평가 방식과 남은 데이터'):
  st.caption('공식 업종의 확인된 적용 시작일은 2026-10-14입니다. 과거 구성에 따른 섹터 종합 평가는 보류합니다. 별도 수급 추이는 화면에 명시한 구성 기준일의 종목 집합을 고정해 과거 순매수를 합산합니다. 과거 날짜 화면의 미분류는 당시 매핑 미확보를 뜻합니다.')
  st.markdown('외국인 수급은 20거래일, 상대강도는 21개 가격 관측, 거래 활성도는 최근 5일과 이전 20일을 사용합니다. 섹터 가격지수는 전일 시가총액 가중·일별 리밸런싱이며, 당시 업종 매핑과 조정주가가 모두 있어야 계산합니다.')

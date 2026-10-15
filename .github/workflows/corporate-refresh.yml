@@ -8,6 +8,10 @@ on:
         type: choice
         options: [probe, collect]
         default: probe
+      symbols:
+        description: Optional comma-separated codes for a bounded pilot; blank scans the universe
+        type: string
+        default: ''
       limit:
         description: Maximum companies in this resumable batch
         type: number
@@ -15,7 +19,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: kis-validation-auth
+  group: corporate-disclosures
   cancel-in-progress: false
 jobs:
   corporate:
@@ -54,15 +58,51 @@ jobs:
               print('::error::DART probe '+str(result.get('error')))
               raise SystemExit(1)
           PY
+      - name: Restore compatible unpublished progress
+        if: inputs.mode != 'probe'
+        run: |
+          mkdir -p corporate-candidate
+          if [ -f snapshot/corporate-state.json.gz ]; then cp snapshot/corporate-state.json.gz corporate-candidate/state.json.gz; fi
+          if git ls-remote --exit-code --heads origin data/corporate-checkpoint >/dev/null 2>&1; then
+            git fetch origin data/corporate-checkpoint
+            git show FETCH_HEAD:corporate-checkpoint.json.gz > /tmp/corporate-checkpoint.json.gz
+            python - <<'PY'
+          import shutil
+          from scripts.publish_corporate import validate
+          from screener.corporate import load_state
+          try:
+              validate(load_state(),load_state('/tmp/corporate-checkpoint.json.gz'))
+          except ValueError:
+              print('Checkpoint predates published changes; retain published state')
+          else:
+              shutil.copy2('/tmp/corporate-checkpoint.json.gz','corporate-candidate/state.json.gz')
+          PY
+          fi
       - name: Collect changed disclosures and resume unfinished companies
         if: inputs.mode != 'probe'
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          PILOT_SYMBOLS: ${{ inputs.symbols || '' }}
           COMPANY_LIMIT: ${{ inputs.limit || 120 }}
         run: |
-          mkdir -p corporate-candidate
-          if [ -f snapshot/corporate-state.json.gz ]; then cp snapshot/corporate-state.json.gz corporate-candidate/state.json.gz; fi
-          python -u scripts/collect_corporate.py --state corporate-candidate/state.json.gz --db corporate-candidate/corporate.duckdb --limit "$COMPANY_LIMIT" --max-calls 600 --max-seconds 2100
+          python -u scripts/collect_corporate.py --state corporate-candidate/state.json.gz --db corporate-candidate/corporate.duckdb --limit "$COMPANY_LIMIT" --max-calls 600 --max-seconds 2100 --symbols "$PILOT_SYMBOLS"
+      - name: Preserve progress independently of publication
+        if: always() && inputs.mode != 'probe'
+        run: |
+          if [ ! -f corporate-candidate/state.json.gz ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git ls-remote --exit-code --heads origin data/corporate-checkpoint >/dev/null 2>&1; then
+            git fetch origin data/corporate-checkpoint
+            git worktree add --detach /tmp/corporate-checkpoint FETCH_HEAD
+          else
+            git worktree add --detach /tmp/corporate-checkpoint HEAD
+          fi
+          cp corporate-candidate/state.json.gz /tmp/corporate-checkpoint/corporate-checkpoint.json.gz
+          git -C /tmp/corporate-checkpoint add -f corporate-checkpoint.json.gz
+          git -C /tmp/corporate-checkpoint diff --cached --quiet || git -C /tmp/corporate-checkpoint commit -m 'Preserve disclosure collection progress'
+          git -C /tmp/corporate-checkpoint push origin HEAD:data/corporate-checkpoint
+          git worktree remove /tmp/corporate-checkpoint
       - name: Validate append-only corporate records
         if: inputs.mode != 'probe'
         run: |

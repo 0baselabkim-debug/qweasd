@@ -41,6 +41,12 @@ def seed(state,universe):
   state['financials'].setdefault(key,{**f,'scope':row['scope'],'currency':row['currency'],'basis':'annual','values':{k:val(k) for k in ACCOUNTS},
    'prior_values':{k:val('previous_'+k) for k in ACCOUNTS},'standalone_quarter':{},'account_evidence':{},'source':'preserved verified annual snapshot','status':'verified_period'})
 
+ for row in json.loads(Path('theme_mapping.json').read_text())['memberships']:
+  receipt=row['evidence_url'].split('rcpNo=')[-1];key=receipt+'_'+row['theme']
+  if row['status']=='confirmed':
+   state['reviews'].setdefault(key,{**row,'receipt':receipt,'reviewer':'preserved_official_business_review','reviewed_on':row['verified_on'],
+    'effective_from':row['valid_from'],'observed_on':row['verified_on'],'excerpts':[row['excerpt']]})
+
 def discover(api,state,universe,end,symbols=None):
  bycorp={r['corp_code']:r['symbol'] for r in universe if r['corp_code']}
  if symbols:
@@ -89,7 +95,7 @@ def process(api,state,f,cache):
      state['events'].append({'type':'theme_revalidated','symbol':f['symbol'],'theme':row['theme'],'receipt':receipt,'previous_receipt':old[0]['receipt'],'observed_at':today})
    for r in rows:
     key=receipt+'_'+r['theme'];state['reviews'].setdefault(key,r)
-   job.update(business_status='success',document_sha256=sha,section_sha256=hashlib.sha256(text.encode()).hexdigest(),characters=len(text))
+   job.update(business_status='success',document_sha256=sha,section_sha256=hashlib.sha256(text.encode()).hexdigest(),characters=len(text));job.pop('business_error',None)
    if cache:
     cache.mkdir(parents=True,exist_ok=True);(cache/(receipt+'.txt')).write_text(text)
    state['events'].append({'type':'business_observed','symbol':f['symbol'],'receipt':receipt,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'section_sha256':job['section_sha256']})
@@ -113,7 +119,8 @@ def main():
  symbols=set(a.symbols.split(',')) if a.symbols else None
  api=Dart(a.max_calls,a.max_seconds);started=dt.datetime.now(dt.timezone.utc).isoformat();budget=False;processed=[]
  try:
-  if not a.skip_discovery:discover(api,state,universe,str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date()),symbols)
+  if not a.skip_discovery:
+   discover(api,state,universe,str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date()),symbols);state.pop('last_discovery_error',None)
   groups={}
   for f in state['filings'].values():
    if symbols and f['symbol'] not in symbols:continue

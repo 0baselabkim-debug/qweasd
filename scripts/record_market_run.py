@@ -7,7 +7,7 @@ def make_record(env,bundle,ledger):
  day=env.get('DAY','');date=f'{day[:4]}-{day[4:6]}-{day[6:8]}' if len(day)==8 else None
  publication=ledger.get(date,{})
  mode=env.get('MODE','collect');same_run=publication.get('run_id')==env.get('GITHUB_RUN_ID')
- success=bool(mode=='collect' and same_run and publication.get('mode')=='collect' and bundle.get('status')=='complete')
+ success=bool(env.get('JOB_STATUS')=='success' and mode=='collect' and same_run and publication.get('mode')=='collect' and bundle.get('status')=='complete')
  schedule=env.get('SCHEDULE','');time='23:30:00' if schedule=='30 14 * * 1-5' else '20:30:00'
  return {'run_id':env.get('GITHUB_RUN_ID'),'attempt':env.get('GITHUB_RUN_ATTEMPT'),'mode':mode,'trade_date':date,
  'planned_start_at':date+'T'+time+'+09:00' if date and env.get('EVENT')=='schedule' else None,

@@ -9,15 +9,23 @@ def definitions():
     return json.loads(PATH.read_text())
 
 def members(asof, mapping=None):
+    supplied=mapping is not None
     mapping=mapping or definitions();day=pd.Timestamp(asof)
     records=[r for r in mapping['memberships'] if r['status']=='confirmed'
              and pd.Timestamp(r['valid_from'])<=day
              and (not r.get('valid_to') or pd.Timestamp(r['valid_to'])>=day)
              and pd.Timestamp(r['disclosed_on'])<=day and r.get('evidence_url') and r.get('excerpt')]
+    from .corporate import load_state,theme_memberships
+    overrides={} if supplied else theme_memberships(load_state(),str(day.date()))
+    records=[r for r in records if (r['symbol'],r['theme']) not in overrides]
+    for r in overrides.values():
+        if r['status']=='confirmed':
+            records.append({**r,'status':'confirmed','valid_from':r['effective_from'],'valid_to':None,
+                            'verified_on':r.get('reviewed_on'),'evidence_title':'사업의 내용 근거 검증','excerpt':r['excerpt']})
     return pd.DataFrame(records).drop_duplicates(['symbol','theme']) if records else pd.DataFrame(columns=['symbol','theme'])
 
 def aggregate(stocks, asof, mapping=None):
-    mapping=mapping or definitions();m=members(asof,mapping)
+    m=members(asof,mapping);mapping=mapping or definitions()
     # An official-sector stock row remains unique even if it belongs to two themes.
     if stocks.symbol.duplicated().any():raise ValueError('duplicate_stock_rows')
     selected=stocks.merge(m[['symbol','theme']],on='symbol',how='inner',validate='one_to_many')

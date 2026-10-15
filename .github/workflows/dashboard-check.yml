@@ -13,6 +13,7 @@ on:
       - 'tests/test_dashboard*.py'
       - 'tests/test_enrichment.py'
       - 'tests/test_daily.py'
+      - 'tests/test_corporate.py'
       - 'tests/test_flow_trends.py'
       - 'scripts/collect_daily_snapshot.py'
       - 'scripts/prepare_daily_publish.py'
@@ -35,7 +36,7 @@ jobs:
       - name: Install dashboard dependencies
         run: python -m pip install -r requirements.txt pytest==9.1.1
       - name: Test real snapshot, calculations, and UI without API secrets
-        run: python -m pytest -q tests/test_dashboard.py tests/test_dashboard_deployment.py tests/test_enrichment.py tests/test_daily.py tests/test_flow_trends.py
+        run: python -m pytest -q tests/test_dashboard.py tests/test_dashboard_deployment.py tests/test_enrichment.py tests/test_daily.py tests/test_flow_trends.py tests/test_corporate.py
       - name: Start and check HTTP server
         shell: bash
         run: |
