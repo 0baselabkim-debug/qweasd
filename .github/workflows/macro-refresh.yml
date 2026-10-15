@@ -34,7 +34,7 @@ jobs:
             path='/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market'
             d=json.load(urllib.request.urlopen(base+'/api/apis/public/detail?'+urllib.parse.urlencode({'accessUrl':path}),timeout=25))
             fields=json.load(urllib.request.urlopen(base+'/api/apis/guide/property/'+d['id'],timeout=25))
-            out={'summary':d.get('apiSummary'),'properties':fields,'endpoint':path}
+            out={'summary':d.get('apiSummary'),'detail':d,'properties':fields,'endpoint':path}
           except Exception as e:out={'error_type':type(e).__name__,'http':getattr(e,'code',None)}
           Path('macro-spec.json').write_text(json.dumps(out,ensure_ascii=False,indent=2))
           PY

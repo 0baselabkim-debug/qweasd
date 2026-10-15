@@ -63,7 +63,7 @@ def test_price_conflict_does_not_change_money_trends(history):
 
 def test_real_app_period_sort_and_whole_market():
     from streamlit.testing.v1 import AppTest
-    app=AppTest.from_file(str(__import__('pathlib').Path(__file__).resolve().parents[1]/'app.py'),default_timeout=90).run();assert not app.exception
+    app=AppTest.from_file(str(__import__('pathlib').Path(__file__).resolve().parents[1]/'app_legacy.py'),default_timeout=90).run();assert not app.exception
     # AppTest does not yet serialize tab-container widgets; browser check clicks real tabs.
     periods={'sector':'오늘','stock':'오늘'}
     def run():

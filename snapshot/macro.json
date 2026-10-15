@@ -287,6 +287,7 @@
       "basis": "",
       "source_url": "https://ecos.bok.or.kr/",
       "official_unit": "연%",
+      "daily_fixing": false,
       "observations": [
         {
           "date": "2026-08-11",
@@ -464,148 +465,204 @@
       "change": 2.59999999999998,
       "change_unit": "bp",
       "change_percent": null,
-      "observed_at": "2026-10-15T04:32:28.796990+00:00",
+      "observed_at": "2026-10-15T04:37:02.485646+00:00",
       "finality": "공급원 공표 일별값 · 추후 수정 가능"
     },
     "usdkrw": {
       "id": "usdkrw",
       "name": "USD/KRW",
       "group": "환율·원자재",
-      "provider": "FRED",
-      "series": "DEXKOUS",
+      "provider": "ECOS",
+      "series": "731Y001/0000001",
       "unit": "원",
       "rate": false,
-      "timezone": "America/New_York",
-      "basis": "미 연준 뉴욕 정오 매입환율, 시장 종가와 구분",
-      "official_title": "South Korean Won to U.S. Dollar Spot Exchange Rate",
-      "official_unit": "South Korean Won to One U.S. Dollar",
-      "source_url": "https://fred.stlouisfed.org/series/DEXKOUS",
+      "timezone": "Asia/Seoul",
+      "basis": "한국은행 공표 매매기준율 · 시장 종가와 구분",
+      "source_url": "https://ecos.bok.or.kr/",
+      "official_unit": "원",
+      "daily_fixing": true,
       "observations": [
         {
+          "date": "2026-08-11",
+          "value": 1415.3
+        },
+        {
+          "date": "2026-08-12",
+          "value": 1415.0
+        },
+        {
+          "date": "2026-08-13",
+          "value": 1415.0
+        },
+        {
+          "date": "2026-08-14",
+          "value": 1414.9
+        },
+        {
+          "date": "2026-08-18",
+          "value": 1415.2
+        },
+        {
+          "date": "2026-08-19",
+          "value": 1411.0
+        },
+        {
+          "date": "2026-08-20",
+          "value": 1402.5
+        },
+        {
+          "date": "2026-08-21",
+          "value": 1393.0
+        },
+        {
+          "date": "2026-08-24",
+          "value": 1383.6
+        },
+        {
+          "date": "2026-08-25",
+          "value": 1380.6
+        },
+        {
+          "date": "2026-08-26",
+          "value": 1383.1
+        },
+        {
+          "date": "2026-08-27",
+          "value": 1384.6
+        },
+        {
+          "date": "2026-08-28",
+          "value": 1380.3
+        },
+        {
           "date": "2026-08-31",
-          "value": 1368.25
+          "value": 1376.5
         },
         {
           "date": "2026-09-01",
-          "value": 1371.76
+          "value": 1373.6
         },
         {
           "date": "2026-09-02",
-          "value": 1358.85
+          "value": 1370.3
         },
         {
           "date": "2026-09-03",
-          "value": 1356.89
+          "value": 1369.4
         },
         {
           "date": "2026-09-04",
-          "value": 1346.51
+          "value": 1359.5
+        },
+        {
+          "date": "2026-09-07",
+          "value": 1355.2
         },
         {
           "date": "2026-09-08",
-          "value": 1341.22
+          "value": 1342.6
         },
         {
           "date": "2026-09-09",
-          "value": 1339.81
+          "value": 1341.1
         },
         {
           "date": "2026-09-10",
-          "value": 1345.63
+          "value": 1337.9
         },
         {
           "date": "2026-09-11",
-          "value": 1340.3
+          "value": 1338.2
         },
         {
           "date": "2026-09-14",
-          "value": 1346.6
+          "value": 1346.4
         },
         {
           "date": "2026-09-15",
-          "value": 1361.84
+          "value": 1345.3
         },
         {
           "date": "2026-09-16",
-          "value": 1367.65
+          "value": 1353.3
         },
         {
           "date": "2026-09-17",
-          "value": 1380.46
+          "value": 1368.3
         },
         {
           "date": "2026-09-18",
-          "value": 1387.97
+          "value": 1380.3
         },
         {
           "date": "2026-09-21",
-          "value": 1374.81
+          "value": 1383.8
         },
         {
           "date": "2026-09-22",
-          "value": 1359.06
+          "value": 1384.3
         },
         {
           "date": "2026-09-23",
-          "value": 1366.99
-        },
-        {
-          "date": "2026-09-24",
-          "value": 1369.44
-        },
-        {
-          "date": "2026-09-25",
-          "value": 1356.51
+          "value": 1360.0
         },
         {
           "date": "2026-09-28",
-          "value": 1359.78
+          "value": 1352.0
         },
         {
           "date": "2026-09-29",
-          "value": 1355.4
+          "value": 1360.0
         },
         {
           "date": "2026-09-30",
-          "value": 1355.91
+          "value": 1358.4
         },
         {
           "date": "2026-10-01",
-          "value": 1364.83
+          "value": 1355.7
         },
         {
           "date": "2026-10-02",
-          "value": 1345.75
-        },
-        {
-          "date": "2026-10-05",
-          "value": 1341.7
+          "value": 1359.6
         },
         {
           "date": "2026-10-06",
-          "value": 1337.88
+          "value": 1358.5
         },
         {
           "date": "2026-10-07",
-          "value": 1339.12
+          "value": 1343.4
         },
         {
           "date": "2026-10-08",
-          "value": 1343.34
+          "value": 1339.2
         },
         {
-          "date": "2026-10-09",
-          "value": 1342.13
+          "date": "2026-10-12",
+          "value": 1338.0
+        },
+        {
+          "date": "2026-10-13",
+          "value": 1335.8
+        },
+        {
+          "date": "2026-10-14",
+          "value": 1340.5
+        },
+        {
+          "date": "2026-10-15",
+          "value": 1338.6
         }
       ],
-      "date": "2026-10-09",
-      "value": 1342.13,
-      "previous_date": "2026-10-08",
-      "previous_value": 1343.34,
-      "change": -1.209999999999809,
+      "date": "2026-10-15",
+      "value": 1338.6,
+      "previous_date": "2026-10-14",
+      "previous_value": 1340.5,
+      "change": -1.900000000000091,
       "change_unit": "원",
-      "change_percent": -0.09007399466998742,
-      "observed_at": "2026-10-15T04:32:29.157357+00:00",
+      "change_percent": -0.14173815740396054,
+      "observed_at": "2026-10-15T04:37:02.902858+00:00",
       "finality": "공급원 공표 일별값 · 추후 수정 가능"
     },
     "vix": {
@@ -3255,7 +3312,152 @@
         "observed_at": "2026-10-15T04:27:43.634534+00:00",
         "finality": "공급원 공표 일별값 · 추후 수정 가능"
       }
+    },
+    {
+      "section": "indicators",
+      "key": "usdkrw",
+      "record": {
+        "id": "usdkrw",
+        "name": "USD/KRW",
+        "group": "환율·원자재",
+        "provider": "FRED",
+        "series": "DEXKOUS",
+        "unit": "원",
+        "rate": false,
+        "timezone": "America/New_York",
+        "basis": "미 연준 뉴욕 정오 매입환율, 시장 종가와 구분",
+        "official_title": "South Korean Won to U.S. Dollar Spot Exchange Rate",
+        "official_unit": "South Korean Won to One U.S. Dollar",
+        "source_url": "https://fred.stlouisfed.org/series/DEXKOUS",
+        "observations": [
+          {
+            "date": "2026-08-31",
+            "value": 1368.25
+          },
+          {
+            "date": "2026-09-01",
+            "value": 1371.76
+          },
+          {
+            "date": "2026-09-02",
+            "value": 1358.85
+          },
+          {
+            "date": "2026-09-03",
+            "value": 1356.89
+          },
+          {
+            "date": "2026-09-04",
+            "value": 1346.51
+          },
+          {
+            "date": "2026-09-08",
+            "value": 1341.22
+          },
+          {
+            "date": "2026-09-09",
+            "value": 1339.81
+          },
+          {
+            "date": "2026-09-10",
+            "value": 1345.63
+          },
+          {
+            "date": "2026-09-11",
+            "value": 1340.3
+          },
+          {
+            "date": "2026-09-14",
+            "value": 1346.6
+          },
+          {
+            "date": "2026-09-15",
+            "value": 1361.84
+          },
+          {
+            "date": "2026-09-16",
+            "value": 1367.65
+          },
+          {
+            "date": "2026-09-17",
+            "value": 1380.46
+          },
+          {
+            "date": "2026-09-18",
+            "value": 1387.97
+          },
+          {
+            "date": "2026-09-21",
+            "value": 1374.81
+          },
+          {
+            "date": "2026-09-22",
+            "value": 1359.06
+          },
+          {
+            "date": "2026-09-23",
+            "value": 1366.99
+          },
+          {
+            "date": "2026-09-24",
+            "value": 1369.44
+          },
+          {
+            "date": "2026-09-25",
+            "value": 1356.51
+          },
+          {
+            "date": "2026-09-28",
+            "value": 1359.78
+          },
+          {
+            "date": "2026-09-29",
+            "value": 1355.4
+          },
+          {
+            "date": "2026-09-30",
+            "value": 1355.91
+          },
+          {
+            "date": "2026-10-01",
+            "value": 1364.83
+          },
+          {
+            "date": "2026-10-02",
+            "value": 1345.75
+          },
+          {
+            "date": "2026-10-05",
+            "value": 1341.7
+          },
+          {
+            "date": "2026-10-06",
+            "value": 1337.88
+          },
+          {
+            "date": "2026-10-07",
+            "value": 1339.12
+          },
+          {
+            "date": "2026-10-08",
+            "value": 1343.34
+          },
+          {
+            "date": "2026-10-09",
+            "value": 1342.13
+          }
+        ],
+        "date": "2026-10-09",
+        "value": 1342.13,
+        "previous_date": "2026-10-08",
+        "previous_value": 1343.34,
+        "change": -1.209999999999809,
+        "change_unit": "원",
+        "change_percent": -0.09007399466998742,
+        "observed_at": "2026-10-15T04:32:29.157357+00:00",
+        "finality": "공급원 공표 일별값 · 추후 수정 가능"
+      }
     }
   ],
-  "last_attempt_at": "2026-10-15T04:32:27.371995+00:00"
+  "last_attempt_at": "2026-10-15T04:37:00.939512+00:00"
 }

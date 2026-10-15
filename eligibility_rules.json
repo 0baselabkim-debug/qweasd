@@ -1,0 +1,31 @@
+{
+  "version": "draft-1",
+  "approved_by_user": false,
+  "approval_reference": null,
+  "required_fields": [
+    "equity",
+    "liabilities",
+    "operating_profit",
+    "ocf",
+    "audit_opinion",
+    "material_financial_risk",
+    "capital_stock"
+  ],
+  "rules": [],
+  "proposal_only": {
+    "debt_ratio_caution_percent": 200,
+    "caution_facts": [
+      "영업적자",
+      "영업현금흐름 음수",
+      "매출 감소"
+    ],
+    "ineligible_review": [
+      "자본총계 0 이하",
+      "감사의견 부적정 또는 의견거절",
+      "공식 확인된 중대한 재무 위험"
+    ],
+    "turnaround": "적자만으로 부적격 처리하지 않고 개선 여부와 현금흐름을 별도 검토",
+    "eligible": "필수 정보가 모두 확인되고 승인된 주의·부적격 조건에 해당하지 않을 때만"
+  },
+  "eligible_when_no_flags": false
+}

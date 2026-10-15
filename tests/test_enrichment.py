@@ -101,7 +101,7 @@ def test_theme_overlap_union_and_unconfirmed_exclusion():
 def test_live_theme_selector_preserves_official_view():
     from pathlib import Path
     from streamlit.testing.v1 import AppTest
-    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=120).run()
+    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app_legacy.py'),default_timeout=120).run()
     assert not app.exception
     next(w for w in app.radio if w.label=='분류체계').set_value('투자 테마');app.run()
     assert not app.exception
@@ -191,7 +191,7 @@ def test_running_app_refreshes_an_old_imported_calculator(monkeypatch):
         raise AssertionError('previous deployment calculator was retained')
     monkeypatch.setattr(scoring,'evaluate',stale)
     monkeypatch.setattr(scoring,'_dashboard_loaded_version','old-deployment',raising=False)
-    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=90).run()
+    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app_legacy.py'),default_timeout=90).run()
     assert not app.exception
     assert any(m.value=='2,415종목' for m in app.metric)
 
@@ -199,7 +199,7 @@ def test_running_app_refreshes_an_old_imported_calculator(monkeypatch):
 def test_historical_date_does_not_backdate_theme_membership():
     from pathlib import Path
     from streamlit.testing.v1 import AppTest
-    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=90).run()
+    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app_legacy.py'),default_timeout=90).run()
     next(w for w in app.selectbox if w.label=='데이터 기준일').select('2026-10-13');app.run()
     next(w for w in app.radio if w.label=='분류체계').set_value('투자 테마');app.run()
     assert not app.exception

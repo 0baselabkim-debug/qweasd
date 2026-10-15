@@ -90,7 +90,7 @@ def test_percentile_ties_small_cohorts_and_config():
 
 def test_actual_dashboard_and_filters():
  from streamlit.testing.v1 import AppTest
- at=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=60).run()
+ at=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app_legacy.py'),default_timeout=60).run()
  assert not at.exception
  next(s for s in at.selectbox if s.label=='데이터 기준일').select('2026-10-14');at.run()
  assert any(m.value=='2,430종목' for m in at.metric)

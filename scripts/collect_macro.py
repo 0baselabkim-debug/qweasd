@@ -13,6 +13,8 @@ def fred(meta):
   args={'api_key':key,'series_id':meta['series'],'file_type':'json'}
   info=json.loads(get('https://api.stlouisfed.org/fred/series',args))['seriess'][0]
   if info['frequency_short']!='D':raise ValueError('Not a daily series')
+  unit=info['units']
+  if (meta['rate'] and unit!='Percent') or (meta['id']=='wti' and unit!='Dollars per Barrel') or (meta['unit']=='포인트' and not unit.startswith('Index')):raise ValueError('Unexpected FRED unit')
   data=json.loads(get('https://api.stlouisfed.org/fred/series/observations',args|{'sort_order':'desc','limit':30}))['observations']
   meta=meta|{'official_title':info['title'],'official_unit':info['units'],'source_url':'https://fred.stlouisfed.org/series/'+meta['series']}
  else:
@@ -27,9 +29,11 @@ def ecos(meta):
  key=os.getenv('ECOS_API_KEY')
  if not key:raise RuntimeError('MISSING_CREDENTIAL')
  today=dt.date.today();start=today-dt.timedelta(days=65)
- rows=json.loads(get(f'https://ecos.bok.or.kr/api/StatisticSearch/{key}/json/kr/1/100/817Y002/D/{start:%Y%m%d}/{today:%Y%m%d}/010200000/'))['StatisticSearch']['row']
- if any(r['ITEM_NAME1']!='국고채(3년)' or r['UNIT_NAME']!='연%' for r in rows):raise ValueError('Unexpected ECOS identity/unit')
- return record(meta|{'source_url':'https://ecos.bok.or.kr/','official_unit':'연%'},[{'date':dt.datetime.strptime(r['TIME'],'%Y%m%d').date().isoformat(),'value':r['DATA_VALUE']} for r in rows])
+ stat,item=meta['series'].split('/')
+ rows=json.loads(get(f'https://ecos.bok.or.kr/api/StatisticSearch/{key}/json/kr/1/100/{stat}/D/{start:%Y%m%d}/{today:%Y%m%d}/{item}/'))['StatisticSearch']['row']
+ name,unit=('국고채(3년)','연%') if meta['id']=='kr3y' else ('원/미국달러(매매기준율)','원')
+ if any(r['ITEM_NAME1']!=name or r['UNIT_NAME']!=unit for r in rows):raise ValueError('Unexpected ECOS identity/unit')
+ return record(meta|{'source_url':'https://ecos.bok.or.kr/','official_unit':unit,'daily_fixing':meta['id']=='usdkrw'},[{'date':dt.datetime.strptime(r['TIME'],'%Y%m%d').date().isoformat(),'value':r['DATA_VALUE']} for r in rows])
 def kis_collect(candidate):
  from scripts.kis_public_client import KIS
  client=KIS();end=cutoff('Asia/Seoul').replace('-','');start=(dt.date.fromisoformat(cutoff('Asia/Seoul'))-dt.timedelta(days=40)).strftime('%Y%m%d')
@@ -45,8 +49,8 @@ def kis_collect(candidate):
   try:
    d=client.request('/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market',{'FID_COND_MRKT_DIV_CODE':'U','FID_INPUT_ISCD':code,'FID_INPUT_DATE_1':end,'FID_INPUT_ISCD_1':board,'FID_INPUT_DATE_2':end,'FID_INPUT_ISCD_2':code},'FHPTJ04040000')
    # Raw market statistics are retained as evidence, not treated as verified won amounts until official unit/scope evidence is available.
-   candidate.setdefault('investor_probe',{})[market]={'output':d.get('output',[]),'endpoint':'inquire-investor-daily-by-market','requested_day':end,'status':'unit_scope_pending'}
-   candidate['attempts']['investor_'+market]={'status':'unit_scope_pending'}
+   candidate.setdefault('investor_probe',{})[market]={'output':d.get('output',[])[:3],'endpoint':'inquire-investor-daily-by-market','requested_day':end,'status':'unit_scope_pending'}
+   candidate['attempts']['investor_'+market]={'status':'unit_scope_pending','data_date':max((r['stck_bsop_date'] for r in d.get('output',[]) if r.get('stck_bsop_date','')<=end),default=None)}
   except Exception as e:candidate['attempts']['investor_'+market]={'status':'failed','error_type':type(e).__name__}
  candidate['kis_metrics']=client.metrics
 

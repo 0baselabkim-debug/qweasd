@@ -33,7 +33,7 @@ def status_panel():
 def company_panel(symbol,asof,cap,classification_asof=None):
  s=state(version());records=[r for (code,scope),r in corporate.latest_financials(s,asof).items() if code==symbol]
  with st.expander('최신 공시 재무 · 사업 테마 검토'):
-  st.caption('기존 2025년 연간 평가 점수는 유지합니다. 최신 분기·반기는 별도 조회하며, 검증된 TTM이 없으면 PER·ROE는 보류합니다. 성장률은 동일 기간의 전년 비교값이 있을 때만 계산합니다.')
+  st.caption('최신 분기·반기는 연간 재무와 구분해 조회하며, 검증된 TTM이 없으면 PER·ROE는 보류합니다. 성장률은 동일 기간의 전년 비교값이 있을 때만 계산합니다.')
   if not records:st.info('이 기준일에 공개된 추가 공시 재무가 없습니다.')
   for r in records:
    st.markdown(f'**{r["period_end"]} · {dict(annual='연간',half='반기',quarter='분기')[r["form"]]} · {r["scope"]} · {'누적 실적' if r['basis']=='YTD' else '연간 실적'}**')

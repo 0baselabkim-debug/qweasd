@@ -50,7 +50,7 @@ def test_clean_checkout_uses_bundled_data_without_credentials():
 
 def test_sector_sort_and_details_are_interactive():
     from streamlit.testing.v1 import AppTest
-    app = AppTest.from_file(str(ROOT / 'app.py'), default_timeout=90).run()
+    app = AppTest.from_file(str(ROOT / 'app_legacy.py'), default_timeout=90).run()
     assert not app.exception
     next(w for w in app.selectbox if w.label == '데이터 기준일').select('2026-10-14');app.run()
     next(w for w in app.selectbox if w.label == '섹터 선택').select('KOSPI · IT 서비스')
@@ -68,7 +68,7 @@ def test_sector_sort_and_details_are_interactive():
 
 def test_formal_sector_sort_does_not_invent_a_total_score():
     from streamlit.testing.v1 import AppTest
-    app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=90).run()
+    app=AppTest.from_file(str(ROOT/'app_legacy.py'),default_timeout=90).run()
     next(w for w in app.selectbox if w.label=='데이터 기준일').select('2026-10-14');app.run()
     next(w for w in app.selectbox if w.label=='섹터 수급 정렬').select('종합 강세 점수');app.run()
     assert not app.exception
