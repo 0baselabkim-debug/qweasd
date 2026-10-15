@@ -1,0 +1,172 @@
+name: Recover validated daily snapshot 20261015
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/recover-daily-20261015.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+# This replay makes no KIS calls and uses no API secrets. Preserve the shared auth queue.
+concurrency:
+  group: daily-artifact-recovery-20261015
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt pytest==9.1.1
+      - name: Record actual runner start
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          started=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs" --jq '.jobs[] | select(.name == "refresh") | .started_at' | head -1)
+          echo "JOB_STARTED_AT=$started" >> "$GITHUB_ENV"
+      - name: Select preserved trading date
+        id: target
+        run: |
+          python - <<'PYCODE'
+          import json,os
+          from pathlib import Path
+          ledger=json.loads(Path('snapshot/publication-ledger.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('day=20261015\n')
+              f.write('already_published='+str('2026-10-15' in ledger).lower()+'\n')
+          PYCODE
+      - name: Restore original artifact using the official action
+        if: steps.target.outputs.already_published != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '11980463950'
+          run-id: '38731200188'
+          github-token: ${{ github.token }}
+          path: /tmp/daily-restored
+          merge-multiple: true
+      - name: Verify original bytes and complete same-day observations
+        if: steps.target.outputs.already_published != 'true'
+        run: |
+          python - <<'PYCODE'
+          import gzip,hashlib,json
+          from pathlib import Path
+          from screener.daily import validate_bundle
+          files=list(Path('/tmp/daily-restored').rglob('bundle.json.gz'))
+          assert len(files)==1,'Expected one original bundle'
+          raw=files[0].read_bytes()
+          digest=hashlib.sha256(raw).hexdigest()
+          assert digest=='2dbcad39cf6245e018c3fee229bdcd923f8c98c0a860739fb14e09a8567f940a','Original bundle SHA-256 mismatch'
+          b=json.loads(gzip.decompress(raw))
+          assert b['trade_date']=='20261015' and str(b['source_run'])=='38731200188'
+          assert b['status']=='complete' and len(b['records'])==2430 and len(b['excluded'])==115 and not b['failures']
+          validate_bundle(b)
+          Path('daily-results').mkdir(exist_ok=True)
+          Path('daily-results/bundle.json.gz').write_bytes(raw)
+          Path('daily-results/recovery.json').write_text(json.dumps({'artifact_id':11980463950,'source_run':'38731200188','bundle_sha256':digest,'recollected_symbols':0},indent=2)+'\n')
+          print('Verified original bundle: 2430 records, 115 exclusions, zero failures; no API collection')
+          PYCODE
+      - name: Preserve resume ledger independently of publication
+        if: success() && steps.target.outputs.already_published != 'true'
+        env:
+          DAY: ${{ steps.target.outputs.day }}
+        run: |
+          if [ ! -f daily-results/bundle.json.gz ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          cp daily-results/bundle.json.gz /tmp/daily-bundle.gz
+          head=$(git rev-parse HEAD)
+          if git ls-remote --exit-code --heads origin "data/daily-$DAY" >/dev/null 2>&1; then
+            git fetch origin "data/daily-$DAY"
+            git switch -C "data/daily-$DAY" FETCH_HEAD
+          else
+            git switch --orphan "data/daily-$DAY"
+          fi
+          mkdir -p daily-results
+          cp /tmp/daily-bundle.gz daily-results/bundle.json.gz
+          git add -f daily-results/bundle.json.gz
+          git diff --cached --quiet || git commit -m "Preserve KRX collection checkpoint $DAY"
+          git push origin "HEAD:data/daily-$DAY"
+          git switch --detach "$head"
+          mkdir -p daily-results
+          cp /tmp/daily-bundle.gz daily-results/bundle.json.gz
+      - name: Build from latest main and validate without touching published files
+        if: steps.target.outputs.already_published != 'true'
+        run: |
+          git fetch origin main
+          git merge --ff-only origin/main
+          python scripts/prepare_daily_publish.py --bundle daily-results/bundle.json.gz
+          python -m pytest -q tests/test_dashboard.py tests/test_enrichment.py tests/test_daily.py
+      - name: Publish validated snapshot in one Git commit
+        if: steps.target.outputs.already_published != 'true'
+        env:
+          DAY: ${{ steps.target.outputs.day }}
+          MODE: collect
+        run: |
+          if [ ! -f daily-candidate/manifest.json ]; then exit 0; fi
+          python - <<'PY'
+          import datetime as dt,json,os,shutil
+          from pathlib import Path
+          new=json.loads(Path('daily-candidate/manifest.json').read_text());old=json.loads(Path('snapshot/manifest.json').read_text())
+          if new['asof']<old['asof']:raise SystemExit('Refuse date rollback')
+          # Once a date has a validated publication, later schedules retain it without a second completion.
+          ledger=Path('snapshot/publication-ledger.json')
+          entries=json.loads(ledger.read_text()) if ledger.exists() else {}
+          day=new['asof']
+          if day in entries:
+              print('Trading date already published; existing snapshot retained')
+              raise SystemExit(0)
+          for name in ['dashboard.duckdb','manifest.json']:shutil.copy2(Path('daily-candidate')/name,Path('snapshot')/name)
+          shutil.copy2('daily-candidate/validation.json','snapshot/daily-validation.json')
+          if Path('daily-results/calendar-check.json').exists():shutil.copy2('daily-results/calendar-check.json','snapshot/calendar-check.json')
+          entries[day]={'run_id':os.environ['GITHUB_RUN_ID'],'mode':os.environ['MODE'],'published_at_utc':dt.datetime.now(dt.timezone.utc).isoformat(),'sha256':new['sha256'],'validation':new['daily_validation']}
+          ledger.write_text(json.dumps(entries,ensure_ascii=False,indent=2)+'\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add snapshot/dashboard.duckdb snapshot/manifest.json snapshot/daily-validation.json snapshot/publication-ledger.json
+          if [ -f snapshot/calendar-check.json ]; then git add snapshot/calendar-check.json; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Publish validated KRX snapshot $DAY"
+          # A concurrent main change causes a safe push rejection; the previous snapshot remains published.
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daily-validation-${{ steps.target.outputs.day }}
+          path: |
+            daily-candidate/validation.json
+            daily-results/bundle.json.gz
+            daily-results/calendar-check.json
+            daily-results/recovery.json
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Record this attempt without changing market data
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DAY: ${{ steps.target.outputs.day }}
+          MODE: collect
+          EVENT: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python scripts/record_market_run.py
+          python - <<'PY'
+          import base64,json,os
+          from pathlib import Path
+          name=os.environ['GITHUB_RUN_ID']+'-'+os.environ['GITHUB_RUN_ATTEMPT']+'.json'
+          payload={'message':'Record market collection attempt '+name,'content':base64.b64encode((Path('operations/market-runs')/name).read_bytes()).decode()}
+          Path('/tmp/market-operation-payload.json').write_text(json.dumps(payload))
+          PY
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/operations/market-runs/$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.json" --input /tmp/market-operation-payload.json --jq '.commit.sha'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: market-attempt-${{ github.run_id }}-${{ github.run_attempt }}
+          path: operations/market-runs
+          if-no-files-found: ignore
