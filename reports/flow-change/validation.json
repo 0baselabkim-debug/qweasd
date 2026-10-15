@@ -1,0 +1,166 @@
+{
+  "asof": "2026-10-14",
+  "baseline_commit": "8e76290",
+  "provider_calls": 0,
+  "rows_preserved": 48567,
+  "database_sha256": "58f7f23797ada71e80a067ecd8c410a66125b72a163d17751f8cb0ee65054bf8",
+  "stock_score_sha256": "a12db424d68e623c2d071c76d5d71861ed26de99c5ac94255728487ee8582d6e",
+  "complete_stock_scores": 1161,
+  "existing_flow_metrics_unchanged": true,
+  "raw_window_checks": 2480,
+  "recent_window": [
+    "2026-10-07",
+    "2026-10-08",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14"
+  ],
+  "previous_window": [
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-06"
+  ],
+  "sector_top5_improvement": [
+    {
+      "market": "KOSPI",
+      "sector": "운송장비·부품",
+      "net_5d": -132321000000.0,
+      "previous_5d": -350140000000.0,
+      "change_5d": 217819000000.0,
+      "change_direction": "강화",
+      "change_state": "순매도 축소",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 7.0
+    },
+    {
+      "market": "KOSPI",
+      "sector": "건설",
+      "net_5d": 61756000000.0,
+      "previous_5d": -39756000000.0,
+      "change_5d": 101512000000.0,
+      "change_direction": "강화",
+      "change_state": "순매수 전환",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 11.0
+    },
+    {
+      "market": "KOSPI",
+      "sector": "음식료·담배",
+      "net_5d": 31274000000.0,
+      "previous_5d": -47340000000.0,
+      "change_5d": 78614000000.0,
+      "change_direction": "강화",
+      "change_state": "순매수 전환",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 11.0
+    },
+    {
+      "market": "KOSPI",
+      "sector": "운송·창고",
+      "net_5d": 87572000000.0,
+      "previous_5d": 20149000000.0,
+      "change_5d": 67423000000.0,
+      "change_direction": "강화",
+      "change_state": "순매수 증가",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 12.0
+    },
+    {
+      "market": "KOSPI",
+      "sector": "유통",
+      "net_5d": 55200000000.0,
+      "previous_5d": -6065000000.0,
+      "change_5d": 61265000000.0,
+      "change_direction": "강화",
+      "change_state": "순매수 전환",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 6.0
+    }
+  ],
+  "stock_top5_improvement": [
+    {
+      "symbol": "240810",
+      "name": "원익IPS",
+      "net_5d": 68444000000.0,
+      "previous_5d": -53046000000.0,
+      "change_5d": 121490000000.0,
+      "change_direction": "강화",
+      "change_state": "순매수 전환",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 10.0
+    },
+    {
+      "symbol": "000990",
+      "name": "DB하이텍",
+      "net_5d": 89229000000.0,
+      "previous_5d": -22380000000.0,
+      "change_5d": 111609000000.0,
+      "change_direction": "강화",
+      "change_state": "순매수 전환",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 9.0
+    },
+    {
+      "symbol": "058470",
+      "name": "리노공업",
+      "net_5d": -51202000000.0,
+      "previous_5d": -158150000000.0,
+      "change_5d": 106948000000.0,
+      "change_direction": "강화",
+      "change_state": "순매도 축소",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 2.0
+    },
+    {
+      "symbol": "039030",
+      "name": "이오테크닉스",
+      "net_5d": 66782000000.0,
+      "previous_5d": -33220000000.0,
+      "change_5d": 100002000000.0,
+      "change_direction": "강화",
+      "change_state": "순매수 전환",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 9.0
+    },
+    {
+      "symbol": "353200",
+      "name": "대덕전자",
+      "net_5d": 12547000000.0,
+      "previous_5d": -85181000000.0,
+      "change_5d": 97728000000.0,
+      "change_direction": "강화",
+      "change_state": "순매수 전환",
+      "buying_pattern": "기준 미충족",
+      "positive_days_20d": 8.0
+    }
+  ],
+  "sector_states": {
+    "순매수 전환": 15,
+    "순매도 축소": 10,
+    "순매도 확대": 9,
+    "순매도 전환": 8,
+    "순매수 증가": 5,
+    "판정 보류": 2,
+    "순매수 감소": 1
+  },
+  "stock_states": {
+    "순매수 전환": 580,
+    "순매도 전환": 511,
+    "순매도 축소": 408,
+    "순매도 확대": 333,
+    "순매수 증가": 280,
+    "순매수 감소": 219,
+    "중립 유지": 27,
+    "순매도 시작": 20,
+    "순매도 해소": 16,
+    "순매수 시작": 15,
+    "순매도 유지": 13,
+    "순매수 종료": 4,
+    "순매수 유지": 2,
+    "판정 보류": 2
+  },
+  "steady_stocks": 61,
+  "full_sector_scores": 0
+}

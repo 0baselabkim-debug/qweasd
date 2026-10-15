@@ -98,6 +98,7 @@ with sync_playwright() as p:
    assert ui.get_by_role('combobox',name='섹터 수급 정렬',exact=True).input_value()=='누적 순매수 금액', 'sector_sort_reset_missing'
    for button,name,original,keys in [('섹터 현황 CSV','sectors',expected_sectors,['market','sector']),('선택 종목 CSV','stocks',expected_stocks,['symbol'])]:
     rows=download_csv(button,f'flow-{name}-{days}d.csv')
+    if name=='sectors':original=[r for r in original if r[f'net_{days}d'] and float(r[f'net_{days}d'])>0]
     assert len(rows)==len(original)
     actual_keys=['시장','섹터'] if name=='sectors' else ['코드']
     lookup={tuple(r[k] for k in keys):r[f'net_{days}d'] for r in original}
@@ -114,6 +115,43 @@ with sync_playwright() as p:
    if days<20:
     choose('섹터 수급 정렬','시가총액 대비 순매수 강도');choose('종목 정렬','종합 점수')
   report['checks'].append('Period tabs independently switch and reset custom sorting to selected-period flow amount')
+  # Verify new descriptive views against independently reconciled stored data.
+  changed_sectors=list(csv_module.DictReader((root/'reports/flow-change/sectors.csv').read_text().splitlines()))
+  changed_stocks=list(csv_module.DictReader((root/'reports/flow-change/stocks.csv').read_text().splitlines()))
+  def mode(section,value):
+   ui.locator('.st-key-'+section+'_view').get_by_role('radio',name=value,exact=True).check(force=True)
+   page.wait_for_timeout(2500)
+  def verify_view(section,value):
+   mode(section,value)
+   original=changed_sectors if section=='sector' else changed_stocks
+   button='섹터 현황 CSV' if section=='sector' else '선택 종목 CSV'
+   rows=download_csv(button,f'{section}-{value}.csv')
+   if value=='매수세 강화':expected=[r for r in original if r['change_5d'] and float(r['change_5d'])>0]
+   elif value=='자금 이탈':expected=[r for r in original if r['net_20d'] and float(r['net_20d'])<0]
+   else:expected=[r for r in original if r['buying_pattern']=='꾸준한 순매수']
+   keys=['market','sector'] if section=='sector' else ['symbol']
+   actual_keys=['시장','섹터'] if section=='sector' else ['코드']
+   lookup={tuple(r[k] for k in keys):r for r in expected}
+   assert len(rows)==len(expected)
+   for row in rows:
+    e=lookup[tuple(row[k] for k in actual_keys)]
+    assert row['수급 변화']==e['change_direction']+' · '+e['change_state']
+    assert row['매수 지속']==e['buying_pattern']
+    if e['change_5d']:assert abs(float(row['5일 증감(억원)'])*1e8-float(e['change_5d']))<1
+   field='5일 증감(억원)' if value=='매수세 강화' else '선택 기간 순매수(억원)'
+   amounts=[float(r[field]) for r in rows]
+   assert amounts==sorted(amounts,reverse=value!='자금 이탈')
+   report['checks'].append(f'{section} {value}: {len(rows)} real rows, state/amount/filter/order match')
+  for value in ['매수세 강화','자금 이탈']:verify_view('sector',value)
+  for value in ['매수세 강화','꾸준한 순매수','자금 이탈']:verify_view('stock',value)
+  choose('섹터 선택','KOSPI · 건설')
+  assert ui.get_by_role('combobox',name='종목 범위',exact=True).input_value()=='선택 섹터'
+  rows=download_csv('선택 종목 CSV','selected-sector-after-change.csv')
+  expected_codes={r['symbol'] for r in changed_stocks if r['market']=='KOSPI' and r['sector']=='건설'}
+  assert {r['코드'] for r in rows}==expected_codes
+  report['checks'].append('Sector change automatically resets stock scope and shows that sector’s stocks')
+  mode('sector','자금 유입 상위');mode('stock','전체 종목')
+  choose('섹터 선택','KOSPI · IT 서비스');choose('종목 범위','전체 시장')
   choose('종목 상세정보','삼성전자 · 005930')
   assert '선택 종목 20거래일 일별·누적 순매수' in ui.locator('body').inner_text()
   charts=ui.locator('[data-testid="stVegaLiteChart"]')

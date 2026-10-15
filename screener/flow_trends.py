@@ -9,6 +9,30 @@ def calendar_days(data,asof,markets):
     return pd.DatetimeIndex(sorted(c.loc[(c.trade_date<=end)&c.market.isin(markets),'trade_date'].unique()))[-20:]
 
 
+def change_state(recent,previous):
+    """Signed, non-overlapping five-day sums; zero is observed neutral, not missing."""
+    if pd.isna(recent) or pd.isna(previous):return '자료 부족','판정 보류'
+    direction='강화' if recent>previous else '약화' if recent<previous else '유지'
+    if recent>0:
+        state=('순매수 전환' if previous<0 else '순매수 시작' if previous==0 else
+               '순매수 증가' if recent>previous else '순매수 감소' if recent<previous else '순매수 유지')
+    elif recent<0:
+        state=('순매도 전환' if previous>0 else '순매도 시작' if previous==0 else
+               '순매도 축소' if recent>previous else '순매도 확대' if recent<previous else '순매도 유지')
+    else:state='순매수 종료' if previous>0 else '순매도 해소' if previous<0 else '중립 유지'
+    return direction,state
+
+
+def screen_flows(frame,mode,days):
+    """Views are descriptive filters; they never modify composite scores."""
+    if mode=='자금 유입 상위':mask=frame[f'net_{days}d']>0
+    elif mode=='매수세 강화':mask=frame.change_5d>0
+    elif mode=='자금 이탈':mask=frame[f'net_{days}d']<0
+    elif mode=='꾸준한 순매수':mask=frame.buying_pattern=='꾸준한 순매수'
+    else:return frame.copy()
+    return frame.loc[mask].copy()
+
+
 def summarize(values,cap=np.nan):
     """A missing observation invalidates its window; real zero remains a valid observation."""
     def total(n,offset=0):
@@ -17,7 +41,9 @@ def summarize(values,cap=np.nan):
     a,b,c=total(5),total(5,5),total(20)
     valid_cap=pd.notna(cap) and np.isfinite(cap) and cap>0
     full=len(values)==20 and values.notna().all()
-    return {'net_1d':total(1),'intensity_1d':total(1)/cap if valid_cap else np.nan,'net_5d':a,'previous_5d':b,'change_5d':a-b,'net_20d':c,
+    direction,state=change_state(a,b)
+    pattern=('꾸준한 순매수' if (values>0).sum()>=15 and a>0 and b>0 else '기준 미충족') if full else '자료 부족'
+    return {'change_direction':direction,'change_state':state,'buying_pattern':pattern,'change_intensity_5d':(a-b)/cap if valid_cap else np.nan,'net_1d':total(1),'intensity_1d':total(1)/cap if valid_cap else np.nan,'net_5d':a,'previous_5d':b,'change_5d':a-b,'net_20d':c,
             'positive_days_20d':int((values>0).sum()) if full else np.nan,
             'observed_days_20d':int(values.notna().sum()),
             'intensity_5d':a/cap if valid_cap else np.nan,'intensity_20d':c/cap if valid_cap else np.nan,
