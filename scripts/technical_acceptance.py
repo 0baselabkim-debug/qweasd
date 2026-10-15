@@ -109,14 +109,18 @@ def review_pending(api,references,asof,limit=100,budget=150):
         except Exception as e:b['acceptance_error']=type(e).__name__
         b['acceptance_attempted_at']=dt.datetime.now(dt.timezone.utc).isoformat();write(path,b)
 
-def run(api,data,limit=600,budget=1500):
+def run(api,data,limit=600,budget=1500,probe=False):
     from scripts.technical_batch import CACHE,ROOT,PRIORITY,read,write,krx_reference,refresh_summary
-    start=time.monotonic();day=str(data['flows'].trade_date.max().date());refs,status=krx_reference(day)
+    start=time.monotonic();day=str(data['flows'].trade_date.max().date())
+    if probe:
+        cached_dates=[b['asof'] for p in CACHE.glob('*.json.gz') if (b:=read(p)) and b['asof']<=day]
+        if cached_dates:day=max(cached_dates)
+    refs,status=krx_reference(day)
     report=read(ROOT/'acceptance-audit.json',{'symbols':{},'incremental':{},'scope':{}})
     tasks=[]
     for path in sorted(CACHE.glob('*.json.gz')):
         b=read(path)
-        if b and b['asof']==day and not daily_accepted(b):tasks.append((path,b))
+        if b and b['asof']==day and (probe or not daily_accepted(b)):tasks.append((path,b))
     tasks.sort(key=lambda pair:(pair[1]['symbol'] not in PRIORITY,pair[1]['symbol']))
     for path,b in tasks[:limit]:
         if time.monotonic()-start>budget:break

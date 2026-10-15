@@ -57,7 +57,7 @@ def main():
     started=time.monotonic();data=load();asof=str(data['flows'].trade_date.max().date())
     if args.mode=='verify':
         from scripts.technical_acceptance import run
-        run(KIS(),data,max(1,min(600,args.limit)),max(60,min(1500,args.budget)));return
+        run(KIS(),data,max(1,min(600,args.limit)),max(60,min(1500,args.budget)),probe=args.probe);return
     if args.mode=='evidence':
         from scripts.technical_evidence import run as probe
         probe(KIS(),data);return
