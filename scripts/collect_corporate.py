@@ -111,13 +111,13 @@ def process(api,state,f,cache):
    job['financial_status']='success';job.pop('financial_error',None);return
   except BudgetExceeded:raise
   except Exception as e:job['financial_status']='failed';job['financial_error']=str(e)[:100] if isinstance(e,ValueError) else type(e).__name__;return
- job['financial_status']='unavailable';job['retry_after']=str(dt.date.today()+dt.timedelta(days=1))
+ job['financial_status']='unavailable';job['retry_after']=str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date()+dt.timedelta(days=1))
 
 def main():
  p=argparse.ArgumentParser();p.add_argument('--symbols',default='');p.add_argument('--limit',type=int,default=120);p.add_argument('--max-calls',type=int,default=600);p.add_argument('--max-seconds',type=int,default=2100);p.add_argument('--state',default='snapshot/corporate-state.json.gz');p.add_argument('--db',default='snapshot/corporate.duckdb');p.add_argument('--cache',type=Path);p.add_argument('--skip-discovery',action='store_true');a=p.parse_args()
  state=load_state(a.state);universe=json.loads(Path('corporate/universe.json').read_text());seed(state,universe)
  symbols=set(a.symbols.split(',')) if a.symbols else None
- api=Dart(a.max_calls,a.max_seconds);started=dt.datetime.now(dt.timezone.utc).isoformat();budget=False;processed=[]
+ api=Dart(a.max_calls,a.max_seconds);started=dt.datetime.now(dt.timezone.utc).isoformat();budget=False;processed=[];pending=[]
  try:
   if not a.skip_discovery:
    discover(api,state,universe,str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date()),symbols);state.pop('last_discovery_error',None)
@@ -134,7 +134,7 @@ def main():
     if candidates:chosen.append(max(candidates,key=lambda f:(f['period_end'],f['disclosed_on'],f['receipt'])))
    for f in chosen:
     j=state['jobs'].get(f['receipt'],{})
-    if j.get('business_status')!='success' or (j.get('financial_status') not in ['success','held_nondec_fiscal_period'] and j.get('retry_after','')<=str(dt.date.today())):pending.append(f)
+    if j.get('business_status')!='success' or (j.get('financial_status') not in ['success','held_nondec_fiscal_period'] and j.get('retry_after','')<=str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date())):pending.append(f)
   codes=list(dict.fromkeys(f['symbol'] for f in pending))[:a.limit]
   fiscal_month={r['symbol']:r.get('fiscal_month') for r in universe}
   for f in pending:
@@ -145,6 +145,10 @@ def main():
  except Exception as e:state['last_discovery_error']=str(e)[:100] if isinstance(e,ValueError) else type(e).__name__
  run={'id':os.environ.get('GITHUB_RUN_ID','local')+'-'+str(time.time_ns()),'started_at':started,'completed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'calls':api.calls,'seconds':round(time.monotonic()-api.started,2),'processed_filings':len(processed),'budget_exhausted':budget,'discovery_through':state.get('discovery_through'),'discovery_error':state.get('last_discovery_error'),
       'failed_jobs':{r:{k:v for k,v in j.items() if k.endswith('error')} for r,j in state['jobs'].items() if j.get('business_status')=='failed' or j.get('financial_status')=='failed'}}
+ run['scope']=sorted(symbols) if symbols else 'entire_universe'
+ run['pending_filings']=sum(state['jobs'].get(f['receipt'],{}).get('business_status')!='success' or state['jobs'].get(f['receipt'],{}).get('financial_status') not in ['success','held_nondec_fiscal_period'] for f in pending)
+ run['unavailable_financials']=[k for k,j in state['jobs'].items() if j.get('financial_status')=='unavailable']
+ run['held_financials']=[k for k,j in state['jobs'].items() if j.get('financial_status')=='held_nondec_fiscal_period']
  state['runs'].append(run);save_state(state,a.state);build_database(state,a.db)
  Path('corporate-run.json').write_text(json.dumps(run,ensure_ascii=False,indent=2)+'\n');print(json.dumps(run,ensure_ascii=False))
 if __name__=='__main__':main()
