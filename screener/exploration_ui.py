@@ -75,11 +75,12 @@ def install():st.markdown(CSS,unsafe_allow_html=True)
 
 READABILITY_CSS='''
 [data-testid="stMain"] .block-container{width:100%!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important}
-.macro-card{padding:14px;margin:0!important}.macro-card-head{margin-bottom:12px}.macro-card h3{font-size:16px!important}.macro-card-head span{font-size:11px}
+.macro-card{padding:14px;margin:0!important}.macro-card-head{margin-bottom:12px}.st-key-macro_cards .macro-card .macro-card-head h3{font-size:20px!important;font-weight:700!important;line-height:1.4!important;color:#edf3ff!important}.macro-card-head span{font-size:11px}
 .st-key-macro_cards div:has(>.macro-card){margin-bottom:0!important}
 .st-key-macro_cards,.st-key-macro_cards [data-testid="stHorizontalBlock"]{gap:22px!important}
 .macro-card .mini-scroll,.investor-table{width:fit-content;max-width:100%;margin-left:auto;margin-right:auto}
 .macro-table,.investor-table .mini-table{width:max-content;min-width:0;table-layout:auto}
+.macro-card .investor-table{width:360px;max-width:100%}.investor-table .mini-table{width:100%;min-width:300px}
 .macro-table th,.investor-table th{height:44px;padding:10px;font-size:14px;line-height:22px}
 .macro-table td,.investor-table td{height:46px;padding:11px 10px!important;font-size:14px!important;line-height:23px;vertical-align:middle}
 .macro-table td:first-child{min-width:0;white-space:nowrap}

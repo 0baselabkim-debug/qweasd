@@ -85,7 +85,6 @@ if ss.stage!='macro':
 
 if ss.stage=='macro':
  explorer.reading_layout('macro')
- st.subheader('매크로 지표')
  state=macro.read();macro_frames=[]
  with st.container(key='macro_cards'):
   cols=st.columns(2)
@@ -101,7 +100,7 @@ if ss.stage=='macro':
     for investor in ['개인','외국인','기관']:
      value=r.get('amounts',{}).get(investor)
      rows.append('<tr><td>'+market_name+'</td><td>'+investor+'</td><td class="num">'+('미확보' if value is None else f'{value:+,.2f}')+'</td></tr>')
-   st.markdown('<section class="macro-card"><div class="macro-card-head"><h3>투자자별 당일 순매수</h3></div><div class="mini-scroll investor-table"><table class="mini-table"><thead><tr><th>시장</th><th>투자자</th><th class="num">당일 순매수(억원)</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div></section>',unsafe_allow_html=True)
+   st.markdown('<section class="macro-card"><div class="macro-card-head"><h3>투자자별 거래 동향</h3></div><div class="mini-scroll investor-table"><table class="mini-table"><thead><tr><th>시장</th><th>투자자</th><th class="num">당일 순매수(억원)</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></div></section>',unsafe_allow_html=True)
   for key,meta in macro.catalog().items():
    r=state.get('indicators',{}).get(key,{})
    macro_frames.append({'지표':meta['name'],'최신 공표값':r.get('value'),'단위':meta['unit'],'직전 공표값':r.get('previous_value'),'전일 대비':r.get('change'),'변화 단위':r.get('change_unit'),'등락률(%)':r.get('change_percent'),'기준일':r.get('date'),'직전 기준일':r.get('previous_date'),'공급원':r.get('provider',meta['provider']),'갱신 상태':('공표값 확보' if state.get('attempts',{}).get(key,{}).get('status')=='success' else '이전 정상 자료 유지') if r else '미확보'})

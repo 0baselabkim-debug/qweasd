@@ -99,7 +99,10 @@ with sync_playwright() as p:
   for card in cards.filter(has=ui.locator('.macro-table')).all():assert card.locator('th').all_text_contents()==['항목명','최신 데이터 값','전일 대비']
   main=ui.locator('[data-testid="stMain"]')
   assert '공표 기준' not in main.inner_text() and '수급 기준일' not in main.inner_text() and '업데이트 상태' not in main.inner_text()
-  assert cards.locator('h3').all_text_contents()==['금리','환율·원자재','증시 지수','투자자별 당일 순매수']
+  assert cards.locator('h3').all_text_contents()==['금리','환율·원자재','증시 지수','투자자별 거래 동향']
+  assert not main.get_by_role('heading',name='매크로 지표',exact=True).count()
+  assert cards.locator('h3').evaluate_all('es=>es.every(e=>parseFloat(getComputedStyle(e).fontSize)>=20)')
+  assert abs(cards.nth(2).locator('table').bounding_box()['width']-cards.nth(3).locator('table').bounding_box()['width'])<20
   assert cards.nth(2).locator('tbody tr').count()==6
   boxes=[c.bounding_box() for c in cards.all()]
   assert abs((boxes[1]['x']-boxes[0]['x']-boxes[0]['width'])-(boxes[2]['y']-boxes[0]['y']-boxes[0]['height']))<3
