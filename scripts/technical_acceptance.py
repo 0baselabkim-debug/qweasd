@@ -53,6 +53,22 @@ def incremental_probe(api,bundle):
                 'source_preserved':digest(bundle)==before,'replay_not_live_new_trading_day':True}
     except Exception as e:return {'symbol':bundle['symbol'],'status':'review_required','error_type':type(e).__name__,'requests':len(api.metrics)-start}
 
+def live_incremental_probe(api,bundle):
+    """Receive a possible new day, but keep this preview outside published bundles."""
+    from zoneinfo import ZoneInfo
+    from scripts.technical_batch import price_rows
+    end=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat()
+    if end<=bundle['asof']:return {'status':'no_later_calendar_date'}
+    start=len(api.metrics);before=digest(bundle)
+    def forbidden(*args,**kwargs):raise ValueError('Revision or adjustment requires full rebuild; preview leaves source unchanged')
+    try:
+        bars,events,mode=price_rows(api,bundle['symbol'],end,bundle,forbidden)
+        return {'symbol':bundle['symbol'],'from':bundle['asof'],'requested_through':end,'mode':mode,
+            'requests':len(api.metrics)-start,'new_bars':[r for r in bars if r['trade_date']>bundle['asof']],
+            'source_preserved':digest(bundle)==before,'published':False,
+            'limit':'Collection-only preview. Not joined to old flows or used for signals.'}
+    except Exception as e:return {'symbol':bundle['symbol'],'status':'review_required','error_type':type(e).__name__,'requests':len(api.metrics)-start,'published':False}
+
 def scope_probe(api,bundle):
     from scripts.technical_batch import chart
     old=bundle['price_comparison'].get('preserved_unadjusted');official=bundle.get('price_crosscheck',{}).get('raw_close_match')
@@ -100,6 +116,7 @@ def run(api,data,limit=600,budget=1500):
                 report['scope'][b['symbol']]=scope_probe(api,checked)
             if b['symbol'] in ['005930','000660','035420']:
                 report['incremental'][b['symbol']]=incremental_probe(api,b)
+                report.setdefault('live_incremental',{})[b['symbol']]=live_incremental_probe(api,b)
         except Exception as e:report['symbols'][b['symbol']]={'asof':day,'accepted':False,'error_type':type(e).__name__}
         write(ROOT/'acceptance-audit.json',report)
     report.update(asof=day,run_id=os.getenv('GITHUB_RUN_ID'),finished_at=dt.datetime.now(dt.timezone.utc).isoformat(),requests=len(api.metrics),
