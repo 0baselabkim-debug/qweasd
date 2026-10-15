@@ -1,0 +1,44 @@
+{
+  "id": "38688068774-1792043534673247189",
+  "started_at": "2026-10-15T05:41:08.154309+00:00",
+  "completed_at": "2026-10-15T05:52:14.673257+00:00",
+  "calls": 379,
+  "seconds": 666.52,
+  "processed_filings": 238,
+  "budget_exhausted": false,
+  "discovery_through": "2026-10-15",
+  "discovery_error": null,
+  "failed_jobs": {
+    "20260325000430": {
+      "business_error": "business_section_not_unique",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    "20260330001721": {
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    "20260320000348": {
+      "business_error": "business_section_not_unique",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    "20260806000296": {
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    "20260430000135": {
+      "business_error": "business_section_not_unique",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    "20260319000150": {
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    "20260605000456": {
+      "financial_error": "receipt_or_period_mismatch"
+    }
+  },
+  "scope": "entire_universe",
+  "pending_filings": 4499,
+  "unavailable_financials": [],
+  "held_financials": []
+}
