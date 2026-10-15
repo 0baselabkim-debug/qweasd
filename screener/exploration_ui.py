@@ -75,3 +75,23 @@ CSS='''<style>
 @media(pointer:coarse){.st-key-close_sector,.st-key-close_stock{opacity:1}}
 </style>'''
 def install():st.markdown(CSS,unsafe_allow_html=True)
+
+READABILITY_CSS='''
+[data-testid="stMain"] .block-container{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:auto!important}
+.macro-card{padding:14px;margin-bottom:12px}.macro-card-head{margin-bottom:12px}.macro-card h3{font-size:16px!important}.macro-card-head span{font-size:11px}
+.st-key-macro_cards>[data-testid="stHorizontalBlock"]{gap:22px!important}
+.macro-card .mini-scroll,.investor-table{width:fit-content;max-width:100%}
+.macro-table,.investor-table .mini-table{width:max-content;min-width:0;table-layout:auto}
+.macro-table th,.investor-table th{height:44px;padding:10px;font-size:14px;line-height:22px}
+.macro-table td,.investor-table td{height:46px;padding:11px 10px!important;font-size:14px!important;line-height:23px;vertical-align:middle}
+.macro-table td:first-child{min-width:0;white-space:nowrap}
+.st-key-stock_kpis{margin:6px 0 16px}.kpi{height:96px;padding:14px 16px}.kpi-label{font-size:13px;white-space:normal}.kpi-value{white-space:normal;overflow-wrap:break-word}
+.st-key-detail_metrics{margin:16px 0 20px}.st-key-detail_metrics [data-testid="stMetricValue"]>div{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+@media(min-width:1360px){[data-testid="stMain"] .block-container{width:min(100%,max(var(--reading-min),var(--reading-width)))!important}}
+@media(max-width:1180px){.macro-card{padding:12px}.kpi{height:auto;min-height:96px}.kpi-label{font-size:13px}.st-key-stock_kpis [data-testid="stHorizontalBlock"]{gap:12px!important}}
+'''
+
+def reading_layout(stage):
+    """Only the presentation viewport varies by current page; state/navigation is unchanged."""
+    percent,minimum={'macro':('70%','1050px'),'sectors':('85%','980px'),'stocks':('85%','980px'),'detail':('75%','980px')}.get(stage,('100%','0px'))
+    st.markdown('<style>:root{--reading-width:'+percent+';--reading-min:'+minimum+'}'+READABILITY_CSS+'</style>',unsafe_allow_html=True)

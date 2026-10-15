@@ -104,6 +104,7 @@ with st.container(key='header'):
  with b:st.link_button('↻ 업데이트 상태','https://github.com/0baselabkim-debug/qweasd/actions',width='stretch')
 
 if ss.stage=='macro':
+ explorer.reading_layout('macro')
  st.subheader('매크로 지표')
  state=macro.read();macro_frames=[]
  with st.container(key='macro_cards'):
@@ -144,6 +145,7 @@ else:selected=visible[(visible.market==group[0])&(visible.sector==group[1])].cop
 if ss.stock_open and ss.symbol not in selected.symbol.values:
  ss.stock_open=False;ss.symbol=None
  if ss.stage=='detail':ss.stage='stocks'
+explorer.reading_layout(ss.stage)
 with st.container(horizontal=True,key='hierarchy'):
  st.button('전체섹터 조회',key='tab_all',type='primary' if ss.stage=='sectors' else 'secondary',on_click=go,args=('sectors',))
  if ss.sector_open:
@@ -207,7 +209,7 @@ ui.badges([(assessment['status'],'hold'),*assessment['reasons'][:1],('감사의�
 financial={'매출액':(r.revenue/1e8,'억원'),'영업이익':(r.operating_profit/1e8,'억원'),'전년 영업이익':(r.previous_operating_profit/1e8,'억원'),'당기순이익':(r.net_income/1e8,'억원'),'자본총계':(r.equity/1e8,'억원'),'부채총계':(r.liabilities/1e8,'억원'),'영업현금흐름':(r.ocf/1e8,'억원'),'매출 성장률':(r.revenue_growth*100,'%'),'영업이익 성장률':(r.op_growth*100,'%'),'ROE':(r.roe*100,'%'),'부채비율':(r.debt_ratio*100,'%'),'PER':(r.per,'배'),'PBR':(r.pbr,'배')}
 rows=[{'항목':k,'실제 값':('흑자전환' if k=='영업이익 성장률' and r.turnaround else amount(v,u)),'기준':'공시된 동일 연간 기간'} for k,(v,u) in financial.items()]
 rows += [{'항목':'자본잠식 여부','실제 값':'판정 보류','기준':'자본금 미확보 · 자본총계만으로 일부 자본잠식 여부 추정 안 함'},{'항목':'감사의견','실제 값':'미확보','기준':'공식 감사의견 확인 필요'},{'항목':'중대한 재무 위험','실제 값':'미확보','기준':'미확보를 위험 없음으로 판단하지 않음'}]
-st.dataframe(pd.DataFrame(rows),hide_index=True,width='stretch')
+st.dataframe(pd.DataFrame(rows),hide_index=True,width='content',row_height=44,column_config={'항목':st.column_config.TextColumn(width=170),'실제 값':st.column_config.TextColumn(width=190,alignment='right'),'기준':st.column_config.TextColumn(width=260)})
 if pd.notna(r.period_end):
  ui.badges([f'회계기간 {pd.Timestamp(r.period_end):%Y-%m-%d}',f'실제 공시 {pd.Timestamp(r.disclosed_on):%Y-%m-%d}',r.scope])
  st.link_button('연간 DART 원문',f'https://dart.fss.or.kr/dsaf001/main.do?rcpNo={r.receipt}')
