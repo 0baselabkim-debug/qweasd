@@ -46,7 +46,8 @@ def macro_card(title,rows):
         tone='positive' if row['change'] is not None and row['change']>0 else 'negative' if row['change'] is not None and row['change']<0 else ''
         provenance=f"기준일 {row['date'] or '미확보'} · {row['provider']}"
         body.append('<tr title="'+html.escape(provenance,quote=True)+'"><td>'+html.escape(row['항목명'])+'</td><td class="num">'+html.escape(row['최신 데이터 값'])+'</td><td class="num '+tone+'">'+html.escape(row['전일 대비'])+'</td></tr>')
-    st.markdown('<section class="macro-card"><div class="macro-card-head"><h3>'+html.escape(title)+'</h3></div><div class="mini-scroll"><table class="mini-table macro-table"><thead><tr><th>항목명</th><th class="num">최신 데이터 값</th><th class="num">전일 대비</th></tr></thead><tbody>'+''.join(body)+'</tbody></table></div></section>',unsafe_allow_html=True)
+    card_class='macro-card economy-card' if title=='기타 경제지표' else 'macro-card'
+    st.markdown('<section class="'+card_class+'"><div class="macro-card-head"><h3>'+html.escape(title)+'</h3></div><div class="mini-scroll"><table class="mini-table macro-table"><thead><tr><th>항목명</th><th class="num">최신 데이터 값</th><th class="num">전일 대비</th></tr></thead><tbody>'+''.join(body)+'</tbody></table></div></section>',unsafe_allow_html=True)
 
 CSS='''<style>
 [data-testid="stSidebarHeader"],[data-testid="stSidebarCollapseButton"],[data-testid="stExpandSidebarButton"],[data-testid="stSidebarCollapsedControl"],[data-testid="stSidebar"] [data-testid="stLogoSpacer"]{display:none!important}
@@ -80,7 +81,11 @@ READABILITY_CSS='''
 .st-key-macro_cards,.st-key-macro_cards [data-testid="stHorizontalBlock"]{gap:22px!important}
 .macro-card .mini-scroll,.investor-table{width:fit-content;max-width:100%;margin-left:auto;margin-right:auto}
 .macro-table,.investor-table .mini-table{width:max-content;min-width:0;table-layout:auto}
-.macro-card .investor-table{width:360px;max-width:100%}.investor-table .mini-table{width:100%;min-width:300px}
+.macro-card .investor-table,.economy-card .mini-scroll{width:360px;max-width:100%}
+.investor-table .mini-table,.economy-card .mini-table{width:360px;min-width:360px;table-layout:fixed}
+.investor-table th:nth-child(1),.economy-card th:nth-child(1){width:90px}
+.investor-table th:nth-child(2),.economy-card th:nth-child(2){width:120px}
+.investor-table th:nth-child(3),.economy-card th:nth-child(3){width:150px}
 .macro-table th,.investor-table th{height:44px;padding:10px;font-size:14px;line-height:22px}
 .macro-table td,.investor-table td{height:46px;padding:11px 10px!important;font-size:14px!important;line-height:23px;vertical-align:middle}
 .macro-table td:first-child{min-width:0;white-space:nowrap}
