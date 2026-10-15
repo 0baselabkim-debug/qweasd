@@ -107,6 +107,7 @@ with sync_playwright() as p:
   boxes=[c.bounding_box() for c in cards.all()]
   assert abs((boxes[1]['x']-boxes[0]['x']-boxes[0]['width'])-(boxes[2]['y']-boxes[0]['y']-boxes[0]['height']))<3
   assert abs(cards.nth(2).bounding_box()['y']-cards.nth(3).bounding_box()['y'])<3
+  assert ui.locator('.macro-card th,.macro-card td:first-child,.investor-table td:nth-child(2)').evaluate_all('es=>es.every(e=>getComputedStyle(e).textAlign==="center")')
   state=macro_read()
   for group in ['금리','환율·원자재','미국 증시','한국 증시']:
    for expected in macro_rows(state,catalog(),group):

@@ -32,12 +32,12 @@ def macro_rows(state,catalog,group):
         if r:
             unit='달러/배럴' if key=='wti' else r['unit']
             value=f"{r['value']:,.3f}" if meta['rate'] else f"{r['value']:,.2f}"
-            value+=(' '+unit if unit!='포인트' else '')
-            if meta['rate']:change=f"{r['change']:+.2f}bp ({r['change']/100:+.3f}%p)"
+            value+=(' '+unit if unit!='포인트' and group!='환율·원자재' else '')
+            if meta['rate']:change=f"{r['change']:+.2f}bp ({r['change']/100:+.3f})"
             else:
-                delta=f"{r['change']:+,.2f}"+('pt' if unit=='포인트' else unit)
+                delta=f"{r['change']:+,.2f}"
                 change=(f"{r['change_percent']:+.2f}% ({delta})" if r.get('change_percent') is not None else delta)
-        rows.append({'항목명':meta['name'],'최신 데이터 값':value,'전일 대비':change,'date':r.get('date') if r else None,'change':r.get('change') if r else None,'provider':r.get('provider') if r else meta['provider']})
+        rows.append({'항목명':('WTI' if key=='wti' else meta['name']),'최신 데이터 값':value,'전일 대비':change,'date':r.get('date') if r else None,'change':r.get('change') if r else None,'provider':r.get('provider') if r else meta['provider']})
     return rows
 
 def macro_card(title,rows):
@@ -84,6 +84,7 @@ READABILITY_CSS='''
 .macro-table th,.investor-table th{height:44px;padding:10px;font-size:14px;line-height:22px}
 .macro-table td,.investor-table td{height:46px;padding:11px 10px!important;font-size:14px!important;line-height:23px;vertical-align:middle}
 .macro-table td:first-child{min-width:0;white-space:nowrap}
+.st-key-macro_cards .mini-table th,.st-key-macro_cards .mini-table td:first-child,.st-key-macro_cards .investor-table td:nth-child(2){text-align:center!important}
 .st-key-stock_kpis{margin:6px 0 16px}.kpi{height:96px;padding:14px 16px}.kpi-label{font-size:13px;white-space:normal}.kpi-value{white-space:normal;overflow-wrap:break-word}
 .st-key-detail_metrics{margin:16px 0 20px}.st-key-detail_metrics [data-testid="stMetricValue"]>div{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
 @media(min-width:1360px){[data-testid="stMain"] .block-container{width:min(100%,max(var(--reading-min),var(--reading-width)))!important}}

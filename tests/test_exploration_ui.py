@@ -17,8 +17,8 @@ def test_hierarchical_tabs_close_and_preferences_are_independent():
 
 def test_macro_presentation_does_not_mutate_values_and_rates_use_bp():
  state=read();original=copy.deepcopy(state);rows=macro_rows(state,catalog(),'금리')
- assert len(rows)==3 and all('bp (' in r['전일 대비'] and '%p)' in r['전일 대비'] for r in rows)
- assert rows[0]['전일 대비']==f"{state['indicators']['us2y']['change']:+.2f}bp ({state['indicators']['us2y']['change']/100:+.3f}%p)"
- other=macro_rows(state,catalog(),'환율·원자재');assert any('달러/배럴' in r['최신 데이터 값'] and r['항목명']=='WTI 현물' for r in other)
+ assert len(rows)==3 and all('bp (' in r['전일 대비'] and '%p' not in r['전일 대비'] for r in rows)
+ assert rows[0]['전일 대비']==f"{state['indicators']['us2y']['change']:+.2f}bp ({state['indicators']['us2y']['change']/100:+.3f})"
+ other=macro_rows(state,catalog(),'환율·원자재');assert any(r['최신 데이터 값']==f"{state['indicators']['wti']['value']:,.2f}" and r['항목명']=='WTI' for r in other)
  assert state==original
  missing=macro_rows({},catalog(),'한국 증시');assert all(r['최신 데이터 값']=='미확보' and r['전일 대비']=='미확보' for r in missing)
