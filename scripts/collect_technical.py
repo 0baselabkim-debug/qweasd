@@ -57,7 +57,7 @@ def main():
     started=time.monotonic();data=load();asof=str(data['flows'].trade_date.max().date())
     if args.mode=='public':
         from scripts.technical_batch import run
-        api=KIS();run(api,data,paged,max(1,min(300,args.limit)),max(60,min(1500,args.budget)))
+        api=KIS();run(api,data,paged,max(1,min(600,args.limit)),max(60,min(1500,args.budget)))
         if args.probe:
             from scripts.technical_evidence import run as probe
             probe(api,data)

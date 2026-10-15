@@ -55,3 +55,14 @@ def test_flow_reuse_does_not_fill_missing_days_or_verify_finality():
     assert b['finality']=='UNVERIFIED' and not b['corporate_actions_verified']
     assert b['price_conflicts'] and not b['indicator_ready']
     assert c.classify(b,'2026-10-14')=='new_listing_short_history'
+
+def test_official_crosscheck_never_implies_finality():
+    b={'symbol':'000001','asof':'2026-10-14','bars':[],'price_comparison':{'preserved_unadjusted':11,'kis_unadjusted':10,'kis_adjusted':10},'price_conflicts':['Preserved raw close differs from current KRX raw close; cause unresolved'],'finality':'UNVERIFIED','finality_evidence':None}
+    ref={'000001':{'BAS_DD':'20261014','TDD_CLSPRC':'10'}}
+    scope={'UN_1':[{'stck_clpr':'11'}],'J_1':[{'stck_clpr':'10'}],'flow_mismatches':[],'flow_checked_dates':20}
+    checked=c.crosscheck(copy.deepcopy(b),ref,scope)
+    assert checked['price_finality']=='CROSS_VALIDATED_DAILY' and checked['finality']=='UNVERIFIED'
+    assert not checked['price_conflicts'] and checked['legacy_price_discrepancy']
+    scope['flow_mismatches']=['2026-10-14']
+    assert c.crosscheck(copy.deepcopy(b),ref,scope)['price_conflicts']
+    assert c.crosscheck(copy.deepcopy(b),{'000001':{'BAS_DD':'20261013','TDD_CLSPRC':'10'}},scope)==b

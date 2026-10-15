@@ -7,15 +7,15 @@ on:
         options: [public, pilot, private]
         default: public
       limit:
-        description: Public symbols per checkpointed batch (max 300)
-        default: '150'
+        description: Public symbols per checkpointed batch (max 600)
+        default: '600'
         type: string
       probe:
         description: Seven-symbol market/adjustment/documentation probe
         type: boolean
         default: false
   schedule:
-    - cron: '45 14 * * 1-5'
+    - cron: '45 14,15,16,17 * * 1-5'
   workflow_run:
     workflows: ['Daily validated dashboard refresh']
     types: [completed]
@@ -54,7 +54,7 @@ jobs:
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
           MODE: ${{ inputs.mode || 'public' }}
-          LIMIT: ${{ inputs.limit || '150' }}
+          LIMIT: ${{ inputs.limit || '600' }}
           PROBE: ${{ inputs.probe || 'false' }}
         shell: bash
         run: |
@@ -62,7 +62,7 @@ jobs:
           sleep 65
           args=()
           if [ "$PROBE" = true ]; then args+=(--probe); fi
-          python scripts/collect_technical.py --mode "$MODE" --limit "$LIMIT" --budget 900 "${args[@]}"
+          python scripts/collect_technical.py --mode "$MODE" --limit "$LIMIT" --budget 1500 "${args[@]}"
       - name: Publish only public observations and checkpoints
         if: always() && inputs.mode != 'private'
         run: |

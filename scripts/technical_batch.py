@@ -24,8 +24,18 @@ def chart(api,symbol,start,end,market='J',adjustment='0'):
 def select_targets(universe,state,asof,limit):
     # Least recently attempted first, so repeated permanent failures cannot starve the queue.
     pending=[s for s in universe if state.get(s,{}).get('completed_asof')!=asof]
-    pending.sort(key=lambda s:(state.get(s,{}).get('attempted_at',''),PRIORITY.index(s) if s in PRIORITY else 99,s))
-    return pending[:limit]
+    priority=[s for s in PRIORITY if s in pending and not state.get(s,{}).get('status')=='api_or_schema_error']
+    pending=[s for s in pending if s not in priority]
+    fresh=[s for s in pending if state.get(s,{}).get('completed_asof')]
+    backfill=[s for s in pending if s not in fresh]
+    key=lambda s:(state.get(s,{}).get('attempted_at',''),s)
+    fresh.sort(key=key);backfill.sort(key=key)
+    # Interleave updates and initial history, so published symbols don't starve during backfill.
+    ordered=[]
+    while fresh or backfill:
+        if fresh:ordered.append(fresh.pop(0))
+        if backfill:ordered.append(backfill.pop(0))
+    return (priority+ordered)[:limit]
 
 def parsed(rows,asof):
     result={}
@@ -105,12 +115,16 @@ def run(api,data,paged,limit=150,budget=900,probe=False):
     universe=sorted(data['instruments'].symbol.unique());excluded=set(data['exclusions'].loc[data['exclusions'].trade_date.astype(str)==asof,'symbol'])
     universe=[s for s in universe if s not in excluded];tasks=select_targets(universe,state['symbols'],asof,limit)
     calendar=[d for d,r in paged(api,'0001',asof,index=True)] if tasks else []
+    references,reference_status=krx_reference(asof) if tasks else ({},{})
+    scopes=read(Path('reports/technical-expansion/provider-evidence.json'),{})
+    if scopes.get('asof')!=asof:scopes={}
     succeeded=failed=0
     for code in tasks:
         if time.monotonic()-started>budget:break
         old=read(CACHE/(code+'.json.gz'));record={'attempted_at':dt.datetime.now(dt.timezone.utc).isoformat(),'attempted_asof':asof}
         try:
             b=make_bundle(api,code,asof,calendar,data,old,paged)
+            b=crosscheck(b,references,scopes.get('symbols',{}).get(code))
             listing=data['instruments'].set_index('symbol').loc[code,'listing_date']
             category=classify(b,str(listing)[:10] if str(listing)!='NaT' else None)
             # Preserve valid previous observations when an incoming window is incomplete or invalid.
@@ -124,6 +138,51 @@ def run(api,data,paged,limit=150,budget=900,probe=False):
             failed+=1;record.update(status='api_or_schema_error',error_type=type(exc).__name__,previous_preserved=old is not None)
         state['symbols'][code]=record;write(STATE,state)
     current=[read(CACHE/(s+'.json.gz')) for s in universe];current=[b for b in current if b]
+    for b in current:
+        if b['asof']==asof and b['symbol'] in state['symbols']:
+            state['symbols'][b['symbol']].update(reasons=validate(b,asof),signal_ready=not validate(b,asof))
     summary={'run_id':os.getenv('GITHUB_RUN_ID'),'asof':asof,'finished_at':dt.datetime.now(dt.timezone.utc).isoformat(),'target_count':len(universe),'excluded_count':len(excluded),'batch_collected':succeeded,'batch_failed_or_incomplete':failed,'cached_symbols':len(current),'completed_current_asof':sum(state['symbols'].get(s,{}).get('completed_asof')==asof for s in universe),'indicator_ready':sum(b.get('indicator_ready',False) for b in current),'signal_ready':sum(not validate(b,asof) for b in current),'price_conflicts':sum(bool(b.get('price_conflicts')) for b in current),'finality_verified':sum(b.get('finality')=='VERIFIED' for b in current),'requests':len(api.metrics),'http_or_api_errors':sum(m['http']!=200 or m['code'] not in ('','MCA00000') for m in api.metrics),'rate_limit_errors':sum(m['code']=='EGW00201' for m in api.metrics),'elapsed_seconds':round(time.monotonic()-started,2),'hold_reasons':dict(collections.Counter(x for b in current for x in validate(b,asof))),'status_counts':dict(collections.Counter(v['status'] for v in state['symbols'].values()))}
+    summary['krx_reference_status']=reference_status
+    summary['legacy_discrepancies']=sum(b.get('price_comparison',{}).get('preserved_unadjusted') is not None and b.get('price_comparison',{}).get('preserved_unadjusted')!=b.get('price_comparison',{}).get('kis_unadjusted') for b in current)
+    summary['legacy_basis_identified']=sum(bool(b.get('legacy_price_discrepancy')) for b in current)
+    summary['official_daily_crosschecked']=sum(b.get('price_crosscheck',{}).get('raw_close_match',False) for b in current)
+    summary['cache_bytes']=sum(p.stat().st_size for p in CACHE.glob('*.gz'))
     summary['remaining']=len(universe)-summary['completed_current_asof'];state['runs']=(state.get('runs',[])+[summary])[-60:];write(STATE,state);write(ROOT/'summary.json',summary)
     print(json.dumps(summary,ensure_ascii=False));return summary
+
+def krx_reference(asof):
+    """Official, independently issued daily unadjusted OHLCV; no finality inference."""
+    import urllib.request
+    key=os.getenv('KRX_API_KEY');result={};status={}
+    for market,code in [('KOSPI','stk'),('KOSDAQ','ksq')]:
+        path=ROOT/'reference'/(market+'.json.gz');cached=read(path,{})
+        if cached.get('asof')==asof:
+            rows=cached['rows'];status[market]='cached_same_date'
+        elif key:
+            try:
+                url='https://data-dbg.krx.co.kr/svc/apis/sto/'+code+'_bydd_trd?basDd='+asof.replace('-','')
+                with urllib.request.urlopen(urllib.request.Request(url,headers={'AUTH_KEY':key}),timeout=25) as response:d=json.load(response)
+                rows=d.get('OutBlock_1',[])
+                if not rows or any(r.get('BAS_DD')!=asof.replace('-','') for r in rows):raise ValueError('Official reference date mismatch')
+                write(path,{'asof':asof,'url':url,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'rows':rows});status[market]='received'
+            except Exception as exc:rows=[];status[market]=type(exc).__name__
+        else:rows=[];status[market]='credential_not_bound'
+        for row in rows:result[row['ISU_CD']]=row
+    return result,status
+
+def crosscheck(b,reference,scope_evidence=None):
+    row=reference.get(b['symbol']);comparison=b.get('price_comparison',{})
+    if not row or row.get('BAS_DD')!=b['asof'].replace('-',''):return b
+    official=float(row['TDD_CLSPRC']);comparison['krx_official_unadjusted']=official
+    b['price_crosscheck']={'source':'KRX official daily trading statistics','trade_date':b['asof'],'raw_close_match':comparison.get('kis_unadjusted')==official,'adjusted_latest_equals_raw':comparison.get('kis_adjusted')==official}
+    b['price_finality']='CROSS_VALIDATED_DAILY' if b['price_crosscheck']['raw_close_match'] else 'CONFLICT'
+    # Resolves only a documented market-basis discrepancy; never grants finality.
+    scope=scope_evidence or {};integrated=scope.get('UN_1');krx=scope.get('J_1')
+    if isinstance(integrated,list) and len(integrated)==1 and isinstance(krx,list) and len(krx)==1:
+        un=float(integrated[0]['stck_clpr']);j=float(krx[0]['stck_clpr'])
+        if comparison.get('preserved_unadjusted')==un and j==official and comparison.get('kis_unadjusted')==official and not scope.get('flow_mismatches') and scope.get('flow_checked_dates')==20:
+            b['legacy_price_discrepancy']={'status':'MARKET_BASIS_IDENTIFIED','legacy_close':un,'krx_close':j,'evidence':'reports/technical-expansion/provider-evidence.json','limit':'Legacy request logs said J; historical provider routing cause cannot be proven. Preserve the original; technical analysis uses independently cross-checked J only.'}
+            b['price_conflicts']=[x for x in b['price_conflicts'] if not x.startswith('Preserved raw close differs')]
+    if not b['price_crosscheck']['raw_close_match']:
+        if 'KIS raw / independent KRX daily close mismatch' not in b['price_conflicts']:b['price_conflicts'].append('KIS raw / independent KRX daily close mismatch')
+    b['validation']=validate(b,b['asof']);return b

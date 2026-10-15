@@ -40,8 +40,13 @@ def run(api,data):
         if not key:out['krx'][market]={'status':'credential_not_bound'};continue
         try:
             with urllib.request.urlopen(urllib.request.Request(url,headers={'AUTH_KEY':key}),timeout=25) as r:d=json.load(r)
-            rows=d.get('OutBlock_1',[]);out['krx'][market]={'url':url,'received_rows':len(rows),'samples':[r for r in rows if r.get('ISU_SRT_CD') in PRIORITY]}
+            rows=d.get('OutBlock_1',[]);out['krx'][market]={'url':url,'received_rows':len(rows),'samples':[r for r in rows if r.get('ISU_CD') in PRIORITY]}
         except Exception as e:out['krx'][market]={'url':url,'error_type':type(e).__name__,'http':getattr(e,'code',None)}
+    from scripts.technical_batch import crosscheck
+    references={r['ISU_CD']:r for m in out['krx'].values() for r in m.get('samples',[])}
+    for symbol in PRIORITY:
+        bundle=read(CACHE/(symbol+'.json.gz'))
+        if bundle:write(CACHE/(symbol+'.json.gz'),crosscheck(bundle,references,out['symbols'].get(symbol)))
     out['requests_including_collection']=len(api.metrics);out['api_metrics']=api.metrics
     serialized=json.dumps(out,ensure_ascii=False)
     assert all(v not in serialized for v in [api.key,api.secret,api.token])
