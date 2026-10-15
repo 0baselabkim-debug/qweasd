@@ -208,20 +208,21 @@ sector_tab,period_days=period_tabs('sector','sector_sort')
 with sector_tab:
  period_caption(period_days)
  sector_mode=analysis_mode('sector',['자금 유입 상위','매수세 강화','자금 이탈'])
- st.caption({'자금 유입 상위':'선택 기간 합계가 양수인 섹터 · 큰 순매수부터 확인','매수세 강화':'최근 5일 − 직전 5일 > 0 · 순매도 축소도 포함','자금 이탈':'선택 기간 합계가 음수인 섹터 · 순매도 규모가 큰 순서'}[sector_mode])
  sector_sort=st.selectbox('섹터 수급 정렬',['누적 순매수 금액','시가총액 대비 순매수 강도','최근 5일 순매수 증감','수급 부분 점수','종합 강세 점수'],key='sector_sort')
+ st.caption('정식 종합 점수 순서 · 모든 업종 표시 · 조건 미충족은 평가 보류' if sector_sort=='종합 강세 점수' else {'자금 유입 상위':'선택 기간 합계가 양수인 섹터 · 큰 순매수부터 확인','매수세 강화':'최근 5일 − 직전 5일 > 0 · 순매도 축소도 포함','자금 이탈':'선택 기간 합계가 음수인 섹터 · 순매도 규모가 큰 순서'}[sector_mode])
+ rank_label='종합 점수 정렬 순위' if sector_sort=='종합 강세 점수' else '수급 정렬 순위'
  sector_key={'누적 순매수 금액':f'net_{period_days}d','시가총액 대비 순매수 강도':f'intensity_{period_days}d','최근 5일 순매수 증감':'change_5d','수급 부분 점수':'flow_points','종합 강세 점수':'formal_total_score'}[sector_sort]
  sector_ascending=sector_mode=='자금 이탈' and sector_key not in ['flow_points','formal_total_score']
  ordered=(group_flows if sector_key=='formal_total_score' else screen_flows(group_flows,sector_mode,period_days)).sort_values([sector_key,'market','sector'],ascending=[sector_ascending,True,True],na_position='last')
  ordered['sort_rank']=ordered[sector_key].rank(ascending=sector_ascending,method='min')
  if ordered.empty:st.info('선택 조건을 충족하는 섹터가 없습니다. 다른 보기나 기간을 선택하세요.')
- table=pd.DataFrame({'시장':ordered.market,'섹터':ordered.sector,'종목 수':ordered.members,'수급 변화':ordered.change_direction+' · '+ordered.change_state,'매수 지속':ordered.buying_pattern,'수급 정렬 순위':ordered.sort_rank,
+ table=pd.DataFrame({'시장':ordered.market,'섹터':ordered.sector,'종목 수':ordered.members,'수급 변화':ordered.change_direction+' · '+ordered.change_state,'매수 지속':ordered.buying_pattern,rank_label:ordered.sort_rank,
   '선택 기간 순매수(억원)':ordered[f'net_{period_days}d']/1e8,'당일 순매수(억원)':ordered.net_1d/1e8,
   '5일 순매수(억원)':ordered.net_5d/1e8,'20일 순매수(억원)':ordered.net_20d/1e8,'직전 5일(억원)':ordered.previous_5d/1e8,'5일 증감(억원)':ordered.change_5d/1e8,
   '선택 기간 강도(%)':ordered[f'intensity_{period_days}d']*100,'20일 순매수 일수':ordered.positive_days_20d,
   '유입 강도 점수 /40':ordered.flow_intensity_points,'지속성 점수 /30':ordered.flow_persistence_points,'수급 부분 점수 /70':ordered.flow_points,
   '20일 중 완전 수신 일수':ordered.observed_days_20d,'상대강도 /20':ordered.formal_score_relative_strength.map(lambda v:display_number(v) if pd.notna(v) else '평가 보류'),'거래 활성도 /10':ordered.formal_score_activity.map(lambda v:display_number(v) if pd.notna(v) else '평가 보류'),'종합 강세 점수 /100':ordered.formal_total_score.map(lambda v:display_number(v) if pd.notna(v) else '평가 보류'),'종합 강세 순위':ordered.formal_evaluation_rank.map(lambda v:display_number(v,0) if pd.notna(v) else '평가 보류')})
- st.dataframe(table,hide_index=True,height=320,width='stretch',column_order=['수급 정렬 순위','시장','섹터','수급 변화','선택 기간 순매수(억원)','5일 증감(억원)','선택 기간 강도(%)','수급 부분 점수 /70','종합 강세 점수 /100'],column_config={c:st.column_config.NumberColumn(format='%.2f') for c in table if any(t in c for t in ['(억원)','강도(%)','점수 /'])})
+ st.dataframe(table,hide_index=True,height=320,width='stretch',column_order=[rank_label,'시장','섹터','수급 변화','선택 기간 순매수(억원)','5일 증감(억원)','선택 기간 강도(%)','수급 부분 점수 /70','종합 강세 점수 /100'],column_config={c:st.column_config.NumberColumn(format='%.2f') for c in table if any(t in c for t in ['(억원)','강도(%)','점수 /'])})
  with st.expander('섹터 상세 지표 · 5일/20일 비교'):
   st.dataframe(table,hide_index=True,width='stretch')
  st.caption(f'완전한 기간 합계: 5일 {group_flows.net_5d.notna().sum()}/{len(group_flows)}개 · 20일 {group_flows.net_20d.notna().sum()}/{len(group_flows)}개. 구성 종목 중 하나라도 해당 기간 자료가 부족하면 전체 기간 합계를 보류합니다.')

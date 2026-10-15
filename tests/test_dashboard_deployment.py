@@ -64,3 +64,15 @@ def test_sector_sort_and_details_are_interactive():
     stock_table = next(w.value for w in app.dataframe if '코드' in w.value.columns)
     assert stock_table['종목명'].tolist() == sorted(stock_table['종목명'].tolist())
     assert stock_table['코드'].astype(str).str.zfill(6).eq('035420').any()
+
+
+def test_formal_sector_sort_does_not_invent_a_total_score():
+    from streamlit.testing.v1 import AppTest
+    app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=90).run()
+    next(w for w in app.selectbox if w.label=='데이터 기준일').select('2026-10-14');app.run()
+    next(w for w in app.selectbox if w.label=='섹터 수급 정렬').select('종합 강세 점수');app.run()
+    assert not app.exception
+    frame=next(w.value for w in app.dataframe if '종합 점수 정렬 순위' in w.value.columns)
+    assert len(frame)==50 and frame['종합 점수 정렬 순위'].isna().all()
+    assert frame['종합 강세 점수 /100'].eq('평가 보류').all()
+    assert any(w.label=='최신 공시 재무 · 사업 테마 검토' for w in app.expander)

@@ -137,6 +137,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git switch -c "evidence/corporate-$GITHUB_RUN_ID"
-          git add reports/corporate-run
+          git add -f reports/corporate-run
           git diff --cached --quiet || git commit -m 'Record corporate collection and publication evidence'
           git push origin "HEAD:refs/heads/evidence/corporate-$GITHUB_RUN_ID"

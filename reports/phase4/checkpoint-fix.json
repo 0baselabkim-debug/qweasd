@@ -1,0 +1,5 @@
+{
+  "detached_head_unqualified_target_exit": 1,
+  "error": "The destination you provided is not a full refname (i.e.,\nstarting with \"refs/\"). We tried to guess what you meant by:\n\n- Looking for a ref that matches 'data/corporate-checkpoint' on the remote side.\n- Checking if the <src> being pushed ('HEAD')\n  is a ref in \"refs/{heads,tags}/\". If so we add a corresponding\n  refs/{heads,tags}/ prefix on the remote side.\n\nNeither worked, so we gave up. You must fully qualify the ref.\nhint: The <src> part of the refspec is a commit object.\nhint: Did you mean to create a new branch by pushing to\nhint: 'HEAD:refs/heads/data/corporate-checkpoint'?\nerror: failed to push some refs to '/tmp/checkpoint-ref-20ohi_2_/remote.git'\n",
+  "explicit_target_exit": 0
+}
