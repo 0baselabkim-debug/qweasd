@@ -307,7 +307,7 @@ with stock_tab:
     v=r['score_'+k];rows.append({'항목':names[k],'배점':weight,'점수':f'{v:.1f}' if pd.notna(v) else '데이터 축적 중 / 평가 보류'})
    st.dataframe(rows,hide_index=True,width='stretch')
    st.caption(f'계산 가능한 배점 {int(r.available_weight)}/100 · 부분 점수를 100점으로 환산하지 않습니다.')
-corporate_ui_module.company_panel(code,asof,r.market_cap)
+corporate_ui_module.company_panel(code,asof,r.market_cap,theme_asof)
 with st.expander('평가 방식과 남은 데이터'):
  st.caption('공식 업종의 확인된 적용 시작일은 2026-10-14입니다. 과거 구성에 따른 섹터 종합 평가는 보류합니다. 별도 수급 추이는 화면에 명시한 구성 기준일의 종목 집합을 고정해 과거 순매수를 합산합니다. 과거 날짜 화면의 미분류는 당시 매핑 미확보를 뜻합니다.')
  st.markdown('외국인 수급은 20거래일, 상대강도는 21개 가격 관측, 거래 활성도는 최근 5일과 이전 20일을 사용합니다. 섹터 가격지수는 전일 시가총액 가중·일별 리밸런싱이며, 당시 업종 매핑과 조정주가가 모두 있어야 계산합니다.')

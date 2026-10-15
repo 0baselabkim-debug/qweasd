@@ -36,6 +36,7 @@ with sync_playwright() as p:
   ui.get_by_text('최신 공시 재무 · 사업 테마 검토',exact=True).click();page.wait_for_timeout(1000)
   panel=ui.locator('[data-testid="stExpander"]').filter(has=ui.get_by_text('최신 공시 재무 · 사업 테마 검토',exact=True))
   assert '2026-06-30' in panel.inner_text() and '2026-08-14' in panel.inner_text()
+  assert '사업 테마 검토 기준일' in panel.inner_text() and '추가 사업보고서 조사 대기' not in panel.inner_text()
   panel.screenshot(path=str(out/'corporate-detail.png'))
   report['checks'].append('Actual half-year statement, disclosure date and held interim valuation displayed')
   page.screenshot(path=str(out/'automation.png'),full_page=True);report['success']=True
