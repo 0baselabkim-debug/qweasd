@@ -12,6 +12,8 @@ on:
       - 'tests/test_technical.py'
       - 'tests/test_technical_collection.py'
       - 'scripts/technical_batch.py'
+      - 'scripts/technical_reference.py'
+      - '.github/workflows/technical-verify.yml'
       - 'scripts/technical_acceptance.py'
       - 'scripts/audit_technical_cache.py'
       - 'scripts/accept_saved_technical.py'

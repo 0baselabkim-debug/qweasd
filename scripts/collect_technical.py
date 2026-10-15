@@ -56,8 +56,8 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--mode',choices=['pilot','private','public','evidence','verify'],default='public');p.add_argument('--limit',type=int,default=150);p.add_argument('--budget',type=int,default=900);p.add_argument('--probe',action='store_true');args=p.parse_args()
     started=time.monotonic();data=load();asof=str(data['flows'].trade_date.max().date())
     if args.mode=='verify':
-        from scripts.technical_acceptance import run
-        run(KIS(),data,max(1,min(600,args.limit)),max(60,min(1500,args.budget)),probe=args.probe);return
+        from scripts.technical_acceptance import run,LazyAPI
+        run(LazyAPI(KIS),data,max(1,min(600,args.limit)),max(60,min(1500,args.budget)),probe=args.probe);return
     if args.mode=='evidence':
         from scripts.technical_evidence import run as probe
         probe(KIS(),data);return
@@ -65,12 +65,14 @@ def main():
         from scripts.technical_batch import run,read,STATE,select_targets,refresh_summary,CACHE
         from screener.technical_quality import daily_accepted
         state=read(STATE,{'symbols':{}})
-        pending=select_targets(sorted(data['instruments'].symbol.unique()),state['symbols'],asof,1)
+        exclusions=data.get('exclusions')
+        excluded=set(exclusions.loc[exclusions.trade_date.astype(str)==asof,'symbol']) if exclusions is not None else set()
+        pending=select_targets(sorted(set(data['instruments'].symbol)-excluded),state['symbols'],asof,1)
         # Completed histories need no token and no historical API request.
         if not pending:
-            from scripts.technical_acceptance import run as review
+            from scripts.technical_acceptance import run as review,LazyAPI
             needs_review=any((b:=read(p)) and b['asof']==asof and not daily_accepted(b) for p in CACHE.glob('*.json.gz'))
-            if needs_review:review(KIS(),data,max(1,min(600,args.limit)),max(60,min(1500,args.budget)))
+            if needs_review:review(LazyAPI(KIS),data,max(1,min(600,args.limit)),max(60,min(1500,args.budget)))
             else:refresh_summary(asof);print('No pending public histories or evidence checks; no API calls')
             return
         api=KIS();run(api,data,paged,max(1,min(600,args.limit)),max(60,min(1500,args.budget)))

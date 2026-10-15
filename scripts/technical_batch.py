@@ -23,7 +23,9 @@ def chart(api,symbol,start,end,market='J',adjustment='0'):
 
 def select_targets(universe,state,asof,limit):
     # Least recently attempted first, so repeated permanent failures cannot starve the queue.
-    pending=[s for s in universe if state.get(s,{}).get('completed_asof')!=asof]
+    pending=[s for s in universe if state.get(s,{}).get('completed_asof')!=asof
+             and not (state.get(s,{}).get('status')=='new_listing_short_history'
+                      and state[s].get('attempted_asof')==asof)]
     priority=[s for s in PRIORITY if s in pending and not state.get(s,{}).get('status')=='api_or_schema_error']
     pending=[s for s in pending if s not in priority]
     fresh=[s for s in pending if state.get(s,{}).get('completed_asof')]
@@ -150,7 +152,11 @@ def run(api,data,paged,limit=150,budget=900,probe=False):
             good=not old or b['indicator_ready'] or (not old.get('indicator_ready') and len(b['bars'])>=len(old['bars']))
             # A current-source conflict cannot replace previously usable prices.
             if old and old.get('indicator_ready') and b.get('price_finality')=='CONFLICT':good=False
-            if good:write(CACHE/(code+'.json.gz'),b)
+            if good:
+                # An unreviewed trading date must survive the next daily refresh.
+                from scripts.technical_acceptance import archive_pending
+                if old and old.get('asof')!=b['asof']:archive_pending(old)
+                write(CACHE/(code+'.json.gz'),b)
             else:write(ROOT/'rejected'/(code+'.json.gz'),b)
             record.update(status=category,bars=len(b['bars']),indicator_ready=b['indicator_ready'],structure_valid=b['structure_valid'],signal_ready=not b['validation'],reasons=b['validation'],previous_preserved=not good)
             if not good and b.get('price_finality')=='CONFLICT':record['status']='source_conflict'
@@ -184,6 +190,7 @@ def refresh_summary(asof):
         if b['symbol'] in state['symbols']:
             state['symbols'][b['symbol']].update(reasons=validate(b,asof),signal_ready=not validate(b,asof))
     summary.update(quality_reviewed_at=dt.datetime.now(dt.timezone.utc).isoformat(),
+        waiting_history_symbols=sum(len(b.get('bars',[]))<rules()['min_bars'] for b in current),
         full_320_symbols=sum(len(b.get('bars',[]))>=320 for b in current),
         short_history_symbols=sum(len(b.get('bars',[]))<320 for b in current),
         daily_accepted=sum(daily_accepted(b) for b in current),signal_ready=sum(not validate(b,asof) for b in current),
@@ -200,28 +207,9 @@ def refresh_summary(asof):
     write(ROOT/'summary.json',summary);write(STATE,state)
 
 def krx_reference(asof):
-    """Official, independently issued daily unadjusted OHLCV; no finality inference."""
-    import urllib.request
-    key=os.getenv('KRX_API_KEY');result={};status={}
-    for market,code in [('KOSPI','stk'),('KOSDAQ','ksq')]:
-        path=ROOT/'reference'/(market+'.json.gz');cached=read(path,{})
-        now=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat()
-        observed=cached.get('observed_at','')
-        cached_day=dt.datetime.fromisoformat(observed).astimezone(ZoneInfo('Asia/Seoul')).date().isoformat() if observed else ''
-        if cached.get('asof')==asof and not (now>asof and cached_day<=asof):
-            rows=cached['rows'];status[market]='cached_same_date'
-        elif key:
-            try:
-                url='https://data-dbg.krx.co.kr/svc/apis/sto/'+code+'_bydd_trd?basDd='+asof.replace('-','')
-                with urllib.request.urlopen(urllib.request.Request(url,headers={'AUTH_KEY':key}),timeout=25) as response:d=json.load(response)
-                rows=d.get('OutBlock_1',[])
-                if not rows or any(r.get('BAS_DD')!=asof.replace('-','') for r in rows):raise ValueError('Official reference date mismatch')
-                write(path,{'asof':asof,'url':url,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'rows':rows});status[market]='received'
-            except Exception as exc:rows=[];status[market]=type(exc).__name__
-        else:rows=[];status[market]='credential_not_bound'
-        metadata=read(path,{})
-        for row in rows:result[row['ISU_CD']]={**row,'_retrieved_at':metadata.get('observed_at'),'_source_url':metadata.get('url')}
-    return result,status
+    """Date-scoped official references; unavailable is not a parser failure."""
+    from scripts.technical_reference import fetch_references
+    return fetch_references(asof,ROOT)
 
 def crosscheck(b,reference,scope_evidence=None):
     row=reference.get(b['symbol']);comparison=b.get('price_comparison',{})

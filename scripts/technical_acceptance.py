@@ -4,13 +4,56 @@ import datetime as dt
 import os,time
 from pathlib import Path
 from screener.technical_quality import POLICY,digest,daily_accepted
-from screener.technical import validate,buy_guide
+from screener.technical import validate,buy_guide,rules
+
+class LazyAPI:
+    """No KIS token issuance until an evidence-ready symbol needs a request."""
+    def __init__(self,factory):self.factory=factory;self.client=None
+    @property
+    def metrics(self):return self.client.metrics if self.client is not None else []
+    def request(self,*args,**kwargs):
+        if self.client is None:self.client=self.factory()
+        return self.client.request(*args,**kwargs)
+
+def reference_ready(bundle,references):
+    """A symbol's same-date official row must exist before any KIS recheck."""
+    row=references.get(bundle['symbol'],{})
+    from screener.technical_quality import FIELDS
+    try:
+        import math
+        observed=dt.datetime.fromisoformat(row['_retrieved_at'])
+        from zoneinfo import ZoneInfo
+        part={'KOSPI':'stk','KOSDAQ':'ksq'}[bundle['market']]
+        url=f'https://data-dbg.krx.co.kr/svc/apis/sto/{part}_bydd_trd?basDd='+bundle['asof'].replace('-','')
+        return (row['BAS_DD']==bundle['asof'].replace('-','') and row['ISU_CD']==bundle['symbol']
+                and row['_source_url']==url
+                and observed.tzinfo is not None
+                and observed.astimezone(ZoneInfo('Asia/Seoul')).date().isoformat()>bundle['asof']
+                and all(math.isfinite(float(row[k])) for k in FIELDS.values()))
+    except (KeyError,ValueError,TypeError,OverflowError):return False
+
+def archive_pending(bundle):
+    from scripts.technical_batch import ROOT,write
+    if daily_accepted(bundle):return
+    path=ROOT/'pending'/bundle['asof']/(bundle['symbol']+'.json.gz')
+    if not path.exists():write(path,bundle)
 
 def verify_bundle(api,bundle,references):
     from scripts.technical_batch import crosscheck
+    if not reference_ready(bundle,references):
+        # Preserve any previous evidence; absence of a new reference is not a revision.
+        b=copy.deepcopy(bundle)
+        b['acceptance_error']='REFERENCE_NOT_AVAILABLE_FOR_SYMBOL'
+        b['validation']=validate(b,b['asof'])
+        return b
     b=copy.deepcopy(bundle);b.pop('daily_acceptance',None)
+    b.pop('acceptance_error',None)
     b=crosscheck(b,references)
     day=b['asof'];symbol=b['symbol']
+    if b.get('price_finality')=='CONFLICT':
+        b['acceptance_error']='REFERENCE_PRICE_CONFLICT'
+        b['validation']=validate(b,day)
+        return b
     from zoneinfo import ZoneInfo
     if day>=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat():
         b['acceptance_error']='Prior Seoul date required; final publication time unconfirmed'
@@ -101,44 +144,84 @@ def review_pending(api,references,asof,limit=100,budget=150):
     started=time.monotonic();pending=[]
     for path in CACHE.glob('*.json.gz'):
         b=read(path)
-        if b and b['asof']==asof and not daily_accepted(b):pending.append((path,b))
+        if b and b['asof']==asof and not daily_accepted(b) and reference_ready(b,references):pending.append((path,b))
     pending.sort(key=lambda pair:(pair[1].get('acceptance_attempted_at',''),pair[1]['symbol']))
     for path,b in pending[:limit]:
         if time.monotonic()-started>=budget:break
-        try:b=verify_bundle(api,b,references)
+        try:b=verify_saved_or_live(api,b,references)
         except Exception as e:b['acceptance_error']=type(e).__name__
         b['acceptance_attempted_at']=dt.datetime.now(dt.timezone.utc).isoformat();write(path,b)
 
+def verify_saved_or_live(api,bundle,references):
+    """Reuse exact saved raw flow responses; an absent/mismatched proof needs KIS."""
+    e=bundle.get('daily_acceptance',{});raw=e.get('raw_flow_rows',[])
+    try:
+        normalized=sorted([{'trade_date':dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date().isoformat(),
+                            'net_amount':int(r['frgn_ntby_tr_pbmn'])*1_000_000} for r in raw],key=lambda r:r['trade_date'])
+        reusable=(len(raw)==20 and normalized==bundle['flows'][-20:]
+                  and e.get('flow_endpoint')=='KIS FHPTJ04160001 / J / million KRW to KRW'
+                  and e.get('flow_check_kind') in ('live_requery','saved_api_response_replay')
+                  and e.get('asof')==bundle['asof'] and e.get('symbol')==bundle['symbol']
+                  and e.get('flows_sha256')==digest(bundle['flows']))
+    except (KeyError,ValueError,TypeError):reusable=False
+    if reusable:
+        sources=e.get('flow_sources') or [{'kind':'previously_received_KIS_J_response',
+                    'observed_at':e['observed_at'],'raw_rows_sha256':digest(raw)}]
+        return accept_saved_responses(bundle,references,raw,sources)
+    return verify_bundle(api,bundle,references)
+
+
 def run(api,data,limit=600,budget=1500,probe=False):
-    from scripts.technical_batch import CACHE,ROOT,PRIORITY,read,write,krx_reference,refresh_summary
+    from scripts.technical_batch import CACHE,ROOT,read,write,krx_reference,refresh_summary
     start=time.monotonic();day=str(data['flows'].trade_date.max().date())
-    if probe:
-        cached_dates=[b['asof'] for p in CACHE.glob('*.json.gz') if (b:=read(p)) and b['asof']<=day]
-        if cached_dates:day=max(cached_dates)
-    refs,status=krx_reference(day)
     report=read(ROOT/'acceptance-audit.json',{'symbols':{},'incremental':{},'scope':{}})
     tasks=[]
-    for path in sorted(CACHE.glob('*.json.gz')):
+    for path in list(CACHE.glob('*.json.gz'))+list((ROOT/'pending').glob('*/*.json.gz')):
         b=read(path)
-        if b and b['asof']==day and (probe or not daily_accepted(b)):tasks.append((path,b))
-    tasks.sort(key=lambda pair:(pair[1]['symbol'] not in PRIORITY,pair[1]['symbol']))
-    for path,b in tasks[:limit]:
+        if b and b['asof']<=day and (probe or not daily_accepted(b)):tasks.append((path,b))
+    # Dates do not disappear when a new dashboard snapshot is published.
+    dates=sorted({b['asof'] for _,b in tasks});all_status={};evaluated=0;deferred=0;short=0
+    for date in dates:
         if time.monotonic()-start>budget:break
-        try:
-            checked=verify_bundle(api,b,refs);write(path,checked)
-            result=buy_guide(checked,day)
-            report['symbols'][b['symbol']]={'asof':day,'accepted':daily_accepted(checked),'status':result['status'],'reasons':result['reasons']}
-            # Continue the previously unresolved 86 using both documented market flags.
-            if b.get('price_conflicts') and not b.get('legacy_price_discrepancy'):
-                report['scope'][b['symbol']]=scope_probe(api,checked)
-            if b['symbol'] in ['005930','000660','035420']:
-                report['incremental'][b['symbol']]=incremental_probe(api,b)
-                report.setdefault('live_incremental',{})[b['symbol']]=live_incremental_probe(api,b)
-        except Exception as e:report['symbols'][b['symbol']]={'asof':day,'accepted':False,'error_type':type(e).__name__}
-        write(ROOT/'acceptance-audit.json',report)
-    report.update(asof=day,run_id=os.getenv('GITHUB_RUN_ID'),finished_at=dt.datetime.now(dt.timezone.utc).isoformat(),requests=len(api.metrics),
-        api_errors=sum(m['http']!=200 or m['code'] not in ('','MCA00000') for m in api.metrics),
-        rate_limit_errors=sum(m['code']=='EGW00201' for m in api.metrics),elapsed_seconds=round(time.monotonic()-start,2),krx_status=status)
+        refs,status=krx_reference(date);all_status[date]=status
+        same=[(p,b) for p,b in tasks if b['asof']==date]
+        same.sort(key=lambda pair:(pair[1].get('acceptance_attempted_at',''),pair[1]['symbol']))
+        for path,b in same:
+            if not reference_ready(b,refs):deferred+=1;continue
+            if len(b.get('bars',[]))<rules()['min_bars'] or len(b.get('flows',[]))<20:
+                short+=1;continue
+            if evaluated>=limit or time.monotonic()-start>budget:break
+            try:
+                checked=verify_bundle(api,b,refs) if probe else verify_saved_or_live(api,b,refs)
+                checked['acceptance_attempted_at']=dt.datetime.now(dt.timezone.utc).isoformat()
+                write(path,checked)
+                result=buy_guide(checked,date)
+                item={'asof':date,'accepted':daily_accepted(checked),'status':result['status'],'reasons':result['reasons']}
+                report.setdefault('by_date',{}).setdefault(date,{})[b['symbol']]=item
+                if date==day:report['symbols'][b['symbol']]=item
+                # Optional diagnostics are bounded and never run for an unavailable reference.
+                if probe and b.get('price_conflicts') and not b.get('legacy_price_discrepancy'):
+                    report['scope'][b['symbol']]=scope_probe(api,checked)
+                if probe and b['symbol'] in ['005930','000660','035420']:
+                    report['incremental'][b['symbol']]=incremental_probe(api,b)
+                    report.setdefault('live_incremental',{})[b['symbol']]=live_incremental_probe(api,b)
+            except Exception as e:
+                b['acceptance_error']=type(e).__name__
+                b['acceptance_attempted_at']=dt.datetime.now(dt.timezone.utc).isoformat();write(path,b)
+                report.setdefault('by_date',{}).setdefault(date,{})[b['symbol']]={'asof':date,'accepted':False,'error_type':type(e).__name__}
+            evaluated+=1
+        if evaluated>=limit:break
+    unprocessed=max(0,len(tasks)-evaluated-deferred-short)
+    report.update(asof=day,run_id=os.getenv('GITHUB_RUN_ID'),finished_at=dt.datetime.now(dt.timezone.utc).isoformat(),
+        requests=len(api.metrics),api_errors=sum(m['http']!=200 or m['code'] not in ('','MCA00000') for m in api.metrics),
+        rate_limit_errors=sum(m['code']=='EGW00201' for m in api.metrics),elapsed_seconds=round(time.monotonic()-start,2),
+        krx_status=all_status.get(day,{}),reference_dates=all_status,evaluated=evaluated,
+        deferred_no_reference=deferred,deferred_short_history=short,unprocessed=unprocessed,
+        outcome='REVIEWED' if evaluated else 'BUDGET_EXHAUSTED' if unprocessed else 'WAITING_REFERENCE' if deferred else 'NO_ELIGIBLE_REVIEW')
     write(ROOT/'acceptance-audit.json',report)
     refresh_summary(day)
-    print({'verified':sum(r.get('accepted',False) for r in report['symbols'].values()),'requests':len(api.metrics)})
+    summary=read(ROOT/'summary.json',{});summary['krx_reference_status']=all_status.get(day,summary.get('krx_reference_status',{}))
+    summary['verification_run']={k:report[k] for k in ['run_id','finished_at','outcome','evaluated','requests','deferred_no_reference','deferred_short_history']}
+    write(ROOT/'summary.json',summary)
+    print({k:report[k] for k in ['outcome','evaluated','requests','deferred_no_reference','reference_dates']})
+    return report

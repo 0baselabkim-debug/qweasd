@@ -194,12 +194,15 @@ def test_failed_crosscheck_preserves_prior_cache_and_does_not_complete(tmp_path,
 def test_evidence_queue_failure_rotates_without_refetching_history(tmp_path,monkeypatch):
     from scripts import technical_acceptance
     monkeypatch.setattr(c,'CACHE',tmp_path)
+    refs={}
     for code in ['000001','000002']:
-        b=accepted_fixture();b['symbol']=code;b.pop('daily_acceptance');c.write(tmp_path/(code+'.json.gz'),b)
+        b=accepted_fixture();b['symbol']=code
+        refs[code]={**b['daily_acceptance']['krx_row'],'ISU_CD':code}
+        b.pop('daily_acceptance');c.write(tmp_path/(code+'.json.gz'),b)
     calls=[]
     def failing(api,b,refs):calls.append(b['symbol']);raise TimeoutError()
     monkeypatch.setattr(technical_acceptance,'verify_bundle',failing)
-    for _ in range(2):technical_acceptance.review_pending(None,{},b['asof'],limit=1)
+    for _ in range(2):technical_acceptance.review_pending(None,refs,b['asof'],limit=1)
     assert calls==['000001','000002']
     assert all(c.read(p)['acceptance_error']=='TimeoutError' for p in tmp_path.glob('*.gz'))
 
@@ -227,3 +230,112 @@ def test_saved_response_acceptance_keeps_replay_distinct_from_new_calls():
     assert result['daily_acceptance']['flow_check_kind']=='saved_api_response_replay'
     assert result['bars']==b['bars'] and result['flows']==b['flows']
     result['daily_acceptance']['flow_sources']=[];assert not daily_accepted(result)
+
+
+def test_reference_response_categories_and_alpha_codes():
+    from scripts.technical_reference import classify_rows
+    b=accepted_fixture();row=b['daily_acceptance']['krx_row'];day=b['asof']
+    assert classify_rows({'OutBlock_1':[]},day)[0]=='REFERENCE_NOT_AVAILABLE'
+    assert classify_rows({},day)[0]=='REFERENCE_SCHEMA_ERROR'
+    assert classify_rows({'OutBlock_1':[dict(row,BAS_DD='20200101')]},day)[0]=='REFERENCE_DATE_MISMATCH'
+    assert classify_rows({'OutBlock_1':[row,row]},day)[0]=='REFERENCE_SCHEMA_ERROR'
+    assert classify_rows({'OutBlock_1':[dict(row,ISU_CD='00088K')]},day)[0]=='RECEIVED'
+    assert classify_rows({'OutBlock_1':[dict(row,ACC_TRDVOL='nan')]},day)[0]=='REFERENCE_SCHEMA_ERROR'
+
+
+def test_empty_reference_keeps_previous_cache_and_records_http(tmp_path,monkeypatch):
+    import json,urllib.request
+    from scripts.technical_reference import fetch_references
+    old={'asof':'2020-01-01','observed_at':'2020-01-02T00:00:00+00:00','rows':[{'unchanged':True}]}
+    path=tmp_path/'reference/KOSPI.json.gz';c.write(path,old);before=path.read_bytes()
+    class Response:
+        status=200
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def read(self):return json.dumps({'OutBlock_1':[]}).encode()
+    monkeypatch.setenv('KRX_API_KEY','unit-test-only-not-a-real-key')
+    monkeypatch.setattr(urllib.request,'urlopen',lambda *a,**k:Response())
+    refs,status=fetch_references('2020-01-03',tmp_path)
+    assert not refs and set(status.values())=={'REFERENCE_NOT_AVAILABLE'}
+    assert path.read_bytes()==before
+    record=c.read(tmp_path/'reference-status.json')['dates']['2020-01-03']['KOSPI']
+    assert record['http']==200 and record['received_rows']==0
+    assert 'unit-test-only' not in (tmp_path/'reference-status.json').read_text()
+
+
+def test_reference_cache_is_date_scoped_and_needs_no_credentials(tmp_path,monkeypatch):
+    from scripts.technical_reference import fetch_references
+    import urllib.request
+    b=accepted_fixture();e=b['daily_acceptance'];day=b['asof']
+    c.write(tmp_path/'reference'/day/'KOSPI.json.gz',{'asof':day,'url':e['krx_url'],
+            'observed_at':e['krx_row']['_retrieved_at'],'rows':[e['krx_row']]})
+    monkeypatch.delenv('KRX_API_KEY',raising=False)
+    def forbidden(*a,**k):raise AssertionError('No network for usable cache / missing key')
+    monkeypatch.setattr(urllib.request,'urlopen',forbidden)
+    refs,status=fetch_references(day,tmp_path)
+    assert refs[b['symbol']]['BAS_DD']==day.replace('-','')
+    assert status=={'KOSPI':'CACHED_SAME_DATE','KOSDAQ':'CREDENTIAL_NOT_BOUND'}
+    assert fetch_references('2021-01-01',tmp_path)[0]=={}
+
+
+def test_missing_or_wrong_reference_does_not_issue_kis_token_or_erase_proof():
+    from scripts.technical_acceptance import LazyAPI,verify_bundle
+    b=accepted_fixture();before=copy.deepcopy(b)
+    def forbidden():raise AssertionError('No KIS authentication')
+    api=LazyAPI(forbidden)
+    result=verify_bundle(api,b,{})
+    assert api.metrics==[] and result['daily_acceptance']==before['daily_acceptance']
+    assert result['bars']==before['bars'] and result['flows']==before['flows']
+    row=dict(b['daily_acceptance']['krx_row'],BAS_DD='19990101')
+    assert verify_bundle(api,b,{b['symbol']:row})['acceptance_error']=='REFERENCE_NOT_AVAILABLE_FOR_SYMBOL'
+
+
+def test_reference_conflict_blocks_before_flow_call():
+    from scripts.technical_acceptance import LazyAPI,verify_bundle
+    b=accepted_fixture();b['price_comparison']['kis_adjusted']=100
+    row=dict(b['daily_acceptance']['krx_row'],TDD_CLSPRC='101')
+    def forbidden():raise AssertionError('No requery can repair an OHLCV mismatch')
+    result=verify_bundle(LazyAPI(forbidden),b,{b['symbol']:row})
+    assert result['acceptance_error']=='REFERENCE_PRICE_CONFLICT'
+    assert not result.get('daily_acceptance') and result['flows']==b['flows']
+
+
+def test_short_history_waits_for_a_new_date_but_api_failure_retries():
+    day='2026-10-15'
+    state={'000001':{'status':'new_listing_short_history','attempted_asof':day},
+           '000002':{'status':'api_or_schema_error','attempted_asof':day}}
+    assert c.select_targets(list(state),state,day,10)==['000002']
+    assert set(c.select_targets(list(state),state,'2026-10-16',10))==set(state)
+
+
+def test_saved_raw_flow_reuse_requires_matching_original_payload():
+    from scripts.technical_acceptance import LazyAPI,verify_saved_or_live
+    from screener.technical_quality import daily_accepted
+    b=accepted_fixture();b['price_comparison']['kis_adjusted']=100
+    row=b['daily_acceptance']['krx_row']
+    def forbidden():raise AssertionError('Already received exact raw flows must not be requested again')
+    api=LazyAPI(forbidden);result=verify_saved_or_live(api,b,{b['symbol']:row})
+    assert daily_accepted(result) and not api.metrics
+    assert result['daily_acceptance']['flow_check_kind']=='saved_api_response_replay'
+    assert result['bars']==b['bars'] and result['flows']==b['flows']
+    b['daily_acceptance']['raw_flow_rows'][-1]['frgn_ntby_tr_pbmn']='1'
+    import pytest
+    with pytest.raises(AssertionError):verify_saved_or_live(api,b,{b['symbol']:row})
+
+
+def test_pending_date_survives_rollover_and_empty_reference_run(tmp_path,monkeypatch):
+    from scripts import technical_acceptance as a
+    b=accepted_fixture();b.pop('daily_acceptance');before=copy.deepcopy(b)
+    monkeypatch.setattr(c,'ROOT',tmp_path);monkeypatch.setattr(c,'CACHE',tmp_path/'market')
+    monkeypatch.setattr(c,'STATE',tmp_path/'state.json')
+    a.archive_pending(b);path=tmp_path/'pending'/b['asof']/(b['symbol']+'.json.gz')
+    assert c.read(path)==before
+    b['acceptance_error']='new failure';a.archive_pending(b);assert c.read(path)==before
+    days=[]
+    def refs(day):days.append(day);return {},{'KOSPI':'REFERENCE_NOT_AVAILABLE','KOSDAQ':'REFERENCE_NOT_AVAILABLE'}
+    monkeypatch.setattr(c,'krx_reference',refs)
+    def forbidden():raise AssertionError('No KIS auth for an absent reference')
+    data={'flows':pd.DataFrame([{'trade_date':pd.Timestamp('2021-01-04')}])}
+    result=a.run(a.LazyAPI(forbidden),data,limit=1)
+    assert days==[b['asof']] and result['outcome']=='WAITING_REFERENCE'
+    assert result['deferred_no_reference']==1 and result['requests']==0 and c.read(path)==before

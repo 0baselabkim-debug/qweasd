@@ -1,0 +1,48 @@
+name: Deferred technical reference verification
+on:
+  workflow_dispatch:
+  schedule:
+    # Availability checks, NOT a claimed KRX publication/finality time.
+    # KST Mon-Sat 08:17; weekdays 11:17, 14:17, 17:17, 20:17.
+    - cron: '17 23 * * 0-5'
+    - cron: '17 2,5,8,11 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+  queue: max
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Check official availability and review only pending evidence
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: |
+          # Respect the shared KIS token interval if a later real recheck needs it.
+          # No token is issued when official reference data is unavailable.
+          sleep 65
+          timeout 1500 python scripts/collect_technical.py --mode verify --limit 600 --budget 900
+      - name: Preserve evidence and availability records
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add technical
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record deferred official reference verification'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
