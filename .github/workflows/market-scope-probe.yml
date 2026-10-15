@@ -1,0 +1,32 @@
+name: Bounded official market-scope comparison
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare official KRX NXT and integrated responses
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python scripts/probe_market_scope.py
+      - name: Preserve public response evidence
+        if: always()
+        run: |
+          if [ ! -f market-scope-probe.json ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/market-scope-$GITHUB_RUN_ID"
+          git add market-scope-probe.json
+          git commit -m 'Record bounded KRX NXT integrated comparison'
+          git push origin "HEAD:evidence/market-scope-$GITHUB_RUN_ID"

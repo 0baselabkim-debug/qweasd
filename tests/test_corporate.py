@@ -69,3 +69,11 @@ def test_existing_financial_versions_cannot_be_changed():
  old={'filings':{},'financials':{'x':{'value':1}},'events':[]}
  new=copy.deepcopy(old);new['financials']['x']['value']=2
  with pytest.raises(ValueError,match='existing_financials_changed'):validate(old,new)
+
+def test_three_day_gate_counts_distinct_actual_dates_only():
+ from screener.operations import summarize_runs
+ row={'mode':'collect','new_trading_day_published':True,'published_at':'2026-10-16'}
+ r=[{**row,'trade_date':'2026-10-14'},{**row,'trade_date':'2026-10-14'},{**row,'trade_date':'2026-10-15'},
+    {**row,'trade_date':'2026-10-16'},{**row,'trade_date':'2026-10-13','mode':'verify_saved'}]
+ assert not summarize_runs(r,'2026-10-15')['verified_three_days']
+ assert summarize_runs(r,'2026-10-16')['verified_three_days']
