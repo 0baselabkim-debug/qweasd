@@ -1,0 +1,29 @@
+[
+  {
+    "file": ".github/workflows/corporate-refresh.yml",
+    "schedule": [
+      {
+        "cron": "17 23,5,9,17 * * *"
+      }
+    ],
+    "concurrency": {
+      "group": "corporate-disclosures",
+      "cancel-in-progress": false
+    }
+  },
+  {
+    "file": ".github/workflows/daily-dashboard.yml",
+    "schedule": [
+      {
+        "cron": "30 11 * * 1-5"
+      },
+      {
+        "cron": "30 14 * * 1-5"
+      }
+    ],
+    "concurrency": {
+      "group": "kis-validation-auth",
+      "cancel-in-progress": false
+    }
+  }
+]
