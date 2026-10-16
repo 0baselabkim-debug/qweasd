@@ -28,7 +28,7 @@
       "ending_interval_seconds": 1.05
     }
   },
-  "sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+  "sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed",
   "finality": "UNVERIFIED",
   "automatic_snapshot_sync": true,
   "secrets_required": false,
@@ -49,7 +49,7 @@
     "complete_sector_scores": 0,
     "full_20d_symbols": 2425,
     "preservation_verified": true,
-    "sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+    "sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed",
     "recovery_revisions": [
       {
         "previous_sha256": "595df2fc434a99590409d39a43b4dab3e366c4a16d1f25acdaf5edd1adfb7738",
@@ -625,52 +625,71 @@
           "raw_tables_preserved": true,
           "observed_at": "2026-10-16T05:31:39.304570+00:00"
         }
+      },
+      {
+        "previous_sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+        "sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed",
+        "audit": {
+          "baseline_sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+          "sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed",
+          "added": [
+            {
+              "asof": "2026-10-14",
+              "symbol": "124560",
+              "bundle_sha256": "61feb9fd2cb91a866df89ec03371a72b92e0f7a787916f2c1497cec85cfc065d"
+            },
+            {
+              "asof": "2026-10-14",
+              "symbol": "009460",
+              "bundle_sha256": "ad315d966e1c6e34739c1c2702b0a690fec58172c6af284e3a68a95d76be3bb3"
+            }
+          ],
+          "before": {
+            "stocks": 2430,
+            "stock_activity": 430,
+            "sectors": 50,
+            "sector_activity": 9
+          },
+          "after": {
+            "stocks": 2430,
+            "stock_activity": 432,
+            "sectors": 50,
+            "sector_activity": 10
+          },
+          "raw_tables_preserved": true,
+          "observed_at": "2026-10-16T05:36:04.096160+00:00"
+        }
       }
     ]
   },
   "recovery_validation": {
-    "baseline_sha256": "4e8a92e4bcc3b17e587b243d011f7aa2f288e1ab7b6846029e533799ffad603b",
-    "sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+    "baseline_sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+    "sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed",
     "added": [
       {
         "asof": "2026-10-14",
-        "symbol": "003100",
-        "bundle_sha256": "fe187e5bfaec5a0486aaf54de070bf9f10ae24e37b2a2ea318b30d6387badbc5"
+        "symbol": "124560",
+        "bundle_sha256": "61feb9fd2cb91a866df89ec03371a72b92e0f7a787916f2c1497cec85cfc065d"
       },
       {
         "asof": "2026-10-14",
-        "symbol": "024800",
-        "bundle_sha256": "820ad79999f9de57f2b4e704f382254b994725cfce8ba69d789dbd72eab94501"
-      },
-      {
-        "asof": "2026-10-14",
-        "symbol": "032280",
-        "bundle_sha256": "c44866fc81d31268afb7d30e249231457ff3808a810ae93593b952102fcf1290"
-      },
-      {
-        "asof": "2026-10-14",
-        "symbol": "063440",
-        "bundle_sha256": "0536885de6b84580e544a7a6408dc7aaa0aa972b2da8a3d0be58686ff4105905"
-      },
-      {
-        "asof": "2026-10-14",
-        "symbol": "066670",
-        "bundle_sha256": "2a322ab8ead1d361c0c30a05324c84103949f98b81c591ac92bb06a59c821f3a"
+        "symbol": "009460",
+        "bundle_sha256": "ad315d966e1c6e34739c1c2702b0a690fec58172c6af284e3a68a95d76be3bb3"
       }
     ],
     "before": {
-      "stocks": 2430,
-      "stock_activity": 425,
-      "sectors": 50,
-      "sector_activity": 7
-    },
-    "after": {
       "stocks": 2430,
       "stock_activity": 430,
       "sectors": 50,
       "sector_activity": 9
     },
+    "after": {
+      "stocks": 2430,
+      "stock_activity": 432,
+      "sectors": 50,
+      "sector_activity": 10
+    },
     "raw_tables_preserved": true,
-    "observed_at": "2026-10-16T05:31:39.304570+00:00"
+    "observed_at": "2026-10-16T05:36:04.096160+00:00"
   }
 }

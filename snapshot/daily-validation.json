@@ -13,7 +13,7 @@
   "complete_sector_scores": 0,
   "full_20d_symbols": 2425,
   "preservation_verified": true,
-  "sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+  "sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed",
   "recovery_revisions": [
     {
       "previous_sha256": "595df2fc434a99590409d39a43b4dab3e366c4a16d1f25acdaf5edd1adfb7738",
@@ -588,6 +588,40 @@
         },
         "raw_tables_preserved": true,
         "observed_at": "2026-10-16T05:31:39.304570+00:00"
+      }
+    },
+    {
+      "previous_sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+      "sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed",
+      "audit": {
+        "baseline_sha256": "9bf0bcc87a5aa85e2b9951d2a784d7d13505850ad1f87776d0b02a6fa2d4da24",
+        "sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed",
+        "added": [
+          {
+            "asof": "2026-10-14",
+            "symbol": "124560",
+            "bundle_sha256": "61feb9fd2cb91a866df89ec03371a72b92e0f7a787916f2c1497cec85cfc065d"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "009460",
+            "bundle_sha256": "ad315d966e1c6e34739c1c2702b0a690fec58172c6af284e3a68a95d76be3bb3"
+          }
+        ],
+        "before": {
+          "stocks": 2430,
+          "stock_activity": 430,
+          "sectors": 50,
+          "sector_activity": 9
+        },
+        "after": {
+          "stocks": 2430,
+          "stock_activity": 432,
+          "sectors": 50,
+          "sector_activity": 10
+        },
+        "raw_tables_preserved": true,
+        "observed_at": "2026-10-16T05:36:04.096160+00:00"
       }
     }
   ]
