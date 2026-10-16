@@ -28,7 +28,7 @@
       "ending_interval_seconds": 1.05
     }
   },
-  "sha256": "3aabe6e154e7e3cc2f4261fb1c332ad154c7deffa42ef00263c949a5825f15fa",
+  "sha256": "ece6d0fde2afbabc2882bae45bff68f132e4badf44b28fb62bd25b9a0eb4250d",
   "finality": "UNVERIFIED",
   "automatic_snapshot_sync": true,
   "secrets_required": false,
@@ -49,7 +49,7 @@
     "complete_sector_scores": 0,
     "full_20d_symbols": 2425,
     "preservation_verified": true,
-    "sha256": "3aabe6e154e7e3cc2f4261fb1c332ad154c7deffa42ef00263c949a5825f15fa",
+    "sha256": "ece6d0fde2afbabc2882bae45bff68f132e4badf44b28fb62bd25b9a0eb4250d",
     "recovery_revisions": [
       {
         "previous_sha256": "595df2fc434a99590409d39a43b4dab3e366c4a16d1f25acdaf5edd1adfb7738",
@@ -269,42 +269,81 @@
           "raw_tables_preserved": true,
           "observed_at": "2026-10-16T04:15:06.664501+00:00"
         }
+      },
+      {
+        "previous_sha256": "3aabe6e154e7e3cc2f4261fb1c332ad154c7deffa42ef00263c949a5825f15fa",
+        "sha256": "ece6d0fde2afbabc2882bae45bff68f132e4badf44b28fb62bd25b9a0eb4250d",
+        "audit": {
+          "baseline_sha256": "3aabe6e154e7e3cc2f4261fb1c332ad154c7deffa42ef00263c949a5825f15fa",
+          "sha256": "ece6d0fde2afbabc2882bae45bff68f132e4badf44b28fb62bd25b9a0eb4250d",
+          "added": [
+            {
+              "asof": "2026-10-14",
+              "symbol": "017670",
+              "bundle_sha256": "08431f9c83c87c811836617eb63bce0e04b0df58ad2872c8f25a1fa93d5d1c50"
+            },
+            {
+              "asof": "2026-10-14",
+              "symbol": "030200",
+              "bundle_sha256": "2b53f3758a17677e13b5304ac39e766c3edd45577bbf8f1fa038e9fa7e08042c"
+            },
+            {
+              "asof": "2026-10-14",
+              "symbol": "032640",
+              "bundle_sha256": "a3bab678391f4c027068914c136fab70afc1fb674501f1d1a193989c01bd34d7"
+            }
+          ],
+          "before": {
+            "stocks": 2430,
+            "stock_activity": 402,
+            "sectors": 50,
+            "sector_activity": 5
+          },
+          "after": {
+            "stocks": 2430,
+            "stock_activity": 405,
+            "sectors": 50,
+            "sector_activity": 5
+          },
+          "raw_tables_preserved": true,
+          "observed_at": "2026-10-16T04:18:43.099608+00:00"
+        }
       }
     ]
   },
   "recovery_validation": {
-    "baseline_sha256": "0e865338af034b682dd2a733c07357088763f362fddeef4e473b923b6f6d8f11",
-    "sha256": "3aabe6e154e7e3cc2f4261fb1c332ad154c7deffa42ef00263c949a5825f15fa",
+    "baseline_sha256": "3aabe6e154e7e3cc2f4261fb1c332ad154c7deffa42ef00263c949a5825f15fa",
+    "sha256": "ece6d0fde2afbabc2882bae45bff68f132e4badf44b28fb62bd25b9a0eb4250d",
     "added": [
       {
         "asof": "2026-10-14",
-        "symbol": "013890",
-        "bundle_sha256": "c84da16e6f7d37af5b6609f86e0adf9fbcf2cfc42e2698c66d2dbebf88bffbc2"
+        "symbol": "017670",
+        "bundle_sha256": "08431f9c83c87c811836617eb63bce0e04b0df58ad2872c8f25a1fa93d5d1c50"
       },
       {
         "asof": "2026-10-14",
-        "symbol": "071950",
-        "bundle_sha256": "d605605d59a845afee60032a72ca60da95cb503c1d8367ad8eabed49c446bfca"
+        "symbol": "030200",
+        "bundle_sha256": "2b53f3758a17677e13b5304ac39e766c3edd45577bbf8f1fa038e9fa7e08042c"
       },
       {
         "asof": "2026-10-14",
-        "symbol": "079430",
-        "bundle_sha256": "b772adaf825d55c36e9c68a32b5100ae13ee3ed3262dde07faba4bfbc8fe96ef"
+        "symbol": "032640",
+        "bundle_sha256": "a3bab678391f4c027068914c136fab70afc1fb674501f1d1a193989c01bd34d7"
       }
     ],
     "before": {
-      "stocks": 2430,
-      "stock_activity": 399,
-      "sectors": 50,
-      "sector_activity": 4
-    },
-    "after": {
       "stocks": 2430,
       "stock_activity": 402,
       "sectors": 50,
       "sector_activity": 5
     },
+    "after": {
+      "stocks": 2430,
+      "stock_activity": 405,
+      "sectors": 50,
+      "sector_activity": 5
+    },
     "raw_tables_preserved": true,
-    "observed_at": "2026-10-16T04:15:06.664501+00:00"
+    "observed_at": "2026-10-16T04:18:43.099608+00:00"
   }
 }
