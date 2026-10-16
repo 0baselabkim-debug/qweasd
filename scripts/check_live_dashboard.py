@@ -233,7 +233,7 @@ with sync_playwright() as p:
    page.screenshot(path=str(out/('complete-sectors-'+market+'.png')),full_page=True)
   # Trace released turnover from exact-date evidence through the actual public CSV.
   released=sorted({code for rows in data['metadata'].get('liquidity_price_evidence',{}).values() for code in rows})
-  audit_codes=list(dict.fromkeys(released[:2]+[c for c in ['053050','060900','210980','004970','052710','052790'] if c in set(stocks.symbol)]))
+  audit_codes=list(dict.fromkeys(released[:2]+[c for c in ['053050','060900','210980','004970','052710','052790','013890','071950','079430','017670','030200','032640','126560'] if c in set(stocks.symbol)]))
   for code in audit_codes:
    row=stocks.set_index('symbol').loc[code]
    click('수급 필터');radio('전체 섹터');choose('시장',row.market);click('전체섹터 조회')

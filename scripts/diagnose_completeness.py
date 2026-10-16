@@ -49,7 +49,9 @@ def run(out):
         sectors.append({**s,'latest_accepted_among_missing':latest_ok,'saved_date_bundles_accepted':cached,
                         'potential_stock_gain':len(codes),'constituents_per_remaining_check':s['members']/len(checks) if checks else None,
                         'minimum_fresh_kis_anchors':2*max(0,len(checks)-cached),
-                        'request_estimate_note':'Lower bound excludes authentication, history rebuild, flow verification and retries; not a completion promise'})
+                        'latest_date_prerequisites':len(codes)-latest_ok,
+                        'planning_requests_no_retry':{'kis_low':3*max(0,len(checks)-cached)+(len(codes)-latest_ok),'kis_high':7*(max(0,len(checks)-cached)+len(codes)-latest_ok),'authentication_per_run':1,'krx_per_distinct_date_per_run':2},
+                        'request_estimate_note':'Anchors are lower bound. Planning range assumes 3 requests per unchanged historical candidate, up to 7 with history rebuild; latest prerequisite 1-7. Saved proof may reduce calls; retries increase them. Not a completion promise'})
     active=[];accepted_codes=set()
     for p in Path('technical/market').glob('*.json.gz'):
         b=read(p);code=b['symbol'];key=(b['asof'],code)
