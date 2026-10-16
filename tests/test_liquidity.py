@@ -101,3 +101,14 @@ def test_new_25_day_collection_requires_full_price_and_flow_evidence(evidence,ba
  assert daily_accepted(proposed) is not bad_flow
  assert bool(validate(proposed,day)) is bad_flow
  assert proposed['finality']=='UNVERIFIED' and len(proposed['bars'])==25
+
+def test_app_reloads_stale_evidence_validator_on_hot_deployment(monkeypatch):
+ import screener.liquidity_evidence as evidence_module
+ from streamlit.testing.v1 import AppTest
+ def removed(*a,**k):raise FileNotFoundError('removed legacy rule must not be called')
+ monkeypatch.setattr(evidence_module,'validate',removed)
+ app=AppTest.from_file(str(Path('app.py').resolve()),default_timeout=120).run()
+ assert not app.exception
+ assert evidence_module.validate is not removed
+ app.sidebar.button[1].click().run()
+ assert not app.exception

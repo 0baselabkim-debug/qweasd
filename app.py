@@ -10,6 +10,11 @@ from screener import store as public_store,publication
 importlib.reload(publication)
 importlib.reload(public_store)
 from screener.store import load,DB
+# Streamlit hot reload must also replace evidence validators held by old modules.
+import screener.liquidity_quality as liquidity_quality
+import screener.market_validation as market_validation
+import screener.liquidity_evidence as liquidity_evidence
+for module in [liquidity_quality,market_validation,liquidity_evidence]:importlib.reload(module)
 import screener.indicators as indicators
 import screener.macro as macro
 import screener.dashboard_style as ui
