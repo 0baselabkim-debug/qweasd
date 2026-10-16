@@ -198,7 +198,7 @@ with sync_playwright() as p:
    pause();assert ui.locator('.st-key-tab_sector').count()==1;readability('stocks');page.screenshot(path=str(out/f'stocks-{width}.png'),full_page=True)
    cell=table().locator('td.name').first
    cell.tap() if touch else cell.dblclick()
-   pause();assert ui.get_by_text('투자 적격성 · 재무 판단 근거',exact=True).count()==1
+   pause();assert ui.get_by_text('공시 재무정보',exact=True).count()==1
    readability('detail');clean();page.screenshot(path=str(out/f'detail-{width}.png'),full_page=True)
    close('stock');assert not ui.locator('.st-key-tab_stock').count()
    close('sector');assert not ui.locator('.st-key-tab_sector').count()
