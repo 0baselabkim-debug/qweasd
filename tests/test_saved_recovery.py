@@ -51,3 +51,13 @@ def test_full_saved_recovery_never_calls_krx_or_kis(tmp_path,monkeypatch):
  r=recovery.run(API(),{'flows':pd.DataFrame({'trade_date':[pd.Timestamp(b['asof'])]})},limit=1)
  assert r['promoted']==1 and r['physical_request_attempts']==0 and not r['reference_status']
  assert r['results'][0]['verification_path']=='saved_evidence_full_verification'
+
+def test_prior_seoul_reference_time_cannot_be_relaxed():
+ b,index=fixture();index[(b['asof'],b['symbol'])]['row']['_retrieved_at']=b['asof']+'T00:00:00+00:00'
+ candidate,info=preflight(b,index)
+ assert candidate is None and info['new_request_reason']=='official_reference_identity_or_observation_time'
+
+def test_planner_rejects_mixed_dates():
+ from scripts.plan_completeness import plan
+ import pytest
+ with pytest.raises(ValueError,match='dates differ'):plan({'asof':'2026-10-15'},{'asof':'2026-10-14'})
