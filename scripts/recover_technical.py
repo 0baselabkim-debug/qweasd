@@ -124,7 +124,7 @@ def fair_tasks(tasks,ledger,now):
     queues={d:[] for d in dates}
     for t in tasks:
         job=ledger['jobs'].setdefault(t[1],{})
-        job.setdefault('first_seen_at',now)
+        job.setdefault('first_seen_at',t[3].get('seed_provenance',{}).get('queued_at') or now)
         queues[t[3]['asof']].append(t)
     for q in queues.values():
         q.sort(key=lambda t:(ledger['jobs'][t[1]].get('last_result',{}).get('error_type')!='RecoveryBudget',

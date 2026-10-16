@@ -43,7 +43,7 @@ def seed_dates(data,limit=2,symbols=None):
             f=flows[(flows.symbol==code)&(flows.trade_date<=pd.Timestamp(day))&(flows.exchange=='KRX')].sort_values('trade_date').tail(20)
             if len(saved)!=1 or len(f)!=20:continue
             b=copy.deepcopy(current);b['asof']=day
-            b['seed_provenance']={'source_bundle_sha256':digest(current),'source_asof':current['asof'],'status':'UNVALIDATED_DATE_SPECIFIC_RECHECK'}
+            b['seed_provenance']={'source_bundle_sha256':digest(current),'source_asof':current['asof'],'queued_at':dt.datetime.now(dt.timezone.utc).isoformat(),'status':'UNVALIDATED_DATE_SPECIFIC_RECHECK'}
             b['bars']=[r for r in b['bars'] if r['trade_date']<=day]
             b['calendar']=[d for d in b['calendar'] if d<=day]
             b['flows']=[{'trade_date':str(r.trade_date.date()),'net_amount':int(r.net_amount)} for r in f.itertuples()]

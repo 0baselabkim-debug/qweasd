@@ -78,3 +78,11 @@ def test_planner_keeps_missing_raw_rows_out_of_price_repair_gain(monkeypatch):
  r=plan({'asof':'2026-10-15','sectors':[s]},{'asof':'2026-10-15','tasks':[]})[0]
  assert not r['potential_sector_completion'] and r['potential_stock_gain']==0
  assert r['estimated_kis_market_requests']==0
+
+def test_dated_queue_keeps_creation_time_before_it_is_first_selected():
+ from scripts.recover_technical import fair_tasks
+ old=(None,'2026-10-14/999999',None,{'asof':'2026-10-14','seed_provenance':{'queued_at':'2026-10-16T01:00:00+00:00'}})
+ new=(None,'2026-10-14/000001',None,{'asof':'2026-10-14','seed_provenance':{'queued_at':'2026-10-16T02:00:00+00:00'}})
+ ledger={'jobs':{}}
+ assert [t[1] for t in fair_tasks([new,old],ledger,'2026-10-16T03:00:00+00:00')]==[old[1],new[1]]
+ assert ledger['jobs'][old[1]]['first_seen_at']=='2026-10-16T01:00:00+00:00'
