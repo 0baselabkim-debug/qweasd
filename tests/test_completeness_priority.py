@@ -35,3 +35,17 @@ def test_matching_prices_complete_saved_evidence_without_http(tmp_path,monkeypat
     assert batch.read(batch.CACHE/(b['symbol']+'.json.gz'))['finality']=='UNVERIFIED'
     again=recovery.run(API(),{'flows':pd.DataFrame({'trade_date':[pd.Timestamp(b['asof'])]})},limit=1)
     assert again['results']==[]
+
+def test_publication_gain_never_borrows_previous_run(tmp_path,monkeypatch):
+    import json
+    from scripts.recovery_outcome import emit
+    monkeypatch.chdir(tmp_path);monkeypatch.setenv('GITHUB_RUN_ID','new')
+    root=tmp_path/'technical';root.mkdir()
+    (root/'recovery-report.json').write_text(json.dumps({'run_id':'new','results':[],'promoted':0}))
+    path=root/'recovery-publication-report.json'
+    path.write_text(json.dumps({'run_id':'old','stock_activity_gain':9,'sector_activity_gain':2}))
+    assert 'indicator_effect' not in emit(published=True)
+    path.write_text(json.dumps({'run_id':'new','stock_activity_gain':1,'sector_activity_gain':0}))
+    result=emit(publication_error=True)
+    assert result['indicator_effect']['publication_confirmed'] is False
+    assert result['status']=='PUBLICATION_FAILED'

@@ -205,6 +205,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
                 result['verification_path']='existing_prices_full_verification'
             candidate_hash=digest(proposed)
             batch.write(batch.ROOT/'candidates'/day/b['symbol']/(candidate_hash+'.json.gz'),proposed)
+            result['saved_flow_response_replay']=proposed.get('daily_acceptance',{}).get('flow_check_kind')=='saved_api_response_replay'
             result.update(candidate_sha256=candidate_hash,reasons=validate(proposed,day),guide=buy_guide(proposed,day)['status'])
             if daily_accepted(proposed) and not result['reasons']:
                 batch.write(path,proposed)
@@ -248,6 +249,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
         'promotions_per_10_physical_requests':10*report['promoted']/calls if calls else None,
         'physical_requests_per_attempted_date_symbol':calls/attempted if attempted else None,
         'response_reuse_fraction':bounded.cache_hits/bounded.logical if bounded.logical else None,
+        'saved_flow_response_replays':sum(bool(r.get('saved_flow_response_replay')) for r in results),
         'promotion_fraction':report['promoted']/attempted if attempted else None,
         'unit':'date-symbol candidate promotions; publication and indicator gains measured separately'}
     report['data_outcome']=outcome(report)
