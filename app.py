@@ -37,7 +37,7 @@ st.markdown('''<style>
 from screener.public_build import identity as public_identity
 _build=public_identity(ROOT)
 st.markdown('<style>div[data-testid="stElementContainer"]:has(.public-build){display:none}</style>'
-            +f'<span class="public-build" data-source-sha256="{_build["source_sha256"]}" data-revision="{_build["revision"]}"></span>',unsafe_allow_html=True)
+            +f'<span class="public-build" data-source-sha256="{_build["source_sha256"]}" data-revision="{_build["revision"]}" data-snapshot-sha256="{_build["data_sha256"]}"></span>',unsafe_allow_html=True)
 ss=st.session_state
 for key,value in {'stage':'macro','nav_epoch':0,'preferences':{},'group':None,'symbol':None,'sector_open':False,'stock_open':False}.items():
  if key not in ss:ss[key]=value
@@ -75,7 +75,8 @@ def groups(stamp,asof,version,market,theme_mode,theme_date,theme_version):
  stocks=stocks if market=='전체' else stocks[stocks.market==market]
  return indicators.sector_indicators(data,stocks,matrix,asof,themes.members(theme_date) if theme_mode else None)
 
-stamp=DB.stat().st_mtime_ns;data=raw_data(stamp)
+from screener.publication import stamp as publication_stamp
+stamp=publication_stamp(DB);data=raw_data(stamp)
 with st.sidebar:
  st.markdown('<div class="sidebar-title">한국 증시 수급 필터</div>',unsafe_allow_html=True)
  with st.container(key='sidebar_menu'):

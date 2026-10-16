@@ -13,4 +13,6 @@ def identity(root=None):
   revision=subprocess.run(['git','rev-parse','HEAD'],cwd=root,capture_output=True,text=True,timeout=2,check=True).stdout.strip()
   if len(revision)!=40 or any(c not in '0123456789abcdef' for c in revision):revision='unavailable'
  except (OSError,subprocess.SubprocessError):revision='unavailable'
- return {'source_sha256':digest.hexdigest(),'revision':revision}
+ from .publication import selected
+ database=selected(root/'snapshot/dashboard.duckdb')
+ return {'source_sha256':digest.hexdigest(),'revision':revision,'data_sha256':hashlib.sha256(database.read_bytes()).hexdigest()}

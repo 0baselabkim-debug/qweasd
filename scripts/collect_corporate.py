@@ -78,7 +78,7 @@ def discover(api,state,universe,end,symbols=None):
 def utc_now():return dt.datetime.now(dt.timezone.utc).isoformat()
 
 def component_due(job,component,now):
- if job.get(component+'_status') in ['success','held_nondec_fiscal_period']:return False
+ if job.get(component+'_status') in ['success','held_nondec_fiscal_period','held_attachment_only']:return False
  return job.get(component+'_retry_after',job.get('retry_after','') if component=='financial' else '')<=now
 
 def mark_attempt(job,component):
@@ -86,7 +86,7 @@ def mark_attempt(job,component):
  job[component+'_attempts']=job.get(component+'_attempts',0)+1
 
 def error_class(error):
- if error in ['receipt_or_period_mismatch','business_section_not_unique','document_xml_missing']:
+ if error in ['receipt_or_period_mismatch','business_section_not_unique','business_document_not_unique','document_xml_missing','DART_document_status_014']:
   return 'evidence_review_required'
  if error=='BadZipFile' or error.startswith(('transport_','DART_status_')):return 'retryable_response'
  if error in ['unavailable','budget_exhausted']:return 'retryable_unavailable'
@@ -102,6 +102,8 @@ def pending_filings(state,symbols,now):
    candidates=[f for f in filings if (f['form']=='annual')==annual]
    if not candidates:continue
    f=max(candidates,key=lambda f:(f['period_end'],f['disclosed_on'],f['receipt']))
+   linked=state['jobs'].get(f['receipt'],{}).get('linked_periodic_receipt')
+   if linked and linked in state['filings']:f=state['filings'][linked]
    j=state['jobs'].get(f['receipt'],{})
    if any(component_due(j,c,now) for c in ['business','financial']):pending.append(f)
  # Unattempted receipts first, then oldest attempt; deterministic round-robin ties.
@@ -134,15 +136,20 @@ def collect_cycle(api,state,universe,symbols,limit,cache,end,skip_discovery,chec
 
 def _process_once(api,state,f,cache):
  receipt=f['receipt'];job=state['jobs'].setdefault(receipt,{})
+ if f['name'].startswith('[첨부정정]'):
+  if not any(component_due(job,c,utc_now()) for c in ['business','financial']):return
+  for c in ['business','financial']:mark_attempt(job,c)
+  from scripts.repair_corporate_attachments import repair
+  result=repair(api,state,[receipt])[0]
+  if result.get('error'):
+   for c in ['business','financial']:job.update({c+'_status':'failed',c+'_error':result['error']})
+  return
  if component_due(job,'business',utc_now()):
   mark_attempt(job,'business')
   try:
    raw=api.get('document.xml',{'rcept_no':receipt})
-   with zipfile.ZipFile(io.BytesIO(raw)) as z:
-    files=[i for i in z.infolist() if i.filename.lower().endswith('.xml') and i.file_size<30000000]
-    if not files:raise ValueError('document_xml_missing')
-    xml=z.read(max(files,key=lambda x:x.file_size)).decode('utf-8')
-   text=business_section(xml);sha=hashlib.sha256(raw).hexdigest()
+   from scripts.corporate_documents import document_section
+   document_name,text=document_section(raw,f);sha=hashlib.sha256(raw).hexdigest()
    rows=business_candidates(text,f,sha)
    today=str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date())
    previous=list(state['reviews'].values())
@@ -154,7 +161,7 @@ def _process_once(api,state,f,cache):
      state['events'].append({'type':'theme_revalidated','symbol':f['symbol'],'theme':row['theme'],'receipt':receipt,'previous_receipt':old[0]['receipt'],'observed_at':today})
    for r in rows:
     key=receipt+'_'+r['theme'];state['reviews'].setdefault(key,r)
-   job.update(business_status='success',document_sha256=sha,section_sha256=hashlib.sha256(text.encode()).hexdigest(),characters=len(text));job.pop('business_error',None)
+   job.update(business_status='success',document_name=document_name,document_sha256=sha,section_sha256=hashlib.sha256(text.encode()).hexdigest(),characters=len(text));job.pop('business_error',None)
    if cache:
     cache.mkdir(parents=True,exist_ok=True);(cache/(receipt+'.txt')).write_text(text)
    state['events'].append({'type':'business_observed','symbol':f['symbol'],'receipt':receipt,'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'section_sha256':job['section_sha256']})
@@ -182,7 +189,7 @@ def process(api,state,f,cache):
  finally:
   for c in ['business','financial']:
    if job.get(c+'_attempts',0)==before[c]:continue
-   if job.get(c+'_status')=='success':
+   if job.get(c+'_status') in ['success','held_attachment_only']:
     for suffix in ['retry_after','error_class']:job.pop(c+'_'+suffix,None)
     continue
    error=job.get(c+'_error','budget_exhausted' if exhausted else job.get(c+'_status','unavailable'))
@@ -201,7 +208,7 @@ def main():
  run={'id':os.environ.get('GITHUB_RUN_ID','local')+'-'+str(time.time_ns()),'started_at':started,'completed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'calls':api.calls,'seconds':round(time.monotonic()-api.started,2),'processed_filings':len(processed),'budget_exhausted':budget,'discovery_through':state.get('discovery_through'),'discovery_error':state.get('last_discovery_error'),
       'failed_jobs':{r:{k:v for k,v in j.items() if k.endswith('error')} for r,j in state['jobs'].items() if j.get('business_status')=='failed' or j.get('financial_status')=='failed'}}
  run['scope']=sorted(symbols) if symbols else 'entire_universe'
- run['pending_filings']=sum(state['jobs'].get(f['receipt'],{}).get('business_status')!='success' or state['jobs'].get(f['receipt'],{}).get('financial_status') not in ['success','held_nondec_fiscal_period'] for f in pending)
+ run['pending_filings']=sum(state['jobs'].get(f['receipt'],{}).get('business_status')!='success' or state['jobs'].get(f['receipt'],{}).get('financial_status') not in ['success','held_nondec_fiscal_period','held_attachment_only'] for f in pending)
  run['unavailable_financials']=[k for k,j in state['jobs'].items() if j.get('financial_status')=='unavailable']
  run['held_financials']=[k for k,j in state['jobs'].items() if j.get('financial_status')=='held_nondec_fiscal_period']
  state['runs'].append(run);save_state(state,a.state);build_database(state,a.db)

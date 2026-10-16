@@ -6,7 +6,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [probe, collect, diagnose]
+        options: [probe, collect, diagnose, repair_attachments]
         default: probe
       symbols:
         description: Optional comma-separated codes for a bounded pilot; blank scans the universe
@@ -92,8 +92,13 @@ jobs:
               shutil.copy2('/tmp/corporate-checkpoint.json.gz','corporate-candidate/state.json.gz')
           PY
           fi
+      - name: Retry two attachment mappings with official evidence
+        if: inputs.mode == 'repair_attachments'
+        env:
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+        run: python scripts/repair_corporate_attachments.py
       - name: Collect changed disclosures and resume unfinished companies
-        if: inputs.mode != 'probe' && inputs.mode != 'diagnose'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'repair_attachments'
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
           PILOT_SYMBOLS: ${{ inputs.symbols || '' }}

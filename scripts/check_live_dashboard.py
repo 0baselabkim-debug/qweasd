@@ -109,7 +109,8 @@ with sync_playwright() as p:
   ui,response=connect();pause();report['http_status']=response.status if response else None
   from screener.public_build import identity
   expected_build=identity(ROOT);stamp=ui.locator('.public-build')
-  report['deployment']={'expected':expected_build,'source_sha256':stamp.get_attribute('data-source-sha256'),'revision':stamp.get_attribute('data-revision')}
+  assert stamp.get_attribute('data-snapshot-sha256')==expected_build['data_sha256'],'Published data generation differs from test snapshot'
+  report['deployment']={'expected':expected_build,'source_sha256':stamp.get_attribute('data-source-sha256'),'revision':stamp.get_attribute('data-revision'),'data_sha256':stamp.get_attribute('data-snapshot-sha256')}
   assert report['deployment']['source_sha256']==expected_build['source_sha256'],'Public app source differs from tested checkout'
   assert ui.locator('[data-testid="stSidebar"] .sidebar-title').inner_text()=='한국 증시 수급 필터'
   assert not ui.locator('[data-testid="stMain"] h1').count();layout()

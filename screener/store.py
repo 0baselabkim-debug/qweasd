@@ -27,7 +27,8 @@ def connect(path=DB,read_only=False):
     return c
 
 def load(path=DB):
-    with connect(path,read_only=True) as c:
+    from .publication import selected
+    with connect(selected(path),read_only=True) as c:
         tables={name:c.execute(f'SELECT * FROM {name}').df() for name in ['instruments','memberships','flows','prices','financials','benchmarks','calendar','exclusions']}
         tables['metadata']={k:json.loads(v) for k,v in c.execute('SELECT key,value FROM metadata').fetchall()}
     return tables

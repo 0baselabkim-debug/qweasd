@@ -37,6 +37,10 @@ def turnover_matrix(data,codes,markets,asof):
     # Do not use prices under a known unresolved market/source reconciliation conflict.
     for date,rows in data.get('metadata',{}).get('adjusted_price_conflicts',{}).items():
         affected={r['symbol'] for r in rows}
+        from .liquidity_evidence import permits
+        proofs=data.get('metadata',{}).get('liquidity_price_evidence',{}).get(date,{})
+        for row in p[(p.trade_date==pd.Timestamp(date))&p.symbol.isin(affected)].to_dict('records'):
+            if row['symbol'] in proofs and permits(row,proofs[row['symbol']],asof):affected.discard(row['symbol'])
         p.loc[(p.trade_date==pd.Timestamp(date))&p.symbol.isin(affected),'turnover']=np.nan
     p.loc[(p.turnover<0)|~np.isfinite(p.turnover),'turnover']=np.nan
     return p.pivot(index='trade_date',columns='symbol',values='turnover').reindex(index=days,columns=codes)

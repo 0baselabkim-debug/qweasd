@@ -155,3 +155,36 @@ def test_discovery_budget_reserves_processing_and_cursor_on_incomplete_chunk(tmp
  assert api.calls==2 and seen==[f['receipt']]
  assert state['discovery_through']=='2026-10-14'
  assert state['last_discovery_error']=='discovery_budget_exhausted'
+
+def test_document_error_payload_and_exact_business_selection():
+ import io,zipfile
+ from scripts.corporate_documents import document_section
+ f=filing()
+ with pytest.raises(ValueError,match='DART_document_status_014'):
+  document_section(b'<result><status>014</status><message>no file</message></result>',f)
+ text='실제 사업의 내용을 설명하는 테스트 문장입니다. '*50
+ xml='<DOCUMENT-NAME>반기보고서</DOCUMENT-NAME><COMPANY-NAME AREGCIK="'+f['corp_code']+'">기업</COMPANY-NAME><TITLE>II. 사업의 내용</TITLE><P>'+text+'</P><TITLE>III. 재무에 관한 사항</TITLE>'
+ raw=io.BytesIO()
+ with zipfile.ZipFile(raw,'w') as z:
+  z.writestr(f['receipt']+'_audit.xml','<DOCUMENT-NAME>감사보고서</DOCUMENT-NAME>'+('audit '*3000))
+  z.writestr(f['receipt']+'_main.xml',xml)
+ name,section=document_section(raw.getvalue(),f)
+ assert name.endswith('_main.xml') and '실제 사업' in section
+ with zipfile.ZipFile(raw,'a') as z:z.writestr(f['receipt']+'_duplicate.xml',xml)
+ with pytest.raises(ValueError,match='business_document_not_unique'):document_section(raw.getvalue(),f)
+
+def test_attachment_mapping_requires_exact_official_receipt_and_period():
+ from scripts.corporate_documents import attachment_parent
+ f=filing();a=dict(f,receipt='20260815000001',name='[첨부정정]'+f['name'],disclosed_on='2026-08-15')
+ d=response()
+ for r in d['list']:r['corp_code']=f['corp_code']
+ class API:
+  def get(self,path,params):
+   if path=='list.json':return {'status':'000','total_page':1,'list':[{'corp_code':f['corp_code'],'report_nm':x['name'],'rcept_no':x['receipt'],'rcept_dt':x['disclosed_on'].replace('-','')} for x in [a,f]]}
+   return d
+ parent,r,proof=attachment_parent(API(),a)
+ assert parent['receipt']==f['receipt'] and r['receipt']!=a['receipt']
+ d['list'][0]['corp_code']='wrong'
+ with pytest.raises(ValueError,match='corporate_identity_mismatch'):attachment_parent(API(),a)
+ d['list'][0]['corp_code']=f['corp_code'];d['list'][0]['bsns_year']='2000'
+ with pytest.raises(ValueError,match='receipt_or_period_mismatch'):attachment_parent(API(),a)

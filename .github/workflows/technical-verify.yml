@@ -53,14 +53,16 @@ jobs:
               timeout 600 python scripts/collect_technical.py --mode recover --limit 2 --budget 240
             fi
           fi
+      - name: Prepare coherent date-specific liquidity evidence
+        run: python scripts/publish_recovery.py
       - name: Preserve evidence and availability records
         if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add technical
+          git add technical snapshot
           if ! git diff --cached --quiet; then
             git commit -m 'Record deferred official reference verification'
-            git pull --rebase origin main
+            # Reject concurrent publication changes; never rebase a generated binary snapshot.
             git push origin HEAD:main
           fi

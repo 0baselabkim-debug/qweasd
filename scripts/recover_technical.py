@@ -105,10 +105,30 @@ def candidate(api,original,references,paged):
     return verify_bundle(api,b,references)
 
 
+def fair_tasks(tasks,ledger,now):
+    """Rotate dates, then oldest eligible attempt; paused work has a resume lane."""
+    dates=sorted({t[3]['asof'] for t in tasks})
+    last=ledger.get('last_processed_date','')
+    dates=[d for d in dates if d>last]+[d for d in dates if d<=last]
+    queues={d:[] for d in dates}
+    for t in tasks:
+        job=ledger['jobs'].setdefault(t[1],{})
+        job.setdefault('first_seen_at',now)
+        queues[t[3]['asof']].append(t)
+    for q in queues.values():
+        q.sort(key=lambda t:(ledger['jobs'][t[1]].get('last_result',{}).get('error_type')!='RecoveryBudget',
+                             t[0] or ledger['jobs'][t[1]]['first_seen_at'],t[1]))
+    while any(queues.values()):
+        for d in dates:
+            if queues[d]:yield queues[d].pop(0)
+
+
 def run(api,data,limit=3,max_calls=60,seconds=240):
     from scripts.collect_technical import paged
     latest=str(data['flows'].trade_date.max().date());start=dt.datetime.now(dt.timezone.utc)
     ledger_path=batch.ROOT/'recovery-state.json';ledger=batch.read(ledger_path,{'jobs':{},'runs':[]})
+    from scripts.publish_recovery import seed_dates
+    seeded=seed_dates(data,limit=2) if 'prices' in data else []
     tasks=[];seen=set();refs_by_date={};status_by_date={}
     # Completion flags never exclude a conflicting observation from this queue.
     paths=list(batch.CACHE.glob('*.json.gz'))+list((batch.ROOT/'history').glob('*/*.json.gz'))+list((batch.ROOT/'pending').glob('*/*.json.gz'))
@@ -122,7 +142,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         if retry_after>start.isoformat():continue
         tasks.append((j.get('attempted_at',''),key,path,b))
     bounded=BoundedAPI(api,max_calls=min(60,max_calls),seconds=min(240,seconds));results=[]
-    for _,key,path,b in sorted(tasks,key=lambda x:(x[0],x[3]['asof'],x[1])):
+    for _,key,path,b in fair_tasks(tasks,ledger,start.isoformat()):
         if len(results)>=min(10,limit) or time.monotonic()-bounded.start>=bounded.seconds:break
         day=b['asof']
         if day not in refs_by_date:
@@ -132,7 +152,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         refs=refs_by_date[day]
         if not reference_ready(b,refs):continue
         checked=batch.crosscheck(copy.deepcopy(b),refs)
-        if checked.get('price_finality')!='CONFLICT':continue
+        if checked.get('price_finality')!='CONFLICT' and not b.get('seed_provenance'):continue
         job=ledger['jobs'].setdefault(key,{});attempts=job.get('attempts',0)+1
         observation_start=len(bounded.observations)
         before=digest(b)
@@ -169,6 +189,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         delay=dt.timedelta(minutes=15) if result.get('error_type')=='RecoveryBudget' else dt.timedelta(hours=min(24,6*2**min(attempts-1,2)))
         job.update(attempted_at=start.isoformat(),attempts=attempts,
                    retry_after=(start+delay).isoformat(),last_result=result)
+        ledger['last_processed_date']=day
         results.append(result);batch.write(ledger_path,ledger)
         if result.get('error_type')=='RecoveryBudget':break
     report={'asof':latest,'started_at':start.isoformat(),'finished_at':dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -178,7 +199,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
             'metering':'physical_boundary' if bounded.physical_supported else 'conservative_adapter_reservation',
             'logical_requests':bounded.logical,'cached_responses_reused':bounded.cache_hits,
             'run_id':__import__('os').environ.get('GITHUB_RUN_ID'),'event':__import__('os').environ.get('GITHUB_EVENT_NAME'),
-            'time_budget_seconds':bounded.seconds,'reference_status':status_by_date,'results':results,
+            'time_budget_seconds':bounded.seconds,'seeded_date_tasks':seeded,'reference_status':status_by_date,'results':results,
             'promoted':sum(r['promoted'] for r in results),'kis_metrics':api.metrics}
     ledger['runs']=(ledger['runs']+[report])[-30:];batch.write(ledger_path,ledger)
     batch.write(batch.ROOT/'recovery-report.json',report);batch.refresh_summary(latest)
