@@ -14,7 +14,8 @@ def diagnose(data,asof):
         matrix=turnover_matrix(data,g.symbol.tolist(),[market],asof);missing={};reasons=collections.defaultdict(set);checks=[];complete=0
         for code in g.symbol:
             values=matrix[code];_,ratio=activity(values)
-            if pd.notna(ratio):ready+=1;complete+=1;continue
+            if len(values)==25 and values.notna().all():complete+=1
+            if pd.notna(ratio):ready+=1;continue
             gaps=[]
             for date in values.index[values.isna()]:
                 key=(code,date);day=str(date.date())
