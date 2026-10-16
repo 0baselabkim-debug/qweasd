@@ -248,6 +248,8 @@ with sync_playwright() as p:
   import pandas as pd
   prior_dates=sorted(data['flows'].loc[data['flows'].trade_date<pd.Timestamp(asof),'trade_date'].dt.strftime('%Y-%m-%d').unique())
   if prior_dates:
+   code=report['liquidity_trace'][-1]['symbol']
+   assert ui.get_by_text(stocks.set_index('symbol').loc[code,'name']+' · '+code,exact=True).count()==1
    prior=prior_dates[-1];choose('수급 기준일',prior)
    rows=download('일별 수급 CSV','historical-flow.csv')
    source=data['flows'][data['flows'].symbol==code].set_index('trade_date').net_amount
