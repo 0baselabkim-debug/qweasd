@@ -145,3 +145,18 @@ def test_closed_day_no_stock_calls(bundle,tmp_path,monkeypatch):
   def request(self,*a):pytest.fail('No market requests on confirmed closed day')
  monkeypatch.setattr(c,'KIS',Closed);c.collect('20261015',tmp_path)
  assert json.loads(gzip.decompress((tmp_path/'bundle.json.gz').read_bytes()))['status']=='closed'
+
+def test_industry_fallback_keeps_original_quote_priority(bundle,monkeypatch):
+ import collect_daily_snapshot as c
+ b,r=enrich(bundle);b['universe'][0]['sector']=None;b['kind_industries']={'000001':'different fallback'}
+ r['quote']['bstp_kor_isnm']='original quote industry'
+ monkeypatch.setattr(c,'utcnow',lambda:'2026-10-15T18:31:00+09:00')
+ api=API(r)
+ _,record,_,error=fetch_stock(b['universe'][0],api,b['trade_date'],'20260816',b,set(),dt.datetime(2099,1,1,tzinfo=KST),float('inf'))
+ assert not error and len(api.calls)==3 and record['quote']['bstp_kor_isnm']=='original quote industry'
+
+def test_unready_benchmark_is_not_a_durable_success():
+ from collect_daily_snapshot import benchmark_ready
+ assert not benchmark_ready({'output2':[{'stck_bsop_date':'20261015','bstp_nmix_prpr':'100'}]},'20261016')
+ assert benchmark_ready({'output2':[{'stck_bsop_date':'20261016','bstp_nmix_prpr':'100'}]},'20261016')
+ assert not benchmark_ready({'output2':[{'stck_bsop_date':'20261016','bstp_nmix_prpr':'nan'}]},'20261016')

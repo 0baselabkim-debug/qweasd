@@ -53,7 +53,9 @@ def test_app_and_workflows_do_not_call_removed_features():
  workflow=Path('.github/workflows/liquidity-recovery.yml').read_text()
  assert 'kis-validation-auth' in workflow and 'cancel-in-progress: false' in workflow
  assert 'recover_liquidity.py' in workflow and 'SUPABASE' not in workflow
- assert '30 11' in Path('.github/workflows/daily-dashboard.yml').read_text()
+ daily=Path('.github/workflows/daily-dashboard.yml').read_text()
+ assert "cron: '30 9 * * 1-5'" in daily and "cron: '0 12 * * 1-5'" in daily
+ assert "cron: '30 11 * * 1-5'" not in daily and "cron: '30 14 * * 1-5'" not in daily
 
 def test_already_published_proof_does_not_request_any_api(evidence,tmp_path,monkeypatch):
  from scripts import recover_liquidity as recovery

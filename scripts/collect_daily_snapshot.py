@@ -91,7 +91,7 @@ def fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline):
                 return code,None,{'reason':'official_delisting','name':row['name'],'market':row['market'],'fields':fields,'observed_at':utcnow(),'source_run':os.environ.get('GITHUB_RUN_ID')},None
             raise ValueError('Target date missing or duplicate')
         observed=utcnow()
-        quote,reasons=chart_quote(series,matched[0],row,day,observed,bool(row.get('sector') or result.get('kind_industries',{}).get(code)))
+        quote,reasons=chart_quote(series,matched[0],row,day,observed,bool(row.get('sector')))
         source='FHKST03010100.output1'
         if reasons:
             quote=api.request('/uapi/domestic-stock/v1/quotations/inquire-price',{'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':code},'FHKST01010100')['output']
