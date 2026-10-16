@@ -14,7 +14,7 @@ def main():
  except Exception as e:result.update(error_type=type(e).__name__,http=getattr(e,'code',None))
  # A human review of explicit endpoint-specific unit and market scope is required.
  result['publication_status']='unit_scope_pending'
- out=Path('technical/provider-spec/investor-market.json');out.parent.mkdir(parents=True,exist_ok=True)
+ out=Path('liquidity/provider-spec/investor-market.json');out.parent.mkdir(parents=True,exist_ok=True)
  out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
  print(json.dumps({k:result.get(k) for k in ['tr_id','publication_status','error_type','http']}))
 if __name__=='__main__':main()

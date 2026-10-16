@@ -1,0 +1,18 @@
+{
+  "before": [
+    ".github/workflows/corporate-refresh.yml",
+    ".github/workflows/daily-dashboard.yml",
+    ".github/workflows/macro-refresh.yml",
+    ".github/workflows/technical-refresh.yml",
+    ".github/workflows/technical-verify.yml"
+  ],
+  "after": [
+    ".github/workflows/liquidity-recovery.yml",
+    ".github/workflows/daily-dashboard.yml",
+    ".github/workflows/macro-refresh.yml",
+    ".github/workflows/corporate-refresh.yml"
+  ],
+  "removed_only_trading_collection": "technical-refresh.yml",
+  "replacement_public_data_validation": "technical-verify.yml -> liquidity-recovery.yml",
+  "daily_unchanged": true
+}

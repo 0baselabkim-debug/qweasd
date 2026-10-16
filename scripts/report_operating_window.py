@@ -7,7 +7,7 @@ def report(day,out):
     target=dt.date.fromisoformat(day);now=dt.datetime.now(dt.timezone.utc);kst=ZoneInfo('Asia/Seoul')
     workflows=[]
     fields='databaseId,headSha,event,status,conclusion,createdAt,startedAt,updatedAt,url'
-    for workflow in ['daily-dashboard.yml','technical-verify.yml','technical-refresh.yml','corporate-refresh.yml']:
+    for workflow in ['daily-dashboard.yml','liquidity-recovery.yml','corporate-refresh.yml']:
         runs=json.loads(subprocess.check_output(['gh','run','list','--repo','0baselabkim-debug/qweasd','--workflow',workflow,'--limit','100','--json',fields],text=True))
         for r in runs:
             r['created_at_kst']=dt.datetime.fromisoformat(r['createdAt'].replace('Z','+00:00')).astimezone(kst).isoformat()

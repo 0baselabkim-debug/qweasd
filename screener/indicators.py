@@ -26,7 +26,6 @@ def universe(data,asof):
     x['intensity_1d']=x.net_amount/x.market_cap.where(x.market_cap>0)
     metrics,matrix=stock_trends(data,x,day)
     x=x.join(metrics,on='symbol',validate='one_to_one')
-    x['eligibility']='판정 보류'
     return x,matrix
 
 

@@ -1,7 +1,7 @@
 """Date-specific turnover release, not a general release of raw price conflicts."""
 import math
-from screener.technical import validate
-from screener.technical_quality import daily_accepted,digest
+from screener.market_validation import validate
+from screener.liquidity_quality import daily_accepted,digest
 
 def price_identity(row):
     return {k:str(row[k]) for k in ['symbol','trade_date','close','adjusted_close','volume','turnover','exchange','source']}

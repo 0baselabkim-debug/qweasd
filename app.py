@@ -11,22 +11,17 @@ importlib.reload(publication)
 importlib.reload(public_store)
 from screener.store import load,DB
 import screener.indicators as indicators
-import screener.eligibility as eligibility
 import screener.macro as macro
 import screener.dashboard_style as ui
 import screener.corporate_ui as corporate_ui
 import screener.themes as themes
 import screener.flow_ui as flow_ui
 import screener.exploration_ui as explorer
-import screener.journal_ui as journal_ui
-import screener.technical as technical_guide
-import screener.technical_cache as technical_cache
-import screener.technical_quality as technical_quality
 from screener.flow_trends import screen_flows,stock_series
 
 ROOT=Path(__file__).parent
 st.set_page_config(page_title='한국 증시 수급 필터',page_icon='◈',layout='wide',initial_sidebar_state='expanded')
-for module in [indicators,eligibility,macro,ui,corporate_ui,themes,flow_ui,explorer,technical_quality,technical_guide,technical_cache,journal_ui]:importlib.reload(module)
+for module in [indicators,macro,ui,corporate_ui,themes,flow_ui,explorer]:importlib.reload(module)
 ui.install()
 explorer.install()
 st.markdown('''<style>
@@ -45,6 +40,8 @@ st.markdown('<style>div[data-testid="stElementContainer"]:has(.public-build){dis
 ss=st.session_state
 for key,value in {'stage':'macro','nav_epoch':0,'preferences':{},'group':None,'symbol':None,'sector_open':False,'stock_open':False}.items():
  if key not in ss:ss[key]=value
+
+if ss.stage not in ['macro','sectors','stocks','detail']:ss.stage='macro'
 
 def go(stage):explorer.navigate(ss,stage)
 def choose_group(g):explorer.navigate(ss,'sector',g)
@@ -65,13 +62,12 @@ def period(section):return {'오늘(1일)':1,'지난 5일':5,'지난 20일':20}[
 def csv_button(label,frame,key):st.download_button(label,frame.to_csv(index=False).encode('utf-8-sig'),key+'.csv','text/csv',key=key,on_click='ignore')
 def amount(value,unit='억원',decimals=2):return '미확보' if pd.isna(value) else f'{value:,.{decimals}f}{unit}'
 
-version=hashlib.sha256(b''.join((ROOT/p).read_bytes() for p in ['screener/indicators.py','screener/eligibility.py','screener/flow_trends.py','eligibility_rules.json'])).hexdigest()
+version=hashlib.sha256(b''.join((ROOT/p).read_bytes() for p in ['screener/indicators.py','screener/flow_trends.py'])).hexdigest()
 @st.cache_data(show_spinner=False,max_entries=2)
 def raw_data(stamp):return load()
 @st.cache_data(show_spinner=False,max_entries=3)
 def stock_data(stamp,asof,version):
  data=raw_data(stamp);x,matrix=indicators.universe(data,asof);x=indicators.stock_activity(data,x,asof)
- x['eligibility']=[eligibility.assess(r)['status'] for r in x.to_dict('records')]
  return x,matrix
 @st.cache_data(show_spinner=False,max_entries=8)
 def groups(stamp,asof,version,market,theme_mode,theme_date,theme_version):
@@ -86,14 +82,11 @@ with st.sidebar:
  with st.container(key='sidebar_menu'):
   st.button('매크로 지표',type='primary' if ss.stage=='macro' else 'secondary',width='stretch',on_click=go,args=('macro',))
   st.button('수급 필터',type='primary' if ss.stage in ['sectors','stocks','detail'] else 'secondary',width='stretch',on_click=go,args=('sectors',))
-  st.button('매매일지',type='primary' if ss.stage=='journal' else 'secondary',width='stretch',on_click=go,args=('journal',))
  st.divider()
  st.subheader('조회 조건')
  asof=select('수급 기준일',sorted(data['flows'].trade_date.dt.strftime('%Y-%m-%d').unique(),reverse=True),'asof')
  market=select('시장',['전체','KOSPI','KOSDAQ'],'market')
  classification=radio('분류체계',['공식 업종','투자 테마'],'classification')
-if ss.stage=='journal':
- journal_ui.render(data['instruments'],str(data['flows'].trade_date.max().date()));st.stop()
 if ss.stage!='macro':
  with st.container(key='header'):
   a,b=st.columns([4,1.5],vertical_alignment='center')
@@ -177,7 +170,7 @@ if ss.stage=='stocks':
  with b:sort=select('종목 정렬',mapping,'stock_sort')
  key=mapping[sort];ascending=key=='name' or (mode=='자금 이탈' and key in [f'net_{days}d','change_5d',f'intensity_{days}d'])
  ordered=screen_flows(selected,mode,days).sort_values([key,'symbol'],ascending=[ascending,True],na_position='last').reset_index(drop=True)
- frame=pd.DataFrame({'종목명':ordered.name,'코드':ordered.symbol,'선택 기간 순매수(억원)':ordered[f'net_{days}d']/1e8,'오늘 순매수(억원)':ordered.net_1d/1e8,'5일 순매수(억원)':ordered.net_5d/1e8,'20일 순매수(억원)':ordered.net_20d/1e8,'5일 변화(억원)':ordered.change_5d/1e8,'수급 변화':ordered.change_state,'20일 순매수 발생일':ordered.positive_days_20d,'순매수 강도(%)':ordered[f'intensity_{days}d']*100,'거래 활성도(배)':ordered.activity_ratio,'5일 평균 거래대금(억원)':ordered.average_turnover/1e8,'투자 적격성':ordered.eligibility})
+ frame=pd.DataFrame({'종목명':ordered.name,'코드':ordered.symbol,'선택 기간 순매수(억원)':ordered[f'net_{days}d']/1e8,'오늘 순매수(억원)':ordered.net_1d/1e8,'5일 순매수(억원)':ordered.net_5d/1e8,'20일 순매수(억원)':ordered.net_20d/1e8,'5일 변화(억원)':ordered.change_5d/1e8,'수급 변화':ordered.change_state,'20일 순매수 발생일':ordered.positive_days_20d,'순매수 강도(%)':ordered[f'intensity_{days}d']*100,'거래 활성도(배)':ordered.activity_ratio,'5일 평균 거래대금(억원)':ordered.average_turnover/1e8})
  ids=ordered.symbol.tolist()
  event=explorer.table(frame,ids,'종목명','stock_grid_'+str(ss.nav_epoch),f'stocks:{asof}:{market}:{classification}:{group}:{days}:{sort}:{mode}')
  if event and event.get('interaction') in ['double_click','touch','keyboard'] and event.get('id') in ids:
@@ -186,29 +179,24 @@ if ss.stage=='stocks':
  st.stop()
 
 if ss.symbol not in selected.symbol.values:st.info('현재 조건에서 선택 종목을 조회할 수 없습니다.');st.stop()
-r=selected[selected.symbol==ss.symbol].iloc[0];assessment=eligibility.assess(r)
+r=selected[selected.symbol==ss.symbol].iloc[0]
 st.subheader(r['name']+' · '+r.symbol)
-ui.badges([r.market,r.sector,('투자 적격성: '+assessment['status'],'hold'),f'종가 {ui.number(r.close,0)}원'])
-buy_result,technical_bundle=journal_ui.buy_result(r.symbol,asof)
+ui.badges([r.market,r.sector,f'종가 {ui.number(r.close,0)}원'])
 with st.container(key='stock_kpis'):
  cols=st.columns(4)
  for col,days in zip(cols[:3],[1,5,20]):
   with col:
-   st.markdown('<div class="buy-guide-spacer"></div>',unsafe_allow_html=True)
    ui.kpi(f'{days}일 '+('순매수' if days==1 else '누적 순매수'),ui.number(r[f'net_{days}d']/1e8),'억원',ui.tone(r[f'net_{days}d']))
  with cols[3]:
-  journal_ui.buy_label(buy_result)
   ui.kpi('20일 순매수 발생일',ui.number(r.positive_days_20d,0),'일')
-journal_ui.technical_details(buy_result,technical_bundle)
 flow_ui.chart(stock_series(matrix,r.symbol),20,'stock_flow_chart','외국인 순매수 추이 · 최근 20거래일')
 with st.container(key='detail_metrics'):
  a,b,c=st.columns(3)
  a.metric('5일 평균 거래대금',amount(r.average_turnover/1e8));b.metric('거래 활성도',amount(r.activity_ratio,'배'));c.metric('시가총액',amount(r.market_cap/1e8))
-st.subheader('투자 적격성 · 재무 판단 근거')
-ui.badges([(assessment['status'],'hold'),*assessment['reasons'][:1],('감사의견·중대한 재무 위험 정보 미확보','hold')])
+st.subheader('공시 재무정보')
 financial={'매출액':(r.revenue/1e8,'억원'),'영업이익':(r.operating_profit/1e8,'억원'),'전년 영업이익':(r.previous_operating_profit/1e8,'억원'),'당기순이익':(r.net_income/1e8,'억원'),'자본총계':(r.equity/1e8,'억원'),'부채총계':(r.liabilities/1e8,'억원'),'영업현금흐름':(r.ocf/1e8,'억원'),'매출 성장률':(r.revenue_growth*100,'%'),'영업이익 성장률':(r.op_growth*100,'%'),'ROE':(r.roe*100,'%'),'부채비율':(r.debt_ratio*100,'%'),'PER':(r.per,'배'),'PBR':(r.pbr,'배')}
 rows=[{'항목':k,'실제 값':('흑자전환' if k=='영업이익 성장률' and r.turnaround else amount(v,u)),'기준':'공시된 동일 연간 기간'} for k,(v,u) in financial.items()]
-rows += [{'항목':'자본잠식 여부','실제 값':'판정 보류','기준':'자본금 미확보 · 자본총계만으로 일부 자본잠식 여부 추정 안 함'},{'항목':'감사의견','실제 값':'미확보','기준':'공식 감사의견 확인 필요'},{'항목':'중대한 재무 위험','실제 값':'미확보','기준':'미확보를 위험 없음으로 판단하지 않음'}]
+rows += [{'항목':'자본잠식 여부','실제 값':'미확보','기준':'자본금 미확보 · 자본총계만으로 일부 자본잠식 여부 추정 안 함'},{'항목':'감사의견','실제 값':'미확보','기준':'공식 감사의견 확인 필요'},{'항목':'중대한 재무 위험','실제 값':'미확보','기준':'미확보를 위험 없음으로 판단하지 않음'}]
 st.dataframe(pd.DataFrame(rows),hide_index=True,width='content',row_height=44,column_config={'항목':st.column_config.TextColumn(width=170),'실제 값':st.column_config.TextColumn(width=190,alignment='right'),'기준':st.column_config.TextColumn(width=260)})
 if pd.notna(r.period_end):
  ui.badges([f'회계기간 {pd.Timestamp(r.period_end):%Y-%m-%d}',f'실제 공시 {pd.Timestamp(r.disclosed_on):%Y-%m-%d}',r.scope])
@@ -229,8 +217,7 @@ with st.expander('추가 사업보고서 조사 기록'):
   st.write(review['theme']+' · '+review['status']+' · '+review.get('reason',review.get('rationale','')))
   for excerpt in review.get('excerpts',[])[:2]:st.write(excerpt)
   st.link_button('사업보고서 원문 '+review['receipt'],review['evidence_url'],key='review_'+str(review_index))
-with st.expander('상세 출처 · 판정 규칙'):
+with st.expander('상세 출처 · 계산 기준'):
  st.write('종가 출처: '+str(r.price_source));st.write('시총 출처: '+str(r.get('market_cap_source','미확보')))
  st.write('거래 활성도는 동일한 KRX 범위와 25거래일 완전성을 확인한 경우만 산출합니다. 기존 가격 정합성 문제는 수급 금액 집계와 분리합니다.')
  st.write('PER/PBR은 연간 손익·자본 기준, 연결이면 지배주주 지분 기준. ROE는 총순이익/평균 총자본. 최신 분기 자료와 혼합하지 않습니다.')
- st.write(assessment['reasons']);st.json(json.loads((ROOT/'eligibility_rules.json').read_text()))

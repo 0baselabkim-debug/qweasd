@@ -61,3 +61,6 @@ python -m pytest -q tests/test_dashboard.py tests/test_dashboard_deployment.py t
 최신 결과는 [섹터·테마·자동 게시 보고서](reports/sector/REPORT.md)를 확인하세요. KIS 수정주가 63,128행과 기준지수 52행을 수신했으나, 과거 업종 구성 미확보 및 2,042종목의 종가 재조회 차이로 섹터 종합 순위는 보류합니다. 기존 원시 가격·시총·종목 평가 1,161개를 유지했습니다. [일일 운영·보존 규칙](docs/daily-publication.md)
 
 5·20거래일 외국인 수급 추이를 제공합니다. ‘수급 기간’과 ‘섹터 수급 정렬’을 선택하고, ‘종목 범위 → 전체 시장’에서 종목별 금액 순위를 볼 수 있습니다. 섹터는 **현재 구성 기준 수급 추이**이며 과거 실제 구성에 따른 종합 강세 순위와 구분합니다. [계산·결측·가격 분리 규칙](docs/flow-trends.md) · [실제 데이터·웹 검증 결과](reports/flow-trends/REPORT.md)
+
+
+현재 공개 앱은 매크로 지표와 수급 필터만 제공합니다. 매매 가이드·개인 매매일지는 제거했습니다. [공개 데이터 운영 및 원본 보관](docs/public-data-operations.md)을 참고하세요.

@@ -1,0 +1,93 @@
+.....................................................................FFF [ 52%]
+F............................................F..................         [100%]
+=================================== FAILURES ===================================
+_ test_latest_quote_cannot_be_assigned_to_an_unverified_day[2026-10-14T05:00:00Z] _
+
+timestamp = '2026-10-14T05:00:00Z'
+
+    @pytest.mark.parametrize('timestamp',['2026-10-14T05:00:00Z','2026-10-15T00:00:00Z',None])
+    def test_latest_quote_cannot_be_assigned_to_an_unverified_day(timestamp):
+>       from screener.market_quality import quote_cap
+E       ImportError: cannot import name 'quote_cap' from 'screener.liquidity_quality' (/tmp/kis-actions-connectivity/screener/liquidity_quality.py)
+
+tests/test_enrichment.py:117: ImportError
+_ test_latest_quote_cannot_be_assigned_to_an_unverified_day[2026-10-15T00:00:00Z] _
+
+timestamp = '2026-10-15T00:00:00Z'
+
+    @pytest.mark.parametrize('timestamp',['2026-10-14T05:00:00Z','2026-10-15T00:00:00Z',None])
+    def test_latest_quote_cannot_be_assigned_to_an_unverified_day(timestamp):
+>       from screener.market_quality import quote_cap
+E       ImportError: cannot import name 'quote_cap' from 'screener.liquidity_quality' (/tmp/kis-actions-connectivity/screener/liquidity_quality.py)
+
+tests/test_enrichment.py:117: ImportError
+_______ test_latest_quote_cannot_be_assigned_to_an_unverified_day[None] ________
+
+timestamp = None
+
+    @pytest.mark.parametrize('timestamp',['2026-10-14T05:00:00Z','2026-10-15T00:00:00Z',None])
+    def test_latest_quote_cannot_be_assigned_to_an_unverified_day(timestamp):
+>       from screener.market_quality import quote_cap
+E       ImportError: cannot import name 'quote_cap' from 'screener.liquidity_quality' (/tmp/kis-actions-connectivity/screener/liquidity_quality.py)
+
+tests/test_enrichment.py:117: ImportError
+_______________ test_cap_units_and_alignment_require_all_checks ________________
+
+    def test_cap_units_and_alignment_require_all_checks():
+>       from screener.market_quality import quote_cap
+E       ImportError: cannot import name 'quote_cap' from 'screener.liquidity_quality' (/tmp/kis-actions-connectivity/screener/liquidity_quality.py)
+
+tests/test_enrichment.py:124: ImportError
+___________ test_new_app_navigation_preserves_sort_and_has_no_scores ___________
+
+    def test_new_app_navigation_preserves_sort_and_has_no_scores():
+     from streamlit.testing.v1 import AppTest
+     from screener.exploration_ui import navigate
+     app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=120).run();assert not app.exception
+     def click(label):
+      next(b for b in app.button if b.label==label).click();app.run();assert not app.exception
+     def choose(label,value):
+      next(w for w in app.selectbox if w.label==label).select(value);app.run();assert not app.exception
+     def mode(label,value):
+      next(w for w in app.radio if w.label==label).set_value(value);app.run();assert not app.exception
+     assert app.session_state['stage']=='macro'
+     click('수급 필터');mode('기간','지난 5일');choose('섹터 정렬','시총 대비 순매수 강도')
+     navigate(app.session_state,'sector',('KOSPI','IT 서비스'));app.run();assert not app.exception
+     choose('종목 정렬','종목명');navigate(app.session_state,'stock','035420');app.run();assert not app.exception
+     assert app.session_state['stage']=='detail' and any('NAVER' in w.value for w in app.subheader)
+>    assert any('판정 보류' in w.value for w in app.markdown)
+E    assert False
+E     +  where False = any(<generator object test_new_app_navigation_preserves_sort_and_has_no_scores.<locals>.<genexpr> at 0x7ff3325d3780>)
+
+tests/test_indicators.py:113: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-10-16 06:20:34.560 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:49.960 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:49.960 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:49.960 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:49.960 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:49.960 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:49.960 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:50.378 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:50.378 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:50.378 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-16 06:20:50.378 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+------------------------------ Captured log call -------------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:483 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+=========================== short test summary info ============================
+FAILED tests/test_enrichment.py::test_latest_quote_cannot_be_assigned_to_an_unverified_day[2026-10-14T05:00:00Z]
+FAILED tests/test_enrichment.py::test_latest_quote_cannot_be_assigned_to_an_unverified_day[2026-10-15T00:00:00Z]
+FAILED tests/test_enrichment.py::test_latest_quote_cannot_be_assigned_to_an_unverified_day[None]
+FAILED tests/test_enrichment.py::test_cap_units_and_alignment_require_all_checks
+FAILED tests/test_indicators.py::test_new_app_navigation_preserves_sort_and_has_no_scores
+5 failed, 131 passed in 159.73s (0:02:39)

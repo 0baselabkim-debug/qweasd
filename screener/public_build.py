@@ -4,7 +4,7 @@ from pathlib import Path
 
 def identity(root=None):
  root=Path(root or Path(__file__).resolve().parents[1])
- paths=[root/'app.py',root/'technical_rules.json',root/'eligibility_rules.json',root/'.streamlit/config.toml']
+ paths=[root/'app.py',root/'.streamlit/config.toml']
  paths+=list((root/'screener').rglob('*.py'))+list((root/'screener').rglob('*.html'))
  digest=hashlib.sha256()
  for p in sorted(set(paths)):

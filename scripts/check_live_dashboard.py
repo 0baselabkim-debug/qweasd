@@ -7,9 +7,6 @@ from screener.store import load,PACKAGED_DB
 from screener.indicators import universe,stock_activity,sector_indicators
 from screener.macro import read as macro_read,catalog
 from screener.exploration_ui import macro_rows
-from screener.technical_cache import get_bundle
-from screener.technical import buy_guide
-from screener.technical_quality import daily_accepted
 URL=os.environ.get('DASHBOARD_CHECK_URL','https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/')
 out=Path(os.environ.get('DASHBOARD_CHECK_OUTPUT','reports/live-dashboard'));out.mkdir(parents=True,exist_ok=True)
 data=load(PACKAGED_DB);asof=str(data['flows'].trade_date.max().date());stocks,matrix=universe(data,asof);stocks=stock_activity(data,stocks,asof);sectors,_=sector_indicators(data,stocks,matrix,asof)
@@ -163,23 +160,11 @@ with sync_playwright() as p:
   rows=download('선택 종목 CSV','stocks.csv');naver=next(r for r in rows if r['코드']=='035420');match(naver['선택 기간 순매수(억원)'],stocks.set_index('symbol').loc['035420','net_20d']/1e8)
   name_cell('NAVER').click();page.wait_for_timeout(400);assert ui.get_by_text('KOSPI · IT 서비스 · 종목 수급',exact=True).count()==1
   readability('stocks');page.screenshot(path=str(out/'stocks.png'),full_page=True);double('NAVER');assert ui.get_by_text('NAVER · 035420',exact=True).count()==1
-  naver_bundle,_=get_bundle('035420',asof);expected_guide=buy_guide(naver_bundle,asof)
-  guide=ui.locator('.buy-guide');assert guide.inner_text().startswith('매수 가이드: '+expected_guide['status']);assert guide.bounding_box()['y']+guide.bounding_box()['height']<=ui.locator('.st-key-stock_kpis .kpi').nth(3).bounding_box()['y']+2
-  ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
-  assert naver_bundle and naver_bundle['asof']==asof
-  assert f"수신 일봉 {len(naver_bundle['bars'])}거래일" in ui.locator('body').inner_text()
-  crosscheck=naver_bundle.get('price_crosscheck')
-  if crosscheck:
-   expected_match='확인' if crosscheck['raw_close_match'] else '불일치'
-   assert 'KRX 공식 일별 종가 교차 일치: '+expected_match in ui.locator('body').inner_text()
-  else:assert 'KRX 공식 일별 종가 교차 일치: 확인' not in ui.locator('body').inner_text()
-  assert '일별 운용 검증 '+('통과' if daily_accepted(naver_bundle) else '미완료') in ui.locator('body').inner_text()
-  from screener.technical import validate
-  if validate(naver_bundle,asof):assert expected_guide['status']=='판정 보류'
-  for reason in expected_guide['reasons']:assert reason in ui.locator('body').inner_text()
-  page.screenshot(path=str(out/'technical-observations.png'),full_page=True)
-  ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
-  report['checks'].append('Actual 320-day NAVER cache and independently computed guide status rendered: '+expected_guide['status'])
+  assert ui.locator('.buy-guide').count()==0
+  assert '매수 가이드' not in ui.locator('body').inner_text()
+  assert '투자 적격성' not in ui.locator('body').inner_text()
+  assert ui.locator('.st-key-sidebar_menu button:visible').all_text_contents()==['매크로 지표','수급 필터']
+  report['checks'].append('Exactly two public menus; no trading recommendation or journal')
   assert ui.locator('.st-key-hierarchy button:visible').all_text_contents()==['전체섹터 조회','IT 서비스','×','NAVER','×']
   # Desktop close controls appear on hover / keyboard focus only.
   ui.locator('.st-key-header').hover();page.wait_for_timeout(200);assert float(ui.locator('.st-key-close_stock').evaluate('e=>getComputedStyle(e).opacity'))==0
@@ -202,7 +187,7 @@ with sync_playwright() as p:
   # Existing corporate publication and verified business evidence remain accessible.
   choose('시장','전체');radio('투자 테마');click('전체섹터 조회');double('원전');double('두산에너빌리티')
   ui.get_by_text('원전 · 검증된 사업 근거',exact=True).click();assert 'DART' in ui.locator('body').inner_text();clean()
-  report['checks'].append('Actual financial eligibility, daily chart, existing theme business evidence and DART retained')
+  report['checks'].append('Actual financial facts, daily chart, existing theme business evidence and DART retained')
   for width in [1440,768,390]:
    touch=width<=768
    page=browser.new_page(viewport={'width':width,'height':1000},has_touch=touch,is_mobile=width==390);ui,response=connect();pause();layout(width<=760);readability('macro')
@@ -259,43 +244,16 @@ with sync_playwright() as p:
    double(row['name']);clean()
    page.screenshot(path=str(out/('liquidity-'+code+'.png')),full_page=True)
    report.setdefault('liquidity_trace',[]).append({'symbol':code,'activity_csv':actual['거래 활성도(배)'],'average_turnover_csv':actual['5일 평균 거래대금(억원)'],'proof_dates':[day for day,values in data['metadata'].get('liquidity_price_evidence',{}).items() if code in values]})
-  # Check the newly promoted real observations, not only the unchanged NAVER case.
-  recovery_path=ROOT/'technical/recovery-report.json'
-  if recovery_path.exists():
-   recovered=json.loads(recovery_path.read_text())
-   current_items={r['symbol']:r for r in recovered.get('results',[]) if r.get('promoted') and r['asof']==asof}
-   for code in ['052710','052790']:
-    b,_=get_bundle(code,asof)
-    if b and daily_accepted(b):current_items.setdefault(code,{'symbol':code,'asof':asof,'promoted':True})
-   for item in current_items.values():
-    if not item.get('promoted') or item['asof']!=asof:continue
-    code=item['symbol'];row=stocks.set_index('symbol').loc[code]
-    click('수급 필터');radio('전체 섹터');choose('시장',row.market);click('전체섹터 조회')
-    double(row.sector);double(row['name'])
-    bundle,_=get_bundle(code,asof);guide_result=buy_guide(bundle,asof)
-    assert daily_accepted(bundle) and bundle['finality']=='UNVERIFIED'
-    assert ui.locator('.buy-guide').inner_text().startswith('매수 가이드: '+guide_result['status'])
-    ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
-    assert '일별 운용 검증 통과' in ui.locator('body').inner_text()
-    rows=download('일별 수급 CSV','recovered-'+code+'.csv')
-    for value in rows:match(value['net_amount'],matrix[code].loc[value['trade_date']])
-    page.screenshot(path=str(out/('recovered-'+code+'.png')),full_page=True)
-    report.setdefault('recovered_symbols',[]).append({'symbol':code,'asof':asof,'guide':guide_result['status'],'daily_accepted':True,'provider_finality':bundle['finality'],'csv_rows':len(rows)})
-  if report.get('recovered_symbols'):
-   # Changing the selected date must never reuse today's technical evidence.
-   import pandas as pd
-   previous_dates=sorted(data['flows'].loc[data['flows'].trade_date<pd.Timestamp(asof),'trade_date'].dt.strftime('%Y-%m-%d').unique())
-   if previous_dates:
-    prior=previous_dates[-1];code=report['recovered_symbols'][-1]['symbol'];choose('수급 기준일',prior)
-    old_bundle,_=get_bundle(code,prior);assert old_bundle is None or old_bundle['asof']==prior
-    expected_old=buy_guide(old_bundle,prior)
-    assert ui.locator('.buy-guide').inner_text().startswith('매수 가이드: '+expected_old['status'])
-    rows=download('일별 수급 CSV','historical-'+code+'.csv')
-    source=data['flows'][data['flows'].symbol==code].set_index('trade_date').net_amount
-    assert max(r['trade_date'] for r in rows)==prior
-    for value in rows:match(value['net_amount'],source.get(pd.Timestamp(value['trade_date']),float('nan')))
-    report['historical_lookup']={'symbol':code,'selected_date':prior,'bundle_asof':old_bundle['asof'] if old_bundle else None,'guide':expected_old['status'],'csv_last_date':max(r['trade_date'] for r in rows)}
-    page.screenshot(path=str(out/'historical-detail.png'),full_page=True)
+  # Historical flow lookup remains tied to the selected real date.
+  import pandas as pd
+  prior_dates=sorted(data['flows'].loc[data['flows'].trade_date<pd.Timestamp(asof),'trade_date'].dt.strftime('%Y-%m-%d').unique())
+  if prior_dates:
+   prior=prior_dates[-1];choose('수급 기준일',prior)
+   rows=download('일별 수급 CSV','historical-flow.csv')
+   source=data['flows'][data['flows'].symbol==code].set_index('trade_date').net_amount
+   assert max(r['trade_date'] for r in rows)==prior
+   for value in rows:match(value['net_amount'],source.get(pd.Timestamp(value['trade_date']),float('nan')))
+   report['historical_lookup']={'symbol':code,'selected_date':prior,'csv_last_date':max(r['trade_date'] for r in rows)}
   assert ui.locator('.public-build').get_attribute('data-snapshot-sha256')==expected_build['data_sha256'],'Data generation changed during browser test'
   report['success']=True
  except Exception as e:

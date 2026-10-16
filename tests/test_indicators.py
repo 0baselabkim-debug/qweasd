@@ -6,7 +6,6 @@ import pandas as pd
 import pytest
 from test_dashboard import history
 from screener.indicators import universe,sector_indicators,stock_activity,activity
-from screener.eligibility import assess
 from screener.macro import record,merge,catalog,cutoff
 
 
@@ -19,7 +18,6 @@ def test_score_free_universe_keeps_loss_makers_and_excludes_future_financials(hi
  assert len(stocks)==9 and stocks.loc[stocks.symbol=='000001','equity'].item()==-10
  assert stocks.loc[stocks.symbol=='000002','equity'].isna().all()
  assert not any('score' in c or 'points' in c for c in stocks)
- assert stocks.eligibility.eq('판정 보류').all()
 
 
 def test_breadth_counts_zero_as_evaluable_and_does_not_zero_fill(history):
@@ -45,14 +43,6 @@ def test_activity_exact_disjoint_windows_and_unknown_scope(history):
  y=stock_activity(history,stocks,'2026-10-14');assert pd.isna(y.loc[y.symbol=='000001','activity_ratio']).all()
  assert y.set_index('symbol').net_20d.equals(x.set_index('symbol').net_20d)
 
-
-def test_eligibility_requires_approval_and_missing_audit_stays_unknown():
- row={'equity':-100,'liabilities':200,'operating_profit':-50,'ocf':-10,'capital_stock':100}
- assert assess(row)['status']=='판정 보류'
- approved={'version':'TEST ONLY','approved_by_user':True,'approval_reference':'test fixture approval','required_fields':['equity','audit_opinion'],'rules':[{'field':'equity','operator':'le','value':0,'state':'투자 부적격','reason':'TEST ONLY'}]}
- assert assess(row,approved)['status']=='판정 보류'
- assert assess(row|{'audit_opinion':'적정'},approved)['status']=='투자 부적격'
- assert assess(row|{'operating_profit':1,'turnaround':True})['status']=='판정 보류'
 
 
 def test_theme_overlap_is_per_theme_not_double_counted_inside_group(history):
@@ -120,7 +110,8 @@ def test_new_app_navigation_preserves_sort_and_has_no_scores():
  navigate(app.session_state,'sector',('KOSPI','IT 서비스'));app.run();assert not app.exception
  choose('종목 정렬','종목명');navigate(app.session_state,'stock','035420');app.run();assert not app.exception
  assert app.session_state['stage']=='detail' and any('NAVER' in w.value for w in app.subheader)
- assert any('판정 보류' in w.value for w in app.markdown)
+ assert any('공시 재무정보' in w.value for w in app.subheader)
+ assert not any('매수 가이드' in w.value or '투자 적격성' in w.value for w in app.markdown)
  for w in app.dataframe:assert not any('점수' in str(c) for c in w.value.columns)
  click('IT 서비스');assert next(w for w in app.selectbox if w.label=='종목 정렬').value=='종목명'
  click('전체섹터 조회');assert next(w for w in app.radio if w.label=='기간').value=='지난 5일'

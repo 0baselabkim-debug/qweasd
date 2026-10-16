@@ -5,7 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from screener.corporate import load_state,save_state,build_database
 from scripts.collect_corporate import process
 from scripts.publish_corporate import validate
-from screener.technical_quality import digest
+from screener.liquidity_quality import digest
 
 def audit_facts(response,filing):
     rows=response.get('list',[])

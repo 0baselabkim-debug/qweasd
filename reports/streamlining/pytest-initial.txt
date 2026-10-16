@@ -1,0 +1,18 @@
+
+==================================== ERRORS ====================================
+_____________________ ERROR collecting tests/test_daily.py _____________________
+ImportError while importing test module '/tmp/kis-actions-connectivity/tests/test_daily.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_daily.py:7: in <module>
+    from screener.daily import validate_bundle,build_candidate
+screener/daily.py:10: in <module>
+    from .market_quality import quote_cap
+E   ImportError: cannot import name 'quote_cap' from 'screener.market_quality' (/tmp/kis-actions-connectivity/screener/market_quality.py)
+=========================== short test summary info ============================
+ERROR tests/test_daily.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 2.55s

@@ -1,0 +1,73 @@
+name: Independent liquidity evidence recovery
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        type: number
+        default: 6
+      symbols:
+        type: string
+        default: ''
+  schedule:
+    - cron: '17 23 * * 0-5'
+    - cron: '17 2,5,8,11 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+  queue: max
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Recover only dated public liquidity evidence
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          RECOVERY_SYMBOLS: ${{ inputs.symbols || '' }}
+          RECOVERY_LIMIT: ${{ inputs.limit || 6 }}
+        run: |
+          sleep 65
+          timeout 600 python scripts/recover_liquidity.py --limit "$RECOVERY_LIMIT" --symbols "$RECOVERY_SYMBOLS"
+      - name: Prepare coherent date-specific liquidity evidence
+        id: prepare
+        run: python scripts/publish_liquidity.py
+      - name: Preserve evidence and availability records
+        id: publish
+        env:
+          RECOVERY_PREPARE_OK: ${{ steps.prepare.outcome }}
+        if: always()
+        run: python scripts/commit_liquidity.py
+      - name: Record publication outcome separately from candidate acceptance
+        if: always()
+        env:
+          PUBLISH_RESULT: ${{ steps.publish.outcome }}
+          PREPARE_RESULT: ${{ steps.prepare.outcome }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess,datetime
+          from pathlib import Path
+          from scripts.market_io import read,write
+          r=read(Path('liquidity/recovery-report.json'),{})
+          current=str(r.get('run_id'))==os.environ['GITHUB_RUN_ID']
+          ok=os.environ['PUBLISH_RESULT']=='success' and os.environ['PREPARE_RESULT']=='success'
+          result={'run_id':os.environ['GITHUB_RUN_ID'],'event':os.environ['GITHUB_EVENT_NAME'],'observed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'candidate_report_current':current,'accepted':r.get('accepted',0) if current else 0,'publication_succeeded':ok,'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'physical_requests':r.get('physical_requests') if current else None}
+          write(Path('reports/liquidity-execution/outcome.json'),result)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/liquidity-outcome-$GITHUB_RUN_ID"
+          git add reports/liquidity-execution
+          git commit -m 'Record independent liquidity recovery outcome'
+          git push origin "HEAD:refs/heads/evidence/liquidity-outcome-$GITHUB_RUN_ID"
