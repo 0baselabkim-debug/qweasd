@@ -13,11 +13,25 @@ from screener.technical_quality import daily_accepted,digest
 from screener.technical import validate
 from screener.liquidity_evidence import permits,price_identity
 
+def prioritized_gaps(data):
+    """Old dates first, then constituent coverage per remaining check; no acceptance shortcut."""
+    from scripts.diagnose_activity import diagnose
+    day=str(data['flows'].trade_date.max().date())
+    sectors=diagnose(data,day)['sectors']
+    ranked=[]
+    for s in sectors:
+        checks=s['remaining_checks'];cost=len(checks)
+        for r in checks:
+            if r['reason']=='unresolved_price_conflict':
+                ranked.append((r['date'],-s['members']/cost,-s['members'],r['symbol']))
+    return [(day,code) for day,_,__,code in sorted(ranked)]
+
 def seed_dates(data,limit=2,symbols=None):
     """Persist older masked dates as separate recheck tasks, never accept latest proof."""
     made=[];prices=data['prices'];flows=data['flows']
+    priorities={key:i for i,key in enumerate(prioritized_gaps(data))}
     for day,rows in sorted(data['metadata'].get('adjusted_price_conflicts',{}).items()):
-        for row in sorted(rows,key=lambda r:r['symbol']):
+        for row in sorted(rows,key=lambda r:(priorities.get((day,r['symbol']),float('inf')),r['symbol'])):
             code=row['symbol']
             if symbols and code not in symbols:continue
             path=batch.ROOT/'pending'/day/(code+'.json.gz')
