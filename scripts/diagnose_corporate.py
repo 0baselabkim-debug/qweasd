@@ -8,7 +8,10 @@ from screener.corporate import load_state, business_section
 def run():
     api=Dart(max_calls=12,max_seconds=180);state=load_state();out=Path('reports/corporate-diagnosis');out.mkdir(parents=True,exist_ok=True)
     report={'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'filings':[]}
-    for receipt in ['20260325000430','20260330001721']:
+    import os
+    receipts=os.environ.get('DIAGNOSTIC_RECEIPTS','20260325000430,20260330001721').split(',')
+    if len(receipts)>3 or any(not re.fullmatch(r'[0-9]{14}',r) or r not in state['filings'] for r in receipts):raise ValueError('Invalid bounded diagnostic receipts')
+    for receipt in receipts:
         f=state['filings'][receipt];r={'requested_filing':f,'previous_job':state['jobs'][receipt]}
         try:
             raw=api.get('document.xml',{'rcept_no':receipt})
@@ -35,6 +38,11 @@ def run():
             d=api.get('list.json',{'corp_code':f['corp_code'],'bgn_de':'20260101','end_de':dt.date.today().strftime('%Y%m%d'),'pblntf_ty':'A','page_count':100})
             r['official_filing_list']=d
         except Exception as e:r['financial_error']=str(e) if isinstance(e,ValueError) else type(e).__name__
+        try:
+            audit=api.get('accnutAdtorNmNdAdtOpinion.json',{'corp_code':f['corp_code'],'bsns_year':str(f['year']),'reprt_code':f['report_code']})
+            r['audit_opinion_response']=audit
+            r['audit_identity_verified']=bool(audit.get('status')=='000' and audit.get('list') and all(x.get('corp_code')==f['corp_code'] and x.get('rcept_no')==receipt and x.get('bsns_year')==str(f['year']) for x in audit['list']))
+        except Exception as e:r['audit_error']=str(e) if isinstance(e,ValueError) else type(e).__name__
         report['filings'].append(r)
     report['calls']=api.calls
     (out/'diagnosis.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')

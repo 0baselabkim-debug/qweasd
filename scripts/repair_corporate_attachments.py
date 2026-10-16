@@ -13,7 +13,11 @@ def repair(api,state,receipts,checkpoint=lambda:None):
         try:
             parent,record,evidence=attachment_parent(api,f)
             before=copy.deepcopy(job)
-            if parent['receipt'] in state['filings'] and state['filings'][parent['receipt']]!=parent:raise ValueError('parent_metadata_revision_requires_review')
+            stored=state['filings'].get(parent['receipt'])
+            identity=['symbol','corp_code','receipt','period_end','year','form','report_code','disclosed_on','url']
+            if stored and any(stored.get(k)!=parent.get(k) for k in identity):raise ValueError('parent_metadata_revision_requires_review')
+            evidence['official_parent_metadata']=parent
+            if stored!=parent:evidence['preserved_parent_metadata']=stored
             state['filings'].setdefault(parent['receipt'],parent)
             new_finance=parent['receipt']+'_'+record['scope'] not in state['financials']
             state['financials'].setdefault(parent['receipt']+'_'+record['scope'],record)

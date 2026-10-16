@@ -121,3 +121,31 @@ def test_liquidity_mask_release_requires_every_date_and_entire_sector(history):
     x,m=universe(history,day);x=stock_activity(history,x,day);s,_=sector_indicators(history,x,m,day)
     assert pd.isna(x.set_index('symbol').loc[code,'activity_ratio'])
     assert pd.isna(s.set_index('sector').loc['A','activity_ratio'])
+
+def test_process_interruption_retains_resume_index_and_original(tmp_path,monkeypatch):
+    import pandas as pd
+    from scripts import technical_batch as batch,recover_technical as recovery
+    from tests.test_technical_collection import repair_sample,accepted_fixture
+    b,refs,_,_=repair_sample()
+    monkeypatch.setattr(batch,'ROOT',tmp_path);monkeypatch.setattr(batch,'CACHE',tmp_path/'market')
+    monkeypatch.setattr(batch,'krx_reference',lambda *a,**k:(refs,{}))
+    monkeypatch.setattr(batch,'refresh_summary',lambda *a:None)
+    path=batch.CACHE/(b['symbol']+'.json.gz');batch.write(path,b);original=path.read_bytes()
+    class API:
+        metrics=[]
+        def __init__(self):self.calls=0
+        def request(self,path,params):self.calls+=1;return {'output2':[{'part':params['part']}]}
+    attempts=[]
+    def candidate(api,*args):
+        for i in range(3):api.request(PATH,{'part':i})
+        if not attempts:
+            attempts.append(1);raise KeyboardInterrupt()
+        return accepted_fixture()
+    monkeypatch.setattr(recovery,'candidate',candidate)
+    data={'flows':pd.DataFrame([{'trade_date':pd.Timestamp(b['asof'])}])}
+    with pytest.raises(KeyboardInterrupt):recovery.run(API(),data,limit=1)
+    assert path.read_bytes()==original
+    session=batch.read(tmp_path/'recovery-sessions'/b['asof']/(b['symbol']+'.json'))
+    assert session['status']=='in_progress' and len(session['response_observations'])==3
+    api=API();r=recovery.run(api,data,limit=1)
+    assert api.calls==2 and r['cached_responses_reused']==1 and r['promoted']==1

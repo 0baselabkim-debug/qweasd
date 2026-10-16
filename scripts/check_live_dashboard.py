@@ -221,6 +221,18 @@ with sync_playwright() as p:
    if width==390:
     page.set_viewport_size({'width':1920,'height':1200});pause();layout();readability('macro')
    report['checks'].append(f'{width}px: page widths, row heights, 14px text, internal scroll, no clipped cells/KPIs, navigation, tabs, sidebar non-overlap')
+  # Trace released turnover from exact-date evidence through the actual public CSV.
+  released=sorted({code for rows in data['metadata'].get('liquidity_price_evidence',{}).values() for code in rows})
+  for code in released[:4]:
+   row=stocks.set_index('symbol').loc[code]
+   click('수급 필터');radio('전체 섹터');choose('시장',row.market);click('전체섹터 조회')
+   double(row.sector)
+   values=download('선택 종목 CSV','liquidity-'+code+'.csv');actual=next(v for v in values if v['코드']==code)
+   match(actual['거래 활성도(배)'],row.activity_ratio)
+   match(actual['5일 평균 거래대금(억원)'],row.average_turnover/1e8)
+   double(row['name']);clean()
+   page.screenshot(path=str(out/('liquidity-'+code+'.png')),full_page=True)
+   report.setdefault('liquidity_trace',[]).append({'symbol':code,'activity_csv':actual['거래 활성도(배)'],'average_turnover_csv':actual['5일 평균 거래대금(억원)'],'proof_dates':[day for day,values in data['metadata'].get('liquidity_price_evidence',{}).items() if code in values]})
   # Check the newly promoted real observations, not only the unchanged NAVER case.
   recovery_path=ROOT/'technical/recovery-report.json'
   if recovery_path.exists():
@@ -254,6 +266,7 @@ with sync_playwright() as p:
     for value in rows:match(value['net_amount'],source.get(pd.Timestamp(value['trade_date']),float('nan')))
     report['historical_lookup']={'symbol':code,'selected_date':prior,'bundle_asof':old_bundle['asof'] if old_bundle else None,'guide':expected_old['status'],'csv_last_date':max(r['trade_date'] for r in rows)}
     page.screenshot(path=str(out/'historical-detail.png'),full_page=True)
+  assert ui.locator('.public-build').get_attribute('data-snapshot-sha256')==expected_build['data_sha256'],'Data generation changed during browser test'
   report['success']=True
  except Exception as e:
   report.update(error_type=type(e).__name__,error=str(e)[:1800],traceback=traceback.format_exc()[-4000:]);report['visible_text']=ui.locator('body').inner_text()[-16000:];page.screenshot(path=str(out/'failure.png'),full_page=True)

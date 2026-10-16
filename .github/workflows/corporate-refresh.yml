@@ -8,6 +8,10 @@ on:
         type: choice
         options: [probe, collect, diagnose, repair_attachments]
         default: probe
+      diagnostic_receipts:
+        type: string
+        default: '20260325000430,20260330001721'
+        description: Up to three saved failed disclosure receipts for evidence only
       symbols:
         description: Optional comma-separated codes for a bounded pilot; blank scans the universe
         type: string
@@ -62,6 +66,7 @@ jobs:
         if: inputs.mode == 'diagnose'
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          DIAGNOSTIC_RECEIPTS: ${{ inputs.diagnostic_receipts }}
         run: python scripts/diagnose_corporate.py
       - name: Preserve diagnostic source responses
         if: always() && inputs.mode == 'diagnose'

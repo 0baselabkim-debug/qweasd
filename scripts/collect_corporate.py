@@ -3,6 +3,7 @@ import argparse,datetime as dt,gzip,hashlib,io,json,os,sys,time,urllib.request,u
 from pathlib import Path
 from zoneinfo import ZoneInfo
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+if __name__=='__main__':sys.modules.setdefault('scripts.collect_corporate',sys.modules[__name__])
 from screener.corporate import *
 
 class BudgetExceeded(Exception):pass

@@ -50,7 +50,7 @@ jobs:
           else
             timeout 1500 python scripts/collect_technical.py --mode verify --limit 600 --budget 900
             if [ "${{ github.event_name }}" = "schedule" ]; then
-              timeout 600 python scripts/collect_technical.py --mode recover --limit 2 --budget 240
+              timeout 600 python scripts/collect_technical.py --mode recover --limit 4 --budget 240
             fi
           fi
       - name: Prepare coherent date-specific liquidity evidence

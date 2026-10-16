@@ -188,3 +188,18 @@ def test_attachment_mapping_requires_exact_official_receipt_and_period():
  with pytest.raises(ValueError,match='corporate_identity_mismatch'):attachment_parent(API(),a)
  d['list'][0]['corp_code']=f['corp_code'];d['list'][0]['bsns_year']='2000'
  with pytest.raises(ValueError,match='receipt_or_period_mismatch'):attachment_parent(API(),a)
+
+def test_attachment_repair_preserves_seed_metadata_and_valid_components(monkeypatch):
+ import scripts.repair_corporate_attachments as repair
+ f=filing();parent=dict(f,name='[기재정정]'+f['name'],correction=True)
+ attachment=dict(f,receipt='20260815000001',name='[첨부정정]'+f['name'],disclosed_on='2026-08-15')
+ record=financial_record(response(),f,'CFS')
+ state={'filings':{f['receipt']:copy.deepcopy(f),attachment['receipt']:attachment},'jobs':{},'financials':{f['receipt']+'_CFS':copy.deepcopy(record)},'events':[]}
+ monkeypatch.setattr(repair,'attachment_parent',lambda *a:(parent,record,{}))
+ monkeypatch.setattr(repair,'process',lambda *a:None)
+ result=repair.repair(None,state,[attachment['receipt']])
+ assert result[0]['parent']==f['receipt'] and not result[0]['new_financial']
+ assert state['filings'][f['receipt']]==f and state['financials'][f['receipt']+'_CFS']==record
+ assert state['events'][0]['evidence']['official_parent_metadata']==parent
+ parent['disclosed_on']='2099-01-01'
+ assert repair.repair(None,state,[attachment['receipt']])[0]['error']=='parent_metadata_revision_requires_review'
