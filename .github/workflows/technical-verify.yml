@@ -6,6 +6,10 @@ on:
         type: choice
         options: [verify, recover]
         default: verify
+      limit:
+        type: number
+        default: 3
+        description: Bounded manual recovery symbols (maximum 10; same 60 physical requests)
   schedule:
     # Availability checks, NOT a claimed KRX publication/finality time.
     # KST Mon-Sat 08:17; weekdays 11:17, 14:17, 17:17, 20:17.
@@ -36,21 +40,19 @@ jobs:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
           RECHECK_MODE: ${{ inputs.mode || 'verify' }}
+          RECOVERY_LIMIT: ${{ inputs.limit || 3 }}
         run: |
           # Respect the shared KIS token interval if a later real recheck needs it.
           # No token is issued when official reference data is unavailable.
           sleep 65
           if [ "$RECHECK_MODE" = "recover" ]; then
-            timeout 600 python scripts/collect_technical.py --mode recover --limit 3 --budget 240
+            timeout 600 python scripts/collect_technical.py --mode recover --limit "$RECOVERY_LIMIT" --budget 240
           else
             timeout 1500 python scripts/collect_technical.py --mode verify --limit 600 --budget 900
             if [ "${{ github.event_name }}" = "schedule" ]; then
               timeout 600 python scripts/collect_technical.py --mode recover --limit 2 --budget 240
             fi
           fi
-      - name: Inspect official market investor specification
-        if: inputs.mode == 'recover'
-        run: python scripts/inspect_investor_spec.py
       - name: Preserve evidence and availability records
         if: always()
         run: |

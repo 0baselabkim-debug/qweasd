@@ -9,18 +9,52 @@ from scripts import technical_batch as batch
 class RecoveryBudget(Exception):pass
 
 class BoundedAPI:
-    # KIS retries a request at most three times. Reserve all three before dispatch.
+    """Physical-boundary caps for KIS, conservative fallback for other adapters."""
     def __init__(self,api,max_calls=60,seconds=240):
         self.api=api;self.start=time.monotonic();self.max_calls=max_calls;self.seconds=seconds
-        self.used=0;self.observations=[]
+        self.used=0;self.observations=[];self.physical=[];self.logical=0;self.cache_hits=0
+        self.reserved=0;self.refunded=0;self.sink=None;self.resume=[];self.anchors=[]
+        target=api.__dict__.get('factory',type(api))
+        self.physical_supported=bool(getattr(target,'physical_budget_supported',False))
+    def check(self):
+        if self.used>=self.max_calls or time.monotonic()-self.start>=self.seconds:raise RecoveryBudget()
+    def before_http(self,path,attempt):
+        self.check()
+        # One slot reserved and consumed at the actual transport boundary. No unused retries.
+        self.used+=1;self.reserved+=1
+        self.physical.append({'kind':'authentication' if path=='/oauth2/tokenP' else 'market','attempt':attempt+1})
+    def begin(self,observations,sink):
+        self.resume=observations;self.anchors=[];self.sink=sink
+    @staticmethod
+    def signature(path,params):return digest({'path':path,'params':params})
     def request(self,*args,**kwargs):
-        reserve=6 if getattr(self.api,'__dict__',{}).get('client',True) is None else 3
-        if self.used+reserve>self.max_calls or time.monotonic()-self.start>=self.seconds:raise RecoveryBudget()
-        self.used+=reserve
-        response=self.api.request(*args,**kwargs)
-        self.observations.append({'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),
-            'path':args[0],'params':args[1] if len(args)>1 else {},
-            'output':{k:response[k] for k in ['output','output1','output2'] if k in response}})
+        from scripts.kis_public_client import REQUEST_BUDGET
+        path=args[0];params=args[1] if len(args)>1 else kwargs.get('params',{})
+        key=self.signature(path,params);self.logical+=1
+        # Always reobserve the adjusted overlap and same-date raw anchor first.
+        # A cache is usable only when BOTH anchors match the interrupted vintage.
+        if len(self.anchors)==2 and all(self.anchors):
+            matches=[o for o in self.resume if self.signature(o['path'],o['params'])==key]
+            if matches:
+                value=matches[-1];self.cache_hits+=1
+                self.observations.append(value)
+                return copy.deepcopy(value['output'])
+        self.check()
+        if not self.physical_supported:
+            reserve=6 if self.api.__dict__.get('client',True) is None else 3
+            if self.used+reserve>self.max_calls:raise RecoveryBudget()
+            self.used+=reserve;self.reserved+=reserve
+        token=REQUEST_BUDGET.set(self) if self.physical_supported else None
+        try:response=self.api.request(*args,**kwargs)
+        finally:
+            if token is not None:REQUEST_BUDGET.reset(token)
+        observation={'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'path':path,'params':params,
+                     'output':{k:response[k] for k in ['output','output1','output2'] if k in response}}
+        if len(self.anchors)<2:
+            self.anchors.append(any(self.signature(o['path'],o['params'])==key and
+                                    o['output'].get('output2')==observation['output'].get('output2') for o in self.resume))
+        self.observations.append(observation)
+        if self.sink:self.sink(observation) # survive process termination after any completed response
         return response
     def prices(self,symbol,start,end):return batch.chart(self,symbol,start,end)
 
@@ -88,7 +122,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         if retry_after>start.isoformat():continue
         tasks.append((j.get('attempted_at',''),key,path,b))
     bounded=BoundedAPI(api,max_calls=min(60,max_calls),seconds=min(240,seconds));results=[]
-    for _,key,path,b in sorted(tasks,key=lambda x:(x[0],x[3]['asof']!=latest,x[1])):
+    for _,key,path,b in sorted(tasks,key=lambda x:(x[0],x[3]['asof'],x[1])):
         if len(results)>=min(10,limit) or time.monotonic()-bounded.start>=bounded.seconds:break
         day=b['asof']
         if day not in refs_by_date:
@@ -101,7 +135,16 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         if checked.get('price_finality')!='CONFLICT':continue
         job=ledger['jobs'].setdefault(key,{});attempts=job.get('attempts',0)+1
         observation_start=len(bounded.observations)
-        before=digest(b);result={'symbol':b['symbol'],'asof':day,'original_sha256':before,'promoted':False}
+        before=digest(b)
+        saved=[]
+        previous=job.get('last_result',{})
+        if previous.get('original_sha256')==before and previous.get('error_type')=='RecoveryBudget':
+            for h in previous.get('response_observations',[]):
+                o=batch.read(batch.ROOT/'provider-observations'/day/b['symbol']/(h+'.json.gz'))
+                if o and digest(o)==h:saved.append(o)
+        bounded.begin(saved,lambda o:batch.write(batch.ROOT/'provider-observations'/day/b['symbol']/(digest(o)+'.json.gz'),o))
+        physical_start=bounded.used;cache_start=bounded.cache_hits;item_start=time.monotonic()
+        result={'symbol':b['symbol'],'asof':day,'original_sha256':before,'promoted':False}
         # Archive the complete original (including the previous flow evidence).
         batch.write(batch.CACHE.parent/'observations'/day/b['symbol']/(before+'.json.gz'),b)
         try:
@@ -120,7 +163,8 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         raw_evidence=bounded.observations[observation_start:]
         for observation in raw_evidence:
             batch.write(batch.ROOT/'provider-observations'/day/b['symbol']/(digest(observation)+'.json.gz'),observation)
-        result['response_observations']=[digest(o) for o in raw_evidence]
+        result['response_observations']=list(dict.fromkeys([digest(o) for o in saved+raw_evidence]))
+        result.update(request_attempts=bounded.used-physical_start,cache_hits=bounded.cache_hits-cache_start,seconds=round(time.monotonic()-item_start,3))
         assert digest(b)==before
         delay=dt.timedelta(minutes=15) if result.get('error_type')=='RecoveryBudget' else dt.timedelta(hours=min(24,6*2**min(attempts-1,2)))
         job.update(attempted_at=start.isoformat(),attempts=attempts,
@@ -128,7 +172,12 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         results.append(result);batch.write(ledger_path,ledger)
         if result.get('error_type')=='RecoveryBudget':break
     report={'asof':latest,'started_at':start.isoformat(),'finished_at':dt.datetime.now(dt.timezone.utc).isoformat(),
-            'limit':min(10,limit),'max_physical_request_attempts':bounded.max_calls,'reserved_request_attempts':bounded.used,
+            'limit':min(10,limit),'max_physical_request_attempts':bounded.max_calls,'reserved_request_attempts':bounded.reserved,
+            'physical_request_attempts':len(bounded.physical),'authentication_attempts':sum(x['kind']=='authentication' for x in bounded.physical),
+            'retry_attempts':sum(x['attempt']>1 for x in bounded.physical),'unused_reservations':0,'refunded_reservations':bounded.refunded,
+            'metering':'physical_boundary' if bounded.physical_supported else 'conservative_adapter_reservation',
+            'logical_requests':bounded.logical,'cached_responses_reused':bounded.cache_hits,
+            'run_id':__import__('os').environ.get('GITHUB_RUN_ID'),'event':__import__('os').environ.get('GITHUB_EVENT_NAME'),
             'time_budget_seconds':bounded.seconds,'reference_status':status_by_date,'results':results,
             'promoted':sum(r['promoted'] for r in results),'kis_metrics':api.metrics}
     ledger['runs']=(ledger['runs']+[report])[-30:];batch.write(ledger_path,ledger)

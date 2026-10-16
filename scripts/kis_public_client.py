@@ -1,9 +1,13 @@
 """Market-data-only KIS transport; credentials and tokens never enter results."""
 import json, os, threading, time, urllib.error, urllib.parse, urllib.request
+from contextvars import ContextVar
+
+REQUEST_BUDGET = ContextVar("kis_physical_request_budget", default=None)
 
 CORPORATE_PATHS={f'/uapi/domestic-stock/v1/ksdinfo/{name}' for name in ['rev-split','merger-split','bonus-issue','cap-dcrs']}
 
 class KIS:
+    physical_budget_supported = True
     def __init__(self, interval=1.05):
         self.key=os.environ['KIS_APP_KEY']; self.secret=os.environ['KIS_APP_SECRET']
         self.token=None; self.interval=interval; self.last=0.; self.lock=threading.Lock(); self.metrics=[]
@@ -21,6 +25,8 @@ class KIS:
             if tr: headers.update(authorization='Bearer '+self.token,appkey=self.key,appsecret=self.secret,custtype='P',tr_id=tr)
             url='https://openapi.koreainvestment.com:9443'+path+('?' + urllib.parse.urlencode(params) if params else '')
             status=None; d={}; started=time.monotonic()
+            budget=REQUEST_BUDGET.get()
+            if budget is not None:budget.before_http(path, attempt)
             try:
                 req=urllib.request.Request(url,headers=headers,data=json.dumps(body).encode() if body else None)
                 with urllib.request.urlopen(req,timeout=30) as r:
@@ -31,7 +37,8 @@ class KIS:
                 except (ValueError,UnicodeError):pass
             except (OSError,ValueError):pass
             code=str(d.get('msg_cd',d.get('error_code','')))[:40]
-            self.metrics.append({'http':status,'code':code,'seconds':round(time.monotonic()-started,4)})
+            self.metrics.append({'http':status,'code':code,'seconds':round(time.monotonic()-started,4),
+                                 'kind':'authentication' if path=='/oauth2/tokenP' else 'market', 'attempt':attempt+1})
             if status==200 and (d.get('rt_cd')=='0' or (path=='/oauth2/tokenP' and d.get('access_token'))):return d
             if status==429 or code=='EGW00201' or status is None or (status and status>=500):
                 time.sleep(3*(attempt+1)); continue
