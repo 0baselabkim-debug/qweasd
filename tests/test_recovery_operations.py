@@ -167,3 +167,17 @@ def test_published_previous_generations_include_matching_databases():
     root=Path(__file__).resolve().parents[1]/'snapshot/publication-history'
     archives=list(root.iterdir());assert archives
     for archived in archives:assert coherent(archived),str(archived)
+
+def test_targeted_recheck_does_not_request_other_symbols(tmp_path,monkeypatch):
+    from scripts import recover_technical as recovery,technical_batch as batch
+    from tests.test_technical_collection import repair_sample
+    import pandas as pd
+    b,_,_,_=repair_sample()
+    monkeypatch.setattr(batch,'ROOT',tmp_path);monkeypatch.setattr(batch,'CACHE',tmp_path/'market')
+    monkeypatch.setattr(batch,'refresh_summary',lambda *a:None)
+    batch.write(batch.CACHE/(b['symbol']+'.json.gz'),b)
+    def forbidden(*a,**k):raise AssertionError('Unselected symbol must not query references or token')
+    monkeypatch.setattr(batch,'krx_reference',forbidden)
+    api=LazyAPI(forbidden)
+    r=recovery.run(api,{'flows':pd.DataFrame([{'trade_date':pd.Timestamp(b['asof'])}])},symbols={'000001'})
+    assert not r['results'] and api.client is None

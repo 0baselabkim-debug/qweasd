@@ -53,12 +53,14 @@ def fetch(api,symbol,asof,calendar,original=None):
     return bundle
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--mode',choices=['pilot','private','public','evidence','verify','recover'],default='public');p.add_argument('--limit',type=int,default=150);p.add_argument('--budget',type=int,default=900);p.add_argument('--probe',action='store_true');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--mode',choices=['pilot','private','public','evidence','verify','recover'],default='public');p.add_argument('--limit',type=int,default=150);p.add_argument('--budget',type=int,default=900);p.add_argument('--probe',action='store_true');p.add_argument('--symbols',default='');args=p.parse_args()
     started=time.monotonic();data=load();asof=str(data['flows'].trade_date.max().date())
     if args.mode=='recover':
         from scripts.recover_technical import run
         from scripts.technical_acceptance import LazyAPI
-        run(LazyAPI(KIS),data,limit=max(1,min(10,args.limit)),max_calls=60,seconds=max(30,min(240,args.budget)));return
+        symbols=set(args.symbols.split(',')) if args.symbols else None
+        if symbols and (len(symbols)>10 or not symbols.issubset(set(data['instruments'].symbol))):raise ValueError('Unknown or oversized recovery symbols')
+        run(LazyAPI(KIS),data,limit=max(1,min(10,args.limit)),max_calls=60,seconds=max(30,min(240,args.budget)),symbols=symbols);return
     if args.mode=='verify':
         from scripts.technical_acceptance import run,LazyAPI
         run(LazyAPI(KIS),data,max(1,min(600,args.limit)),max(60,min(1500,args.budget)),probe=args.probe);return

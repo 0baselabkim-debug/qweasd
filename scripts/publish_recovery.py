@@ -13,12 +13,14 @@ from screener.technical_quality import daily_accepted,digest
 from screener.technical import validate
 from screener.liquidity_evidence import permits,price_identity
 
-def seed_dates(data,limit=2):
+def seed_dates(data,limit=2,symbols=None):
     """Persist older masked dates as separate recheck tasks, never accept latest proof."""
     made=[];prices=data['prices'];flows=data['flows']
     for day,rows in sorted(data['metadata'].get('adjusted_price_conflicts',{}).items()):
         for row in sorted(rows,key=lambda r:r['symbol']):
-            code=row['symbol'];path=batch.ROOT/'pending'/day/(code+'.json.gz')
+            code=row['symbol']
+            if symbols and code not in symbols:continue
+            path=batch.ROOT/'pending'/day/(code+'.json.gz')
             if path.exists() or (batch.ROOT/'history'/day/(code+'.json.gz')).exists():continue
             current=batch.read(batch.CACHE/(code+'.json.gz'))
             if not current or not daily_accepted(current) or current['asof']<=day:continue

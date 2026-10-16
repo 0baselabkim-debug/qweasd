@@ -6,6 +6,10 @@ on:
         type: choice
         options: [verify, recover]
         default: verify
+      symbols:
+        type: string
+        default: ''
+        description: Optional existing codes for bounded targeted recheck
       limit:
         type: number
         default: 3
@@ -41,13 +45,14 @@ jobs:
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
           RECOVERY_SCHEDULE: ${{ github.event.schedule }}
           RECHECK_MODE: ${{ inputs.mode || 'verify' }}
+          RECOVERY_SYMBOLS: ${{ inputs.symbols || '' }}
           RECOVERY_LIMIT: ${{ inputs.limit || 3 }}
         run: |
           # Respect the shared KIS token interval if a later real recheck needs it.
           # No token is issued when official reference data is unavailable.
           sleep 65
           if [ "$RECHECK_MODE" = "recover" ]; then
-            timeout 600 python scripts/collect_technical.py --mode recover --limit "$RECOVERY_LIMIT" --budget 240
+            timeout 600 python scripts/collect_technical.py --mode recover --limit "$RECOVERY_LIMIT" --budget 240 --symbols "$RECOVERY_SYMBOLS"
           else
             timeout 1500 python scripts/collect_technical.py --mode verify --limit 600 --budget 900
             if [ "${{ github.event_name }}" = "schedule" ]; then
