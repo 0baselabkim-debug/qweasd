@@ -2,7 +2,7 @@
 import copy,datetime as dt,json,time
 from pathlib import Path
 from screener.technical import indicators,levels,reward_risk,rules,validate,buy_guide
-from screener.technical_quality import daily_accepted,digest,LEGACY_CONFLICT
+from screener.technical_quality import daily_accepted,digest,LEGACY_CONFLICT,blocking_conflicts
 from scripts.technical_acceptance import reference_ready,verify_bundle,selected_observations
 from scripts import technical_batch as batch
 
@@ -158,7 +158,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
         if retry_after>start.isoformat():
             excluded_queue['backoff']+=1;continue
         tasks.append((j.get('attempted_at',''),key,path,b))
-    bounded=BoundedAPI(api,max_calls=min(60,max_calls),seconds=min(240,seconds));results=[]
+    bounded=BoundedAPI(api,max_calls=min(60,max_calls),seconds=min(240,seconds));results=[];deferred_reference=[];not_conflicting=[]
     for _,key,path,b in fair_tasks(tasks,ledger,start.isoformat()):
         if len(results)>=min(10,limit) or time.monotonic()-bounded.start>=bounded.seconds:break
         day=b['asof']
@@ -167,9 +167,11 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
             if len(refs_by_date)>=2:continue
             refs_by_date[day],status_by_date[day]=batch.krx_reference(day,refresh=True)
         refs=refs_by_date[day]
-        if not reference_ready(b,refs):continue
+        if not reference_ready(b,refs):
+            deferred_reference.append(key);continue
         checked=batch.crosscheck(copy.deepcopy(b),refs)
-        if checked.get('price_finality')!='CONFLICT' and not b.get('seed_provenance'):continue
+        if checked.get('price_finality')!='CONFLICT' and not b.get('seed_provenance') and not blocking_conflicts(b):
+            not_conflicting.append(key);continue
         job=ledger['jobs'].setdefault(key,{});attempts=job.get('attempts',0)+1
         observation_start=len(bounded.observations)
         before=digest(b)
@@ -191,7 +193,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
             batch.write(session_path,session)
         bounded.begin(saved,persist)
         physical_start=bounded.used;cache_start=bounded.cache_hits;item_start=time.monotonic()
-        result={'symbol':b['symbol'],'asof':day,'original_sha256':before,'promoted':False}
+        result={'symbol':b['symbol'],'asof':day,'original_sha256':before,'promoted':False,'previously_blocking':bool(blocking_conflicts(b))}
         # Archive the complete original (including the previous flow evidence).
         batch.write(batch.CACHE.parent/'observations'/day/b['symbol']/(before+'.json.gz'),b)
         try:
@@ -230,7 +232,13 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
             'run_id':__import__('os').environ.get('GITHUB_RUN_ID'),'event':__import__('os').environ.get('GITHUB_EVENT_NAME'),
             'scheduled_cron':__import__('os').environ.get('RECOVERY_SCHEDULE'),'excluded_from_price_recovery':excluded_queue,
             'time_budget_seconds':bounded.seconds,'seeded_date_tasks':seeded,'reference_status':status_by_date,'results':results,
-            'promoted':sum(r['promoted'] for r in results),'kis_metrics':api.metrics}
+            'promoted':sum(r['promoted'] for r in results),'kis_metrics':api.metrics,
+            'queue':{'eligible_date_symbol_tasks':len(tasks),'attempted':len(results),'reference_deferred':len(deferred_reference),'not_price_conflicting':len(not_conflicting),
+                     'carried_forward':len(tasks)-sum(r['promoted'] for r in results)-len(not_conflicting)},
+            'budget_exhausted':bounded.used>=bounded.max_calls or time.monotonic()-bounded.start>=bounded.seconds,
+            'reference_deferred_tasks':deferred_reference,'recovered_existing_blocked':sum(r['promoted'] and r['previously_blocking'] for r in results)}
+    from scripts.recovery_outcome import outcome
+    report['data_outcome']=outcome(report)
     ledger['runs']=(ledger['runs']+[report])[-30:];batch.write(ledger_path,ledger)
     batch.write(batch.ROOT/'recovery-report.json',report);batch.refresh_summary(latest)
     print(json.dumps({'examined_conflicts':len(results),'promoted':report['promoted'],'reserved_attempts':bounded.used}))

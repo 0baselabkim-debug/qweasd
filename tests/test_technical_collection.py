@@ -252,7 +252,7 @@ def test_empty_reference_keeps_previous_cache_and_records_http(tmp_path,monkeypa
         status=200
         def __enter__(self):return self
         def __exit__(self,*args):pass
-        def read(self):return json.dumps({'OutBlock_1':[]}).encode()
+        def read(self,size=-1):return json.dumps({'OutBlock_1':[]}).encode()
     monkeypatch.setenv('KRX_API_KEY','unit-test-only-not-a-real-key')
     monkeypatch.setattr(urllib.request,'urlopen',lambda *a,**k:Response())
     refs,status=fetch_references('2020-01-03',tmp_path)
@@ -468,7 +468,7 @@ def test_explicit_reference_refresh_archives_without_replacing_selected_referenc
   status=200
   def __enter__(self):return self
   def __exit__(self,*a):pass
-  def read(self):return json.dumps({'OutBlock_1':[new]}).encode()
+  def read(self,size=-1):return json.dumps({'OutBlock_1':[new]}).encode()
  monkeypatch.setenv('KRX_API_KEY','unit-test-only')
  monkeypatch.setattr('urllib.request.urlopen',lambda *a,**k:Reply())
  refs,status=fetch_references(day,tmp_path,refresh=True)

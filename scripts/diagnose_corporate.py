@@ -9,10 +9,11 @@ def run():
     api=Dart(max_calls=12,max_seconds=180);state=load_state();out=Path('reports/corporate-diagnosis');out.mkdir(parents=True,exist_ok=True)
     report={'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'filings':[]}
     import os
+    documents_only=os.environ.get('DIAGNOSTIC_DOCUMENTS_ONLY')=='true'
     receipts=os.environ.get('DIAGNOSTIC_RECEIPTS','20260325000430,20260330001721').split(',')
-    if len(receipts)>3 or any(not re.fullmatch(r'[0-9]{14}',r) or r not in state['filings'] for r in receipts):raise ValueError('Invalid bounded diagnostic receipts')
+    if len(receipts)>(6 if documents_only else 3) or any(not re.fullmatch(r'[0-9]{14}',r) or r not in state['filings'] for r in receipts):raise ValueError('Invalid bounded diagnostic receipts')
     for receipt in receipts:
-        f=state['filings'][receipt];r={'requested_filing':f,'previous_job':state['jobs'][receipt]}
+        f=state['filings'][receipt];r={'requested_filing':f,'previous_job':state['jobs'].get(receipt,{})}
         try:
             raw=api.get('document.xml',{'rcept_no':receipt})
             r['document']={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'zip_signature':raw.startswith(b'PK'),'transport':getattr(api,'last_response',{})}
@@ -31,6 +32,8 @@ def run():
                 r['document']['entries']=entries
             else:r['document']['error_body']=raw.decode('utf-8',errors='replace')[:1500]
         except Exception as e:r['document_error']=str(e) if isinstance(e,ValueError) else type(e).__name__
+        if documents_only:
+            report['filings'].append(r);continue
         try:
             d=api.get('fnlttSinglAcntAll.json',{'corp_code':f['corp_code'],'bsns_year':str(f['year']),'reprt_code':f['report_code'],'fs_div':'CFS'})
             (out/(receipt+'.financial.json.gz')).write_bytes(gzip.compress(json.dumps(d,ensure_ascii=False).encode(),mtime=0))

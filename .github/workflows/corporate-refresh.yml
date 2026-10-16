@@ -6,7 +6,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [probe, collect, diagnose, repair_attachments]
+        options: [probe, collect, diagnose, review_documents, repair_attachments]
         default: probe
       diagnostic_receipts:
         type: string
@@ -63,13 +63,14 @@ jobs:
               raise SystemExit(1)
           PY
       - name: Diagnose two public failed filings without changing snapshots
-        if: inputs.mode == 'diagnose'
+        if: inputs.mode == 'diagnose' || inputs.mode == 'review_documents'
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          DIAGNOSTIC_DOCUMENTS_ONLY: ${{ inputs.mode == 'review_documents' }}
           DIAGNOSTIC_RECEIPTS: ${{ inputs.diagnostic_receipts }}
         run: python scripts/diagnose_corporate.py
       - name: Preserve diagnostic source responses
-        if: always() && inputs.mode == 'diagnose'
+        if: always() && (inputs.mode == 'diagnose' || inputs.mode == 'review_documents')
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -78,7 +79,7 @@ jobs:
           git diff --cached --quiet || git commit -m 'Record public DART failure response evidence'
           git push origin "HEAD:evidence/corporate-diagnosis-$GITHUB_RUN_ID"
       - name: Restore compatible unpublished progress
-        if: inputs.mode != 'probe' && inputs.mode != 'diagnose'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'review_documents'
         run: |
           mkdir -p corporate-candidate
           if [ -f snapshot/corporate-state.json.gz ]; then cp snapshot/corporate-state.json.gz corporate-candidate/state.json.gz; fi
@@ -104,7 +105,7 @@ jobs:
           REPAIR_LIMIT: ${{ inputs.limit || 2 }}
         run: python scripts/repair_corporate_attachments.py --limit "$REPAIR_LIMIT"
       - name: Collect changed disclosures and resume unfinished companies
-        if: inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'repair_attachments'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'review_documents' && inputs.mode != 'repair_attachments'
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
           PILOT_SYMBOLS: ${{ inputs.symbols || '' }}
@@ -112,15 +113,15 @@ jobs:
         run: |
           python -u scripts/collect_corporate.py --state corporate-candidate/state.json.gz --db corporate-candidate/corporate.duckdb --limit "$COMPANY_LIMIT" --max-calls 600 --max-seconds 2100 --symbols "$PILOT_SYMBOLS"
       - name: Preserve progress independently of publication
-        if: always() && inputs.mode != 'probe' && inputs.mode != 'diagnose'
+        if: always() && inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'review_documents'
         run: python scripts/checkpoint_corporate.py
       - name: Validate append-only corporate records
-        if: inputs.mode != 'probe' && inputs.mode != 'diagnose'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'review_documents'
         run: |
           python scripts/publish_corporate.py --validate-only
           python -m pytest -q tests/test_corporate.py
       - name: Publish corporate snapshot without changing the market database
-        if: inputs.mode != 'probe' && inputs.mode != 'diagnose'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'review_documents'
         run: |
           git fetch origin main
           git merge --ff-only origin/main
@@ -152,7 +153,7 @@ jobs:
           git push origin "HEAD:evidence/corporate-$GITHUB_RUN_ID"
 
       - name: Preserve collection and publication evidence
-        if: always() && inputs.mode != 'probe' && inputs.mode != 'diagnose'
+        if: always() && inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'review_documents'
         run: |
           mkdir -p reports/corporate-run
           for name in corporate-run.json corporate-checkpoint-result.json; do
