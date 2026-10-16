@@ -1,49 +1,73 @@
 {
-  "updated_at": "2026-10-16T01:37:12.400414+00:00",
+  "updated_at": "2026-10-16T01:47:08.056504+00:00",
   "filings": 8356,
   "financial_versions": 2772,
   "business_companies": 357,
   "universe": 2430,
   "last_run": {
-    "run_id": "38836003007",
-    "calls": 6,
-    "seconds": 8.028,
+    "run_id": "38836860743",
+    "calls": 13,
+    "seconds": 19.448,
     "results": [
       {
-        "receipt": "20260325000430",
-        "parent": "20260323001116",
+        "receipt": "20260320000348",
+        "parent": "20260318001443",
         "new_financial": false,
         "parent_job": {
-          "attempted_at": "2026-10-16T01:36:43.617051+00:00",
-          "business_attempted_at": "2026-10-16T01:36:43.617051+00:00",
+          "attempted_at": "2026-10-16T01:46:26.694002+00:00",
+          "business_attempted_at": "2026-10-16T01:46:26.694002+00:00",
           "business_attempts": 1,
           "business_status": "success",
-          "document_name": "20260323001116.xml",
-          "document_sha256": "7ca5f2b305de117d9e2fc69f7d7c781e31eece8fd826c75ab8fe43412503548a",
-          "section_sha256": "6116cd0f8cac58362226f4883126c1583754294ff5868934b2ac312e42653ceb",
-          "characters": 19465,
+          "document_name": "20260318001443.xml",
+          "document_sha256": "81b087cf248bd499af8cad552f4a6b1b74313d852bb05b9af3c891e2f6b59901",
+          "section_sha256": "c0519495f877b9d250d883221a9583ab50399dfde5598c03c396575b17162e3f",
+          "characters": 16994,
           "financial_status": "success"
         }
       },
       {
-        "receipt": "20260330001721",
-        "parent": "20260320001026",
+        "receipt": "20260806000296",
+        "error": "parent_metadata_revision_requires_review"
+      },
+      {
+        "receipt": "20260430000135",
+        "parent": "20260319000781",
         "new_financial": false,
         "parent_job": {
-          "attempted_at": "2026-10-16T01:36:47.741021+00:00",
-          "business_attempted_at": "2026-10-16T01:36:47.741021+00:00",
+          "attempted_at": "2026-10-16T01:46:33.793641+00:00",
+          "business_attempted_at": "2026-10-16T01:46:33.793641+00:00",
           "business_attempts": 1,
           "business_status": "success",
-          "document_name": "20260320001026.xml",
-          "document_sha256": "701e94c27c3e0efc4277e84d0e3dc3735c108efe5c4b4de218953e0fe54a2923",
-          "section_sha256": "2f2d94d81c7f9fcad1ebba26a04cab6ce6e8eb6e1dcff0ccd77c498482d71973",
-          "characters": 20381,
+          "document_name": "20260319000781.xml",
+          "document_sha256": "f338ed128214aeeb78d1b902112b0fe112dcee33cc8700da937a8b50d5b3657e",
+          "section_sha256": "28bb32ce531d6fccaca8d3b460a9d7883a5ad14d0e2d085bf9f906b06c0e2678",
+          "characters": 22836,
           "financial_status": "success"
         }
+      },
+      {
+        "receipt": "20260319000150",
+        "parent": "20260318001595",
+        "new_financial": false,
+        "parent_job": {
+          "attempted_at": "2026-10-16T01:46:38.888869+00:00",
+          "business_attempted_at": "2026-10-16T01:46:38.888869+00:00",
+          "business_attempts": 1,
+          "business_status": "success",
+          "document_name": "20260318001595.xml",
+          "document_sha256": "e6fff20a4c401c03f95cd06c4131743126952465667efac9bc4bfeb42cc5a072",
+          "section_sha256": "1aad52f3474bd4568d5720277d607cb8989b14918eaa04a359d0a8699daabefc",
+          "characters": 17019,
+          "financial_status": "success"
+        }
+      },
+      {
+        "receipt": "20260730000175",
+        "error": "parent_metadata_revision_requires_review"
       }
     ]
   },
   "annual_score_policy": "preserved_2025_baseline",
   "quarterly_score_policy": "hold_until_comparable_TTM_validation",
-  "state_sha256": "b692a771c0aafc7db785a4df1f1d11a075c15a5d2b00cb97f381204085816e0d"
+  "state_sha256": "0d428963aceeeb0ec7162fbb03edb4b2ec9152bb5b933ea4ff475c818de23ef8"
 }
