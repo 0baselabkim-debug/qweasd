@@ -248,7 +248,11 @@ with sync_playwright() as p:
   recovery_path=ROOT/'technical/recovery-report.json'
   if recovery_path.exists():
    recovered=json.loads(recovery_path.read_text())
-   for item in recovered.get('results',[]):
+   current_items={r['symbol']:r for r in recovered.get('results',[]) if r.get('promoted') and r['asof']==asof}
+   for code in ['052710','052790']:
+    b,_=get_bundle(code,asof)
+    if b and daily_accepted(b):current_items.setdefault(code,{'symbol':code,'asof':asof,'promoted':True})
+   for item in current_items.values():
     if not item.get('promoted') or item['asof']!=asof:continue
     code=item['symbol'];row=stocks.set_index('symbol').loc[code]
     click('수급 필터');radio('전체 섹터');choose('시장',row.market);click('전체섹터 조회')
