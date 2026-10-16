@@ -60,7 +60,27 @@ jobs:
             fi
           fi
       - name: Prepare coherent date-specific liquidity evidence
+        id: prepare
         run: python scripts/publish_recovery.py
       - name: Preserve evidence and availability records
+        id: publish
+        env:
+          RECOVERY_PREPARE_OK: ${{ steps.prepare.outcome }}
         if: always()
         run: python scripts/commit_recovery.py
+      - name: Record actual data outcome independently of Actions success
+        if: always()
+        env:
+          PUBLICATION_RESULT: ${{ steps.publish.outcome }}
+        run: |
+          python - <<'PY'
+          import os
+          from scripts.recovery_outcome import emit
+          emit(published=os.environ['PUBLICATION_RESULT']=='success',publication_error=os.environ['PUBLICATION_RESULT']!='success')
+          PY
+          if [ -f reports/recovery-execution/outcome.json ]; then
+            git switch -c "evidence/recovery-outcome-$GITHUB_RUN_ID"
+            git add reports/recovery-execution
+            git commit -m "Record actual recovery and publication outcome"
+            git push origin "HEAD:refs/heads/evidence/recovery-outcome-$GITHUB_RUN_ID"
+          fi

@@ -16,6 +16,7 @@ def main():
         git('push','origin','HEAD:refs/heads/'+branch)
         print(reason+'; candidate preserved at '+branch)
         raise SystemExit(1)
+    if os.getenv('RECOVERY_PREPARE_OK','success')!='success':preserve('Candidate preparation failed; retain published snapshot')
     if not coherent(Path('snapshot')):preserve('Publication coherence failed')
     if git('push','origin','HEAD:main',check=False).returncode==0:return
     git('fetch','origin','main')
