@@ -19,7 +19,7 @@ def report(day,out):
         if v.get('trade_date')==day:attempts.append(v)
     ledger=json.loads(Path('snapshot/publication-ledger.json').read_text())
     snapshot=json.loads(Path('snapshot/manifest.json').read_text())
-    planned=[dt.datetime.combine(target,dt.time(h,m),kst) for h,m in [(20,30),(23,30)]]
+    planned=[dt.datetime.combine(target,dt.time(h,m),kst) for h,m in [(18,30),(21,0)]]
     result={'checked_at_utc':now.isoformat(),'target_trade_date':day,'snapshot_asof':snapshot['asof'],
         'publication':ledger.get(day),'market_attempts':attempts,'workflows':workflows,
         'daily_slots':[{'planned_at_kst':t.isoformat(),'time_state':'NOT_DUE' if now<t else 'DUE_NOT_PROOF_OF_EXECUTION'} for t in planned],

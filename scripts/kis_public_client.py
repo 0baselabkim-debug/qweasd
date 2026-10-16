@@ -38,7 +38,8 @@ class KIS:
             except (OSError,ValueError):pass
             code=str(d.get('msg_cd',d.get('error_code','')))[:40]
             self.metrics.append({'http':status,'code':code,'seconds':round(time.monotonic()-started,4),
-                                 'kind':'authentication' if path=='/oauth2/tokenP' else 'market', 'attempt':attempt+1})
+                                 'kind':'authentication' if path=='/oauth2/tokenP' else 'market', 'attempt':attempt+1,
+                                 'endpoint':path,'symbol':(params or {}).get('FID_INPUT_ISCD'),'started_at_unix':time.time()-(time.monotonic()-started)})
             if status==200 and (d.get('rt_cd')=='0' or (path=='/oauth2/tokenP' and d.get('access_token'))):return d
             if status==429 or code=='EGW00201' or status is None or (status and status>=500):
                 time.sleep(3*(attempt+1)); continue

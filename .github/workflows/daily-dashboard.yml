@@ -1,8 +1,8 @@
 name: Daily validated dashboard refresh
 on:
   schedule:
-    - cron: '30 11 * * 1-5'
-    - cron: '30 14 * * 1-5'
+    - cron: '30 9 * * 1-5'
+    - cron: '0 12 * * 1-5'
   workflow_dispatch:
     inputs:
       mode:
@@ -34,6 +34,8 @@ jobs:
         run: |
           started=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs" --jq '.jobs[] | select(.name == "refresh") | .started_at' | head -1)
           echo "JOB_STARTED_AT=$started" >> "$GITHUB_ENV"
+          created=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)
+          echo "RUN_CREATED_AT=$created" >> "$GITHUB_ENV"
       - name: Choose scheduled trading date and restore only its checkpoint
         id: target
         env:
@@ -45,7 +47,9 @@ jobs:
           from zoneinfo import ZoneInfo
           now=dt.datetime.now(ZoneInfo('Asia/Seoul'))
           # A queued late-evening run may start after midnight; never query that new day before its close.
-          day=(now-dt.timedelta(days=1)).date() if now.hour<9 else now.date()
+          from screener.collection_schedule import target_date
+          created=dt.datetime.fromisoformat(os.environ['RUN_CREATED_AT'].replace('Z','+00:00')) if os.environ.get('GITHUB_EVENT_NAME')=='schedule' else None
+          day=target_date(now,created)
           if os.environ['MODE']=='verify_saved':day=dt.date.fromisoformat(json.loads(Path('snapshot/manifest.json').read_text())['asof'])
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('day='+day.strftime('%Y%m%d')+'\n')
           ledger=Path('snapshot/publication-ledger.json')
@@ -64,6 +68,9 @@ jobs:
           elif git ls-remote --exit-code --heads origin "data/daily-$DAY" >/dev/null 2>&1; then
             git fetch origin "data/daily-$DAY"
             git show FETCH_HEAD:daily-results/bundle.json.gz > daily-results/bundle.json.gz
+            if git cat-file -e FETCH_HEAD:daily-results/successes.jsonl 2>/dev/null; then
+              git show FETCH_HEAD:daily-results/successes.jsonl > daily-results/successes.jsonl
+            fi
           fi
       - name: Collect only missing stocks for this trading date
         if: inputs.mode != 'verify_saved' && steps.target.outputs.already_published != 'true'
@@ -100,6 +107,8 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           cp daily-results/bundle.json.gz /tmp/daily-bundle.gz
+          if [ -f daily-results/successes.jsonl ]; then cp daily-results/successes.jsonl /tmp/daily-successes.jsonl; fi
+          rm -f daily-results/bundle.json.gz daily-results/successes.jsonl
           head=$(git rev-parse HEAD)
           if git ls-remote --exit-code --heads origin "data/daily-$DAY" >/dev/null 2>&1; then
             git fetch origin "data/daily-$DAY"
@@ -109,7 +118,9 @@ jobs:
           fi
           mkdir -p daily-results
           cp /tmp/daily-bundle.gz daily-results/bundle.json.gz
+          if [ -f /tmp/daily-successes.jsonl ]; then cp /tmp/daily-successes.jsonl daily-results/successes.jsonl; fi
           git add -f daily-results/bundle.json.gz
+          if [ -f daily-results/successes.jsonl ]; then git add -f daily-results/successes.jsonl; fi
           git diff --cached --quiet || git commit -m "Preserve KRX collection checkpoint $DAY"
           git push origin "HEAD:data/daily-$DAY"
           git switch --detach "$head"
@@ -163,6 +174,7 @@ jobs:
             daily-candidate/validation.json
             daily-results/bundle.json.gz
             daily-results/calendar-check.json
+            daily-results/successes.jsonl
           retention-days: 7
           if-no-files-found: ignore
 

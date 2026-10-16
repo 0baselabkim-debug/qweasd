@@ -3,14 +3,15 @@ import datetime as dt,json,sys,time,urllib.request,urllib.parse
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from kis_public_client import KIS
-from collect_daily_snapshot import master
+from collect_daily_snapshot import master,fetch_stock
+import argparse
 
 OUT=Path('reports/daily-optimization/probe');OUT.mkdir(parents=True,exist_ok=True)
 def save(name,obj):
     (OUT/name).write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n')
-def main():
+def main(optimized=False):
     specs=[]
-    for name in ['inquire-daily-itemchartprice','investor-trade-by-stock-daily','inquire-price']:
+    for name in ([] if optimized else ['inquire-daily-itemchartprice','investor-trade-by-stock-daily','inquire-price']):
         url='https://apiportal.koreainvestment.com/api/apis/public/detail?'+urllib.parse.urlencode({'accessUrl':'/uapi/domestic-stock/v1/quotations/'+name})
         try:
             d=json.load(urllib.request.urlopen(url,timeout=20))
@@ -26,10 +27,20 @@ def main():
     universe,sources=master(day);by_code={r['symbol']:r for r in universe}
     symbols=['005930','000660','005380','035420','105560','000250','000440','247540','086520','042510']
     result={'day':day,'observed_at':now.isoformat(),'master_sources':sources,'records':{},'errors':{}}
+    context={'schema':1,'trade_date':day,'exchange':'KRX','status':'complete','finality':'UNVERIFIED','master_sources':sources,'kind_industries':{}}
+    if optimized:context['benchmarks']={m:api.benchmark(c,since,day) for m,c in [('KOSPI','0001'),('KOSDAQ','1001')]}
     start=time.monotonic()
     for code in symbols:
         t=time.monotonic();n=len(api.metrics)
         try:
+            if optimized:
+                cutoff=dt.datetime.combine(now.date()+dt.timedelta(days=1),dt.time(9),ZoneInfo('Asia/Seoul'))
+                _,record,excluded,error=fetch_stock(by_code[code],api,day,since,context,set(),cutoff,start+300)
+                result['records'][code]={'record':record,'excluded':excluded,'error':error,'seconds':time.monotonic()-t,'physical_requests':len(api.metrics)-n}
+                if error:result['errors'][code]=error
+                result.update(metrics=api.metrics,seconds=time.monotonic()-start)
+                save('optimized.json',result)
+                continue
             flow=api.request('/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily',{'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':code,'FID_INPUT_DATE_1':day,'FID_ORG_ADJ_PRC':'','FID_ETC_CLS_CODE':''},'FHPTJ04160001')
             series=api.prices(code,since,day)
             quote=api.request('/uapi/domestic-stock/v1/quotations/inquire-price',{'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':code},'FHKST01010100')
@@ -40,4 +51,5 @@ def main():
         if any(s and s in raw for s in [api.key,api.secret,api.token]):raise ValueError('Secret in evidence')
         save('responses.json',result)
     print(json.dumps({'records':len(result['records']),'errors':len(result['errors']),'physical_requests':len(api.metrics)}))
-if __name__=='__main__':main()
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--optimized',action='store_true');a=p.parse_args();main(a.optimized)

@@ -5,6 +5,7 @@ import json
 import math
 import re
 import shutil
+import time
 from pathlib import Path
 import duckdb
 from .market_quality import quote_cap
@@ -45,6 +46,13 @@ def validate_bundle(b):
             if d>day or not math.isfinite(float(v['stck_clpr'])) or float(v['stck_clpr'])<=0:raise ValueError('Adjusted series invalid date/value')
         latest=next(v for v in r['adjusted_prices'] if v['stck_bsop_date']==b['trade_date'])
         if integer(latest['acml_vol'])!=fields['acml_vol']:raise ValueError('Daily adjusted endpoint does not match volume')
+        if r.get('validation_profile')=='dated_close_volume_turnover_v2':
+            if r.get('request_scope')!={'market':'J','symbol':code,'end':b['trade_date'],'adjustment':'0'}:raise ValueError('Request scope mismatch')
+            if integer(latest.get('acml_tr_pbmn'))!=fields['acml_tr_pbmn'] or integer(q.get('acml_tr_pbmn'))!=fields['acml_tr_pbmn']:raise ValueError('Daily turnover mismatch')
+            if r.get('quote_source')=='FHKST03010100.output1':
+                for k,v in q.items():
+                    if r.get('chart_header',{}).get(k)!=v:raise ValueError('Chart metadata provenance mismatch')
+            elif r.get('quote_source')!='FHKST01010100.output':raise ValueError('Unknown quote source')
         close_conflict=integer(latest['stck_clpr'])!=fields['stck_clpr']
         if close_conflict and b.get('input_mode')!='saved_real_responses_replay':raise ValueError('Daily adjusted endpoint does not match close')
         sector=instrument.get('sector') or q.get('bstp_kor_isnm') or b.get('kind_industries',{}).get(code) or '업종 미분류'
@@ -67,10 +75,12 @@ def validate_bundle(b):
     return day,normalized
 
 def build_candidate(b,baseline,destination):
-    day,rows=validate_bundle(b);baseline=Path(baseline);destination=Path(destination)
+    started=time.monotonic();phases={}
+    day,rows=validate_bundle(b);phases['bundle_validation']=time.monotonic()-started;baseline=Path(baseline);destination=Path(destination)
     if baseline.resolve()==destination.resolve():raise ValueError('Candidate must be separate from published DB')
     destination.parent.mkdir(parents=True,exist_ok=True);temp=destination.with_suffix('.building.duckdb')
-    shutil.copy2(baseline,temp)
+    t=time.monotonic();shutil.copy2(baseline,temp);phases['database_copy']=time.monotonic()-t
+    db_started=time.monotonic()
     audit={'trade_date':str(day),'records':len(rows),'excluded':len(b['excluded']),'adjusted_updates':0,'source_run':b.get('source_run'),
            'planned_start_at':b.get('planned_start_at'),'collection_started_at':b.get('started_at'),'collection_completed_at':b.get('completed_at'),
            'input_mode':b.get('input_mode','live_daily_collection')}
@@ -100,7 +110,7 @@ def build_candidate(b,baseline,destination):
                 c.execute('insert or ignore into flows values (?,?,?,?,?,?,?)',[code,day,*values,'KRX','KIS FHPTJ04160001','UNVERIFIED'])
                 old_price=c.execute('select close,volume,turnover from prices where symbol=? and trade_date=?',[code,day]).fetchone()
                 if old_price and old_price!=(f['stck_clpr'],f['acml_vol'],f['acml_tr_pbmn']):raise ValueError('Existing price revision requires review '+code)
-                c.execute('insert or ignore into prices values (?,?,?,?,?,?,?,?,?,?,?,?)',[code,day,f['stck_clpr'],None,f['acml_tr_pbmn'],f['acml_vol'],r['cap'],'KIS dated J daily flow + adjusted chart','KRX','KIS J hts_avls × 100 million KRW','CLOSE_VOLUME_DATED_MASTER_SHARES_MATCH',record['observed_at']])
+                c.execute('insert or ignore into prices values (?,?,?,?,?,?,?,?,?,?,?,?)',[code,day,f['stck_clpr'],None,f['acml_tr_pbmn'],f['acml_vol'],r['cap'],'KIS dated J daily flow + adjusted chart','KRX','KIS J '+record.get('quote_source','FHKST01010100.output')+' hts_avls × 100 million KRW','CLOSE_VOLUME_DATED_MASTER_SHARES_MATCH',record['observed_at']])
                 for v in record['adjusted_prices']:
                     d=dt.datetime.strptime(v['stck_bsop_date'],'%Y%m%d').date()
                     c.execute('update prices set adjusted_close=? where symbol=? and trade_date=?',[float(v['stck_clpr']),code,d]);audit['adjusted_updates']+=1
@@ -136,6 +146,8 @@ def build_candidate(b,baseline,destination):
             c.execute('insert or replace into metadata values (?,?)',['verified_delistings',json.dumps(registry,ensure_ascii=False)])
             c.execute('insert or replace into metadata values (?,?)',['adjusted_price_provenance',json.dumps({'source':'KIS J FHKST03010100','parameter':'FID_ORG_ADJ_PRC=0','requested_end':str(day),'quote_observation_rule':'after close, before next calendar-day open','adjustment_vintage':'provider response at collection time; not a historical adjustment-vintage archive','run':b.get('source_run')})])
             c.execute('COMMIT');c.execute('CHECKPOINT')
+        phases['database_update']=time.monotonic()-db_started
+        preservation_started=time.monotonic()
         # Independent preservation comparison: no old flows, financials or unadjusted prices disappear/change.
         with duckdb.connect(str(temp),read_only=True) as c:
             escaped=str(baseline.resolve()).replace("'","''")
@@ -143,10 +155,14 @@ def build_candidate(b,baseline,destination):
             for table,cols in [('flows','*'),('financials','*'),('memberships','*'),('instruments','*'),('exclusions','*'),('prices','symbol,trade_date,close,turnover,volume,market_cap,source,exchange,market_cap_source,market_cap_quality,market_cap_observed_at')]:
                 n=c.execute(f'select count(*) from (select {cols} from original.{table} except select {cols} from main.{table})').fetchone()[0]
                 if n:raise ValueError('Preservation check failed '+table)
+        phases['preservation_comparison']=time.monotonic()-preservation_started
+        evaluation_started=time.monotonic()
         x,s,_=evaluate(load(temp),day)
         if len(x)!=len(rows) or int(x.net_amount.sum())!=sum(r['fields']['frgn_ntby_tr_pbmn']*1000000 for r in rows):raise ValueError('Evaluation lost input stocks')
         if int(s.net_amount.sum())!=int(x.net_amount.sum()):raise ValueError('Industry aggregate double counted')
         audit.update(complete_stock_scores=int(x.total_score.notna().sum()),complete_sector_scores=int(s.total_score.notna().sum()),full_20d_symbols=int((x.flow_observations>=20).sum()),preservation_verified=True)
+        phases['aggregate_validation']=time.monotonic()-evaluation_started
+        audit['phase_seconds']=phases;audit['candidate_total_seconds']=time.monotonic()-started
         temp.replace(destination);audit['sha256']=hashlib.sha256(destination.read_bytes()).hexdigest();return audit
     except Exception:
         temp.unlink(missing_ok=True);raise

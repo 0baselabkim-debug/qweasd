@@ -1,6 +1,11 @@
 name: Bounded daily collection field comparison
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [compare, optimized]
+        default: compare
 permissions:
   contents: write
 concurrency:
@@ -23,7 +28,7 @@ jobs:
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
         run: |
           sleep 65
-          python scripts/probe_daily_optimization.py
+          python scripts/probe_daily_optimization.py ${{ inputs.mode == 'optimized' && '--optimized' || '' }}
       - name: Preserve read-only evidence
         if: always()
         run: |
