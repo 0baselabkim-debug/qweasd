@@ -1,0 +1,312 @@
+{
+  "asof": "2026-10-15",
+  "started_at": "2026-10-16T01:41:48.857627+00:00",
+  "finished_at": "2026-10-16T01:42:41.316818+00:00",
+  "limit": 5,
+  "max_physical_request_attempts": 60,
+  "reserved_request_attempts": 25,
+  "physical_request_attempts": 25,
+  "authentication_attempts": 1,
+  "retry_attempts": 0,
+  "unused_reservations": 0,
+  "refunded_reservations": 0,
+  "metering": "physical_boundary",
+  "logical_requests": 27,
+  "cached_responses_reused": 3,
+  "run_id": "38836360166",
+  "event": "workflow_dispatch",
+  "time_budget_seconds": 240,
+  "seeded_date_tasks": [
+    "2026-10-14/000020",
+    "2026-10-14/000050"
+  ],
+  "reference_status": {
+    "2026-10-14": {
+      "KOSPI": "RECEIVED",
+      "KOSDAQ": "RECEIVED"
+    },
+    "2026-10-15": {
+      "KOSPI": "RECEIVED",
+      "KOSDAQ": "RECEIVED"
+    }
+  },
+  "results": [
+    {
+      "symbol": "000020",
+      "asof": "2026-10-14",
+      "original_sha256": "21b4b20fe496565ad4cec74b6cf3cefeacfa522f7a287991a8bdfa8af4ee9f7b",
+      "promoted": true,
+      "candidate_sha256": "e9866f012cc39ac99fdada2f8962ca85b9eec4a3dffda23cff84eebe914b9f32",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "6fc8ed0b74204b5c0feb896523ad408300f4cafc470583c247bccab5b4b09ba4",
+        "d15dacba47e08296e5cb12faf656e9524739dcb4d92e776bb652e1ec51204532",
+        "0f2c487ef603b5c5595c1116dd5fdaf4537b39539b326a73ff2a27f1900994b6"
+      ],
+      "request_attempts": 4,
+      "cache_hits": 0,
+      "seconds": 4.707
+    },
+    {
+      "symbol": "000080",
+      "asof": "2026-10-15",
+      "original_sha256": "4914b81981f03e118704fdec88da1d9a026479a137fe704d438380e88d741a78",
+      "promoted": true,
+      "candidate_sha256": "2a77f36dbb5bbb6f20e825bf0a6eaad5c924b3d1836931ec9734312ccfbbf8cf",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "12c0ee89c06fe49a49dd2c6a665643db7e4d6ce8d2d71de44efd21673fdb9e9a",
+        "515eb3b199c340577e73581757bba0deb9dc277a7254c29c5fa403349d799046",
+        "c82dad22874e16e44bb6c1801ccc0901c9bf51b7430a0c364a478f1d6e7219c0",
+        "50750b930626a42a22e3f096a72fb27131bb5c1c9207c5760a8ec562a7ec5ac5",
+        "7f0cabd24fd6eb7d64874a89a840c5b72a6b76ae7c6ee39cc81e9c6bf2646498",
+        "d64d2c5c69d8d1315c25d517c4d29d748d1084d0e1b19e5f19997ce0416709aa",
+        "d07e1eca8b81c4049e73afbfeb358fbe17c3d43abe58fc677b651ff3d045f9a6",
+        "9ac293c74465461ae9cddaebd9dd6dccbc2c241e9160c51ef3f1969878a77ea2",
+        "9849cf6d025145cd651f30c0d456088b61817856eeb22932e448f319b3849c9f"
+      ],
+      "request_attempts": 4,
+      "cache_hits": 3,
+      "seconds": 4.774
+    },
+    {
+      "symbol": "000050",
+      "asof": "2026-10-14",
+      "original_sha256": "fccd27868d56c7c02c0deac1b284d076ffa3ea99080d8820b439398c706d20b4",
+      "promoted": true,
+      "candidate_sha256": "f0db5329ca1abcacdfe5ce8daeefcb08656bc1bdd2bd71c171d76aa7fde94462",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "7eeac3e5bb6d3dda325dcfe2e72f86703c45dffee450d658e1347316a9848ec4",
+        "75dc38e7becb0f5a89ff91df45331cfc9ba233255ccc3507b8f597bed85bcbf6",
+        "a81d4a5879f97b44309d44db4218f7a9f69a5c2ae163fbd7db4961fdc595bcaa"
+      ],
+      "request_attempts": 3,
+      "cache_hits": 0,
+      "seconds": 3.662
+    },
+    {
+      "symbol": "000150",
+      "asof": "2026-10-15",
+      "original_sha256": "0d2d634161bafdab5e0642c590f12532d850bb146429ab66eeca1f26930b8456",
+      "promoted": true,
+      "candidate_sha256": "ac9f5792dea9eb061df2b1c71adcd0beebba9b0e0b67aefedc952fbac7188e97",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "1309ee66ad0d2080fbfa157fae19890282f07c390326a273327d44d617f8a18d",
+        "d302ede2b1e1eecd6952444002b49a8db08c6392e9b60b930d3b06b14c54ab1c",
+        "6d5601d3524177ec9fdf7245237169e88506942c4211454794f9c8bd7177a1ef",
+        "e75d8deb94116fbd8c5265169d8f6a02df59c46f6e93ba1b9691994df1f52c70",
+        "6557fa62809667fcdfa1a5ce7d26e8e492bf4ae23ba155da5e7d496aa9af2c66",
+        "352e40391227c4543b04fd68bc92925aea9de91b91ae4edabf598cc53cb6153d",
+        "1ac43279b12c2b14e25201f0b643953a4b566835a0ff189bb54c92e0acd2db03"
+      ],
+      "request_attempts": 7,
+      "cache_hits": 0,
+      "seconds": 7.95
+    },
+    {
+      "symbol": "000180",
+      "asof": "2026-10-15",
+      "original_sha256": "9f9806c1ea8f838880a1f3416977704f1dc55236249e5f9139bd5365363e882f",
+      "promoted": true,
+      "candidate_sha256": "64e7d6ca2e6057c581ec48e3d62887262e2450074cdbeb31c9d4d5b43f4f4966",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "965e19f4fbde0f83ffdb3047dda127b1a1ce0a933a4b35c5c7a0ff25842f0877",
+        "e4e5910ae8c7f984d99aa7cfd8b92a705d318c9e2ad727435af0bb6b49767c60",
+        "20238a5d8b5d687f1c8d735c7f6e6c7de4901425bac7a3ce846b29471f60f08c",
+        "823867cddc6df71eeac0c1f05afa88447fb34bf0cfd206fee7b8354b4aa7e35d",
+        "b5152de92c88cb0dc3411221f30df0dba1ef60f4263f3bac1200a0ffc1bc3651",
+        "c16be9a4d64483ef6868939ea73fcd091e9e65852a53fdafde068ff61d4462f4",
+        "81e025d6cacca5a4bb33f2ec3c95746b6d87a00f381d9c87c26eee924fe06020"
+      ],
+      "request_attempts": 7,
+      "cache_hits": 0,
+      "seconds": 7.913
+    }
+  ],
+  "promoted": 5,
+  "kis_metrics": [
+    {
+      "http": 200,
+      "code": "",
+      "seconds": 0.633,
+      "kind": "authentication",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5371,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5122,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.3491,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5589,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5351,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8802,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.3373,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5338,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.538,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.3551,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.51,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5219,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8383,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8522,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8321,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8347,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.3596,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5293,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5236,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.7552,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8646,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.718,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8344,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.3404,
+      "kind": "market",
+      "attempt": 1
+    }
+  ]
+}

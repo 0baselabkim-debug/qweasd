@@ -1,0 +1,70 @@
+[
+  {
+    "market": "KOSPI",
+    "requested_date": "2026-10-14",
+    "checked_at": "2026-10-16T01:47:21.703439+00:00",
+    "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261014",
+    "http": 200,
+    "received_rows": 941,
+    "returned_dates": [
+      "20261014"
+    ],
+    "status": "RECEIVED"
+  },
+  {
+    "market": "KOSDAQ",
+    "requested_date": "2026-10-14",
+    "checked_at": "2026-10-16T01:47:23.607043+00:00",
+    "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261014",
+    "http": 200,
+    "received_rows": 1820,
+    "returned_dates": [
+      "20261014"
+    ],
+    "status": "RECEIVED"
+  },
+  {
+    "market": "KOSPI",
+    "requested_date": "2026-10-15",
+    "checked_at": "2026-10-16T01:47:31.184505+00:00",
+    "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261015",
+    "http": 200,
+    "received_rows": 940,
+    "returned_dates": [
+      "20261015"
+    ],
+    "status": "RECEIVED"
+  },
+  {
+    "market": "KOSDAQ",
+    "requested_date": "2026-10-15",
+    "checked_at": "2026-10-16T01:47:34.113405+00:00",
+    "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261015",
+    "http": 200,
+    "received_rows": 1822,
+    "returned_dates": [
+      "20261015"
+    ],
+    "status": "RECEIVED"
+  },
+  {
+    "market": "KOSPI",
+    "requested_date": "2026-10-15",
+    "checked_at": "2026-10-16T02:15:32.965019+00:00",
+    "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261015",
+    "http": 403,
+    "received_rows": 0,
+    "returned_dates": [],
+    "status": "REFERENCE_AUTH_ERROR"
+  },
+  {
+    "market": "KOSDAQ",
+    "requested_date": "2026-10-15",
+    "checked_at": "2026-10-16T02:15:33.163106+00:00",
+    "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261015",
+    "http": 403,
+    "received_rows": 0,
+    "returned_dates": [],
+    "status": "REFERENCE_AUTH_ERROR"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "success": false,
+  "checks": [],
+  "asof": "2026-10-15",
+  "error_type": "AssertionError",
+  "error": "Redesigned sidebar not loaded",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/qweasd/qweasd/scripts/check_live_dashboard.py\", line 109, in <module>\n    ui,response=connect();pause();report['http_status']=response.status if response else None\n                ^^^^^^^^^\n  File \"/home/runner/work/qweasd/qweasd/scripts/check_live_dashboard.py\", line 30, in connect\n    raise AssertionError('Redesigned sidebar not loaded')\nAssertionError: Redesigned sidebar not loaded\n",
+  "visible_text": "",
+  "final_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "app_frame_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/"
+}

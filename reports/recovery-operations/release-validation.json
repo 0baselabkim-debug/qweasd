@@ -1,0 +1,77 @@
+{
+  "checked_at_utc": "2026-10-16T02:25:54.628794+00:00",
+  "functional_commit": "18c2f69465f482ff77e6e63e6e5d647196ad50d4",
+  "data_observation_commit": "ab7d9e89c1e33ae110fec8ccb3b73be663e3faaf",
+  "ci": {
+    "conclusion": "success",
+    "createdAt": "2026-10-16T02:13:50Z",
+    "databaseId": 38839345562,
+    "headSha": "18c2f69465f482ff77e6e63e6e5d647196ad50d4",
+    "status": "completed",
+    "updatedAt": "2026-10-16T02:16:05Z",
+    "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38839345562"
+  },
+  "local_regression": {
+    "passed": 197,
+    "duration_seconds": 145.76,
+    "log": "regression-tests.txt"
+  },
+  "public_web": {
+    "run_id": 38838273967,
+    "success": true,
+    "deployment": {
+      "expected": {
+        "source_sha256": "ba0639be2f4e0ae1b24d61294094f45d664436f6062738684b254fecf2b3cca7",
+        "revision": "9f7bcc595097ca6f4ca717e44f8c317c0486f91a",
+        "data_sha256": "855475ba8eb1768d2aed8f01c57d09f740e8640a0ec20a67160f5999ab0b248c"
+      },
+      "source_sha256": "ba0639be2f4e0ae1b24d61294094f45d664436f6062738684b254fecf2b3cca7",
+      "revision": "0bcd849c18261bd80492e61d728c6db93d5716e1",
+      "data_sha256": "855475ba8eb1768d2aed8f01c57d09f740e8640a0ec20a67160f5999ab0b248c"
+    },
+    "viewports": [
+      1920,
+      1440,
+      768,
+      390
+    ],
+    "liquidity_csv_symbols": [
+      "000020",
+      "000050",
+      "000080",
+      "000100"
+    ],
+    "latest_main_browser_reverified": false
+  },
+  "new_recovery_schedule_verified": false,
+  "observed_schedule_runs": [
+    {
+      "conclusion": "success",
+      "createdAt": "2026-10-15T23:38:15Z",
+      "databaseId": 38824766362,
+      "event": "schedule",
+      "headSha": "d202aaf2f07243e3afc6625bc5e8c5fe5e01cc06",
+      "status": "completed"
+    }
+  ],
+  "latest_targeted_trial": {
+    "run_id": 38839346041,
+    "actions_conclusion": "success",
+    "data_recovery_success": false,
+    "reference_http_status": 403,
+    "kis_attempts": 0,
+    "promoted": 0,
+    "origin_and_cause_confirmed": false
+  },
+  "published_data_sha256": "855475ba8eb1768d2aed8f01c57d09f740e8640a0ec20a67160f5999ab0b248c",
+  "after": {
+    "accepted": 230,
+    "guides": {
+      "관망": 225,
+      "판정 보류": 2205
+    },
+    "stock_activity": 391,
+    "sector_activity": 0
+  },
+  "completion": "partial; schedule operation, KRX access, full price/sector coverage and external evidence/rules remain pending"
+}
