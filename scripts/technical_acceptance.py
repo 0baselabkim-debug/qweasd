@@ -11,6 +11,9 @@ class LazyAPI:
     def __init__(self,factory):self.factory=factory;self.client=None
     @property
     def metrics(self):return self.client.metrics if self.client is not None else []
+    def __getattr__(self,name):
+        if self.client is None:self.client=self.factory()
+        return getattr(self.client,name)
     def request(self,*args,**kwargs):
         if self.client is None:self.client=self.factory()
         return self.client.request(*args,**kwargs)

@@ -17,7 +17,7 @@ create table if not exists public.technical_requests (
 );
 create table if not exists public.technical_cache (
  symbol text primary key check(symbol ~ '^[0-9]{6}$'), bundle jsonb,
- updated_at timestamptz,attempted_at timestamptz,last_error text, completed_asof date
+ updated_at timestamptz,attempted_at timestamptz,last_error text, collected_asof date, completed_asof date
 );
 create table if not exists public.journal_risk_state (
  user_id uuid not null default auth.uid() references auth.users(id) on delete cascade,
@@ -40,6 +40,17 @@ create policy risk_owner on public.journal_risk_state for select to authenticate
 create policy cache_requested on public.technical_cache for select to authenticated using(
  exists(select 1 from public.technical_requests r where r.user_id=auth.uid() and r.symbol=technical_cache.symbol)
  or exists(select 1 from public.journal_purchases p where p.user_id=auth.uid() and p.symbol=technical_cache.symbol));
+
+-- Private scheduled guidance results; never published to GitHub.
+create table if not exists public.journal_signals (
+ user_id uuid not null references auth.users(id) on delete cascade,symbol text not null,
+ purchase_signature text not null,result jsonb not null,calculated_at timestamptz not null default now(),primary key(user_id,symbol)
+);
+alter table public.journal_signals enable row level security;
+revoke all on public.journal_signals from anon,authenticated;
+grant select on public.journal_signals to authenticated;
+grant all on public.journal_signals to service_role;
+create policy signals_owner on public.journal_signals for select to authenticated using(user_id=auth.uid());
 
 create or replace function public.journal_before_change() returns trigger language plpgsql set search_path=public as $$
 begin
@@ -77,18 +88,22 @@ begin
  on conflict(user_id,symbol) do update set trailing_stop=greatest(journal_risk_state.trailing_stop,excluded.trailing_stop),activated=journal_risk_state.activated or excluded.activated,asof=greatest(journal_risk_state.asof,excluded.asof);
 end $$;
 create or replace function public.technical_targets(p_asof date) returns table(symbol text) language sql security definer set search_path=public as $$
- select distinct targets.symbol from (select p.symbol from journal_purchases p union select r.symbol from technical_requests r where requested_at>now()-interval '7 days') targets
+ select targets.symbol from (select p.symbol from journal_purchases p union select r.symbol from technical_requests r where requested_at>now()-interval '7 days') targets
  left join technical_cache c on c.symbol=targets.symbol
- where c.completed_asof is null or c.completed_asof<p_asof order by targets.symbol limit 30
+ where c.completed_asof is null or c.completed_asof<p_asof
+ or exists(select 1 from journal_purchases p where p.symbol=targets.symbol
+           and not exists(select 1 from journal_signals s where s.user_id=p.user_id and s.symbol=p.symbol))
+ order by c.attempted_at nulls first,targets.symbol limit 30
 $$;
 create or replace function public.publish_technical(p_symbol text,p_bundle jsonb,p_error text default null) returns void language plpgsql security definer set search_path=public as $$
 begin
  insert into technical_cache(symbol,attempted_at,last_error) values(p_symbol,now(),p_error)
  on conflict(symbol) do update set attempted_at=now(),last_error=excluded.last_error;
  if p_bundle is not null and (p_bundle->>'structure_valid')::boolean and p_bundle->>'symbol'=p_symbol then
-  update technical_cache set bundle=p_bundle,updated_at=now(),completed_asof=(p_bundle->>'asof')::date,last_error=null
+  update technical_cache set bundle=p_bundle,updated_at=now(),collected_asof=(p_bundle->>'asof')::date,
+   completed_asof=case when coalesce((p_bundle->>'worker_verified')::boolean,false) then (p_bundle->>'asof')::date else null end,last_error=null
   where symbol=p_symbol and (bundle is null or (bundle->>'asof')::date<=(p_bundle->>'asof')::date)
-  and (bundle is null or bundle->>'finality'<>'VERIFIED' or p_bundle->>'finality'='VERIFIED');
+  and (bundle is null or (bundle->>'asof')::date<(p_bundle->>'asof')::date or bundle->>'finality'<>'VERIFIED' or p_bundle->>'finality'='VERIFIED');
  else
   update technical_cache set last_error=coalesce(p_error,'Data validation failed; prior cache retained') where symbol=p_symbol;
  end if;
@@ -102,16 +117,6 @@ revoke insert,update on public.technical_requests from authenticated;
 
 grant all on public.journal_purchases,public.journal_audit,public.technical_requests,public.technical_cache,public.journal_risk_state to service_role;
 
--- Private scheduled guidance results; never published to GitHub.
-create table if not exists public.journal_signals (
- user_id uuid not null references auth.users(id) on delete cascade,symbol text not null,
- purchase_signature text not null,result jsonb not null,calculated_at timestamptz not null default now(),primary key(user_id,symbol)
-);
-alter table public.journal_signals enable row level security;
-revoke all on public.journal_signals from anon,authenticated;
-grant select on public.journal_signals to authenticated;
-grant all on public.journal_signals to service_role;
-create policy signals_owner on public.journal_signals for select to authenticated using(user_id=auth.uid());
 create or replace function public.worker_positions(p_symbol text) returns table(user_id uuid,symbol text,buy_date date,average_price numeric,quantity numeric,purchase_signature text,risk jsonb) language sql security definer set search_path=public as $$
  select p.user_id,p.symbol,min(p.buy_date),sum(p.average_price*p.quantity)/sum(p.quantity),sum(p.quantity),md5(string_agg(p.id::text||':'||p.revision::text,',' order by p.id)),coalesce((select to_jsonb(r) from journal_risk_state r where r.user_id=p.user_id and r.symbol=p.symbol),'{}'::jsonb)
  from journal_purchases p where p.symbol=p_symbol group by p.user_id,p.symbol

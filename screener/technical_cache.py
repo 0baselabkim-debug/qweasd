@@ -1,5 +1,5 @@
 """Public pilot observations + private cache access. No API calls on page navigation."""
-import gzip,json
+import gzip,json,datetime as dt
 from pathlib import Path
 from .technical import validate
 ROOT=Path(__file__).resolve().parents[1]
@@ -20,11 +20,18 @@ def get_bundle(symbol,asof=None,store=None):
             if not asof or market.get('asof','')<=str(asof):public=market
         except (OSError,ValueError,EOFError):pass
     if public:candidates.append(public)
+    if asof:
+        try:day=dt.date.fromisoformat(str(asof)).isoformat()
+        except ValueError:return None,'기준일 형식 오류'
+        for folder in ['history','pending']:
+            path=ROOT/'technical'/folder/day/(symbol+'.json.gz')
+            try:candidates.append(json.loads(gzip.decompress(path.read_bytes())))
+            except (OSError,ValueError,EOFError):pass
     if store:
         record=store.cache(symbol);error=record.get('last_error')
         if record.get('bundle'):candidates.append(record['bundle'])
     candidates=[b for b in candidates if isinstance(b,dict) and b.get('symbol')==symbol
-                and isinstance(b.get('asof'),str) and (not asof or b['asof']<=str(asof))]
+                and isinstance(b.get('asof'),str) and (not asof or b['asof']==str(asof))]
     if candidates:
         latest=max(b['asof'] for b in candidates)
         current=[b for b in candidates if b['asof']==latest]

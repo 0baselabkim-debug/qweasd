@@ -13,6 +13,12 @@ def read(path,default=None):
     except (OSError,ValueError,EOFError):return default
 
 def write(path,value):
+    # Preserve exact date payloads before replacing a public latest pointer.
+    if path.parent==CACHE and isinstance(value,dict) and value.get('asof'):
+        old=read(path)
+        if old and old.get('asof'):
+            write(CACHE.parent/'history'/old['asof']/path.name,old)
+        write(CACHE.parent/'history'/value['asof']/path.name,value)
     path.parent.mkdir(parents=True,exist_ok=True)
     raw=json.dumps(value,ensure_ascii=False,allow_nan=False,separators=(',',':')).encode()
     if path.suffix=='.gz':raw=gzip.compress(raw,mtime=0)

@@ -89,30 +89,17 @@ def main():
         tasks=store.targets(asof);targets=[r['symbol'] for r in tasks][:30]
         if not targets:print('No pending private market-data tasks');return
     else:targets=PILOT
+    if args.mode=='private':
+        from scripts.private_technical import run
+        from scripts.technical_acceptance import LazyAPI
+        run(store,LazyAPI(KIS),data,asof,targets,paged);return
     api=KIS();calendar=[d for d,r in paged(api,'0001',asof,index=True)];bundles={};failed=0
     for code in targets:
         try:
             p=data['prices'];old=p[(p.symbol==code)&(p.trade_date.astype(str)==asof)]
             original=float(old.close.iloc[0]) if len(old)==1 else None
-            if args.mode=='private':
-                from scripts.technical_batch import make_bundle
-                positions=store.positions(code)
-                earliest=min((str(p['buy_date']) for p in positions),default=asof)
-                # Calendar days upper-bound trading days; enough pre-entry history without logging positions.
-                count=max(320,(dt.date.fromisoformat(asof)-dt.date.fromisoformat(earliest)).days+200)
-                count=min(count,5500)
-                private_calendar=[d for d,r in paged(api,'0001',asof,index=True,count=count)]
-                previous=store.cache(code)
-                if previous and sum(r['trade_date']<earliest for r in previous.get('bars',[]))<160:previous=None
-                bundle=make_bundle(api,code,asof,private_calendar,data,previous,paged,count=count)
-                bundle['private_history_requirement']={'pre_purchase_days':sum(r['trade_date']<earliest for r in bundle['bars']),'required':160,'lookback_cap':5500}
-            else:bundle=fetch(api,code,asof,calendar,original)
-            if args.mode=='private':
-                store.publish(code,bundle)
-                for position in positions:
-                    result=sell_guide(bundle,position,position.get('risk') or {})
-                    store.save_signal(position,result)
-            else:bundles[code]=bundle
+            bundle=fetch(api,code,asof,calendar,original)
+            bundles[code]=bundle
         except Exception:
             failed+=1
             if args.mode=='private':store.fail(code,'Upstream collection or schema validation failed; previous data retained')
