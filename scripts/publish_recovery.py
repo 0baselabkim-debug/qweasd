@@ -110,4 +110,11 @@ def install(snapshot,out,audit):
 
 if __name__=='__main__':
     snapshot=Path('snapshot');out=Path('recovery-publication');audit=build(snapshot,out=out)
-    install(snapshot,out,audit);print(json.dumps(audit,ensure_ascii=False))
+    install(snapshot,out,audit)
+    batch.write(batch.ROOT/'recovery-publication-report.json',{
+        'run_id':__import__('os').environ.get('GITHUB_RUN_ID'),
+        'prepared_at':dt.datetime.now(dt.timezone.utc).isoformat(),
+        'audit':audit,'stock_activity_gain':audit.get('after',{}).get('stock_activity',0)-audit.get('before',{}).get('stock_activity',0),
+        'sector_activity_gain':audit.get('after',{}).get('sector_activity',0)-audit.get('before',{}).get('sector_activity',0),
+        'status':'PREPARED_NOT_YET_PUBLISHED'})
+    print(json.dumps(audit,ensure_ascii=False))

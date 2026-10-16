@@ -29,6 +29,13 @@ def emit(published=False,publication_error=False):
     r=json.loads(path.read_text())
     if r.get('run_id')!=os.environ.get('GITHUB_RUN_ID'):return
     value=outcome(r,published,publication_error)
+    value['efficiency']=r.get('efficiency',{})
+    prepared=Path('technical/recovery-publication-report.json')
+    if prepared.exists():
+        proof=json.loads(prepared.read_text())
+        if proof.get('run_id')==r.get('run_id'):
+            value['indicator_effect']={k:proof[k] for k in ['stock_activity_gain','sector_activity_gain']}
+            value['indicator_effect']['publication_confirmed']=published and not publication_error
     value['published_at']=dt.datetime.now(dt.timezone.utc).isoformat() if published else None
     dest=Path('reports/recovery-execution');dest.mkdir(parents=True,exist_ok=True)
     (dest/'outcome.json').write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
