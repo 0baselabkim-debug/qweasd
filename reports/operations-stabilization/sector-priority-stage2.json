@@ -1,0 +1,158 @@
+{
+  "asof": "2026-10-15",
+  "started_at": "2026-10-16T03:04:53.352039+00:00",
+  "finished_at": "2026-10-16T03:05:13.868837+00:00",
+  "limit": 4,
+  "max_physical_request_attempts": 60,
+  "reserved_request_attempts": 7,
+  "physical_request_attempts": 7,
+  "authentication_attempts": 1,
+  "retry_attempts": 0,
+  "unused_reservations": 0,
+  "refunded_reservations": 0,
+  "metering": "physical_boundary",
+  "logical_requests": 6,
+  "cached_responses_reused": 0,
+  "run_id": "38843567695",
+  "event": "workflow_dispatch",
+  "scheduled_cron": "",
+  "excluded_from_price_recovery": {
+    "short_history": 0,
+    "short_flow_history": 0,
+    "backoff": 0
+  },
+  "time_budget_seconds": 240,
+  "seeded_date_tasks": [
+    "2026-10-14/004970",
+    "2026-10-14/053050"
+  ],
+  "reference_status": {
+    "2026-10-14": {
+      "KOSPI": "REFERENCE_RECEIVED",
+      "KOSDAQ": "REFERENCE_RECEIVED"
+    }
+  },
+  "results": [
+    {
+      "symbol": "004970",
+      "asof": "2026-10-14",
+      "original_sha256": "ba47560bc6bee0f33308aa62ef0fac385cd29f657d3e72b4cd0a77a9f15a558c",
+      "promoted": true,
+      "previously_blocking": true,
+      "candidate_sha256": "9ddc1bc1dff627637ecf38e306b7cde9ece539098f803ace9db5d575d8f5ae22",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "a6e835980f8858a82c05bd27b8be6f14bc719f7d80d0d4ecb915a25dca43a251",
+        "27772cb2d0c8e0e57ddb76423b0b20ea06c5581ec568600ea9ebb13b4fa0a29f",
+        "933644012b9297d45c809f3f99daada5a7b795e4ff485b12ab2e6cd900f645e4"
+      ],
+      "request_attempts": 4,
+      "cache_hits": 0,
+      "seconds": 4.846
+    },
+    {
+      "symbol": "053050",
+      "asof": "2026-10-14",
+      "original_sha256": "e5ac0cf5adfe8357f665dacdafbf999d7c21d5f3677c81abbaa8f4c25d3c3332",
+      "promoted": true,
+      "previously_blocking": true,
+      "candidate_sha256": "3cfcf678de3a5bea9a013f5f9d49f9d13939366820d7e9a5a00bcaeee3d6de30",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "5adf5146f4ba3297354b816546312c8bd5700294aee4b54e493df60e8241f982",
+        "dea8ebd6b86a2694ad6196ebcac68b230455eef017d2ba1e7659811b7221a0c1",
+        "eeadfc1e0bfb8d037a42172762ec9fe71d9fd092e30961d4d65954f35d1ee192"
+      ],
+      "request_attempts": 3,
+      "cache_hits": 0,
+      "seconds": 4.033
+    }
+  ],
+  "promoted": 2,
+  "kis_metrics": [
+    {
+      "http": 200,
+      "code": "",
+      "seconds": 0.6617,
+      "kind": "authentication",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.6203,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.6005,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.4927,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.7676,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.6389,
+      "kind": "market",
+      "attempt": 1
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.7328,
+      "kind": "market",
+      "attempt": 1
+    }
+  ],
+  "queue": {
+    "eligible_date_symbol_tasks": 2,
+    "attempted": 2,
+    "reference_deferred": 0,
+    "not_price_conflicting": 0,
+    "carried_forward": 0
+  },
+  "budget_exhausted": false,
+  "reference_deferred_tasks": [],
+  "recovered_existing_blocked": 2,
+  "data_outcome": {
+    "status": "VALIDATED_PENDING_PUBLICATION",
+    "counts": {
+      "VALIDATED_PENDING_PUBLICATION": 2
+    },
+    "published": false,
+    "provider_count_unit": "market/date status, not symbols",
+    "run_id": "38843567695",
+    "event": "workflow_dispatch",
+    "scheduled_cron": "",
+    "started_at": "2026-10-16T03:04:53.352039+00:00",
+    "finished_at": "2026-10-16T03:05:13.868837+00:00",
+    "reported_at": "2026-10-16T03:05:13.870001+00:00",
+    "queue": {
+      "eligible_date_symbol_tasks": 2,
+      "attempted": 2,
+      "reference_deferred": 0,
+      "not_price_conflicting": 0,
+      "carried_forward": 0
+    },
+    "kis_attempts": 7,
+    "promoted_candidates": 2
+  }
+}

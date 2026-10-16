@@ -1,0 +1,61 @@
+FF.FE                                                                    [100%]
+==================================== ERRORS ====================================
+______ ERROR at setup of test_sector_gap_diagnostic_uses_same_25_day_mask ______
+file /tmp/kis-actions-connectivity/tests/test_operations_stabilization.py, line 55
+  def test_sector_gap_diagnostic_uses_same_25_day_mask(history):
+E       fixture 'history' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/tmp/kis-actions-connectivity/tests/test_operations_stabilization.py:55
+=================================== FAILURES ===================================
+______________ test_auth_denial_stops_other_markets_and_next_run _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-98/test_auth_denial_stops_other_m0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd1d1b374d0>
+
+    def test_auth_denial_stops_other_markets_and_next_run(tmp_path,monkeypatch):
+        monkeypatch.setenv('KRX_API_KEY','test-secret');calls=[]
+        def deny(req,**kw):
+            calls.append(req.full_url)
+            raise urllib.error.HTTPError(req.full_url,403,'Forbidden',{'Content-Type':'text/html'},io.BytesIO(b'Forbidden'))
+        monkeypatch.setattr('scripts.technical_reference.urllib.request.urlopen',deny)
+        refs,status=fetch_references('2026-10-15',tmp_path,refresh=True)
+>       assert not refs and len(calls)==1
+E       AssertionError: assert (not {} and 2 == 1)
+E        +  where 2 = len(['https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261015', 'https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261015'])
+
+tests/test_operations_stabilization.py:18: AssertionError
+__________________ test_temporary_failure_is_not_auth_failure __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-98/test_temporary_failure_is_not_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd1d2191fd0>
+
+    def test_temporary_failure_is_not_auth_failure(tmp_path,monkeypatch):
+        monkeypatch.setenv('KRX_API_KEY','test-secret')
+        def fail(*a,**k):raise TimeoutError()
+        monkeypatch.setattr('scripts.technical_reference.urllib.request.urlopen',fail)
+        _,status=fetch_references('2026-10-15',tmp_path,refresh=True)
+>       assert set(status.values())=={'REFERENCE_TEMPORARY_FAILURE'}
+E       AssertionError: assert {'REFERENCE_NETWORK_ERROR'} == {'REFERENCE_T...RARY_FAILURE'}
+E         
+E         Extra items in the left set:
+E         'REFERENCE_NETWORK_ERROR'
+E         Extra items in the right set:
+E         'REFERENCE_TEMPORARY_FAILURE'
+E         Use -v to get more diff
+
+tests/test_operations_stabilization.py:31: AssertionError
+______ test_run_status_requires_publication_and_preserves_mixed_outcomes _______
+
+    def test_run_status_requires_publication_and_preserves_mixed_outcomes():
+>       from scripts.recovery_outcome import outcome
+E       ModuleNotFoundError: No module named 'scripts.recovery_outcome'
+
+tests/test_operations_stabilization.py:45: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_operations_stabilization.py::test_auth_denial_stops_other_markets_and_next_run
+FAILED tests/test_operations_stabilization.py::test_temporary_failure_is_not_auth_failure
+FAILED tests/test_operations_stabilization.py::test_run_status_requires_publication_and_preserves_mixed_outcomes
+ERROR tests/test_operations_stabilization.py::test_sector_gap_diagnostic_uses_same_25_day_mask
+3 failed, 1 passed, 1 error in 0.96s

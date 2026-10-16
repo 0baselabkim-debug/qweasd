@@ -1,0 +1,1241 @@
+{
+  "asof": "2026-10-15",
+  "before": {
+    "accepted": 218,
+    "guides": {
+      "판정 보류": 2216,
+      "관망": 214
+    },
+    "stock_activity": 387,
+    "sector_activity": 0
+  },
+  "after": {
+    "accepted": 230,
+    "guides": {
+      "관망": 225,
+      "판정 보류": 2205
+    },
+    "stock_activity": 391,
+    "sector_activity": 0
+  },
+  "excluded_cached_observations": [
+    {
+      "symbol": "005110",
+      "asof": "2026-10-14"
+    },
+    {
+      "symbol": "018000",
+      "asof": "2026-10-14"
+    }
+  ],
+  "exclusive_current_queue_categories": {
+    "verified_current_date": 230,
+    "not_yet_verified_or_other_evidence_gap": 921,
+    "stored_supplier_conflict": 1256,
+    "short_history": 22,
+    "short_flow_history": 1
+  },
+  "physical_runs": [
+    {
+      "asof": "2026-10-15",
+      "started_at": "2026-10-16T01:29:26.839302+00:00",
+      "finished_at": "2026-10-16T01:30:00.832410+00:00",
+      "limit": 3,
+      "max_physical_request_attempts": 60,
+      "reserved_request_attempts": 22,
+      "physical_request_attempts": 22,
+      "authentication_attempts": 1,
+      "retry_attempts": 0,
+      "unused_reservations": 0,
+      "refunded_reservations": 0,
+      "metering": "physical_boundary",
+      "logical_requests": 21,
+      "cached_responses_reused": 0,
+      "run_id": "38835239097",
+      "event": "workflow_dispatch",
+      "time_budget_seconds": 240,
+      "reference_status": {
+        "2026-10-15": {
+          "KOSPI": "RECEIVED",
+          "KOSDAQ": "RECEIVED"
+        }
+      },
+      "results": [
+        {
+          "symbol": "000100",
+          "asof": "2026-10-15",
+          "original_sha256": "fa30f911b56c77f232c4c6d2f01068916fe18afdf0d2f638d9fe8914344c6130",
+          "promoted": true,
+          "candidate_sha256": "41f7b49dc4ea5e7b1a01ca9fadd2808c51f5101996e913549563c20196ab6854",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "62fa8cc514dc36d86f6c30f6b8759a057d947e7fce9d786cd9538f44745cdfaf",
+            "94799da3ede67404caf64fc3b1a23d4d78ad1232f10465297a0d85444fc0e169",
+            "f95f08938c3103b2cd8ec03e3e04ba1dae1bb658579a6929a1c3b7923b65e8a3",
+            "ebf2da1994962713bfa764c038a8cbd1a6b7469992573e3ca36089b6b0b97a24",
+            "632f234f8838e63a7c43f5c31a7b53880e25cc01d44a92c2fdf33ef1115b1277",
+            "52971fe9be67f73e3a15610768f0b6fbf51ed7b93b8c4aba08ff0dc9d36f68cc",
+            "550d1db34a6859b6f947785039dd8cd853fca06bfe716a66835479922c9ad73c"
+          ],
+          "request_attempts": 8,
+          "cache_hits": 0,
+          "seconds": 9.052
+        },
+        {
+          "symbol": "000120",
+          "asof": "2026-10-15",
+          "original_sha256": "26a8ab4fa72343cdeaf7e06a1160cba654126044ccdf6c388471a9d5409b903e",
+          "promoted": true,
+          "candidate_sha256": "5ba2b1feedbe66798fc79462c0d0e37e7d54f7030d964cd9f06d778129aa7982",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "9b1138038a52bfeeee6761fa09e90663a3464e634047c8b058f18bdcc1d2ac48",
+            "fc3443c6761c93da0717b1dfcd69eae92cfd2cbf24431aa96809438f6356b160",
+            "72bba37052f67a59ffaa47f4b1b022ea508a591aac7632f7616ce9618a34fd61",
+            "d48808d163ae0ed8c85579cab29feb048b8b625c350aa6b40622ad449b0662e9",
+            "0b24273330f0e59835e7416a371c23ca07f7729f3c4cf540d29e3cd62e0bda6e",
+            "51159296d131524d7c61431fda2cd5fccac08db15527c98fb79e01f1706c5658",
+            "0ec6f608fd161726973a69568a1893f7e789318a44f029421bc6098ffd0e47e0"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 8.228
+        },
+        {
+          "symbol": "000140",
+          "asof": "2026-10-15",
+          "original_sha256": "3d396209e4be591ea1f776e4a12671fa592f569ef4495441c59c4aee11d9792e",
+          "promoted": true,
+          "candidate_sha256": "bdd4feb6e572edd70cc5ae8d39bef0c47b9d72dbc5f3d106bafd1eb2e879c2b9",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "89156c44b4ffeabef2b9b955a47a1ca1ee54ec15f75407f65a5ed92f52a08d44",
+            "bd6307255d85932d3627f9e5beb992dc7582a68ca506ba0f11019587aa9c7ac2",
+            "7078cc238664214a80525cdc61c75a5ca7570de9ae5c7e5739e0ef35e7c6936f",
+            "972aea91d6feace05e4ba2639e10605d9d3cc24c752894a1eaca45e3734a12e0",
+            "e215293edfd661b51906653ab6b36175e164602b3725ea27dd8413d65ec4475e",
+            "e26dd5bd666635f7ef30589822335594ae593901d25c49307888c1e6f53d0bf7",
+            "95c8678e94ed51641355a4541e79d72cf182d72c0c0c522a9d58d0cbfa41329e"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 8.102
+        }
+      ],
+      "promoted": 3,
+      "kis_metrics": [
+        {
+          "http": 200,
+          "code": "",
+          "seconds": 0.7095,
+          "kind": "authentication",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5764,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.6299,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.0021,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.0132,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.0058,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.9836,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.515,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5999,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5799,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.9842,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8599,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.9972,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.9996,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.7374,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.6367,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5795,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.9879,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8574,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.9938,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.9988,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.4926,
+          "kind": "market",
+          "attempt": 1
+        }
+      ]
+    },
+    {
+      "asof": "2026-10-15",
+      "started_at": "2026-10-16T01:41:48.857627+00:00",
+      "finished_at": "2026-10-16T01:42:41.316818+00:00",
+      "limit": 5,
+      "max_physical_request_attempts": 60,
+      "reserved_request_attempts": 25,
+      "physical_request_attempts": 25,
+      "authentication_attempts": 1,
+      "retry_attempts": 0,
+      "unused_reservations": 0,
+      "refunded_reservations": 0,
+      "metering": "physical_boundary",
+      "logical_requests": 27,
+      "cached_responses_reused": 3,
+      "run_id": "38836360166",
+      "event": "workflow_dispatch",
+      "time_budget_seconds": 240,
+      "seeded_date_tasks": [
+        "2026-10-14/000020",
+        "2026-10-14/000050"
+      ],
+      "reference_status": {
+        "2026-10-14": {
+          "KOSPI": "RECEIVED",
+          "KOSDAQ": "RECEIVED"
+        },
+        "2026-10-15": {
+          "KOSPI": "RECEIVED",
+          "KOSDAQ": "RECEIVED"
+        }
+      },
+      "results": [
+        {
+          "symbol": "000020",
+          "asof": "2026-10-14",
+          "original_sha256": "21b4b20fe496565ad4cec74b6cf3cefeacfa522f7a287991a8bdfa8af4ee9f7b",
+          "promoted": true,
+          "candidate_sha256": "e9866f012cc39ac99fdada2f8962ca85b9eec4a3dffda23cff84eebe914b9f32",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "6fc8ed0b74204b5c0feb896523ad408300f4cafc470583c247bccab5b4b09ba4",
+            "d15dacba47e08296e5cb12faf656e9524739dcb4d92e776bb652e1ec51204532",
+            "0f2c487ef603b5c5595c1116dd5fdaf4537b39539b326a73ff2a27f1900994b6"
+          ],
+          "request_attempts": 4,
+          "cache_hits": 0,
+          "seconds": 4.707
+        },
+        {
+          "symbol": "000080",
+          "asof": "2026-10-15",
+          "original_sha256": "4914b81981f03e118704fdec88da1d9a026479a137fe704d438380e88d741a78",
+          "promoted": true,
+          "candidate_sha256": "2a77f36dbb5bbb6f20e825bf0a6eaad5c924b3d1836931ec9734312ccfbbf8cf",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "12c0ee89c06fe49a49dd2c6a665643db7e4d6ce8d2d71de44efd21673fdb9e9a",
+            "515eb3b199c340577e73581757bba0deb9dc277a7254c29c5fa403349d799046",
+            "c82dad22874e16e44bb6c1801ccc0901c9bf51b7430a0c364a478f1d6e7219c0",
+            "50750b930626a42a22e3f096a72fb27131bb5c1c9207c5760a8ec562a7ec5ac5",
+            "7f0cabd24fd6eb7d64874a89a840c5b72a6b76ae7c6ee39cc81e9c6bf2646498",
+            "d64d2c5c69d8d1315c25d517c4d29d748d1084d0e1b19e5f19997ce0416709aa",
+            "d07e1eca8b81c4049e73afbfeb358fbe17c3d43abe58fc677b651ff3d045f9a6",
+            "9ac293c74465461ae9cddaebd9dd6dccbc2c241e9160c51ef3f1969878a77ea2",
+            "9849cf6d025145cd651f30c0d456088b61817856eeb22932e448f319b3849c9f"
+          ],
+          "request_attempts": 4,
+          "cache_hits": 3,
+          "seconds": 4.774
+        },
+        {
+          "symbol": "000050",
+          "asof": "2026-10-14",
+          "original_sha256": "fccd27868d56c7c02c0deac1b284d076ffa3ea99080d8820b439398c706d20b4",
+          "promoted": true,
+          "candidate_sha256": "f0db5329ca1abcacdfe5ce8daeefcb08656bc1bdd2bd71c171d76aa7fde94462",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "7eeac3e5bb6d3dda325dcfe2e72f86703c45dffee450d658e1347316a9848ec4",
+            "75dc38e7becb0f5a89ff91df45331cfc9ba233255ccc3507b8f597bed85bcbf6",
+            "a81d4a5879f97b44309d44db4218f7a9f69a5c2ae163fbd7db4961fdc595bcaa"
+          ],
+          "request_attempts": 3,
+          "cache_hits": 0,
+          "seconds": 3.662
+        },
+        {
+          "symbol": "000150",
+          "asof": "2026-10-15",
+          "original_sha256": "0d2d634161bafdab5e0642c590f12532d850bb146429ab66eeca1f26930b8456",
+          "promoted": true,
+          "candidate_sha256": "ac9f5792dea9eb061df2b1c71adcd0beebba9b0e0b67aefedc952fbac7188e97",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "1309ee66ad0d2080fbfa157fae19890282f07c390326a273327d44d617f8a18d",
+            "d302ede2b1e1eecd6952444002b49a8db08c6392e9b60b930d3b06b14c54ab1c",
+            "6d5601d3524177ec9fdf7245237169e88506942c4211454794f9c8bd7177a1ef",
+            "e75d8deb94116fbd8c5265169d8f6a02df59c46f6e93ba1b9691994df1f52c70",
+            "6557fa62809667fcdfa1a5ce7d26e8e492bf4ae23ba155da5e7d496aa9af2c66",
+            "352e40391227c4543b04fd68bc92925aea9de91b91ae4edabf598cc53cb6153d",
+            "1ac43279b12c2b14e25201f0b643953a4b566835a0ff189bb54c92e0acd2db03"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 7.95
+        },
+        {
+          "symbol": "000180",
+          "asof": "2026-10-15",
+          "original_sha256": "9f9806c1ea8f838880a1f3416977704f1dc55236249e5f9139bd5365363e882f",
+          "promoted": true,
+          "candidate_sha256": "64e7d6ca2e6057c581ec48e3d62887262e2450074cdbeb31c9d4d5b43f4f4966",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "965e19f4fbde0f83ffdb3047dda127b1a1ce0a933a4b35c5c7a0ff25842f0877",
+            "e4e5910ae8c7f984d99aa7cfd8b92a705d318c9e2ad727435af0bb6b49767c60",
+            "20238a5d8b5d687f1c8d735c7f6e6c7de4901425bac7a3ce846b29471f60f08c",
+            "823867cddc6df71eeac0c1f05afa88447fb34bf0cfd206fee7b8354b4aa7e35d",
+            "b5152de92c88cb0dc3411221f30df0dba1ef60f4263f3bac1200a0ffc1bc3651",
+            "c16be9a4d64483ef6868939ea73fcd091e9e65852a53fdafde068ff61d4462f4",
+            "81e025d6cacca5a4bb33f2ec3c95746b6d87a00f381d9c87c26eee924fe06020"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 7.913
+        }
+      ],
+      "promoted": 5,
+      "kis_metrics": [
+        {
+          "http": 200,
+          "code": "",
+          "seconds": 0.633,
+          "kind": "authentication",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5371,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5122,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3491,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5589,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5351,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8802,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3373,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5338,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.538,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3551,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.51,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5219,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8383,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8522,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8321,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8347,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3596,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5293,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5236,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.7552,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8646,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.718,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8344,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3404,
+          "kind": "market",
+          "attempt": 1
+        }
+      ]
+    },
+    {
+      "asof": "2026-10-15",
+      "started_at": "2026-10-16T01:47:19.472983+00:00",
+      "finished_at": "2026-10-16T01:48:28.005497+00:00",
+      "limit": 8,
+      "max_physical_request_attempts": 60,
+      "reserved_request_attempts": 49,
+      "physical_request_attempts": 49,
+      "authentication_attempts": 1,
+      "retry_attempts": 0,
+      "unused_reservations": 0,
+      "refunded_reservations": 0,
+      "metering": "physical_boundary",
+      "logical_requests": 48,
+      "cached_responses_reused": 0,
+      "run_id": "38836858174",
+      "event": "workflow_dispatch",
+      "time_budget_seconds": 240,
+      "seeded_date_tasks": [
+        "2026-10-14/000080",
+        "2026-10-14/000100"
+      ],
+      "reference_status": {
+        "2026-10-14": {
+          "KOSPI": "RECEIVED",
+          "KOSDAQ": "RECEIVED"
+        },
+        "2026-10-15": {
+          "KOSPI": "RECEIVED",
+          "KOSDAQ": "RECEIVED"
+        }
+      },
+      "results": [
+        {
+          "symbol": "000080",
+          "asof": "2026-10-14",
+          "original_sha256": "ab9a6123a8dc46014fd7b63adc4afd097eb88a758a40de4b5a3cec68c8f2a6c7",
+          "promoted": true,
+          "candidate_sha256": "420e4b1ccc2b6674c653eb3c312ea106b3c08a6458f8c6c6d622dc86bf94b12a",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "8f279d022ecebe19853e87bfa60c071c5d21b86fa3f19d4b7959b151202616b3",
+            "3ac277b1b350ad29c3c56cd913a4f34c09aadedf6a1841e3a4b4549425f9de02",
+            "6ac9dacc45ad49f07cdb148594a1acf901df41a8154bbc9a4635eb2e6fe40754"
+          ],
+          "request_attempts": 4,
+          "cache_hits": 0,
+          "seconds": 4.617
+        },
+        {
+          "symbol": "000100",
+          "asof": "2026-10-14",
+          "original_sha256": "c9915cf5cdbc3a591e92341a9348ebd1ca4602f3ad0b76e7c7e62ac23271e866",
+          "promoted": true,
+          "candidate_sha256": "0a0d515cf3918a2672e7576db262d2f1e816b55d22476b3da7190541473fd1dd",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "4ffa306d8f2118242c4670958d7d7afb331a658b9ce9c98a24a937400af8ca7f",
+            "6a481ba9170a2d79f683860e7c5dc369e1cdf02bb9d67a217261f93f689236a9",
+            "7ec09363060954b128c03bdf5754f4fa080414babd95c877d037a37839412ed9"
+          ],
+          "request_attempts": 3,
+          "cache_hits": 0,
+          "seconds": 3.569
+        },
+        {
+          "symbol": "000210",
+          "asof": "2026-10-15",
+          "original_sha256": "e7fd5a81b69c6dc12bd5b0999e0f9feb8397a92d9d01e4aa3e04c8227792dba4",
+          "promoted": true,
+          "candidate_sha256": "01451725a5d40a33ef02df42ffde7521454671a4a8ce5b1f222d0efad5c44b81",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "9dffaba095659b883966514af0b051f9ec513cfc71d6d84d7e224bafd2eeca3c",
+            "696191a563648825d9b2d28cb161ea98d59989bb4c898a0e8562501b6b1177db",
+            "49700235e217c714991c1162b22887e10aeed1202fe16803f259010c8611d49a",
+            "a17e6512368319278acf69e0bca321b2eacbc95698a7f7b511f65c817fb0ed4b",
+            "69d5c1993a9be843927e668579a9e5c7002f17414ce3a4525381c8f6de53c6e7",
+            "ec6a79691d35422f26a4e4ab98d8ca3ed409039a67745bd06ddfe98f1f253b42",
+            "5c93c87143f4a0366c543fd9993e29596990492e8a9260e71fc8441b5a1c0f17"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 7.899
+        },
+        {
+          "symbol": "000220",
+          "asof": "2026-10-15",
+          "original_sha256": "f41e5bfcd5ede07348e719f7ed5e763d41025cf9daec784f2f8d0ff9cff4b523",
+          "promoted": true,
+          "candidate_sha256": "b48b93a71be12a7414a36e42663fec290070548c288d6743359b2c2d51914c99",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "214782a6538c7c5189030da118b2db7cf287eb18dbfa59490d14682ff8de1db3",
+            "ffaa20b9000465f1e699d72d1ee94b9c4579b245a81cb20c89445eb3acffb670",
+            "ccd480ce516d64c7896ac65159e1f5229fa4fa7846af6887936954afe6639275",
+            "8f4d5a9f59c1aa462eda18ac3430898b1fd3cbdd52acc4a8689ad64e99ffabff",
+            "e671a47316cc5bf951906813b04dc75b644951dd2e8546e0e0b7180c59a18b12",
+            "5f9ff0509123835b9d9a0a85aedf65258f23dd06d2a8910a13c6350b6d7e0939",
+            "5b05e1cdf2d827a0796a295e5b0edba20048c373f419bbe1935984750bb46dde"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 7.772
+        },
+        {
+          "symbol": "000230",
+          "asof": "2026-10-15",
+          "original_sha256": "dd94c5adc9fe06cdb66cf7bbced89bf4da4e9a15a7ef4d8a8b7a6c6512f4387c",
+          "promoted": true,
+          "candidate_sha256": "3c60468d4f6c65ce33dd24e1373c5fb2959cc22e1356619fdbb44d88a83fd7cd",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "4951a7ad8d1d3fd5d80edeed001c5ed1ce94defa6e16eb46899f5d29bce071c2",
+            "67b5f9748f0dffabe90dfc392d33d16458ceb7d545dd6e5268751667bb8c05cb",
+            "4a80c76ed7fc4d27e48f0daa0ed33b150d1df0b7c18fceab156f405d29e85934",
+            "18b5037ec1a49b9f50db219eb2ff6abc1f6105824b02e5e4dd64ec4855b966dd",
+            "8aba54b504623cd4e25cdeaea61ea1de1485f446fc6e67132180c8a664a9fa62",
+            "bd504c11311f38a9f872dec3cb32b695f09e0b80ad432df6330ed04ea07d9546",
+            "1776dfc786ac53172a263d4b2b4c4308af46fc3bd3748a79ea37c8a86de84a42"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 7.821
+        },
+        {
+          "symbol": "000240",
+          "asof": "2026-10-15",
+          "original_sha256": "cb776914253b274e94f5ba1f5eb902feb7f843444e23951bfe9add99d773eff6",
+          "promoted": true,
+          "candidate_sha256": "35ebd15d77e15858c6c5bafdf1659afdc647a5f0e79d561d848514449ec60188",
+          "reasons": [],
+          "guide": "판정 보류",
+          "response_observations": [
+            "c666e8945343b43d8a97b3281eb9a12ac2062b46bfed631fd61161c0a12a973e",
+            "2775c2dfddc3e4d864e5d73a31282f4bf817eff81be0d5fe89559b30da992adf",
+            "64636b85f958e283cde881fa606fffc48baeb858ba5dd8cbb966003f1248b3f8",
+            "b911d6e4ae607ab924083ca9e407b5be35ef5c3dafc83a3f81136389ef215b09",
+            "bd6440b57bfd3efa95357622c9071777d366f8425a3a8e220e7f821ddba6c8d1",
+            "9d6f0b210c81ea0e1d930c253f3a1ea2a5e3fe60a49292d640561b8f7c2acfa6",
+            "1b45c22fa64ce6c9fa49d7a24780ae1f21dfe87e338cbb8a4c7ab83beef016d8"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 8.031
+        },
+        {
+          "symbol": "000250",
+          "asof": "2026-10-15",
+          "original_sha256": "1a24917133b37834c078c0780aa54950712f217fd748d0ed3b74e86038e1a6d6",
+          "promoted": true,
+          "candidate_sha256": "08302abab85b59f8b1148d867af90eea014965b4433f613e341c568edf9f1882",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "d8380b7b40d7fda6341c88e7ef7e803017db249397559d65a8a49c5a304de8bd",
+            "26804e5e5cc37896a942a8c7cf25bfc353b03ec11ab38d61b2c11e76c514ca95",
+            "1a53a1c30440496fbf9396a4090fcc3779623a2aebb0c5bdcd6cd37abf268096",
+            "19ed66c91237f403eeb8f1f97b5dc41aa8ad9f9a0b47b7b58269bc740c34f992",
+            "f03dd51b2e7bc6834e0248d0b2994e7ac1ec0776743a4b07eff188172716caef",
+            "bdc1c3c7b402ce1c1ab818c03633c996868f2f9a6d8d453393066b5a09caaf55",
+            "68775c85198b4c3f198d9089303d74c049cc71cda90f7422cfac37ee36c51fb3"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 7.756
+        },
+        {
+          "symbol": "000270",
+          "asof": "2026-10-15",
+          "original_sha256": "b737ec99bcfb381c2a3d75ed9b8c54767b5226cc9da155ea7d164b0858d18ef2",
+          "promoted": true,
+          "candidate_sha256": "06eff2931b18514ed201e7f9519dcbb0445777b42a55bbc0f927f72ec51e9aaf",
+          "reasons": [],
+          "guide": "관망",
+          "response_observations": [
+            "5c14dcbb7fbb0625cfca48b624107e768f08652cc009161d2143bb49ba7aa561",
+            "55390d84d95c5b1d5f2463b6f86e61846d8801a8764e5e5cfe04e0a96951c8ba",
+            "98d140b2f3aa680424434e3c20cf096a0ad73ed36d560b4de43720b5d089dd0c",
+            "8203ad1ba0f70efc7faacf8cc68c6dac6afde32fff914bd78a7ee5b58e719794",
+            "7c3246447a087d8c6e534b4baa829e76d86457bd6c62e971da855dfa3f1032d7",
+            "be165c650e03da7c503fb11610f6bb2caaf90b774dda7b98210ad0bcf313f426",
+            "196b1715c3ba4687bbbb81e2f79c18685daa5ecfedd5dc3b00db38e251473e5d"
+          ],
+          "request_attempts": 7,
+          "cache_hits": 0,
+          "seconds": 7.806
+        }
+      ],
+      "promoted": 8,
+      "kis_metrics": [
+        {
+          "http": 200,
+          "code": "",
+          "seconds": 0.6555,
+          "kind": "authentication",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.534,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5777,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3581,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5253,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5617,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3628,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.535,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5194,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.845,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8584,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8524,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.7298,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3321,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5274,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5109,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8509,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8512,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8403,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8397,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3265,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.519,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5161,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.7106,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8468,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8359,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8691,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.385,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5137,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5085,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8362,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.7278,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.7175,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8403,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.5942,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5084,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.507,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8299,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8482,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8388,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8614,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3145,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.513,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.5121,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8468,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8225,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8247,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 0.8658,
+          "kind": "market",
+          "attempt": 1
+        },
+        {
+          "http": 200,
+          "code": "MCA00000",
+          "seconds": 1.3707,
+          "kind": "market",
+          "attempt": 1
+        }
+      ]
+    },
+    {
+      "asof": "2026-10-15",
+      "started_at": "2026-10-16T02:15:29.401864+00:00",
+      "finished_at": "2026-10-16T02:15:33.200570+00:00",
+      "limit": 2,
+      "max_physical_request_attempts": 60,
+      "reserved_request_attempts": 0,
+      "physical_request_attempts": 0,
+      "authentication_attempts": 0,
+      "retry_attempts": 0,
+      "unused_reservations": 0,
+      "refunded_reservations": 0,
+      "metering": "physical_boundary",
+      "logical_requests": 0,
+      "cached_responses_reused": 0,
+      "run_id": "38839346041",
+      "event": "workflow_dispatch",
+      "scheduled_cron": "",
+      "excluded_from_price_recovery": {
+        "short_history": 0,
+        "short_flow_history": 0,
+        "backoff": 0
+      },
+      "time_budget_seconds": 240,
+      "seeded_date_tasks": [],
+      "reference_status": {
+        "2026-10-15": {
+          "KOSPI": "REFERENCE_AUTH_ERROR",
+          "KOSDAQ": "REFERENCE_AUTH_ERROR"
+        }
+      },
+      "results": [],
+      "promoted": 0,
+      "kis_metrics": []
+    }
+  ],
+  "corporate": {
+    "unique_failed_filings": 2,
+    "error_combinations": {
+      "receipt_or_period_mismatch": 2
+    },
+    "business_success_before": 699,
+    "business_success_after": 714,
+    "new_financial_records": 0,
+    "preservation": {
+      "filings": true,
+      "financials": true,
+      "reviews": true,
+      "events_prefix": true
+    }
+  },
+  "liquidity_evidence_dates": {
+    "2026-10-14": [
+      "000020",
+      "000050",
+      "000080",
+      "000100"
+    ]
+  },
+  "raw_conflict_mask_counts": {
+    "2026-10-14": 2042
+  },
+  "data_sha256": "855475ba8eb1768d2aed8f01c57d09f740e8640a0ec20a67160f5999ab0b248c",
+  "source_commit": "ab7d9e89c1e33ae110fec8ccb3b73be663e3faaf",
+  "liquidity_trace": [
+    {
+      "symbol": "000020",
+      "name": "동화약품",
+      "market": "KOSPI",
+      "sector": "제약",
+      "activity_ratio": 0.5381635902258823,
+      "average_turnover": 1406448009.0,
+      "sector_activity": null
+    },
+    {
+      "symbol": "000050",
+      "name": "경방",
+      "market": "KOSPI",
+      "sector": "유통",
+      "activity_ratio": 1.3899217177950407,
+      "average_turnover": 279655452.0,
+      "sector_activity": null
+    },
+    {
+      "symbol": "000080",
+      "name": "하이트진로",
+      "market": "KOSPI",
+      "sector": "음식료·담배",
+      "activity_ratio": 1.6941189334807676,
+      "average_turnover": 1802000273.0,
+      "sector_activity": null
+    },
+    {
+      "symbol": "000100",
+      "name": "유한양행",
+      "market": "KOSPI",
+      "sector": "제약",
+      "activity_ratio": 1.172751046911333,
+      "average_turnover": 17924321750.0,
+      "sector_activity": null
+    }
+  ]
+}
