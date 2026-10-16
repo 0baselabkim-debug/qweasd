@@ -70,3 +70,11 @@ def test_planner_does_not_promise_sector_completion_for_short_history(monkeypatc
  assert row['potential_sector_completion'] is False
  assert row['potential_stock_gain']==0 and row['estimated_kis_market_requests']==0
  assert row['prerequisite_held'][0]['bars']==36
+
+def test_planner_keeps_missing_raw_rows_out_of_price_repair_gain(monkeypatch):
+ from scripts.plan_completeness import plan
+ b,_=fixture();monkeypatch.setattr('scripts.plan_completeness.read',lambda *a,**k:b)
+ s={'market':'KOSPI','sector':'synthetic-test-only','members':1,'complete_25d_symbols':0,'reason_symbol_counts':{'missing_price_row':1},'remaining_checks':[{'symbol':'999999','date':'2026-10-14','reason':'missing_price_row'}]}
+ r=plan({'asof':'2026-10-15','sectors':[s]},{'asof':'2026-10-15','tasks':[]})[0]
+ assert not r['potential_sector_completion'] and r['potential_stock_gain']==0
+ assert r['estimated_kis_market_requests']==0

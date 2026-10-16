@@ -16,6 +16,9 @@ def plan(gaps,saved):
         latest_needed=[];saved_latest=[];held=[]
         for code in codes:
             b=read(Path('technical/market')/(code+'.json.gz'),{})
+            if any(r['symbol']==code and r['reason']!='unresolved_price_conflict' for r in checks):
+                held.append({'symbol':code,'reason':'Raw price observation missing/invalid; conflict recovery cannot create it'})
+                continue
             if daily_accepted(b):continue
             if len(b.get('bars',[]))<rules()['min_bars'] or len(b.get('flows',[]))<20:
                 held.append({'symbol':code,'bars':len(b.get('bars',[])),'flows':len(b.get('flows',[])),'reason':'Existing full validation prerequisites not met'})
