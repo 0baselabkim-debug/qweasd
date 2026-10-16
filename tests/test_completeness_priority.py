@@ -49,3 +49,19 @@ def test_publication_gain_never_borrows_previous_run(tmp_path,monkeypatch):
     result=emit(publication_error=True)
     assert result['indicator_effect']['publication_confirmed'] is False
     assert result['status']=='PUBLICATION_FAILED'
+
+def test_summary_reuses_validation_within_one_immutable_pass(tmp_path,monkeypatch):
+    from scripts import technical_batch as batch
+    from tests.test_technical_collection import accepted_fixture
+    b=accepted_fixture();root=tmp_path/'technical'
+    monkeypatch.setattr(batch,'ROOT',root);monkeypatch.setattr(batch,'CACHE',root/'market');monkeypatch.setattr(batch,'STATE',root/'collection-state.json')
+    batch.write(batch.CACHE/(b['symbol']+'.json.gz'),b)
+    batch.write(batch.STATE,{'symbols':{b['symbol']:{}},'runs':[]})
+    original=batch.validate;calls=[]
+    def counted(bundle,day):calls.append(bundle['symbol']);return original(bundle,day)
+    monkeypatch.setattr(batch,'validate',counted)
+    batch.refresh_summary(b['asof'])
+    assert calls==[b['symbol']]
+    report=batch.read(root/'summary.json')
+    assert report['daily_accepted']==report['signal_ready']==1
+    assert report['guide_status_counts']=={'관망':1}
