@@ -1,0 +1,29 @@
+{
+  "date": "20261016",
+  "observed_at": "2026-10-16T16:35:42.032748+09:00",
+  "requested_symbols": 10,
+  "two_call_valid": 7,
+  "third_call_attempts": 1,
+  "blocked": {
+    "005930": "ValueError: Dated chart/flow mismatch: stck_clpr",
+    "000250": "ValueError: Market-cap checks failed 000250 volume_mismatch",
+    "042510": "ValueError: Dated chart/flow mismatch: acml_vol"
+  },
+  "stock_physical_requests": 21,
+  "shared_physical_requests": 4,
+  "sample_seconds": 25.611031188,
+  "retry_count": 0,
+  "rate_limit_responses": 0,
+  "comparison_stock_requests": 30,
+  "comparison_sample_seconds": 32.210854420000004,
+  "not_final_close_evidence": true,
+  "stock_request_reduction_percent": 30.000000000000004,
+  "projection": {
+    "universe": 2430,
+    "all_two_calls_stock_requests": 4860,
+    "previous_three_calls_stock_requests": 7290,
+    "all_two_calls_throttle_minutes": 85.05,
+    "three_calls_throttle_minutes": 127.575,
+    "note": "Forecast only. Authentication, calendar, benchmarks, exclusions, exceptions, retry, latency, DB validation, queue delay and publication add time."
+  }
+}

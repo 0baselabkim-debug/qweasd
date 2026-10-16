@@ -1,0 +1,303 @@
+{
+  "checked_at_utc": "2026-10-16T07:48:05.040100+00:00",
+  "target_trade_date": "2026-10-16",
+  "snapshot_asof": "2026-10-15",
+  "publication": null,
+  "market_attempts": [],
+  "workflows": [
+    {
+      "workflow": "daily-dashboard.yml",
+      "target_date_created_runs": [],
+      "latest_schedule_runs": [
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-15T14:59:16Z",
+          "databaseId": 38756301400,
+          "event": "schedule",
+          "headSha": "fc59f2927979a00803291ba9d1c4095075cd65ae",
+          "startedAt": "2026-10-15T14:59:16Z",
+          "status": "completed",
+          "updatedAt": "2026-10-15T15:49:38Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38756301400",
+          "created_at_kst": "2026-10-15T23:59:16+09:00"
+        },
+        {
+          "conclusion": "failure",
+          "createdAt": "2026-10-15T11:58:43Z",
+          "databaseId": 38731200188,
+          "event": "schedule",
+          "headSha": "ca22511fe9221c289c4c912df51d8fc0cb55c60b",
+          "startedAt": "2026-10-15T11:58:43Z",
+          "status": "completed",
+          "updatedAt": "2026-10-15T14:14:41Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38731200188",
+          "created_at_kst": "2026-10-15T20:58:43+09:00"
+        }
+      ]
+    },
+    {
+      "workflow": "liquidity-recovery.yml",
+      "target_date_created_runs": [
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T06:26:34Z",
+          "databaseId": 38861222096,
+          "event": "workflow_dispatch",
+          "headSha": "5c1b4ee9297c2585f31378f0930af85cd508a2da",
+          "startedAt": "2026-10-16T06:26:34Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T06:28:45Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38861222096",
+          "created_at_kst": "2026-10-16T15:26:34+09:00"
+        }
+      ],
+      "latest_schedule_runs": []
+    },
+    {
+      "workflow": "corporate-refresh.yml",
+      "target_date_created_runs": [
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T05:40:16Z",
+          "databaseId": 38856979719,
+          "event": "schedule",
+          "headSha": "ac049ce08ddb63f9d667a9a08725a6db1fe33f12",
+          "startedAt": "2026-10-16T05:40:16Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T06:17:04Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38856979719",
+          "created_at_kst": "2026-10-16T14:40:16+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T05:07:05Z",
+          "databaseId": 38854104225,
+          "event": "workflow_dispatch",
+          "headSha": "b97b2852581410613a864d713339ee44eef712ce",
+          "startedAt": "2026-10-16T05:07:05Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T05:07:51Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38854104225",
+          "created_at_kst": "2026-10-16T14:07:05+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T02:53:55Z",
+          "databaseId": 38842775568,
+          "event": "workflow_dispatch",
+          "headSha": "7fd0de088f71bda6e65ceda63ee0487bd6d3f7bc",
+          "startedAt": "2026-10-16T02:53:55Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T02:54:45Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38842775568",
+          "created_at_kst": "2026-10-16T11:53:55+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T02:51:30Z",
+          "databaseId": 38842568587,
+          "event": "workflow_dispatch",
+          "headSha": "3df8299b811f4164cafa9d943c04771ba4e3d1bd",
+          "startedAt": "2026-10-16T02:51:30Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T02:52:18Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38842568587",
+          "created_at_kst": "2026-10-16T11:51:30+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T01:59:36Z",
+          "databaseId": 38838080512,
+          "event": "workflow_dispatch",
+          "headSha": "4c8c5a268df372d532d3b1c1accd4b0c6605f216",
+          "startedAt": "2026-10-16T01:59:36Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T02:01:06Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38838080512",
+          "created_at_kst": "2026-10-16T10:59:36+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T01:56:44Z",
+          "databaseId": 38837829938,
+          "event": "workflow_dispatch",
+          "headSha": "d7e7764596067c3bd49e8a928c6517d70fc983b1",
+          "startedAt": "2026-10-16T01:56:44Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T01:58:04Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38837829938",
+          "created_at_kst": "2026-10-16T10:56:44+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T01:51:25Z",
+          "databaseId": 38837357481,
+          "event": "workflow_dispatch",
+          "headSha": "f4390588f4c166f3ca2cbd84c1ece6c87cef2796",
+          "startedAt": "2026-10-16T01:51:25Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T01:56:24Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38837357481",
+          "created_at_kst": "2026-10-16T10:51:25+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T01:51:23Z",
+          "databaseId": 38837354380,
+          "event": "workflow_dispatch",
+          "headSha": "f4390588f4c166f3ca2cbd84c1ece6c87cef2796",
+          "startedAt": "2026-10-16T01:51:23Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T01:55:23Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38837354380",
+          "created_at_kst": "2026-10-16T10:51:23+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T01:45:48Z",
+          "databaseId": 38836860743,
+          "event": "workflow_dispatch",
+          "headSha": "e89a4fbaf8fbefeb4ddeb8f270c3e6bcc3666156",
+          "startedAt": "2026-10-16T01:45:48Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T01:47:17Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38836860743",
+          "created_at_kst": "2026-10-16T10:45:48+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T01:36:09Z",
+          "databaseId": 38836003007,
+          "event": "workflow_dispatch",
+          "headSha": "ad11cd02f93227ea6278f06bfe9eac6a57e4eeab",
+          "startedAt": "2026-10-16T01:36:09Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T01:37:22Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38836003007",
+          "created_at_kst": "2026-10-16T10:36:09+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T01:30:49Z",
+          "databaseId": 38835520245,
+          "event": "workflow_dispatch",
+          "headSha": "c0ab0b6fdad0c74f0dfc57d0b772d6a0a8d00c80",
+          "startedAt": "2026-10-16T01:30:49Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T01:31:50Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38835520245",
+          "created_at_kst": "2026-10-16T10:30:49+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T00:54:49Z",
+          "databaseId": 38832186544,
+          "event": "workflow_dispatch",
+          "headSha": "37f5ffb72ccf6f8c56ed27f08735d0dd0228928a",
+          "startedAt": "2026-10-16T00:54:49Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T00:56:24Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38832186544",
+          "created_at_kst": "2026-10-16T09:54:49+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-15T23:35:51Z",
+          "databaseId": 38824532538,
+          "event": "schedule",
+          "headSha": "d202aaf2f07243e3afc6625bc5e8c5fe5e01cc06",
+          "startedAt": "2026-10-15T23:35:51Z",
+          "status": "completed",
+          "updatedAt": "2026-10-15T23:47:09Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38824532538",
+          "created_at_kst": "2026-10-16T08:35:51+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-15T17:39:49Z",
+          "databaseId": 38779194650,
+          "event": "schedule",
+          "headSha": "d8a2709382a52473cfe494f907f598951946352e",
+          "startedAt": "2026-10-15T17:39:49Z",
+          "status": "completed",
+          "updatedAt": "2026-10-15T18:16:09Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38779194650",
+          "created_at_kst": "2026-10-16T02:39:49+09:00"
+        }
+      ],
+      "latest_schedule_runs": [
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-16T05:40:16Z",
+          "databaseId": 38856979719,
+          "event": "schedule",
+          "headSha": "ac049ce08ddb63f9d667a9a08725a6db1fe33f12",
+          "startedAt": "2026-10-16T05:40:16Z",
+          "status": "completed",
+          "updatedAt": "2026-10-16T06:17:04Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38856979719",
+          "created_at_kst": "2026-10-16T14:40:16+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-15T23:35:51Z",
+          "databaseId": 38824532538,
+          "event": "schedule",
+          "headSha": "d202aaf2f07243e3afc6625bc5e8c5fe5e01cc06",
+          "startedAt": "2026-10-15T23:35:51Z",
+          "status": "completed",
+          "updatedAt": "2026-10-15T23:47:09Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38824532538",
+          "created_at_kst": "2026-10-16T08:35:51+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-15T17:39:49Z",
+          "databaseId": 38779194650,
+          "event": "schedule",
+          "headSha": "d8a2709382a52473cfe494f907f598951946352e",
+          "startedAt": "2026-10-15T17:39:49Z",
+          "status": "completed",
+          "updatedAt": "2026-10-15T18:16:09Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38779194650",
+          "created_at_kst": "2026-10-16T02:39:49+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-15T09:43:04Z",
+          "databaseId": 38714989849,
+          "event": "schedule",
+          "headSha": "7ddb869b53c9e22b0234d586e4edb9309538a609",
+          "startedAt": "2026-10-15T09:43:04Z",
+          "status": "completed",
+          "updatedAt": "2026-10-15T10:19:14Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38714989849",
+          "created_at_kst": "2026-10-15T18:43:04+09:00"
+        },
+        {
+          "conclusion": "success",
+          "createdAt": "2026-10-15T05:40:39Z",
+          "databaseId": 38688068774,
+          "event": "schedule",
+          "headSha": "ae487b269d7fcc68efc75854d7e3152fa2ac997f",
+          "startedAt": "2026-10-15T05:40:39Z",
+          "status": "completed",
+          "updatedAt": "2026-10-15T05:52:41Z",
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38688068774",
+          "created_at_kst": "2026-10-15T14:40:39+09:00"
+        }
+      ]
+    }
+  ],
+  "daily_slots": [
+    {
+      "planned_at_kst": "2026-10-16T18:30:00+09:00",
+      "time_state": "NOT_DUE"
+    },
+    {
+      "planned_at_kst": "2026-10-16T21:00:00+09:00",
+      "time_state": "NOT_DUE"
+    }
+  ],
+  "note": "Actions process success, collection, validation, Git publication and public browser verification are separate. Created date alone does not prove the target trading date."
+}

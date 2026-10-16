@@ -1,0 +1,20 @@
+{
+  "tested_public_deployment": {
+    "expected": {
+      "source_sha256": "50b7434664ee160a5f2e5082863c7c2d22841121ee849c01ea0567d9188abd73",
+      "revision": "da9232996aaac01b4333246564c303c16a1abe46",
+      "data_sha256": "68ade5c1305014a7ae1cd6ad62399fa61b824594d22df05a40e18124a9d8e141"
+    },
+    "source_sha256": "50b7434664ee160a5f2e5082863c7c2d22841121ee849c01ea0567d9188abd73",
+    "revision": "da9232996aaac01b4333246564c303c16a1abe46",
+    "data_sha256": "68ade5c1305014a7ae1cd6ad62399fa61b824594d22df05a40e18124a9d8e141"
+  },
+  "final_checkout": {
+    "source_sha256": "50b7434664ee160a5f2e5082863c7c2d22841121ee849c01ea0567d9188abd73",
+    "revision": "c00efebe0e3363c6c45ba5ed8104d3284ef4a054",
+    "data_sha256": "68ade5c1305014a7ae1cd6ad62399fa61b824594d22df05a40e18124a9d8e141"
+  },
+  "same_rendered_source": true,
+  "same_database": true,
+  "note": "The final checkpoint-persistence commit changes collector/workflow/tests/docs only; public UI/source hash remains identical to the browser-tested commit."
+}

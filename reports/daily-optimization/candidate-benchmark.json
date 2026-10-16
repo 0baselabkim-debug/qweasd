@@ -1,0 +1,37 @@
+{
+  "success": true,
+  "seconds": 49.706037656986155,
+  "audit": {
+    "trade_date": "2026-10-15",
+    "records": 2430,
+    "excluded": 115,
+    "adjusted_updates": 94625,
+    "source_run": "38731200188",
+    "planned_start_at": "2026-10-15T20:30:00+09:00",
+    "collection_started_at": "2026-10-15T12:04:34.443686+00:00",
+    "collection_completed_at": "2026-10-15T14:14:26.777611+00:00",
+    "input_mode": "live_daily_collection",
+    "adjusted_close_conflict_symbols": 0,
+    "complete_stock_scores": 1161,
+    "complete_sector_scores": 0,
+    "full_20d_symbols": 2425,
+    "preservation_verified": true,
+    "phase_seconds": {
+      "bundle_validation": 0.9208510469761677,
+      "database_copy": 0.01328787999227643,
+      "database_update": 39.00437780399807,
+      "preservation_comparison": 0.11973492000834085,
+      "aggregate_validation": 9.592874459020095
+    },
+    "candidate_total_seconds": 49.65144955998403,
+    "sha256": "68ade5c1305014a7ae1cd6ad62399fa61b824594d22df05a40e18124a9d8e141"
+  },
+  "records": 2430,
+  "source_run": "38731200188",
+  "source_collection_seconds": 7792.334,
+  "source_physical_requests": 7409,
+  "source_started_at": "2026-10-15T12:04:34.443686+00:00",
+  "source_completed_at": "2026-10-15T14:14:26.777611+00:00",
+  "mode": "real saved 2430-stock 2026-10-15 rehearsal; no API or publication",
+  "published_database_unchanged": true
+}

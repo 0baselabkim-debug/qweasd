@@ -1,0 +1,195 @@
+{
+  "rows": [
+    {
+      "symbol": "005930",
+      "market": "KOSPI",
+      "master_sector": "전기·전자",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": true,
+        "acml_tr_pbmn": true,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": null,
+      "old_quote_failures": [
+        "volume_mismatch"
+      ],
+      "two_call_eligible": false,
+      "blocking_reason": "Dated chart/flow mismatch: acml_vol"
+    },
+    {
+      "symbol": "000660",
+      "market": "KOSPI",
+      "master_sector": "전기·전자",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": false,
+        "acml_tr_pbmn": false,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": null,
+      "old_quote_failures": [
+        "volume_mismatch"
+      ],
+      "two_call_eligible": false,
+      "blocking_reason": "Dated chart/flow mismatch: acml_vol"
+    },
+    {
+      "symbol": "005380",
+      "market": "KOSPI",
+      "master_sector": "운송장비·부품",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": true,
+        "acml_tr_pbmn": true,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": 63685000000000,
+      "old_quote_failures": [],
+      "two_call_eligible": true,
+      "fallback_reasons": [],
+      "new_quote_cap": 63685000000000
+    },
+    {
+      "symbol": "035420",
+      "market": "KOSPI",
+      "master_sector": "IT 서비스",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": false,
+        "acml_vol": false,
+        "acml_tr_pbmn": false,
+        "lstn_stcn": true,
+        "hts_avls": false
+      },
+      "old_quote_cap": null,
+      "old_quote_failures": [
+        "close_mismatch",
+        "volume_mismatch"
+      ],
+      "two_call_eligible": true,
+      "fallback_reasons": [],
+      "new_quote_cap": 27394800000000
+    },
+    {
+      "symbol": "105560",
+      "market": "KOSPI",
+      "master_sector": "금융",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": true,
+        "acml_tr_pbmn": true,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": 56891900000000,
+      "old_quote_failures": [],
+      "two_call_eligible": true,
+      "fallback_reasons": [],
+      "new_quote_cap": 56891900000000
+    },
+    {
+      "symbol": "000250",
+      "market": "KOSDAQ",
+      "master_sector": "제약",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": true,
+        "acml_tr_pbmn": true,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": 4820500000000,
+      "old_quote_failures": [],
+      "two_call_eligible": true,
+      "fallback_reasons": [],
+      "new_quote_cap": 4820500000000
+    },
+    {
+      "symbol": "000440",
+      "market": "KOSDAQ",
+      "master_sector": "유통",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": true,
+        "acml_tr_pbmn": true,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": 76200000000,
+      "old_quote_failures": [],
+      "two_call_eligible": true,
+      "fallback_reasons": [],
+      "new_quote_cap": 76200000000
+    },
+    {
+      "symbol": "247540",
+      "market": "KOSDAQ",
+      "master_sector": "전기·전자",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": true,
+        "acml_tr_pbmn": true,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": null,
+      "old_quote_failures": [
+        "close_mismatch",
+        "volume_mismatch"
+      ],
+      "two_call_eligible": false,
+      "blocking_reason": "Dated chart/flow mismatch: stck_clpr"
+    },
+    {
+      "symbol": "086520",
+      "market": "KOSDAQ",
+      "master_sector": "금융",
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": true,
+        "acml_tr_pbmn": true,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": 11065800000000,
+      "old_quote_failures": [],
+      "two_call_eligible": true,
+      "fallback_reasons": [],
+      "new_quote_cap": 11065800000000
+    },
+    {
+      "symbol": "042510",
+      "market": "KOSDAQ",
+      "master_sector": null,
+      "shared_fields_equal": {
+        "stck_shrn_iscd": true,
+        "stck_prpr": true,
+        "acml_vol": true,
+        "acml_tr_pbmn": true,
+        "lstn_stcn": true,
+        "hts_avls": true
+      },
+      "old_quote_cap": 231000000000,
+      "old_quote_failures": [],
+      "two_call_eligible": false,
+      "fallback_reasons": [
+        "industry_quote_required"
+      ],
+      "new_quote_cap": 231000000000
+    }
+  ],
+  "two_call_eligible": 6,
+  "note": "After-close early sample, not 18:30 finality evidence. Later quote may have changed."
+}

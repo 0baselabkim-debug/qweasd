@@ -1,0 +1,26 @@
+........................................................................ [ 41%]
+........................................................................ [ 82%]
+......F........................                                          [100%]
+=================================== FAILURES ===================================
+_____________ test_app_and_workflows_do_not_call_removed_features ______________
+
+    def test_app_and_workflows_do_not_call_removed_features():
+     import ast
+     app=Path('app.py').read_text();ast.parse(app)
+     for token in ['journal_ui','technical_guide','buy_guide','sell_guide','SUPABASE','투자 적격성']:
+      assert token not in app
+     for name in ['screener/technical.py','screener/journal_ui.py','technical_rules.json','.github/workflows/technical-refresh.yml','.github/workflows/technical-verify.yml']:
+      assert not Path(name).exists()
+     workflow=Path('.github/workflows/liquidity-recovery.yml').read_text()
+     assert 'kis-validation-auth' in workflow and 'cancel-in-progress: false' in workflow
+     assert 'recover_liquidity.py' in workflow and 'SUPABASE' not in workflow
+>    assert '30 11' in Path('.github/workflows/daily-dashboard.yml').read_text()
+E    assert '30 11' in "name: Daily validated dashboard refresh\non:\n  schedule:\n    - cron: '30 9 * * 1-5'\n    - cron: '0 12 * * 1-5'\n  ...hub.run_id }}-${{ github.run_attempt }}\n          path: operations/market-runs\n          if-no-files-found: ignore\n"
+E     +  where "name: Daily validated dashboard refresh\non:\n  schedule:\n    - cron: '30 9 * * 1-5'\n    - cron: '0 12 * * 1-5'\n  ...hub.run_id }}-${{ github.run_attempt }}\n          path: operations/market-runs\n          if-no-files-found: ignore\n" = read_text()
+E     +    where read_text = PosixPath('.github/workflows/daily-dashboard.yml').read_text
+E     +      where PosixPath('.github/workflows/daily-dashboard.yml') = Path('.github/workflows/daily-dashboard.yml')
+
+tests/test_liquidity.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_liquidity.py::test_app_and_workflows_do_not_call_removed_features
+1 failed, 174 passed in 229.07s (0:03:49)
