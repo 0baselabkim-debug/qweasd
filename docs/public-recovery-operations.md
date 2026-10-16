@@ -5,9 +5,9 @@
 수집 완료(`completed_asof`)는 가격 검증 완료를 의미하지 않는다. `collect_technical.py --mode recover --limit 3 --budget 240`은 기존 일별 검증과 분리된 공개 데이터 전용 경로다. private worker나 Supabase를 호출하지 않는다.
 
 - 기존 KIS 1.05초 호출 간격과 `kis-validation-auth` Actions concurrency를 유지한다.
-- 첫 검증은 최대 3종목. 실제 2종목 복구 확인 후 기존 예약 검증 뒤에 회당 최대 2종목의 자동 재확인을 연결했다. CLI 상한은 10종목, 인증을 포함한 KIS 요청 시도 예약 상한은 60회다. 요청별 최대 3회 재시도를 보수적으로 예약하며 인증에 별도 3회를 포함한다.
-- 240초 이후 새 요청을 시작하지 않는다. 이미 시작된 요청의 타임아웃/백오프는 끝날 수 있으므로 복구 실행 자체는 Actions `timeout 600`으로 제한한다. 예약 검증(최대 1500초)과 복구를 순차 실행하고 증거를 게시할 여유를 포함해 전체 job 상한은 40분이다. KRX 기준 자료 확인은 최대 2개 날짜 × 2개 시장이며, 충돌 복구에서는 해당 날짜의 공식 응답도 새로 관측하고 기존 유효한 기준 캐시는 덮어쓰지 않는다. 일반 검증에서는 같은 날짜 캐시를 재사용한다. 명세 조회 2회는 KIS 인증/API 요청과 별도다.
-- 불일치·공급자 오류가 남는 날짜·종목은 6시간, 12시간, 최대 24시간 후 다시 시도한다. 요청 예산 소진은 공급자 오류와 구분해 15분 후부터 다음 실행에서 이어받는다. 신규 대상/가장 오래 시도한 대상을 먼저 처리한다.
+- 첫 검증은 최대 3종목. 실제 2종목 복구 확인 후 기존 예약 검증 뒤에 회당 최대 2종목의 자동 재확인을 연결했다. CLI 상한은 10종목, 인증·재시도를 포함한 실제 KIS HTTP 전송 상한은 60회다. 실제 전송 직전에 한 슬롯씩 차감하며 미사용 재시도를 미리 차감하지 않는다.
+- 240초 이후 새 요청을 시작하지 않는다. 이미 시작된 요청의 타임아웃/백오프는 끝날 수 있으므로 복구 실행 자체는 Actions `timeout 600`으로 제한한다. 예약 검증(최대 1500초)과 복구를 순차 실행하고 증거를 게시할 여유를 포함해 전체 job 상한은 40분이다. KRX 기준 자료 확인은 최대 2개 날짜 × 2개 시장이며, 충돌 복구에서는 해당 날짜의 공식 응답도 새로 관측하고 기존 유효한 기준 캐시는 덮어쓰지 않는다. 일반 검증에서는 같은 날짜 캐시를 재사용한다. 기존 공식 명세는 보존하며 복구 때 반복 조회하지 않는다.
+- 불일치·공급자 오류가 남는 날짜·종목은 6시간, 12시간, 최대 24시간 후 다시 시도한다. 요청 예산 소진은 공급자 오류와 구분해 15분 후부터 다음 실행에서 이어받는다. 날짜를 순환하고 예산 중단 재개 작업 및 오래된 시도를 우선 처리한다.
 - 정확한 날짜의 KIS J 수정주가(0)와 원주가(1)를 새로 요청한다. 최근 겹치는 구간 또는 수정주가 관측이 달라졌으면 KIS J의 동일 기준 전체 가격 이력을 다시 구성한다. KRX 종가를 KIS OHLCV 안에 끼워 넣지 않는다.
 - `technical/observations/<날짜>/<종목>/<내용SHA256>.json.gz`는 기존 및 신규 번들 증거를 보존한다. `provider-observations`에는 이번에 받은 원시 응답 필드를 저장한다. 실패 후보는 `candidates`, 재시도 상태는 `recovery-state.json`, 실행 결과는 `recovery-report.json`에 저장한다.
 - 후보는 날짜·종목·OHLCV 6필드·원주가·거래일·20일 실제 수급·해시 검증을 모두 통과해야 기존 날짜 포인터에 반영한다. 불일치와 오류가 계속되면 원본 포인터는 유지된다. 기존 acceptance와 충돌 이력은 별도로 보존한다.
@@ -27,3 +27,21 @@
 ## 시장 전체 투자자 수급의 남은 근거
 
 FHPTJ04040000 공식 예제는 `frgn_ntby_tr_pbmn`, `prsn_ntby_tr_pbmn`, `orgn_ntby_tr_pbmn`의 정체를 설명하지만, 그 예제만으로 금액 배수와 KRX/NXT 범위는 확정할 수 없다. 종목별 FHPTJ04160001의 백만원 단위를 전용하지 않는다. `inspect_investor_spec.py`로 해당 API의 공식 개요 및 필드 명세를 별도로 보존한다. 명시적 단위·범위 근거가 없으면 `unit_scope_pending`을 유지한다.
+
+## Physical budgets and resumable sessions (2026-10-16)
+
+Production recovery uses a ContextVar guard at KIS's actual HTTP boundary. Authentication and every retry consume one of at most 60 slots; unused retry attempts consume none. The 1.05-second pacing, shared workflow concurrency and 240-second deadline for new requests remain unchanged. KRX reference requests remain separately recorded and limited to two dates / two markets (at most four requests) per run. A transport adapter without physical-boundary support retains conservative reservations and is explicitly labelled as such; it is not reported as measured physical traffic.
+
+Public response bodies are content-addressed immediately after each successful response, and a session index survives interruption. Resuming still requests a fresh adjusted overlap and same-day raw anchor. Cached pages are reused only if both anchors match the interrupted vintage and the original bundle hash is unchanged. Full candidate validation, exact-date KRX comparison and 20-day flow checks remain mandatory. A changed anchor causes a new coherent history request.
+
+The queue rotates dates and selects eligible old attempts within each date, with a separate priority for budget-paused work. Provider-error backoff still applies. Successful date/symbol observations are excluded even if old pending copies remain. A current accepted bundle can seed at most two older **unvalidated** date-specific tasks for masked liquidity dates. The seed strips current acceptance and computed values, trims future bars/calendar/events, and loads that date's exact 20 flow rows; it is never itself accepted.
+
+## Connection to turnover metrics and publication
+
+The original price rows and original conflict list are preserved. A separate `liquidity_price_evidence` record in DuckDB can release only the same date/symbol's identical original turnover and volume, after the entire price bundle passes existing OHLCV, raw price, calendar, 20-flow and hash gates. It does **not** correct the DB's old close, market cap or valuation, clear general price conflicts, or grant acceptance to other dates. Those remaining price differences stay separately auditable. All 25 observations are still required for activity; all sector constituents remain required.
+
+Publication prepares a candidate DB plus matching manifest, validation and ledger. Old generation files are archived by DB hash. The public reader rejects mixed generations and selects a coherent archived generation until all new files agree. The hidden browser identity now includes both UI source and actual published DB hashes. No visible date/status header is added. Git publication commits the generation together; nonoverlapping concurrent changes are merged, while overlapping changes preserve the candidate on an evidence branch instead of forcing/rebasing a binary snapshot.
+
+## DART attachment corrections
+
+`[첨부정정]` is not assumed to contain another full business report. The exact original periodic receipt is linked only when the official disclosure listing and financial API agree on issuer, receipt, year, report code and period. Original and attachment records remain separate. Original financial records are reused unchanged; attachment audit content remains separately held for review. XML status 014 is classified as file unavailable, not a corrupt ZIP. A business section is selected only from a unique matching issuer/receipt/form document, not the largest/first ZIP entry.

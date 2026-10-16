@@ -1,6 +1,7 @@
 """Physical transport and resumable evidence, independent of production credentials."""
 import copy, io, json
 import pytest
+from test_dashboard import history
 from scripts.kis_public_client import KIS
 from scripts.recover_technical import BoundedAPI, RecoveryBudget
 from scripts.technical_acceptance import LazyAPI
@@ -104,3 +105,19 @@ def test_date_rotation_and_budget_resume_do_not_starve_old_work():
     ledger={'jobs':{'2026-10-15/000003':{'last_result':{'error_type':'RecoveryBudget'}}},'last_processed_date':'2026-10-14'}
     order=list(fair_tasks(tasks,ledger,'2026-10-16T01:00:00+00:00'))
     assert [x[1] for x in order]==['2026-10-15/000003','2026-10-14/000001','2026-10-15/000002']
+
+def test_liquidity_mask_release_requires_every_date_and_entire_sector(history):
+    import pandas as pd
+    from screener.indicators import universe,stock_activity,sector_indicators
+    from screener.technical_quality import digest,POLICY
+    from screener.liquidity_evidence import price_identity
+    from tests.test_technical_collection import accepted_fixture
+    # The fixture already has 25 complete turnover days; only masking changes.
+    day='2026-10-14';code='000001';b=accepted_fixture()
+    # Prove the real gate separately above. Here use a deliberately invalid proof:
+    # neither an old date nor a boolean flag can unmask a stock/sector.
+    history['metadata']['adjusted_price_conflicts']={day:[{'symbol':code}]}
+    history['metadata']['liquidity_price_evidence']={day:{code:{'verified':True,'bundle':b}}}
+    x,m=universe(history,day);x=stock_activity(history,x,day);s,_=sector_indicators(history,x,m,day)
+    assert pd.isna(x.set_index('symbol').loc[code,'activity_ratio'])
+    assert pd.isna(s.set_index('sector').loc['A','activity_ratio'])

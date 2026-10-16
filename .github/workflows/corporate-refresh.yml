@@ -96,7 +96,8 @@ jobs:
         if: inputs.mode == 'repair_attachments'
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
-        run: python scripts/repair_corporate_attachments.py
+          REPAIR_LIMIT: ${{ inputs.limit || 2 }}
+        run: python scripts/repair_corporate_attachments.py --limit "$REPAIR_LIMIT"
       - name: Collect changed disclosures and resume unfinished companies
         if: inputs.mode != 'probe' && inputs.mode != 'diagnose' && inputs.mode != 'repair_attachments'
         env:

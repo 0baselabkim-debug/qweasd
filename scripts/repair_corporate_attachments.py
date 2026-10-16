@@ -6,7 +6,7 @@ from scripts.collect_corporate import Dart,process,BudgetExceeded
 from scripts.corporate_documents import attachment_parent
 from screener.corporate import load_state,save_state,build_database
 
-def repair(api,state,receipts):
+def repair(api,state,receipts,checkpoint=lambda:None):
     results=[]
     for receipt in receipts:
         f=state['filings'][receipt];job=state['jobs'].setdefault(receipt,{})
@@ -25,11 +25,17 @@ def repair(api,state,receipts):
             results.append({'receipt':receipt,'parent':parent['receipt'],'new_financial':new_finance,'parent_job':state['jobs'].get(parent['receipt'])})
         except BudgetExceeded:raise
         except Exception as e:results.append({'receipt':receipt,'error':str(e) if isinstance(e,ValueError) else type(e).__name__})
+        finally:checkpoint()
     return results
 
 if __name__=='__main__':
-    state=load_state();api=Dart(max_calls=12,max_seconds=180)
-    result=repair(api,state,['20260325000430','20260330001721'])
+    import argparse
+    p=argparse.ArgumentParser();p.add_argument('--limit',type=int,default=2);args=p.parse_args();limit=max(1,min(5,args.limit))
+    state=load_state();api=Dart(max_calls=limit*4,max_seconds=180)
+    receipts=[k for k,j in state['jobs'].items() if (j.get('business_status')=='failed' or j.get('financial_status')=='failed') and state['filings'][k]['name'].startswith('[첨부정정]') and not j.get('linked_periodic_receipt')][:limit]
+    Path('corporate-candidate').mkdir(exist_ok=True)
+    try:result=repair(api,state,receipts,lambda:save_state(state,Path('corporate-candidate/state.json.gz')))
+    except BudgetExceeded:result=[{'error':'BudgetExceeded','partial_state_preserved':True}]
     report={'run_id':os.environ.get('GITHUB_RUN_ID'),'calls':api.calls,'seconds':round(time.monotonic()-api.started,3),'results':result}
     state['runs'].append(report);Path('corporate-candidate').mkdir(exist_ok=True)
     save_state(state,Path('corporate-candidate/state.json.gz'));build_database(state,Path('corporate-candidate/corporate.duckdb'))
