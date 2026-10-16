@@ -1,0 +1,39 @@
+{
+  "run_id": "38836003007",
+  "calls": 6,
+  "seconds": 8.028,
+  "results": [
+    {
+      "receipt": "20260325000430",
+      "parent": "20260323001116",
+      "new_financial": false,
+      "parent_job": {
+        "attempted_at": "2026-10-16T01:36:43.617051+00:00",
+        "business_attempted_at": "2026-10-16T01:36:43.617051+00:00",
+        "business_attempts": 1,
+        "business_status": "success",
+        "document_name": "20260323001116.xml",
+        "document_sha256": "7ca5f2b305de117d9e2fc69f7d7c781e31eece8fd826c75ab8fe43412503548a",
+        "section_sha256": "6116cd0f8cac58362226f4883126c1583754294ff5868934b2ac312e42653ceb",
+        "characters": 19465,
+        "financial_status": "success"
+      }
+    },
+    {
+      "receipt": "20260330001721",
+      "parent": "20260320001026",
+      "new_financial": false,
+      "parent_job": {
+        "attempted_at": "2026-10-16T01:36:47.741021+00:00",
+        "business_attempted_at": "2026-10-16T01:36:47.741021+00:00",
+        "business_attempts": 1,
+        "business_status": "success",
+        "document_name": "20260320001026.xml",
+        "document_sha256": "701e94c27c3e0efc4277e84d0e3dc3735c108efe5c4b4de218953e0fe54a2923",
+        "section_sha256": "2f2d94d81c7f9fcad1ebba26a04cab6ce6e8eb6e1dcff0ccd77c498482d71973",
+        "characters": 20381,
+        "financial_status": "success"
+      }
+    }
+  ]
+}
