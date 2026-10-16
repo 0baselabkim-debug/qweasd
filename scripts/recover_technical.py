@@ -158,15 +158,18 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
         if retry_after>start.isoformat():
             excluded_queue['backoff']+=1;continue
         tasks.append((j.get('attempted_at',''),key,path,b))
+    from scripts.saved_recovery import reference_index,preflight
+    saved_index,saved_reference_errors=reference_index(batch.ROOT)
     bounded=BoundedAPI(api,max_calls=min(60,max_calls),seconds=min(240,seconds));results=[];deferred_reference=[];not_conflicting=[]
     for _,key,path,b in fair_tasks(tasks,ledger,start.isoformat()):
         if len(results)>=min(10,limit) or time.monotonic()-bounded.start>=bounded.seconds:break
         day=b['asof']
-        if day not in refs_by_date:
+        saved_candidate,saved_check=preflight(b,saved_index)
+        if saved_candidate is None and day not in refs_by_date:
             # At most two dates' availability checks per run; retain older queues.
             if len(refs_by_date)>=2:continue
             refs_by_date[day],status_by_date[day]=batch.krx_reference(day,refresh=True)
-        refs=refs_by_date[day]
+        refs=refs_by_date[day] if saved_candidate is None else {b['symbol']:saved_check['saved_evidence']['reference']['row']}
         if not reference_ready(b,refs):
             deferred_reference.append(key);continue
         checked=batch.crosscheck(copy.deepcopy(b),refs)
@@ -192,11 +195,14 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
             batch.write(session_path,session)
         bounded.begin(saved,persist)
         physical_start=bounded.used;cache_start=bounded.cache_hits;item_start=time.monotonic()
-        result={'symbol':b['symbol'],'asof':day,'original_sha256':before,'promoted':False,'previously_blocking':bool(blocking_conflicts(b))}
+        result={'symbol':b['symbol'],'asof':day,'original_sha256':before,'promoted':False,'previously_blocking':bool(blocking_conflicts(b)),'saved_preflight':saved_check}
         # Archive the complete original (including the previous flow evidence).
         batch.write(batch.CACHE.parent/'observations'/day/b['symbol']/(before+'.json.gz'),b)
         try:
-            if needs_price_requery:
+            if saved_candidate is not None:
+                proposed=saved_candidate
+                result['verification_path']='saved_evidence_full_verification'
+            elif needs_price_requery:
                 proposed=candidate(bounded,b,refs,paged)
                 result['verification_path']='fresh_price_candidate'
             else:
@@ -237,7 +243,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
             'logical_requests':bounded.logical,'cached_responses_reused':bounded.cache_hits,
             'run_id':__import__('os').environ.get('GITHUB_RUN_ID'),'event':__import__('os').environ.get('GITHUB_EVENT_NAME'),
             'scheduled_cron':__import__('os').environ.get('RECOVERY_SCHEDULE'),'excluded_from_price_recovery':excluded_queue,
-            'time_budget_seconds':bounded.seconds,'seeded_date_tasks':seeded,'reference_status':status_by_date,'results':results,
+            'saved_reference_errors':saved_reference_errors,'time_budget_seconds':bounded.seconds,'seeded_date_tasks':seeded,'reference_status':status_by_date,'results':results,
             'promoted':sum(r['promoted'] for r in results),'kis_metrics':api.metrics,
             'queue':{'eligible_date_symbol_tasks':len(tasks),'attempted':len(results),'reference_deferred':len(deferred_reference),'not_price_conflicting':len(not_conflicting),
                      'carried_forward':len(tasks)-sum(r['promoted'] for r in results)-len(not_conflicting)},

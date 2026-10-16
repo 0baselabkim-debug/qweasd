@@ -234,6 +234,10 @@ with sync_playwright() as p:
   # Trace released turnover from exact-date evidence through the actual public CSV.
   released=sorted({code for rows in data['metadata'].get('liquidity_price_evidence',{}).values() for code in rows})
   audit_codes=list(dict.fromkeys(released[:2]+[c for c in ['053050','060900','210980','004970','052710','052790','013890','071950','079430','017670','030200','032640','126560','034230'] if c in set(stocks.symbol)]))
+  # Include every currently complete sector, including newly published recoveries.
+  for sector in sectors[sectors.activity_ratio.notna()].itertuples():
+   members=stocks[(stocks.market==sector.market)&(stocks.sector==sector.sector)]
+   audit_codes.append(sorted(members.symbol)[0])
   audited_sectors=set()
   for code in audit_codes:
    row=stocks.set_index('symbol').loc[code]
