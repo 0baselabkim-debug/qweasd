@@ -1,73 +1,97 @@
 {
-  "updated_at": "2026-10-16T01:47:08.056504+00:00",
+  "updated_at": "2026-10-16T01:55:16.355223+00:00",
   "filings": 8356,
   "financial_versions": 2772,
   "business_companies": 357,
   "universe": 2430,
   "last_run": {
-    "run_id": "38836860743",
-    "calls": 13,
-    "seconds": 19.448,
+    "run_id": "38837354380",
+    "calls": 15,
+    "seconds": 178.357,
     "results": [
       {
-        "receipt": "20260320000348",
-        "parent": "20260318001443",
-        "new_financial": false,
-        "parent_job": {
-          "attempted_at": "2026-10-16T01:46:26.694002+00:00",
-          "business_attempted_at": "2026-10-16T01:46:26.694002+00:00",
-          "business_attempts": 1,
-          "business_status": "success",
-          "document_name": "20260318001443.xml",
-          "document_sha256": "81b087cf248bd499af8cad552f4a6b1b74313d852bb05b9af3c891e2f6b59901",
-          "section_sha256": "c0519495f877b9d250d883221a9583ab50399dfde5598c03c396575b17162e3f",
-          "characters": 16994,
-          "financial_status": "success"
-        }
-      },
-      {
         "receipt": "20260806000296",
-        "error": "parent_metadata_revision_requires_review"
-      },
-      {
-        "receipt": "20260430000135",
-        "parent": "20260319000781",
+        "parent": "20260806000290",
         "new_financial": false,
         "parent_job": {
-          "attempted_at": "2026-10-16T01:46:33.793641+00:00",
-          "business_attempted_at": "2026-10-16T01:46:33.793641+00:00",
+          "attempted_at": "2026-10-16T01:52:03.863716+00:00",
+          "business_attempted_at": "2026-10-16T01:52:03.863716+00:00",
           "business_attempts": 1,
           "business_status": "success",
-          "document_name": "20260319000781.xml",
-          "document_sha256": "f338ed128214aeeb78d1b902112b0fe112dcee33cc8700da937a8b50d5b3657e",
-          "section_sha256": "28bb32ce531d6fccaca8d3b460a9d7883a5ad14d0e2d085bf9f906b06c0e2678",
-          "characters": 22836,
-          "financial_status": "success"
-        }
-      },
-      {
-        "receipt": "20260319000150",
-        "parent": "20260318001595",
-        "new_financial": false,
-        "parent_job": {
-          "attempted_at": "2026-10-16T01:46:38.888869+00:00",
-          "business_attempted_at": "2026-10-16T01:46:38.888869+00:00",
-          "business_attempts": 1,
-          "business_status": "success",
-          "document_name": "20260318001595.xml",
-          "document_sha256": "e6fff20a4c401c03f95cd06c4131743126952465667efac9bc4bfeb42cc5a072",
-          "section_sha256": "1aad52f3474bd4568d5720277d607cb8989b14918eaa04a359d0a8699daabefc",
-          "characters": 17019,
+          "document_name": "20260806000290.xml",
+          "document_sha256": "3ec7bcb56200f02f82195b2763d9a43e4098dd9bd4965d78bafc8b85d7f845b3",
+          "section_sha256": "dd4424f41bd54b2a5a18060b8142daeb95624afb540d22220fa9ad3fccfb78e8",
+          "characters": 22632,
           "financial_status": "success"
         }
       },
       {
         "receipt": "20260730000175",
-        "error": "parent_metadata_revision_requires_review"
+        "parent": "20260730000045",
+        "new_financial": false,
+        "parent_job": {
+          "attempted_at": "2026-10-16T01:52:38.039003+00:00",
+          "business_attempted_at": "2026-10-16T01:52:38.039003+00:00",
+          "business_attempts": 1,
+          "business_status": "success",
+          "document_name": "20260730000045.xml",
+          "document_sha256": "0f6a3d9ec27b936e7efb844c36190d185529f02349ed541a16555633defb65ab",
+          "section_sha256": "ac916a6a026e53d911441f502ad585be5f520edf07bee31d396e6827574bd24a",
+          "characters": 23077,
+          "financial_status": "success"
+        }
+      },
+      {
+        "receipt": "20260508000660",
+        "parent": "20260323001379",
+        "new_financial": false,
+        "parent_job": {
+          "attempted_at": "2026-10-16T01:53:01.685884+00:00",
+          "business_attempted_at": "2026-10-16T01:53:01.685884+00:00",
+          "business_attempts": 1,
+          "business_status": "success",
+          "document_name": "20260323001379.xml",
+          "document_sha256": "d9d61e39f4b1c38754bc37ef189985655e85179a7852cb5a5e14807a738389b8",
+          "section_sha256": "d3f5195e179162562ae384fb9baf0a9e81c5e5966069fd85cf6e94b657254b95",
+          "characters": 17623,
+          "financial_status": "success"
+        }
+      },
+      {
+        "receipt": "20260319000744",
+        "parent": "20260318000864",
+        "new_financial": false,
+        "parent_job": {
+          "attempted_at": "2026-10-16T01:54:00.299470+00:00",
+          "business_attempted_at": "2026-10-16T01:54:00.299470+00:00",
+          "business_attempts": 1,
+          "business_status": "success",
+          "document_name": "20260318000864.xml",
+          "document_sha256": "2f19d8acd74d4cb032d7728eeaa17a229f045f123677b126a3cb0dcf857ee300",
+          "section_sha256": "cf414c029e289632c1ded1e96f938df87bd1e76e5bfb8c5df5cf5f9c568651ca",
+          "characters": 20524,
+          "financial_status": "success"
+        }
+      },
+      {
+        "receipt": "20260814002982",
+        "parent": "20260814002549",
+        "new_financial": false,
+        "parent_job": {
+          "attempted_at": "2026-10-16T01:54:32.729632+00:00",
+          "business_attempted_at": "2026-10-16T01:54:32.729632+00:00",
+          "business_attempts": 1,
+          "business_status": "success",
+          "document_name": "20260814002549.xml",
+          "document_sha256": "7289a45d8fd8d1a76b67857d834205285c45730735333d7508650f2bf9d96e07",
+          "section_sha256": "eaddceb6f3240cdfb857fc57a760a218c5c9b4030ebe5cbdec36936925761136",
+          "characters": 15743,
+          "financial_status": "success"
+        }
       }
     ]
   },
   "annual_score_policy": "preserved_2025_baseline",
   "quarterly_score_policy": "hold_until_comparable_TTM_validation",
-  "state_sha256": "0d428963aceeeb0ec7162fbb03edb4b2ec9152bb5b933ea4ff475c818de23ef8"
+  "state_sha256": "c2bd2da57ee8e14bd7491aa5a83142a45f90cca6f6ba1bba697808338b6053d7"
 }
