@@ -126,3 +126,11 @@ def test_one_market_success_does_not_reset_other_markets_denial_backoff(tmp_path
     gate=read(tmp_path/'reference-status.json')['provider_backoff']
     assert gate['attempts']==2
     assert dt.datetime.fromisoformat(gate['retry_after'])==clock+dt.timedelta(hours=2)
+
+def test_zero_turnover_is_observed_data_not_missing(history):
+    from scripts.diagnose_activity import diagnose
+    history['prices'].loc[history['prices'].symbol=='000001','turnover']=0
+    report=diagnose(history,'2026-10-14');row=next(r for r in report['sectors'] if r['sector']=='A')
+    assert row['minimum_additional_date_symbol_checks']==0
+    assert row['complete_25d_symbols']==row['members']
+    assert row['reason_symbol_counts']['nonpositive_prior_turnover']==1
