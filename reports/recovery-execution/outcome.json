@@ -1,0 +1,37 @@
+{
+  "status": "RECOVERED",
+  "counts": {
+    "RECOVERED": 6
+  },
+  "published": true,
+  "provider_count_unit": "market/date status, not symbols",
+  "run_id": "38854041735",
+  "event": "workflow_dispatch",
+  "scheduled_cron": "",
+  "started_at": "2026-10-16T05:07:57.883033+00:00",
+  "finished_at": "2026-10-16T05:09:25.964193+00:00",
+  "reported_at": "2026-10-16T05:11:48.865556+00:00",
+  "queue": {
+    "eligible_date_symbol_tasks": 7,
+    "attempted": 6,
+    "reference_deferred": 0,
+    "not_price_conflicting": 0,
+    "carried_forward": 1
+  },
+  "kis_attempts": 31,
+  "promoted_candidates": 6,
+  "efficiency": {
+    "promotions_per_10_physical_requests": 1.935483870967742,
+    "physical_requests_per_attempted_date_symbol": 5.166666666666667,
+    "response_reuse_fraction": 0.0,
+    "saved_flow_response_replays": 0,
+    "promotion_fraction": 1.0,
+    "unit": "date-symbol candidate promotions; publication and indicator gains measured separately"
+  },
+  "indicator_effect": {
+    "stock_activity_gain": 3,
+    "sector_activity_gain": 0,
+    "publication_confirmed": true
+  },
+  "published_at": "2026-10-16T05:11:48.865660+00:00"
+}
