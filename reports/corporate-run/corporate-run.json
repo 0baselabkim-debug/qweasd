@@ -1,0 +1,63 @@
+{
+  "run_id": "38836860743",
+  "calls": 13,
+  "seconds": 19.448,
+  "results": [
+    {
+      "receipt": "20260320000348",
+      "parent": "20260318001443",
+      "new_financial": false,
+      "parent_job": {
+        "attempted_at": "2026-10-16T01:46:26.694002+00:00",
+        "business_attempted_at": "2026-10-16T01:46:26.694002+00:00",
+        "business_attempts": 1,
+        "business_status": "success",
+        "document_name": "20260318001443.xml",
+        "document_sha256": "81b087cf248bd499af8cad552f4a6b1b74313d852bb05b9af3c891e2f6b59901",
+        "section_sha256": "c0519495f877b9d250d883221a9583ab50399dfde5598c03c396575b17162e3f",
+        "characters": 16994,
+        "financial_status": "success"
+      }
+    },
+    {
+      "receipt": "20260806000296",
+      "error": "parent_metadata_revision_requires_review"
+    },
+    {
+      "receipt": "20260430000135",
+      "parent": "20260319000781",
+      "new_financial": false,
+      "parent_job": {
+        "attempted_at": "2026-10-16T01:46:33.793641+00:00",
+        "business_attempted_at": "2026-10-16T01:46:33.793641+00:00",
+        "business_attempts": 1,
+        "business_status": "success",
+        "document_name": "20260319000781.xml",
+        "document_sha256": "f338ed128214aeeb78d1b902112b0fe112dcee33cc8700da937a8b50d5b3657e",
+        "section_sha256": "28bb32ce531d6fccaca8d3b460a9d7883a5ad14d0e2d085bf9f906b06c0e2678",
+        "characters": 22836,
+        "financial_status": "success"
+      }
+    },
+    {
+      "receipt": "20260319000150",
+      "parent": "20260318001595",
+      "new_financial": false,
+      "parent_job": {
+        "attempted_at": "2026-10-16T01:46:38.888869+00:00",
+        "business_attempted_at": "2026-10-16T01:46:38.888869+00:00",
+        "business_attempts": 1,
+        "business_status": "success",
+        "document_name": "20260318001595.xml",
+        "document_sha256": "e6fff20a4c401c03f95cd06c4131743126952465667efac9bc4bfeb42cc5a072",
+        "section_sha256": "1aad52f3474bd4568d5720277d607cb8989b14918eaa04a359d0a8699daabefc",
+        "characters": 17019,
+        "financial_status": "success"
+      }
+    },
+    {
+      "receipt": "20260730000175",
+      "error": "parent_metadata_revision_requires_review"
+    }
+  ]
+}
