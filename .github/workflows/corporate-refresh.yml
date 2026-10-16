@@ -6,7 +6,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [probe, collect]
+        options: [probe, collect, diagnose]
         default: probe
       symbols:
         description: Optional comma-separated codes for a bounded pilot; blank scans the universe
@@ -58,8 +58,22 @@ jobs:
               print('::error::DART probe '+str(result.get('error')))
               raise SystemExit(1)
           PY
+      - name: Diagnose two public failed filings without changing snapshots
+        if: inputs.mode == 'diagnose'
+        env:
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+        run: python scripts/diagnose_corporate.py
+      - name: Preserve diagnostic source responses
+        if: always() && inputs.mode == 'diagnose'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/corporate-diagnosis-$GITHUB_RUN_ID"
+          git add reports/corporate-diagnosis
+          git diff --cached --quiet || git commit -m 'Record public DART failure response evidence'
+          git push origin "HEAD:evidence/corporate-diagnosis-$GITHUB_RUN_ID"
       - name: Restore compatible unpublished progress
-        if: inputs.mode != 'probe'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose'
         run: |
           mkdir -p corporate-candidate
           if [ -f snapshot/corporate-state.json.gz ]; then cp snapshot/corporate-state.json.gz corporate-candidate/state.json.gz; fi
@@ -79,7 +93,7 @@ jobs:
           PY
           fi
       - name: Collect changed disclosures and resume unfinished companies
-        if: inputs.mode != 'probe'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose'
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
           PILOT_SYMBOLS: ${{ inputs.symbols || '' }}
@@ -87,15 +101,15 @@ jobs:
         run: |
           python -u scripts/collect_corporate.py --state corporate-candidate/state.json.gz --db corporate-candidate/corporate.duckdb --limit "$COMPANY_LIMIT" --max-calls 600 --max-seconds 2100 --symbols "$PILOT_SYMBOLS"
       - name: Preserve progress independently of publication
-        if: always() && inputs.mode != 'probe'
+        if: always() && inputs.mode != 'probe' && inputs.mode != 'diagnose'
         run: python scripts/checkpoint_corporate.py
       - name: Validate append-only corporate records
-        if: inputs.mode != 'probe'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose'
         run: |
           python scripts/publish_corporate.py --validate-only
           python -m pytest -q tests/test_corporate.py
       - name: Publish corporate snapshot without changing the market database
-        if: inputs.mode != 'probe'
+        if: inputs.mode != 'probe' && inputs.mode != 'diagnose'
         run: |
           git fetch origin main
           git merge --ff-only origin/main
@@ -127,7 +141,7 @@ jobs:
           git push origin "HEAD:evidence/corporate-$GITHUB_RUN_ID"
 
       - name: Preserve collection and publication evidence
-        if: always() && inputs.mode != 'probe'
+        if: always() && inputs.mode != 'probe' && inputs.mode != 'diagnose'
         run: |
           mkdir -p reports/corporate-run
           for name in corporate-run.json corporate-checkpoint-result.json; do

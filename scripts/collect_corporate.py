@@ -15,7 +15,8 @@ class Dart:
   time.sleep(max(0,1-(time.monotonic()-self.last)));self.calls+=1;self.last=time.monotonic()
   try:
    url='https://opendart.fss.or.kr/api/'+path+'?'+urllib.parse.urlencode({'crtfc_key':self.key,**params})
-   with urllib.request.urlopen(url,timeout=45) as r:data=r.read(40000000)
+   with urllib.request.urlopen(url,timeout=45) as r:
+    data=r.read(40000000);self.last_response={'http':r.status,'content_type':r.headers.get('Content-Type'),'bytes':len(data)}
   except Exception as e:raise ValueError('transport_'+type(e).__name__) from None
   if self.key.encode() in data:raise ValueError('secret_in_response')
   if path.endswith('.json'):
