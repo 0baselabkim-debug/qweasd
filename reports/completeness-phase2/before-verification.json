@@ -1,0 +1,3157 @@
+{
+  "baseline": "c834c172b6fe733add5d35e35c22ffc8f5b467d6",
+  "asof": "2026-10-15",
+  "universe": 2430,
+  "accepted": 584,
+  "guides": {
+    "판정 보류": 1851,
+    "관망": 579
+  },
+  "active_conflicts": 1252,
+  "baseline_blocking": 1278,
+  "recovered_existing_blocked": [
+    {
+      "symbol": "052710",
+      "name": "아모텍",
+      "asof": "2026-10-15",
+      "before_sha256": "224078d08d75125eb98dc7a17d5ca065ec2313b2ca34382ca9d51e9a4399b2be",
+      "after_sha256": "a9beff12b0a0bd15ab3a8a0cd26cc31a2f18473c893318ed98ab0cfe820ec2bc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "052790",
+      "name": "액토즈소프트",
+      "asof": "2026-10-15",
+      "before_sha256": "166781050da14fe69a7c305d5327b694638fb5ba6d1a3e5661ceee942266b18d",
+      "after_sha256": "316dca1eb27722e107a023187c490cdff552da69e016d40878bc6f8d457b7ff3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "053050",
+      "name": "지에스이",
+      "asof": "2026-10-15",
+      "before_sha256": "4cc189d20bf9312756fc66575737c841b4586b047a7774559e8a4f92f67a5b5a",
+      "after_sha256": "2607bc745933b2e9afd27502794a09e3dd67c2aac514ba75f5f64e0a698a250f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "060900",
+      "name": "에이전트AI",
+      "asof": "2026-10-15",
+      "before_sha256": "38538100b8405889399586c1d64a6250040b6d52e580c72da2c3c69a00cbcdd6",
+      "after_sha256": "5d54a7430965e784449105f15cc0110aa6b71901032aece99c71769965df8886",
+      "guide": "관망"
+    },
+    {
+      "symbol": "210980",
+      "name": "SK디앤디",
+      "asof": "2026-10-15",
+      "before_sha256": "9fc7cfddfa8fec21e7d62eb3188da5182399f997a3a89e1f33057ff21e547b57",
+      "after_sha256": "9dfa0d0a826ff0822f582983aa319a4fe33056082838a947535b6400d866d9d5",
+      "guide": "관망"
+    },
+    {
+      "symbol": "356890",
+      "name": "싸이버원",
+      "asof": "2026-10-15",
+      "before_sha256": "1998cd8fe4d7c6331d9cc44ae60901c079c9d526631233ad3969502e2fbc3bea",
+      "after_sha256": "336f03bf6865f355fd349d2bf2664559aec14316d023ebf815766221e2dd9cb1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "357230",
+      "name": "에이치피오",
+      "asof": "2026-10-15",
+      "before_sha256": "87fa71b57373458333897e89a2fa86e0436ce0e03018236ac58112e17332179f",
+      "after_sha256": "c3be75671dfe9a6a4507adb45df102b335a46cc60ee3de131825b69a308f5b31",
+      "guide": "관망"
+    },
+    {
+      "symbol": "357550",
+      "name": "석경에이티",
+      "asof": "2026-10-15",
+      "before_sha256": "f35202e3071cc03cf21123dcc606a7c24b3e05e159e3292c610a83e71e61d4e6",
+      "after_sha256": "4edc03f50424017d85f9cd9b90cf2b2d843e56caebaf5e372cfa7b0f6f983a66",
+      "guide": "관망"
+    },
+    {
+      "symbol": "357580",
+      "name": "아모센스",
+      "asof": "2026-10-15",
+      "before_sha256": "03d5a728b24bc67cc4cb6aa3d802c76a326703b92ba2139bab9ebb009ae51767",
+      "after_sha256": "4bb64beff1cdeee7107631ec9612089f9b2869a09d33afee75cdfde15e5d1f9b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "357780",
+      "name": "솔브레인",
+      "asof": "2026-10-15",
+      "before_sha256": "7e2ba03dfc8f43125eca40276ac51e31e13dbd1811baccf6f9b82f4678e69144",
+      "after_sha256": "53d9f8317aa9f7f47f083ed94a39fadbf5d99572eff7401a6921bdc9071570d6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "357880",
+      "name": "SKAI",
+      "asof": "2026-10-15",
+      "before_sha256": "9be1bc87f29bcc690d63832594af6ec4536df0fbb697aa52a6131a483c9deb42",
+      "after_sha256": "ff9b10d32503681004f11217f870eb0fec42e0e8640803ffd46fcf505742f5ed",
+      "guide": "관망"
+    },
+    {
+      "symbol": "358570",
+      "name": "지아이이노베이션",
+      "asof": "2026-10-15",
+      "before_sha256": "cfc6ab799a7ff4531f58b89753dac5a33508c3d332be94a3769a426a02b5c9f3",
+      "after_sha256": "ce30994d0f4ed3a4964ec5f50b1bf93f12787f618e61fd2b7fdfa17823f5e9ac",
+      "guide": "관망"
+    },
+    {
+      "symbol": "359090",
+      "name": "씨엔알리서치",
+      "asof": "2026-10-15",
+      "before_sha256": "5e68f9b5493ec44a287b298669f96f4860aa37c94d3b036178f412fb841752c4",
+      "after_sha256": "06acb93c2ce89ebbf53d8bd352be1d319d2d6bed7ae29a60f89e3a9884e35c99",
+      "guide": "관망"
+    },
+    {
+      "symbol": "360070",
+      "name": "탑머티리얼",
+      "asof": "2026-10-15",
+      "before_sha256": "fce0a7879845d79b4af70330e7104e5dc2b364b841cd54545b58b21b089b5d5b",
+      "after_sha256": "d3ba6b4065e2adefdf641316f5fe57b657caec72c1f132618e434a7cee7c2dcc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "361390",
+      "name": "제노코",
+      "asof": "2026-10-15",
+      "before_sha256": "f983eafbbebca0bfbe4120d4f33e2e81ab4fed6c69d5f53374b0420409a9b095",
+      "after_sha256": "da6a12b6f6d78e91c44c3cf0dd3129ed4652921329f37b0d5ce0ff82911cbb84",
+      "guide": "관망"
+    },
+    {
+      "symbol": "361570",
+      "name": "알비더블유",
+      "asof": "2026-10-15",
+      "before_sha256": "950ad71de9507961871328ec5e79df655fe4d13a1ab5b10f07da5f421da3c6c0",
+      "after_sha256": "59788db1fb9216d186eae0ecb8088c1a058955b66a9c84ea2e4caa54312c7b10",
+      "guide": "관망"
+    },
+    {
+      "symbol": "361610",
+      "name": "SK아이이테크놀로지",
+      "asof": "2026-10-15",
+      "before_sha256": "13fb05975e610b1add64532ae600147eaeeb0b74b60d3727c3a090920a7841f1",
+      "after_sha256": "1f30a57c4f7420e9c8d9a2ae815e997c3b9fbc0bfb3a407879fee1795f993d43",
+      "guide": "관망"
+    },
+    {
+      "symbol": "361670",
+      "name": "삼영에스앤씨",
+      "asof": "2026-10-15",
+      "before_sha256": "c1427fbaf10e8deaeb692347d9b0978c799dab154c488176ff10ade7209f6797",
+      "after_sha256": "5ffb0ba852f5b8c1f8f624fe87b68f8607af0322bda6b2af0a93c0c803665e96",
+      "guide": "관망"
+    },
+    {
+      "symbol": "362320",
+      "name": "청담글로벌",
+      "asof": "2026-10-15",
+      "before_sha256": "6eb966c8838b706035ebb80c50576455f2201a4a61cb124751ea3d2b40769984",
+      "after_sha256": "6f03d05953adf0ba158a5c3bc121b3701d357eb1ed383a032d2a7bf8baacc46f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "362990",
+      "name": "드림인사이트",
+      "asof": "2026-10-15",
+      "before_sha256": "2b3a903e4a6479ddcdfc13b0b48488a6ad18574b743ee7c6979e5c509f37a376",
+      "after_sha256": "1b19ce4c84b9f9d09ee6f3c0a77e9e1ebe1a953891cfffda572e79221e435975",
+      "guide": "관망"
+    },
+    {
+      "symbol": "363250",
+      "name": "진시스템",
+      "asof": "2026-10-15",
+      "before_sha256": "cc8058b3251fed2af8428511b279a98c6d0a4be6ab37c25c0cfdde8b2947b7c2",
+      "after_sha256": "cccbbd3473cc69a32f72fac203f00870006df042aecc3da3477ad75c7f59f687",
+      "guide": "관망"
+    },
+    {
+      "symbol": "363260",
+      "name": "모비데이즈",
+      "asof": "2026-10-15",
+      "before_sha256": "b115a618f0da22f0f4a3a86c79b34b19cef89952d67e892249f9a4919f8c8079",
+      "after_sha256": "35c494c5925b93015b3c25bda5645c00587ae6dab1b689ff5774c59d8dbfb557",
+      "guide": "관망"
+    },
+    {
+      "symbol": "363280",
+      "name": "티와이홀딩스",
+      "asof": "2026-10-15",
+      "before_sha256": "32a1a4e6910c2bdc8d8e89759415f020f39f2d8aad182bf4077a4a82c049b1c0",
+      "after_sha256": "4933827e2eb7da6c114df15d898a04a6ba084425cf0de9fc4efb6f50070b072d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "364950",
+      "name": "에이아이코리아",
+      "asof": "2026-10-15",
+      "before_sha256": "56da2c2ff0bb2c66a313ec4f8ae6869582d56c1cb3fc620114d2679366f5bc80",
+      "after_sha256": "31e65fa3efd85f8256d527b8ea67ba9be42b0cf2599a4540010881c5ee68b56c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "365330",
+      "name": "에스와이스틸텍",
+      "asof": "2026-10-15",
+      "before_sha256": "5d3f62ff64c1091d6dcb65de202b61d199b0515e7eeaba1892b3e9a29408a34c",
+      "after_sha256": "933ec5eea8973c5a8d93a2fddb3af84726b5d3cc060183b21abb8274f9413a9e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "365340",
+      "name": "성일하이텍",
+      "asof": "2026-10-15",
+      "before_sha256": "ce35329db267c96688e6c3d52e9b3c0b9117e06b8c170f5d1fd6a8a3ef4cfc3a",
+      "after_sha256": "463f7590f236e2ed7902e1d2dd17d11663ff3c21cf91819b8d1796d1cf11b79a",
+      "guide": "관망"
+    },
+    {
+      "symbol": "365590",
+      "name": "하이딥",
+      "asof": "2026-10-15",
+      "before_sha256": "98c57eb05854188c27bafeb6212fc84bc55e822e89c69215832d2bc656b13292",
+      "after_sha256": "abf96a6bb46161a476b2d88cbefff50b1dd7821c0dd328f095cc2a9dff7a7000",
+      "guide": "관망"
+    },
+    {
+      "symbol": "366030",
+      "name": "나인앤컴퍼니",
+      "asof": "2026-10-15",
+      "before_sha256": "b5f2c03d2ac4cd4319414b23c52edb8b89fa6857488089ba588e83dfd917ce5b",
+      "after_sha256": "4ad9eed7a7d1d5db1846f3b03f905f4ed58f45d23fed23bf9095cff930547486",
+      "guide": "관망"
+    },
+    {
+      "symbol": "367000",
+      "name": "플래티어",
+      "asof": "2026-10-15",
+      "before_sha256": "b6392de5a991fee8370627975b8de4bf2846996e97daa095da00895b53499a3c",
+      "after_sha256": "a30c6324bf7b2a0b06d9320f735213d60764fdafbd5fcf77961a448aac0090bc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "368770",
+      "name": "파이버프로",
+      "asof": "2026-10-15",
+      "before_sha256": "923eeeed6fa789df4b026cb476034851606047750418a4cef618e3f8a5fce885",
+      "after_sha256": "09b9ebbb580be013c4c148e3257a7c6bfee09f281972fc51ca79f8d09f668df4",
+      "guide": "관망"
+    },
+    {
+      "symbol": "368970",
+      "name": "오에스피",
+      "asof": "2026-10-15",
+      "before_sha256": "2baf3bcfad71a39061c221baee7f4670bbd8cd30001b89caa84b5c574b88c2cf",
+      "after_sha256": "17428386ee8767723e295deed5f15b9f72aaa680e6677dc76e09ae915660f0bb",
+      "guide": "관망"
+    },
+    {
+      "symbol": "369370",
+      "name": "블리츠웨이엔터테인먼트",
+      "asof": "2026-10-15",
+      "before_sha256": "9c22bd342b8d7968ed22b80ffd2464bbc23607c19d032d0f72848b7eebf09cf2",
+      "after_sha256": "4cbdd8c5689412040872b05d1b83763c996f9f3d606e09ca9ef1de66977c75f6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "370090",
+      "name": "퓨런티어",
+      "asof": "2026-10-15",
+      "before_sha256": "3a68eb59dbce36ef4c3d23e5dd65f608fbafbcd43e5f029170abede1cae2892e",
+      "after_sha256": "aef4183f1769eeb6efc34c70befef78aaa1350b9b8aa8cdebc957b07ec8e6813",
+      "guide": "관망"
+    },
+    {
+      "symbol": "371950",
+      "name": "풍원정밀",
+      "asof": "2026-10-15",
+      "before_sha256": "53aa342c28a694194ca6d82e61bdc1e1633fd11032a93f112f9530cd1c5f6520",
+      "after_sha256": "ae7ded2f481c93688409f77a1cac230ec566ed77c8c0b31392333e1a2f3ef0d5",
+      "guide": "관망"
+    },
+    {
+      "symbol": "372170",
+      "name": "윤성에프앤씨",
+      "asof": "2026-10-15",
+      "before_sha256": "b827d4a22da9144887ad22a97ec39c995f652267278fcfe6d3efa3385173c1fd",
+      "after_sha256": "322f4146d228a630ce28031a0c86aa0133700d2892119338c14016f57c028bd8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "372320",
+      "name": "큐로셀",
+      "asof": "2026-10-15",
+      "before_sha256": "e876b395fcd574f47b4f1e99f3a9624246887c99a248c833160c6d878669013f",
+      "after_sha256": "b71a7eb15a6b1b573cb88df586c572a4759aaa9573b234a9fa6c066bfb4461f2",
+      "guide": "관망"
+    },
+    {
+      "symbol": "372800",
+      "name": "아이티아이즈",
+      "asof": "2026-10-15",
+      "before_sha256": "318db0d61557acbf176cd76ddffebeb9c69470fdbf155c60729f7a86c4322ffc",
+      "after_sha256": "fe08773d837fb373adbdb382648a06cfb663fce0cc06158c74780756df309565",
+      "guide": "관망"
+    },
+    {
+      "symbol": "372910",
+      "name": "한컴라이프케어",
+      "asof": "2026-10-15",
+      "before_sha256": "4505519b446e30027f1860ce41477dc3ac957bec26507dfe53cb85e95470921a",
+      "after_sha256": "2456121e339fe96a1c107d48e729412572869e38a34c61b74491e656c48dbc79",
+      "guide": "관망"
+    },
+    {
+      "symbol": "373110",
+      "name": "엑셀세라퓨틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "4202df209a590d269f4309fb339309bf9ddd0dbfb468f34d6e462649292c3ed2",
+      "after_sha256": "c0535ea87d697fae4c6a6eb4dafd8e9554b06c4fa41082f2600f5fed92dc5200",
+      "guide": "관망"
+    },
+    {
+      "symbol": "373160",
+      "name": "데이원컴퍼니",
+      "asof": "2026-10-15",
+      "before_sha256": "93830177ba5c28eccf8374889478096c412fd9b3fde004b3f8211022f3929637",
+      "after_sha256": "2ed12b893d0c0859b7091b38edf1f11133581f40515087e4e1d74d77bfd8d1f8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "373220",
+      "name": "LG에너지솔루션",
+      "asof": "2026-10-15",
+      "before_sha256": "b018fe0023ab7780890cf77209cd2aa841ecc0979d72762ca08937c2f51cb492",
+      "after_sha256": "da5a304d99848ccd28145669b210f7fef0922868a6b86925b1ca0c18839ea06a",
+      "guide": "관망"
+    },
+    {
+      "symbol": "375500",
+      "name": "DL이앤씨",
+      "asof": "2026-10-15",
+      "before_sha256": "b6f13e0a700f80943e4475208c0100952eab7cd0eb2ea58b87409b0e1c9e5a19",
+      "after_sha256": "a2c8fb57aa30b3970bc1c85bb757d4ae67bb70ac1d556a78e99c8c1b01c2857a",
+      "guide": "관망"
+    },
+    {
+      "symbol": "376270",
+      "name": "HEM파마",
+      "asof": "2026-10-15",
+      "before_sha256": "61e2b96c11e9afb9907b5225c8431d21d5fcda0a117a7dd8739556d95900de1e",
+      "after_sha256": "c52fc95d2e066a8eaf8ab01ad959692777537791769c80b32b99589fa5ae8260",
+      "guide": "관망"
+    },
+    {
+      "symbol": "376290",
+      "name": "씨유테크",
+      "asof": "2026-10-15",
+      "before_sha256": "0a82b0b26273407bd9ef4f6b22aafccd56cd2bdf0e6e5e039fab1ce998ecd97f",
+      "after_sha256": "aa9f8903e38ff7c3ca3c8dcb73e88d244523d6ebacfe2dfec560fcbff75fa8eb",
+      "guide": "관망"
+    },
+    {
+      "symbol": "376300",
+      "name": "디어유",
+      "asof": "2026-10-15",
+      "before_sha256": "6be9dc4549cdff7542f5e1f86c897c70c4bf25730b08b8a7e6f7e4e62f5621a1",
+      "after_sha256": "e06121b13356890ab2e911c12de7e1b432c2fe3deb233d0768345fc118c79ad1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "376900",
+      "name": "로킷헬스케어",
+      "asof": "2026-10-15",
+      "before_sha256": "8d2730899b9ebfabe52ad1d65a2446349a61f54dbba5a73c5e6c0b6ff3595f2b",
+      "after_sha256": "28e8889bcef178f87b0986d648ee2dda72c5247c3e7429ba8852c42bb00a90f7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "376980",
+      "name": "원티드랩",
+      "asof": "2026-10-15",
+      "before_sha256": "c14da43158afd6960c96eb592d96654cd25cbc6024746855630a5aa7dbaeeca9",
+      "after_sha256": "c0d2a533388725fc0f066b98db027ec5991d7040a40870cea5661bcd2242d0ba",
+      "guide": "관망"
+    },
+    {
+      "symbol": "377300",
+      "name": "카카오페이",
+      "asof": "2026-10-15",
+      "before_sha256": "d92f79a95d05eaadd2af05d53159a0bae9f1a48d1123526cf333ed9d37fab1cd",
+      "after_sha256": "53280f5956c49866d9b76b84c7237de113691e53939672d4ece081ee05687e34",
+      "guide": "관망"
+    },
+    {
+      "symbol": "377330",
+      "name": "이지트로닉스",
+      "asof": "2026-10-15",
+      "before_sha256": "976560e5830fea2de62db8b27298d51dedf6c1f974d8ffa35f293d8eb8d976bb",
+      "after_sha256": "2450635ce1e4d84dc02d1cdd03ec50ff7ea54552eb1c7ab344ed8c54b787432c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "377450",
+      "name": "리파인",
+      "asof": "2026-10-15",
+      "before_sha256": "c7c162520ec92b024ebaddbebbf3fde4cac011a8bbe49dbf984718dadf1021af",
+      "after_sha256": "1882f2d8c413122ef6c11299156beebfb4ab42a3bbc3d7575ef8c296f5b09e58",
+      "guide": "관망"
+    },
+    {
+      "symbol": "377480",
+      "name": "마음AI",
+      "asof": "2026-10-15",
+      "before_sha256": "a5a391ef8a6937944553843cddf1b83c615f15059254ba29d0ac8f1b1654b8fe",
+      "after_sha256": "9cb7ccde09e39bc49f075d1551c3214f553ee40a50ccb1853e421eba1143269f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "377740",
+      "name": "바이오노트",
+      "asof": "2026-10-15",
+      "before_sha256": "e368555aa3064ce043b07362ea0f11e13a275dce37c2660e82c9621ec5c0b923",
+      "after_sha256": "0abd4a803a396b861435d4402330f07f1ac678c2cda44c7ddff68ee09e75c1ea",
+      "guide": "관망"
+    },
+    {
+      "symbol": "378340",
+      "name": "필에너지",
+      "asof": "2026-10-15",
+      "before_sha256": "3df55de0b56eeb30fa4f0db44bfa7b289235558f0cee56c1d1f32c387fdeaa77",
+      "after_sha256": "dd648ffd6d2a13f99475d67bd5209d70b847c7b805381934d3dd238f7f152d46",
+      "guide": "관망"
+    },
+    {
+      "symbol": "378850",
+      "name": "화승알앤에이",
+      "asof": "2026-10-15",
+      "before_sha256": "ec30bcf222311938c915c3e4f9c48de43e097dbd1b5d8f32002377be1d1b4b12",
+      "after_sha256": "6a98f834964f982ca8a2b6c0404d9f528d3702cf6abc30b37cbfc6daa7eed0d8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "380550",
+      "name": "뉴로핏",
+      "asof": "2026-10-15",
+      "before_sha256": "4fe830856dce4f8fd4d82154fdb15de464f6ea61f5edfced01a55f2d40ec77a0",
+      "after_sha256": "822ab4868c4b976607e694e440aab0b8a12a3f561eb2ee234dd98ae79c97c6f7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "381620",
+      "name": "제닉스로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "e96823af0acf1fd427174d6a73cc40e2e8cc8eb1f1f99ab18f9e24a8a4c0af84",
+      "after_sha256": "6f62a9db1d0133f4d13fffdc7fd9f922a3e1f576c95c150af062a784b4d3625b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "382150",
+      "name": "온코크로스",
+      "asof": "2026-10-15",
+      "before_sha256": "dd8c7eb721bca2430a5d06a577b26d4512c3343f0877649854deb06070714004",
+      "after_sha256": "f581152c2052b2a533624acc8e64edd6a8c13602b83bd6a4343394ea5d24a4e7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "382480",
+      "name": "지아이텍",
+      "asof": "2026-10-15",
+      "before_sha256": "cdaeb3005357e40efd5f38b1973555d9f83f591b7d296716ef2f916d74a53712",
+      "after_sha256": "5a963cfe9cc0d538641164d0cce89f705bb9e59739c922c5122fcefb391dbafa",
+      "guide": "관망"
+    },
+    {
+      "symbol": "382800",
+      "name": "지앤비에스 에코",
+      "asof": "2026-10-15",
+      "before_sha256": "83e96f0865e2b7e0c84d706a01f58fe7a8f20bdf15b14bf96309d435034ba502",
+      "after_sha256": "00d43674bde5f003e81b198d2507188385254caa3b7d6f9089702dd6aa5d95a9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "382840",
+      "name": "원준",
+      "asof": "2026-10-15",
+      "before_sha256": "511c104e1d5ed63eca9c3e6ebf5dd059fe6b0d569bc9d4bc8933d129d3c73a0d",
+      "after_sha256": "1fbf9eb26e4931cebc84286b5a791e5b05df2c132ef6828cf2425a9683eed950",
+      "guide": "관망"
+    },
+    {
+      "symbol": "382900",
+      "name": "범한퓨얼셀",
+      "asof": "2026-10-15",
+      "before_sha256": "d215ba3ff8b24f8f213a75aaa9e72617f39b17b33c44f6901fd5d42179c54f9d",
+      "after_sha256": "50a79bfd729f18e79f54a2d63506fdc81f21721a4a5d66d92d85b8b08e1f5f10",
+      "guide": "관망"
+    },
+    {
+      "symbol": "383310",
+      "name": "에코프로에이치엔",
+      "asof": "2026-10-15",
+      "before_sha256": "43226b51a21a314a459f2a0b0f549f60f93a40cacda2e2f6bb2a6029063d35c0",
+      "after_sha256": "7b03e7e70155d694920cbdca38c8619a0459edafbf59858884e4451d2d3b1ed7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "383800",
+      "name": "LX홀딩스",
+      "asof": "2026-10-15",
+      "before_sha256": "905d1b1435131d9a8193377d25a9b74fbf0d038696b3b9b26e9febd5224ac833",
+      "after_sha256": "00899797a069a662f5dc91152fa56b271f4b8bfee900343acf48b449a05173f2",
+      "guide": "관망"
+    },
+    {
+      "symbol": "383930",
+      "name": "디티앤씨알오",
+      "asof": "2026-10-15",
+      "before_sha256": "2fc9020ea5b8052a96148834b2050354900f7b1ea05007c42d5d22c633de6ad6",
+      "after_sha256": "22e23af3f2ee2b78f9efab4f356c7b3aaec17ba75e8fd4c765f3de569c6246e0",
+      "guide": "관망"
+    },
+    {
+      "symbol": "384470",
+      "name": "코어라인소프트",
+      "asof": "2026-10-15",
+      "before_sha256": "7830f20f1a39170500d09d5f058930f269c8c3c9ef20d0eb28ae85e2fd27453d",
+      "after_sha256": "5cde440e1c8017e70ec0d6fdd8eeeccc773c3fa85806560025f37b95a182f46f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "388050",
+      "name": "지투파워",
+      "asof": "2026-10-15",
+      "before_sha256": "e795609af84b1413412d8e75b6e44e095a56ec49c8edcd77061ab7961f0937bb",
+      "after_sha256": "57b9f5a752346193f10b219ca1bbadaf91191d3887ad48a08968eb74a822f1b7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "388210",
+      "name": "씨엠티엑스",
+      "asof": "2026-10-15",
+      "before_sha256": "fe0f2f5cfc3b5e6d82dad99ebb911203afdf051e31f806e8ccd3c28bf1c22122",
+      "after_sha256": "a36b97bbe077647b2aa7b687ff40991c96ec68edd44e1fda4869510329c05d87",
+      "guide": "관망"
+    },
+    {
+      "symbol": "388610",
+      "name": "지에프씨생명과학",
+      "asof": "2026-10-15",
+      "before_sha256": "ad0a5a84a5fdb514a600951109ecff7c09c032bedf30bc9f7fa58e520d1d2961",
+      "after_sha256": "8d3fb45f33c232844f10db193ec12dfe7930353d22346ed3ed26c91d0ce1436a",
+      "guide": "관망"
+    },
+    {
+      "symbol": "388720",
+      "name": "유일로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "9d7314bb23f418bca9ff01bb88e2b6e7ad5dc16bc4b2ce8f5a72a5630c757f48",
+      "after_sha256": "0ae978adea23a6878797f7669e13bfcd1385e6478773e6158afa70c932115d76",
+      "guide": "관망"
+    },
+    {
+      "symbol": "388790",
+      "name": "라이콤",
+      "asof": "2026-10-15",
+      "before_sha256": "28ba1064ad86b0104dc1a7318593395d19e6fc8634020f00731735b4a9d52384",
+      "after_sha256": "11cefd3d99c639be255a8141ef6b02feab9b34660562f27425b02952ee3f09c9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "388870",
+      "name": "파로스아이바이오",
+      "asof": "2026-10-15",
+      "before_sha256": "87bab0f94301c83d7a3811c795fa46027dd645f62c70776b49a17ccef0e6bafe",
+      "after_sha256": "3da4b1ccb290791036fd5d2fd77fd1e8a12634c38be807667e10c5b6dbec17f6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "389020",
+      "name": "자람테크놀로지",
+      "asof": "2026-10-15",
+      "before_sha256": "8d04b87591bea9417087616f3b8316188a4cb65a99a4c78385396a549bf08317",
+      "after_sha256": "7f8d05e4b35e807a873cedfb6c0b720b39167e2af08580586baf025c6bacc24f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "389030",
+      "name": "지니너스",
+      "asof": "2026-10-15",
+      "before_sha256": "4e46de57f818407daa75fefdcb6a8072eb190a62651208fdfe8ebbb39c72dfd7",
+      "after_sha256": "2103629a64fee9c639edbd60b6e34fee95d3c87e4ca745986ef2260ea29c2eb1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "389140",
+      "name": "포바이포",
+      "asof": "2026-10-15",
+      "before_sha256": "08df2f0fedb0fa9dd980633e5a0739b9effa01cecceaa8bce6abca9cf44f1440",
+      "after_sha256": "23342bb7c151867ee88490d9949415b43fea3f4cb382d298f8be7917c6383682",
+      "guide": "관망"
+    },
+    {
+      "symbol": "389260",
+      "name": "대명에너지",
+      "asof": "2026-10-15",
+      "before_sha256": "0524200a0532835e2ecba77adecadf64a15eb014220895b364f5d3b1a5ac170c",
+      "after_sha256": "83a168536599e0ece83b6d4f039dd27abd3037fd547e78f7cc87a8293c898792",
+      "guide": "관망"
+    },
+    {
+      "symbol": "389470",
+      "name": "인벤티지랩",
+      "asof": "2026-10-15",
+      "before_sha256": "36140b699d01df0789a6ab5f914a4edf4f713bde2c1f3228861a38cc45bf8be1",
+      "after_sha256": "b30b1988b3d9073f3255972b9947b15bc9f4ba67b76e6979dde412ed954db876",
+      "guide": "관망"
+    },
+    {
+      "symbol": "389500",
+      "name": "에스비비테크",
+      "asof": "2026-10-15",
+      "before_sha256": "933b6b222e1bfcda57a3d2a32f3537d99a8146b88010774cc007b18aba2cb4c1",
+      "after_sha256": "17f121d9ef5200db27123bd2c9ca95e2a81721b3abb02183e9b4e33ba64f3592",
+      "guide": "관망"
+    },
+    {
+      "symbol": "389650",
+      "name": "넥스트바이오메디컬",
+      "asof": "2026-10-15",
+      "before_sha256": "905c1b0f0f9d68da62c22369a552d11f57c8968794204adae8f437c637ce2358",
+      "after_sha256": "2c9f7591777d94eed80dfeace638cf41d381d5bb2a89a303274f9ea10ac5a9c9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "391710",
+      "name": "코닉오토메이션",
+      "asof": "2026-10-15",
+      "before_sha256": "d265b498ea530a46e8f81771532bca917d9a8dd1f93a75204f0610cf1b9a0a9d",
+      "after_sha256": "e214e1bdc58dd1036f3ac251c235a78d7b45b612ba0ba5e23aeee3ff9c7a2bb7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "393210",
+      "name": "토마토시스템",
+      "asof": "2026-10-15",
+      "before_sha256": "876a2ee7855e1b64aecd8f83a49178f914c38859c7377408a865ad2c31ca3e20",
+      "after_sha256": "399e57d0dfad3a9c2df93dd473ade065310e1431e18996078afac0319932f9c6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "393890",
+      "name": "더블유씨피",
+      "asof": "2026-10-15",
+      "before_sha256": "f27027510f8484e63c35b11eb72cba221c0bfbd187442b86a124cc943b04eee9",
+      "after_sha256": "ee7c700617d8eb6af120a0b70dec04521ec7e2ed1024457aef31990b5a002399",
+      "guide": "관망"
+    },
+    {
+      "symbol": "394280",
+      "name": "오픈엣지테크놀로지",
+      "asof": "2026-10-15",
+      "before_sha256": "ee9d159ccb1c1554491d2ed6f225e088cdd858863ab76744b2af587ef9c796c2",
+      "after_sha256": "4dc81005e3061ed199217ede075f90d0a2d7c033fe034676a3492eda342a4807",
+      "guide": "관망"
+    },
+    {
+      "symbol": "394800",
+      "name": "쓰리빌리언",
+      "asof": "2026-10-15",
+      "before_sha256": "a8055e835037739e6be2f8908f70a9be3d518737689ef23abcd22ed597c2cdfc",
+      "after_sha256": "f50e6cd78ab9d7b23b67d7ffff0960950f0f786f13dbb2ebd8d56b6126bc3e10",
+      "guide": "관망"
+    },
+    {
+      "symbol": "396270",
+      "name": "넥스트칩",
+      "asof": "2026-10-15",
+      "before_sha256": "aaad349777c5a867b9725b74e9d20adf009214afc7b67fcb7005fc294a45363a",
+      "after_sha256": "d2e1b31c36904b248ca2bd90222cf97bb43ff47d600a8855a28a5ba03f99879a",
+      "guide": "관망"
+    },
+    {
+      "symbol": "396470",
+      "name": "워트",
+      "asof": "2026-10-15",
+      "before_sha256": "bba35d0552278212a64e2bbacd4b7c9b8968995729ff76cb53202d607ebb1d89",
+      "after_sha256": "0f91e7b8a0f9e359b6acf5d4dde747fa844f211171533545f09d6c6cccca5c07",
+      "guide": "관망"
+    },
+    {
+      "symbol": "397030",
+      "name": "에이프릴바이오",
+      "asof": "2026-10-15",
+      "before_sha256": "0dca7dd89e0e229aae8351d853eb8f4982d0b19ff451a0a9e486ffc1d7360f0f",
+      "after_sha256": "1cdb6c4b55ab6b34b49fe6f3eb1577f7e084e8361f65132e751dafff139de624",
+      "guide": "관망"
+    },
+    {
+      "symbol": "397810",
+      "name": "애드포러스",
+      "asof": "2026-10-15",
+      "before_sha256": "8c0b71f0af1a763b5986b1c39e7382fd1bad0a1b3338e603f0ab776b2cafa72f",
+      "after_sha256": "774b45874e0552a248d9e55fff4b229982889eb89628e02f0c676a143f8399fd",
+      "guide": "관망"
+    },
+    {
+      "symbol": "398120",
+      "name": "에스지헬스케어",
+      "asof": "2026-10-15",
+      "before_sha256": "8afb9ac1d2965a0570821192ac7a0fb8457883cf515d76254484d2c964f75526",
+      "after_sha256": "892e4750116236dcb744e941e5b4b89fae0f05ce31a087ceed8a9e3758c70f78",
+      "guide": "관망"
+    },
+    {
+      "symbol": "399720",
+      "name": "가온칩스",
+      "asof": "2026-10-15",
+      "before_sha256": "e15dd3d2272b6dd14598189c2e6dcb1e8e93e83308acb8d062706d2e5635fca7",
+      "after_sha256": "0a2324a3f141b81e3a4cc5527c649522672c617dcb9798f4d97278e0f42deaec",
+      "guide": "관망"
+    },
+    {
+      "symbol": "402030",
+      "name": "코난테크놀로지",
+      "asof": "2026-10-15",
+      "before_sha256": "aa31cc54066ecbeb3a2ee29d69b53822dda452c0783bc0e4aab7e5ff3aad816a",
+      "after_sha256": "1301b96cd6f0044782744210a11c462169cb502b1271f9284379d02216674ad1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "402340",
+      "name": "SK스퀘어",
+      "asof": "2026-10-15",
+      "before_sha256": "ca6fe96e46d8800ddbcf94209b09d29457163ce3db0b42d8f77f2779d55d5404",
+      "after_sha256": "33d288ae1c7e345027bd4e24a60afe015ea2ea09cfa9724796159aa62f80e01c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "402490",
+      "name": "그린리소스",
+      "asof": "2026-10-15",
+      "before_sha256": "b1aa3f7d5d74ee570815b901e24e5da46f7b2ae616fc036be10ea42aa72a1ab9",
+      "after_sha256": "9bc3725ed31061f7b14a67bdf18da77d74319116298d67816e969f8d122cafb0",
+      "guide": "관망"
+    },
+    {
+      "symbol": "403490",
+      "name": "우듬지팜",
+      "asof": "2026-10-15",
+      "before_sha256": "5c21998d346c31be4daf4631e4ba7a4ecbe1508d2d9f5e5104e946e6faece3a2",
+      "after_sha256": "f89074582537732bdb42616bd08f43fefc7c1e528f96344f27997a5588642834",
+      "guide": "관망"
+    },
+    {
+      "symbol": "403550",
+      "name": "쏘카",
+      "asof": "2026-10-15",
+      "before_sha256": "acf033e73da5356359e84e39441cce9fe32f6e3436d02fc15c7a0bcd0e8adcfb",
+      "after_sha256": "61130c0002f487710363d781908d5497ced8cf36510a58e1364c12206aee0ff2",
+      "guide": "관망"
+    },
+    {
+      "symbol": "403850",
+      "name": "더핑크퐁컴퍼니",
+      "asof": "2026-10-15",
+      "before_sha256": "c532bb1005a85f809411dd5aeaebac1fa78f6f6173ead1217963626d3cedc0ed",
+      "after_sha256": "42098d687bf3fc2e023c09f2101f75154bd3ee65bd01815d460b729dbc51362f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "403870",
+      "name": "HPSP",
+      "asof": "2026-10-15",
+      "before_sha256": "538c2cb8d47bea670aecff573f8583ea2d1640c76c61703db994d3f63f47c430",
+      "after_sha256": "15d8e5646379c57ab0ef4cadff5f7fbf263d95bbfd12884db2562b8b45e38c65",
+      "guide": "관망"
+    },
+    {
+      "symbol": "405000",
+      "name": "플라즈맵",
+      "asof": "2026-10-15",
+      "before_sha256": "cd34eb2857295bdfba48505d1e44ecf86885a6bb930a13caee3697c713e6012e",
+      "after_sha256": "feddca256f7d42e628217ad91db2aa1750a743269fed8e758f3a7e4e13c6e7c0",
+      "guide": "관망"
+    },
+    {
+      "symbol": "405100",
+      "name": "큐알티",
+      "asof": "2026-10-15",
+      "before_sha256": "2fd2bb85cc88bbc092ebb90c927c8b56f13e7cac8bbc295daf9aec519ce6dcbc",
+      "after_sha256": "3e6cc4bf0c19e642985ca40deaf8d543d361241b79c9f987a48d3cf5783e2719",
+      "guide": "관망"
+    },
+    {
+      "symbol": "405920",
+      "name": "나라셀라",
+      "asof": "2026-10-15",
+      "before_sha256": "b9f97b09631df40313c4ca6158f5cb6222bee3c1200738ff062065c5d8186d64",
+      "after_sha256": "22056e054546100c2ef58c66898bd0444b94a7b060d0c1772b5123e525c949d6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "406820",
+      "name": "뷰티스킨",
+      "asof": "2026-10-15",
+      "before_sha256": "0fea98d9fe551f5e2d76c1a4dd4c48644102098689012a33b94afdd66342884c",
+      "after_sha256": "ee2bc35730b1be14c88d82f9abbb09f6222704d2c90f96d6b9ce20e8f46c8541",
+      "guide": "관망"
+    },
+    {
+      "symbol": "407400",
+      "name": "꿈비",
+      "asof": "2026-10-15",
+      "before_sha256": "e8fdd4cafa7438610ad27e511ff5d1ebba82706f5e08b16f5dd0709e69a68ee9",
+      "after_sha256": "ba444f07e4dac9ebdfc3a56796e83419db7eab46446d89d0b5f4249fe13af317",
+      "guide": "관망"
+    },
+    {
+      "symbol": "408900",
+      "name": "스튜디오미르",
+      "asof": "2026-10-15",
+      "before_sha256": "b079ef033c89bba2224931161dc4a46bc0449d5386cf643ab2df006e03925333",
+      "after_sha256": "74e9f453e3fa465dd31e637b42a8e5dac9072f1981ef1c9c170732ae8456abae",
+      "guide": "관망"
+    },
+    {
+      "symbol": "408920",
+      "name": "메쎄이상",
+      "asof": "2026-10-15",
+      "before_sha256": "bcaf2bf2866deb64515c2e20985e3a3719717ff7ae297cda4c1dd0f9558c1e96",
+      "after_sha256": "1a0b88f0f29098508adabb8b79f2644121d0da1aca6f7d3f4f8c593ec4bc6145",
+      "guide": "관망"
+    },
+    {
+      "symbol": "411080",
+      "name": "샌즈랩",
+      "asof": "2026-10-15",
+      "before_sha256": "50995e1e048de9973f5997534ded1774b3bf18d0bb20ea17bc16afa63b83e44f",
+      "after_sha256": "2f2731b88093ed8ace69c2051162d5c90e076ba5c5b7cb0ebd8f4de1dad2132d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "412350",
+      "name": "레이저쎌",
+      "asof": "2026-10-15",
+      "before_sha256": "6bf4439994af180ef49e37d8aa3a5c46a94faf3ef139811ff2cbb71c2ec010c5",
+      "after_sha256": "dcb238fc76bc9e519a4e6651fcf1025eb849882361a6e6ae7caf2697a8f865e7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "413390",
+      "name": "엠오티",
+      "asof": "2026-10-15",
+      "before_sha256": "f740ab65f848287899ace12f77998ced0fdcd6bd041b0b2c716d1010d7444e3b",
+      "after_sha256": "ebc1b46023e31d97c8fcb3900637f55fffa41d4df2bb0f839098c2fdc7fab407",
+      "guide": "관망"
+    },
+    {
+      "symbol": "413630",
+      "name": "씨피시스템",
+      "asof": "2026-10-15",
+      "before_sha256": "82291f452c71bd8e3d337790695cecd31547de307b974965387a2ce33fe539ff",
+      "after_sha256": "706f244b1075cc733c7a9b9315130e09940bc67ac414843908a03bbbda3db969",
+      "guide": "관망"
+    },
+    {
+      "symbol": "413640",
+      "name": "비아이매트릭스",
+      "asof": "2026-10-15",
+      "before_sha256": "d32dd9b1f8a96e564e4c06d266a0eed042bdd43fb4237950e63b296e98fefd11",
+      "after_sha256": "31774141c84da69ec8d4dc99cc435a93a023e52a8bf2f99dc91ca4a69b5660d6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "415380",
+      "name": "스튜디오삼익",
+      "asof": "2026-10-15",
+      "before_sha256": "fa1776fa0e56b094bc4fb1441f3e27f1ad8e04ecd9b64bf8e7168c27bbda402e",
+      "after_sha256": "68cad889692ce7d5b0ff4861873d1de3db0ff02f8cf63c056ad8e2c7a124a2e1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "416180",
+      "name": "신성에스티",
+      "asof": "2026-10-15",
+      "before_sha256": "af07c7d3815aaf98547938cf5786508eb2bf883988649bfa3027d1c0c53bee22",
+      "after_sha256": "54d28f4307b54301cc084f320e48f98ec8d70b830a6722e015a51f90ac1a422e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "417010",
+      "name": "나노팀",
+      "asof": "2026-10-15",
+      "before_sha256": "aa957fcb7c5f239f8c5fd29769429f562e8e6756dfd565501e2d77a8b9a5048f",
+      "after_sha256": "922fd03585ac25eb80ece10deb70671a66d643fdb586df5cf593cf1d4ae788fc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "417180",
+      "name": "핑거스토리",
+      "asof": "2026-10-15",
+      "before_sha256": "bb213e7db2967f080490a914bb8f3c989e447360bc192c4f14cd975d1d7d2605",
+      "after_sha256": "da6c1502437bdcca9131ace3eaa6aa1b915b0a4892de706086aded580d3c66bc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "417200",
+      "name": "LS머트리얼즈",
+      "asof": "2026-10-15",
+      "before_sha256": "d8a4f5feeef743c2274037daabfe6e0e5b2f2815c41cfb0e9e72fc16f49e6b04",
+      "after_sha256": "2d16005d2fc5fe57cc66e07c73a1b359fa4f55d5279f83c61c2fb1f5d05f18ac",
+      "guide": "관망"
+    },
+    {
+      "symbol": "417500",
+      "name": "제이아이테크",
+      "asof": "2026-10-15",
+      "before_sha256": "25a26d20d2d09155d3876c5e9a54344805d5c1524273859bf0f0a25fe93629ea",
+      "after_sha256": "bc340347265f59562534f00363de3207d31cceb282df5684aae0cc9823740807",
+      "guide": "관망"
+    },
+    {
+      "symbol": "417790",
+      "name": "트루엔",
+      "asof": "2026-10-15",
+      "before_sha256": "0b39a601b6faa2c7ba690bf9a6a3252f77a32d7a1a69ddde23d5e482f8812597",
+      "after_sha256": "96adb46a4ccf65caa888c6e05d16275b2e0772d0a43216388b000e9df6c0dd75",
+      "guide": "관망"
+    },
+    {
+      "symbol": "417840",
+      "name": "저스템",
+      "asof": "2026-10-15",
+      "before_sha256": "8a4c2777dfd3b3d1e6ee556857f555ff429b01f4fab3cc23d1ad1fa00c7e4279",
+      "after_sha256": "cd0fe1081b0778e5f932640857d99480182a9182634549c7400e4fdba0230813",
+      "guide": "관망"
+    },
+    {
+      "symbol": "417860",
+      "name": "오브젠",
+      "asof": "2026-10-15",
+      "before_sha256": "b2dfc23308f15460a48f4eae22c6750bd5a638a8bdc95c55110cc403e00eb44c",
+      "after_sha256": "1ef63c9fd20b2db1b5efac65a054b849bc7910269850eb50e6a6fb8dee240d85",
+      "guide": "관망"
+    },
+    {
+      "symbol": "417970",
+      "name": "모델솔루션",
+      "asof": "2026-10-15",
+      "before_sha256": "39f78a9d74958032fc6b27c659920583d9eb71413ba04a574d6a40bdf913c357",
+      "after_sha256": "02b092ca5821e65dffb8e9b40127171e9a4fc2347bde109a9a4296df4179f222",
+      "guide": "관망"
+    },
+    {
+      "symbol": "418420",
+      "name": "라온텍",
+      "asof": "2026-10-15",
+      "before_sha256": "c7159284f78e6106f342728ab802ae67e8be3b7cd4da1b19b32da20d50499564",
+      "after_sha256": "bf565050a56264724d830c0fb95405db674b02f3f00a157210edbc8e057d1fee",
+      "guide": "관망"
+    },
+    {
+      "symbol": "418470",
+      "name": "KT밀리의서재",
+      "asof": "2026-10-15",
+      "before_sha256": "fcf0db75379aeeefef8da4562bfc543b6e80bfe356afbbfea0242d52f00477c9",
+      "after_sha256": "d3da1dfa4f1f583c4b2dd04f578efcf155792c24cba4f4191e1aa154d9b62de6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "418550",
+      "name": "제이오",
+      "asof": "2026-10-15",
+      "before_sha256": "3ea5d94d62239eb8fc0627fc4e1d69bfd3bdd750f5fef5a2420bca278bfc8ecb",
+      "after_sha256": "91a63faae6ed994af05c89db10620f6c9b9c4065c4e8829492292489e73bf9a8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "419050",
+      "name": "삼기에너지솔루션즈",
+      "asof": "2026-10-15",
+      "before_sha256": "007a7ca4976d0b88e81dd4deed62bbbfc4576134f87a11ecdc6e4d0b8e54aad7",
+      "after_sha256": "954a25803ecf15db56ffa483f2f1702fe877b3ac8d9ac44810ae8ed4d1b9e677",
+      "guide": "관망"
+    },
+    {
+      "symbol": "419080",
+      "name": "엔젯",
+      "asof": "2026-10-15",
+      "before_sha256": "c7446a79d3bfca7666b436589247d34801733ab23b4c9e23f747a9100cf56528",
+      "after_sha256": "f314507242f6506155dd7d29f2d6e3d53897413473958b95c37c9466682a2cb3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "419120",
+      "name": "산돌",
+      "asof": "2026-10-15",
+      "before_sha256": "5faec4a25994b301c8f658053b512cfa23d2dfa0c3aabfbf28a7dd870c0e91c7",
+      "after_sha256": "bc3519db5958f9d1e55cb547fc69f23e5e6bd66859dfb95354205e2d05821d7c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "419530",
+      "name": "SAMG엔터",
+      "asof": "2026-10-15",
+      "before_sha256": "b167e0952286aa8b6fb3e1eb25c8a6864b348d960e2cfff3f7bedc7f021ae8a1",
+      "after_sha256": "e201b1ac8b36c6a3b193ad6f6df38fe222d60c4f2aa86c2dfc18eaaf548622a6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "419540",
+      "name": "비스토스",
+      "asof": "2026-10-15",
+      "before_sha256": "e378bff553305bbc8653443d2f9e14b847c37afadeeca5bc4973df53191e8c7d",
+      "after_sha256": "a218ed181f85f09560186583ce4442aa21595ecb744ed6f4791b5bac9e11eed6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "420570",
+      "name": "제이투케이바이오",
+      "asof": "2026-10-15",
+      "before_sha256": "e8fde13162d9fe27851b08548295f38ecd3a8f5d4102f30380237cd8eaec9fe7",
+      "after_sha256": "e588c05b67b42a96f50e4a1e9ab7698d4b271bb498ce620a4f1a9f8249747ba3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "420770",
+      "name": "기가비스",
+      "asof": "2026-10-15",
+      "before_sha256": "f4a44e388542748d9e1b3d15467db1e60d92cfb3bfce65c160728b445fec39b5",
+      "after_sha256": "6fec729da58c162597370577963ee771368548a4d9a126c3cfacb09efb00f96c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "424760",
+      "name": "벨로크",
+      "asof": "2026-10-15",
+      "before_sha256": "34d5a1bef919cc06c5bdf825b859d3e1a53301a8f692f913b271e5d32e358eee",
+      "after_sha256": "0b84f5366536cfaf461c89dae59c7d7a7b1064698b1dbb90bd8fb512ced454c1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "424870",
+      "name": "이뮨온시아",
+      "asof": "2026-10-15",
+      "before_sha256": "9355366c0668432e35bf8723d688414c9c89408e825696fb04578586d1fa72e7",
+      "after_sha256": "71a0db7622557568e6770353023f77860a59fb9f78b15dc3551ad196a19762c7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "424960",
+      "name": "스마트레이더시스템",
+      "asof": "2026-10-15",
+      "before_sha256": "93fc0871f318ddb6ac31eff4ad1756923942937bd45c6a0926985ee8b681e8a1",
+      "after_sha256": "48ef3107e34f89ea4b5c9ca161e0f4edba81c7fd7d6a7b35897af02b5a506205",
+      "guide": "관망"
+    },
+    {
+      "symbol": "425040",
+      "name": "티이엠씨",
+      "asof": "2026-10-15",
+      "before_sha256": "bf622742fed3831b99d4aac989f4a13ad8e8c586ebf34abbf4a12be3a98099dc",
+      "after_sha256": "e1921e5c4ff9dc1a7e94a5bb4fa36c5d5563ec54540e33ef781f5ee3c8405947",
+      "guide": "관망"
+    },
+    {
+      "symbol": "425420",
+      "name": "티에프이",
+      "asof": "2026-10-15",
+      "before_sha256": "d2524b325fb561e074d27b56aaf735c8e187aa239f4e2f56f392a7d0bbec9157",
+      "after_sha256": "7531f6a49306c2632905c185f04f5be8d032ef63af87dc6368f2058324dc0f41",
+      "guide": "관망"
+    },
+    {
+      "symbol": "429270",
+      "name": "시지트로닉스",
+      "asof": "2026-10-15",
+      "before_sha256": "80c42c2380309155f5b518224a54817e93ba8b805ac7126ecfe93b21e2d47d8b",
+      "after_sha256": "81a37c5534c801ab3f87612ef4ff9d6950f9f504d4b2ad4cacdafc269c64162e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "430690",
+      "name": "한싹",
+      "asof": "2026-10-15",
+      "before_sha256": "d017018ff5c0cce98c3f02d6b8b146acaceb36342b146ae1bfcdca721199e447",
+      "after_sha256": "294b079d2e2cfe00b5a9fccef8a60139fe712ac27e562502e25bad120a7799b6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "431190",
+      "name": "케이쓰리아이",
+      "asof": "2026-10-15",
+      "before_sha256": "9096f50ba2d134a2243731c868189a822cf03e130059977aefedc5f7db91e230",
+      "after_sha256": "4e7ad4edb4010961dafd65f04ef89ecc3b6cc4006a4c6a6c916cc47aa62caf4c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "432470",
+      "name": "케이엔에스",
+      "asof": "2026-10-15",
+      "before_sha256": "24b04b198a84862887ba896f460a580709ce3e061e3cd072a2911502a42effcd",
+      "after_sha256": "cc31de9be499d55a2355e36bcc1741996f9467a3dd64048288b58ffd8bdd1edc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "432720",
+      "name": "퀄리타스반도체",
+      "asof": "2026-10-15",
+      "before_sha256": "d778805521ac08c48d4d8b612531ed6a76926a6489cd98f8aae93ae0492b0618",
+      "after_sha256": "3224620bf7e490de27a640a3f4b140eee409b7cfa65e8dca22388dd0398e752e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "432980",
+      "name": "엠에프씨",
+      "asof": "2026-10-15",
+      "before_sha256": "be09fd5daafe96b818cb7455b48b6e8fb17bfc75ac06f2372bd36742e9d82acd",
+      "after_sha256": "d87e68128f3de1005067155fd1df257c9cfd587895dc0238c4e89132af07d84c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "434480",
+      "name": "모니터랩",
+      "asof": "2026-10-15",
+      "before_sha256": "768a33fe6727288de6a1a775d4616aabb5f54940b5e0a83351bbf824ded734a3",
+      "after_sha256": "eda2c1575d21a1f52decf56912260428e7036c85fe56e8fe74ae9395c918d843",
+      "guide": "관망"
+    },
+    {
+      "symbol": "435570",
+      "name": "에르코스",
+      "asof": "2026-10-15",
+      "before_sha256": "79c2baf22e187575eb1ea6c0aa7b8e9cc51505b3898a30fc47618f32c771a838",
+      "after_sha256": "b191ccfcaa539da1868fa52962b5ef5480d44e87d016f62e745ad4b353adcc59",
+      "guide": "관망"
+    },
+    {
+      "symbol": "437730",
+      "name": "삼현",
+      "asof": "2026-10-15",
+      "before_sha256": "e66bc920d106b01c7d6d383f1415223a19cdadcabf074d6347ee309b480328e5",
+      "after_sha256": "df23e2458a0cc8be131173f808c366dd3bd7caef1a47662389903d41902542a7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "438700",
+      "name": "버넥트",
+      "asof": "2026-10-15",
+      "before_sha256": "0ad096701c81ee29682a42c6161c2894dbe0e0149b9eff2fe684ba3b7bab1409",
+      "after_sha256": "72ec05a03760448398a4fcb97dfa39007de23c5f4bbde68b31e9ef840d4fb695",
+      "guide": "관망"
+    },
+    {
+      "symbol": "439090",
+      "name": "마녀공장",
+      "asof": "2026-10-15",
+      "before_sha256": "62cf161516f610ebb5e0340a3804e543f901093da9e9be8fd9392bbc749be517",
+      "after_sha256": "a3d5c6827b0001ec492c5f5ba74ce2e5de54ba8873796c061c62364d74b6fbb1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "439260",
+      "name": "대한조선",
+      "asof": "2026-10-15",
+      "before_sha256": "be9cfe531037ae8b77127a6a86d0479e418e7ac2821977ef9aee4eed90737630",
+      "after_sha256": "5048e0f50e1abf5eb42d539885ba0ae91d604436fef7bd2c9de6040224cdd15f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "439580",
+      "name": "블루엠텍",
+      "asof": "2026-10-15",
+      "before_sha256": "e81da59937f11a5d2b2ca2f3034e6061ef1ba0b6170f2d0e76e38751f6339cff",
+      "after_sha256": "4321c7e9defaa2a19017dafc8b2627e1b187319e2dc824cbb676a76714416f5f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "440110",
+      "name": "파두",
+      "asof": "2026-10-15",
+      "before_sha256": "a9ba8af41bff3e19fcbe07019dbbf76d999d11139e03fe6b88fab1f3c722232a",
+      "after_sha256": "c1e7a1adce51bdc5347337c02dc13fb89d746fe7c5699b3f387a5b273b000231",
+      "guide": "관망"
+    },
+    {
+      "symbol": "440290",
+      "name": "HB인베스트먼트",
+      "asof": "2026-10-15",
+      "before_sha256": "ff897fe5575034ea9d08cdf17008e1a387b11cd40673c5dd40195457e8e5d6dd",
+      "after_sha256": "8453b6038be9e7493d6f50e03763b97af07010f0017cbcdf14bc970e9bb3bcc6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "440320",
+      "name": "오픈놀",
+      "asof": "2026-10-15",
+      "before_sha256": "06a59486f8683221912d68a90755217dac4df2d1638b1ddfa0e00666b69cf6ca",
+      "after_sha256": "e192c29bbf18584d0f6b6e7dce1487b538b20610e7688cd3d956f7dce3052e90",
+      "guide": "관망"
+    },
+    {
+      "symbol": "441270",
+      "name": "파인엠텍",
+      "asof": "2026-10-15",
+      "before_sha256": "0917e475edb6e193da2ec0bdb79662c066d5083fc57e1fdb01848a8f166eb0f4",
+      "after_sha256": "6f9b8f1e144f36dc31c4c3447a860bdebb17502d03a2f0be9b2d7a4ce0579639",
+      "guide": "관망"
+    },
+    {
+      "symbol": "443060",
+      "name": "HD현대마린솔루션",
+      "asof": "2026-10-15",
+      "before_sha256": "9fce347231bda5c6f6e7d4a6a3095f026d1ace1dacbf19bdca9b0e8d0c9710bc",
+      "after_sha256": "12ed50e85745912783e70608755e809b9e9c7a421a849322b1d067e4e0f0d6ae",
+      "guide": "관망"
+    },
+    {
+      "symbol": "443250",
+      "name": "레뷰코퍼레이션",
+      "asof": "2026-10-15",
+      "before_sha256": "38e9202621e920ea3543e03b9a58a329829406261e6acd85a6cb3ce0c38920ee",
+      "after_sha256": "df648b445d899465dfdf5d5c3e7aba1cc1a2869890a38370cbe82c6c2222a1eb",
+      "guide": "관망"
+    },
+    {
+      "symbol": "443670",
+      "name": "에스피소프트",
+      "asof": "2026-10-15",
+      "before_sha256": "acb098b5d1a9d5547f93702cf3c126fc929b0550f348dc55e38b08b360ac680c",
+      "after_sha256": "95e110a66d45e511704d69561beb8ab36c2bde69699f70bfe1eb1f74851ebca0",
+      "guide": "관망"
+    },
+    {
+      "symbol": "444530",
+      "name": "심플랫폼",
+      "asof": "2026-10-15",
+      "before_sha256": "d03a3d290f2d4dc079cf40de17d54bb504dcc50210f0334aa0cb97252f6577b6",
+      "after_sha256": "758932e71b9b73e59743d1a7865d9b234cd388c024bbbaa8eafbb56c3130799a",
+      "guide": "관망"
+    },
+    {
+      "symbol": "445090",
+      "name": "에이직랜드",
+      "asof": "2026-10-15",
+      "before_sha256": "dfc095790b849d9a85ca6b32b3688b67c64a6608ead964583c9916efaea164aa",
+      "after_sha256": "4aac96485f52914e92b3d2d194a8221951a0a09f0f732f87bc5fe08425275e9d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "445180",
+      "name": "퓨릿",
+      "asof": "2026-10-15",
+      "before_sha256": "e262cd16890e27c9e2dc1a33a356de8dc21362b84199152cfedbacf869753458",
+      "after_sha256": "2abf69a2eaad7a5f10ef41ec64d38d8c35c76751ffb62661877e8970373570d3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "445680",
+      "name": "큐리옥스바이오시스템즈",
+      "asof": "2026-10-15",
+      "before_sha256": "1397aa67442d3991dd081c364485f18c613295fb77e65abd7af96f7a70df9b51",
+      "after_sha256": "9a6a972a42b9980d0349a7e988b5882622764565d3d1fdb8c7848dd12e19c94e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "446070",
+      "name": "유니드비티플러스",
+      "asof": "2026-10-15",
+      "before_sha256": "ff9dcea85d6618fadce86960b307b95c0eb165999a51add721d77479ec8c1aa4",
+      "after_sha256": "ff168116b9761720cbb302a24978e870445323e25f118a33bc82c58898034605",
+      "guide": "관망"
+    },
+    {
+      "symbol": "446540",
+      "name": "메가터치",
+      "asof": "2026-10-15",
+      "before_sha256": "21cdf66c63f9aae68c99d5be9707c1a5637aa2fbfd405863c343671563e6a8a2",
+      "after_sha256": "68b313a860d256d453488b6190bea104cd3f28c209e81a72691bfb76b81a79cc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "446840",
+      "name": "지슨",
+      "asof": "2026-10-15",
+      "before_sha256": "f616d7cbce8c43ba6f37a91f71a2529805a8b8d2641c9d968655705553a4bec4",
+      "after_sha256": "d47ce9ff47d7766649177a9d91061ec105b153b7056b963e84a77329a76da97b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "448280",
+      "name": "에코아이",
+      "asof": "2026-10-15",
+      "before_sha256": "47dd450da0bfd60d2af7da576aaa320a4b222310d07512006b9d165fe2bc8b11",
+      "after_sha256": "d6c2d0bd2ea2f92ec1e5d2bf9ed1ecf7fc65f76c45b83b1f6e90d0e4020b831d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "448710",
+      "name": "코츠테크놀로지",
+      "asof": "2026-10-15",
+      "before_sha256": "f2a7d8598fe3ec38d6e4fa4672ced43a9feb922902062b524cd28733acff3d0f",
+      "after_sha256": "d491bb7b279785ddc8d1837e284ec78d9d92889bc32ab8629efeadbb355699d5",
+      "guide": "관망"
+    },
+    {
+      "symbol": "448900",
+      "name": "한국피아이엠",
+      "asof": "2026-10-15",
+      "before_sha256": "2524157481a0b1c457cc150cf972dc105f9b1d8ce16f4e05f90c7358862e8819",
+      "after_sha256": "46878bee5ff2f4f7bea6902163a871e860ec319fcc56b4317c774d707878c5ca",
+      "guide": "관망"
+    },
+    {
+      "symbol": "450080",
+      "name": "에코프로머티",
+      "asof": "2026-10-15",
+      "before_sha256": "79b7571bfa44a574af911d42cc9d58e80127ecead99dde891a38874a9dc5ef5d",
+      "after_sha256": "465803f9bd25812759ff3899fac369754de2c815f2d94d9060708b064cb60f55",
+      "guide": "관망"
+    },
+    {
+      "symbol": "450330",
+      "name": "하스",
+      "asof": "2026-10-15",
+      "before_sha256": "3e2666718267faa4ee30dadb2084fb567645e7f73f88c51c61857b962b9f7303",
+      "after_sha256": "0b266e69bae2faa82f17bd855f96f513d50f70e5d850a77759c50d2ccfdf52de",
+      "guide": "관망"
+    },
+    {
+      "symbol": "450520",
+      "name": "인스웨이브",
+      "asof": "2026-10-15",
+      "before_sha256": "d0e00e21ddf287d78cb183ada7c400d6beefbc696229f7df1dd9e0b9978d7de7",
+      "after_sha256": "6401c0400ab13380c7ae333d1924d33ac357c4e562e5c47ac367138fe28d3bf5",
+      "guide": "관망"
+    },
+    {
+      "symbol": "450950",
+      "name": "아스테라시스",
+      "asof": "2026-10-15",
+      "before_sha256": "1bc1a234ada3183166e5027ddd515f0b6a6d3ce90ae17949b66e918a6bc4f2a0",
+      "after_sha256": "9ce00d0933b996d7855c4df59cbd457b078d98da033a1f0473f8528e52b16b3f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "451220",
+      "name": "아이엠티",
+      "asof": "2026-10-15",
+      "before_sha256": "d76eb8ef7a5b6a5f0378cef08c68befdfbea767d9151348e9b5b63a033acf2b7",
+      "after_sha256": "e64e4fd10172ec95f59b4fbc10d2d0a94eb0267370aff588ee5c4f61eedc9549",
+      "guide": "관망"
+    },
+    {
+      "symbol": "451250",
+      "name": "삐아",
+      "asof": "2026-10-15",
+      "before_sha256": "0cfd22724e995f79cbf21e5e118cf4a70adb4e2a440e5ab67768f5c2c6ab0fb1",
+      "after_sha256": "7ed96c30cc93733a872a8430fee253fa6a6af8f169cd9f52d983f4c61ec71b34",
+      "guide": "관망"
+    },
+    {
+      "symbol": "451760",
+      "name": "컨텍",
+      "asof": "2026-10-15",
+      "before_sha256": "662c91af2388e87f0dabd39e1cf2e4baedb369d2134874119738b290321bf56a",
+      "after_sha256": "7050bae85c0b466bea795063f5b8ae6736693107e06e1908be06c3dda5fb96bc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452160",
+      "name": "제이엔비",
+      "asof": "2026-10-15",
+      "before_sha256": "af37af744074c803b5b3d49818222c1899937c42f317e3a75e4691bd3df55d26",
+      "after_sha256": "f9f1524c4c13835070a800fcc18104495456da0ece9c25143ab6c3aa5cdd887d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452190",
+      "name": "한빛레이저",
+      "asof": "2026-10-15",
+      "before_sha256": "8f4f9832b6ed378861f8600c7310d4317ea21c533c98caebe0adea8109934e58",
+      "after_sha256": "2a7dbce7572681e00cd2ce709cbba667bbe3464e83b7943add3f15fabe6b7285",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452200",
+      "name": "민테크",
+      "asof": "2026-10-15",
+      "before_sha256": "c00a6f3d17ea125c3b48fa1b76ccc732efb3b8c108c255184da59917c0bc74c8",
+      "after_sha256": "f4b099919e6efb5c183514f7921a9fd334dca08949e705e074ac0c40075f0ce1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452260",
+      "name": "한화갤러리아",
+      "asof": "2026-10-15",
+      "before_sha256": "f951290501d93d9426be8fdd860e3c9d554a93962635035e8283b685ebf1bf4b",
+      "after_sha256": "e2ebaeeef9932164daf1180136d4b5838c935e87b948cab90b822577e1ff292d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452280",
+      "name": "한선엔지니어링",
+      "asof": "2026-10-15",
+      "before_sha256": "18baeed5634bf55c64c8861d2dfff1fb8be2f3757bc83fa0f922a8e007096801",
+      "after_sha256": "f8257e8d0f3a1cb7b35413f0053bda8d42b8be087185daf77340bb996fd827de",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452300",
+      "name": "캡스톤파트너스",
+      "asof": "2026-10-15",
+      "before_sha256": "01b36aeb23096859d97f2faf8779cae278462c88f5349abd17fae2aae8c77bea",
+      "after_sha256": "2902322b23a24454323d1bb6d8ae28d9732b93f18eef0fd4f1de671487f16db6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452400",
+      "name": "이닉스",
+      "asof": "2026-10-15",
+      "before_sha256": "0375c7c3e693e232e956a05a01fa3873528d4e3f8f776fd109221f28a7796b70",
+      "after_sha256": "69bae3719f6fbc2a6dfdbe3f28c9d75eeb1962de152d497a0e39ac3b39059801",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452430",
+      "name": "사피엔반도체",
+      "asof": "2026-10-15",
+      "before_sha256": "7a2fbeeac39d68671e9bad4ab8ef146f694272a72abc7723787061ae5ce46689",
+      "after_sha256": "f0043ae0f8499a929b698445f0d684102bc2dfb2e9e3338668b044e4e0ee050a",
+      "guide": "관망"
+    },
+    {
+      "symbol": "452450",
+      "name": "피아이이",
+      "asof": "2026-10-15",
+      "before_sha256": "484dc6e664c09be6406d8bf9a4fbe1cfdda63bdec7af413a42529cd682291df6",
+      "after_sha256": "19b9b990631c80d95e050080e354e79a727296361725aac92fa59a1a76bd6725",
+      "guide": "관망"
+    },
+    {
+      "symbol": "453340",
+      "name": "현대그린푸드",
+      "asof": "2026-10-15",
+      "before_sha256": "397c37395c9eae621b830ddc111a7298c29d1dd7d18a393b7b22e332e2780f99",
+      "after_sha256": "50cd2e9714c0e0eda3ebdca825ace2cbd44c66c21c24a1f4fad4ef53ccd15864",
+      "guide": "관망"
+    },
+    {
+      "symbol": "453450",
+      "name": "그리드위즈",
+      "asof": "2026-10-15",
+      "before_sha256": "4fd8f69dc0503bdfc350b301c9ae67afa9f0e058b22a9056f4f0ac54b0f37fe4",
+      "after_sha256": "6bc6d09049668ede087ec9edb723f64eb70f7c1886e6b2dfa139e6599cc5e051",
+      "guide": "관망"
+    },
+    {
+      "symbol": "453860",
+      "name": "에이에스텍",
+      "asof": "2026-10-15",
+      "before_sha256": "a194ac80d80cd88835b325a983a7dcf14bc78f7d3c98c9bf7fb3239a5a796fb0",
+      "after_sha256": "cad56549806469f12f039c369c9140f3a3f3be2699f410a079dc1a2e05c6ed69",
+      "guide": "관망"
+    },
+    {
+      "symbol": "454910",
+      "name": "두산로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "739dfb6415aa0b0d8b5ce7bd826b1c4b082d9de025fca6e5f13318da460387da",
+      "after_sha256": "9952c9305d9788591d2b2df2c38f08f2f363f9c257a6c65824784e202fcb6070",
+      "guide": "관망"
+    },
+    {
+      "symbol": "455180",
+      "name": "케이지에이",
+      "asof": "2026-10-15",
+      "before_sha256": "f1d657ba4d51079e268e49e58d9704088131a059eee8db6e42604026020cb07d",
+      "after_sha256": "020f99e2ab739be119881367fd08437ab89d5eab389a07819e6dbbe3629fe33e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "455900",
+      "name": "엔젤로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "d5eade1a9f698ee7d2513ab22c96e7fa9edc719eb1c667e5cc34cf3311f0c50c",
+      "after_sha256": "275f45db7c5614e6093e2032b0c08d3f685190fb43677121869d6fbff759181e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "456010",
+      "name": "아이씨티케이",
+      "asof": "2026-10-15",
+      "before_sha256": "9a5b0cec07bb27d0f50dba0087b8c650f4626d1760e666e3404449b38552ff9d",
+      "after_sha256": "dd0bb8d70ff8c6e1bcaf50346b3858d662ad2ee23bc9a3d625cb02f383abde28",
+      "guide": "관망"
+    },
+    {
+      "symbol": "456040",
+      "name": "OCI",
+      "asof": "2026-10-15",
+      "before_sha256": "946aa6a32ac57afd1669c976ba6681ba41859765882b57d51959de7caa5e6766",
+      "after_sha256": "d5366a582865467641c1e9f11c6a3083f1686e8e275885e4e10da300e8c16039",
+      "guide": "관망"
+    },
+    {
+      "symbol": "456070",
+      "name": "이엔셀",
+      "asof": "2026-10-15",
+      "before_sha256": "98f2e9f5be9eeafd7e8cdc664d574855a91243083fe4de791e8c1ae76e44ce7b",
+      "after_sha256": "a40d190a383e3eab5116f472aedc1b85c914d7a0f1a21ffca2e80a55f96ca531",
+      "guide": "관망"
+    },
+    {
+      "symbol": "456160",
+      "name": "지투지바이오",
+      "asof": "2026-10-15",
+      "before_sha256": "4420ca415ea20fbc72a63ca5a0902743fd4001d07fe6516d25ea29afa9f2a507",
+      "after_sha256": "a7eaf5ef38fb03244b9dbdb1205cab47cdd810c7bad5254b3161dfe54b36fe8c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "457190",
+      "name": "이수스페셜티케미컬",
+      "asof": "2026-10-15",
+      "before_sha256": "7b893e45759256b7636ec8a6c3efd6147fd829ddbf166f968a62d8aae5e99257",
+      "after_sha256": "dbc7a723987d2d6d4b1ebfe783b815ab88cf81ae122e09f1545f2c4239f63540",
+      "guide": "관망"
+    },
+    {
+      "symbol": "457370",
+      "name": "한켐",
+      "asof": "2026-10-15",
+      "before_sha256": "313f742e6b4265fda3bc67d55d0001c0694f91d6ebc8f324ebcaf5d6618fee4f",
+      "after_sha256": "eb15e803ec423e1234f7381218d01a3ce8ce85752061084c63fd699593a7acb8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "457600",
+      "name": "벡트",
+      "asof": "2026-10-15",
+      "before_sha256": "9e4e3d98871bf910c5600106c54fc306779f4a5391ec22663cc6d197eb9e8339",
+      "after_sha256": "da7e924cc7a0a92a1e6f628063ff9c44f37ef5518a75e5ac4bf2b8b0518f8747",
+      "guide": "관망"
+    },
+    {
+      "symbol": "458650",
+      "name": "성우",
+      "asof": "2026-10-15",
+      "before_sha256": "6c39d7d94532afc150caa28d4ae4c94d84e33e7788ba21e76c99a3c96823b00b",
+      "after_sha256": "3fdc770ab158f1704cd6698ef644fe60eb646fbc22e226cab6a62163f3d4852d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "458870",
+      "name": "씨어스",
+      "asof": "2026-10-15",
+      "before_sha256": "702edc81d6768ba69ec1da5a35a8f25141dc1217a30741d4c8c66cea2076df81",
+      "after_sha256": "0ae21037fc24f0af864ff82bde5f4b6ec4da8d7efc078258c372713bd25817bf",
+      "guide": "관망"
+    },
+    {
+      "symbol": "459100",
+      "name": "위츠",
+      "asof": "2026-10-15",
+      "before_sha256": "a8703a578d7d711599ac0baaf80b8aa0a72621240d0300736499dd7ee6b17a17",
+      "after_sha256": "0f2354f800c9780e927605dc44d4bd8a47e24dda9637b37efc4bfbaf4499f473",
+      "guide": "관망"
+    },
+    {
+      "symbol": "459510",
+      "name": "나우로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "2532c433ff5ede1a04c52d796c9b00a6f593e768093dacf75a98b09cb2c061e5",
+      "after_sha256": "be07d4d04fe94bfd4d7c092165211eabe2dc4288f070498d1de8a3bba75f2f5c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "459550",
+      "name": "알트",
+      "asof": "2026-10-15",
+      "before_sha256": "b889a06f7d9e0d5f4d4e444b72bd423e03432f2ab9f19fbda9c9affd242e9942",
+      "after_sha256": "611fbc44621b547e03560dabd9ff96330a7252339d22726d8f855e3aa1fff42f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "460470",
+      "name": "아이빔테크놀로지",
+      "asof": "2026-10-15",
+      "before_sha256": "dc5c85c43c0b4073a76e5461070822f8762a23ddebfd39007ddf394c2920acbc",
+      "after_sha256": "daa00495350eed4f1a3682e3e007405e5c2ff4640e94ae3b2a5af59b8c1a4a3d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "460850",
+      "name": "동국씨엠",
+      "asof": "2026-10-15",
+      "before_sha256": "a23d6aa2846e61197f1c4c31e91f639b08e6b72e88a8180dbed879e617fd368b",
+      "after_sha256": "60eaeda36a2ea658aaab2b82f95f0f1ed931f3eeaba509470fcf0c6f694cdd11",
+      "guide": "관망"
+    },
+    {
+      "symbol": "460860",
+      "name": "동국제강",
+      "asof": "2026-10-15",
+      "before_sha256": "c5b78f7568d679bfd7e15a8439e0ccb605ce1f40671b055ad29926462d4f4892",
+      "after_sha256": "d5f5146cb201597bcf77c058a50220ea00bd4a9a32f6b5557d0e00663c0644b5",
+      "guide": "관망"
+    },
+    {
+      "symbol": "460870",
+      "name": "에스엠씨지",
+      "asof": "2026-10-15",
+      "before_sha256": "5d8e13880c3e3bcd5be7f5e2c1f7df75cbc623353648b25398ffe9eafcae0548",
+      "after_sha256": "4965bd394d9472d02aa406bef8be88374c78a36236983c90fd646d5ea8944034",
+      "guide": "관망"
+    },
+    {
+      "symbol": "460930",
+      "name": "현대힘스",
+      "asof": "2026-10-15",
+      "before_sha256": "23938f8e5bf0da30231350476b44b1f997b8182cb248f3a699bb6bab783b9222",
+      "after_sha256": "336c501e8af74f5ae798efd74e446fe81d7e1778e25121b9b6b95cc45e4eb42b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "460940",
+      "name": "피앤에스로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "bae45b353b155cabaddebbc6673c6c08d04da95ab0598206a21e5dc1fd91f581",
+      "after_sha256": "e95817886fc2f14f9ed31f63ea6747f01c8ace07097e090502b731ca64728887",
+      "guide": "관망"
+    },
+    {
+      "symbol": "461030",
+      "name": "아이엠비디엑스",
+      "asof": "2026-10-15",
+      "before_sha256": "ffd8bb261368daf8bf2cfe8b290fcd9c14784dac10b03054d973b85b73cfdce4",
+      "after_sha256": "3ddd47eebbe43c73f20f4e5828b8a8169267438d9009f69f1800c4aa2fb50393",
+      "guide": "관망"
+    },
+    {
+      "symbol": "461300",
+      "name": "아이스크림미디어",
+      "asof": "2026-10-15",
+      "before_sha256": "3f2591f235cb8af1a730a1540e3a9383fce45e5396d06fe56dc3626ba7383ae8",
+      "after_sha256": "6c616a8ebc71a6b65d8b8a82337a6d8497e6382b18a0eee6a85cb3f41402d839",
+      "guide": "관망"
+    },
+    {
+      "symbol": "462310",
+      "name": "뉴키즈온",
+      "asof": "2026-10-15",
+      "before_sha256": "89ea3b38f81bdfbfa086186480ad82b259016b2693cf318012538534fa27112e",
+      "after_sha256": "2c70a0eb96b60b57a8f62d0dff09649a47d66c87c2142eed0bbc3cf99e1b95c8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "462350",
+      "name": "이노스페이스",
+      "asof": "2026-10-15",
+      "before_sha256": "64c7b07cf4e82ed06c3e7872d92822ca2c0a96dbb54cbc17d877df451b92afa0",
+      "after_sha256": "5e13a8b1fee05307c49d9ec69dcd16c3239c2931484ac42987dda747e8faf675",
+      "guide": "관망"
+    },
+    {
+      "symbol": "462510",
+      "name": "라메디텍",
+      "asof": "2026-10-15",
+      "before_sha256": "20176d63c423fef068bd0130e5cc03deb5489fef168f2e939186c1fa2e356d1d",
+      "after_sha256": "f675a9a8cf202879a1c0efd7881ff7c1cbd9e6e9891c209c63d1cb5f085daae0",
+      "guide": "관망"
+    },
+    {
+      "symbol": "462520",
+      "name": "조선내화",
+      "asof": "2026-10-15",
+      "before_sha256": "57631910e422c67cab4c388e1b1bc8b0772e710618d7d793828c03dea630041c",
+      "after_sha256": "5d48c2247dc9784768c011b1385c824022074030a6b121dce2e8ec801cd48dfa",
+      "guide": "관망"
+    },
+    {
+      "symbol": "462860",
+      "name": "더즌",
+      "asof": "2026-10-15",
+      "before_sha256": "e0f16f9e978b3fa445e107220fafaada0aaf7a3124d25897aa3b0eecf9c6fb59",
+      "after_sha256": "1125921c47e7ec4a03ee134a01452fd671b7b9489c5698b9a1969fc982db0ba7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "462870",
+      "name": "시프트업",
+      "asof": "2026-10-15",
+      "before_sha256": "5f07270a8642c0bc48555597255d1fddb0384eda25f0dab2d4cb8bf41d2f7e5b",
+      "after_sha256": "4045ac2491b597547395bdef8fd614c4d066f64c361c170c1aaecb957dbb8f74",
+      "guide": "관망"
+    },
+    {
+      "symbol": "462980",
+      "name": "아이지넷",
+      "asof": "2026-10-15",
+      "before_sha256": "0ff509ad34dec8051362af499657ae9276cfcd821ce3185160a2bdd8419ddf89",
+      "after_sha256": "092df50ea7f99ebf6637f95936d2fa01e1ccbc4fb7d38be48f919d2ad0440125",
+      "guide": "관망"
+    },
+    {
+      "symbol": "463020",
+      "name": "뉴엔AI",
+      "asof": "2026-10-15",
+      "before_sha256": "7be88c2c80447e678bf46c39fac47403e2ef4987eb1430025adc67bff2a92d65",
+      "after_sha256": "905c50879b56a52a2d57b5682f2418d19a2aff255acd44611b52e60212feb602",
+      "guide": "관망"
+    },
+    {
+      "symbol": "463480",
+      "name": "모티브링크",
+      "asof": "2026-10-15",
+      "before_sha256": "d26f11bf07cec8c56d884516c8352725a83d094d66967dd73a43e62ca00bdd76",
+      "after_sha256": "1bbe44dec873ed6d85bd2d2f99c7dbdf9d5ae7c64f874293e72c5826d15777e6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "464080",
+      "name": "에스오에스랩",
+      "asof": "2026-10-15",
+      "before_sha256": "5ad53718f66d3bbd170cb4173170a060b71a3860798beb79f6c24f9851172b3b",
+      "after_sha256": "c92bdaa2ce0d382bdf65cbbdffd43aead3abf026e1dcb70b63da78e02e08fca3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "464490",
+      "name": "쿼드메디슨",
+      "asof": "2026-10-15",
+      "before_sha256": "d62b02f33bbb56533b61298534e2aba42b15ec7996a856a33e3e61cc063ab453",
+      "after_sha256": "429f2a9d6879e72dd702d2cc1e04c543bd6c01e7f0d94b4e6ca4da028eedc954",
+      "guide": "관망"
+    },
+    {
+      "symbol": "464500",
+      "name": "아이언디바이스",
+      "asof": "2026-10-15",
+      "before_sha256": "feeff5170332dcc7817047024b5fc8f4cd29ab1b8a7999a3dc8d331eacf8eb58",
+      "after_sha256": "3c18d78e98a6e63ca901f083693c4bbac38a7614640a66d6fb0ace13e2683be4",
+      "guide": "관망"
+    },
+    {
+      "symbol": "464580",
+      "name": "닷밀",
+      "asof": "2026-10-15",
+      "before_sha256": "fb64e09c14193cdc22d21387fd9d940b5c7b239b2b7a4575014b8b36c1cef431",
+      "after_sha256": "ec715ef4173a5b30e51173f9a8218f7cd7b57e2e1dcff466d9de13e7b13d502b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "465480",
+      "name": "인스피언",
+      "asof": "2026-10-15",
+      "before_sha256": "c2bbd415ba59c267b3f5daa12df82ece89f8b1ac0d82786fa6523aed1f80afc4",
+      "after_sha256": "72e9322ce86db70ba4e0893ee1f49c678b3e925796f677552c0fd6b9501ceae5",
+      "guide": "관망"
+    },
+    {
+      "symbol": "466100",
+      "name": "클로봇",
+      "asof": "2026-10-15",
+      "before_sha256": "4d1b263b93dbd616a71f70acde11e0096bf1d3403c7dc70578ac13887cab0d04",
+      "after_sha256": "e18e0e0d0f71044c69e30c94784f63796ac9ddea28bb1b715015a9e856df7892",
+      "guide": "관망"
+    },
+    {
+      "symbol": "466410",
+      "name": "사이냅소프트",
+      "asof": "2026-10-15",
+      "before_sha256": "009c2b93887e589b6b926d9d335f9c45f22637dba7d042654e1cf871ef65499c",
+      "after_sha256": "98e5de9c95f8134db1ccc6572f68adb7edf7bdc61c2263cdfde4df90c86e4506",
+      "guide": "관망"
+    },
+    {
+      "symbol": "468530",
+      "name": "프로티나",
+      "asof": "2026-10-15",
+      "before_sha256": "412f8852f4a1f2b000bcc4c82442f89793664d6951c01c24654bcbc76d83fed4",
+      "after_sha256": "3954e2b4bd21293d8fe9e5ce44d099123ae5ca7ab5e79e2fae68fc1c4ca9f7da",
+      "guide": "관망"
+    },
+    {
+      "symbol": "469480",
+      "name": "IBKS제24호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "879a9cf79130516402e6083c7ff1bfdb3b94145d84565f29ca0a52e26db2e4a4",
+      "after_sha256": "0b8da90f89834cc95c6e71de80c2e1f1c4fc6a79dcf91d9e6b974e31b8a78e9f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "469610",
+      "name": "이노테크",
+      "asof": "2026-10-15",
+      "before_sha256": "b01ddd0d80282d79c46e9087c3a2f996a6e13928d67b8a6be9bd220b77fd3ff9",
+      "after_sha256": "efe7e78f2fbda10852afd36c43a21b03e8319ef0341505ff680dc0573ed52ab7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "469750",
+      "name": "아이비젼웍스",
+      "asof": "2026-10-15",
+      "before_sha256": "f1c0fd8edd9d5179575e26d6630ab714e2e9b86dc7d930176b3b0b7822a24d52",
+      "after_sha256": "fe83ccc633ec403ec03bd634c355f3ef9cddb7e638f276e6f55d81b132d8dcda",
+      "guide": "관망"
+    },
+    {
+      "symbol": "471820",
+      "name": "셀로맥스사이언스",
+      "asof": "2026-10-15",
+      "before_sha256": "62233af472f5fa9c0edea448877a11d7e857f3c676a1a48d8e13ee65b1ee2477",
+      "after_sha256": "106ef285e0c93fa89f6c321a98a8d63910028f772b6ee6142a6bb6fe234c0a27",
+      "guide": "관망"
+    },
+    {
+      "symbol": "472850",
+      "name": "폰드그룹",
+      "asof": "2026-10-15",
+      "before_sha256": "c163ec6b416db66366c15777c248d818f1dd12b756532ce44e685ada3234d9c2",
+      "after_sha256": "b4b1d3fd29d92ba2bf4ac868afc3bbdb354512b98b893c09c7510c6fd19eaea0",
+      "guide": "관망"
+    },
+    {
+      "symbol": "473000",
+      "name": "에스케이증권제12호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "ada7c7a97b01ece544ede2bdb8f8c8bc433afaf82564b4e52fe289a8889ff6e1",
+      "after_sha256": "5a2c85c08d3ab549ae07299bb1467ba4e317036fc7cf2835743ba456007712e9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "473980",
+      "name": "노머스",
+      "asof": "2026-10-15",
+      "before_sha256": "50e86b0306ad90d368d350e26721ff95f35621b2405e0e883907e453ce35c482",
+      "after_sha256": "b3f5c9018379b5600a2607b935b6c262c0cf582789cdb947474ca7634a90e7d5",
+      "guide": "관망"
+    },
+    {
+      "symbol": "474170",
+      "name": "루미르",
+      "asof": "2026-10-15",
+      "before_sha256": "adb7bb9fb6e6f1491dc4e4e6855a752abd92bbb45c6025c205666e1f88865919",
+      "after_sha256": "c1fe60669f143965219c2fa3fa252c70ab93d1c13391bedb3bdcfb760cb8a997",
+      "guide": "관망"
+    },
+    {
+      "symbol": "474490",
+      "name": "유안타제16호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "47c5bac645636c79fb172ddc3b0b4daaf75d9de5d192c551f246fe91ac74367d",
+      "after_sha256": "674ca177d29b52d00bb0b24caacff93faa4e33f5116eda693f5ee683701b28a0",
+      "guide": "관망"
+    },
+    {
+      "symbol": "474610",
+      "name": "RF시스템즈",
+      "asof": "2026-10-15",
+      "before_sha256": "d6c068f96100a27993c26c2a99c20158b6ccd427ff8df26e0fc4595ae28e1735",
+      "after_sha256": "65d5a3cd041827653ed83d7e66ea4daf594cd648808513ac9eaf3e91b5322ec8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "474650",
+      "name": "링크솔루션",
+      "asof": "2026-10-15",
+      "before_sha256": "6d08b0680ee317227fdab615b4511b175d1c29b31a39ce09831c04dfa0822146",
+      "after_sha256": "321fcb0704cc583e613d9f77e64c5877e8bf65b1fdd88ba62b88512259d2bc83",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475150",
+      "name": "SK이터닉스",
+      "asof": "2026-10-15",
+      "before_sha256": "d99b96f0bb487241a57c020dc010a2b3c9c85c17b72dc1e109c78ac08319f3dd",
+      "after_sha256": "5d2c4d948f2a1031a62f8a1688d53e0013df84e46fbe27c9393ff708716520a3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475230",
+      "name": "엔알비",
+      "asof": "2026-10-15",
+      "before_sha256": "9705b98f52763253366c51dadbe0570f60ac05ca26a7ba6e4c694e49b747dc57",
+      "after_sha256": "904d7406d94f2e79ec33c98dbd9f1343f9020324d291405b72916f03b064edf8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475400",
+      "name": "씨메스로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "5ff245096d4754eb558907c57b428c20dafb43043618d40a6da8b2290df0fdc1",
+      "after_sha256": "5f412660fa837ccec0ce9363d9ef31cfdfb588e76260add7d6124c0ac7c77607",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475430",
+      "name": "키스트론",
+      "asof": "2026-10-15",
+      "before_sha256": "4f2b8551c1c09b6f9cedbf92b040a7572ec342ad348b1b27735e42127f01af9f",
+      "after_sha256": "c98ed165bf9cb6a741c465cec1d3c5bea47b72217e7e451f2b71162a16635568",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475460",
+      "name": "미트박스",
+      "asof": "2026-10-15",
+      "before_sha256": "c56070e159126c1984e7bd43e10f86f3d59942d4263de0cbf4d19a70a7c7a4ba",
+      "after_sha256": "8e3f0b6f29fdafa9e2de35bd5e8e59fc85a383e67ef1a6bcbbe7114f5bb61954",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475560",
+      "name": "더본코리아",
+      "asof": "2026-10-15",
+      "before_sha256": "b60c2f41690d43086065a56b1867702f14a5db6cdd55c4b318a1189dfbceb48a",
+      "after_sha256": "b2d89957905eaa1e9f541c024c80393d731da025afe3b84ac606864bce746e9e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475580",
+      "name": "에이럭스",
+      "asof": "2026-10-15",
+      "before_sha256": "683072f2875ddcd8b76817f5819bd5487a93512f36ad87c349b7fc8066156e42",
+      "after_sha256": "5148a64a3c9feabf532a34fe17e26b491a235f3721ae74f61ce1abf8adcf1810",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475660",
+      "name": "에스켐",
+      "asof": "2026-10-15",
+      "before_sha256": "8f70ffcdb2f97991609a5977a2cccb6b5388da993b349d80e4ba1422f64590f6",
+      "after_sha256": "feacf10c0bb165211517b57b6f154a8fb1c8964639df5af2d73ad5be90bf2a63",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475830",
+      "name": "오름테라퓨틱",
+      "asof": "2026-10-15",
+      "before_sha256": "721e30f56e91e1e882f6f2f3e4c5b7c09128338364b48756f0bf28719a56447b",
+      "after_sha256": "5f817d897525ae059cd1dc5f90bda3dcf2583410b3fd88eda912e47e1f5f2fd9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475960",
+      "name": "토모큐브",
+      "asof": "2026-10-15",
+      "before_sha256": "67d3af8e74e6aaecbd055d251107368445330165b5e1eb91daac5342f4c2c571",
+      "after_sha256": "047c66633e1f27eaa47797061c175ee94cab1ab95fb05cb6024da684ed046f35",
+      "guide": "관망"
+    },
+    {
+      "symbol": "476040",
+      "name": "오가노이드사이언스",
+      "asof": "2026-10-15",
+      "before_sha256": "fe386710253a7b623ad252298566487128005802f7e372208bf20eae085e034d",
+      "after_sha256": "ca51b22ed72b83d790fe6c305778780a8c631f2c4073fc372f95b5465c5baccb",
+      "guide": "관망"
+    },
+    {
+      "symbol": "476060",
+      "name": "온코닉테라퓨틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "4884161fb68ae5642c73c7506e0e285e2b3559ae1a8b75ad8dfad9477cfaf430",
+      "after_sha256": "a7defd0b35b6d85fe60af344435fc346d136a676ccec10bc773087fc2c38f91f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "476080",
+      "name": "M83",
+      "asof": "2026-10-15",
+      "before_sha256": "fc304f7b306d13dce90e3fd14c2e66cd5c698f61de32506c4cab4fd37a94c082",
+      "after_sha256": "a3f9a49c6ebceaead205331b388efb95bcd775e8889f1194d5645601124ae3e4",
+      "guide": "관망"
+    },
+    {
+      "symbol": "476830",
+      "name": "알지노믹스",
+      "asof": "2026-10-15",
+      "before_sha256": "c5baf642a07d7ec11f45e5d82e1539a744cf0afdfc2a8cb5e99866b2d6ee7893",
+      "after_sha256": "3b48c6645cb22ef3102c72215e1ea90407f61785df7f7e2e4b6394cb934b0a9d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "477340",
+      "name": "에이치엠씨제7호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "6f89e7413eb4aa593af32fff59a671ddd1f83030837f230f7a0e6abc72df9182",
+      "after_sha256": "c897244658860dffe0b3394c8df6e799ff2bff86c9c72ab60b7a46711dc1e406",
+      "guide": "관망"
+    },
+    {
+      "symbol": "477760",
+      "name": "DB금융스팩12호",
+      "asof": "2026-10-15",
+      "before_sha256": "ebef050f02054cec39961797d37eec04e112a3a8b16fcbfe7deda3f745d12968",
+      "after_sha256": "01849b9c7e9b4c16b4bc916040532b6ff5bdc2b1bca74e7f47e37a8f998db1a4",
+      "guide": "관망"
+    },
+    {
+      "symbol": "478340",
+      "name": "나라스페이스테크놀로지",
+      "asof": "2026-10-15",
+      "before_sha256": "0162ce1d915b9ef56b5cf621d2b86284e3e4c854456003dfbaeca5feeea321ca",
+      "after_sha256": "fd806d8dec13531593b1b9961cfefcb6131fcda951d3ade77bc3fac7f3e5a0e9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "478390",
+      "name": "KB제29호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "6f301b0262b831fa96c291253b6a095f8cf7292ea88ee9a6d71b687a0c2639b6",
+      "after_sha256": "cb3197dd851fda01cffcf816db63ec5f0ceb039bdbb508edddf2064675229bbb",
+      "guide": "관망"
+    },
+    {
+      "symbol": "479960",
+      "name": "위너스일렉",
+      "asof": "2026-10-15",
+      "before_sha256": "751e11200b35296b827c690d7fed7a269d7d4b1ec12ad411a89c83985f110ddc",
+      "after_sha256": "442dad309407265fb490419390c0cd7ce7fc8db96c2581425d43d2893f38098e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "480370",
+      "name": "씨케이솔루션",
+      "asof": "2026-10-15",
+      "before_sha256": "c74f647abab33c59ab009e1d79410d6d94e36f629aac23216d33bcdbf8fa6d0c",
+      "after_sha256": "aab975065d4d959cb2f2a31081dafc40288773c0965915f380f7ee9b8332786d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "481070",
+      "name": "에이유브랜즈",
+      "asof": "2026-10-15",
+      "before_sha256": "d3ed70a6e19a1d83d833fd1c952a6dd20d31bbbf28ae6ec264b3b4fb0af4a3ba",
+      "after_sha256": "2e4d83739a97ec32d4f1c30163bac49065c7e6f9c5f3d8d3a1f837c42acd2120",
+      "guide": "관망"
+    },
+    {
+      "symbol": "482630",
+      "name": "삼양엔씨켐",
+      "asof": "2026-10-15",
+      "before_sha256": "52a197c3b8844e61b0bb4a7abbf0e4720e1668782ec2c432b2e5fa99bddf8f1c",
+      "after_sha256": "1513938b5863a59f02710b497a3ea3fea705abf124ef53678171a64999a3c29d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "483650",
+      "name": "달바글로벌",
+      "asof": "2026-10-15",
+      "before_sha256": "1c6ada377484d1bebb7a8dd7491eabfd8000eee50dd94b5ec638560bb36acefd",
+      "after_sha256": "cc6ee98a026bad0c98258fa66e6e7009808a729d7f0112c48698009d733099bc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "484590",
+      "name": "삼양컴텍",
+      "asof": "2026-10-15",
+      "before_sha256": "5f736dc1b51dd5b389dbe9a716da95317bd3a3c0cfd397061bf23b50fe2d677c",
+      "after_sha256": "bb97e3a90d00427b63df4da8b15d37d193630b28e41c59a41a97317832e11853",
+      "guide": "관망"
+    },
+    {
+      "symbol": "484810",
+      "name": "티엑스알로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "f2b018cda892ec8ba5ff2be2c7026150d710b3fbc34eee0c84d1aa171776587f",
+      "after_sha256": "8e1b62809064492dac15d8cd2d1e016226fd3ca2eac0ebe3dd7404fdb16a55f6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "484870",
+      "name": "엠앤씨솔루션",
+      "asof": "2026-10-15",
+      "before_sha256": "94fab8cbf314fc7400092e3f18abd809d2214f35f6e8d20298350e4a93a3d51a",
+      "after_sha256": "60e614ab29667c469cf05fe0c28a0e68c37737d98fabffdeff84d5e71787cb33",
+      "guide": "관망"
+    },
+    {
+      "symbol": "486990",
+      "name": "노타",
+      "asof": "2026-10-15",
+      "before_sha256": "80fa27ef3f76d101124da2abbceafaa65479f07b6338dc5d5d078109deaa50eb",
+      "after_sha256": "74691ab4285e0ec08ef761a2718c0433c4aad0bcca38067bb6fb8192825a58e9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "487570",
+      "name": "HS효성",
+      "asof": "2026-10-15",
+      "before_sha256": "7b9ecda23d2dd4fc7beb91f396b40a38110bde86601b9ee11becc2d0ca7db17e",
+      "after_sha256": "770923b385775b5830ebdc7da13fc461a474d820e1a898445602acf42f281659",
+      "guide": "관망"
+    },
+    {
+      "symbol": "487720",
+      "name": "키움제10호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "8a8b23e0063b4510d8dd3a8fbd1bbfd5399b1feabdda3116b69255bb3095ec46",
+      "after_sha256": "31c4e795695571ef5e69c142402018cbee1d8b9e42351095935e9c82b7d1eebf",
+      "guide": "관망"
+    },
+    {
+      "symbol": "488280",
+      "name": "에스투더블유",
+      "asof": "2026-10-15",
+      "before_sha256": "5fc5d6190d3e5cdbef7cbcd5243b75741b32009fbb0b812a4f022e1cf25419d7",
+      "after_sha256": "109f45aa073a88f973bd42b665ff5640e2b8bc6ac62f20d3c2f9ef4412b35f9c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "488900",
+      "name": "비츠로넥스텍",
+      "asof": "2026-10-15",
+      "before_sha256": "cdcc06ec6ef1971ee9fc4a2b68c44f45f1b23e75f9ea56d4070057f4f8fac205",
+      "after_sha256": "6fda770506d614c568c35a6fbf647d4ee5336822b2e9caa3aba0b7b9643981e1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "489460",
+      "name": "바이오비쥬",
+      "asof": "2026-10-15",
+      "before_sha256": "f257c912018e10a060b3af1b9fef0a2b638613c5e83c90849688e3ab8f1a7b54",
+      "after_sha256": "121768fe5b6f964547c21b04fe3e578b25c4dbf86371c104c154a8a2793256d3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "489500",
+      "name": "엘케이켐",
+      "asof": "2026-10-15",
+      "before_sha256": "81b99c83cbf95062a6394949abb7811672f0682c74e9134c0526c7af3768427e",
+      "after_sha256": "7283d0a2c7588eb4be36ebbc10b45840abcb08d6692961e21fdfee07d2c231ae",
+      "guide": "관망"
+    },
+    {
+      "symbol": "489730",
+      "name": "디비금융제13호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "9ff6703e5c7813795a90e2562466771c02d961134d187b35d950b0874c31e3ac",
+      "after_sha256": "7029dd2e6f06a6a650a6297e770fe4e3640e5ca7557f2ad54e35845b572bdd05",
+      "guide": "관망"
+    },
+    {
+      "symbol": "489790",
+      "name": "한화비전",
+      "asof": "2026-10-15",
+      "before_sha256": "3bcf7699663199c197fc2767dd9cf46d5b28c1ec16f27e7713d24eea80d30fe1",
+      "after_sha256": "a9b27c58d11eef441f7d31ea289e720203a6821c2b3d9c79c2cb7eb91faf2bf0",
+      "guide": "관망"
+    },
+    {
+      "symbol": "490470",
+      "name": "세미파이브",
+      "asof": "2026-10-15",
+      "before_sha256": "1556bcf7faf9e2fb29efb3dcb40d121a89cf8362da770fbcb9830a0714fa1450",
+      "after_sha256": "6ff6458f19018a74707fbde5d68646bae0df8836257e727f3cd3740efc5f547b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "491000",
+      "name": "리브스메드",
+      "asof": "2026-10-15",
+      "before_sha256": "c14718142db36c8af41f774c286a38c7b2e12039973e7d08cdb93d0b0ffcb4fc",
+      "after_sha256": "eed708374c78e7f88990542121b1e896b5ded3374046ac002f48c3bb083ce6be",
+      "guide": "관망"
+    },
+    {
+      "symbol": "492220",
+      "name": "KB제31호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "df837b372bd627257608ca3350f79f7bed676d4d81d84fa2b9c1d4e18ba2aaed",
+      "after_sha256": "1f822df0b1831db4cd81c6f5addd9f8d5a25789367735ae991191fe8a910247c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "493330",
+      "name": "지에프아이",
+      "asof": "2026-10-15",
+      "before_sha256": "5e231b9aa7eabb3eabe9bf63596ab39d56b9087e6ab6eb234f3408cb9df44e6b",
+      "after_sha256": "d2e25d4ae80dc8a8a636d06863d819b9e5e9e72d48aba1de2bb3bc3f1083d397",
+      "guide": "관망"
+    },
+    {
+      "symbol": "493790",
+      "name": "유안타제17호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "29d8b3de87b0b64113d70e469179a0261d8d2592c887017bf35b15a0c67e0370",
+      "after_sha256": "bb4c8e2a6255de25ecf64d9287b5666b3debaa9ffe53ac31e16d5f666e4209cd",
+      "guide": "관망"
+    },
+    {
+      "symbol": "494120",
+      "name": "큐리오시스",
+      "asof": "2026-10-15",
+      "before_sha256": "31f34529c00c94f7c9cbf5db0eab0914840386f32a8c9a01e4baaebd6a782acb",
+      "after_sha256": "a569a115024801ef67ed62e8f90ff1e0013c9185fd6fad8ffc86071736aefeb3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "496070",
+      "name": "신한제16호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "91876cfbb3eecceec9f200546a1e809933cba6096cc989b4b907f6eb7f79781d",
+      "after_sha256": "ec37182c63788cdf53aed0d66cdac50203651e81af375d02b5ef5ee118135bb3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "498390",
+      "name": "한화플러스제5호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "32a367c32f5a973a85ba1dfb59b2c4627355cf0acdc9e901b7cde2be53362a1a",
+      "after_sha256": "45b6332958deb1c38ac94e8b16bb9dea381fd6686efbba949d9469ad80633ed7",
+      "guide": "관망"
+    },
+    {
+      "symbol": "499790",
+      "name": "GS피앤엘",
+      "asof": "2026-10-15",
+      "before_sha256": "06b6fdf581736d3c63e8048212d16ed47c513d8f374f11ba88cf42ab9b410809",
+      "after_sha256": "a357c64c517013ac02b13f29c5eb08de086f0e49dfb0f2c2844c539af5c9e11e",
+      "guide": "관망"
+    }
+  ],
+  "newly_verified_nonblocked": [
+    {
+      "symbol": "000040",
+      "name": "KR모터스",
+      "asof": "2026-10-15",
+      "before_sha256": "be515e04f88ffddd51215b8d4c97d6dbd1193269d7dd39e4d521c982ead6bae8",
+      "after_sha256": "96f3a0ae94ce2b9ad999561a2788ffba7cbafd4b2d894edc566e309971284d71",
+      "guide": "관망"
+    },
+    {
+      "symbol": "000070",
+      "name": "삼양홀딩스",
+      "asof": "2026-10-15",
+      "before_sha256": "94218aa29ed3674047aa75ab3834a40020980892bae8884eab93637c51a40d98",
+      "after_sha256": "01a968323e4d026c1f3058ee3643e1d62f2a99f2420332c071193b4e534641ad",
+      "guide": "관망"
+    },
+    {
+      "symbol": "000320",
+      "name": "노루홀딩스",
+      "asof": "2026-10-15",
+      "before_sha256": "f97276f14c02ad1495d02776829e98253923ca344bf0aa8a101702310f758820",
+      "after_sha256": "c90d46255d7ac523faea426985bfe7a5fe4dc73f10846a9a3e5c9b6f2ce0af28",
+      "guide": "관망"
+    },
+    {
+      "symbol": "000370",
+      "name": "한화손해보험",
+      "asof": "2026-10-15",
+      "before_sha256": "6372b98fd45dbcf18c323c5159591380dd9c5c5a625ec626cc7eda8b9df9bec9",
+      "after_sha256": "4c810f97ec5615efd96c380084d608ad65e20606703ae8a8c08be5d3e1ba48a9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "000540",
+      "name": "흥국화재",
+      "asof": "2026-10-15",
+      "before_sha256": "b4b3ac9df3352340cb24fb092700727d2a7885c31ae9cf116bdff87399060dad",
+      "after_sha256": "f43e1dbac0a8c1247ac040cc3e3c94c19aa0f62d86404371348b6a6e274bd096",
+      "guide": "관망"
+    },
+    {
+      "symbol": "000650",
+      "name": "천일고속",
+      "asof": "2026-10-15",
+      "before_sha256": "1dd7cc23ea098e520ef05d82a8df0047db93262b1451cbd66088567ad607c05b",
+      "after_sha256": "e16470756f393d16575bc93b8093b90960f1cebd00f32dc7e89a5f4b7a1b0939",
+      "guide": "관망"
+    },
+    {
+      "symbol": "000760",
+      "name": "이화산업",
+      "asof": "2026-10-15",
+      "before_sha256": "5cac0595dc1ca0dce1b1ba1a8a41152e8b7d3990af5e54a7713eb42bcbf960a7",
+      "after_sha256": "13e43cafc983f51280866a78f9ac79a42d398fdfeada2fa837e6158d24947319",
+      "guide": "관망"
+    },
+    {
+      "symbol": "001000",
+      "name": "신라섬유",
+      "asof": "2026-10-15",
+      "before_sha256": "9d286fb3b7c8939ef51ef39db35573782c908a368f4b18054cc40912d85ac08b",
+      "after_sha256": "063be31007dc7635bfaf996fb94b508790c246b9819e7973a8b5c99ae4bb1f8f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "001380",
+      "name": "SG글로벌",
+      "asof": "2026-10-15",
+      "before_sha256": "76814055b98dabdeb3d3a301cb0d5896656a14eb732f1e52698b8057ef01dd32",
+      "after_sha256": "f896c5e50853446da2c0a5bd781a15d919b536090eea01c23f96ef8db882fe13",
+      "guide": "관망"
+    },
+    {
+      "symbol": "001420",
+      "name": "태원물산",
+      "asof": "2026-10-15",
+      "before_sha256": "b415324570f8fdc567ba7801e9cefb086fa0033d16ca15c450a6fca566e418aa",
+      "after_sha256": "74774c1ec17c8ebce72977d9358d9f8461c22f7316f8e78b97e5d725d1dc7e64",
+      "guide": "관망"
+    },
+    {
+      "symbol": "001540",
+      "name": "안국약품",
+      "asof": "2026-10-15",
+      "before_sha256": "c5660a9c141bb7f8dff4425099e348c1112cfe6599b45f9a60f07ff85b61fb51",
+      "after_sha256": "41e947cf99c3eec3564a3c50209a27b16ff55540c791ea8dc59a3e47b8d421a9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "002070",
+      "name": "비비안",
+      "asof": "2026-10-15",
+      "before_sha256": "dcf92ce02461459a4bcb6ce89ce89329c02397420b9fcbd3a1c998a488a49fcf",
+      "after_sha256": "ca8ed846ff874008a24e8b7855bd7d550daf5b4125c7785a073de539b07f7166",
+      "guide": "관망"
+    },
+    {
+      "symbol": "002360",
+      "name": "SH에너지화학",
+      "asof": "2026-10-15",
+      "before_sha256": "a768eb780ebf310031b9166f8001e2cbf92fdf3c8fa0bc76cc3e9e73fae1501c",
+      "after_sha256": "c971dd7bc8db2d4bc8bb68c6c24de8164b55864eadc836ef52996c9030114560",
+      "guide": "관망"
+    },
+    {
+      "symbol": "002600",
+      "name": "조흥",
+      "asof": "2026-10-15",
+      "before_sha256": "a56786dbc8b0205150e68b7828b9f764207a1770b296be1ca6db01ecd43b49b9",
+      "after_sha256": "e7373397802c656862187909d381721b12caab7ffa77c7d24eb1a2721c89dce2",
+      "guide": "관망"
+    },
+    {
+      "symbol": "002680",
+      "name": "한탑",
+      "asof": "2026-10-15",
+      "before_sha256": "c873cd7c5a23bb2c5bddf8b6832a3f09325356a0913ecd05c2d66277b71a30d1",
+      "after_sha256": "ae1184a3db631d319874b63855dec02b1b004a2f76136cabe77bdf4ba2909582",
+      "guide": "관망"
+    },
+    {
+      "symbol": "002820",
+      "name": "SUN&L",
+      "asof": "2026-10-15",
+      "before_sha256": "2025fc5ee3ed20e9430e6b17b48dd4a867505f9850122ca0cd91cfddd0cae72a",
+      "after_sha256": "d5affcf623d7b914bd76528901ccd710ccafc05c3d2386aa24a8c56f8ac12bac",
+      "guide": "관망"
+    },
+    {
+      "symbol": "003080",
+      "name": "SB성보",
+      "asof": "2026-10-15",
+      "before_sha256": "bb8a53c8a4fec38fce81ecda1850e965e41b8b8b36c3f14044b39582bfa8877d",
+      "after_sha256": "2036eecf8aaa6255470e0b5c4edb745433150d7484af3dac2eaf1da446b0a564",
+      "guide": "관망"
+    },
+    {
+      "symbol": "003540",
+      "name": "대신증권",
+      "asof": "2026-10-15",
+      "before_sha256": "3a967d754f272ba071ff3172a94f7c3b7a0daa869be560da3a89ed910bc2a059",
+      "after_sha256": "2f51da9aff8a9de00e0c0e60bc9dc1c9c5d7a00dbe28716013fc5a951ecfb83b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "003610",
+      "name": "방림",
+      "asof": "2026-10-15",
+      "before_sha256": "1240edb8425f7f5360ad8152441867938a8b969096939429faba2fb542b619f7",
+      "after_sha256": "14995e9f945446db70625381c874315131c34f01c54f38fff1fc5148b6fec578",
+      "guide": "관망"
+    },
+    {
+      "symbol": "003830",
+      "name": "대한화섬",
+      "asof": "2026-10-15",
+      "before_sha256": "ffba711e9e39deee2941fae2b2a8d883cf9611409c302f153c0500f99e66d130",
+      "after_sha256": "b213b76ea43e43882524b78f3aadaa5a3d9a7d4f5ddc56df5bfe64263084b9cf",
+      "guide": "관망"
+    },
+    {
+      "symbol": "003920",
+      "name": "남양유업",
+      "asof": "2026-10-15",
+      "before_sha256": "f8208534e090847e38eb98aab7737c4213e5fd23526e9960f61f2009f0f59b0b",
+      "after_sha256": "d4d887f460a152c97f8a1a3911272b9a1f43ce2c62abb9a2008649f127a3872f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "004060",
+      "name": "SG세계물산",
+      "asof": "2026-10-15",
+      "before_sha256": "d5cba10ffa6d323a7f306d02143f615e49fb2839126d2981efb580c9513e42db",
+      "after_sha256": "71e135ec120b9dc31bbe3141a6429b4c30bc8a8da557d52e8e05f85743ace887",
+      "guide": "관망"
+    },
+    {
+      "symbol": "004150",
+      "name": "한솔홀딩스",
+      "asof": "2026-10-15",
+      "before_sha256": "bf9565d78ea3c37e1312174318f14fa75afa5997806df5321faf15c12c8a3617",
+      "after_sha256": "86490ad19b3cec85947562b49737460c29db7b3b7aff169a9a3d2b589f48c4a1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "004270",
+      "name": "남성",
+      "asof": "2026-10-15",
+      "before_sha256": "492b07e27fefb4b8d826a8cf582804c6badca7d1868bb94f239bab46840235b6",
+      "after_sha256": "af18b81215289353ee54a13f8e2408637443cc71dc67dd7abfe70a987c7bcbcc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "004870",
+      "name": "티웨이홀딩스",
+      "asof": "2026-10-15",
+      "before_sha256": "ff4b996f31a99d7f429bc5c9be7c5472e47746fd30c3d575ab222cac0d0fa43d",
+      "after_sha256": "c197bfbab144bc94634f33fba3b7c60c755eab1dd9aaa764803bf0f974426fab",
+      "guide": "관망"
+    },
+    {
+      "symbol": "004890",
+      "name": "동일산업",
+      "asof": "2026-10-15",
+      "before_sha256": "29c69ecc6debdbbee937f511ab51c6752413da0e0610cbb27594c2ca4f7769f4",
+      "after_sha256": "1d6707b0ec2b82d7650013064e8c3fecb8db990222bc31970126aefe921e4736",
+      "guide": "관망"
+    },
+    {
+      "symbol": "004920",
+      "name": "씨아이테크",
+      "asof": "2026-10-15",
+      "before_sha256": "6253d914a6cdc8bf592dc774cc2361dcdc0e18d5d69880f080fb4d206ecaf3c4",
+      "after_sha256": "c98016f2a91b9f8bcb09eae833070c7613660bb080d4fe57a6b78df27f86b8f4",
+      "guide": "관망"
+    },
+    {
+      "symbol": "004970",
+      "name": "신라교역",
+      "asof": "2026-10-15",
+      "before_sha256": "412c37f43819612a7395308910ab79bcab680e09a74b495e89ef1121575cb860",
+      "after_sha256": "afa963d78b671bdfa1aae7184a18da335fe9b47c5fd081bb5cdf90b9b5ae60db",
+      "guide": "관망"
+    },
+    {
+      "symbol": "004990",
+      "name": "롯데지주",
+      "asof": "2026-10-15",
+      "before_sha256": "6d501eaa505ab885c9fd9307b0c64dcb9fda53e58fec477f9d3db5050c905411",
+      "after_sha256": "5e7c8049131c4c2d3d7e0f427ee3fc60d6864354cb1bb876a80f45449c9ec264",
+      "guide": "관망"
+    },
+    {
+      "symbol": "005320",
+      "name": "온타이드",
+      "asof": "2026-10-15",
+      "before_sha256": "97d54a4bb9c86c10c2825e0da5883e73b7a1f0fe017f62757bf9af3bfb77ee25",
+      "after_sha256": "380d5d5006c08aaca5d2583cc82634a5b3770350d4f1ef00ade1b3e758222dc3",
+      "guide": "관망"
+    },
+    {
+      "symbol": "005360",
+      "name": "모나미",
+      "asof": "2026-10-15",
+      "before_sha256": "392354b0a0e0c84bf7b86a58bfe02c88e9ce019c2b99f0ac6a28fd85f9e8049a",
+      "after_sha256": "f760b6ee7f384a7621e339dcce863a82d9bea915866a06d6ad375f47c6793966",
+      "guide": "관망"
+    },
+    {
+      "symbol": "005820",
+      "name": "원림",
+      "asof": "2026-10-15",
+      "before_sha256": "ea883501e83a64e3f0e448c7f8fc9aa200b78d18221aa763b7e589c44ad48400",
+      "after_sha256": "02f39c18bd976ebf47534ab0d29ce818e4202deeaff589cf5de3bdbad5bcef36",
+      "guide": "관망"
+    },
+    {
+      "symbol": "006050",
+      "name": "국영지앤엠",
+      "asof": "2026-10-15",
+      "before_sha256": "6b75be5fb57124c695d55403929df9b14d99de8bf5791db04195d6c95fdfc31a",
+      "after_sha256": "176548e115e4853e1964d98164a0c7518216e9cdf931a890d8da369224af90b9",
+      "guide": "관망"
+    },
+    {
+      "symbol": "006200",
+      "name": "한국전자홀딩스",
+      "asof": "2026-10-15",
+      "before_sha256": "df07cec0785101a70288533da3f1d6e0f48c870e014df30d7e3799afbb0652a9",
+      "after_sha256": "c438de9c566a6d1ca9e6727aa111b4dc0d5ed32aa55354123959e7f084badaff",
+      "guide": "관망"
+    },
+    {
+      "symbol": "006490",
+      "name": "프리티",
+      "asof": "2026-10-15",
+      "before_sha256": "d314cb437bf3cc5992413187839b8510d69d50554eb33dfa4fdbdaefdae2c772",
+      "after_sha256": "9357fa29dfe8521f624982cac4dfd8fda69099f0e16ec23c5061151e9d91098e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "007110",
+      "name": "일신석재",
+      "asof": "2026-10-15",
+      "before_sha256": "91b3e2ebbea1c1488b419b2b80ddee0406a14c065c927b7b5e580a40018faf61",
+      "after_sha256": "745399440308fe15b1cc1871127cbcb269ccd207956b871ccbf3f05e830e617b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "007330",
+      "name": "푸른저축은행",
+      "asof": "2026-10-15",
+      "before_sha256": "533022b71f7286021b4d51cd8cd4f45d08b3aabdbaccf25af8a69c8392a56255",
+      "after_sha256": "607f102d5ad63ab1d654738d6ab8d42b8139b2028b77b08e4655ad1001bd0b53",
+      "guide": "관망"
+    },
+    {
+      "symbol": "360350",
+      "name": "코셈",
+      "asof": "2026-10-15",
+      "before_sha256": "c886da5fbe7ab58268a6e671032bc890eca9a08d54acb83a935c551977e06df4",
+      "after_sha256": "c5d6a3c189339c5d571c1fd90b8e8eb00a84063a9da907c33aebb8b29297b4ca",
+      "guide": "관망"
+    },
+    {
+      "symbol": "365270",
+      "name": "큐라클",
+      "asof": "2026-10-15",
+      "before_sha256": "0d7e82b272a47f5ec2a1dc55cf83772d6d2322f6f8fafe7f1291b7ae5f456abe",
+      "after_sha256": "68e18823c881933ac485b333574626dab50c2edc1dff1b5a024d4f47ba35458e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "365900",
+      "name": "브이씨",
+      "asof": "2026-10-15",
+      "before_sha256": "d45a02a3c95993b890923fdd7e39721808ca917716348f79ccc040a38b1851f5",
+      "after_sha256": "8d9ce496ee7d209a555e5ccd3bdcb7d56dad7a4bacda5fad083a8865f8e71cb4",
+      "guide": "관망"
+    },
+    {
+      "symbol": "373170",
+      "name": "엠아이큐브솔루션",
+      "asof": "2026-10-15",
+      "before_sha256": "867f9d0ec62e7f71306994ceb430c8a6cd7c9db08f4df44cb85c5eb03e5f3932",
+      "after_sha256": "999a7eb8a2d2f2721876c1cfae14667522848489608f0881f68469b89a206691",
+      "guide": "관망"
+    },
+    {
+      "symbol": "373200",
+      "name": "엑스플러스",
+      "asof": "2026-10-15",
+      "before_sha256": "92d733d5f10db7006ded3bc58c9e091d0535979552be3972a338d2231c3c4f59",
+      "after_sha256": "86db99e5c5cbdfda59932fdac1a59c94d352c1a9e1fbd33458e35b648371d982",
+      "guide": "관망"
+    },
+    {
+      "symbol": "376180",
+      "name": "피코그램",
+      "asof": "2026-10-15",
+      "before_sha256": "3be60842112a9e225345a24851e79637230f2c66dea800340f78ada788bd8674",
+      "after_sha256": "24d50c4b427f862c61c96ef5f60085c936753bf0cfd74a6b4b061a57c3992526",
+      "guide": "관망"
+    },
+    {
+      "symbol": "376930",
+      "name": "노을",
+      "asof": "2026-10-15",
+      "before_sha256": "68ce2af4ff48de9b70fa29442f82e04ae9ccdcbb80cd904c8d852d5c9186a165",
+      "after_sha256": "34bfe2ee6e58d3b9c8ae516b12a18e8691d17d8d31abcb181205db6381dc3e3f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "377030",
+      "name": "비트맥스",
+      "asof": "2026-10-15",
+      "before_sha256": "87312d9dc36d81e6ff925010e8e2cd22db80067c989b8b3f3bd4b248c3837595",
+      "after_sha256": "bb67c54c2e6c136d2a58806b5e11eba7ec683b9c253f9bb9a642c79ab84787bc",
+      "guide": "관망"
+    },
+    {
+      "symbol": "377220",
+      "name": "프롬바이오",
+      "asof": "2026-10-15",
+      "before_sha256": "279dd341b8da2b5762c3d88302f9ca4f35fdb7bc01d626a18d2114700029ad33",
+      "after_sha256": "81b883f40c8801315ea05fb2e0f67366f142c5e89beb66075b7c18dc18161c5e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "378800",
+      "name": "샤페론",
+      "asof": "2026-10-15",
+      "before_sha256": "ee4276e20abf3569cfa79062f29209ac8fb126de0b8de02f36849bc92d5c7a27",
+      "after_sha256": "0f318968c06d430289747555fa55a4cffec31109e402c7dde53cfbde2992f9b6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "381970",
+      "name": "KG모빌리티플랫폼",
+      "asof": "2026-10-15",
+      "before_sha256": "38642c69e28615480d40389d54a84a8c483288ac6a668880d23989a6c624715d",
+      "after_sha256": "3aae41d6995aebe55a4b02dd4afdccd0ce8fe9cf3699830820d982de51dde626",
+      "guide": "관망"
+    },
+    {
+      "symbol": "383220",
+      "name": "F&F",
+      "asof": "2026-10-15",
+      "before_sha256": "aa7622ee03989ea46629afc0c50cc8a660d2b2293a08cf656e5604862f3e9632",
+      "after_sha256": "ff8dd79ebcddd7d570ee713c89b0c1cfe9224cc3cb29cbb7cc2d24d7e303613c",
+      "guide": "관망"
+    },
+    {
+      "symbol": "387570",
+      "name": "파인메딕스",
+      "asof": "2026-10-15",
+      "before_sha256": "eb1b1707bd6ee97760aa43bbf2828c3bde8bcc779c18c8bbc1f054807f333f64",
+      "after_sha256": "a8a50af047c65251cb6a41a10e9b327e8a30bd93d8394cfc741c87e543c4216e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "389680",
+      "name": "유디엠텍",
+      "asof": "2026-10-15",
+      "before_sha256": "32aca3f7fcc3a59b368c6cddd4ab132b2bd9066f01f55fb1736a25e0f6e2fcfd",
+      "after_sha256": "d8da0478a7b069661d7c463c81966d11de5f8c29bf3da0d6e6b7fdd7d678c7c6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "396300",
+      "name": "HT로보틱스",
+      "asof": "2026-10-15",
+      "before_sha256": "3135a3530c6bf53ca25f47e6df1aa25f2f00142bed9003b448b86fc0c0443b56",
+      "after_sha256": "f5523a1e2954b5d66a173c021a7815cab06a0705cd0b6ae175bb26cfc8f59578",
+      "guide": "관망"
+    },
+    {
+      "symbol": "424980",
+      "name": "마이크로투나노",
+      "asof": "2026-10-15",
+      "before_sha256": "f9cdeab2e0e543820f8c2e3d1296548979a01f66ebb3cf6e71839136ade34cfc",
+      "after_sha256": "e3edac43dd287b2c003c4e468a7aed52bba12afab240e4d7d6ead784e2eeff04",
+      "guide": "관망"
+    },
+    {
+      "symbol": "432430",
+      "name": "와이랩",
+      "asof": "2026-10-15",
+      "before_sha256": "55d6b3b5f164e8118309ecba5452aea80bfab1f6bcb9dae4187f229417f4dd6d",
+      "after_sha256": "0164addbb0440f01c9d16f9d0c633804e71e1c90c3d091c36619929733cbd94e",
+      "guide": "관망"
+    },
+    {
+      "symbol": "464280",
+      "name": "티디에스팜",
+      "asof": "2026-10-15",
+      "before_sha256": "38941b8c32c29368418e93204e6c6da50fafbd096c0a2adc65041ec0d18b0b13",
+      "after_sha256": "9b591b8d41e7f601e239ddd2638a54690540409afa61eff6038daae0f1a51d75",
+      "guide": "관망"
+    },
+    {
+      "symbol": "465770",
+      "name": "STX그린로지스",
+      "asof": "2026-10-15",
+      "before_sha256": "cb062eff5b97c6b0e6d743bdf2bdd5d5186179a08021f2067cab41f92038a532",
+      "after_sha256": "dff24a026f22dc408e74671c0de7688e8053ac128715fc1c65ae81b8d0ffb06b",
+      "guide": "관망"
+    },
+    {
+      "symbol": "466690",
+      "name": "키움히어로제1호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "5b527f23286cd3c178f8536677e5c233daf42cb7ab5d712a458313cda4f06e6f",
+      "after_sha256": "ead48756dfa411348071d547a668c84c5db7ae7f6a4a5c21aa67b50a851ece54",
+      "guide": "관망"
+    },
+    {
+      "symbol": "473950",
+      "name": "에스케이증권제13호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "dc0f736f819081b184a28af17d009ee98e4ed80b8ef49ef219a81e7429cd6d8d",
+      "after_sha256": "511639098bb731d63a4569bf5c03f2e663c0889def2c8d4d1c2a4e9fc27ea1d2",
+      "guide": "관망"
+    },
+    {
+      "symbol": "474660",
+      "name": "신한제12호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "cd6e062663a089a0983cb40d0834e4740819fe3dad80deea0aad8d969ebd77f6",
+      "after_sha256": "d16f75906862cbb4c7498621ee8820d2b5c3597f93a0e85d47872eccddb899ed",
+      "guide": "관망"
+    },
+    {
+      "symbol": "474930",
+      "name": "신한제13호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "7f59a9c7f9ee13635d2669e8f6b22255f1ebee3c1bf448a1825972aafd1b092b",
+      "after_sha256": "c558c19ff37150372916cb4017cd232dfe85f51bac2ba70dbf21a7ae4cc149c1",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475240",
+      "name": "하나32호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "df5c2e869b0cd9f1b90b83bfbcd2b9550f33d09996b95b585a1a61f4f43625c5",
+      "after_sha256": "466976f5778e3b6a40e3c173789f9f6e5b49d58f3dbbe030c53c4af079d14848",
+      "guide": "관망"
+    },
+    {
+      "symbol": "475250",
+      "name": "하나33호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "368e2349c0aab0394c83ad24557c2abbb642962e9f0a77eaceabe87a501e5d42",
+      "after_sha256": "7eff3cb4bd4c96ab2dcf05094db0a749cbeded7e53b08e797876c67679c3f862",
+      "guide": "관망"
+    },
+    {
+      "symbol": "477380",
+      "name": "미래에셋비전스팩4호",
+      "asof": "2026-10-15",
+      "before_sha256": "7c7dd5efe2b24b9def654b02b24670958d63e53334b818027b6280a500473d0f",
+      "after_sha256": "df409dc261b1e94238074aa2a48e0ed8b044c2f9a403f827f1e1031f590f2732",
+      "guide": "관망"
+    },
+    {
+      "symbol": "477470",
+      "name": "미래에셋비전스팩5호",
+      "asof": "2026-10-15",
+      "before_sha256": "e890c1cb77ff903c131432eed6ed4d5404e0813214ed5ad60e3fd4eb4df5e007",
+      "after_sha256": "8a52e034b394ed018fd67434b14c88e2e3a19488348693f51d8e07e8317d47ee",
+      "guide": "관망"
+    },
+    {
+      "symbol": "478110",
+      "name": "이베스트스팩6호",
+      "asof": "2026-10-15",
+      "before_sha256": "3519b7ef6bfb86b48e3cfe7e9145e83f70a14205d7e3b289026024f4920b2873",
+      "after_sha256": "d3ecf4170cdd03e94ad779443452b2ce3aca8b945d145d7104ca90265910dcc8",
+      "guide": "관망"
+    },
+    {
+      "symbol": "478440",
+      "name": "미래에셋비전스팩6호",
+      "asof": "2026-10-15",
+      "before_sha256": "be994025e90d0f01ace6aa47f5c376725f9e1fe967cdd8340d01528373d1b23d",
+      "after_sha256": "6607967e350d2b9b35dd119e0ca31affa86076a44524b72c40587b9bf91c13c6",
+      "guide": "관망"
+    },
+    {
+      "symbol": "478560",
+      "name": "블랙야크아이앤씨",
+      "asof": "2026-10-15",
+      "before_sha256": "3059eee68bdd79047ed1df3f9e39027aee1eb5f939e28f7a069cea0805d4b914",
+      "after_sha256": "01b253e80dfebf23b796ea758d77a8d6ccd48f67f2fed91c6bfcd8a9dece86ad",
+      "guide": "관망"
+    },
+    {
+      "symbol": "479880",
+      "name": "한국제15호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "04a0b1a1e32a4a0525213628c7d14ad3db4993f2e2f47823281125eb7ffd1a70",
+      "after_sha256": "1c8ce8b3f59a22c29fcd3ed1f2dce23db05b532a1d754f00e1b197cce300582f",
+      "guide": "관망"
+    },
+    {
+      "symbol": "481890",
+      "name": "엔에이치스팩31호",
+      "asof": "2026-10-15",
+      "before_sha256": "8e72fdda6b5b631f34c7d36b7eb8c9851391eeda6dae4616d9085c5ffd9638e0",
+      "after_sha256": "d5ce985cf101c5392210a74aa01a3291302e82d25ca7aece06fdbf6088ea9465",
+      "guide": "관망"
+    },
+    {
+      "symbol": "482690",
+      "name": "대신밸런스제19호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "0de13ab2d71f58c3ff0be16cc913378c5b9272b248b4e4cff7112dcdff476628",
+      "after_sha256": "dbe3fb66177f7de6c00581374759ee6a411f53093d8daa97c85777a4d148cd27",
+      "guide": "관망"
+    },
+    {
+      "symbol": "484120",
+      "name": "도우인시스",
+      "asof": "2026-10-15",
+      "before_sha256": "e51999dbded0b65e239d1efdbaa1aedab67951ac9876371990b1a9dea77b6819",
+      "after_sha256": "305cfca85022ed4cbb3259407831dbe81d39b2b0cf23ea58a1fec6363433ae31",
+      "guide": "관망"
+    },
+    {
+      "symbol": "484130",
+      "name": "하나34호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "2d5eaee1d722fde1e12eaf47c1fdf4c29e9d0bc96f3f1e4bbaa8e0dba3b6d01d",
+      "after_sha256": "a2cc477191a4614e05e9660e0b67905d69b2af367882bd5b723d914da1ad6bc2",
+      "guide": "관망"
+    },
+    {
+      "symbol": "486630",
+      "name": "KB제30호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "e30076074ffb8c69553accd0f105d0e2e54b74b4ba3350934e1386716ed31c33",
+      "after_sha256": "45b68c38333fb249ec8d3a84f068a2b40972e1f83f91a00d66b9f32e5c889249",
+      "guide": "관망"
+    },
+    {
+      "symbol": "487360",
+      "name": "신한제14호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "f4662f3c6db5cfad7f2e12392d2b622d3f2f46009809ae5aa36a9b1baf4c5d88",
+      "after_sha256": "0a2369cf6120c053352e92d284023bf04849806084e9770c4e1d5984c3211f2d",
+      "guide": "관망"
+    },
+    {
+      "symbol": "487830",
+      "name": "신한제15호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "0d459ed6068fa779e57bfc0c7062de8122258fa79b5e84fb5d406da9cdec119e",
+      "after_sha256": "635d7cb811aa245acbea4c98e679d143581ce6f60a45da51feb790c2c6237dd4",
+      "guide": "관망"
+    },
+    {
+      "symbol": "488060",
+      "name": "유진스팩11호",
+      "asof": "2026-10-15",
+      "before_sha256": "b18395a2b089cc71797545f95f1078dad9e660295d20ad9814fc6f5dea30fb42",
+      "after_sha256": "d99d0a80bc0bb5051ca1a95f5af58a82e85289c5d4d5fef3cb19ae291e8bd913",
+      "guide": "관망"
+    },
+    {
+      "symbol": "489210",
+      "name": "교보17호스팩",
+      "asof": "2026-10-15",
+      "before_sha256": "365b6a8d524e7dcdb4d94768af2c046d57a3beb5c6d2fdaea1af5a47bdccd6ce",
+      "after_sha256": "531de931ade5652a9f4d11afdcd314a10b31177357ccdc7b7e0e2717b8f61296",
+      "guide": "관망"
+    }
+  ],
+  "stock_activity": 399,
+  "sector_activity": 4,
+  "independent_complete_sectors": [
+    {
+      "market": "KOSDAQ",
+      "sector": "표준산업 · 연료용 가스 제조 및 배관공급업",
+      "symbols": [
+        "053050"
+      ],
+      "activity": 0.25441725497869283,
+      "dates": [
+        "2026-09-07",
+        "2026-09-08",
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-14",
+        "2026-09-15",
+        "2026-09-16",
+        "2026-09-17",
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30",
+        "2026-10-01",
+        "2026-10-02",
+        "2026-10-06",
+        "2026-10-07",
+        "2026-10-08",
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15"
+      ],
+      "daily_turnover": [
+        258710475.0,
+        242702352.0,
+        113870697.0,
+        8499656577.0,
+        2635969810.0,
+        981562044.0,
+        342517954.0,
+        283983332.0,
+        142025084.0,
+        255381550.0,
+        258819931.0,
+        108415213.0,
+        93468296.0,
+        187142346.0,
+        112453738.0,
+        107736166.0,
+        53312448.0,
+        106307959.0,
+        152138303.0,
+        137942189.0,
+        275405902.0,
+        193049051.0,
+        114862410.0,
+        95391373.0,
+        280070097.0
+      ]
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "표준산업 · 전기업",
+      "symbols": [
+        "060900"
+      ],
+      "activity": 0.7367952840444179,
+      "dates": [
+        "2026-09-07",
+        "2026-09-08",
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-14",
+        "2026-09-15",
+        "2026-09-16",
+        "2026-09-17",
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30",
+        "2026-10-01",
+        "2026-10-02",
+        "2026-10-06",
+        "2026-10-07",
+        "2026-10-08",
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15"
+      ],
+      "daily_turnover": [
+        19200465.0,
+        77603025.0,
+        151261680.0,
+        36411285.0,
+        165796175.0,
+        31947355.0,
+        58113850.0,
+        149997965.0,
+        31680907.0,
+        22442239.0,
+        21231000.0,
+        30792100.0,
+        469176825.0,
+        1053545570.0,
+        333322722.0,
+        866172338.0,
+        1087520098.0,
+        1348307910.0,
+        137445566.0,
+        586377286.0,
+        200042854.0,
+        200090474.0,
+        348391961.0,
+        234358467.0,
+        247259770.0
+      ]
+    },
+    {
+      "market": "KOSPI",
+      "sector": "부동산",
+      "symbols": [
+        "210980",
+        "317400"
+      ],
+      "activity": 0.5740700378941493,
+      "dates": [
+        "2026-09-07",
+        "2026-09-08",
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-14",
+        "2026-09-15",
+        "2026-09-16",
+        "2026-09-17",
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30",
+        "2026-10-01",
+        "2026-10-02",
+        "2026-10-06",
+        "2026-10-07",
+        "2026-10-08",
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15"
+      ],
+      "daily_turnover": [
+        10830848410.0,
+        12951271200.0,
+        24506954709.0,
+        19589148649.0,
+        25909525592.0,
+        15355808507.0,
+        8531495215.0,
+        9525291980.0,
+        11015385496.0,
+        8132923584.0,
+        8633167710.0,
+        7921408655.0,
+        8056849368.0,
+        6378285667.0,
+        9972167359.0,
+        5500783350.0,
+        6038385855.0,
+        5659302398.0,
+        8385017511.0,
+        4325886219.0,
+        4674610592.0,
+        7408693049.0,
+        8882598883.0,
+        4861912084.0,
+        5347045515.0
+      ]
+    },
+    {
+      "market": "KOSPI",
+      "sector": "표준산업 · 어로 어업",
+      "symbols": [
+        "004970",
+        "030720"
+      ],
+      "activity": 1.3075209598163025,
+      "dates": [
+        "2026-09-07",
+        "2026-09-08",
+        "2026-09-09",
+        "2026-09-10",
+        "2026-09-11",
+        "2026-09-14",
+        "2026-09-15",
+        "2026-09-16",
+        "2026-09-17",
+        "2026-09-18",
+        "2026-09-21",
+        "2026-09-22",
+        "2026-09-23",
+        "2026-09-28",
+        "2026-09-29",
+        "2026-09-30",
+        "2026-10-01",
+        "2026-10-02",
+        "2026-10-06",
+        "2026-10-07",
+        "2026-10-08",
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15"
+      ],
+      "daily_turnover": [
+        832275030.0,
+        695791415.0,
+        199208230.0,
+        274321170.0,
+        223637245.0,
+        148831250.0,
+        108909770.0,
+        158474545.0,
+        221950670.0,
+        350426180.0,
+        146569275.0,
+        151243090.0,
+        247115950.0,
+        257233742.0,
+        243385385.0,
+        189767734.0,
+        163963845.0,
+        132153605.0,
+        199900897.0,
+        316968555.0,
+        576501667.0,
+        139709235.0,
+        280089575.0,
+        263001695.0,
+        460783355.0
+      ]
+    }
+  ],
+  "raw_preservation": {
+    "instruments": {
+      "identical": true,
+      "rows": 2432
+    },
+    "memberships": {
+      "identical": true,
+      "rows": 4860
+    },
+    "flows": {
+      "identical": true,
+      "rows": 50997
+    },
+    "prices": {
+      "identical": true,
+      "rows": 65667
+    },
+    "financials": {
+      "identical": true,
+      "rows": 2415
+    },
+    "benchmarks": {
+      "identical": true,
+      "rows": 78
+    },
+    "calendar": {
+      "identical": true,
+      "rows": 78
+    },
+    "exclusions": {
+      "identical": true,
+      "rows": 228
+    }
+  },
+  "legacy_scores_unchanged": true,
+  "rules_unchanged": {
+    "technical_rules.json": true,
+    "eligibility_rules.json": true,
+    "theme_mapping.json": true,
+    "config.toml": true
+  },
+  "corporate": {
+    "business_success_before": 714,
+    "business_success_after": 714,
+    "failed_financial_jobs": 2,
+    "attachment_held": 12,
+    "source_reviews": 14,
+    "prior_versions_preserved": true,
+    "prior_events_preserved": true
+  },
+  "before_db_sha256": "855475ba8eb1768d2aed8f01c57d09f740e8640a0ec20a67160f5999ab0b248c",
+  "after_db_sha256": "0e865338af034b682dd2a733c07357088763f362fddeef4e473b923b6f6d8f11",
+  "source_commit": "adf326b10235354fe736e6e1f57fbe00087f9d30",
+  "phase2_baseline_commit": "06baf219b0c5344e9d999d6881865de3c0e60db6",
+  "basis": "Preserved previous completed audit; same production data at phase2 baseline."
+}

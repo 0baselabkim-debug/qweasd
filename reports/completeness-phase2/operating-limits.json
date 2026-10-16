@@ -1,0 +1,16 @@
+{
+  "kis_physical_requests_per_run": 60,
+  "recovery_date_symbol_tasks_per_scheduled_run": 6,
+  "new_request_deadline_seconds": 240,
+  "kis_interval_seconds": 1.05,
+  "shared_concurrency": "kis-validation-auth",
+  "source_date": "2026-10-15",
+  "new_day_2026_10_16_operating_result": "NOT_YET_OBSERVED_AFTER_CLOSE",
+  "schedule_six_task_result": "NOT_YET_OBSERVED",
+  "no_intraday_data_promoted": true,
+  "daily_kst_attempts": [
+    "20:30",
+    "23:30"
+  ],
+  "verification_finality_policy": "UNVERIFIED retained; same-day bars cannot pass prior-Seoul-date acceptance"
+}
