@@ -160,3 +160,15 @@ def test_unready_benchmark_is_not_a_durable_success():
  assert not benchmark_ready({'output2':[{'stck_bsop_date':'20261015','bstp_nmix_prpr':'100'}]},'20261016')
  assert benchmark_ready({'output2':[{'stck_bsop_date':'20261016','bstp_nmix_prpr':'100'}]},'20261016')
  assert not benchmark_ready({'output2':[{'stck_bsop_date':'20261016','bstp_nmix_prpr':'nan'}]},'20261016')
+
+def test_physical_metrics_distinguish_auth_retry_and_cached_success():
+ from daily_metrics import summarize
+ metrics=[{'kind':'authentication','attempt':1},
+          {'symbol':'000001','endpoint':'flow','attempt':1,'http':200},
+          {'symbol':'000001','endpoint':'price','attempt':1,'http':429},
+          {'symbol':'000001','endpoint':'price','attempt':2,'http':200}]
+ d=summarize(metrics,{'000001':{},'000002':{}})
+ assert d['physical_requests']==4 and d['authentication']==1 and d['retries']==1
+ assert d['more_than_two_request_symbols']=={'000001':3}
+ assert d['successful_with_two_physical_requests']==0 and d['successful_without_request_this_attempt']==1
+ assert d['rate_limit_responses']==1

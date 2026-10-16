@@ -8,6 +8,7 @@ import shutil
 import time
 from pathlib import Path
 import duckdb
+import pandas as pd
 from .market_quality import quote_cap
 from .store import load
 from .scoring import evaluate
@@ -92,6 +93,7 @@ def build_candidate(b,baseline,destination):
             previous_count=c.execute('select count(*) from flows where trade_date=?',[previous]).fetchone()[0]
             if len(rows)<previous_count*.9:raise ValueError('Evaluated coverage dropped by more than 10%')
             c.execute('BEGIN')
+            adjusted_updates=[]
             for r in rows:
                 code=r['symbol'];i=r['instrument'];f=r['fields'];record=r['record'];sector=r['sector']
                 old=c.execute('select net_amount,net_quantity from flows where symbol=? and trade_date=?',[code,day]).fetchone()
@@ -113,7 +115,7 @@ def build_candidate(b,baseline,destination):
                 c.execute('insert or ignore into prices values (?,?,?,?,?,?,?,?,?,?,?,?)',[code,day,f['stck_clpr'],None,f['acml_tr_pbmn'],f['acml_vol'],r['cap'],'KIS dated J daily flow + adjusted chart','KRX','KIS J '+record.get('quote_source','FHKST01010100.output')+' hts_avls × 100 million KRW','CLOSE_VOLUME_DATED_MASTER_SHARES_MATCH',record['observed_at']])
                 for v in record['adjusted_prices']:
                     d=dt.datetime.strptime(v['stck_bsop_date'],'%Y%m%d').date()
-                    c.execute('update prices set adjusted_close=? where symbol=? and trade_date=?',[float(v['stck_clpr']),code,d]);audit['adjusted_updates']+=1
+                    adjusted_updates.append((code,d,float(v['stck_clpr'])));audit['adjusted_updates']+=1
                 c.execute('insert or ignore into calendar values (?,?)',[i['market'],day])
             for code,r in b['excluded'].items():
                 c.execute('insert or ignore into exclusions values (?,?,?,?)',[code,r['name'],day,r['reason']])
@@ -125,7 +127,13 @@ def build_candidate(b,baseline,destination):
                     if d==day:
                         # Do not invent a raw close/cap for an excluded company.
                         c.execute('insert or ignore into prices(symbol,trade_date,adjusted_close,volume,turnover,source,exchange) values (?,?,?,?,?,?,?)',[code,day,adj,integer(v['acml_vol']),integer(v['acml_tr_pbmn']),'KIS J adjusted chart; excluded from stock evaluation','KRX'])
-                    c.execute('update prices set adjusted_close=? where symbol=? and trade_date=?',[adj,code,d])
+                    adjusted_updates.append((code,d,adj))
+            if adjusted_updates:
+                updates=pd.DataFrame(adjusted_updates,columns=['symbol','trade_date','adjusted_close'])
+                if updates.duplicated(['symbol','trade_date']).any():raise ValueError('Duplicate adjusted update identity')
+                c.register('validated_daily_adjustments',updates)
+                c.execute('update prices p set adjusted_close=u.adjusted_close from validated_daily_adjustments u where p.symbol=u.symbol and p.trade_date=u.trade_date and p.adjusted_close is distinct from u.adjusted_close')
+                c.unregister('validated_daily_adjustments')
             for market,response in b['benchmarks'].items():
                 for r in response['output2']:
                     d=dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date();value=float(r['bstp_nmix_prpr'])

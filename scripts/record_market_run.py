@@ -17,6 +17,7 @@ def make_record(env,bundle,ledger):
  'success_symbols':len(bundle['records']) if 'records' in bundle else None,'excluded_symbols':len(bundle['excluded']) if 'excluded' in bundle else None,
  'failed_symbols':len(bundle['failures']) if 'failures' in bundle else None,'failures':bundle.get('failures',{}),
  'collection_status':bundle.get('status','not_started_or_already_published'),'published_at':publication.get('published_at_utc') if same_run else None,
+ 'call_summary':bundle.get('call_summary',{}),
  'collection_attempts':bundle.get('attempts',[]),'phase_seconds':bundle.get('phase_seconds',{}),'checkpoint_cost':bundle.get('checkpoint_cost',{}),
  'two_call_successes':sum(r.get('quote_source')=='FHKST03010100.output1' for r in bundle.get('records',{}).values()),
  'third_call_successes':sum(r.get('quote_source')=='FHKST01010100.output' for r in bundle.get('records',{}).values()),

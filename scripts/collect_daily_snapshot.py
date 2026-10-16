@@ -5,6 +5,7 @@ from zoneinfo import ZoneInfo
 from html.parser import HTMLParser
 from kis_public_client import KIS
 from daily_checkpoint import Journal
+from daily_metrics import summarize
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from screener.daily import validate_bundle
 from screener.collection_schedule import window
@@ -139,7 +140,7 @@ def collect(day,out):
     if entry:registry.update(json.loads(entry[0]))
     def save():
         t=time.monotonic()
-        result.update(updated_at=utcnow(),elapsed_seconds=round(time.monotonic()-started,3),metrics=api.metrics,phase_seconds=phases,checkpoint_cost=checkpoint_stats)
+        result.update(updated_at=utcnow(),elapsed_seconds=round(time.monotonic()-started,3),metrics=api.metrics,phase_seconds=phases,checkpoint_cost=checkpoint_stats,call_summary=summarize(api.metrics,result['records']))
         result['attempts'][-1].update(physical_requests=len(api.metrics),retries=sum(m.get('attempt',1)>1 for m in api.metrics),endpoints=dict(Counter(m.get('endpoint','legacy') for m in api.metrics)),elapsed_seconds=round(time.monotonic()-started,3),successful=len(result['records']),failed=len(result['failures']))
         raw=json.dumps(result,ensure_ascii=False,separators=(',',':'))
         if any(s in raw for s in [api.key,api.secret,api.token]):raise ValueError('Credential in result')
