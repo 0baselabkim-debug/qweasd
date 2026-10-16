@@ -170,8 +170,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
         if not reference_ready(b,refs):
             deferred_reference.append(key);continue
         checked=batch.crosscheck(copy.deepcopy(b),refs)
-        if checked.get('price_finality')!='CONFLICT' and not b.get('seed_provenance') and not blocking_conflicts(b):
-            not_conflicting.append(key);continue
+        needs_price_requery=(checked.get('price_finality')=='CONFLICT' or bool(b.get('seed_provenance')) or bool(blocking_conflicts(b)))
         job=ledger['jobs'].setdefault(key,{});attempts=job.get('attempts',0)+1
         observation_start=len(bounded.observations)
         before=digest(b)
@@ -197,7 +196,13 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
         # Archive the complete original (including the previous flow evidence).
         batch.write(batch.CACHE.parent/'observations'/day/b['symbol']/(before+'.json.gz'),b)
         try:
-            proposed=candidate(bounded,b,refs,paged)
+            if needs_price_requery:
+                proposed=candidate(bounded,b,refs,paged)
+                result['verification_path']='fresh_price_candidate'
+            else:
+                from scripts.technical_acceptance import verify_saved_or_live
+                proposed=verify_saved_or_live(bounded,b,refs)
+                result['verification_path']='existing_prices_full_verification'
             candidate_hash=digest(proposed)
             batch.write(batch.ROOT/'candidates'/day/b['symbol']/(candidate_hash+'.json.gz'),proposed)
             result.update(candidate_sha256=candidate_hash,reasons=validate(proposed,day),guide=buy_guide(proposed,day)['status'])
@@ -238,6 +243,13 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
             'budget_exhausted':bounded.used>=bounded.max_calls or time.monotonic()-bounded.start>=bounded.seconds,
             'reference_deferred_tasks':deferred_reference,'recovered_existing_blocked':sum(r['promoted'] and r['previously_blocking'] for r in results)}
     from scripts.recovery_outcome import outcome
+    calls=report['physical_request_attempts'];attempted=len(results)
+    report['efficiency']={
+        'promotions_per_10_physical_requests':10*report['promoted']/calls if calls else None,
+        'physical_requests_per_attempted_date_symbol':calls/attempted if attempted else None,
+        'response_reuse_fraction':bounded.cache_hits/bounded.logical if bounded.logical else None,
+        'promotion_fraction':report['promoted']/attempted if attempted else None,
+        'unit':'date-symbol candidate promotions; publication and indicator gains measured separately'}
     report['data_outcome']=outcome(report)
     ledger['runs']=(ledger['runs']+[report])[-30:];batch.write(ledger_path,ledger)
     batch.write(batch.ROOT/'recovery-report.json',report);batch.refresh_summary(latest)
