@@ -111,4 +111,3 @@ def test_published_previous_generations_include_matching_databases():
     root=Path(__file__).resolve().parents[1]/'snapshot/publication-history'
     archives=list(root.iterdir());assert archives
     for archived in archives:assert coherent(archived),str(archived)
-
