@@ -95,3 +95,12 @@ def test_reference_backoff_expiry_resumes_without_relaxing_schema(tmp_path,monke
     refs,status=fetch_references('2026-10-15',tmp_path,refresh=True)
     assert refs and set(status.values())=={'REFERENCE_RECEIVED'}
     assert 'provider_backoff' not in read(tmp_path/'reference-status.json')
+
+def test_document_reviews_append_without_clearing_failed_jobs():
+    from scripts.publish_document_reviews import add_reviews
+    state={'filings':{'r':{'receipt':'r'}},'financials':{},'reviews':{},'jobs':{'r':{'financial_status':'failed'}},'events':[]}
+    report={'corrections':[],'attachments':[{'receipt':'r','parent_receipt':'p','filing':state['filings']['r'],'status':'REVIEW_NEEDED','evidence':{'status':'DART_014'}}]}
+    new,added=add_reviews(state,report)
+    assert added==['r'] and new['jobs']==state['jobs'] and len(new['events'])==1
+    again,added=add_reviews(new,report)
+    assert not added and again==new
