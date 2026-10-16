@@ -238,6 +238,21 @@ with sync_playwright() as p:
     for value in rows:match(value['net_amount'],matrix[code].loc[value['trade_date']])
     page.screenshot(path=str(out/('recovered-'+code+'.png')),full_page=True)
     report.setdefault('recovered_symbols',[]).append({'symbol':code,'asof':asof,'guide':guide_result['status'],'daily_accepted':True,'provider_finality':bundle['finality'],'csv_rows':len(rows)})
+  if report.get('recovered_symbols'):
+   # Changing the selected date must never reuse today's technical evidence.
+   import pandas as pd
+   previous_dates=sorted(data['flows'].loc[data['flows'].trade_date<pd.Timestamp(asof),'trade_date'].dt.strftime('%Y-%m-%d').unique())
+   if previous_dates:
+    prior=previous_dates[-1];code=report['recovered_symbols'][-1]['symbol'];choose('수급 기준일',prior)
+    old_bundle,_=get_bundle(code,prior);assert old_bundle is None or old_bundle['asof']==prior
+    expected_old=buy_guide(old_bundle,prior)
+    assert ui.locator('.buy-guide').inner_text().startswith('매수 가이드: '+expected_old['status'])
+    rows=download('일별 수급 CSV','historical-'+code+'.csv')
+    source=data['flows'][data['flows'].symbol==code].set_index('trade_date').net_amount
+    assert max(r['trade_date'] for r in rows)==prior
+    for value in rows:match(value['net_amount'],source.get(pd.Timestamp(value['trade_date']),float('nan')))
+    report['historical_lookup']={'symbol':code,'selected_date':prior,'bundle_asof':old_bundle['asof'] if old_bundle else None,'guide':expected_old['status'],'csv_last_date':max(r['trade_date'] for r in rows)}
+    page.screenshot(path=str(out/'historical-detail.png'),full_page=True)
   report['success']=True
  except Exception as e:
   report.update(error_type=type(e).__name__,error=str(e)[:1800],traceback=traceback.format_exc()[-4000:]);report['visible_text']=ui.locator('body').inner_text()[-16000:];page.screenshot(path=str(out/'failure.png'),full_page=True)
