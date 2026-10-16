@@ -66,7 +66,7 @@ def test_resume_requires_two_matching_fresh_anchors_and_saves_each_response(monk
         b=BoundedAPI(LazyAPI(KIS));b.begin(copy.deepcopy(old),saved.append)
         for i in range(3):b.request(PATH,{'part':i},'test')
         assert b.cache_hits==(0 if changed else 1)
-        assert len(saved)==(3 if changed else 2)
+        assert len(saved)==3
         assert len(calls)==(4 if changed else 3)
 
 def test_liquidity_release_is_date_and_payload_specific():
@@ -149,3 +149,14 @@ def test_process_interruption_retains_resume_index_and_original(tmp_path,monkeyp
     assert session['status']=='in_progress' and len(session['response_observations'])==3
     api=API();r=recovery.run(api,data,limit=1)
     assert api.calls==2 and r['cached_responses_reused']==1 and r['promoted']==1
+
+def test_resume_never_mixes_pages_from_different_adjustment_generations(monkeypatch):
+    anchors=[{'path':PATH,'params':{'part':i},'output':{'output2':[{'value':i}]}} for i in range(2)]
+    ga=BoundedAPI.anchor_digest(anchors)
+    changed=copy.deepcopy(anchors);changed[0]['output']['output2'][0]['value']=99;gb=BoundedAPI.anchor_digest(changed)
+    pages=[{'path':PATH,'params':{'part':2},'output':{'output2':[{'value':v}]},'anchor_generation':g} for v,g in [(100,ga),(999,gb)]]
+    calls=transport(monkeypatch,[{'access_token':'test-token'}]+[{'rt_cd':'0',**a['output']} for a in anchors])
+    b=BoundedAPI(LazyAPI(KIS));b.begin(anchors+pages,lambda _:None)
+    for i in range(2):b.request(PATH,{'part':i},'test')
+    assert b.request(PATH,{'part':2},'test')['output2']==[{'value':100}]
+    assert b.cache_hits==1 and len(calls)==3

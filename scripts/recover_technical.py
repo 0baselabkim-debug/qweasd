@@ -13,7 +13,7 @@ class BoundedAPI:
     def __init__(self,api,max_calls=60,seconds=240):
         self.api=api;self.start=time.monotonic();self.max_calls=max_calls;self.seconds=seconds
         self.used=0;self.observations=[];self.physical=[];self.logical=0;self.cache_hits=0
-        self.reserved=0;self.refunded=0;self.sink=None;self.resume=[];self.anchors=[]
+        self.reserved=0;self.refunded=0;self.sink=None;self.resume=[];self.anchors=[];self.generation=None;self.legacy_generation=None
         target=api.__dict__.get('factory',type(api))
         self.physical_supported=bool(getattr(target,'physical_budget_supported',False))
     def check(self):
@@ -24,7 +24,15 @@ class BoundedAPI:
         self.used+=1;self.reserved+=1
         self.physical.append({'kind':'authentication' if path=='/oauth2/tokenP' else 'market','attempt':attempt+1})
     def begin(self,observations,sink):
-        self.resume=observations;self.anchors=[];self.sink=sink
+        self.resume=observations;self.anchors=[];self.sink=sink;self.generation=None
+        self.legacy_generation=None
+        if len(observations)>=2 and not any(o.get('anchor_generation') for o in observations):
+            first=observations[:2];keys=[self.signature(o['path'],o['params']) for o in first]
+            if len(set(keys))==2 and all(sum(self.signature(o['path'],o['params'])==k for o in observations)==1 for k in keys):
+                self.legacy_generation=self.anchor_digest(first)
+    @staticmethod
+    def anchor_digest(anchors):
+        return digest([{'path':o['path'],'params':o['params'],'output2':o['output'].get('output2')} for o in anchors])
     @staticmethod
     def signature(path,params):return digest({'path':path,'params':params})
     def request(self,*args,**kwargs):
@@ -33,11 +41,13 @@ class BoundedAPI:
         key=self.signature(path,params);self.logical+=1
         # Always reobserve the adjusted overlap and same-date raw anchor first.
         # A cache is usable only when BOTH anchors match the interrupted vintage.
-        if len(self.anchors)==2 and all(self.anchors):
-            matches=[o for o in self.resume if self.signature(o['path'],o['params'])==key]
+        if len(self.anchors)==2:
+            matches=[o for o in self.resume if self.signature(o['path'],o['params'])==key and o.get('anchor_generation',self.legacy_generation)==self.generation]
             if matches:
-                value=matches[-1];self.cache_hits+=1
+                value=copy.deepcopy(matches[-1]);self.cache_hits+=1
+                value['anchor_generation']=self.generation
                 self.observations.append(value)
+                if self.sink:self.sink(value)
                 return copy.deepcopy(value['output'])
         self.check()
         if not self.physical_supported:
@@ -51,8 +61,9 @@ class BoundedAPI:
         observation={'observed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'path':path,'params':params,
                      'output':{k:response[k] for k in ['output','output1','output2'] if k in response}}
         if len(self.anchors)<2:
-            self.anchors.append(any(self.signature(o['path'],o['params'])==key and
-                                    o['output'].get('output2')==observation['output'].get('output2') for o in self.resume))
+            self.anchors.append(observation)
+            if len(self.anchors)==2:self.generation=self.anchor_digest(self.anchors)
+        if self.generation:observation['anchor_generation']=self.generation
         self.observations.append(observation)
         if self.sink:self.sink(observation) # survive process termination after any completed response
         return response
@@ -129,17 +140,22 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
     ledger_path=batch.ROOT/'recovery-state.json';ledger=batch.read(ledger_path,{'jobs':{},'runs':[]})
     from scripts.publish_recovery import seed_dates
     seeded=seed_dates(data,limit=2) if 'prices' in data else []
-    tasks=[];seen=set();refs_by_date={};status_by_date={}
+    tasks=[];seen=set();refs_by_date={};status_by_date={};excluded_queue={'short_history':0,'short_flow_history':0,'backoff':0}
     # Completion flags never exclude a conflicting observation from this queue.
     paths=list(batch.CACHE.glob('*.json.gz'))+list((batch.ROOT/'history').glob('*/*.json.gz'))+list((batch.ROOT/'pending').glob('*/*.json.gz'))
     for path,b in selected_observations(paths,latest):
         key=b['asof']+'/'+b['symbol']
         if key in seen:continue
         seen.add(key);j=ledger['jobs'].get(key,{})
+        if len(b.get('bars',[]))<rules()['min_bars']:
+            excluded_queue['short_history']+=1;continue
+        if len(b.get('flows',[]))<20:
+            excluded_queue['short_flow_history']+=1;continue
         retry_after=j.get('retry_after','')
         if j.get('last_result',{}).get('error_type')=='RecoveryBudget' and j.get('attempted_at'):
             retry_after=(dt.datetime.fromisoformat(j['attempted_at'])+dt.timedelta(minutes=15)).isoformat()
-        if retry_after>start.isoformat():continue
+        if retry_after>start.isoformat():
+            excluded_queue['backoff']+=1;continue
         tasks.append((j.get('attempted_at',''),key,path,b))
     bounded=BoundedAPI(api,max_calls=min(60,max_calls),seconds=min(240,seconds));results=[]
     for _,key,path,b in fair_tasks(tasks,ledger,start.isoformat()):
@@ -211,6 +227,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
             'metering':'physical_boundary' if bounded.physical_supported else 'conservative_adapter_reservation',
             'logical_requests':bounded.logical,'cached_responses_reused':bounded.cache_hits,
             'run_id':__import__('os').environ.get('GITHUB_RUN_ID'),'event':__import__('os').environ.get('GITHUB_EVENT_NAME'),
+            'scheduled_cron':__import__('os').environ.get('RECOVERY_SCHEDULE'),'excluded_from_price_recovery':excluded_queue,
             'time_budget_seconds':bounded.seconds,'seeded_date_tasks':seeded,'reference_status':status_by_date,'results':results,
             'promoted':sum(r['promoted'] for r in results),'kis_metrics':api.metrics}
     ledger['runs']=(ledger['runs']+[report])[-30:];batch.write(ledger_path,ledger)

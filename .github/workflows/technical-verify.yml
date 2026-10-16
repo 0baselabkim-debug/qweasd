@@ -39,6 +39,7 @@ jobs:
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          RECOVERY_SCHEDULE: ${{ github.event.schedule }}
           RECHECK_MODE: ${{ inputs.mode || 'verify' }}
           RECOVERY_LIMIT: ${{ inputs.limit || 3 }}
         run: |
