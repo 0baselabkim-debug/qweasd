@@ -45,3 +45,11 @@ Publication prepares a candidate DB plus matching manifest, validation and ledge
 ## DART attachment corrections
 
 `[첨부정정]` is not assumed to contain another full business report. The exact original periodic receipt is linked only when the official disclosure listing and financial API agree on issuer, receipt, year, report code and period. Original and attachment records remain separate. Original financial records are reused unchanged; attachment audit content remains separately held for review. XML status 014 is classified as file unavailable, not a corrupt ZIP. A business section is selected only from a unique matching issuer/receipt/form document, not the largest/first ZIP entry.
+
+## 공급자 장애와 실제 데이터 결과 (2026-10-16)
+
+KRX 401/403은 `REFERENCE_AUTH_ERROR`로 기록하고 동일 실행의 나머지 시장·날짜 요청도 중지한다. 다음 요청은 1시간, 반복 시 2/4/8/16/24시간 뒤부터 허용한다. 전송 오류·408·429·5xx는 `REFERENCE_TEMPORARY_FAILURE`이며 15분부터 최대 24시간 백오프한다. 새 정상 응답이면 해제한다. 동일 날짜의 정상 캐시를 사용하는 일반 검증은 유지하지만, 충돌 복구의 `refresh=True`는 백오프/장애 중 캐시로 대신하지 않는다. 요청 시도 여부·HTTP·응답 해시·수신 시각·재시각을 기록하며 403의 정확한 원인은 상태 코드만으로 단정하지 않는다.
+
+`recovery-report.json`은 검증 후보 결과이며 게시 완료를 뜻하지 않는다. 실제 Git 게시 성공 후 `evidence/recovery-outcome-<run_id>` 브랜치의 `reports/recovery-execution/outcome.json`과 Actions Summary에 `RECOVERED`, `NO_ELIGIBLE_WORK`, `PROVIDER_BLOCKED`, `BUDGET_PAUSED`, `VALIDATION_FAILED`, `PUBLICATION_FAILED`를 구분한다. 혼합 결과는 건수도 함께 표시한다. 공급자 상태 건수는 시장/날짜 수이며 종목 수와 다르다. 준비 실패 시 정상 main에 후보를 게시하지 않고 증거 브랜치에 보존한다.
+
+`diagnose_activity.py`는 기존 25일 행렬의 마스킹을 그대로 적용해 업종별 구성 수·검증 수·차단 날짜·사유·최소 추가 날짜/종목 확인 수를 산출한다. 일부 종목 합계를 완전한 업종 수치로 만들지 않는다. `review_corrections.py`와 `publish_document_reviews.py`는 공식 정정·감사 원문 비교 근거만 추가하며 기존 재무 접수번호 검증과 실패/검토 상태를 변경하지 않는다.
