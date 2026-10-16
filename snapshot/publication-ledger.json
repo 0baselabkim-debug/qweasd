@@ -26,7 +26,7 @@
     "run_id": "38755149870",
     "mode": "collect",
     "published_at_utc": "2026-10-15T14:58:53.283055+00:00",
-    "sha256": "9d36a151e3afcf775b537474e51dc2b83dc073246b30f015751cba13d81b36dc",
+    "sha256": "17ba52739387ca61a5d25a2bdabf44eda42bd13d9e6007f29d83dcb01293eea5",
     "validation": {
       "trade_date": "2026-10-15",
       "records": 2430,
@@ -42,7 +42,7 @@
       "complete_sector_scores": 0,
       "full_20d_symbols": 2425,
       "preservation_verified": true,
-      "sha256": "9d36a151e3afcf775b537474e51dc2b83dc073246b30f015751cba13d81b36dc",
+      "sha256": "17ba52739387ca61a5d25a2bdabf44eda42bd13d9e6007f29d83dcb01293eea5",
       "recovery_revisions": [
         {
           "previous_sha256": "595df2fc434a99590409d39a43b4dab3e366c4a16d1f25acdaf5edd1adfb7738",
@@ -490,6 +490,45 @@
             },
             "raw_tables_preserved": true,
             "observed_at": "2026-10-16T05:11:44.951101+00:00"
+          }
+        },
+        {
+          "previous_sha256": "9d36a151e3afcf775b537474e51dc2b83dc073246b30f015751cba13d81b36dc",
+          "sha256": "17ba52739387ca61a5d25a2bdabf44eda42bd13d9e6007f29d83dcb01293eea5",
+          "audit": {
+            "baseline_sha256": "9d36a151e3afcf775b537474e51dc2b83dc073246b30f015751cba13d81b36dc",
+            "sha256": "17ba52739387ca61a5d25a2bdabf44eda42bd13d9e6007f29d83dcb01293eea5",
+            "added": [
+              {
+                "asof": "2026-10-14",
+                "symbol": "030960",
+                "bundle_sha256": "61b96ebc808986c5938ea4d55017a311ce9184266bf3c5133163ceac73096bbe"
+              },
+              {
+                "asof": "2026-10-14",
+                "symbol": "204020",
+                "bundle_sha256": "90372745939f8208e5103ac939caa604d101fe55f41673ca0db033ff1db8355c"
+              },
+              {
+                "asof": "2026-10-14",
+                "symbol": "478560",
+                "bundle_sha256": "5b06eceba2de65de6433a1d4a0f3d49039637f180bd0a4b10d362684da589d43"
+              }
+            ],
+            "before": {
+              "stocks": 2430,
+              "stock_activity": 419,
+              "sectors": 50,
+              "sector_activity": 7
+            },
+            "after": {
+              "stocks": 2430,
+              "stock_activity": 422,
+              "sectors": 50,
+              "sector_activity": 7
+            },
+            "raw_tables_preserved": true,
+            "observed_at": "2026-10-16T05:18:42.603062+00:00"
           }
         }
       ]
@@ -941,6 +980,45 @@
           },
           "raw_tables_preserved": true,
           "observed_at": "2026-10-16T05:11:44.951101+00:00"
+        }
+      },
+      {
+        "previous_sha256": "9d36a151e3afcf775b537474e51dc2b83dc073246b30f015751cba13d81b36dc",
+        "sha256": "17ba52739387ca61a5d25a2bdabf44eda42bd13d9e6007f29d83dcb01293eea5",
+        "audit": {
+          "baseline_sha256": "9d36a151e3afcf775b537474e51dc2b83dc073246b30f015751cba13d81b36dc",
+          "sha256": "17ba52739387ca61a5d25a2bdabf44eda42bd13d9e6007f29d83dcb01293eea5",
+          "added": [
+            {
+              "asof": "2026-10-14",
+              "symbol": "030960",
+              "bundle_sha256": "61b96ebc808986c5938ea4d55017a311ce9184266bf3c5133163ceac73096bbe"
+            },
+            {
+              "asof": "2026-10-14",
+              "symbol": "204020",
+              "bundle_sha256": "90372745939f8208e5103ac939caa604d101fe55f41673ca0db033ff1db8355c"
+            },
+            {
+              "asof": "2026-10-14",
+              "symbol": "478560",
+              "bundle_sha256": "5b06eceba2de65de6433a1d4a0f3d49039637f180bd0a4b10d362684da589d43"
+            }
+          ],
+          "before": {
+            "stocks": 2430,
+            "stock_activity": 419,
+            "sectors": 50,
+            "sector_activity": 7
+          },
+          "after": {
+            "stocks": 2430,
+            "stock_activity": 422,
+            "sectors": 50,
+            "sector_activity": 7
+          },
+          "raw_tables_preserved": true,
+          "observed_at": "2026-10-16T05:18:42.603062+00:00"
         }
       }
     ]
