@@ -10,7 +10,11 @@ from screener.indicators import universe,stock_activity,sector_indicators,turnov
 from screener.corporate import load_state
 BASE='c834c172b6fe733add5d35e35c22ffc8f5b467d6'
 def at(path):return subprocess.check_output(['git','show',BASE+':'+path])
-def run():
+def run(base=None,output=None):
+    global BASE
+    if base is not None:BASE=base
+    start_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+    start_db=hashlib.sha256(PACKAGED_DB.read_bytes()).hexdigest()
     d=load(PACKAGED_DB);day=str(d['flows'].trade_date.max().date());x,m=universe(d,day);x=stock_activity(d,x,day);sectors,_=sector_indicators(d,x,m,day);codes=set(x.symbol)
     original={}
     with tarfile.open(fileobj=io.BytesIO(subprocess.check_output(['git','archive',BASE,'technical/market']))) as tar:
@@ -54,5 +58,8 @@ def run():
        'recovered_existing_blocked':sorted(recovered,key=lambda r:r['symbol']),'newly_verified_nonblocked':sorted(newly,key=lambda r:r['symbol']),
        'stock_activity':int(x.activity_ratio.notna().sum()),'sector_activity':len(independent),'independent_complete_sectors':independent,'raw_preservation':preservation,'legacy_scores_unchanged':True,'rules_unchanged':rules,
        'corporate':corp,'before_db_sha256':hashlib.sha256(baseline_db.read_bytes()).hexdigest(),'after_db_sha256':hashlib.sha256(PACKAGED_DB.read_bytes()).hexdigest(),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()}
-    out=Path('reports/operations-stabilization/final-verification.json');out.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in r.items() if k not in ['recovered_existing_blocked','newly_verified_nonblocked','independent_complete_sectors']},ensure_ascii=False))
-if __name__=='__main__':run()
+    if r['source_commit']!=start_commit or r['after_db_sha256']!=start_db:raise RuntimeError('Source changed during audit; repeat against a stable revision')
+    out=Path(output or 'reports/operations-stabilization/final-verification.json');out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in r.items() if k not in ['recovered_existing_blocked','newly_verified_nonblocked','independent_complete_sectors']},ensure_ascii=False))
+if __name__=='__main__':
+    import argparse
+    p=argparse.ArgumentParser();p.add_argument('--baseline');p.add_argument('--output');a=p.parse_args();run(a.baseline,a.output)
