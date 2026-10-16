@@ -93,6 +93,7 @@ def fetch_references(day, root, refresh=False):
                 record['status'], rows = classify_rows(payload, day)
                 if record['status']=='RECEIVED':record['status']='REFERENCE_RECEIVED'
                 ledger.pop('provider_backoff',None)
+                ledger.setdefault('failure_attempts',{}).pop(market,None)
                 if rows:
                     previous=cached
                     cached = {'asof': day, 'url': url, 'observed_at': now.isoformat(), 'rows': rows,'http':200,'rows_sha256':digest(rows),'response_sha256':record['response_sha256']}
@@ -111,7 +112,9 @@ def fetch_references(day, root, refresh=False):
             except (OSError, TimeoutError):
                 record['status'] = 'REFERENCE_TEMPORARY_FAILURE'
         if record['request_attempted'] and record['status'] in ['REFERENCE_AUTH_ERROR','REFERENCE_TEMPORARY_FAILURE']:
-            attempts=gate.get('attempts',0)+1 if gate.get('status')==record['status'] else 1
+            prior=ledger.setdefault('failure_attempts',{}).get(market,{})
+            attempts=prior.get('attempts',0)+1 if prior.get('status')==record['status'] else 1
+            ledger['failure_attempts'][market]={'status':record['status'],'attempts':attempts}
             retry_after=(now+dt.timedelta(seconds=failure_delay(record['status'],attempts))).isoformat()
             ledger['provider_backoff']={'status':record['status'],'http':record['http'],'attempts':attempts,'retry_after':retry_after,'failed_at':now.isoformat()}
             record['retry_after']=retry_after

@@ -104,3 +104,25 @@ def test_document_reviews_append_without_clearing_failed_jobs():
     assert added==['r'] and new['jobs']==state['jobs'] and len(new['events'])==1
     again,added=add_reviews(new,report)
     assert not added and again==new
+
+def test_missing_exact_reference_row_is_not_no_work():
+    from scripts.recovery_outcome import outcome
+    r={'results':[],'promoted':0,'queue':{'eligible_date_symbol_tasks':1,'reference_deferred':1,'carried_forward':1},'reference_status':{'d':{'KOSPI':'REFERENCE_RECEIVED'}}}
+    assert outcome(r,published=True)['status']=='PROVIDER_BLOCKED'
+    r={'results':[{'promoted':True}],'budget_exhausted':True,'queue':{'carried_forward':0}}
+    assert 'BUDGET_PAUSED' not in outcome(r,published=True)['counts']
+
+def test_one_market_success_does_not_reset_other_markets_denial_backoff(tmp_path,monkeypatch):
+    import datetime as dt
+    import scripts.technical_reference as ref
+    clock=dt.datetime(2026,10,16,tzinfo=dt.timezone.utc)
+    monkeypatch.setattr(ref,'utcnow',lambda:clock);monkeypatch.setenv('KRX_API_KEY','test-secret')
+    def send(req,**kw):
+        if 'stk_bydd' in req.full_url:return Reply({'OutBlock_1':[]})
+        raise urllib.error.HTTPError(req.full_url,403,'Forbidden',{},io.BytesIO(b'Forbidden'))
+    monkeypatch.setattr(ref.urllib.request,'urlopen',send)
+    fetch_references('2026-10-15',tmp_path,refresh=True);clock+=dt.timedelta(hours=2)
+    fetch_references('2026-10-15',tmp_path,refresh=True)
+    gate=read(tmp_path/'reference-status.json')['provider_backoff']
+    assert gate['attempts']==2
+    assert dt.datetime.fromisoformat(gate['retry_after'])==clock+dt.timedelta(hours=2)

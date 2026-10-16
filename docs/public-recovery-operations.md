@@ -34,7 +34,7 @@ Production recovery uses a ContextVar guard at KIS's actual HTTP boundary. Authe
 
 Public response bodies are content-addressed immediately after each successful response, and a session index survives interruption. Resuming still requests a fresh adjusted overlap and same-day raw anchor. Cached pages are reused only if both anchors match the interrupted vintage and the original bundle hash is unchanged. Full candidate validation, exact-date KRX comparison and 20-day flow checks remain mandatory. A changed anchor causes a new coherent history request.
 
-The queue rotates dates and selects eligible old attempts within each date, with a separate priority for budget-paused work. Provider-error backoff still applies. Successful date/symbol observations are excluded even if old pending copies remain. A current accepted bundle can seed at most two older **unvalidated** date-specific tasks for masked liquidity dates. The seed strips current acceptance and computed values, trims future bars/calendar/events, and loads that date's exact 20 flow rows; it is never itself accepted.
+The queue rotates dates and selects eligible old attempts within each date, with a separate priority for budget-paused work. Provider-error backoff still applies. Successful date/symbol observations are excluded even if old pending copies remain. A current accepted bundle can seed at most four older **unvalidated** date-specific tasks for masked liquidity dates. The seed strips current acceptance and computed values, trims future bars/calendar/events, and loads that date's exact 20 flow rows; it is never itself accepted.
 
 ## Connection to turnover metrics and publication
 
@@ -53,3 +53,5 @@ KRX 401/403은 `REFERENCE_AUTH_ERROR`로 기록하고 동일 실행의 나머지
 `recovery-report.json`은 검증 후보 결과이며 게시 완료를 뜻하지 않는다. 실제 Git 게시 성공 후 `evidence/recovery-outcome-<run_id>` 브랜치의 `reports/recovery-execution/outcome.json`과 Actions Summary에 `RECOVERED`, `NO_ELIGIBLE_WORK`, `PROVIDER_BLOCKED`, `BUDGET_PAUSED`, `VALIDATION_FAILED`, `PUBLICATION_FAILED`를 구분한다. 혼합 결과는 건수도 함께 표시한다. 공급자 상태 건수는 시장/날짜 수이며 종목 수와 다르다. 준비 실패 시 정상 main에 후보를 게시하지 않고 증거 브랜치에 보존한다.
 
 `diagnose_activity.py`는 기존 25일 행렬의 마스킹을 그대로 적용해 업종별 구성 수·검증 수·차단 날짜·사유·최소 추가 날짜/종목 확인 수를 산출한다. 일부 종목 합계를 완전한 업종 수치로 만들지 않는다. `review_corrections.py`와 `publish_document_reviews.py`는 공식 정정·감사 원문 비교 근거만 추가하며 기존 재무 접수번호 검증과 실패/검토 상태를 변경하지 않는다.
+
+실제 추가 2건/15회, 4건/29회 시험에서 재시도·호출 제한 오류가 없음을 확인한 뒤 예약 복구를 최대 6건으로 단계 확대했다. 기존 8건/49회 시험도 참고했다. KIS 60회·240초 상한은 유지한다. 과거 날짜 작업 생성은 회당 최대 4건(선택 한도가 더 작으면 그 이하)이며 검증 통과를 의미하지 않는다. 실제 6건 예약 성공과 장기 처리량은 이후 실제 schedule 기록으로 판단한다.
