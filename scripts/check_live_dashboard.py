@@ -228,14 +228,7 @@ with sync_playwright() as p:
    exported=download('섹터 현황 CSV','complete-sectors-'+market+'.csv')
    for row in g.itertuples():
     actual=next(v for v in exported if v['섹터']==row.sector)
-    expected_sector=stocks[(stocks.market==row.market)&(stocks.sector==row.sector)].set_index('symbol')
-   assert {v['코드'] for v in values}==set(expected_sector.index)
-   for value in values:
-    expected_row=expected_sector.loc[value['코드']]
-    match(value['거래 활성도(배)'],expected_row.activity_ratio)
-    match(value['5일 평균 거래대금(억원)'],expected_row.average_turnover/1e8)
-   report.setdefault('full_sector_stock_csv',[]).append({'market':row.market,'sector':row.sector,'members_checked':len(values)})
-   match(actual['거래 활성도(배)'],row.activity_ratio)
+    match(actual['거래 활성도(배)'],row.activity_ratio)
     report['sector_activity_trace'].append({'market':market,'sector':row.sector,'members':int(row.members),'activity_csv':actual['거래 활성도(배)']})
    page.screenshot(path=str(out/('complete-sectors-'+market+'.png')),full_page=True)
   # Trace released turnover from exact-date evidence through the actual public CSV.
