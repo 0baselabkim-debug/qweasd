@@ -178,14 +178,23 @@ def verify_saved_or_live(api,bundle,references):
     return verify_bundle(api,bundle,references)
 
 
+def selected_observations(paths,day,probe=False):
+    """One exact-date observation per symbol; accepted evidence outranks old queues."""
+    from scripts.technical_batch import read
+    chosen={}
+    for path in paths:
+        b=read(path)
+        if not b or b['asof']>day:continue
+        key=(b['asof'],b['symbol']);previous=chosen.get(key)
+        if previous is None or (daily_accepted(b) and not daily_accepted(previous[1])):chosen[key]=(path,b)
+    return [(path,b) for path,b in chosen.values() if probe or not daily_accepted(b)]
+
+
 def run(api,data,limit=600,budget=1500,probe=False):
     from scripts.technical_batch import CACHE,ROOT,read,write,krx_reference,refresh_summary
     start=time.monotonic();day=str(data['flows'].trade_date.max().date())
     report=read(ROOT/'acceptance-audit.json',{'symbols':{},'incremental':{},'scope':{}})
-    tasks=[]
-    for path in list(CACHE.glob('*.json.gz'))+list((ROOT/'pending').glob('*/*.json.gz')):
-        b=read(path)
-        if b and b['asof']<=day and (probe or not daily_accepted(b)):tasks.append((path,b))
+    tasks=selected_observations(list(CACHE.glob('*.json.gz'))+list((ROOT/'history').glob('*/*.json.gz'))+list((ROOT/'pending').glob('*/*.json.gz')),day,probe)
     # Dates do not disappear when a new dashboard snapshot is published.
     dates=sorted({b['asof'] for _,b in tasks});all_status={};evaluated=0;deferred=0;short=0
     for date in dates:

@@ -485,3 +485,16 @@ def test_budget_pause_does_not_become_provider_failure_backoff(tmp_path,monkeypa
  assert r['results'][0]['error_type']=='RecoveryBudget' and not r['promoted']
  j=c.read(tmp_path/'recovery-state.json')['jobs'][b['asof']+'/'+b['symbol']]
  assert (dt.datetime.fromisoformat(j['retry_after'])-dt.datetime.fromisoformat(j['attempted_at'])).total_seconds()==900
+
+def test_accepted_observation_supersedes_old_pending_without_requests(tmp_path,monkeypatch):
+ from scripts import recover_technical as recovery,technical_acceptance as acceptance
+ b,refs,API,pages=repair_sample();good=accepted_fixture()
+ monkeypatch.setattr(c,'ROOT',tmp_path);monkeypatch.setattr(c,'CACHE',tmp_path/'market')
+ c.write(c.CACHE/(good['symbol']+'.json.gz'),good)
+ old_path=tmp_path/'pending'/b['asof']/(b['symbol']+'.json.gz');c.write(old_path,b);before=old_path.read_bytes()
+ def forbidden(*args,**kwargs):raise AssertionError('Accepted date/symbol requires no reference or KIS recheck')
+ monkeypatch.setattr(c,'krx_reference',forbidden)
+ api=acceptance.LazyAPI(forbidden);data={'flows':pd.DataFrame([{'trade_date':pd.Timestamp(b['asof'])}])}
+ assert recovery.run(api,data)['results']==[]
+ assert acceptance.run(api,data)['evaluated']==0
+ assert api.client is None and old_path.read_bytes()==before

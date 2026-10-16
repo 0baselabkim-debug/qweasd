@@ -3,7 +3,7 @@ import copy,datetime as dt,json,time
 from pathlib import Path
 from screener.technical import indicators,levels,reward_risk,rules,validate,buy_guide
 from screener.technical_quality import daily_accepted,digest,LEGACY_CONFLICT
-from scripts.technical_acceptance import reference_ready,verify_bundle
+from scripts.technical_acceptance import reference_ready,verify_bundle,selected_observations
 from scripts import technical_batch as batch
 
 class RecoveryBudget(Exception):pass
@@ -77,9 +77,8 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
     ledger_path=batch.ROOT/'recovery-state.json';ledger=batch.read(ledger_path,{'jobs':{},'runs':[]})
     tasks=[];seen=set();refs_by_date={};status_by_date={}
     # Completion flags never exclude a conflicting observation from this queue.
-    for path in list(batch.CACHE.glob('*.json.gz'))+list((batch.ROOT/'history').glob('*/*.json.gz'))+list((batch.ROOT/'pending').glob('*/*.json.gz')):
-        b=batch.read(path)
-        if not b or b['asof']>latest or daily_accepted(b):continue
+    paths=list(batch.CACHE.glob('*.json.gz'))+list((batch.ROOT/'history').glob('*/*.json.gz'))+list((batch.ROOT/'pending').glob('*/*.json.gz'))
+    for path,b in selected_observations(paths,latest):
         key=b['asof']+'/'+b['symbol']
         if key in seen:continue
         seen.add(key);j=ledger['jobs'].get(key,{})
