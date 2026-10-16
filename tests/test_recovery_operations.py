@@ -160,3 +160,10 @@ def test_resume_never_mixes_pages_from_different_adjustment_generations(monkeypa
     for i in range(2):b.request(PATH,{'part':i},'test')
     assert b.request(PATH,{'part':2},'test')['output2']==[{'value':100}]
     assert b.cache_hits==1 and len(calls)==3
+
+def test_published_previous_generations_include_matching_databases():
+    from pathlib import Path
+    from screener.publication import coherent
+    root=Path(__file__).resolve().parents[1]/'snapshot/publication-history'
+    archives=list(root.iterdir());assert archives
+    for archived in archives:assert coherent(archived),str(archived)
