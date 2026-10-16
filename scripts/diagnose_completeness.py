@@ -64,7 +64,8 @@ def run(out):
             categories['original_blocked_unresolved' if code in original_blocked else 'newly_discovered_conflict_same_date'].add(key)
         if len(b.get('bars',[]))<rules()['min_bars']:categories['technical_history_short'].add(key)
         if len(b.get('flows',[]))<20:categories['flow_history_short'].add(key)
-        if not daily_accepted(b):categories['external_or_incomplete_verification'].add(key)
+        if not daily_accepted(b):categories['unaccepted_all_causes'].add(key)
+        if b.get('acceptance_error')=='REFERENCE_NOT_AVAILABLE_FOR_SYMBOL':categories['external_reference_evidence_wait'].add(key)
     from scripts.technical_acceptance import selected_observations
     paths=list(Path('technical/market').glob('*.json.gz'))+list(Path('technical/history').glob('*/*.json.gz'))+list(Path('technical/pending').glob('*/*.json.gz'))
     for path,b in selected_observations(paths,day):
@@ -74,6 +75,7 @@ def run(out):
         result=j.get('last_result',{})
         if result.get('promoted'):continue
         if result.get('error_type')=='RecoveryBudget':categories['budget_paused'].add(tuple(key.split('/')))
+    categories.setdefault('external_reference_evidence_wait',set())
     groups={k:{'symbols':len({c for d,c in v}),'date_symbol_tasks':len(v),'by_date':dict(collections.Counter(d for d,c in v)),'tasks':[{'date':d,'symbol':c} for d,c in sorted(v)]} for k,v in categories.items()}
     overlap={f'{a} & {b}':len(categories[a]&categories[b]) for i,a in enumerate(groups) for b in list(groups)[i+1:]}
     window_dates=sorted(data['calendar'].loc[data['calendar'].trade_date<=pd.Timestamp(day),'trade_date'].unique())[-25:]
