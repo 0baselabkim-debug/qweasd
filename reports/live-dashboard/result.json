@@ -1,0 +1,575 @@
+{
+  "url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "success": true,
+  "checks": [
+    "Default macro, fixed sidebar-only title/menu, 12 unchanged actual values, three columns, rates bp, dates/provenance, six separate investor rows",
+    "Actual 320-day NAVER cache and independently computed guide status rendered: 판정 보류",
+    "Genuine sector/name double click; mouse single click and other-cell double click do not navigate; client sort/filter; matching raw CSV; KOSPI/KOSDAQ identity",
+    "Hierarchy retains child tabs on upward navigation; active stock close goes to sector; sector close removes descendants; hover X; periods, market, sorts and search retained",
+    "Actual financial eligibility, daily chart, existing theme business evidence and DART retained",
+    "1440px: page widths, row heights, 14px text, internal scroll, no clipped cells/KPIs, navigation, tabs, sidebar non-overlap",
+    "768px: page widths, row heights, 14px text, internal scroll, no clipped cells/KPIs, navigation, tabs, sidebar non-overlap",
+    "390px: page widths, row heights, 14px text, internal scroll, no clipped cells/KPIs, navigation, tabs, sidebar non-overlap"
+  ],
+  "asof": "2026-10-15",
+  "http_status": 200,
+  "deployment": {
+    "expected": {
+      "source_sha256": "ba0639be2f4e0ae1b24d61294094f45d664436f6062738684b254fecf2b3cca7",
+      "revision": "5cfc0756b67fa0931e204a54a9273c7502cf8e29",
+      "data_sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed"
+    },
+    "source_sha256": "ba0639be2f4e0ae1b24d61294094f45d664436f6062738684b254fecf2b3cca7",
+    "revision": "5cfc0756b67fa0931e204a54a9273c7502cf8e29",
+    "data_sha256": "83e729c0a3db4aea3ce0352e283efcd29e497767299983ad762f4aeacf283aed"
+  },
+  "layout_measurements": [
+    {
+      "viewport": 1920,
+      "stage": "macro",
+      "available_width": 1650,
+      "content_width": 1155,
+      "row_heights": [
+        46
+      ],
+      "header_heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "viewport": 1920,
+      "stage": "sectors",
+      "available_width": 1650,
+      "content_width": 1402.5,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 1359,
+        "full": 1767
+      }
+    },
+    {
+      "viewport": 1920,
+      "stage": "stocks",
+      "available_width": 1650,
+      "content_width": 1402.5,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 1359,
+        "full": 1567
+      }
+    },
+    {
+      "viewport": 1920,
+      "stage": "detail",
+      "available_width": 1650,
+      "content_width": 1237.5
+    },
+    {
+      "viewport": 1440,
+      "stage": "macro",
+      "available_width": 1170,
+      "content_width": 1050,
+      "row_heights": [
+        46
+      ],
+      "header_heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "viewport": 1440,
+      "stage": "sectors",
+      "available_width": 1170,
+      "content_width": 994.5,
+      "header_height": 45,
+      "row_heights": [
+        44,
+        67
+      ],
+      "table": {
+        "view": 951,
+        "full": 1892
+      }
+    },
+    {
+      "viewport": 1440,
+      "stage": "stocks",
+      "available_width": 1170,
+      "content_width": 994.5,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 951,
+        "full": 1640
+      }
+    },
+    {
+      "viewport": 1440,
+      "stage": "detail",
+      "available_width": 1170,
+      "content_width": 980
+    },
+    {
+      "viewport": 768,
+      "stage": "macro",
+      "available_width": 498,
+      "content_width": 498,
+      "row_heights": [
+        46
+      ],
+      "header_heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "viewport": 768,
+      "stage": "sectors",
+      "available_width": 498,
+      "content_width": 498,
+      "header_height": 45,
+      "row_heights": [
+        44,
+        67
+      ],
+      "table": {
+        "view": 470,
+        "full": 1892
+      }
+    },
+    {
+      "viewport": 768,
+      "stage": "stocks",
+      "available_width": 498,
+      "content_width": 498,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 470,
+        "full": 1640
+      }
+    },
+    {
+      "viewport": 768,
+      "stage": "detail",
+      "available_width": 498,
+      "content_width": 498
+    },
+    {
+      "viewport": 390,
+      "stage": "macro",
+      "available_width": 390,
+      "content_width": 390,
+      "row_heights": [
+        46
+      ],
+      "header_heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "viewport": 390,
+      "stage": "sectors",
+      "available_width": 390,
+      "content_width": 390,
+      "header_height": 45,
+      "row_heights": [
+        44,
+        67
+      ],
+      "table": {
+        "view": 362,
+        "full": 1892
+      }
+    },
+    {
+      "viewport": 390,
+      "stage": "stocks",
+      "available_width": 390,
+      "content_width": 390,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 362,
+        "full": 1640
+      }
+    },
+    {
+      "viewport": 390,
+      "stage": "detail",
+      "available_width": 390,
+      "content_width": 390
+    },
+    {
+      "viewport": 1920,
+      "stage": "macro",
+      "available_width": 1650,
+      "content_width": 1155,
+      "row_heights": [
+        46
+      ],
+      "header_heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    }
+  ],
+  "sector_activity_trace": [
+    {
+      "market": "KOSDAQ",
+      "sector": "운송·창고",
+      "members": 4,
+      "activity_csv": "1.5019858480597035"
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "출판·매체복제",
+      "members": 2,
+      "activity_csv": "40.925399629736845"
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "표준산업 · 부동산 임대 및 공급업",
+      "members": 3,
+      "activity_csv": "16.261805702421803"
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "표준산업 · 연료용 가스 제조 및 배관공급업",
+      "members": 1,
+      "activity_csv": "0.25441725497869283"
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "표준산업 · 전기업",
+      "members": 1,
+      "activity_csv": "0.7367952840444179"
+    },
+    {
+      "market": "KOSPI",
+      "sector": "부동산",
+      "members": 2,
+      "activity_csv": "0.5740700378941493"
+    },
+    {
+      "market": "KOSPI",
+      "sector": "오락·문화",
+      "members": 13,
+      "activity_csv": "1.3598332073211044"
+    },
+    {
+      "market": "KOSPI",
+      "sector": "제조",
+      "members": 8,
+      "activity_csv": "0.8896776176569268"
+    },
+    {
+      "market": "KOSPI",
+      "sector": "통신",
+      "members": 5,
+      "activity_csv": "1.2270654312237714"
+    },
+    {
+      "market": "KOSPI",
+      "sector": "표준산업 · 어로 어업",
+      "members": 2,
+      "activity_csv": "1.3075209598163025"
+    }
+  ],
+  "full_sector_stock_csv": [
+    {
+      "market": "KOSPI",
+      "sector": "제약",
+      "members_checked": 47
+    },
+    {
+      "market": "KOSPI",
+      "sector": "유통",
+      "members_checked": 59
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "표준산업 · 연료용 가스 제조 및 배관공급업",
+      "members_checked": 1
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "표준산업 · 전기업",
+      "members_checked": 1
+    },
+    {
+      "market": "KOSPI",
+      "sector": "부동산",
+      "members_checked": 2
+    },
+    {
+      "market": "KOSPI",
+      "sector": "표준산업 · 어로 어업",
+      "members_checked": 2
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "전기·전자",
+      "members_checked": 297
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "IT 서비스",
+      "members_checked": 215
+    },
+    {
+      "market": "KOSPI",
+      "sector": "제조",
+      "members_checked": 8
+    },
+    {
+      "market": "KOSPI",
+      "sector": "통신",
+      "members_checked": 5
+    },
+    {
+      "market": "KOSPI",
+      "sector": "오락·문화",
+      "members_checked": 13
+    },
+    {
+      "market": "KOSPI",
+      "sector": "종이·목재",
+      "members_checked": 18
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "섬유·의류",
+      "members_checked": 22
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "출판·매체복제",
+      "members_checked": 2
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "운송·창고",
+      "members_checked": 4
+    },
+    {
+      "market": "KOSDAQ",
+      "sector": "표준산업 · 부동산 임대 및 공급업",
+      "members_checked": 3
+    }
+  ],
+  "liquidity_trace": [
+    {
+      "symbol": "000020",
+      "activity_csv": "0.5381635902258823",
+      "average_turnover_csv": "14.06448009",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "000050",
+      "activity_csv": "1.3899217177950407",
+      "average_turnover_csv": "2.79655452",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "053050",
+      "activity_csv": "0.25441725497869283",
+      "average_turnover_csv": "1.917557666",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "060900",
+      "activity_csv": "0.7367952840444179",
+      "average_turnover_csv": "2.460287052",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "210980",
+      "activity_csv": "0.18805924079824304",
+      "average_turnover_csv": "2.344362886",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "004970",
+      "activity_csv": "1.1584336297381117",
+      "average_turnover_csv": "0.94893394",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "052710",
+      "activity_csv": "0.6467199991092084",
+      "average_turnover_csv": "134.83962906",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "052790",
+      "activity_csv": "0.3368073580145406",
+      "average_turnover_csv": "1.423724404",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "013890",
+      "activity_csv": "1.1144453121710012",
+      "average_turnover_csv": "1.29342509",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "017670",
+      "activity_csv": "1.1293477841015358",
+      "average_turnover_csv": "679.7619509",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "034230",
+      "activity_csv": "1.2369870440003803",
+      "average_turnover_csv": "32.83584329",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "009460",
+      "activity_csv": "1.2161352784076005",
+      "average_turnover_csv": "0.26647614",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "032080",
+      "activity_csv": "7.12306839365026",
+      "average_turnover_csv": "0.249841282",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "030960",
+      "activity_csv": "70.40838401050473",
+      "average_turnover_csv": "74.838734446",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "003100",
+      "activity_csv": "1.8600781825296298",
+      "average_turnover_csv": "2.43611682",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "symbol": "014470",
+      "activity_csv": "1.1495198706058558",
+      "average_turnover_csv": "0.840538894",
+      "proof_dates": [
+        "2026-10-14"
+      ]
+    }
+  ],
+  "recovered_symbols": [
+    {
+      "symbol": "011080",
+      "asof": "2026-10-15",
+      "guide": "관망",
+      "daily_accepted": true,
+      "provider_finality": "UNVERIFIED",
+      "csv_rows": 20
+    },
+    {
+      "symbol": "011090",
+      "asof": "2026-10-15",
+      "guide": "관망",
+      "daily_accepted": true,
+      "provider_finality": "UNVERIFIED",
+      "csv_rows": 20
+    },
+    {
+      "symbol": "016800",
+      "asof": "2026-10-15",
+      "guide": "관망",
+      "daily_accepted": true,
+      "provider_finality": "UNVERIFIED",
+      "csv_rows": 20
+    },
+    {
+      "symbol": "033340",
+      "asof": "2026-10-15",
+      "guide": "관망",
+      "daily_accepted": true,
+      "provider_finality": "UNVERIFIED",
+      "csv_rows": 20
+    },
+    {
+      "symbol": "052710",
+      "asof": "2026-10-15",
+      "guide": "관망",
+      "daily_accepted": true,
+      "provider_finality": "UNVERIFIED",
+      "csv_rows": 20
+    },
+    {
+      "symbol": "052790",
+      "asof": "2026-10-15",
+      "guide": "관망",
+      "daily_accepted": true,
+      "provider_finality": "UNVERIFIED",
+      "csv_rows": 20
+    }
+  ],
+  "historical_lookup": {
+    "symbol": "052790",
+    "selected_date": "2026-10-14",
+    "bundle_asof": "2026-10-14",
+    "guide": "관망",
+    "csv_last_date": "2026-10-14"
+  },
+  "final_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "app_frame_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/~/+/"
+}
