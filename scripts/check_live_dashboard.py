@@ -221,9 +221,20 @@ with sync_playwright() as p:
    if width==390:
     page.set_viewport_size({'width':1920,'height':1200});pause();layout();readability('macro')
    report['checks'].append(f'{width}px: page widths, row heights, 14px text, internal scroll, no clipped cells/KPIs, navigation, tabs, sidebar non-overlap')
+  # Verify every now-complete sector against its actual public export.
+  report['sector_activity_trace']=[]
+  for market,g in sectors[sectors.activity_ratio.notna()].groupby('market'):
+   click('수급 필터');radio('전체 섹터');choose('시장',market);click('전체섹터 조회')
+   exported=download('섹터 현황 CSV','complete-sectors-'+market+'.csv')
+   for row in g.itertuples():
+    actual=next(v for v in exported if v['섹터']==row.sector)
+    match(actual['거래 활성도(배)'],row.activity_ratio)
+    report['sector_activity_trace'].append({'market':market,'sector':row.sector,'members':int(row.members),'activity_csv':actual['거래 활성도(배)']})
+   page.screenshot(path=str(out/('complete-sectors-'+market+'.png')),full_page=True)
   # Trace released turnover from exact-date evidence through the actual public CSV.
   released=sorted({code for rows in data['metadata'].get('liquidity_price_evidence',{}).values() for code in rows})
-  for code in released[:4]:
+  audit_codes=list(dict.fromkeys(released[:2]+[c for c in ['053050','060900','210980','004970','052710','052790'] if c in set(stocks.symbol)]))
+  for code in audit_codes:
    row=stocks.set_index('symbol').loc[code]
    click('수급 필터');radio('전체 섹터');choose('시장',row.market);click('전체섹터 조회')
    double(row.sector)
