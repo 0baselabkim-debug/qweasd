@@ -203,3 +203,12 @@ def test_attachment_repair_preserves_seed_metadata_and_valid_components(monkeypa
  assert state['events'][0]['evidence']['official_parent_metadata']==parent
  parent['disclosed_on']='2099-01-01'
  assert repair.repair(None,state,[attachment['receipt']])[0]['error']=='parent_metadata_revision_requires_review'
+
+def test_audit_facts_use_current_term_label_and_exact_filing():
+ from scripts.replay_corporate_documents import audit_facts
+ f=filing();row={'corp_code':f['corp_code'],'rcept_no':f['receipt'],'stlm_dt':f['period_end'],'bsns_year':'제59기\n(당기)','adt_opinion':'적정의견'}
+ r={'status':'000','list':[row,dict(row,bsns_year='제58기 (전기)',adt_opinion='전기 의견')]}
+ facts=audit_facts(r,f)
+ assert len(facts['raw_current_rows'])==1 and facts['material_financial_risk']=='unverified' and not facts['eligibility_rule_applied']
+ r['list'][0]['rcept_no']='incorrect'
+ assert audit_facts(r,f) is None

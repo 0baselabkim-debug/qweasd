@@ -10,7 +10,7 @@ def document_section(raw,filing):
         raise zipfile.BadZipFile('Document response is not ZIP')
     candidates=[]
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
-        files=[i for i in z.infolist() if i.filename.lower().endswith('.xml') and i.file_size<30000000]
+        files=[i for i in z.infolist() if i.filename.lower().endswith('.xml')]
         if not files:raise ValueError('document_xml_missing')
         if sum(i.file_size for i in files)>60000000:raise ValueError('document_expansion_limit')
         for item in files:

@@ -16,10 +16,10 @@ def validate(old,new):
   if r['status']=='confirmed' and (not r.get('excerpt') or not r.get('reviewer') or not r.get('document_sha256')):raise ValueError('unverified_theme')
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--validate-only',action='store_true');a=p.parse_args()
- old=load_state();new=load_state('corporate-candidate/state.json.gz');validate(old,new)
+ p=argparse.ArgumentParser();p.add_argument('--validate-only',action='store_true');p.add_argument('--candidate-dir',type=Path,default=Path('corporate-candidate'));a=p.parse_args()
+ old=load_state();new=load_state(a.candidate_dir/'state.json.gz');validate(old,new)
  import duckdb
- with duckdb.connect('corporate-candidate/corporate.duckdb',read_only=True) as c:
+ with duckdb.connect(str(a.candidate_dir/'corporate.duckdb'),read_only=True) as c:
   for table,key in [('filings','receipt'),('financial_versions','id'),('theme_reviews','id')]:
    state_key={'filings':'filings','financial_versions':'financials','theme_reviews':'reviews'}[table]
    actual={k:json.loads(v) for k,v in c.execute(f'select {key},payload from {table}').fetchall()}
@@ -29,9 +29,9 @@ def main():
  manifest={'updated_at':dt.datetime.now(dt.timezone.utc).isoformat(),'filings':len(new['filings']),'financial_versions':len(new['financials']),
  'business_companies':len({new['filings'][k]['symbol'] for k,j in new['jobs'].items() if j.get('business_status')=='success'}),'universe':2430,
  'last_run':latest,'annual_score_policy':'preserved_2025_baseline','quarterly_score_policy':'hold_until_comparable_TTM_validation',
- 'state_sha256':hashlib.sha256(Path('corporate-candidate/state.json.gz').read_bytes()).hexdigest()}
+ 'state_sha256':hashlib.sha256((a.candidate_dir/'state.json.gz').read_bytes()).hexdigest()}
  Path('snapshot').mkdir(exist_ok=True)
- shutil.copy2('corporate-candidate/state.json.gz','snapshot/corporate-state.json.gz');shutil.copy2('corporate-candidate/corporate.duckdb','snapshot/corporate.duckdb')
+ shutil.copy2(a.candidate_dir/'state.json.gz','snapshot/corporate-state.json.gz');shutil.copy2(a.candidate_dir/'corporate.duckdb','snapshot/corporate.duckdb')
  Path('snapshot/corporate-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
  print(json.dumps({k:v for k,v in manifest.items() if k!='last_run'},ensure_ascii=False))
 if __name__=='__main__':main()

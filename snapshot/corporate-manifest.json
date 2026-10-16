@@ -1,49 +1,37 @@
 {
-  "updated_at": "2026-10-16T01:57:55.064092+00:00",
+  "updated_at": "2026-10-16T02:02:14.769967+00:00",
   "filings": 8356,
   "financial_versions": 2772,
   "business_companies": 357,
   "universe": 2430,
   "last_run": {
-    "run_id": "38837829938",
-    "calls": 6,
-    "seconds": 8.661,
+    "run_id": "saved-document-replay",
+    "calls": 0,
     "results": [
       {
-        "receipt": "20260403000835",
-        "parent": "20260318001570",
-        "new_financial": false,
-        "parent_job": {
-          "attempted_at": "2026-10-16T01:57:23.848061+00:00",
-          "business_attempted_at": "2026-10-16T01:57:23.848061+00:00",
-          "business_attempts": 1,
-          "business_status": "success",
-          "document_name": "20260318001570.xml",
-          "document_sha256": "d63d30c1748085c7f6c5769eb26c7ee2ec3440682d0fd43e06a74061640d346c",
-          "section_sha256": "91972ffd6620e1fb484cc2a40575b93151aac1e11ee44c466b357eb74a2b775e",
-          "characters": 13007,
-          "financial_status": "success"
-        }
+        "receipt": "20260331003904",
+        "symbol": "005830",
+        "business_status": "success",
+        "business_error": null,
+        "audit_facts_verified": true
       },
       {
-        "receipt": "20260730000551",
-        "parent": "20260730000356",
-        "new_financial": false,
-        "parent_job": {
-          "attempted_at": "2026-10-16T01:57:28.820875+00:00",
-          "business_attempted_at": "2026-10-16T01:57:28.820875+00:00",
-          "business_attempts": 1,
-          "business_status": "success",
-          "document_name": "20260730000356.xml",
-          "document_sha256": "5ddd0bf0d170270294266dc348fe99256e574b4fb2e05f62f016a70551ba863b",
-          "section_sha256": "f1a9b8f1265aadd49743e3b94acd1570e81c36d4700ffb0732640c65be28ceaf",
-          "characters": 7080,
-          "financial_status": "success"
-        }
+        "receipt": "20260331003871",
+        "symbol": "000880",
+        "business_status": "success",
+        "business_error": null,
+        "audit_facts_verified": true
+      },
+      {
+        "receipt": "20260331003585",
+        "symbol": "088350",
+        "business_status": "success",
+        "business_error": null,
+        "audit_facts_verified": true
       }
     ]
   },
   "annual_score_policy": "preserved_2025_baseline",
   "quarterly_score_policy": "hold_until_comparable_TTM_validation",
-  "state_sha256": "7226512c4150305571f0be3562f6659dc0cba7adbe9d4597c6868285ad358bc2"
+  "state_sha256": "96a44411f28423ed534c789124a4912667f1cca5239a02ca679b46c8beebb94f"
 }

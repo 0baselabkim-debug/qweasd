@@ -15,9 +15,12 @@ def at(name):
 def run():
     data=load(PACKAGED_DB);asof=str(data['flows'].trade_date.max().date());x,m=universe(data,asof);x=stock_activity(data,x,asof);s,_=sector_indicators(data,x,m,asof)
     ledger=read(Path('technical/recovery-state.json'));categories=collections.Counter();guides=collections.Counter();accepted=0
-    before=at('technical/summary.json');changed=[]
+    before=at('technical/summary.json');changed=[];codes=set(x.symbol);excluded_cached=[]
     for path in sorted(Path('technical/market').glob('*.json.gz')):
-        b=read(path);code=b['symbol'];key=b['asof']+'/'+code;j=ledger['jobs'].get(key,{})
+        b=read(path);code=b['symbol']
+        if code not in codes:
+            excluded_cached.append({'symbol':code,'asof':b['asof']});continue
+        key=b['asof']+'/'+code;j=ledger['jobs'].get(key,{})
         if daily_accepted(b) and not validate(b,asof):category='verified_current_date';accepted+=1
         elif len(b['bars'])<rules()['min_bars']:category='short_history'
         elif len(b['flows'])<20:category='short_flow_history'
@@ -31,7 +34,7 @@ def run():
     original_preserved['events_prefix']=state['events'][:len(old['events'])]==old['events']
     metrics={'asof':asof,'before':{'accepted':before['daily_accepted'],'guides':before['guide_status_counts'],'stock_activity':387,'sector_activity':0},
         'after':{'accepted':accepted,'guides':guides,'stock_activity':int(x.activity_ratio.notna().sum()),'sector_activity':int(s.activity_ratio.notna().sum())},
-        'exclusive_current_queue_categories':categories,'physical_runs':runs,'corporate':{'unique_failed_filings':len(failed),'error_combinations':dict(collections.Counter('|'.join(sorted(j.get(c+'_error','') for c in ['business','financial'] if j.get(c+'_status')=='failed')) for j in failed.values())),
+        'excluded_cached_observations':excluded_cached,'exclusive_current_queue_categories':categories,'physical_runs':runs,'corporate':{'unique_failed_filings':len(failed),'error_combinations':dict(collections.Counter('|'.join(sorted(j.get(c+'_error','') for c in ['business','financial'] if j.get(c+'_status')=='failed')) for j in failed.values())),
           'business_success_before':sum(j.get('business_status')=='success' for j in old['jobs'].values()),'business_success_after':sum(j.get('business_status')=='success' for j in state['jobs'].values()),'new_financial_records':len(state['financials'])-len(old['financials']),'preservation':original_preserved},
         'liquidity_evidence_dates':{d:sorted(v) for d,v in data['metadata'].get('liquidity_price_evidence',{}).items()},
         'raw_conflict_mask_counts':{d:len(v) for d,v in data['metadata'].get('adjusted_price_conflicts',{}).items()},
