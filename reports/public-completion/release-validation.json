@@ -1,0 +1,54 @@
+{
+  "implementation_commit": "5fa15c12871f4c269c9204c905b1d3e86059561f",
+  "ci": {
+    "run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38833508699",
+    "conclusion": "success",
+    "head_sha": "5fa15c12871f4c269c9204c905b1d3e86059561f"
+  },
+  "public_browser": {
+    "run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38833100425",
+    "conclusion": "success",
+    "observed_deployment": {
+      "expected": {
+        "source_sha256": "d2233fc16c06004285fe2b98b27f82f41c71b7a1e2d38c7c4d165eb842a3ae46",
+        "revision": "34d79fdbd6d257bcd848da7fe5c1c3d379923915"
+      },
+      "source_sha256": "d2233fc16c06004285fe2b98b27f82f41c71b7a1e2d38c7c4d165eb842a3ae46",
+      "revision": "34d79fdbd6d257bcd848da7fe5c1c3d379923915"
+    },
+    "recovered_symbols": [
+      {
+        "symbol": "000020",
+        "asof": "2026-10-15",
+        "guide": "관망",
+        "daily_accepted": true,
+        "provider_finality": "UNVERIFIED",
+        "csv_rows": 20
+      },
+      {
+        "symbol": "000050",
+        "asof": "2026-10-15",
+        "guide": "관망",
+        "daily_accepted": true,
+        "provider_finality": "UNVERIFIED",
+        "csv_rows": 20
+      }
+    ],
+    "historical_lookup": {
+      "symbol": "000050",
+      "selected_date": "2026-10-14",
+      "bundle_asof": null,
+      "guide": "판정 보류",
+      "csv_last_date": "2026-10-14"
+    }
+  },
+  "scheduled_recovery": "Configured: at most 2 symbols after scheduled verification. Future scheduled operation not yet verified.",
+  "provider_finality": "UNVERIFIED unchanged",
+  "macro_market_investors": "Blocked: endpoint-specific monetary multiplier and KRX/NXT scope missing in received official specification.",
+  "local_regression": {
+    "passed": 179,
+    "failed": 0,
+    "seconds": 214.18,
+    "log": "regression-tests.txt"
+  }
+}
