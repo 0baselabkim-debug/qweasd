@@ -11,6 +11,8 @@ from screener.technical import rules,validate
 
 def run(out):
     data=load(PACKAGED_DB);day=str(data['flows'].trade_date.max().date());gaps=diagnose(data,day)
+    from screener.indicators import universe
+    stocks,_=universe(data,day);normal_codes=set(stocks.symbol)
     original_blocked=set()
     with tarfile.open(fileobj=io.BytesIO(subprocess.check_output(['git','archive','c834c172b6fe733add5d35e35c22ffc8f5b467d6','technical/market']))) as archive:
         for member in archive:
@@ -55,6 +57,7 @@ def run(out):
     active=[];accepted_codes=set()
     for p in Path('technical/market').glob('*.json.gz'):
         b=read(p);code=b['symbol'];key=(b['asof'],code)
+        if code not in normal_codes:continue
         if daily_accepted(b) and not validate(b,day):accepted_codes.add(code)
         if blocking_conflicts(b):
             active.append(code);categories['active_price_conflict'].add(key)
@@ -62,6 +65,10 @@ def run(out):
         if len(b.get('bars',[]))<rules()['min_bars']:categories['technical_history_short'].add(key)
         if len(b.get('flows',[]))<20:categories['flow_history_short'].add(key)
         if not daily_accepted(b):categories['external_or_incomplete_verification'].add(key)
+    from scripts.technical_acceptance import selected_observations
+    paths=list(Path('technical/market').glob('*.json.gz'))+list(Path('technical/history').glob('*/*.json.gz'))+list(Path('technical/pending').glob('*/*.json.gz'))
+    for path,b in selected_observations(paths,day):
+        if b['symbol'] in normal_codes:categories['materialized_unaccepted_date_tasks'].add((b['asof'],b['symbol']))
     ledger=read(Path('technical/recovery-state.json'),{})
     for key,j in ledger.get('jobs',{}).items():
         result=j.get('last_result',{})
@@ -69,9 +76,12 @@ def run(out):
         if result.get('error_type')=='RecoveryBudget':categories['budget_paused'].add(tuple(key.split('/')))
     groups={k:{'symbols':len({c for d,c in v}),'date_symbol_tasks':len(v),'by_date':dict(collections.Counter(d for d,c in v)),'tasks':[{'date':d,'symbol':c} for d,c in sorted(v)]} for k,v in categories.items()}
     overlap={f'{a} & {b}':len(categories[a]&categories[b]) for i,a in enumerate(groups) for b in list(groups)[i+1:]}
+    window_dates=sorted(data['calendar'].loc[data['calendar'].trade_date<=pd.Timestamp(day),'trade_date'].unique())[-25:]
+    window=data['prices'][data['prices'].symbol.isin(normal_codes)&data['prices'].trade_date.isin(window_dates)&(data['prices'].exchange=='KRX')]
+    zero_observations={k:{'rows':int((window[k]==0).sum()),'symbols':int(window.loc[window[k]==0,'symbol'].nunique())} for k in ['volume','turnover']}
     missing_codes={r['symbol'] for sec in sectors for r in sec['remaining_checks']}
     result={'accepted_with_activity_gap':sorted(accepted_codes & missing_codes),'accepted_without_activity_gap':len(accepted_codes-missing_codes),'asof':day,'stock_activity':gaps['stock_activity'],'categories':groups,'category_overlap_date_symbol_counts':overlap,
-            'gap_observation_counts':{k:{'symbols':len({c for d,c in v}),'date_symbol_tasks':len(v)} for k,v in observations.items()},
+            'observed_zeros_in_25d_window_not_inferred_suspensions':zero_observations,'gap_observation_counts':{k:{'symbols':len({c for d,c in v}),'date_symbol_tasks':len(v)} for k,v in observations.items()},
             'category_note':'overlapping observations, not mutually exclusive causes; exchange mismatch and suspension require source evidence, not inference from price conflict',
             'sectors':sorted(sectors,key=lambda s:-(s['constituents_per_remaining_check'] or 0))}
     out.mkdir(parents=True,exist_ok=True);(out/'completeness.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')

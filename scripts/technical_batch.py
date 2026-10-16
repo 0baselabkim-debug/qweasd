@@ -199,18 +199,19 @@ def refresh_summary(asof):
     from screener.technical_quality import daily_accepted,blocking_conflicts
     state=read(STATE,{'symbols':{},'runs':[]});summary=read(ROOT/'summary.json',{})
     current=[read(p) for p in CACHE.glob('*.json.gz')];current=[b for b in current if b and b['asof']==asof]
+    checks={b['symbol']:validate(b,asof) for b in current}
     guides={b['symbol']:buy_guide(b,asof) for b in current}
     for b in current:
         if b['symbol'] in state['symbols']:
-            state['symbols'][b['symbol']].update(reasons=validate(b,asof),signal_ready=not validate(b,asof))
+            state['symbols'][b['symbol']].update(reasons=checks[b['symbol']],signal_ready=not checks[b['symbol']])
     summary.update(quality_reviewed_at=dt.datetime.now(dt.timezone.utc).isoformat(),
         waiting_history_symbols=sum(len(b.get('bars',[]))<rules()['min_bars'] for b in current),
         full_320_symbols=sum(len(b.get('bars',[]))>=320 for b in current),
         short_history_symbols=sum(len(b.get('bars',[]))<320 for b in current),
-        daily_accepted=sum(daily_accepted(b) for b in current),signal_ready=sum(not validate(b,asof) for b in current),
+        daily_accepted=sum(daily_accepted(b) for b in current),signal_ready=sum(not checks[b['symbol']] for b in current),
         guide_status_counts=dict(collections.Counter(g['status'] for g in guides.values())),
         guide_hold_reasons=dict(collections.Counter(x for g in guides.values() if g['status']=='판정 보류' for x in g['reasons'])),
-        hold_reasons=dict(collections.Counter(x for b in current for x in validate(b,asof))),
+        hold_reasons=dict(collections.Counter(x for b in current for x in checks[b['symbol']])),
         price_conflicts=sum(bool(b.get('price_conflicts')) for b in current),
         blocking_price_conflicts=sum(bool(blocking_conflicts(b)) for b in current),
         finality_verified=sum(b.get('finality')=='VERIFIED' for b in current),
