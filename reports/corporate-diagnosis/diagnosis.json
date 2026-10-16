@@ -1,0 +1,625 @@
+{
+  "observed_at": "2026-10-16T01:55:54.515230+00:00",
+  "filings": [
+    {
+      "requested_filing": {
+        "symbol": "005830",
+        "corp_code": "00159102",
+        "receipt": "20260331003904",
+        "name": "사업보고서 (2025.12)",
+        "period_end": "2025-12-31",
+        "year": 2025,
+        "form": "annual",
+        "report_code": "11011",
+        "disclosed_on": "2026-03-31",
+        "correction": false,
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003904"
+      },
+      "previous_job": {
+        "business_status": "failed",
+        "business_error": "document_xml_missing",
+        "financial_status": "success"
+      },
+      "document": {
+        "bytes": 1096861,
+        "sha256": "6b6c4bad042a29d522a5e37bace09455a192a0f3dca4a99c85e0739c66f206d1",
+        "zip_signature": true,
+        "transport": {
+          "http": 200,
+          "content_type": "application/x-msdownload;charset=UTF-8",
+          "bytes": 1096861
+        },
+        "entries": [
+          {
+            "name": "20260331003904.xml",
+            "bytes": 30219978
+          }
+        ]
+      },
+      "financial": {
+        "status": "000",
+        "rows": 347,
+        "identities": [
+          {
+            "rcept_no": "20260331003904",
+            "reprt_code": "11011",
+            "bsns_year": "2025",
+            "corp_code": "00159102",
+            "fs_div": "None"
+          }
+        ]
+      },
+      "official_filing_list": {
+        "status": "000",
+        "message": "정상",
+        "page_no": 1,
+        "page_count": 100,
+        "total_count": 4,
+        "total_page": 1,
+        "list": [
+          {
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "stock_code": "005830",
+            "corp_cls": "Y",
+            "report_nm": "반기보고서 (2026.06)",
+            "rcept_no": "20260814003682",
+            "flr_nm": "DB손해보험",
+            "rcept_dt": "20260814",
+            "rm": ""
+          },
+          {
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "stock_code": "005830",
+            "corp_cls": "Y",
+            "report_nm": "분기보고서 (2026.03)",
+            "rcept_no": "20260515002382",
+            "flr_nm": "DB손해보험",
+            "rcept_dt": "20260515",
+            "rm": ""
+          },
+          {
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "stock_code": "005830",
+            "corp_cls": "Y",
+            "report_nm": "[기재정정]사업보고서 (2025.12)",
+            "rcept_no": "20260331003904",
+            "flr_nm": "DB손해보험",
+            "rcept_dt": "20260331",
+            "rm": "연"
+          },
+          {
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "stock_code": "005830",
+            "corp_cls": "Y",
+            "report_nm": "사업보고서 (2025.12)",
+            "rcept_no": "20260312001222",
+            "flr_nm": "DB손해보험",
+            "rcept_dt": "20260312",
+            "rm": "정연"
+          }
+        ]
+      },
+      "audit_opinion_response": {
+        "status": "000",
+        "message": "정상",
+        "list": [
+          {
+            "rcept_no": "20260331003904",
+            "corp_cls": "Y",
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "bsns_year": "제59기\n(당기)",
+            "adtor": "삼일회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "강조사항 없음",
+            "core_adt_matter": "보험계약 이행현금흐름 산출 시 적용된 손해율 가정의 적정성",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003904",
+            "corp_cls": "Y",
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "bsns_year": "제59기\n(당기)",
+            "adtor": "삼일회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "강조사항 없음",
+            "core_adt_matter": "보험계약 이행현금흐름 산출 시 적용된 손해율 가정의 적정성",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003904",
+            "corp_cls": "Y",
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "bsns_year": "제58기\n(전기)",
+            "adtor": "삼일회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "강조사항 없음",
+            "core_adt_matter": "보험계약 이행현금흐름 산출 시 적용된 손해율 가정의 적정성",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003904",
+            "corp_cls": "Y",
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "bsns_year": "제58기\n(전기)",
+            "adtor": "삼일회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "강조사항 없음",
+            "core_adt_matter": "보험계약 이행현금흐름 산출 시 적용된 손해율 가정의 적정성",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003904",
+            "corp_cls": "Y",
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "bsns_year": "제57기\n (전전기)",
+            "adtor": "삼일회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "강조사항 없음",
+            "core_adt_matter": "보험계약 이행현금흐름 산출 시 적용된 손해율 가정의 적정성",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003904",
+            "corp_cls": "Y",
+            "corp_code": "00159102",
+            "corp_name": "DB손해보험",
+            "bsns_year": "제57기\n (전전기)",
+            "adtor": "삼일회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "강조사항 없음",
+            "core_adt_matter": "보험계약 이행현금흐름 산출 시 적용된 손해율 가정의 적정성",
+            "stlm_dt": "2025-12-31"
+          }
+        ]
+      },
+      "audit_identity_verified": false
+    },
+    {
+      "requested_filing": {
+        "symbol": "000880",
+        "corp_code": "00160588",
+        "receipt": "20260331003871",
+        "name": "사업보고서 (2025.12)",
+        "period_end": "2025-12-31",
+        "year": 2025,
+        "form": "annual",
+        "report_code": "11011",
+        "disclosed_on": "2026-03-31",
+        "correction": false,
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003871"
+      },
+      "previous_job": {
+        "business_status": "failed",
+        "business_error": "document_xml_missing",
+        "financial_status": "success"
+      },
+      "document": {
+        "bytes": 1616366,
+        "sha256": "cc7975634ea44825185ee7fd8637a0946c84fcfcbe9a50baa1aec027628ac814",
+        "zip_signature": true,
+        "transport": {
+          "http": 200,
+          "content_type": "application/x-msdownload;charset=UTF-8",
+          "bytes": 1616366
+        },
+        "entries": [
+          {
+            "name": "20260331003871.xml",
+            "bytes": 30329988
+          }
+        ]
+      },
+      "financial": {
+        "status": "000",
+        "rows": 294,
+        "identities": [
+          {
+            "rcept_no": "20260331003871",
+            "reprt_code": "11011",
+            "bsns_year": "2025",
+            "corp_code": "00160588",
+            "fs_div": "None"
+          }
+        ]
+      },
+      "official_filing_list": {
+        "status": "000",
+        "message": "정상",
+        "page_no": 1,
+        "page_count": 100,
+        "total_count": 7,
+        "total_page": 1,
+        "list": [
+          {
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "stock_code": "000880",
+            "corp_cls": "Y",
+            "report_nm": "[기재정정]반기보고서 (2026.06)",
+            "rcept_no": "20260831001249",
+            "flr_nm": "한화",
+            "rcept_dt": "20260831",
+            "rm": ""
+          },
+          {
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "stock_code": "000880",
+            "corp_cls": "Y",
+            "report_nm": "반기보고서 (2026.06)",
+            "rcept_no": "20260814003062",
+            "flr_nm": "한화",
+            "rcept_dt": "20260814",
+            "rm": "정"
+          },
+          {
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "stock_code": "000880",
+            "corp_cls": "Y",
+            "report_nm": "[기재정정]분기보고서 (2026.03)",
+            "rcept_no": "20260529001733",
+            "flr_nm": "한화",
+            "rcept_dt": "20260529",
+            "rm": ""
+          },
+          {
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "stock_code": "000880",
+            "corp_cls": "Y",
+            "report_nm": "분기보고서 (2026.03)",
+            "rcept_no": "20260514000765",
+            "flr_nm": "한화",
+            "rcept_dt": "20260514",
+            "rm": "정"
+          },
+          {
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "stock_code": "000880",
+            "corp_cls": "Y",
+            "report_nm": "[기재정정]사업보고서 (2025.12)",
+            "rcept_no": "20260331003871",
+            "flr_nm": "한화",
+            "rcept_dt": "20260331",
+            "rm": "연"
+          },
+          {
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "stock_code": "000880",
+            "corp_cls": "Y",
+            "report_nm": "[기재정정]사업보고서 (2025.12)",
+            "rcept_no": "20260320000558",
+            "flr_nm": "한화",
+            "rcept_dt": "20260320",
+            "rm": "정연"
+          },
+          {
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "stock_code": "000880",
+            "corp_cls": "Y",
+            "report_nm": "사업보고서 (2025.12)",
+            "rcept_no": "20260318001426",
+            "flr_nm": "한화",
+            "rcept_dt": "20260318",
+            "rm": "정연"
+          }
+        ]
+      },
+      "audit_opinion_response": {
+        "status": "000",
+        "message": "정상",
+        "list": [
+          {
+            "rcept_no": "20260331003871",
+            "corp_cls": "Y",
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "bsns_year": "제74기\n(당기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "해당사항없음",
+            "core_adt_matter": "투입법에 따른\n건설공사 수익인식의 정확성",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003871",
+            "corp_cls": "Y",
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "bsns_year": "제74기\n(당기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "해당사항없음",
+            "core_adt_matter": "해당사항없음",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003871",
+            "corp_cls": "Y",
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "bsns_year": "제73기\n(전기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "종속기업의 주식을 보유하고 이 과정에서 발생하는 배당수익 및 현금흐름의 분류를 영업손익 및 영업활동현금흐름으로 변경하였고, 이에 따라 동회계정책 변경효과를 소급하여 수정되어 이용자들의 주의가 필요",
+            "core_adt_matter": "투입법에 의한 수익인식",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003871",
+            "corp_cls": "Y",
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "bsns_year": "제73기\n(전기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "연결회사는 당기에 연결재무상태표의유동과 비유동 표시방법을 혼합법에서 유동, 비유동 구분법으로 변경",
+            "core_adt_matter": "별도 의견 없음",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003871",
+            "corp_cls": "Y",
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "bsns_year": "제72기\n(전전기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "해당사항없음",
+            "core_adt_matter": "투입법에 의한 수익인식",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003871",
+            "corp_cls": "Y",
+            "corp_code": "00160588",
+            "corp_name": "한화",
+            "bsns_year": "제72기\n(전전기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "한국채택국제회계기준 제1117호의 적용으로 인하여 비교표시 되는 2022년 12월31일로 종료되는 보고기간의 연결재무제표가 재작성 되어 이용자들의 주의가 필요",
+            "core_adt_matter": "보험계약부채 평가에 적용된\n가정 중 위험률",
+            "stlm_dt": "2025-12-31"
+          }
+        ]
+      },
+      "audit_identity_verified": false
+    },
+    {
+      "requested_filing": {
+        "symbol": "088350",
+        "corp_code": "00113058",
+        "receipt": "20260331003585",
+        "name": "사업보고서 (2025.12)",
+        "period_end": "2025-12-31",
+        "year": 2025,
+        "form": "annual",
+        "report_code": "11011",
+        "disclosed_on": "2026-03-31",
+        "correction": false,
+        "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260331003585"
+      },
+      "previous_job": {
+        "business_status": "failed",
+        "business_error": "document_xml_missing",
+        "financial_status": "success"
+      },
+      "document": {
+        "bytes": 1418549,
+        "sha256": "04e4d61c75d442b6a605f4d0b13b19298912c0a041a49ddc1ec835fbf10c4bce",
+        "zip_signature": true,
+        "transport": {
+          "http": 200,
+          "content_type": "application/x-msdownload;charset=UTF-8",
+          "bytes": 1418549
+        },
+        "entries": [
+          {
+            "name": "20260331003585.xml",
+            "bytes": 37629855
+          }
+        ]
+      },
+      "financial": {
+        "status": "000",
+        "rows": 346,
+        "identities": [
+          {
+            "rcept_no": "20260331003585",
+            "reprt_code": "11011",
+            "bsns_year": "2025",
+            "corp_code": "00113058",
+            "fs_div": "None"
+          }
+        ]
+      },
+      "official_filing_list": {
+        "status": "000",
+        "message": "정상",
+        "page_no": 1,
+        "page_count": 100,
+        "total_count": 6,
+        "total_page": 1,
+        "list": [
+          {
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "stock_code": "088350",
+            "corp_cls": "Y",
+            "report_nm": "[기재정정]반기보고서 (2026.06)",
+            "rcept_no": "20260831001232",
+            "flr_nm": "한화생명",
+            "rcept_dt": "20260831",
+            "rm": ""
+          },
+          {
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "stock_code": "088350",
+            "corp_cls": "Y",
+            "report_nm": "반기보고서 (2026.06)",
+            "rcept_no": "20260813001536",
+            "flr_nm": "한화생명",
+            "rcept_dt": "20260813",
+            "rm": "정"
+          },
+          {
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "stock_code": "088350",
+            "corp_cls": "Y",
+            "report_nm": "[기재정정]분기보고서 (2026.03)",
+            "rcept_no": "20260529001672",
+            "flr_nm": "한화생명",
+            "rcept_dt": "20260529",
+            "rm": ""
+          },
+          {
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "stock_code": "088350",
+            "corp_cls": "Y",
+            "report_nm": "분기보고서 (2026.03)",
+            "rcept_no": "20260514000964",
+            "flr_nm": "한화생명",
+            "rcept_dt": "20260514",
+            "rm": "정"
+          },
+          {
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "stock_code": "088350",
+            "corp_cls": "Y",
+            "report_nm": "[기재정정]사업보고서 (2025.12)",
+            "rcept_no": "20260331003585",
+            "flr_nm": "한화생명",
+            "rcept_dt": "20260331",
+            "rm": "연"
+          },
+          {
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "stock_code": "088350",
+            "corp_cls": "Y",
+            "report_nm": "사업보고서 (2025.12)",
+            "rcept_no": "20260316001304",
+            "flr_nm": "한화생명",
+            "rcept_dt": "20260316",
+            "rm": "정연"
+          }
+        ]
+      },
+      "audit_opinion_response": {
+        "status": "000",
+        "message": "정상",
+        "list": [
+          {
+            "rcept_no": "20260331003585",
+            "corp_cls": "Y",
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "bsns_year": "제77기\n(당기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "해당사항 없음",
+            "core_adt_matter": "1) 보험계약부채 평가에 적용된 가정 중 위험률\n2) 배분 전 보험계약마진 중 당기에 제공된\n보장단위로 배분된 비율",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003585",
+            "corp_cls": "Y",
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "bsns_year": "제77기\n(당기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "해당사항 없음",
+            "core_adt_matter": "1) 보험계약부채 평가에 적용된 가정 중 위험률\n2) 배분 전 보험계약마진 중 당기에 제공된\n보장단위로 배분된 비율",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003585",
+            "corp_cls": "Y",
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "bsns_year": "제76기\n(전기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "해당사항 없음",
+            "core_adt_matter": "1) 보험계약부채 평가에 적용된 가정 중 위험률\n2) 배분 전 보험계약마진 중 당기에 제공된 \n보장단위로 배분된 비율",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003585",
+            "corp_cls": "Y",
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "bsns_year": "제76기\n(전기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "해당사항 없음",
+            "core_adt_matter": "1) 보험계약부채 평가에 적용된 가정 중 위험률\n2) 배분 전 보험계약마진 중 당기에 제공된 \n보장단위로 배분된 비율",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003585",
+            "corp_cls": "Y",
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "bsns_year": "제75기\n(전전기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "감사의견에는 영향을 미치지 않는 사항으로서, 이용자는 회사의 재무제표에 대한 주석 2에 주의를 기울여야 할 필요가 있습니다. \n재무제표에 대한 주석 2에서 설명하는 바와 같이, 회사의 기업회계기준서 제1117호의 적용으로 인하여 비교표시 되는 2022년 12월 31일로 종료되는 보고기간의 재무제표가 재작성 되었습니다.",
+            "core_adt_matter": "1) 보험계약부채 평가에 적용된 가정 중 위험률\n2) 배분 전 보험계약마진 중 당기에 제공된 \n보장단위로 배분된 비율",
+            "stlm_dt": "2025-12-31"
+          },
+          {
+            "rcept_no": "20260331003585",
+            "corp_cls": "Y",
+            "corp_code": "00113058",
+            "corp_name": "한화생명",
+            "bsns_year": "제75기\n(전전기)",
+            "adtor": "한영회계법인",
+            "adt_opinion": "적정의견",
+            "adt_reprt_spcmnt_matter": "-",
+            "emphs_matter": "감사의견에는 영향을 미치지 않는 사항으로서, 이용자는 회사의 연결재무제표에 대한 주석 2에 주의를 \n기울여야 할 필요가 있습니다.\n연결재무제표에 대한 주석 2에서 설명하는 바와 같이, 회사의 기업회계기준서 제1117호의 적용으로 인하여 비교표시 되는 2022년 12월 31일로 종료되는 보고기간의 연결재무제표가 재작성 되었습니다.",
+            "core_adt_matter": "1) 보험계약부채 평가에 적용된 가정 중 위험률\n2) 배분 전 보험계약마진 중 당기에 제공된 \n보장단위로 배분된 비율",
+            "stlm_dt": "2025-12-31"
+          }
+        ]
+      },
+      "audit_identity_verified": false
+    }
+  ],
+  "calls": 12
+}
