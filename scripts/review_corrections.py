@@ -35,7 +35,7 @@ def extract(raw,filing):
                               'financial_sections':sections,'opinion_excerpts':opinions,'xml_sha256':hashlib.sha256(xml.encode()).hexdigest()})
     return {'status':'DOCUMENTS_EXTRACTED','raw_sha256':hashlib.sha256(raw).hexdigest(),'documents':documents,'final_financial_acceptance':False}
 
-def run():
+def run(output=None):
     state=load_state();root=Path('reports/operations-stabilization/dart-source');result={'corrections':[],'attachments':[]}
     for receipt,parent in [('20260605000456','20260318000902'),('20260605000334','20260312001121')]:
         row={'receipt':receipt,'parent_receipt':parent,'filing':state['filings'][receipt]}
@@ -56,7 +56,7 @@ def run():
         path=root/(receipt+'.document.gz');row={'receipt':receipt,'filing':state['filings'][receipt],'parent_receipt':job['linked_periodic_receipt']}
         row['evidence']=extract(gzip.decompress(path.read_bytes()),state['filings'][receipt]) if path.exists() else {'status':'NOT_RECEIVED'}
         row['status']='REVIEW_NEEDED_NO_INFERRED_FINANCIAL_OR_RISK_CLEARANCE';result['attachments'].append(row)
-    out=Path('reports/operations-stabilization/correction-review.json');out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    out=Path(output or 'reports/operations-stabilization/correction-review.json');out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({'corrections':[(r['receipt'],r['comparisons']) for r in result['corrections']],
                       'attachments':[(r['receipt'],r['evidence']['status']) for r in result['attachments']]},ensure_ascii=False))
-if __name__=='__main__':run()
+if __name__=='__main__':run(sys.argv[1] if len(sys.argv)>1 else None)
