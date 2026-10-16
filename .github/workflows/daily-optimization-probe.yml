@@ -1,0 +1,35 @@
+name: Bounded daily collection field comparison
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+  queue: max
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Compare raw fields without changing the snapshot
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: |
+          sleep 65
+          python scripts/probe_daily_optimization.py
+      - name: Preserve read-only evidence
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "evidence/daily-optimization-$GITHUB_RUN_ID"
+          git add reports/daily-optimization/probe
+          git commit -m 'Record daily API field comparison'
+          git push origin "HEAD:refs/heads/evidence/daily-optimization-$GITHUB_RUN_ID"
