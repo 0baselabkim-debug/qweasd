@@ -228,17 +228,35 @@ with sync_playwright() as p:
    exported=download('섹터 현황 CSV','complete-sectors-'+market+'.csv')
    for row in g.itertuples():
     actual=next(v for v in exported if v['섹터']==row.sector)
-    match(actual['거래 활성도(배)'],row.activity_ratio)
+    expected_sector=stocks[(stocks.market==row.market)&(stocks.sector==row.sector)].set_index('symbol')
+   assert {v['코드'] for v in values}==set(expected_sector.index)
+   for value in values:
+    expected_row=expected_sector.loc[value['코드']]
+    match(value['거래 활성도(배)'],expected_row.activity_ratio)
+    match(value['5일 평균 거래대금(억원)'],expected_row.average_turnover/1e8)
+   report.setdefault('full_sector_stock_csv',[]).append({'market':row.market,'sector':row.sector,'members_checked':len(values)})
+   match(actual['거래 활성도(배)'],row.activity_ratio)
     report['sector_activity_trace'].append({'market':market,'sector':row.sector,'members':int(row.members),'activity_csv':actual['거래 활성도(배)']})
    page.screenshot(path=str(out/('complete-sectors-'+market+'.png')),full_page=True)
   # Trace released turnover from exact-date evidence through the actual public CSV.
   released=sorted({code for rows in data['metadata'].get('liquidity_price_evidence',{}).values() for code in rows})
-  audit_codes=list(dict.fromkeys(released[:2]+[c for c in ['053050','060900','210980','004970','052710','052790','013890','071950','079430','017670','030200','032640','126560'] if c in set(stocks.symbol)]))
+  audit_codes=list(dict.fromkeys(released[:2]+[c for c in ['053050','060900','210980','004970','052710','052790','013890','071950','079430','017670','030200','032640','126560','034230'] if c in set(stocks.symbol)]))
+  audited_sectors=set()
   for code in audit_codes:
    row=stocks.set_index('symbol').loc[code]
+   sector_key=(row.market,row.sector)
+   if sector_key in audited_sectors:continue
+   audited_sectors.add(sector_key)
    click('수급 필터');radio('전체 섹터');choose('시장',row.market);click('전체섹터 조회')
    double(row.sector)
    values=download('선택 종목 CSV','liquidity-'+code+'.csv');actual=next(v for v in values if v['코드']==code)
+   expected_sector=stocks[(stocks.market==row.market)&(stocks.sector==row.sector)].set_index('symbol')
+   assert {v['코드'] for v in values}==set(expected_sector.index)
+   for value in values:
+    expected_row=expected_sector.loc[value['코드']]
+    match(value['거래 활성도(배)'],expected_row.activity_ratio)
+    match(value['5일 평균 거래대금(억원)'],expected_row.average_turnover/1e8)
+   report.setdefault('full_sector_stock_csv',[]).append({'market':row.market,'sector':row.sector,'members_checked':len(values)})
    match(actual['거래 활성도(배)'],row.activity_ratio)
    match(actual['5일 평균 거래대금(억원)'],row.average_turnover/1e8)
    double(row['name']);clean()
