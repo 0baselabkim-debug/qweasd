@@ -1,0 +1,36 @@
+{
+  "id": "38882167112-1792144369525670726",
+  "started_at": "2026-10-16T09:41:59.398900+00:00",
+  "completed_at": "2026-10-16T09:52:49.525680+00:00",
+  "calls": 377,
+  "seconds": 650.13,
+  "processed_filings": 239,
+  "budget_exhausted": false,
+  "discovery_through": "2026-10-16",
+  "discovery_error": null,
+  "failed_jobs": {
+    "20260605000456": {
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    "20260605000334": {
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    "20260814003889": {
+      "business_error": "DART_status_100",
+      "financial_error": "DART_status_100"
+    }
+  },
+  "scope": "entire_universe",
+  "pending_filings": 3832,
+  "unavailable_financials": [],
+  "held_financials": [
+    "20260514000007",
+    "20260910000496",
+    "20260611000685",
+    "20260810000423",
+    "20260619000626",
+    "20260814002966",
+    "20260814000394",
+    "20261015000435"
+  ]
+}
