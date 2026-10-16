@@ -102,30 +102,7 @@ jobs:
         if: always() && inputs.mode != 'verify_saved' && steps.target.outputs.already_published != 'true'
         env:
           DAY: ${{ steps.target.outputs.day }}
-        run: |
-          if [ ! -f daily-results/bundle.json.gz ]; then exit 0; fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          cp daily-results/bundle.json.gz /tmp/daily-bundle.gz
-          if [ -f daily-results/successes.jsonl ]; then cp daily-results/successes.jsonl /tmp/daily-successes.jsonl; fi
-          rm -f daily-results/bundle.json.gz daily-results/successes.jsonl
-          head=$(git rev-parse HEAD)
-          if git ls-remote --exit-code --heads origin "data/daily-$DAY" >/dev/null 2>&1; then
-            git fetch origin "data/daily-$DAY"
-            git switch -C "data/daily-$DAY" FETCH_HEAD
-          else
-            git switch --orphan "data/daily-$DAY"
-          fi
-          mkdir -p daily-results
-          cp /tmp/daily-bundle.gz daily-results/bundle.json.gz
-          if [ -f /tmp/daily-successes.jsonl ]; then cp /tmp/daily-successes.jsonl daily-results/successes.jsonl; fi
-          git add -f daily-results/bundle.json.gz
-          if [ -f daily-results/successes.jsonl ]; then git add -f daily-results/successes.jsonl; fi
-          git diff --cached --quiet || git commit -m "Preserve KRX collection checkpoint $DAY"
-          git push origin "HEAD:data/daily-$DAY"
-          git switch --detach "$head"
-          mkdir -p daily-results
-          cp /tmp/daily-bundle.gz daily-results/bundle.json.gz
+        run: python scripts/persist_daily_checkpoint.py --date "$DAY"
       - name: Build from latest main and validate without touching published files
         if: steps.target.outputs.already_published != 'true'
         run: |

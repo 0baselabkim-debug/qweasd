@@ -4,7 +4,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [compare, optimized]
+        options: [compare, optimized, checkpoint]
         default: compare
 permissions:
   contents: write
@@ -27,6 +27,10 @@ jobs:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
         run: |
+          if [ '${{ inputs.mode }}' = checkpoint ]; then
+            python scripts/probe_daily_checkpoint.py
+            exit 0
+          fi
           sleep 65
           python scripts/probe_daily_optimization.py ${{ inputs.mode == 'optimized' && '--optimized' || '' }}
       - name: Preserve read-only evidence

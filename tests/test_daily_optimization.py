@@ -172,3 +172,24 @@ def test_physical_metrics_distinguish_auth_retry_and_cached_success():
  assert d['more_than_two_request_symbols']=={'000001':3}
  assert d['successful_with_two_physical_requests']==0 and d['successful_without_request_this_attempt']==1
  assert d['rate_limit_responses']==1
+
+def test_checkpoint_git_publish_keeps_running_checkout_and_resumes(tmp_path):
+ import subprocess,gzip
+ from persist_daily_checkpoint import persist
+ remote=tmp_path/'remote.git';repo=tmp_path/'checkout'
+ def run(*args,cwd=None):return subprocess.check_output(['git',*args],cwd=cwd,stderr=subprocess.DEVNULL).decode().strip()
+ run('init','--bare',str(remote));run('clone',str(remote),str(repo))
+ run('config','user.name','fixture',cwd=repo);run('config','user.email','fixture@example.invalid',cwd=repo)
+ (repo/'code.txt').write_text('unchanged source');run('add','code.txt',cwd=repo);run('commit','-m','fixture',cwd=repo)
+ head=run('rev-parse','HEAD',cwd=repo)
+ (repo/'daily-results').mkdir();p=repo/'daily-results/bundle.json.gz';p.write_bytes(gzip.compress(b'{"records":{}}'))
+ (repo/'unrelated.txt').write_text('preserve')
+ first=persist(repo,'20261016');assert first['status']=='saved'
+ assert run('rev-parse','HEAD',cwd=repo)==head and (repo/'code.txt').read_text()=='unchanged source'
+ assert persist(repo,'20261016')['status']=='unchanged'
+ p.write_bytes(gzip.compress(b'{"records":{"000001":{}}}'))
+ (repo/'daily-results/successes.jsonl').write_text('journal fixture\n')
+ second=persist(repo,'20261016');assert second['status']=='saved' and second['commit']!=first['commit']
+ assert run('rev-parse',second['commit']+'^',cwd=repo)==first['commit']
+ assert run('rev-parse','HEAD',cwd=repo)==head and (repo/'unrelated.txt').read_text()=='preserve'
+ assert set(run('ls-tree','--name-only',second['commit']+':daily-results',cwd=repo).splitlines())=={'bundle.json.gz','successes.jsonl'}
