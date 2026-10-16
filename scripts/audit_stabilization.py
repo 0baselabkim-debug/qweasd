@@ -35,6 +35,9 @@ def run(base=None,output=None):
     preservation={}
     for t in ['instruments','memberships','flows','prices','financials','benchmarks','calendar','exclusions']:
         pd.testing.assert_frame_equal(old[t],d[t]);preservation[t]={'identical':True,'rows':len(d[t])}
+    old_stocks,_=universe(old,day);old_stocks=stock_activity(old,old_stocks,day)
+    old_ready=set(old_stocks.loc[old_stocks.activity_ratio.notna(),'symbol'])
+    new_activity=x[x.activity_ratio.notna()&~x.symbol.isin(old_ready)][['symbol','name','market','sector','activity_ratio','average_turnover']].to_dict('records')
     from screener.scoring import evaluate
     before_scores=evaluate(old,day);after_scores=evaluate(d,day)
     # evaluate returns sector/stock frames; retain exact legacy output including holds.
@@ -56,7 +59,7 @@ def run(base=None,output=None):
     rules={name:at(name)==Path(name).read_bytes() for name in ['technical_rules.json','eligibility_rules.json','theme_mapping.json','config.toml']};assert all(rules.values())
     r={'baseline':BASE,'asof':day,'universe':len(x),'accepted':len(accepted),'guides':dict(guides),'active_conflicts':len(active),'baseline_blocking':sum(bool(blocking_conflicts(b)) for code,b in original.items() if code in codes),
        'recovered_existing_blocked':sorted(recovered,key=lambda r:r['symbol']),'newly_verified_nonblocked':sorted(newly,key=lambda r:r['symbol']),
-       'stock_activity':int(x.activity_ratio.notna().sum()),'sector_activity':len(independent),'independent_complete_sectors':independent,'raw_preservation':preservation,'legacy_scores_unchanged':True,'rules_unchanged':rules,
+       'new_activity_symbols':new_activity,'complete_sector_member_count':len({c for sec in independent for c in sec['symbols']}),'stock_activity':int(x.activity_ratio.notna().sum()),'sector_activity':len(independent),'independent_complete_sectors':independent,'raw_preservation':preservation,'legacy_scores_unchanged':True,'rules_unchanged':rules,
        'corporate':corp,'before_db_sha256':hashlib.sha256(baseline_db.read_bytes()).hexdigest(),'after_db_sha256':hashlib.sha256(PACKAGED_DB.read_bytes()).hexdigest(),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()}
     if r['source_commit']!=start_commit or r['after_db_sha256']!=start_db:raise RuntimeError('Source changed during audit; repeat against a stable revision')
     out=Path(output or 'reports/operations-stabilization/final-verification.json');out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in r.items() if k not in ['recovered_existing_blocked','newly_verified_nonblocked','independent_complete_sectors']},ensure_ascii=False))
