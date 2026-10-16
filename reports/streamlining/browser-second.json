@@ -1,0 +1,124 @@
+{
+  "url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "success": false,
+  "checks": [
+    "Default macro, fixed sidebar-only title/menu, 12 unchanged actual values, three columns, rates bp, dates/provenance, six separate investor rows",
+    "Exactly two public menus; no trading recommendation or journal",
+    "Genuine sector/name double click; mouse single click and other-cell double click do not navigate; client sort/filter; matching raw CSV; KOSPI/KOSDAQ identity",
+    "Hierarchy retains child tabs on upward navigation; active stock close goes to sector; sector close removes descendants; hover X; periods, market, sorts and search retained",
+    "Actual financial facts, daily chart, existing theme business evidence and DART retained"
+  ],
+  "asof": "2026-10-15",
+  "http_status": 200,
+  "deployment": {
+    "expected": {
+      "source_sha256": "b97bb1e5508e66c9a93c4c2010cdf306c928baef0003ddc069028ae26ff3f587",
+      "revision": "6718691841d2c7984b097c10a1f57590bae93efe",
+      "data_sha256": "68ade5c1305014a7ae1cd6ad62399fa61b824594d22df05a40e18124a9d8e141"
+    },
+    "source_sha256": "b97bb1e5508e66c9a93c4c2010cdf306c928baef0003ddc069028ae26ff3f587",
+    "revision": "6718691841d2c7984b097c10a1f57590bae93efe",
+    "data_sha256": "68ade5c1305014a7ae1cd6ad62399fa61b824594d22df05a40e18124a9d8e141"
+  },
+  "layout_measurements": [
+    {
+      "viewport": 1920,
+      "stage": "macro",
+      "available_width": 1650,
+      "content_width": 1155,
+      "row_heights": [
+        46
+      ],
+      "header_heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "viewport": 1920,
+      "stage": "sectors",
+      "available_width": 1650,
+      "content_width": 1402.5,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 1359,
+        "full": 1767
+      }
+    },
+    {
+      "viewport": 1920,
+      "stage": "stocks",
+      "available_width": 1650,
+      "content_width": 1402.5,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 1359,
+        "full": 1472
+      }
+    },
+    {
+      "viewport": 1920,
+      "stage": "detail",
+      "available_width": 1650,
+      "content_width": 1237.5
+    },
+    {
+      "viewport": 1440,
+      "stage": "macro",
+      "available_width": 1170,
+      "content_width": 1050,
+      "row_heights": [
+        46
+      ],
+      "header_heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "viewport": 1440,
+      "stage": "sectors",
+      "available_width": 1170,
+      "content_width": 994.5,
+      "header_height": 45,
+      "row_heights": [
+        44,
+        67
+      ],
+      "table": {
+        "view": 951,
+        "full": 1892
+      }
+    },
+    {
+      "viewport": 1440,
+      "stage": "stocks",
+      "available_width": 1170,
+      "content_width": 994.5,
+      "header_height": 45,
+      "row_heights": [
+        44
+      ],
+      "table": {
+        "view": 951,
+        "full": 1545
+      }
+    }
+  ],
+  "error_type": "AssertionError",
+  "error": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/qweasd/qweasd/scripts/check_live_dashboard.py\", line 201, in <module>\n    pause();assert ui.get_by_text('투자 적격성 · 재무 판단 근거',exact=True).count()==1\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "visible_text": "한국 증시 수급 필터\n\n매크로 지표\n\n수급 필터\n\n조회 조건\n\n수급 기준일\n\n시장\n\n분류체계\n\n공식 업종\n\n투자 테마\n\nFork\n수급 기준일\n2026-10-15\n\n↻ 업데이트 상태\n\n전체섹터 조회\n\nIT 서비스\n\n×\n\n라온시큐어\n\n×\n\n라온시큐어 · 042510\nKOSDAQ\nIT 서비스\n종가 20,100원\n1일 순매수\n54.14 억원\n5일 누적 순매수\n69.05 억원\n20일 누적 순매수\n55.98 억원\n20일 순매수 발생일\n10 일\n\n외국인 순매수 추이 · 최근 20거래일\n\n일별 순매수\n\n누적 순매수\n\n함께 보기\n\n09-14\n09-15\n09-16\n09-17\n09-18\n09-21\n09-22\n09-23\n09-28\n09-29\n09-30\n10-01\n10-02\n10-06\n10-07\n10-08\n10-12\n10-13\n10-14\n10-15\n−20\n0\n20\n40\n60\n순매수 (억원)\n\n일별 수급 CSV\n\n5일 평균 거래대금\n\n미확보\n\n거래 활성도\n\n미확보\n\n시가총액\n\n2,232.00억원\n\n공시 재무정보\n회계기간 2025-12-31\n실제 공시 2026-03-20\nCFS\n\n연간 DART 원문\n\nkeyboard_arrow_right\n\n최신 공시 재무 · 사업 테마 검토\n\n실제 사업 내용 · 투자 테마\n\n검증된 테마 소속 없음 · 사업 근거 확인 필요\n\nkeyboard_arrow_right\n\n추가 사업보고서 조사 기록\n\nkeyboard_arrow_right\n\n상세 출처 · 계산 기준",
+  "final_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "app_frame_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/~/+/"
+}

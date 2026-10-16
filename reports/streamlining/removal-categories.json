@@ -1,0 +1,22 @@
+{
+  "remove_immediately": [
+    "매매일지 UI/저장/로그인/Supabase/SQL",
+    "매매 규칙 및 매수·매도 계산",
+    "개인 종목 수집·전용 테스트·운영 문서"
+  ],
+  "move_public_parts_then_remove": [
+    "일별 KRX/KIS 수락 → liquidity_quality/market_validation",
+    "물리 호출 상한·재개 → market_budget",
+    "KRX 응답·백오프 → market_reference",
+    "날짜별 게시 → publish_liquidity",
+    "공공 품질·예산·공시 테스트 → test_market_budget/test_market_reference"
+  ],
+  "retain_for_data_and_validation": [
+    "DuckDB 원본 8개 테이블",
+    "재무·사업·테마·공시 원본 및 이력",
+    "25일 유동성 증거와 수급 원응답",
+    "현재 및 이전 정상 게시본",
+    "이전 원본 관측·게시세대의 SHA256 압축 보관본",
+    "미사용 기존 점수 산출 코드/결과는 비교용으로 보존; 앱에서 호출하지 않음"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "run_id": "38861222096",
+  "event": "workflow_dispatch",
+  "date_symbol_tasks": 2,
+  "accepted": 2,
+  "kis_physical": 7,
+  "authentication_included": 1,
+  "retries": 0,
+  "errors": 0,
+  "krx_http_requests": 2,
+  "krx_checks": [
+    {
+      "market": "KOSPI",
+      "requested_date": "2026-10-14",
+      "checked_at": "2026-10-16T06:28:13.913914+00:00",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261014",
+      "http": 200,
+      "received_rows": 941,
+      "returned_dates": [
+        "20261014"
+      ],
+      "request_attempted": true,
+      "run_id": "38861222096",
+      "event": "workflow_dispatch",
+      "credential_present": true,
+      "refresh_required": true,
+      "response_sha256": "089fbc3395dcece04b920c0120fb0d9c338ee5650dc8c52221e42ace5da96c9d",
+      "content_type": "application/json; charset=utf-8",
+      "status": "REFERENCE_RECEIVED"
+    },
+    {
+      "market": "KOSDAQ",
+      "requested_date": "2026-10-14",
+      "checked_at": "2026-10-16T06:28:16.227740+00:00",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261014",
+      "http": 200,
+      "received_rows": 1820,
+      "returned_dates": [
+        "20261014"
+      ],
+      "request_attempted": true,
+      "run_id": "38861222096",
+      "event": "workflow_dispatch",
+      "credential_present": true,
+      "refresh_required": true,
+      "response_sha256": "f7995e2d19d216c4a0eb0d049c6941431f61598250125c3cdc2f64d11739d58e",
+      "content_type": "application/json; charset=utf-8",
+      "status": "REFERENCE_RECEIVED"
+    }
+  ],
+  "seconds": 12.166046,
+  "old_comparison": "Prior same-date historical repair also used adjusted, raw and flow requests. This two-stock sample does not demonstrate fewer requests per historical repair. It eliminates long-history maintenance and trading-only scheduled jobs."
+}
