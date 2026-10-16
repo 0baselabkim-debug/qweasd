@@ -1,6 +1,11 @@
 name: Deferred technical reference verification
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [verify, recover]
+        default: verify
   schedule:
     # Availability checks, NOT a claimed KRX publication/finality time.
     # KST Mon-Sat 08:17; weekdays 11:17, 14:17, 17:17, 20:17.
@@ -30,11 +35,19 @@ jobs:
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          RECHECK_MODE: ${{ inputs.mode || 'verify' }}
         run: |
           # Respect the shared KIS token interval if a later real recheck needs it.
           # No token is issued when official reference data is unavailable.
           sleep 65
-          timeout 1500 python scripts/collect_technical.py --mode verify --limit 600 --budget 900
+          if [ "$RECHECK_MODE" = "recover" ]; then
+            timeout 600 python scripts/collect_technical.py --mode recover --limit 3 --budget 240
+          else
+            timeout 1500 python scripts/collect_technical.py --mode verify --limit 600 --budget 900
+          fi
+      - name: Inspect official market investor specification
+        if: inputs.mode == 'recover'
+        run: python scripts/inspect_investor_spec.py
       - name: Preserve evidence and availability records
         if: always()
         run: |

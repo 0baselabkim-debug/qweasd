@@ -74,9 +74,67 @@ def discover(api,state,universe,end,symbols=None):
     page+=1
   state['discovery_through']=str(last);start=last+dt.timedelta(days=1)
 
-def process(api,state,f,cache):
+def utc_now():return dt.datetime.now(dt.timezone.utc).isoformat()
+
+def component_due(job,component,now):
+ if job.get(component+'_status') in ['success','held_nondec_fiscal_period']:return False
+ return job.get(component+'_retry_after',job.get('retry_after','') if component=='financial' else '')<=now
+
+def mark_attempt(job,component):
+ job['attempted_at']=utc_now();job[component+'_attempted_at']=job['attempted_at']
+ job[component+'_attempts']=job.get(component+'_attempts',0)+1
+
+def error_class(error):
+ if error in ['receipt_or_period_mismatch','business_section_not_unique','document_xml_missing']:
+  return 'evidence_review_required'
+ if error=='BadZipFile' or error.startswith(('transport_','DART_status_')):return 'retryable_response'
+ if error in ['unavailable','budget_exhausted']:return 'retryable_unavailable'
+ return 'review_required'
+
+def pending_filings(state,symbols,now):
+ groups={}
+ for f in state['filings'].values():
+  if not symbols or f['symbol'] in symbols:groups.setdefault(f['symbol'],[]).append(f)
+ pending=[]
+ for filings in groups.values():
+  for annual in [True,False]:
+   candidates=[f for f in filings if (f['form']=='annual')==annual]
+   if not candidates:continue
+   f=max(candidates,key=lambda f:(f['period_end'],f['disclosed_on'],f['receipt']))
+   j=state['jobs'].get(f['receipt'],{})
+   if any(component_due(j,c,now) for c in ['business','financial']):pending.append(f)
+ # Unattempted receipts first, then oldest attempt; deterministic round-robin ties.
+ return sorted(pending,key=lambda f:(state['jobs'].get(f['receipt'],{}).get('attempted_at',''),f['symbol'],f['receipt']))
+
+class DiscoveryAllowance:
+ """Reserve at least 2/3 of calls and time for already discovered work."""
+ def __init__(self,api):self.api=api;self.calls=0;self.started=time.monotonic()
+ def get(self,*args):
+  if self.calls>=max(1,self.api.max_calls//3) or time.monotonic()-self.started>=max(1,self.api.max_seconds//3):raise BudgetExceeded()
+  self.calls+=1;return self.api.get(*args)
+
+def collect_cycle(api,state,universe,symbols,limit,cache,end,skip_discovery,checkpoint):
+ budget=False;processed=[]
+ if not skip_discovery:
+  try:
+   discover(DiscoveryAllowance(api),state,universe,end,symbols);state.pop('last_discovery_error',None)
+  except BudgetExceeded:state['last_discovery_error']='discovery_budget_exhausted'
+  except Exception as e:state['last_discovery_error']=str(e)[:100] if isinstance(e,ValueError) else type(e).__name__
+  checkpoint()
+ pending=pending_filings(state,symbols,utc_now());codes=list(dict.fromkeys(f['symbol'] for f in pending))[:limit]
+ fiscal_month={r['symbol']:r.get('fiscal_month') for r in universe}
+ for f in pending:
+  if f['symbol'] not in codes:continue
+  if str(fiscal_month.get(f['symbol'])) not in ['12','12.0']:f={**f,'report_code':None}
+  try:process(api,state,f,cache);processed.append(f['receipt'])
+  except BudgetExceeded:budget=True;break
+  finally:checkpoint()
+ return {'processed':processed,'pending':pending,'budget_exhausted':budget}
+
+def _process_once(api,state,f,cache):
  receipt=f['receipt'];job=state['jobs'].setdefault(receipt,{})
- if job.get('business_status')!='success':
+ if component_due(job,'business',utc_now()):
+  mark_attempt(job,'business')
   try:
    raw=api.get('document.xml',{'rcept_no':receipt})
    with zipfile.ZipFile(io.BytesIO(raw)) as z:
@@ -103,6 +161,8 @@ def process(api,state,f,cache):
   except Exception as e:job['business_status']='failed';job['business_error']=str(e)[:100] if isinstance(e,ValueError) else type(e).__name__
  if any(r['receipt']==receipt for r in state['financials'].values()):job['financial_status']='success';return
  if not f['report_code']:job['financial_status']='held_nondec_fiscal_period';return
+ if not component_due(job,'financial',utc_now()):return
+ mark_attempt(job,'financial')
  for scope in ['CFS','OFS']:
   try:
    d=api.get('fnlttSinglAcntAll.json',{'corp_code':f['corp_code'],'bsns_year':str(f['year']),'reprt_code':f['report_code'],'fs_div':scope})
@@ -113,36 +173,30 @@ def process(api,state,f,cache):
   except Exception as e:job['financial_status']='failed';job['financial_error']=str(e)[:100] if isinstance(e,ValueError) else type(e).__name__;return
  job['financial_status']='unavailable';job['retry_after']=str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date()+dt.timedelta(days=1))
 
+def process(api,state,f,cache):
+ job=state['jobs'].setdefault(f['receipt'],{});before={c:job.get(c+'_attempts',0) for c in ['business','financial']}
+ exhausted=False
+ try:_process_once(api,state,f,cache)
+ except BudgetExceeded:exhausted=True;raise
+ finally:
+  for c in ['business','financial']:
+   if job.get(c+'_attempts',0)==before[c]:continue
+   if job.get(c+'_status')=='success':
+    for suffix in ['retry_after','error_class']:job.pop(c+'_'+suffix,None)
+    continue
+   error=job.get(c+'_error','budget_exhausted' if exhausted else job.get(c+'_status','unavailable'))
+   category=error_class(error);hours=24 if category in ['evidence_review_required','review_required'] else 1
+   delay=min(168,hours*2**min(job[c+'_attempts']-1,8))
+   job[c+'_error_class']=category
+   job[c+'_retry_after']=(dt.datetime.now(dt.timezone.utc)+dt.timedelta(hours=delay)).isoformat()
+
 def main():
  p=argparse.ArgumentParser();p.add_argument('--symbols',default='');p.add_argument('--limit',type=int,default=120);p.add_argument('--max-calls',type=int,default=600);p.add_argument('--max-seconds',type=int,default=2100);p.add_argument('--state',default='snapshot/corporate-state.json.gz');p.add_argument('--db',default='snapshot/corporate.duckdb');p.add_argument('--cache',type=Path);p.add_argument('--skip-discovery',action='store_true');a=p.parse_args()
  state=load_state(a.state);universe=json.loads(Path('corporate/universe.json').read_text());seed(state,universe)
  symbols=set(a.symbols.split(',')) if a.symbols else None
  api=Dart(a.max_calls,a.max_seconds);started=dt.datetime.now(dt.timezone.utc).isoformat();budget=False;processed=[];pending=[]
- try:
-  if not a.skip_discovery:
-   discover(api,state,universe,str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date()),symbols);state.pop('last_discovery_error',None)
-  groups={}
-  for f in state['filings'].values():
-   if symbols and f['symbol'] not in symbols:continue
-   groups.setdefault(f['symbol'],[]).append(f)
-  pending=[]
-  for symbol,filings in groups.items():
-   # Initial scan: latest annual business and latest interim; older receipts remain archived.
-   chosen=[]
-   for kind in ['annual','interim']:
-    candidates=[f for f in filings if (f['form']=='annual')==(kind=='annual')]
-    if candidates:chosen.append(max(candidates,key=lambda f:(f['period_end'],f['disclosed_on'],f['receipt'])))
-   for f in chosen:
-    j=state['jobs'].get(f['receipt'],{})
-    if j.get('business_status')!='success' or (j.get('financial_status') not in ['success','held_nondec_fiscal_period'] and j.get('retry_after','')<=str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date())):pending.append(f)
-  codes=list(dict.fromkeys(f['symbol'] for f in pending))[:a.limit]
-  fiscal_month={r['symbol']:r.get('fiscal_month') for r in universe}
-  for f in pending:
-   if f['symbol'] not in codes:continue
-   if str(fiscal_month.get(f['symbol'])) not in ['12','12.0']:f={**f,'report_code':None}
-   process(api,state,f,a.cache);processed.append(f['receipt']);save_state(state,a.state)
- except BudgetExceeded:budget=True
- except Exception as e:state['last_discovery_error']=str(e)[:100] if isinstance(e,ValueError) else type(e).__name__
+ cycle=collect_cycle(api,state,universe,symbols,a.limit,a.cache,str(dt.datetime.now(ZoneInfo('Asia/Seoul')).date()),a.skip_discovery,lambda:save_state(state,a.state))
+ processed=cycle['processed'];pending=cycle['pending'];budget=cycle['budget_exhausted']
  run={'id':os.environ.get('GITHUB_RUN_ID','local')+'-'+str(time.time_ns()),'started_at':started,'completed_at':dt.datetime.now(dt.timezone.utc).isoformat(),'calls':api.calls,'seconds':round(time.monotonic()-api.started,2),'processed_filings':len(processed),'budget_exhausted':budget,'discovery_through':state.get('discovery_through'),'discovery_error':state.get('last_discovery_error'),
       'failed_jobs':{r:{k:v for k,v in j.items() if k.endswith('error')} for r,j in state['jobs'].items() if j.get('business_status')=='failed' or j.get('financial_status')=='failed'}}
  run['scope']=sorted(symbols) if symbols else 'entire_universe'

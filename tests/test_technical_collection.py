@@ -339,3 +339,138 @@ def test_pending_date_survives_rollover_and_empty_reference_run(tmp_path,monkeyp
     result=a.run(a.LazyAPI(forbidden),data,limit=1)
     assert days==[b['asof']] and result['outcome']=='WAITING_REFERENCE'
     assert result['deferred_no_reference']==1 and result['requests']==0 and c.read(path)==before
+
+
+def test_repeated_price_crosscheck_recomputes_active_conflicts():
+    b=accepted_fixture();b['price_comparison']['kis_adjusted']=100
+    row=b['daily_acceptance']['krx_row'];refs={b['symbol']:dict(row,ACC_TRDVOL='21')}
+    c.crosscheck(b,refs);c.crosscheck(b,refs)
+    assert len(b['price_conflicts'])==len(set(b['price_conflicts']))
+    c.crosscheck(b,{b['symbol']:row})
+    assert 'Same-date KIS / KRX official OHLCV fields differ' not in b['price_conflicts']
+    assert b.get('conflict_history')
+
+
+def test_same_day_observations_remain_content_addressed(tmp_path,monkeypatch):
+    from screener.technical_quality import digest
+    monkeypatch.setattr(c,'CACHE',tmp_path/'market')
+    b=accepted_fixture();path=c.CACHE/(b['symbol']+'.json.gz');c.write(path,b)
+    changed=copy.deepcopy(b);changed['bars'][-1]['close']=101;c.write(path,changed)
+    root=tmp_path/'observations'/b['asof']/b['symbol']
+    assert c.read(root/(digest(b)+'.json.gz'))==b
+    assert c.read(root/(digest(changed)+'.json.gz'))==changed
+    assert c.read(root/(digest(b)+'.json.gz'))['daily_acceptance']==b['daily_acceptance']
+
+
+def repair_sample():
+    b=accepted_fixture();row=copy.deepcopy(b['daily_acceptance']['krx_row'])
+    b['price_comparison'].update(kis_adjusted=99,kis_unadjusted=99,preserved_unadjusted=99)
+    b['bars'][-1]['close']=99;b['price_conflicts'].append('KIS raw / independent KRX daily close mismatch')
+    b['price_finality']='CONFLICT'
+    good=copy.deepcopy(b['bars']);good[-1]['close']=100
+    def convert(bar):return {'stck_bsop_date':bar['trade_date'].replace('-',''),**{field:str(bar[k]) for k,field in c.FIELDS.items()},'prtt_rate':'0','revl_issu_reas':'00'}
+    class RepairAPI:
+        metrics=[]
+        def __init__(self,match=True,badflow=False,baddate=False):self.calls=0;self.match=match;self.badflow=badflow;self.baddate=baddate
+        def request(self,path,params=None,tr=None):
+            self.calls+=1
+            if 'investor-trade' in path:
+                rows=copy.deepcopy(b['daily_acceptance']['raw_flow_rows'])
+                if self.badflow:rows[-1]['frgn_ntby_tr_pbmn']='1'
+                return {'output2':rows}
+            bars=copy.deepcopy(good if self.match else b['bars'])
+            rows=[convert(x) for x in bars if params['FID_INPUT_DATE_1']<=x['trade_date'].replace('-','')<=params['FID_INPUT_DATE_2']]
+            if self.baddate:rows[-1]['stck_bsop_date']='20990101'
+            return {'output2':rows}
+    def pages(api,*args,**kwargs):return [(x['trade_date'],convert(x)) for x in (good if api.match else b['bars'])]
+    return b,{b['symbol']:row},RepairAPI,pages
+
+
+def test_conflict_candidate_repairs_only_with_all_original_gates():
+    from scripts.recover_technical import candidate
+    from screener.technical import validate,buy_guide
+    from screener.technical_quality import daily_accepted,digest
+    b,refs,API,pages=repair_sample();before=digest(b)
+    new=candidate(API(),b,refs,pages)
+    assert daily_accepted(new) and not validate(new,new['asof'])
+    assert new['recovery']['rebuilt_history'] and new['finality']=='UNVERIFIED'
+    assert digest(b)==before and new['flows']==b['flows']
+    assert b['daily_acceptance'] in new['acceptance_history'].values()
+    assert 'KIS raw / independent KRX daily close mismatch' not in new['price_conflicts']
+    assert buy_guide(new)['status'] in ['관망','판정 보류']
+    assert not daily_accepted(candidate(API(badflow=True),b,refs,pages))
+    import pytest
+    with pytest.raises(ValueError):candidate(API(baddate=True),b,refs,pages)
+
+
+def test_unresolved_conflict_keeps_original_and_does_not_fetch_flows():
+    from scripts.recover_technical import candidate
+    from screener.technical_quality import daily_accepted,digest
+    b,refs,API,pages=repair_sample();before=digest(b);api=API(match=False)
+    new=candidate(api,b,refs,pages)
+    assert not daily_accepted(new) and digest(b)==before and api.calls==2
+    assert new['acceptance_error']=='REFERENCE_PRICE_CONFLICT'
+    assert b['daily_acceptance'] in new['acceptance_history'].values()
+
+
+def test_completed_conflict_has_separate_bounded_recovery_queue(tmp_path,monkeypatch):
+    from scripts import recover_technical as recovery,collect_technical
+    b,refs,API,pages=repair_sample()
+    monkeypatch.setattr(c,'ROOT',tmp_path);monkeypatch.setattr(c,'CACHE',tmp_path/'market');monkeypatch.setattr(c,'STATE',tmp_path/'state.json')
+    c.write(c.CACHE/(b['symbol']+'.json.gz'),b)
+    c.write(c.STATE,{'symbols':{b['symbol']:{'completed_asof':b['asof']}}})
+    assert not c.select_targets([b['symbol']],c.read(c.STATE)['symbols'],b['asof'],1)
+    monkeypatch.setattr(c,'krx_reference',lambda day,**kw:(refs,{}))
+    monkeypatch.setattr(collect_technical,'paged',lambda api,*args,**kwargs:pages(api.api,*args,**kwargs))
+    data={'flows':pd.DataFrame([{'trade_date':pd.Timestamp(b['asof'])}])}
+    result=recovery.run(API(),data,limit=1,max_calls=12)
+    assert result['promoted']==1 and len(result['results'])==1
+    assert result['reserved_request_attempts']<=12
+    assert list((tmp_path/'observations'/b['asof']/b['symbol']).glob('*.gz'))
+    assert recovery.run(API(),data,limit=1)['results']==[]
+
+def test_failed_candidate_is_archived_backed_off_and_never_overwrites(tmp_path,monkeypatch):
+ from scripts import recover_technical as recovery
+ b,refs,API,pages=repair_sample()
+ monkeypatch.setattr(c,'ROOT',tmp_path);monkeypatch.setattr(c,'CACHE',tmp_path/'market')
+ path=c.CACHE/(b['symbol']+'.json.gz');c.write(path,b);original=path.read_bytes()
+ monkeypatch.setattr(c,'krx_reference',lambda day,**kw:(refs,{}))
+ data={'flows':pd.DataFrame([{'trade_date':pd.Timestamp(b['asof'])}])}
+ result=recovery.run(API(match=False),data,limit=1,max_calls=6)
+ assert result['promoted']==0 and path.read_bytes()==original
+ assert len(list((tmp_path/'provider-observations'/b['asof']/b['symbol']).glob('*.gz')))==2
+ assert recovery.run(API(match=False),data,limit=1)['results']==[]
+
+
+def test_recovery_reserves_auth_retries_and_rejects_bad_ohlcv():
+ import pytest
+ from scripts.recover_technical import BoundedAPI,RecoveryBudget,candidate
+ from scripts.technical_acceptance import LazyAPI
+ b,refs,API,pages=repair_sample();api=API();lazy=LazyAPI(lambda:api)
+ with pytest.raises(RecoveryBudget):BoundedAPI(lazy,max_calls=3).request('unreachable')
+ assert lazy.client is None and api.calls==0
+ broken=copy.deepcopy(b);broken['bars'][-1]['volume']=float('nan')
+ # Provider malformed numeric data is never silently repaired with a reference value.
+ class Bad(API):
+  def request(self,*args,**kwargs):
+   d=super().request(*args,**kwargs);d['output2'][-1]['acml_vol']='NaN';return d
+ with pytest.raises(ValueError,match='nonfinite_value'):candidate(Bad(),b,refs,pages)
+
+def test_explicit_reference_refresh_archives_without_replacing_selected_reference(tmp_path,monkeypatch):
+ import os,json
+ from scripts.technical_reference import fetch_references
+ from screener.technical_quality import digest
+ b=accepted_fixture();e=b['daily_acceptance'];day=b['asof']
+ old={'asof':day,'url':e['krx_url'],'observed_at':e['krx_row']['_retrieved_at'],'rows':[e['krx_row']]}
+ path=tmp_path/'reference'/day/'KOSPI.json.gz';c.write(path,old);original=path.read_bytes()
+ new=dict(e['krx_row'],TDD_CLSPRC='101')
+ class Reply:
+  status=200
+  def __enter__(self):return self
+  def __exit__(self,*a):pass
+  def read(self):return json.dumps({'OutBlock_1':[new]}).encode()
+ monkeypatch.setenv('KRX_API_KEY','unit-test-only')
+ monkeypatch.setattr('urllib.request.urlopen',lambda *a,**k:Reply())
+ refs,status=fetch_references(day,tmp_path,refresh=True)
+ assert refs[b['symbol']]['TDD_CLSPRC']=='101' and path.read_bytes()==original
+ assert list((tmp_path/'reference-observations'/day/'KOSPI').glob('*.json.gz'))

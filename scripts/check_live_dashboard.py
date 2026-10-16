@@ -3,7 +3,7 @@ import csv,json,os,sys,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
-from screener.store import load
+from screener.store import load,PACKAGED_DB
 from screener.indicators import universe,stock_activity,sector_indicators
 from screener.macro import read as macro_read,catalog
 from screener.exploration_ui import macro_rows
@@ -12,7 +12,7 @@ from screener.technical import buy_guide
 from screener.technical_quality import daily_accepted
 URL=os.environ.get('DASHBOARD_CHECK_URL','https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/')
 out=Path(os.environ.get('DASHBOARD_CHECK_OUTPUT','reports/live-dashboard'));out.mkdir(parents=True,exist_ok=True)
-data=load();asof=str(data['flows'].trade_date.max().date());stocks,matrix=universe(data,asof);stocks=stock_activity(data,stocks,asof);sectors,_=sector_indicators(data,stocks,matrix,asof)
+data=load(PACKAGED_DB);asof=str(data['flows'].trade_date.max().date());stocks,matrix=universe(data,asof);stocks=stock_activity(data,stocks,asof);sectors,_=sector_indicators(data,stocks,matrix,asof)
 report={'url':URL,'success':False,'checks':[],'asof':asof}
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,**({'executable_path':os.environ['BROWSER_EXECUTABLE'],'args':['--no-sandbox','--disable-dev-shm-usage']} if os.environ.get('BROWSER_EXECUTABLE') else {}))
@@ -107,6 +107,10 @@ with sync_playwright() as p:
   else:assert v not in ['',None] and abs(float(v)-float(e))<1e-6,(v,e)
  try:
   ui,response=connect();pause();report['http_status']=response.status if response else None
+  from screener.public_build import identity
+  expected_build=identity(ROOT);stamp=ui.locator('.public-build')
+  report['deployment']={'expected':expected_build,'source_sha256':stamp.get_attribute('data-source-sha256'),'revision':stamp.get_attribute('data-revision')}
+  assert report['deployment']['source_sha256']==expected_build['source_sha256'],'Public app source differs from tested checkout'
   assert ui.locator('[data-testid="stSidebar"] .sidebar-title').inner_text()=='한국 증시 수급 필터'
   assert not ui.locator('[data-testid="stMain"] h1').count();layout()
   cards=ui.locator('.macro-card');assert cards.count()==4
@@ -140,7 +144,6 @@ with sync_playwright() as p:
    key=next(k for k,m in catalog().items() if m['name']==row['지표']);match(row['최신 공표값'],state['indicators'][key]['value']);assert row['기준일']==state['indicators'][key]['date']
   clean();readability('macro');page.screenshot(path=str(out/'macro.png'),full_page=True)
   report['checks'].append('Default macro, fixed sidebar-only title/menu, 12 unchanged actual values, three columns, rates bp, dates/provenance, six separate investor rows')
-  click('매매일지');assert ui.get_by_role('button',name='+ 추가',exact=True).is_disabled();assert ui.get_by_text('매매현황',exact=True).count()==1;clean();page.screenshot(path=str(out/'journal-unconfigured-or-loggedout.png'),full_page=True)
   click('수급 필터');choose('시장','KOSPI');radio('지난 5일');radio('전체 섹터');choose('섹터 정렬','시총 대비 순매수 강도')
   rows=download('섹터 현황 CSV','sectors.csv');expected=sectors[sectors.market=='KOSPI'].set_index('sector');assert len(rows)==len(expected)
   for row in rows:

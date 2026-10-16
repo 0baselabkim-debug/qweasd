@@ -1,0 +1,316 @@
+{
+  "asof": "2026-10-15",
+  "stocks": 2430,
+  "average_turnover_available": 387,
+  "activity_ratio_available": 387,
+  "average_turnover_missing_due_to_conflict": 2041,
+  "activity_missing_due_to_conflict": 2038,
+  "average_turnover_missing_without_conflict": 2,
+  "activity_missing_without_conflict": 5,
+  "sectors": 50,
+  "sector_activity_available": 0,
+  "market_price_dates": {
+    "KOSDAQ": 25,
+    "KOSPI": 25
+  },
+  "corporate_failed_samples": [
+    {
+      "receipt": "20260325000430",
+      "symbol": "054950",
+      "business_error": "business_section_not_unique",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260330001721",
+      "symbol": "121600",
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260320000348",
+      "symbol": "126880",
+      "business_error": "business_section_not_unique",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260806000296",
+      "symbol": "002220",
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260430000135",
+      "symbol": "002460",
+      "business_error": "business_section_not_unique",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260319000150",
+      "symbol": "025320",
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260605000456",
+      "symbol": "079900",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260331003904",
+      "symbol": "005830",
+      "business_error": "document_xml_missing"
+    },
+    {
+      "receipt": "20260331003871",
+      "symbol": "000880",
+      "business_error": "document_xml_missing"
+    },
+    {
+      "receipt": "20260730000175",
+      "symbol": "039420",
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260331003585",
+      "symbol": "088350",
+      "business_error": "document_xml_missing"
+    },
+    {
+      "receipt": "20260605000334",
+      "symbol": "003160",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260508000660",
+      "symbol": "033160",
+      "business_error": "business_section_not_unique",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260319000744",
+      "symbol": "023960",
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260814002982",
+      "symbol": "002450",
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260403000835",
+      "symbol": "009450",
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    },
+    {
+      "receipt": "20260730000551",
+      "symbol": "000440",
+      "business_error": "BadZipFile",
+      "financial_error": "receipt_or_period_mismatch"
+    }
+  ],
+  "hashes": {
+    "snapshot/dashboard.duckdb": "595df2fc434a99590409d39a43b4dab3e366c4a16d1f25acdaf5edd1adfb7738",
+    "snapshot/corporate-state.json.gz": "dc3dbbf72619f08fd631b2147b0b4dd4a0ddca53d8a3e0cf7440bd64020c7a4b",
+    "theme_mapping.json": "8be13ba1a4b3c02fdd64a7eb9c056ac2aad7f946c069f25c60b1e7549e135c28",
+    "technical_rules.json": "46699d338be71480518c8d3273c254d4ecbb3e531a6090b1350570b4d8cc016b",
+    "eligibility_rules.json": "0145f0452660c5c0ef762116b0d9474333ddbb7ba33504457483895fe3d42e1d"
+  },
+  "flows_by_date": {
+    "2026-09-11": {
+      "rows": 2427,
+      "net_won": -2312011000000
+    },
+    "2026-09-14": {
+      "rows": 2427,
+      "net_won": -3209323000000
+    },
+    "2026-09-15": {
+      "rows": 2427,
+      "net_won": -1478487000000
+    },
+    "2026-09-16": {
+      "rows": 2427,
+      "net_won": -1668839000000
+    },
+    "2026-09-17": {
+      "rows": 2427,
+      "net_won": -2423262000000
+    },
+    "2026-09-18": {
+      "rows": 2427,
+      "net_won": 554189000000
+    },
+    "2026-09-21": {
+      "rows": 2427,
+      "net_won": -181117000000
+    },
+    "2026-09-22": {
+      "rows": 2427,
+      "net_won": -21403000000
+    },
+    "2026-09-23": {
+      "rows": 2427,
+      "net_won": -673138000000
+    },
+    "2026-09-28": {
+      "rows": 2427,
+      "net_won": -2790013000000
+    },
+    "2026-09-29": {
+      "rows": 2428,
+      "net_won": -3034100000000
+    },
+    "2026-09-30": {
+      "rows": 2429,
+      "net_won": -1913786000000
+    },
+    "2026-10-01": {
+      "rows": 2430,
+      "net_won": 255231000000
+    },
+    "2026-10-02": {
+      "rows": 2430,
+      "net_won": -305371000000
+    },
+    "2026-10-06": {
+      "rows": 2430,
+      "net_won": -1617497000000
+    },
+    "2026-10-07": {
+      "rows": 2430,
+      "net_won": -2927947000000
+    },
+    "2026-10-08": {
+      "rows": 2430,
+      "net_won": -1873766000000
+    },
+    "2026-10-12": {
+      "rows": 2430,
+      "net_won": -2003305000000
+    },
+    "2026-10-13": {
+      "rows": 2430,
+      "net_won": -4285706000000
+    },
+    "2026-10-14": {
+      "rows": 2430,
+      "net_won": -1311278000000
+    },
+    "2026-10-15": {
+      "rows": 2430,
+      "net_won": -3465120000000
+    }
+  },
+  "technical_summary": {
+    "run_id": "38814927141",
+    "asof": "2026-10-15",
+    "finished_at": "2026-10-15T22:30:01.082983+00:00",
+    "target_count": 2430,
+    "excluded_count": 115,
+    "batch_collected": 156,
+    "batch_failed_or_incomplete": 22,
+    "cached_symbols": 2430,
+    "completed_current_asof": 2408,
+    "indicator_ready": 2408,
+    "signal_ready": 216,
+    "price_conflicts": 1370,
+    "finality_verified": 0,
+    "requests": 1109,
+    "http_or_api_errors": 0,
+    "rate_limit_errors": 0,
+    "elapsed_seconds": 1262.93,
+    "hold_reasons": {
+      "공식 확정 또는 일별 교차검증 근거 미확보": 2214,
+      "시세 정합성 미확인 · 기존 원본 보존": 1278,
+      "OHLCV 63/160거래일": 1,
+      "OHLCV 73/160거래일": 1,
+      "OHLCV 11/160거래일": 1,
+      "동일 거래일 외국인 수급 20일 미확보": 5,
+      "OHLCV 137/160거래일": 1,
+      "OHLCV 99/160거래일": 1,
+      "OHLCV 72/160거래일": 1,
+      "OHLCV 68/160거래일": 1,
+      "OHLCV 100/160거래일": 1,
+      "OHLCV 133/160거래일": 1,
+      "OHLCV 106/160거래일": 1,
+      "OHLCV 150/160거래일": 1,
+      "OHLCV 151/160거래일": 1,
+      "OHLCV 1/160거래일": 1,
+      "OHLCV 36/160거래일": 1,
+      "OHLCV 103/160거래일": 1,
+      "OHLCV 41/160거래일": 1,
+      "OHLCV 42/160거래일": 1,
+      "OHLCV 35/160거래일": 1,
+      "OHLCV 9/160거래일": 1,
+      "OHLCV 10/160거래일": 1,
+      "OHLCV 140/160거래일": 1,
+      "OHLCV 26/160거래일": 1
+    },
+    "status_counts": {
+      "collected": 2410,
+      "new_listing_short_history": 22
+    },
+    "krx_reference_status": {
+      "KOSPI": "CACHED_SAME_DATE",
+      "KOSDAQ": "CACHED_SAME_DATE"
+    },
+    "legacy_discrepancies": 387,
+    "legacy_basis_identified": 0,
+    "official_daily_crosschecked": 0,
+    "cache_bytes": 28594753,
+    "remaining": 22,
+    "quality_reviewed_at": "2026-10-15T23:40:36.520978+00:00",
+    "full_320_symbols": 2373,
+    "short_history_symbols": 57,
+    "daily_accepted": 216,
+    "guide_status_counts": {
+      "판정 보류": 2218,
+      "관망": 212
+    },
+    "guide_hold_reasons": {
+      "공식 확정 또는 일별 교차검증 근거 미확보": 2214,
+      "시세 정합성 미확인 · 기존 원본 보존": 1278,
+      "OHLCV 63/160거래일": 1,
+      "OHLCV 73/160거래일": 1,
+      "OHLCV 11/160거래일": 1,
+      "동일 거래일 외국인 수급 20일 미확보": 5,
+      "OHLCV 137/160거래일": 1,
+      "OHLCV 99/160거래일": 1,
+      "OHLCV 72/160거래일": 1,
+      "OHLCV 68/160거래일": 1,
+      "OHLCV 100/160거래일": 1,
+      "OHLCV 133/160거래일": 1,
+      "지지·저항 또는 정상 손익비 미확인": 4,
+      "OHLCV 106/160거래일": 1,
+      "OHLCV 150/160거래일": 1,
+      "OHLCV 151/160거래일": 1,
+      "OHLCV 1/160거래일": 1,
+      "OHLCV 36/160거래일": 1,
+      "OHLCV 103/160거래일": 1,
+      "OHLCV 41/160거래일": 1,
+      "OHLCV 42/160거래일": 1,
+      "OHLCV 35/160거래일": 1,
+      "OHLCV 9/160거래일": 1,
+      "OHLCV 10/160거래일": 1,
+      "OHLCV 140/160거래일": 1,
+      "OHLCV 26/160거래일": 1
+    },
+    "blocking_price_conflicts": 1278,
+    "official_ohlcv_crosschecked": 216,
+    "corporate_event_symbols": 119,
+    "waiting_history_symbols": 22,
+    "verification_run": {
+      "run_id": "38824766362",
+      "finished_at": "2026-10-15T23:40:03.650812+00:00",
+      "outcome": "REVIEWED",
+      "evaluated": 600,
+      "requests": 0,
+      "deferred_no_reference": 0,
+      "deferred_short_history": 7
+    }
+  }
+}

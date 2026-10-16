@@ -33,6 +33,11 @@ st.markdown('''<style>
 .st-key-ui_sector_period [role="radiogroup"] label:has(input:checked),.st-key-ui_stock_period [role="radiogroup"] label:has(input:checked){background:#2167ff}
 .breadcrumb{font-size:14px;color:#b0caff;margin:7px 0 12px}
 </style>''',unsafe_allow_html=True)
+# Invisible identity only: no date/status header or design change.
+from screener.public_build import identity as public_identity
+_build=public_identity(ROOT)
+st.markdown('<style>div[data-testid="stElementContainer"]:has(.public-build){display:none}</style>'
+            +f'<span class="public-build" data-source-sha256="{_build["source_sha256"]}" data-revision="{_build["revision"]}"></span>',unsafe_allow_html=True)
 ss=st.session_state
 for key,value in {'stage':'macro','nav_epoch':0,'preferences':{},'group':None,'symbol':None,'sector_open':False,'stock_open':False}.items():
  if key not in ss:ss[key]=value

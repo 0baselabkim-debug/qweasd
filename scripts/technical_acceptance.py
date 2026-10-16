@@ -49,7 +49,11 @@ def verify_bundle(api,bundle,references):
         b['acceptance_error']='REFERENCE_NOT_AVAILABLE_FOR_SYMBOL'
         b['validation']=validate(b,b['asof'])
         return b
-    b=copy.deepcopy(bundle);b.pop('daily_acceptance',None)
+    b=copy.deepcopy(bundle)
+    previous=b.pop('daily_acceptance',None)
+    if previous:
+        history=b.setdefault('acceptance_history',{})
+        history.setdefault(digest(previous),previous)
     b.pop('acceptance_error',None)
     b=crosscheck(b,references)
     day=b['asof'];symbol=b['symbol']

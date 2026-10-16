@@ -30,7 +30,7 @@ def classify_rows(payload, day):
     return 'RECEIVED', rows
 
 
-def fetch_references(day, root):
+def fetch_references(day, root, refresh=False):
     from scripts.technical_batch import read, write
     dt.date.fromisoformat(day)  # Only a real ISO date can enter a cache path.
     key = os.getenv('KRX_API_KEY')
@@ -57,7 +57,7 @@ def fetch_references(day, root):
         record = {'requested_date': day, 'checked_at': now.isoformat(), 'url': url,
                   'http': None, 'received_rows': 0, 'returned_dates': []}
         rows = []
-        if reusable:
+        if reusable and not refresh:
             rows = cached['rows']
             record.update(status='CACHED_SAME_DATE', received_rows=len(rows),
                           returned_dates=[day.replace('-', '')], reference_observed_at=observed)
@@ -75,8 +75,14 @@ def fetch_references(day, root):
                     record['returned_dates'] = sorted({str(r.get('BAS_DD')) for r in raw_rows if isinstance(r, dict)})
                 record['status'], rows = classify_rows(payload, day)
                 if rows:
+                    previous=cached
                     cached = {'asof': day, 'url': url, 'observed_at': now.isoformat(), 'rows': rows}
-                    write(path, cached)
+                    from screener.technical_quality import digest
+                    for observation in [previous,cached]:
+                        if observation.get('asof') and observation.get('rows'):
+                            write(root/'reference-observations'/observation['asof']/market/(digest(observation)+'.json.gz'),observation)
+                    # A repair candidate never overwrites a selected valid reference.
+                    if not (refresh and reusable):write(path, cached)
             except urllib.error.HTTPError as exc:
                 record.update(http=exc.code, status='REFERENCE_AUTH_ERROR' if exc.code in (401, 403) else 'REFERENCE_HTTP_ERROR')
             except (json.JSONDecodeError, UnicodeError):

@@ -103,3 +103,55 @@ def test_real_pilot_preserves_scores_and_separates_periods():
  assert len(records)==1
  r=records[0];assert r['values']['revenue']==381372590019 and r['standalone_quarter']['revenue']==216471641903
  assert r['values']['ocf']==49194134963 and metrics(r)['roe'] is None
+
+def test_retry_queue_does_not_starve_after_120_failures(tmp_path):
+ from scripts.collect_corporate import pending_filings
+ state=load_state(tmp_path/'absent')
+ for i in range(121):
+  f={**filing(str(i)), 'symbol':str(i).zfill(6)};state['filings'][f['receipt']]=f
+  if i<120:state['jobs'][f['receipt']]={'business_status':'failed','financial_status':'failed','attempted_at':'2026-10-15T00:00:00+00:00'}
+ pending=pending_filings(state,None,'2026-10-16T00:00:00+00:00')
+ assert pending[0]['symbol']=='000120'
+
+def test_discovery_failure_still_processes_saved_pending(tmp_path,monkeypatch):
+ from scripts import collect_corporate as c
+ state=load_state(tmp_path/'absent');f=filing();state['filings'][f['receipt']]=f;state['discovery_through']='2026-10-14'
+ class API:
+  calls=0;started=0;max_calls=600;max_seconds=2100
+  def get(self,*a):raise ValueError('transport_TimeoutError')
+ seen=[]
+ monkeypatch.setattr(c,'process',lambda api,state,f,cache:seen.append(f['receipt']))
+ result=c.collect_cycle(API(),state,[{'symbol':f['symbol'],'corp_code':f['corp_code'],'fiscal_month':12}],None,120,None,'2026-10-16',False,lambda:None)
+ assert seen==[f['receipt']] and state['discovery_through']=='2026-10-14'
+ assert state['last_discovery_error']=='transport_TimeoutError' and not result['budget_exhausted']
+
+def test_failed_document_and_period_are_not_success_and_backoff_is_per_component(tmp_path):
+ from scripts import collect_corporate as c
+ state=load_state(tmp_path/'absent');f=filing()
+ class API:
+  calls=[]
+  def get(self,path,params):
+   self.calls.append(path)
+   if path=='document.xml':return b'invalid ZIP fixture'
+   d=response();d['list'][0]['rcept_no']='wrong';return d
+ api=API();c.process(api,state,f,None);job=state['jobs'][f['receipt']]
+ assert job['business_error']=='BadZipFile' and job['business_error_class']=='retryable_response'
+ assert job['financial_error']=='receipt_or_period_mismatch' and job['financial_error_class']=='evidence_review_required'
+ assert not state['financials'] and not state['reviews']
+ count=len(api.calls);c.process(api,state,f,None);assert len(api.calls)==count
+ job['business_retry_after']='2000-01-01';c.process(api,state,f,None)
+ assert len(api.calls)==count+1 and api.calls[-1]=='document.xml'
+ assert job['business_attempts']==2 and job['financial_attempts']==1
+
+
+def test_discovery_budget_reserves_processing_and_cursor_on_incomplete_chunk(tmp_path,monkeypatch):
+ from scripts import collect_corporate as c
+ state=load_state(tmp_path/'absent');f=filing();state['filings'][f['receipt']]=f;state['discovery_through']='2026-10-14'
+ class API:
+  calls=0;max_calls=6;max_seconds=60
+  def get(self,*args):self.calls+=1;return {'list':[],'total_page':100}
+ api=API();seen=[];monkeypatch.setattr(c,'process',lambda *args:seen.append(args[2]['receipt']))
+ c.collect_cycle(api,state,[{'symbol':f['symbol'],'corp_code':f['corp_code'],'fiscal_month':12}],None,120,None,'2026-10-16',False,lambda:None)
+ assert api.calls==2 and seen==[f['receipt']]
+ assert state['discovery_through']=='2026-10-14'
+ assert state['last_discovery_error']=='discovery_budget_exhausted'
