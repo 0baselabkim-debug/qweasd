@@ -83,7 +83,10 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         key=b['asof']+'/'+b['symbol']
         if key in seen:continue
         seen.add(key);j=ledger['jobs'].get(key,{})
-        if j.get('retry_after','')>start.isoformat():continue
+        retry_after=j.get('retry_after','')
+        if j.get('last_result',{}).get('error_type')=='RecoveryBudget' and j.get('attempted_at'):
+            retry_after=(dt.datetime.fromisoformat(j['attempted_at'])+dt.timedelta(minutes=15)).isoformat()
+        if retry_after>start.isoformat():continue
         tasks.append((j.get('attempted_at',''),key,path,b))
     bounded=BoundedAPI(api,max_calls=min(60,max_calls),seconds=min(240,seconds));results=[]
     for _,key,path,b in sorted(tasks,key=lambda x:(x[0],x[3]['asof']!=latest,x[1])):
@@ -120,8 +123,9 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
             batch.write(batch.ROOT/'provider-observations'/day/b['symbol']/(digest(observation)+'.json.gz'),observation)
         result['response_observations']=[digest(o) for o in raw_evidence]
         assert digest(b)==before
+        delay=dt.timedelta(minutes=15) if result.get('error_type')=='RecoveryBudget' else dt.timedelta(hours=min(24,6*2**min(attempts-1,2)))
         job.update(attempted_at=start.isoformat(),attempts=attempts,
-                   retry_after=(start+dt.timedelta(hours=min(24,6*2**min(attempts-1,2)))).isoformat(),last_result=result)
+                   retry_after=(start+delay).isoformat(),last_result=result)
         results.append(result);batch.write(ledger_path,ledger)
         if result.get('error_type')=='RecoveryBudget':break
     report={'asof':latest,'started_at':start.isoformat(),'finished_at':dt.datetime.now(dt.timezone.utc).isoformat(),

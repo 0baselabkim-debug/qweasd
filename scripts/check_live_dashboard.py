@@ -220,6 +220,24 @@ with sync_playwright() as p:
    if width==390:
     page.set_viewport_size({'width':1920,'height':1200});pause();layout();readability('macro')
    report['checks'].append(f'{width}px: page widths, row heights, 14px text, internal scroll, no clipped cells/KPIs, navigation, tabs, sidebar non-overlap')
+  # Check the newly promoted real observations, not only the unchanged NAVER case.
+  recovery_path=ROOT/'technical/recovery-report.json'
+  if recovery_path.exists():
+   recovered=json.loads(recovery_path.read_text())
+   for item in recovered.get('results',[]):
+    if not item.get('promoted') or item['asof']!=asof:continue
+    code=item['symbol'];row=stocks.set_index('symbol').loc[code]
+    click('수급 필터');radio('전체 섹터');choose('시장',row.market);click('전체섹터 조회')
+    double(row.sector);double(row['name'])
+    bundle,_=get_bundle(code,asof);guide_result=buy_guide(bundle,asof)
+    assert daily_accepted(bundle) and bundle['finality']=='UNVERIFIED'
+    assert ui.locator('.buy-guide').inner_text().startswith('매수 가이드: '+guide_result['status'])
+    ui.get_by_text('매수 가이드 · 기술 지표 근거',exact=True).click();pause()
+    assert '일별 운용 검증 통과' in ui.locator('body').inner_text()
+    rows=download('일별 수급 CSV','recovered-'+code+'.csv')
+    for value in rows:match(value['net_amount'],matrix[code].loc[value['trade_date']])
+    page.screenshot(path=str(out/('recovered-'+code+'.png')),full_page=True)
+    report.setdefault('recovered_symbols',[]).append({'symbol':code,'asof':asof,'guide':guide_result['status'],'daily_accepted':True,'provider_finality':bundle['finality'],'csv_rows':len(rows)})
   report['success']=True
  except Exception as e:
   report.update(error_type=type(e).__name__,error=str(e)[:1800],traceback=traceback.format_exc()[-4000:]);report['visible_text']=ui.locator('body').inner_text()[-16000:];page.screenshot(path=str(out/'failure.png'),full_page=True)

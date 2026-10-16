@@ -1,0 +1,172 @@
+{
+  "changes_commit": "37f5ffb72ccf6f8c56ed27f08735d0dd0228928a",
+  "recovery_run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38832184067",
+  "corporate_run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38832186544",
+  "ci_run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38832175628",
+  "initial_public_browser_run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38832310158",
+  "preservation": {
+    "snapshot/dashboard.duckdb": true,
+    "theme_mapping.json": true,
+    "technical_rules.json": true,
+    "eligibility_rules.json": true,
+    "all_original_financial_records_preserved": true,
+    "all_original_theme_reviews_preserved": true,
+    "all_original_filings_preserved": true,
+    "previous_events_are_prefix": true
+  },
+  "technical_before": {
+    "daily_accepted": 216,
+    "signal_ready": 216,
+    "guide_status_counts": {
+      "판정 보류": 2218,
+      "관망": 212
+    },
+    "blocking_price_conflicts": 1278
+  },
+  "technical_after": {
+    "daily_accepted": 218,
+    "signal_ready": 218,
+    "guide_status_counts": {
+      "판정 보류": 2216,
+      "관망": 214
+    },
+    "blocking_price_conflicts": 1278
+  },
+  "actual_kis_request_attempts": 20,
+  "recovery_results": [
+    {
+      "symbol": "000020",
+      "asof": "2026-10-15",
+      "original_sha256": "0456ffc503343b4b3578e98eed73b84ba22c8806092b39f9583b3532a7ac2599",
+      "promoted": true,
+      "candidate_sha256": "fb95a9fecf2cbc5a9a0a9658ef747b24c9cbf28e2c8e867c1696e56cbd3ed331",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "c62e67c7c4bfdd607f87addd319fa1521cddec75eb13767b8a4e78e9b6651c5c",
+        "9caab350779657d3ba3153a9c3fc1749a1fc9748102c1d34f8b8f7b829699e66",
+        "5a3576c785c23ba978716b7e4f3305c16fefcf00b4764ee1750f9bdfd8703c59",
+        "de7f79e04ca6efda999a7e2e9b1b29a67c8937672121937f0ea1d327c757e889",
+        "f8a07b0be5104fc17fb93e7a842565cfe75d3fe13e4c16170f71530364878900",
+        "4a60039bd350ed844a208c0b985e9f664311ffeaca85019a3d016b4e090c3881",
+        "7c4f60431c24718c1659d1ba047f9cc56ccab9b8423d09d7902bdd2012c1d50b"
+      ]
+    },
+    {
+      "symbol": "000050",
+      "asof": "2026-10-15",
+      "original_sha256": "0a07c39510353e012db81e4508a3950bf31b7488dfa0a9860fc7cdb74d4f060f",
+      "promoted": true,
+      "candidate_sha256": "ecdbb6b4f81299e2ee7f43e3cf6edae436aec7b6a123438cd93e868346cd1e12",
+      "reasons": [],
+      "guide": "관망",
+      "response_observations": [
+        "f80e3638ed9471149c7b31b9e2e03e7597464890c799b5027c2aa574aea71d8f",
+        "694d68ecd07730b4904d257bef7700530e5dd905fe732b99422eaa0952fc84c7",
+        "9eab4f36945ba272ffd0e685f6081b89f4aaba55f6341b0fdb19e7c373de0f70",
+        "60aaeaf8fb14864c0b4d7201cd3e6cdcdb09ad7b51933e9bbc50f81839be8138",
+        "f0df014c63f17f4c2407f80168b83b86b803df7d085d16404cc4985f673ed757",
+        "85c68bd5c44bd75bdcfc93a2a85e7be00b2eea43b5567f5cecbaa485646da67b",
+        "0972f0bd2ef0b09d052c9ed18c9ad31fea7c3149551b5acd5a8255c21f1c61b0"
+      ]
+    },
+    {
+      "symbol": "000080",
+      "asof": "2026-10-15",
+      "original_sha256": "4914b81981f03e118704fdec88da1d9a026479a137fe704d438380e88d741a78",
+      "promoted": false,
+      "error_type": "RecoveryBudget",
+      "response_observations": [
+        "12c0ee89c06fe49a49dd2c6a665643db7e4d6ce8d2d71de44efd21673fdb9e9a",
+        "515eb3b199c340577e73581757bba0deb9dc277a7254c29c5fa403349d799046",
+        "c82dad22874e16e44bb6c1801ccc0901c9bf51b7430a0c364a478f1d6e7219c0",
+        "50750b930626a42a22e3f096a72fb27131bb5c1c9207c5760a8ec562a7ec5ac5",
+        "7f0cabd24fd6eb7d64874a89a840c5b72a6b76ae7c6ee39cc81e9c6bf2646498"
+      ]
+    }
+  ],
+  "corporate_run_result": {
+    "id": "38832186544-1792112154383432470",
+    "started_at": "2026-10-16T00:55:23.887398+00:00",
+    "completed_at": "2026-10-16T00:55:54.383440+00:00",
+    "calls": 7,
+    "seconds": 30.5,
+    "processed_filings": 2,
+    "budget_exhausted": false,
+    "discovery_through": "2026-10-16",
+    "discovery_error": null,
+    "failed_jobs": {
+      "20260325000430": {
+        "business_error": "business_section_not_unique",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260330001721": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260320000348": {
+        "business_error": "business_section_not_unique",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260806000296": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260430000135": {
+        "business_error": "business_section_not_unique",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260319000150": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260605000456": {
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260331003904": {
+        "business_error": "document_xml_missing"
+      },
+      "20260331003871": {
+        "business_error": "document_xml_missing"
+      },
+      "20260730000175": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260331003585": {
+        "business_error": "document_xml_missing"
+      },
+      "20260605000334": {
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260508000660": {
+        "business_error": "business_section_not_unique",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260319000744": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260814002982": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260403000835": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      },
+      "20260730000551": {
+        "business_error": "BadZipFile",
+        "financial_error": "receipt_or_period_mismatch"
+      }
+    },
+    "scope": [
+      "005930",
+      "054950",
+      "121600"
+    ],
+    "pending_filings": 2,
+    "unavailable_financials": [],
+    "held_financials": []
+  }
+}

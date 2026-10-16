@@ -1,5 +1,5 @@
 """Offline fixtures only; real KIS observations are verified separately."""
-import copy
+import copy,datetime as dt
 import pandas as pd
 from scripts import technical_batch as c
 from screener import technical_cache
@@ -474,3 +474,14 @@ def test_explicit_reference_refresh_archives_without_replacing_selected_referenc
  refs,status=fetch_references(day,tmp_path,refresh=True)
  assert refs[b['symbol']]['TDD_CLSPRC']=='101' and path.read_bytes()==original
  assert list((tmp_path/'reference-observations'/day/'KOSPI').glob('*.json.gz'))
+
+def test_budget_pause_does_not_become_provider_failure_backoff(tmp_path,monkeypatch):
+ from scripts import recover_technical as recovery
+ b,refs,API,pages=repair_sample()
+ monkeypatch.setattr(c,'ROOT',tmp_path);monkeypatch.setattr(c,'CACHE',tmp_path/'market')
+ c.write(c.CACHE/(b['symbol']+'.json.gz'),b);monkeypatch.setattr(c,'krx_reference',lambda day,**kw:(refs,{}))
+ data={'flows':pd.DataFrame([{'trade_date':pd.Timestamp(b['asof'])}])}
+ r=recovery.run(API(match=False),data,limit=1,max_calls=3)
+ assert r['results'][0]['error_type']=='RecoveryBudget' and not r['promoted']
+ j=c.read(tmp_path/'recovery-state.json')['jobs'][b['asof']+'/'+b['symbol']]
+ assert (dt.datetime.fromisoformat(j['retry_after'])-dt.datetime.fromisoformat(j['attempted_at'])).total_seconds()==900
