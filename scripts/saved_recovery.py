@@ -47,6 +47,10 @@ def preflight(bundle,index):
     if not entry:return fail('exact_date_official_reference_missing')
     refs={b['symbol']:entry['row']};info['saved_evidence']['reference']=entry
     if not reference_ready(b,refs):return fail('official_reference_identity_or_observation_time')
+    if not b.get('bars') or b['bars'][-1].get('trade_date')!=b['asof']:
+        return fail('saved_adjusted_bar_date_mismatch_or_missing')
+    if b.get('price_comparison',{}).get('kis_unadjusted') is None:
+        return fail('saved_same_date_unadjusted_price_missing')
     from screener.technical_quality import FIELDS
     row=entry['row']
     try:

@@ -13,14 +13,19 @@ def test_saved_full_verification_preserves_original_and_finality():
  assert candidate['finality']=='UNVERIFIED' and b==before
 
 def test_saved_bad_hash_wrong_day_flow_and_price_remain_blocked():
- for kind in ['hash','date','flow','price','reference']:
+ for kind in ['hash','date','flow','price','reference','raw_missing','bar_date']:
   b,index=fixture()
   if kind=='hash':b['daily_acceptance']['bars_sha256']='wrong'
   if kind=='date':b['daily_acceptance']['asof']='1900-01-01'
   if kind=='flow':b['daily_acceptance']['raw_flow_rows'][0]['frgn_ntby_tr_pbmn']='99'
   if kind=='price':b['price_comparison']['kis_unadjusted']=90
   if kind=='reference':index={}
-  assert preflight(b,index)[0] is None,kind
+  if kind=='raw_missing':b['price_comparison']['kis_unadjusted']=None
+  if kind=='bar_date':b['bars'][-1]['trade_date']='1900-01-01'
+  candidate,info=preflight(b,index)
+  assert candidate is None,kind
+  if kind=='raw_missing':assert info['new_request_reason']=='saved_same_date_unadjusted_price_missing'
+  if kind=='bar_date':assert info['new_request_reason']=='saved_adjusted_bar_date_mismatch_or_missing'
 
 def test_reference_hash_checked_and_newest_selected(tmp_path):
  from scripts.technical_batch import write
