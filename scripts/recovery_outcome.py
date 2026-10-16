@@ -8,7 +8,8 @@ def outcome(report,published=False,publication_error=False):
         key='RECOVERED' if r.get('promoted') and published else 'VALIDATED_PENDING_PUBLICATION' if r.get('promoted') else 'BUDGET_PAUSED' if r.get('error_type')=='RecoveryBudget' else 'VALIDATION_FAILED'
         counts[key]+=1
     blocked=sum(v not in ['RECEIVED','REFERENCE_RECEIVED','CACHED_SAME_DATE'] for states in report.get('reference_status',{}).values() for v in states.values())
-    if report.get('budget_exhausted') and not counts['BUDGET_PAUSED']:counts['BUDGET_PAUSED']=1
+    if not blocked and report.get('queue',{}).get('reference_deferred',0):blocked=1
+    if report.get('budget_exhausted') and report.get('queue',{}).get('carried_forward',1)>0 and not counts['BUDGET_PAUSED']:counts['BUDGET_PAUSED']=1
     if blocked:counts['PROVIDER_BLOCKED']=blocked
     if publication_error:status='PUBLICATION_FAILED';counts[status]+=1
     elif counts['RECOVERED']:status='RECOVERED'

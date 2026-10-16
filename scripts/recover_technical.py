@@ -139,7 +139,7 @@ def run(api,data,limit=3,max_calls=60,seconds=240,symbols=None):
     latest=str(data['flows'].trade_date.max().date());start=dt.datetime.now(dt.timezone.utc)
     ledger_path=batch.ROOT/'recovery-state.json';ledger=batch.read(ledger_path,{'jobs':{},'runs':[]})
     from scripts.publish_recovery import seed_dates
-    seeded=seed_dates(data,limit=2,symbols=symbols) if 'prices' in data else []
+    seeded=seed_dates(data,limit=min(4,limit),symbols=symbols) if 'prices' in data else []
     tasks=[];seen=set();refs_by_date={};status_by_date={};excluded_queue={'short_history':0,'short_flow_history':0,'backoff':0}
     # Completion flags never exclude a conflicting observation from this queue.
     paths=list(batch.CACHE.glob('*.json.gz'))+list((batch.ROOT/'history').glob('*/*.json.gz'))+list((batch.ROOT/'pending').glob('*/*.json.gz'))
