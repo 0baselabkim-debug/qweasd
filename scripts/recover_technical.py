@@ -158,11 +158,21 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         before=digest(b)
         saved=[]
         previous=job.get('last_result',{})
+        session_path=batch.ROOT/'recovery-sessions'/day/(b['symbol']+'.json')
+        session=batch.read(session_path,{})
+        if session.get('original_sha256')==before and session.get('status')=='in_progress':
+            previous={**session,'error_type':'RecoveryBudget'}
         if previous.get('original_sha256')==before and previous.get('error_type')=='RecoveryBudget':
             for h in previous.get('response_observations',[]):
                 o=batch.read(batch.ROOT/'provider-observations'/day/b['symbol']/(h+'.json.gz'))
                 if o and digest(o)==h:saved.append(o)
-        bounded.begin(saved,lambda o:batch.write(batch.ROOT/'provider-observations'/day/b['symbol']/(digest(o)+'.json.gz'),o))
+        session={'original_sha256':before,'status':'in_progress','response_observations':[digest(o) for o in saved]}
+        def persist(o):
+            h=digest(o)
+            batch.write(batch.ROOT/'provider-observations'/day/b['symbol']/(h+'.json.gz'),o)
+            if h not in session['response_observations']:session['response_observations'].append(h)
+            batch.write(session_path,session)
+        bounded.begin(saved,persist)
         physical_start=bounded.used;cache_start=bounded.cache_hits;item_start=time.monotonic()
         result={'symbol':b['symbol'],'asof':day,'original_sha256':before,'promoted':False}
         # Archive the complete original (including the previous flow evidence).
@@ -189,6 +199,8 @@ def run(api,data,limit=3,max_calls=60,seconds=240):
         delay=dt.timedelta(minutes=15) if result.get('error_type')=='RecoveryBudget' else dt.timedelta(hours=min(24,6*2**min(attempts-1,2)))
         job.update(attempted_at=start.isoformat(),attempts=attempts,
                    retry_after=(start+delay).isoformat(),last_result=result)
+        session.update(status='paused' if result.get('error_type')=='RecoveryBudget' else 'finished',result=result)
+        batch.write(session_path,session)
         ledger['last_processed_date']=day
         results.append(result);batch.write(ledger_path,ledger)
         if result.get('error_type')=='RecoveryBudget':break

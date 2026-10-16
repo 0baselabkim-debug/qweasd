@@ -22,6 +22,7 @@ def seed_dates(data,limit=2):
             if path.exists() or (batch.ROOT/'history'/day/(code+'.json.gz')).exists():continue
             current=batch.read(batch.CACHE/(code+'.json.gz'))
             if not current or not daily_accepted(current) or current['asof']<=day:continue
+            if not any(r['trade_date']==day for r in current['bars']):continue
             saved=prices[(prices.symbol==code)&(prices.trade_date==pd.Timestamp(day))]
             f=flows[(flows.symbol==code)&(flows.trade_date<=pd.Timestamp(day))&(flows.exchange=='KRX')].sort_values('trade_date').tail(20)
             if len(saved)!=1 or len(f)!=20:continue
@@ -57,7 +58,9 @@ def build(snapshot=Path('snapshot'),root=Path('technical'),out=Path('recovery-pu
             if not permits(row,proof,day):continue
             proofs.setdefault(date,{})[code]=proof;added.append({'asof':date,'symbol':code,'bundle_sha256':digest(b)})
     if not added:return {'added':[],'baseline_sha256':old_hash}
-    out.mkdir(parents=True,exist_ok=True);dest=out/'dashboard.duckdb';shutil.copy2(source,dest)
+    out.mkdir(parents=True,exist_ok=True);dest=out/'dashboard.duckdb'
+    (out/'manifest.json').unlink(missing_ok=True) # prior candidate is not a published generation
+    shutil.copy2(source,dest)
     with duckdb.connect(str(dest)) as c:
         c.execute('insert or replace into metadata values (?,?)',['liquidity_price_evidence',json.dumps(proofs,allow_nan=False)])
         c.execute('CHECKPOINT')
