@@ -6,6 +6,9 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import numpy as np
 import streamlit as st
+from screener import store as public_store,publication
+importlib.reload(publication)
+importlib.reload(public_store)
 from screener.store import load,DB
 import screener.indicators as indicators
 import screener.eligibility as eligibility
@@ -34,8 +37,9 @@ st.markdown('''<style>
 .breadcrumb{font-size:14px;color:#b0caff;margin:7px 0 12px}
 </style>''',unsafe_allow_html=True)
 # Invisible identity only: no date/status header or design change.
-from screener.public_build import identity as public_identity
-_build=public_identity(ROOT)
+from screener import public_build
+importlib.reload(public_build)
+_build=public_build.identity(ROOT)
 st.markdown('<style>div[data-testid="stElementContainer"]:has(.public-build){display:none}</style>'
             +f'<span class="public-build" data-source-sha256="{_build["source_sha256"]}" data-revision="{_build["revision"]}" data-snapshot-sha256="{_build["data_sha256"]}"></span>',unsafe_allow_html=True)
 ss=st.session_state

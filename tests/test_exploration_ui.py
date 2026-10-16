@@ -22,3 +22,13 @@ def test_macro_presentation_does_not_mutate_values_and_rates_use_bp():
  other=macro_rows(state,catalog(),'환율·원자재');assert any(r['최신 데이터 값']==f"{state['indicators']['wti']['value']:,.2f}" and r['항목명']=='WTI' for r in other)
  assert state==original
  missing=macro_rows({},catalog(),'한국 증시');assert all(r['최신 데이터 값']=='미확보' and r['전일 대비']=='미확보' for r in missing)
+
+def test_warm_process_reloads_public_identity_module(monkeypatch):
+    """Reproduce Cloud retaining the old identity callable across app-only reload."""
+    from pathlib import Path
+    from streamlit.testing.v1 import AppTest
+    from screener import public_build
+    monkeypatch.setattr(public_build,'identity',lambda *a,**k:{'source_sha256':'old','revision':'old'})
+    app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py'),default_timeout=90).run()
+    assert not app.exception
+    assert 'data_sha256' in public_build.identity()
