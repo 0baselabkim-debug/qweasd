@@ -64,3 +64,34 @@ def test_sector_gap_diagnostic_uses_same_25_day_mask(history):
     assert row['minimum_additional_date_symbol_checks']==1
     assert row['blocking_dates']==[day]
     assert row['reason_symbol_counts']['unresolved_price_conflict']==1
+
+def test_correction_document_identity_and_no_final_acceptance():
+    import zipfile
+    from scripts.review_corrections import extract
+    f={'receipt':'20260605000456','corp_code':'12345678'}
+    xml='<DOCUMENT><DOCUMENT-NAME>사업보고서</DOCUMENT-NAME><COMPANY-NAME AREGCIK="12345678">기업</COMPANY-NAME><SECTION-2><TITLE>4. 재무제표</TITLE><P>(단위 : 원) 2025-12-31 자본총계 100</P></SECTION-2></DOCUMENT>'
+    b=io.BytesIO()
+    with zipfile.ZipFile(b,'w') as z:z.writestr(f['receipt']+'.xml',xml)
+    r=extract(b.getvalue(),f)
+    assert r['documents'][0]['identity_verified']
+    assert '4. 재무제표' in r['documents'][0]['financial_sections']
+    assert r['final_financial_acceptance'] is False
+    assert not extract(b.getvalue(),dict(f,corp_code='87654321'))['documents'][0]['identity_verified']
+    assert extract(b'<result><status>014</status></result>',f)['status']=='DART_014'
+
+def test_reference_backoff_expiry_resumes_without_relaxing_schema(tmp_path,monkeypatch):
+    import datetime as dt
+    import scripts.technical_reference as ref
+    from screener.technical_quality import FIELDS
+    clock=dt.datetime(2026,10,16,tzinfo=dt.timezone.utc)
+    monkeypatch.setattr(ref,'utcnow',lambda:clock)
+    monkeypatch.setenv('KRX_API_KEY','test-secret')
+    def deny(req,**kw):raise urllib.error.HTTPError(req.full_url,403,'Forbidden',{},io.BytesIO(b'Forbidden'))
+    monkeypatch.setattr(ref.urllib.request,'urlopen',deny)
+    fetch_references('2026-10-15',tmp_path,refresh=True)
+    clock+=dt.timedelta(hours=2)
+    row={v:'1' for v in FIELDS.values()};row.update(BAS_DD='20261015',ISU_CD='000001')
+    monkeypatch.setattr(ref.urllib.request,'urlopen',lambda *a,**k:Reply({'OutBlock_1':[row]}))
+    refs,status=fetch_references('2026-10-15',tmp_path,refresh=True)
+    assert refs and set(status.values())=={'REFERENCE_RECEIVED'}
+    assert 'provider_backoff' not in read(tmp_path/'reference-status.json')
