@@ -21,5 +21,61 @@
     "aggregate_validation": 8.151111776999642
   },
   "candidate_total_seconds": 36.6724752479995,
-  "sha256": "ee75c37252c85cfb1ab7e0ffa82cc13dabf182fdeeecf735ff007e7e2d6a4837"
+  "sha256": "87968c2b69c125f52d834e3f15e46bd80e02554e3b0b5396a3f062fa4d47af68",
+  "recovery_revisions": [
+    {
+      "previous_sha256": "ee75c37252c85cfb1ab7e0ffa82cc13dabf182fdeeecf735ff007e7e2d6a4837",
+      "sha256": "87968c2b69c125f52d834e3f15e46bd80e02554e3b0b5396a3f062fa4d47af68",
+      "audit": {
+        "baseline_sha256": "ee75c37252c85cfb1ab7e0ffa82cc13dabf182fdeeecf735ff007e7e2d6a4837",
+        "sha256": "87968c2b69c125f52d834e3f15e46bd80e02554e3b0b5396a3f062fa4d47af68",
+        "added": [
+          {
+            "asof": "2026-10-14",
+            "symbol": "000220",
+            "bundle_sha256": "6a7d4b2623fc45e1a0dd3728d75bd11cdbf9e3d98a133277a6e737211e98fb22"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "000230",
+            "bundle_sha256": "0becff513e8e680958cd86200e1517758852cc2228079766b9b8f45bc462023e"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "000240",
+            "bundle_sha256": "c265615c5169c49f68b14a582fbd4452e60cbce4060e895dbe68207f1c2875d9"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "000270",
+            "bundle_sha256": "1dd6a9bae29f73988cfcff6082899be6d4058e40ef5e84411c929a153d506b64"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "000320",
+            "bundle_sha256": "b8158a8b1fc048a288db5bfa5dc393c727d5228017e7c50d126069e8a579d5d4"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "000390",
+            "bundle_sha256": "66df915d239d0ac7aa5f1ddcedf1256b318ab1ad84d237510c447342bf32cef2"
+          }
+        ],
+        "before": {
+          "stocks": 2430,
+          "stock_activity": 442,
+          "sectors": 50,
+          "sector_activity": 10
+        },
+        "after": {
+          "stocks": 2430,
+          "stock_activity": 448,
+          "sectors": 50,
+          "sector_activity": 10
+        },
+        "raw_tables_preserved": true,
+        "observed_at": "2026-10-16T11:45:03.829736+00:00"
+      }
+    }
+  ]
 }
