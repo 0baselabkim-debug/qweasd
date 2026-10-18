@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-18T06:14:45.906853+00:00",
+  "updated_at": "2026-10-18T09:51:08.901998+00:00",
   "filings": 8356,
-  "financial_versions": 3368,
-  "business_companies": 977,
+  "financial_versions": 3486,
+  "business_companies": 1097,
   "universe": 2430,
   "last_run": {
-    "id": "39101244333-1792304054679547614",
-    "started_at": "2026-10-18T05:39:07.652405+00:00",
-    "completed_at": "2026-10-18T06:14:14.679556+00:00",
-    "calls": 154,
-    "seconds": 2107.03,
-    "processed_filings": 97,
-    "budget_exhausted": true,
+    "id": "39116162406-1792317033410309673",
+    "started_at": "2026-10-18T09:39:41.655405+00:00",
+    "completed_at": "2026-10-18T09:50:33.410319+00:00",
+    "calls": 382,
+    "seconds": 651.75,
+    "processed_filings": 240,
+    "budget_exhausted": false,
     "discovery_through": "2026-10-18",
     "discovery_error": null,
     "failed_jobs": {
@@ -34,7 +34,7 @@
       }
     },
     "scope": "entire_universe",
-    "pending_filings": 2901,
+    "pending_filings": 2662,
     "unavailable_financials": [],
     "held_financials": [
       "20260514000007",
@@ -62,10 +62,14 @@
       "20260921000275",
       "20260616000373",
       "20260813000800",
-      "20260813000672"
+      "20260813000672",
+      "20260515002028",
+      "20260911000401",
+      "20260617000470",
+      "20260812000330"
     ]
   },
   "annual_score_policy": "preserved_2025_baseline",
   "quarterly_score_policy": "hold_until_comparable_TTM_validation",
-  "state_sha256": "3d5402514fa0a6b705c5725251fb180e613dacdfcb1734796df14132e19b34ba"
+  "state_sha256": "ae1b103771e5b7a3ea30d89642224c680decf820950a2b874281b41b8a4bb4d5"
 }
