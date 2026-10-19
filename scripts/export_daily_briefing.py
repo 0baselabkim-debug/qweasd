@@ -1,6 +1,7 @@
 """Export verified dashboard flow metrics without fabricating missing observations."""
-import argparse,json,math
+import argparse,json,math,sys
 from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import pandas as pd
 from screener.store import load
 from screener.indicators import universe,stock_activity,sector_indicators
