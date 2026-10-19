@@ -117,27 +117,11 @@ jobs:
           MODE: ${{ inputs.mode || 'collect' }}
         run: |
           if [ ! -f daily-candidate/manifest.json ]; then exit 0; fi
-          python - <<'PY'
-          import datetime as dt,json,os,shutil
-          from pathlib import Path
-          new=json.loads(Path('daily-candidate/manifest.json').read_text());old=json.loads(Path('snapshot/manifest.json').read_text())
-          if new['asof']<old['asof']:raise SystemExit('Refuse date rollback')
-          # Once a date has a validated publication, later schedules retain it without a second completion.
-          ledger=Path('snapshot/publication-ledger.json')
-          entries=json.loads(ledger.read_text()) if ledger.exists() else {}
-          day=new['asof']
-          if day in entries:
-              print('Trading date already published; existing snapshot retained')
-              raise SystemExit(0)
-          for name in ['dashboard.duckdb','manifest.json']:shutil.copy2(Path('daily-candidate')/name,Path('snapshot')/name)
-          shutil.copy2('daily-candidate/validation.json','snapshot/daily-validation.json')
-          if Path('daily-results/calendar-check.json').exists():shutil.copy2('daily-results/calendar-check.json','snapshot/calendar-check.json')
-          entries[day]={'run_id':os.environ['GITHUB_RUN_ID'],'mode':os.environ['MODE'],'published_at_utc':dt.datetime.now(dt.timezone.utc).isoformat(),'sha256':new['sha256'],'validation':new['daily_validation']}
-          ledger.write_text(json.dumps(entries,ensure_ascii=False,indent=2)+'\n')
-          PY
+          python -m scripts.stage_daily_publication
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add snapshot/dashboard.duckdb snapshot/manifest.json snapshot/daily-validation.json snapshot/publication-ledger.json
+          git add snapshot/dashboard.duckdb snapshot/manifest.json snapshot/daily-validation.json snapshot/publication-ledger.json snapshot/daily_briefing.json
+          git add snapshot/publication-history
           if [ -f snapshot/calendar-check.json ]; then git add snapshot/calendar-check.json; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Publish validated KRX snapshot $DAY"
@@ -149,6 +133,8 @@ jobs:
           name: daily-validation-${{ steps.target.outputs.day }}
           path: |
             daily-candidate/validation.json
+            daily-candidate/daily_briefing.json
+            briefing-failure.json
             daily-results/bundle.json.gz
             daily-results/calendar-check.json
             daily-results/successes.jsonl
