@@ -35,6 +35,33 @@ def export(asof,output):
             entry['top_stocks'].append({'symbol':s.symbol,'name':s['name'],**fields(s,['net_1d','net_5d','net_20d','change_5d','intensity_5d','positive_days_20d'])})
         result['top_sectors'].append(entry)
     if not result['top_sectors']:raise ValueError('No eligible sectors; refusing empty success')
+    # Independently reconcile exported totals against raw date-keyed flow observations.
+    raw=data['flows']
+    cal=data['calendar']
+    checks=0
+    for entry in result['top_sectors']:
+        market=entry['market']
+        codes=stocks.loc[(stocks.market==market)&(stocks.sector==entry['sector']),'symbol'].tolist()
+        dates=sorted(cal.loc[(cal.market==market)&(cal.trade_date<=pd.Timestamp(asof)),'trade_date'].unique())
+        for n in (1,5,20):
+            days=set(dates[-n:])
+            rows=raw[(raw.exchange=='KRX')&raw.symbol.isin(codes)&raw.trade_date.isin(days)]
+            complete=(len(days)==n and len(rows)==len(codes)*n and rows.groupby('symbol').size().eq(n).all())
+            expected=int(rows.net_amount.sum()) if complete else None
+            actual=entry[f'net_{n}d']
+            if expected!=actual:
+                raise ValueError(f"Sector raw-flow mismatch: {market}/{entry['sector']} {n}d: {expected} vs {actual}")
+            checks+=1
+        for stock in entry['top_stocks']:
+            for n in (1,5,20):
+                days=set(dates[-n:])
+                rows=raw[(raw.exchange=='KRX')&(raw.symbol==stock['symbol'])&raw.trade_date.isin(days)]
+                expected=int(rows.net_amount.sum()) if len(rows)==n else None
+                actual=stock[f'net_{n}d']
+                if expected!=actual:
+                    raise ValueError(f"Stock raw-flow mismatch: {stock['symbol']} {n}d: {expected} vs {actual}")
+                checks+=1
+    result['raw_flow_reconciliation']={'status':'passed','checks':checks,'windows':[1,5,20]}
     output.parent.mkdir(parents=True,exist_ok=True)
     output.write_text(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
     print('Exported',asof,len(result['top_sectors']),'sectors to',output)
