@@ -1,29 +1,28 @@
-name: Research price pilot (bounded, no publication)
+name: Preserve existing research artifact (zero market calls)
 on:
   workflow_dispatch:
 permissions:
-  contents: read
-concurrency:
-  group: kis-validation-auth
-  cancel-in-progress: false
-  queue: max
+  contents: write
+  actions: read
 jobs:
-  probe:
+  preserve:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Collect ten research samples only
-        timeout-minutes: 9
-        env:
-          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
-          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python research/pilot_collect.py
-      - uses: actions/upload-artifact@v4
-        if: always()
+      - uses: actions/download-artifact@v4
         with:
           name: research-price-pilot
-          path: research-output/
-          retention-days: 30
+          path: research-results/pilot
+          run-id: 39381006174
+          github-token: ${{ github.token }}
+      - name: Preserve existing public market responses on research branch only
+        env:
+          RESEARCH_BRANCH: research/flow-stage-pilot-20261020-063251
+        run: |
+          test "$GITHUB_REF_NAME" = "$RESEARCH_BRANCH"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- research-results/pilot
+          git commit -m 'Preserve existing bounded research responses; no new API calls'
+          git push origin "HEAD:refs/heads/$RESEARCH_BRANCH"
