@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "trade_date": "20261020",
+  "exchange": "KRX",
+  "finality": "UNVERIFIED",
+  "master_sources": [
+    {
+      "name": "industry index names",
+      "sha256": "3015c4325fdc4eb3369247f22eb823fa458da3443769fea618854ec0035184aa",
+      "observed_at": "2026-10-20T10:00:52.306455+00:00"
+    },
+    {
+      "market": "KOSPI",
+      "url": "https://new.real.download.dws.co.kr/common/master/kospi_code.mst.zip",
+      "sha256": "2795c050f5fed2268798343f6c285299df5cf1e0944d947d65667cd17501e121",
+      "observed_at": "2026-10-20T10:00:52.642225+00:00"
+    },
+    {
+      "market": "KOSDAQ",
+      "url": "https://new.real.download.dws.co.kr/common/master/kosdaq_code.mst.zip",
+      "sha256": "10d75eaaf94798d8835e91e4b41abfafc737babd14a5357cd16f6ef6f51a3d92",
+      "observed_at": "2026-10-20T10:00:53.152154+00:00"
+    }
+  ],
+  "source_run": "39404777750",
+  "universe": [
+    {
+      "symbol": "001420",
+      "name": "태원물산",
+      "market": "KOSPI",
+      "listing_date": "19750624",
+      "halt": "N",
+      "sector": "운송장비·부품",
+      "industry_code": "0015",
+      "shares_thousands": "000000000007600",
+      "spac": false
+    }
+  ],
+  "benchmarks": {
+    "KOSPI": {
+      "output2": [
+        {
+          "stck_bsop_date": "20261020",
+          "bstp_nmix_prpr": "5552.74",
+          "bstp_nmix_oprc": "5733.57",
+          "bstp_nmix_hgpr": "5733.57",
+          "bstp_nmix_lwpr": "5493.24",
+          "acml_vol": "259746",
+          "acml_tr_pbmn": "15999691",
+          "mod_yn": "N"
+        }
+      ]
+    },
+    "KOSDAQ": {
+      "output2": [
+        {
+          "stck_bsop_date": "20261020",
+          "bstp_nmix_prpr": "781.97",
+          "bstp_nmix_oprc": "805.37",
+          "bstp_nmix_hgpr": "807.22",
+          "bstp_nmix_lwpr": "773.32",
+          "acml_vol": "458577",
+          "acml_tr_pbmn": "4995195",
+          "mod_yn": "N"
+        }
+      ]
+    }
+  },
+  "records": {},
+  "excluded": {},
+  "failures": {},
+  "status": "partial",
+  "evidence_origin": {
+    "checkpoint": "c9e24ddc6a597233fc46da5c1e2f4eeeaa13da6b",
+    "bundle_sha256": "789e48a73a34f925c5442c92035dbf39715a34c92f3d351b1f4b30c20860fcf4"
+  }
+}

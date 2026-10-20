@@ -1,0 +1,143 @@
+{
+  "compared_to": "061c7fcd2be7aefd147368b3694111372b2c1909",
+  "unchanged_paths": [
+    "snapshot",
+    "app.py",
+    "screener/daily.py",
+    "screener/daily_quote.py",
+    "screener/collection_schedule.py",
+    "scripts/kis_public_client.py",
+    ".github/workflows/daily-dashboard.yml"
+  ],
+  "public_verification": {
+    "checked_main_commit": "061c7fcd2be7aefd147368b3694111372b2c1909",
+    "asof": "2026-10-20",
+    "snapshot_sha256": "d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+    "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+    "publication_status": "ready_for_briefing",
+    "validation_status": "passed",
+    "provider_finality": "UNVERIFIED",
+    "published_at": "2026-10-20T12:51:42.243665+00:00",
+    "source_run": "39425171247",
+    "flow_checkpoint_rows_reconciled": 2429,
+    "independent_full_dataset_reconciliation": {
+      "status": "passed",
+      "sectors_checked": 50,
+      "stocks_checked": 2429,
+      "metric_checks": 20232
+    },
+    "taewon_database_values": {
+      "close": 2995.0,
+      "adjusted_close": 2995.0,
+      "volume": 33786,
+      "turnover": 102119270.0,
+      "market_cap": 22800000000.0,
+      "foreign_net_krw": 7000000
+    },
+    "public_files": {
+      "snapshot/manifest.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/manifest.json",
+        "http": 200,
+        "file_sha256": "31d170f640d2f0e6d2b8eaae5452cec7a83dc52887a8c3876d083785f4a5cadd",
+        "asof": "2026-10-20",
+        "dataset_id": null,
+        "validation_status": null,
+        "publication_status": null
+      },
+      "snapshot/publication-ledger.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/publication-ledger.json",
+        "http": 200,
+        "file_sha256": "d9900953a490ed1612eda46640c27b7da70f7f802777618db437cc6776a9ee4c",
+        "asof": null,
+        "dataset_id": null,
+        "validation_status": null,
+        "publication_status": null
+      },
+      "snapshot/daily-validation.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/daily-validation.json",
+        "http": 200,
+        "file_sha256": "5eefa6c22143e9e9370d2d74c11854a4bf05bf22c02b8e1eec0fcd13e4f290a4",
+        "asof": "2026-10-20",
+        "dataset_id": null,
+        "validation_status": null,
+        "publication_status": null
+      },
+      "snapshot/briefing/index.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/index.json",
+        "http": 200,
+        "file_sha256": "7ff32e3927856154d16429b28b7df9ac232a1e74cf0a3f2b4391635a7d0af526",
+        "asof": "2026-10-20",
+        "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      },
+      "snapshot/daily_briefing.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/daily_briefing.json",
+        "http": 200,
+        "file_sha256": "a6040ac63098c57e3147c40a94256a184a367a31245f4dfbc8ef8cd1910d3208",
+        "asof": "2026-10-20",
+        "dataset_id": null,
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      },
+      "snapshot/briefing/sectors/kosdaq-3e6ffb5436df98f1284156f8.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/sectors/kosdaq-3e6ffb5436df98f1284156f8.json",
+        "http": 200,
+        "file_sha256": "d47b7dbd09923b1757d29a3bff3f54f3d46db1e8a43ad1715f88d64b5ec9d133",
+        "asof": "2026-10-20",
+        "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      },
+      "snapshot/briefing/sectors/kospi-4568f2f682af64bee1ade18d.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/sectors/kospi-4568f2f682af64bee1ade18d.json",
+        "http": 200,
+        "file_sha256": "f48658b3fc0aa4e63966c5aedca027e6d6305d8f27025c91f3def7cacd2086eb",
+        "asof": "2026-10-20",
+        "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      },
+      "snapshot/briefing/sectors/kospi-59ea626efa4b283132c311fc.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/sectors/kospi-59ea626efa4b283132c311fc.json",
+        "http": 200,
+        "file_sha256": "76e8d5b478303980aa67d903087da7b280e26671ff2bebff9d9c06635605f3bf",
+        "asof": "2026-10-20",
+        "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      }
+    },
+    "ledger_20261020": {
+      "run_id": "39425171247",
+      "mode": "collect",
+      "published_at_utc": "2026-10-20T12:51:42.243665+00:00",
+      "sha256": "d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+      "validation": {
+        "trade_date": "2026-10-20",
+        "records": 2429,
+        "excluded": 112,
+        "adjusted_updates": 94607,
+        "source_run": "39404777750",
+        "planned_start_at": "2026-10-20T18:30:00+09:00",
+        "collection_started_at": "2026-10-20T10:00:49.808523+00:00",
+        "collection_completed_at": "2026-10-20T12:49:23.294280+00:00",
+        "input_mode": "live_daily_collection",
+        "adjusted_close_conflict_symbols": 0,
+        "complete_stock_scores": 1159,
+        "complete_sector_scores": 0,
+        "full_20d_symbols": 2420,
+        "preservation_verified": true,
+        "phase_seconds": {
+          "bundle_validation": 0.7031833810000023,
+          "database_copy": 0.008296897999997555,
+          "database_update": 27.106584821000013,
+          "preservation_comparison": 0.09242758099999548,
+          "aggregate_validation": 8.396037696999997
+        },
+        "candidate_total_seconds": 36.30675908500001,
+        "sha256": "d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c"
+      }
+    }
+  }
+}

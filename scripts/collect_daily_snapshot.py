@@ -6,6 +6,7 @@ from html.parser import HTMLParser
 from kis_public_client import KIS
 from daily_checkpoint import Journal
 from daily_metrics import summarize
+from daily_retry import collect_pending
 from daily_diagnostics import preserve_failure,redact
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from screener.daily import validate_bundle
@@ -135,6 +136,7 @@ def collect(day,out):
     journal=Journal(out/'successes.jsonl',day)
     restored=journal.restore(result)
     result.setdefault('attempts',[]).append({'started_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'restored':restored,'cached_successes':len(result['records'])})
+    result.pop('retry_summary',None)  # The previous run's metrics stay in attempts, not this run.
     phases={};checkpoint_stats={'writes':0,'seconds':0.,'bytes':0}
     deadline=started+140*60
     if result.get('status') in ['complete','closed']:print('Already completed; no API calls');return
@@ -149,7 +151,7 @@ def collect(day,out):
     def save():
         t=time.monotonic()
         result.update(updated_at=utcnow(),elapsed_seconds=round(time.monotonic()-started,3),metrics=api.metrics,phase_seconds=phases,checkpoint_cost=checkpoint_stats,call_summary=summarize(api.metrics,result['records']))
-        result['attempts'][-1].update(physical_requests=len(api.metrics),retries=sum(m.get('attempt',1)>1 for m in api.metrics),endpoints=dict(Counter(m.get('endpoint','legacy') for m in api.metrics)),elapsed_seconds=round(time.monotonic()-started,3),successful=len(result['records']),failed=len(result['failures']))
+        result['attempts'][-1].update(physical_requests=len(api.metrics),retries=sum(m.get('attempt',1)>1 for m in api.metrics),endpoints=dict(Counter(m.get('endpoint','legacy') for m in api.metrics)),elapsed_seconds=round(time.monotonic()-started,3),successful=len(result['records']),failed=len(result['failures']),retry_summary=result.get('retry_summary',{}))
         raw=json.dumps(result,ensure_ascii=False,separators=(',',':'))
         if any(s in raw for s in [api.key,api.secret,api.token]):raise ValueError('Credential in result')
         temp=path.with_suffix('.tmp');temp.write_bytes(gzip.compress(raw.encode(),compresslevel=1,mtime=0));temp.replace(path)
@@ -197,19 +199,16 @@ def collect(day,out):
     save()
     phases['preparation']=time.monotonic()-preparation_start
     collection_start=time.monotonic()
-    for attempt in range(2):
-        pending=[r for r in result['universe'] if r['symbol'] not in result['records'] and r['symbol'] not in result['excluded']]
-        if not pending:break
-        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-            for i,(code,record,excluded,error) in enumerate(pool.map(lambda row:fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline,out/'diagnostics'),pending),1):
-                if error:result['failures'][code]=error
-                else:
-                    result['failures'].pop(code,None)
-                    if record or excluded:journal.append(code,record,excluded)
-                    if record:result['records'][code]=record
-                    if excluded:result['excluded'][code]=excluded
-                if i%100==0:save();print(json.dumps({'successful':len(result['records']),'excluded':len(result['excluded']),'failed':len(result['failures'])}),flush=True)
-        save()
+    def accept(code,record,excluded,error):
+        if error:result['failures'][code]=error
+        else:
+            result['failures'].pop(code,None)
+            if record or excluded:journal.append(code,record,excluded)
+            if record:result['records'][code]=record
+            if excluded:result['excluded'][code]=excluded
+    collect_pending(result,
+        lambda row:fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline,out/'diagnostics'),
+        accept,save,deadline,cutoff.timestamp())
     phases['stocks']=time.monotonic()-collection_start
     result['status']='complete' if not result['failures'] and len(result['records'])+len(result['excluded'])==len(result['universe']) else 'partial'
     result['completed_at']=utcnow();save()
