@@ -55,7 +55,7 @@ def build(snapshot=Path('snapshot'),root=Path('liquidity'),out=Path('recovery-pu
     for name,value in [('manifest.json',manifest),('daily-validation.json',validation),('publication-ledger.json',ledger),('recovery-validation.json',audit)]:
         (out/name).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
     from scripts.export_daily_briefing import export
-    export(day,out/'daily_briefing.json',out)
+    export(day,out/'daily_briefing.json',out,dataset_output=out/'briefing')
     return audit
 
 def install(snapshot,out,audit):
@@ -66,6 +66,9 @@ def install(snapshot,out,audit):
         if not (archive/name).exists():shutil.copy2(snapshot/name,archive/name)
     # All files are staged in ONE git commit; app additionally rejects a mixed generation.
     for name in ['dashboard.duckdb','manifest.json','daily-validation.json','publication-ledger.json','recovery-validation.json','daily_briefing.json']:shutil.copy2(out/name,snapshot/name)
+
+    from scripts.export_market_briefing import install_dataset
+    install_dataset(out/'briefing',snapshot/'briefing')
 
 if __name__=='__main__':
     snapshot=Path('snapshot');out=Path('recovery-publication');audit=build(snapshot,out=out)

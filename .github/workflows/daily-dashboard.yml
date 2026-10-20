@@ -121,7 +121,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add snapshot/dashboard.duckdb snapshot/manifest.json snapshot/daily-validation.json snapshot/publication-ledger.json snapshot/daily_briefing.json
-          git add snapshot/publication-history
+          git add snapshot/publication-history snapshot/briefing
           if [ -f snapshot/calendar-check.json ]; then git add snapshot/calendar-check.json; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Publish validated KRX snapshot $DAY"
@@ -134,6 +134,7 @@ jobs:
           path: |
             daily-candidate/validation.json
             daily-candidate/daily_briefing.json
+            daily-candidate/briefing/index.json
             briefing-failure.json
             daily-results/bundle.json.gz
             daily-results/calendar-check.json
