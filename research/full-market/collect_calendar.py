@@ -38,7 +38,10 @@ def reference_probe(budget,out):
 def main():
  assert os.environ.get('GITHUB_REF_NAME')==BRANCH and git('branch','--show-current')==BRANCH
  out=ROOT/'collection';dest=out/'calendar.json'
- if dest.exists():print('Calendar evidence exists; no requests');return
+ if dest.exists() and read(dest,{})['status']=='passed':print('Validated calendar exists; no requests');return
+ previous=read(dest,{})
+ if dest.exists():
+  raw=dest.read_bytes();archive=out/'calendar-audit'/(hashlib.sha256(raw).hexdigest()+'.json');archive.parent.mkdir(parents=True,exist_ok=True);archive.write_bytes(raw)
  ledger=read(out/'ledger.json',{'batches':[],'limit':GLOBAL_LIMIT})
  assert not any(b['status']=='reserved' for b in ledger['batches'])
  remaining=GLOBAL_LIMIT-sum(b['charged'] for b in ledger['batches']);assert remaining>1
@@ -48,28 +51,40 @@ def main():
  budget=Budget(maximum=entry['charged'],seconds=600,interval=1.05);client=Client(budget);by_market={};observations=[];error=None
  try:
   client.auth()
-  # Do not loop chk-holiday: official documentation asks preferably once daily.
-  # Compare the observed sessions of both official equity market indices instead.
-  for market,code in [('KOSPI','0001'),('KOSDAQ','1001')]:
-   params={'FID_COND_MRKT_DIV_CODE':'U','FID_INPUT_ISCD':code,'FID_INPUT_DATE_1':'20260601','FID_INPUT_DATE_2':'20261019','FID_PERIOD_DIV_CODE':'D'}
-   x=client.request('/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice',params,'FHKUP03500100')
-   wrapped={'observed_at':utcnow(),'params':params,'market':market,'response':x};raw=json.dumps(wrapped,ensure_ascii=False).encode()
-   if any(v and v.encode() in raw for v in [client.key,client.secret,client.token]):raise RuntimeError('credential_echo_rejected')
-   data=gzip.compress(raw,mtime=0);sha=hashlib.sha256(data).hexdigest();p=out/'calendar-responses'/f'{market}-{sha}.json.gz';p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
-   observations.append({'market':market,'file':str(p.relative_to(out)),'sha256':sha})
-   received=[r for r in x.get('output2',[]) if r.get('stck_bsop_date')]
-   dates=[dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date().isoformat() for r in received]
-   if len(dates)!=len(set(dates)) or not dates or min(dates)!='2026-06-01' or max(dates)!='2026-10-19':raise ValueError('index_calendar_coverage_invalid')
-   if any(float(r['bstp_nmix_prpr'])<=0 for r in received):raise ValueError('invalid_index_close')
-   by_market[market]=sorted(dates)
-  if by_market['KOSPI']!=by_market['KOSDAQ']:raise ValueError('market_session_mismatch')
+  # Reuse earlier successful index pages, then request only missing earlier ranges.
   expected=[r['trade_date'] for r in csv.DictReader((ROOT/'inputs/calendar.csv').open()) if '2026-06-01'<=r['trade_date']<='2026-10-19']
-  if by_market['KOSPI']!=expected:raise ValueError('preserved_calendar_mismatch')
+  for market,code in [('KOSPI','0001'),('KOSDAQ','1001')]:
+   dates=set()
+   for observation in previous.get('observations',[]):
+    if observation['market']!=market:continue
+    p=out/observation['file'];assert hashlib.sha256(p.read_bytes()).hexdigest()==observation['sha256']
+    saved=json.loads(gzip.decompress(p.read_bytes()));observations.append(observation)
+    dates.update(dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date().isoformat() for r in saved['response']['output2'] if r.get('stck_bsop_date'))
+   for page in range(4):
+    covered={d for d in dates if '2026-06-01'<=d<='2026-10-19'}
+    if covered==set(expected):break
+    end=(dt.date.fromisoformat(min(dates))-dt.timedelta(days=1)).strftime('%Y%m%d') if dates else '20261019'
+    params={'FID_COND_MRKT_DIV_CODE':'U','FID_INPUT_ISCD':code,'FID_INPUT_DATE_1':'20260601','FID_INPUT_DATE_2':end,'FID_PERIOD_DIV_CODE':'D'}
+    x=client.request('/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice',params,'FHKUP03500100')
+    wrapped={'observed_at':utcnow(),'params':params,'market':market,'response':x};raw=json.dumps(wrapped,ensure_ascii=False).encode()
+    if any(v and v.encode() in raw for v in [client.key,client.secret,client.token]):raise RuntimeError('credential_echo_rejected')
+    data=gzip.compress(raw,mtime=0);sha=hashlib.sha256(data).hexdigest();p=out/'calendar-responses'/f'{market}-{sha}.json.gz';p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
+    observations.append({'market':market,'file':str(p.relative_to(out)),'sha256':sha})
+    received=[r for r in x.get('output2',[]) if r.get('stck_bsop_date')]
+    new=[dt.datetime.strptime(r['stck_bsop_date'],'%Y%m%d').date().isoformat() for r in received]
+    if not new or len(new)!=len(set(new)) or any(d.replace('-','')>end for d in new) or not(set(new)-dates):raise ValueError('index_calendar_no_progress_or_scope')
+    if any(float(r['bstp_nmix_prpr'])<=0 for r in received):raise ValueError('invalid_index_close')
+    dates.update(new)
+   by_market[market]=sorted(d for d in dates if '2026-06-01'<=d<='2026-10-19')
+   if by_market[market]!=expected:raise ValueError('preserved_calendar_mismatch')
+  if by_market['KOSPI']!=by_market['KOSDAQ']:raise ValueError('market_session_mismatch')
  except Exception as e:error=type(e).__name__
  finally:
-  try:reference_probe(budget,out)
+  try:
+   if not (out/'official-reference-probe.json').exists():reference_probe(budget,out)
   except Exception as e:write(out/'reference-probe-stop.json',{'error':type(e).__name__})
-  try:action_probe(budget,out)
+  try:
+   if not (out/'sangji-official-probe.json').exists():action_probe(budget,out)
   except Exception as e:write(out/'action-probe-stop.json',{'error':type(e).__name__})
   sessions=by_market.get('KOSPI',[]) if not error else []
   write(dest,{'source':'KIS official FHKUP03500100 / KOSPI 0001 and KOSDAQ 1001 daily index trading sessions','from':'2026-06-01','through':'2026-10-19','observations':observations,'sessions':sessions,'market_sessions':by_market,'status':'passed' if not error and len(by_market)==2 else 'unverified','error':error,'holiday_API_not_called':'Official documentation recommends preferably once daily; existing regular collector uses it.'})
