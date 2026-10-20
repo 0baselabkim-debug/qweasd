@@ -64,3 +64,5 @@ python -m pytest -q tests/test_dashboard.py tests/test_dashboard_deployment.py t
 
 
 현재 공개 앱은 매크로 지표와 수급 필터만 제공합니다. 매매 가이드·개인 매매일지는 제거했습니다. [공개 데이터 운영 및 원본 보관](docs/public-data-operations.md)을 참고하세요.
+
+현재 운영 스냅샷은 publication-ledger 기반이다. 위 초기 구축용 `publish_snapshot.py` 명령은 운영 저장소에 덮어쓸 수 없다. 정규 게시/가격 복구 및 v2·v3 브리핑 동시 게시 절차는 [운영 문서](docs/daily-publication.md), [전체 시장 JSON 명세](docs/daily-briefing.md)를 따른다.

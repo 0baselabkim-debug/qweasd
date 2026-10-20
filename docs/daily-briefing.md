@@ -35,3 +35,38 @@ python scripts/export_daily_briefing.py --asof 2026-10-16 --output /tmp/briefing
 ```
 
 고정 날짜 회귀는 시험 브랜치의 실제 JSON과 대조한다. 공개 스냅샷에 테스트 자료를 섞지 않는다. 실패 사유는 Actions 실패 로그와 `briefing-failure.json` artifact에서 확인한다.
+
+## v3 전체 시장 데이터셋 (v2는 그대로 유지)
+
+인덱스: https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/index.json
+
+- `daily_briefing.json`의 schema_version=2 및 상위 3업종·각 5종목 의미는 바꾸지 않는다.
+- 새 `briefing/index.json` 및 `briefing/sectors/{sector_id}.json`은 schema_version=3이다. 지표별 수치를 제공하며 종합 점수나 투자 순위를 부여하지 않는다. 인덱스는 시장·업종명, 종목 파일은 종목코드 순이다.
+- sector_id는 시장 소문자와 SHA256(시장 + NUL + 공식 업종명)의 앞 24자리 조합이다. ASCII 경로이며 시장이 다른 동명 업종도 별개다. 중복 ID/대상 범위 오류는 독립 검증에서 차단한다.
+- 모든 대시보드 포함 종목을 담는다. 음수와 일부 기간 결측 종목을 제거하지 않는다. 미분류는 별도 그룹에 `official_sector=false`로 남기며 공식 업종 선택에서 제외한다.
+- `members`는 대시보드에 포함된 업종 구성 종목 수, `registered_members`는 instruments에 등록되고 기준일 해당 업종으로 매핑된 수다. 전체 거래소 상장 종목 수라고 해석하지 않는다.
+- `coverage.population_total`은 DB instruments와 당일 공식 exclusions의 종목 합집합이다. included/excluded/not_observed는 서로 배타적이며 합계가 population_total이다. `omitted`에 코드·상태·원본 사유를 보존한다. 제외 목록에만 있고 instruments에 없는 종목의 시장·업종은 추측하지 않고 null로 남긴다.
+- 결측 종목은 included에 남고 각 `metric_validity` 및 `quality`에 표시된다. actual 0은 유효 수치다. 섹터 금액은 날짜별 모든 구성 종목의 관측이 있어야 합산하며 부분 합계를 완전한 합계로 표시하지 않는다.
+- 20일 지표는 net_20d, positive_days_20d, observed_days_20d, 업종 evaluable_20d/positive_20d/breadth_20d를 제공한다. 원본 관측과 대조할 수 있는 기존 계산만 노출한다.
+
+### GPT Dot 조회 절차
+
+1. 인덱스를 GET한다. `schema_version=3`, `publication_status=ready_for_briefing`, `validation_status=passed`, `raw_flow_reconciliation.status=passed`를 확인한다. 한국 기준 브리핑 대상 거래일과 `asof`가 다르면 당일 자료로 사용하지 않는다.
+2. 인덱스의 `source_snapshot_sha256`, `dataset_id`, 기준일을 고정한다. 가능하면 최신 `snapshot/manifest.json`의 asof/sha256과도 비교한다. 불일치하면 캐시 갱신 후 재조회하고 계속 다르면 브리핑을 보류한다.
+3. 인덱스 `sectors`의 모든 공식 업종 지표를 살펴보고 분석 관점에 맞는 3개를 선택한다. 순매도 축소와 순매수 전환을 구분하고, 결측을 0이나 최하위로 단정하지 않는다. `official_sector=false` 그룹은 공식 업종 선정에서 제외한다.
+4. 선택한 항목의 `path`를 인덱스 URL의 디렉터리 기준으로 연결한다. 예: `.../snapshot/briefing/` + `sectors/kospi-<hash>.json`.
+5. 응답의 **원시 UTF-8 바이트** SHA256이 인덱스 항목의 sha256과 일치하고, byte 길이도 bytes와 같아야 한다. 파일의 dataset_id/asof/source_snapshot_sha256이 고정한 인덱스와 같아야 한다. stock_count, 배열 길이, 인덱스 members도 일치해야 한다.
+6. 해당 파일의 전체 stocks를 보고 5개 후보를 선정한다. 미리 상위 5개로 잘린 파일이 아니다. net/change는 원(KRW), intensity는 ratio(백분율 표시는 ×100), breadth는 이미 %이다. 종목별 결측 표시와 20일 관측 일수를 함께 확인한다.
+7. 도중에 파일이 없거나 해시·세대가 다르면 같은 인덱스에서 재시도한다. 새 인덱스로 넘어가려면 선택한 모든 파일을 다시 읽어야 한다. 서로 다른 세대 파일을 섞지 않는다. 계속 실패하면 미완료로 보고한다.
+
+`index_content_sha256`은 자기 필드를 뺀 인덱스를 `json.dumps(..., ensure_ascii=False, sort_keys=True, indent=2, allow_nan=False) + '\n'`로 직렬화한 UTF-8 바이트의 SHA256이다. 자기 참조를 피한 **내용 해시**이며 원시 index.json 파일 전체 해시와는 다르다. 하위 파일의 sha256은 파일 전체 바이트 해시다. 생성 코드의 `scripts/briefing_schema.py`가 이 계약을 정의한다.
+
+같은 source SHA와 schema의 dataset_id는 동일하다. 같은 자료 재실행은 최초 generated_at/published_at과 파일 바이트를 보존한다. 시장 자료나 계산 계약이 바뀌면 새 스냅샷 또는 새 스키마로 게시해야 한다. 현재 업종 구성을 과거에 적용한 수급이라는 한계와 공급자 finality UNVERIFIED는 그대로다.
+
+### 운영·복원
+
+정규 후보 및 가격 복구 후보에서 기존 프레임을 한 번 계산해 v2/v3에 재사용한다. v3는 원본 SQL을 한 번 읽고 모든 종목·업종 지표를 독립 대조한다. 정상 후보만 한 Git 커밋으로 DB·manifest·검증·v2·v3를 게시한다. 공유 concurrency와 수집 API 호출/시간은 변경하지 않는다. 실패 사유는 Actions 로그와 briefing-failure.json을 확인한다. 수동 초기 게시 워크플로는 별도 수집 없이 두 JSON 체계를 검증하고 공개 파일을 확인한다.
+
+원자적 Git 게시 이후에도 Raw CDN은 파일별 캐시가 달라질 수 있으므로 해시·세대 검사는 필수다. 이전 세대는 Git 이력에서 조회할 수 있다. 예전 시각으로 브리핑하려면 해당 커밋의 DB·manifest·v2·v3 전체를 함께 사용한다.
+
+v3 소비를 중단하고 이전 방식으로 돌아갈 때는 GPT Dot의 읽기 주소를 기존 v2 주소로 돌리면 된다. v2와 UI는 계속 유지된다. 코드 차원의 되돌리기가 필요하면 v3 구현 커밋만 revert하고 이후 데이터/공시 커밋을 보존한다. DB를 오래된 파일로 덮어쓰지 않는다. 남은 v3 파일은 더 이상 갱신되지 않는다면 사용 중단해야 하며 asof/hash 검사로 이를 감지한다.

@@ -15,13 +15,15 @@ def stage(candidate=Path('daily-candidate'),snapshot=Path('snapshot'),run_id=Non
     (candidate/'publication-ledger.json').write_text(json.dumps(ledger,ensure_ascii=False,indent=2)+'\n')
     shutil.copy2(candidate/'validation.json',candidate/'daily-validation.json')
     # Any export error occurs before touching the last good publication.
-    export(day,candidate/'daily_briefing.json',candidate)
+    export(day,candidate/'daily_briefing.json',candidate,dataset_output=candidate/'briefing')
     archive=snapshot/'publication-history'/old['sha256']
     archive.mkdir(parents=True,exist_ok=True)
     for name in ['dashboard.duckdb','manifest.json','daily-validation.json','publication-ledger.json','daily_briefing.json']:
         if (snapshot/name).exists() and not (archive/name).exists():shutil.copy2(snapshot/name,archive/name)
     for name in ['dashboard.duckdb','manifest.json','daily-validation.json','publication-ledger.json','daily_briefing.json']:
         shutil.copy2(candidate/name,snapshot/name)
+    from scripts.export_market_briefing import install_dataset
+    install_dataset(candidate/'briefing',snapshot/'briefing')
     return True
 
 if __name__=='__main__':

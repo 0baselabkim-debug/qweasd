@@ -11,6 +11,8 @@ ROOT=Path(__file__).resolve().parents[1]
 def read(p):return json.loads(gzip.decompress(p.read_bytes()) if p.suffix=='.gz' else p.read_text())
 def write(p,v):p.write_text(json.dumps(v,ensure_ascii=False,indent=2,default=str)+'\n')
 ap=argparse.ArgumentParser();ap.add_argument('--candidate',type=Path,default=ROOT/'data/dashboard.duckdb');ap.add_argument('--raw',type=Path,required=True);args=ap.parse_args()
+if (ROOT/'snapshot/publication-ledger.json').exists():
+ raise SystemExit('Legacy bootstrap publisher cannot overwrite a ledger-backed publication. Use stage_daily_publication or publish_liquidity for coherent DB and briefing publication.')
 audit=read(ROOT/'data/enrichment-audit.json');checks=read(ROOT/'reports/enrichment/independent_checks.json')
 assert audit['original_2430_flow_rows_unchanged'] and not audit['financial_errors'] and not audit['financial_changes']
 data=load(args.candidate);stocks,sectors,meta=evaluate(data,audit['asof'])
