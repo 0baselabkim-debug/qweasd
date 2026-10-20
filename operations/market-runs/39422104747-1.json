@@ -1,0 +1,94 @@
+{
+  "run_id": "39422104747",
+  "attempt": "1",
+  "mode": "collect",
+  "trade_date": "2026-10-20",
+  "planned_start_at": "2026-10-20T21:00:00+09:00",
+  "actual_job_started_at": "2026-10-20T12:25:18Z",
+  "collection_started_at": "2026-10-20T10:00:49.808523+00:00",
+  "collection_completed_at": "2026-10-20T12:25:56.063572+00:00",
+  "finished_at": "2026-10-20T12:26:01.128748+00:00",
+  "job_status": "failure",
+  "success_symbols": 2428,
+  "excluded_symbols": 112,
+  "failed_symbols": 1,
+  "failures": {
+    "001420": "ValueError: Dated chart/flow mismatch: stck_clpr"
+  },
+  "collection_status": "partial",
+  "published_at": null,
+  "call_summary": {
+    "physical_requests": 5,
+    "authentication": 1,
+    "retries": 0,
+    "rate_limit_responses": 0,
+    "endpoint_counts": {
+      "/oauth2/tokenP": 1,
+      "/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily": 2,
+      "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice": 2
+    },
+    "per_symbol_requests": {
+      "001420": 4
+    },
+    "successful_with_two_physical_requests": 0,
+    "successful_without_request_this_attempt": 2428,
+    "more_than_two_request_symbols": {
+      "001420": 4
+    },
+    "quote_fallback_reasons": {
+      "industry_quote_required": 230
+    },
+    "response_seconds": 4.4992
+  },
+  "collection_attempts": [
+    {
+      "started_at": "2026-10-20T10:00:49.808573+00:00",
+      "run_id": "39404777750",
+      "restored": 0,
+      "cached_successes": 0,
+      "physical_requests": 5315,
+      "retries": 0,
+      "endpoints": {
+        "/oauth2/tokenP": 1,
+        "/uapi/domestic-stock/v1/quotations/chk-holiday": 1,
+        "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice": 2,
+        "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice": 2593,
+        "/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily": 2483,
+        "/uapi/domestic-stock/v1/quotations/inquire-price": 235
+      },
+      "elapsed_seconds": 5634.651,
+      "successful": 2428,
+      "failed": 1
+    },
+    {
+      "started_at": "2026-10-20T12:25:50.349931+00:00",
+      "run_id": "39422104747",
+      "restored": 0,
+      "cached_successes": 2428,
+      "physical_requests": 5,
+      "retries": 0,
+      "endpoints": {
+        "/oauth2/tokenP": 1,
+        "/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily": 2,
+        "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice": 2
+      },
+      "elapsed_seconds": 6.465,
+      "successful": 2428,
+      "failed": 1
+    }
+  ],
+  "phase_seconds": {
+    "preparation": 0.29706317000000126,
+    "stocks": 4.747758771000008
+  },
+  "checkpoint_cost": {
+    "writes": 3,
+    "seconds": 0.8836713990000007,
+    "bytes": 17498375
+  },
+  "two_call_successes": 2198,
+  "third_call_successes": 230,
+  "physical_request_count_current_attempt": 5,
+  "new_trading_day_published": false,
+  "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39422104747"
+}
