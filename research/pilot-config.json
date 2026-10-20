@@ -1,0 +1,132 @@
+{
+  "asof": "2026-10-19",
+  "start": "2026-06-01",
+  "end": "2026-10-19",
+  "minimum_sessions": 60,
+  "max_physical_requests": 40,
+  "max_elapsed_seconds": 600,
+  "interval_seconds": 1.05,
+  "selection": "5 per market; 5 improving/5 not; 4 large/3 mid/3 small; 6 short/2 long controls/2 quality holds; median cap within stratum",
+  "targets": [
+    {
+      "symbol": "000640",
+      "name": "동아쏘시오홀딩스",
+      "market": "KOSPI",
+      "market_cap": 630200000000.0,
+      "cap_bucket": "대형(상위1/3)",
+      "improving": true,
+      "history_state": "40일 미만·연결 실패",
+      "prices": 39,
+      "net_5d": 1403000000.0,
+      "change_5d": 1405000000.0
+    },
+    {
+      "symbol": "139480",
+      "name": "이마트",
+      "market": "KOSPI",
+      "market_cap": 2069700000000.0,
+      "cap_bucket": "대형(상위1/3)",
+      "improving": false,
+      "history_state": "40일 미만·연결 실패",
+      "prices": 39,
+      "net_5d": -1215000000.0,
+      "change_5d": -6354000000.0
+    },
+    {
+      "symbol": "083420",
+      "name": "그린케미칼",
+      "market": "KOSPI",
+      "market_cap": 114000000000.0,
+      "cap_bucket": "중형(중간1/3)",
+      "improving": true,
+      "history_state": "40일 미만·연결 실패",
+      "prices": 39,
+      "net_5d": 44000000.0,
+      "change_5d": 48000000.0
+    },
+    {
+      "symbol": "000760",
+      "name": "이화산업",
+      "market": "KOSPI",
+      "market_cap": 32100000000.0,
+      "cap_bucket": "소형(하위1/3)",
+      "improving": false,
+      "history_state": "장기 연결 대조군",
+      "prices": 322,
+      "net_5d": 0.0,
+      "change_5d": -10000000.0
+    },
+    {
+      "symbol": "000590",
+      "name": "CS홀딩스",
+      "market": "KOSPI",
+      "market_cap": 82300000000.0,
+      "cap_bucket": "중형(중간1/3)",
+      "improving": false,
+      "history_state": "40일 이상이나 품질 보류",
+      "prices": 41,
+      "net_5d": 0.0,
+      "change_5d": -43000000.0
+    },
+    {
+      "symbol": "368770",
+      "name": "파이버프로",
+      "market": "KOSDAQ",
+      "market_cap": 374900000000.0,
+      "cap_bucket": "대형(상위1/3)",
+      "improving": true,
+      "history_state": "장기 연결 대조군",
+      "prices": 322,
+      "net_5d": 234000000.0,
+      "change_5d": 4107000000.0
+    },
+    {
+      "symbol": "059120",
+      "name": "아진엑스텍",
+      "market": "KOSDAQ",
+      "market_cap": 119400000000.0,
+      "cap_bucket": "중형(중간1/3)",
+      "improving": false,
+      "history_state": "40일 미만·연결 실패",
+      "prices": 39,
+      "net_5d": 217000000.0,
+      "change_5d": -645000000.0
+    },
+    {
+      "symbol": "042940",
+      "name": "상지건설",
+      "market": "KOSDAQ",
+      "market_cap": 35200000000.0,
+      "cap_bucket": "소형(하위1/3)",
+      "improving": true,
+      "history_state": "40일 미만·연결 실패",
+      "prices": 39,
+      "net_5d": 98000000.0,
+      "change_5d": 114000000.0
+    },
+    {
+      "symbol": "064520",
+      "name": "테크엘",
+      "market": "KOSDAQ",
+      "market_cap": 31400000000.0,
+      "cap_bucket": "소형(하위1/3)",
+      "improving": false,
+      "history_state": "40일 미만·연결 실패",
+      "prices": 39,
+      "net_5d": 0.0,
+      "change_5d": 1000000.0
+    },
+    {
+      "symbol": "225570",
+      "name": "넥슨게임즈",
+      "market": "KOSDAQ",
+      "market_cap": 626300000000.0,
+      "cap_bucket": "대형(상위1/3)",
+      "improving": true,
+      "history_state": "40일 이상이나 품질 보류",
+      "prices": 41,
+      "net_5d": 975000000.0,
+      "change_5d": 465000000.0
+    }
+  ]
+}
