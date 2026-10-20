@@ -1,0 +1,3014 @@
+{
+  "run": "39461347630-1",
+  "started_at": "2026-10-20T16:53:33.872424+00:00",
+  "completed_at": "2026-10-20T16:59:08.991755+00:00",
+  "elapsed_seconds": 335.11934476600004,
+  "physical_requests": 300,
+  "metrics": [
+    {
+      "number": 1,
+      "endpoint": "/oauth2/tokenP",
+      "attempt": 1,
+      "kind": "authentication",
+      "started_at": "2026-10-20T16:53:33.872900+00:00",
+      "http": 200,
+      "code": "",
+      "seconds": 0.7426
+    },
+    {
+      "number": 2,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:34.923053+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9807
+    },
+    {
+      "number": 3,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:35.973145+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8778
+    },
+    {
+      "number": 4,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:37.023241+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.949
+    },
+    {
+      "number": 5,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:38.073320+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8822
+    },
+    {
+      "number": 6,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:39.123468+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8417
+    },
+    {
+      "number": 7,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:40.173604+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8481
+    },
+    {
+      "number": 8,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:41.223751+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8842
+    },
+    {
+      "number": 9,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:42.273847+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9665
+    },
+    {
+      "number": 10,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:43.323946+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0114
+    },
+    {
+      "number": 11,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:44.374035+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.942
+    },
+    {
+      "number": 12,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:45.424125+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9073
+    },
+    {
+      "number": 13,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:46.474273+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8923
+    },
+    {
+      "number": 14,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:47.524400+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8126
+    },
+    {
+      "number": 15,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:48.574541+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.932
+    },
+    {
+      "number": 16,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:49.624670+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8248
+    },
+    {
+      "number": 17,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:50.674821+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9775
+    },
+    {
+      "number": 18,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:51.724923+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9775
+    },
+    {
+      "number": 19,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:52.775010+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9337
+    },
+    {
+      "number": 20,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:53.825152+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9544
+    },
+    {
+      "number": 21,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:54.875256+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8509
+    },
+    {
+      "number": 22,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:55.925412+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8485
+    },
+    {
+      "number": 23,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:56.975573+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9566
+    },
+    {
+      "number": 24,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:58.025671+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1763
+    },
+    {
+      "number": 25,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:53:59.225641+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8354
+    },
+    {
+      "number": 26,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:00.275805+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8835
+    },
+    {
+      "number": 27,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:01.325967+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8866
+    },
+    {
+      "number": 28,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:02.376106+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9888
+    },
+    {
+      "number": 29,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:03.426197+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9514
+    },
+    {
+      "number": 30,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:04.476289+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8107
+    },
+    {
+      "number": 31,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:05.526436+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.883
+    },
+    {
+      "number": 32,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:06.576585+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0373
+    },
+    {
+      "number": 33,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:07.635720+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9736
+    },
+    {
+      "number": 34,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:08.685820+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8202
+    },
+    {
+      "number": 35,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:09.735959+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.921
+    },
+    {
+      "number": 36,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:10.786112+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8632
+    },
+    {
+      "number": 37,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:11.836247+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8551
+    },
+    {
+      "number": 38,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:12.886406+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8484
+    },
+    {
+      "number": 39,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:13.936570+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9441
+    },
+    {
+      "number": 40,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:14.986665+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8758
+    },
+    {
+      "number": 41,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:16.036834+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9911
+    },
+    {
+      "number": 42,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:17.086918+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.799
+    },
+    {
+      "number": 43,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:18.137045+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.5297
+    },
+    {
+      "number": 44,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:19.688651+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1348
+    },
+    {
+      "number": 45,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:20.844729+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1093
+    },
+    {
+      "number": 46,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:21.975649+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8437
+    },
+    {
+      "number": 47,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:23.025804+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8027
+    },
+    {
+      "number": 48,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:24.075942+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8405
+    },
+    {
+      "number": 49,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:25.126070+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8773
+    },
+    {
+      "number": 50,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:26.176196+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9709
+    },
+    {
+      "number": 51,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:27.226282+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8097
+    },
+    {
+      "number": 52,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:28.276406+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9357
+    },
+    {
+      "number": 53,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:29.326531+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8185
+    },
+    {
+      "number": 54,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:30.376663+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8825
+    },
+    {
+      "number": 55,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:31.426797+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1707
+    },
+    {
+      "number": 56,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:32.619505+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9389
+    },
+    {
+      "number": 57,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:33.669632+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8407
+    },
+    {
+      "number": 58,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:34.719768+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8802
+    },
+    {
+      "number": 59,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:35.769908+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0356
+    },
+    {
+      "number": 60,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:36.827751+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8837
+    },
+    {
+      "number": 61,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:37.877887+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8792
+    },
+    {
+      "number": 62,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:38.928016+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9476
+    },
+    {
+      "number": 63,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:39.978139+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9905
+    },
+    {
+      "number": 64,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:41.028225+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0253
+    },
+    {
+      "number": 65,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:42.078291+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.858
+    },
+    {
+      "number": 66,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:43.128421+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9342
+    },
+    {
+      "number": 67,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:44.178549+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 3.1223
+    },
+    {
+      "number": 68,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:47.322760+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8786
+    },
+    {
+      "number": 69,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:48.372915+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9553
+    },
+    {
+      "number": 70,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:49.423020+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.979
+    },
+    {
+      "number": 71,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:50.473107+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9932
+    },
+    {
+      "number": 72,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:51.523191+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9908
+    },
+    {
+      "number": 73,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:52.573276+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8039
+    },
+    {
+      "number": 74,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:53.623399+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9211
+    },
+    {
+      "number": 75,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:54.673528+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8116
+    },
+    {
+      "number": 76,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:55.723655+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.0716
+    },
+    {
+      "number": 77,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:57.817421+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9131
+    },
+    {
+      "number": 78,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:58.867570+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8939
+    },
+    {
+      "number": 79,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:54:59.917693+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0644
+    },
+    {
+      "number": 80,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:01.004135+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8154
+    },
+    {
+      "number": 81,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:02.054271+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0094
+    },
+    {
+      "number": 82,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:03.104358+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0243
+    },
+    {
+      "number": 83,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:04.154425+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8568
+    },
+    {
+      "number": 84,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:05.204523+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8154
+    },
+    {
+      "number": 85,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:06.254638+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9338
+    },
+    {
+      "number": 86,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:07.304754+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9434
+    },
+    {
+      "number": 87,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:08.354855+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0287
+    },
+    {
+      "number": 88,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:09.405552+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8046
+    },
+    {
+      "number": 89,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:10.455700+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9148
+    },
+    {
+      "number": 90,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:11.505828+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0344
+    },
+    {
+      "number": 91,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:12.562488+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8791
+    },
+    {
+      "number": 92,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:13.612629+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9976
+    },
+    {
+      "number": 93,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:14.662713+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9447
+    },
+    {
+      "number": 94,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:15.712793+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9421
+    },
+    {
+      "number": 95,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:16.762910+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9427
+    },
+    {
+      "number": 96,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:17.813000+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8383
+    },
+    {
+      "number": 97,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:18.863144+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9431
+    },
+    {
+      "number": 98,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:19.913231+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1331
+    },
+    {
+      "number": 99,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:21.068488+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9768
+    },
+    {
+      "number": 100,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:22.118581+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.0465
+    },
+    {
+      "number": 101,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:24.186904+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8825
+    },
+    {
+      "number": 102,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:25.236986+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8367
+    },
+    {
+      "number": 103,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:26.287115+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.991
+    },
+    {
+      "number": 104,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:27.337190+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0219
+    },
+    {
+      "number": 105,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:28.387257+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1704
+    },
+    {
+      "number": 106,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:29.579895+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8507
+    },
+    {
+      "number": 107,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:30.630012+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0302
+    },
+    {
+      "number": 108,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:31.682113+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8143
+    },
+    {
+      "number": 109,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:32.732249+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1711
+    },
+    {
+      "number": 110,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:33.925751+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9975
+    },
+    {
+      "number": 111,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:34.975833+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9961
+    },
+    {
+      "number": 112,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:36.025913+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8135
+    },
+    {
+      "number": 113,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:37.076055+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8745
+    },
+    {
+      "number": 114,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:38.126186+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8502
+    },
+    {
+      "number": 115,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:39.176316+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0009
+    },
+    {
+      "number": 116,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:40.226398+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 3.0712
+    },
+    {
+      "number": 117,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:43.320251+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9484
+    },
+    {
+      "number": 118,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:44.370342+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9458
+    },
+    {
+      "number": 119,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:45.420440+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9431
+    },
+    {
+      "number": 120,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:46.470536+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0682
+    },
+    {
+      "number": 121,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:47.561091+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8314
+    },
+    {
+      "number": 122,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:48.611228+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.045
+    },
+    {
+      "number": 123,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:50.679049+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8075
+    },
+    {
+      "number": 124,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:51.729194+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8885
+    },
+    {
+      "number": 125,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:52.779318+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0312
+    },
+    {
+      "number": 126,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:53.833193+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9435
+    },
+    {
+      "number": 127,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:54.883289+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.845
+    },
+    {
+      "number": 128,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:55.933423+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8068
+    },
+    {
+      "number": 129,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:56.983548+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8515
+    },
+    {
+      "number": 130,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:58.033688+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.028
+    },
+    {
+      "number": 131,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:55:59.084631+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9649
+    },
+    {
+      "number": 132,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:00.134739+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1202
+    },
+    {
+      "number": 133,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:01.277617+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8569
+    },
+    {
+      "number": 134,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:02.327755+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0331
+    },
+    {
+      "number": 135,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:03.383865+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8498
+    },
+    {
+      "number": 136,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:04.434018+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8448
+    },
+    {
+      "number": 137,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:05.484139+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8543
+    },
+    {
+      "number": 138,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:06.534272+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0677
+    },
+    {
+      "number": 139,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:07.624217+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8315
+    },
+    {
+      "number": 140,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:08.674333+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9029
+    },
+    {
+      "number": 141,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:09.724460+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.811
+    },
+    {
+      "number": 142,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:10.774585+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9631
+    },
+    {
+      "number": 143,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:11.824676+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8576
+    },
+    {
+      "number": 144,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:12.874803+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8361
+    },
+    {
+      "number": 145,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:13.924936+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1688
+    },
+    {
+      "number": 146,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:15.116228+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8111
+    },
+    {
+      "number": 147,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:16.166369+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0069
+    },
+    {
+      "number": 148,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:17.216447+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8422
+    },
+    {
+      "number": 149,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:18.266562+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8784
+    },
+    {
+      "number": 150,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:19.316694+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0603
+    },
+    {
+      "number": 151,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:20.399322+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8839
+    },
+    {
+      "number": 152,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:21.449447+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0131
+    },
+    {
+      "number": 153,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:22.499544+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1248
+    },
+    {
+      "number": 154,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:23.647093+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0676
+    },
+    {
+      "number": 155,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:24.737108+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8123
+    },
+    {
+      "number": 156,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:25.787200+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8419
+    },
+    {
+      "number": 157,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:26.837345+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8073
+    },
+    {
+      "number": 158,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:27.887476+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0436
+    },
+    {
+      "number": 159,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:28.953521+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8118
+    },
+    {
+      "number": 160,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:30.003628+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9085
+    },
+    {
+      "number": 161,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:31.053790+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9902
+    },
+    {
+      "number": 162,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:32.103879+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8308
+    },
+    {
+      "number": 163,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:33.154038+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0203
+    },
+    {
+      "number": 164,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:34.204103+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.843
+    },
+    {
+      "number": 165,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:35.254194+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8071
+    },
+    {
+      "number": 166,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:36.304334+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0731
+    },
+    {
+      "number": 167,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:37.400033+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9945
+    },
+    {
+      "number": 168,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:38.450121+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0145
+    },
+    {
+      "number": 169,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:39.500201+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8512
+    },
+    {
+      "number": 170,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:40.550335+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8115
+    },
+    {
+      "number": 171,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:41.600476+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8217
+    },
+    {
+      "number": 172,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:42.650598+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9229
+    },
+    {
+      "number": 173,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:43.700737+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8558
+    },
+    {
+      "number": 174,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:44.750888+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8583
+    },
+    {
+      "number": 175,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:45.801024+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9894
+    },
+    {
+      "number": 176,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:46.851111+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9945
+    },
+    {
+      "number": 177,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:47.901194+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9633
+    },
+    {
+      "number": 178,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:48.951285+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8028
+    },
+    {
+      "number": 179,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:50.001414+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0738
+    },
+    {
+      "number": 180,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:51.098603+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.07
+    },
+    {
+      "number": 181,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:52.192309+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1211
+    },
+    {
+      "number": 182,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:53.337032+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8484
+    },
+    {
+      "number": 183,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:54.387174+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8789
+    },
+    {
+      "number": 184,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:55.437319+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.076
+    },
+    {
+      "number": 185,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:56.536289+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.875
+    },
+    {
+      "number": 186,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:57.586434+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8456
+    },
+    {
+      "number": 187,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:58.636577+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8119
+    },
+    {
+      "number": 188,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:56:59.686695+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0744
+    },
+    {
+      "number": 189,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:00.784880+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0888
+    },
+    {
+      "number": 190,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:01.901580+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.0954
+    },
+    {
+      "number": 191,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:04.020852+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8343
+    },
+    {
+      "number": 192,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:05.070997+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0503
+    },
+    {
+      "number": 193,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:06.145342+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8093
+    },
+    {
+      "number": 194,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:07.195466+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.994
+    },
+    {
+      "number": 195,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:08.245556+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0932
+    },
+    {
+      "number": 196,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:09.362514+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8737
+    },
+    {
+      "number": 197,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:10.412662+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.996
+    },
+    {
+      "number": 198,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:11.462754+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9133
+    },
+    {
+      "number": 199,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:12.512849+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8134
+    },
+    {
+      "number": 200,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:13.562984+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.0741
+    },
+    {
+      "number": 201,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:15.660898+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8847
+    },
+    {
+      "number": 202,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:16.711037+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8063
+    },
+    {
+      "number": 203,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:17.761192+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0906
+    },
+    {
+      "number": 204,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:18.875920+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0698
+    },
+    {
+      "number": 205,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:19.969734+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9472
+    },
+    {
+      "number": 206,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:21.019842+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0464
+    },
+    {
+      "number": 207,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:22.090310+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0171
+    },
+    {
+      "number": 208,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:23.140388+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8428
+    },
+    {
+      "number": 209,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:24.190547+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0284
+    },
+    {
+      "number": 210,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:25.243109+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9483
+    },
+    {
+      "number": 211,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:26.293201+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.041
+    },
+    {
+      "number": 212,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:27.358339+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8525
+    },
+    {
+      "number": 213,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:28.408490+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8042
+    },
+    {
+      "number": 214,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:29.458613+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0287
+    },
+    {
+      "number": 215,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:30.511569+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.7914
+    },
+    {
+      "number": 216,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:31.561723+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8472
+    },
+    {
+      "number": 217,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:32.611860+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8058
+    },
+    {
+      "number": 218,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:33.661987+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0212
+    },
+    {
+      "number": 219,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:34.712050+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8392
+    },
+    {
+      "number": 220,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:35.762171+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1396
+    },
+    {
+      "number": 221,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:36.925906+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.0475
+    },
+    {
+      "number": 222,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:38.997647+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8373
+    },
+    {
+      "number": 223,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:40.047794+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9513
+    },
+    {
+      "number": 224,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:41.097894+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8522
+    },
+    {
+      "number": 225,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:42.148022+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0202
+    },
+    {
+      "number": 226,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:43.198091+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8498
+    },
+    {
+      "number": 227,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:44.248234+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9022
+    },
+    {
+      "number": 228,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:45.298325+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9901
+    },
+    {
+      "number": 229,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:46.348422+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8755
+    },
+    {
+      "number": 230,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:47.398568+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9427
+    },
+    {
+      "number": 231,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:48.448670+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8449
+    },
+    {
+      "number": 232,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:49.498819+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8594
+    },
+    {
+      "number": 233,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:50.548955+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8287
+    },
+    {
+      "number": 234,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:51.599107+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9973
+    },
+    {
+      "number": 235,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:52.649194+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8512
+    },
+    {
+      "number": 236,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:53.699320+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9819
+    },
+    {
+      "number": 237,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:54.749414+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1728
+    },
+    {
+      "number": 238,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:55.946358+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8697
+    },
+    {
+      "number": 239,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:56.996524+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9984
+    },
+    {
+      "number": 240,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:58.046608+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.845
+    },
+    {
+      "number": 241,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:57:59.096763+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8642
+    },
+    {
+      "number": 242,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:00.146901+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1264
+    },
+    {
+      "number": 243,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:01.297699+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9938
+    },
+    {
+      "number": 244,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:02.347786+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8326
+    },
+    {
+      "number": 245,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:03.397955+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0784
+    },
+    {
+      "number": 246,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:04.501254+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8717
+    },
+    {
+      "number": 247,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:05.551358+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.846
+    },
+    {
+      "number": 248,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:06.601489+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8077
+    },
+    {
+      "number": 249,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:07.651604+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8868
+    },
+    {
+      "number": 250,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:08.701736+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.953
+    },
+    {
+      "number": 251,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:09.751836+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9989
+    },
+    {
+      "number": 252,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:10.801924+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8464
+    },
+    {
+      "number": 253,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:11.852079+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9924
+    },
+    {
+      "number": 254,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:12.902160+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8344
+    },
+    {
+      "number": 255,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:13.952312+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8491
+    },
+    {
+      "number": 256,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:15.002412+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8088
+    },
+    {
+      "number": 257,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:16.052595+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9117
+    },
+    {
+      "number": 258,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:17.102731+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8073
+    },
+    {
+      "number": 259,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:18.152887+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8465
+    },
+    {
+      "number": 260,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:19.203058+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8784
+    },
+    {
+      "number": 261,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:20.253183+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8847
+    },
+    {
+      "number": 262,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:21.303338+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.0658
+    },
+    {
+      "number": 263,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:23.394294+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8951
+    },
+    {
+      "number": 264,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:24.444426+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.883
+    },
+    {
+      "number": 265,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:25.494584+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.1934
+    },
+    {
+      "number": 266,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:27.712535+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8731
+    },
+    {
+      "number": 267,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:28.762705+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0284
+    },
+    {
+      "number": 268,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:29.816095+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9455
+    },
+    {
+      "number": 269,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:30.866189+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.801
+    },
+    {
+      "number": 270,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:31.916340+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8516
+    },
+    {
+      "number": 271,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:32.966494+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.125
+    },
+    {
+      "number": 272,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:34.116307+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9623
+    },
+    {
+      "number": 273,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:35.166407+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8386
+    },
+    {
+      "number": 274,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:36.216551+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8022
+    },
+    {
+      "number": 275,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:37.266687+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8694
+    },
+    {
+      "number": 276,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:38.316841+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.0557
+    },
+    {
+      "number": 277,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:40.397489+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0431
+    },
+    {
+      "number": 278,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:41.465619+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1253
+    },
+    {
+      "number": 279,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:42.615837+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9091
+    },
+    {
+      "number": 280,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:43.665961+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8475
+    },
+    {
+      "number": 281,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:44.716129+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8201
+    },
+    {
+      "number": 282,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:45.766278+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.1002
+    },
+    {
+      "number": 283,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:46.891890+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8093
+    },
+    {
+      "number": 284,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:47.942046+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8086
+    },
+    {
+      "number": 285,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:48.992211+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9374
+    },
+    {
+      "number": 286,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:50.042303+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9474
+    },
+    {
+      "number": 287,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:51.092408+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9978
+    },
+    {
+      "number": 288,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:52.142503+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8799
+    },
+    {
+      "number": 289,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:53.192639+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9654
+    },
+    {
+      "number": 290,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:54.242729+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.9402
+    },
+    {
+      "number": 291,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:55.292824+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.995
+    },
+    {
+      "number": 292,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:56.342913+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.1473
+    },
+    {
+      "number": 293,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:58.515316+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0622
+    },
+    {
+      "number": 294,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:58:59.602600+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0402
+    },
+    {
+      "number": 295,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:59:00.668064+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 1.0191
+    },
+    {
+      "number": 296,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:59:01.718133+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.0855
+    },
+    {
+      "number": 297,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:59:03.828670+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8423
+    },
+    {
+      "number": 298,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:59:04.878832+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.8953
+    },
+    {
+      "number": 299,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:59:05.928977+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 2.1425
+    },
+    {
+      "number": 300,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T16:59:08.096641+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.87
+    }
+  ],
+  "error": null,
+  "complete_pairs": 1495,
+  "saved_responses": 2990,
+  "failures": {},
+  "global_charged": 3000
+}
