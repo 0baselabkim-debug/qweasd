@@ -1,0 +1,49 @@
+{
+  "run": "39464552741-1",
+  "kind": "calendar_validation",
+  "physical_requests": 4,
+  "elapsed_seconds": 3.795090762000001,
+  "metrics": [
+    {
+      "number": 1,
+      "endpoint": "/oauth2/tokenP",
+      "attempt": 1,
+      "kind": "authentication",
+      "started_at": "2026-10-20T17:16:21.639084+00:00",
+      "http": 200,
+      "code": "",
+      "seconds": 0.7313
+    },
+    {
+      "number": 2,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:16:22.689195+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.6302
+    },
+    {
+      "number": 3,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:16:23.739302+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.6148
+    },
+    {
+      "number": 4,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:16:24.789407+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5807
+    }
+  ],
+  "error": null
+}
