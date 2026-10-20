@@ -33,6 +33,8 @@ def main():
  previous_nine=pd.read_csv(OUT/'previous-nine-followup.csv',dtype={'symbol':str})
  boundary=pd.read_csv(OUT/'middle-boundary-cases.csv',dtype={'symbol':str})
  middle10=f[f.trusted_candidate_data & f.flow_improving & (f.price_structure=='중간 전환') & f.within10.fillna(False)]
+ prebreak=f[f.trusted_candidate_data & f.flow_improving & f.middle_before_breakout]
+ prebreak_limits=pd.DataFrame([{'집단':'수급 개선·검증 통과·현재 H3 이하 중간 전환','제한 전':len(prebreak),'10% 이내':int(prebreak.within10.sum()),'15% 이내':int(prebreak.within15.sum()),'20% 이내':int(prebreak.within20.sum())}])
  base=pd.read_csv(ROOT/'inputs/baseline-screening.csv',dtype={'symbol':str}).set_index('symbol');b=set(base[base.research_price_eligible].index);c60=set(base[base.consecutive_60].index);p=set(json.loads((ROOT/'inputs/pilot/run.json').read_text())['records']);short=set(base[base.prelisting_40>0].index)
  reuse_breakdown={'기존 기준선':len(b),'별도 기존60일':len(c60-b),'추가 시범 재사용':len(p-b-c60),'신규상장 짧은 이력':len(short-b-c60-p),'신규 요청':plan['targets']}
  report=f'''# 한국 증시 전체 종목 가격·수급 기반 1차 전수 선별
@@ -53,6 +55,8 @@ def main():
 
 - 고정 모집단: {s['population']}개. 40일 구조 자체를 계산할 수 있는 수: {s['structural_price_evaluable']}개.
 - 가격·필수 수급 및 확보한 증거 검사를 통과한 수: **{s['trusted_data_stocks']}개**.
+- 검증 통과 집단의 구성: 기존 701종목 중 {int(f.loc[f.baseline_701,'trusted_candidate_data'].sum())}개,
+  나머지 1,728종목 중 추가 {int(f.loc[~f.baseline_701,'trusted_candidate_data'].sum())}개.
 - 기존 701종목의 원본 가격·원래 단계 판정·5일/직전5일 수급 기준선 **701개 모두 보존**.
 - 그중 {s['baseline_revalidated_candidates']}종목은 10/20에 보존된 KIS 관측과 10/19 KRX 공식자료로
   별도 연구 이력을 재검증했다. 원래 701종목 결과를 덮어쓰지 않았다.
@@ -97,6 +101,8 @@ J=KRX·수정/원주가 옵션, 요청 종료일, 중복/미래 날짜, 이전 �
   분할·병합·권리락으로 단정하지 않고 검토 보류한다.
 - 두 시장 공식 지수 거래일 검증 상태: **{cal.get('status')}**. 보존 연구 달력과 6/1~10/19
   거래일 집합 일치: **{calendar_matches}**, 확인 거래일 수 {len(cal.get('sessions',[]))}.
+  첫 응답의 50행 제한 때문에 처음에는 검증을 통과하지 못했다. 이미 받은 페이지를
+  재사용하고 과거 구간만 이어 받아 검증했다. 최초 실패 기록도 보존했다.
 - 공급자 최종 확정 상태는 `UNVERIFIED`로 유지했다. “정상”은 확보된 근거의 연구 정합성 통과이며
   거래소의 완전한 최종가격/기업행사 인증을 뜻하지 않는다.
 
@@ -165,6 +171,16 @@ L3 확인 전의 H3 초과 또는 이후 새 극값 때문에 원래 확정 사�
 
 {md(threshold)}
 
+위 중간 전환 통계에는 현재 H3 초과 경계 사례도 포함된다. 실제 핵심·확장 후보와 같은
+**현재 H3 이하** 조건으로 비교하면 다음과 같다.
+
+{md(prebreak_limits)}
+
+핵심 후보 {len(core)}개 중 **{int(core.breakout_within10_impossible.sum())}개**는 고정 H3가 L2의
+110% 이상이다. 이들은 현재는 10% 이내 중간 후보이지만 같은 H3를 종가로 엄격히 돌파할 때
+10% 제한까지 동시에 충족할 수 없다. 중간 단계와 확정 단계에 같은 상한을 적용하면
+이런 구조적 차이가 생긴다는 사실이며, 어느 조건의 미래 수익률이 낫다는 결론은 아니다.
+
 10% 이내는 15%·20% 이내에도 포함되므로 합산하지 않는다. 중복되지 않는 구간은
 [cross-tabulation.csv](cross-tabulation.csv)에 별도 제공한다. 10%로 먼저 잘라낸 뒤 분석하지 않았다.
 H3 자체가 L2의 110% 이상이면 해당 고정 H3의 **엄격한 종가 초과** 돌파를 10% 이내에서 만들 수 없다.
@@ -204,6 +220,8 @@ H3 자체가 L2의 110% 이상이면 해당 고정 H3의 **엄격한 종가 초�
 - 유일한 운영 파일 경로 차이는 **연구 브랜치에만 있는 수동 진단 workflow**다.
   main의 동일 파일은 그대로이며 운영 예약을 생성/수정하지 않았다.
 - 전체 자동 테스트 결과는 [tests.txt](tests.txt), 기계 판독 검증은 [verification.json](verification.json).
+- 서로 다른 Python 해시 시드로 두 차례 전체 분석한 CSV·요약의 동일성은
+  [재현 검증](reproducibility.json)에 기록했다. DuckDB 파일의 물리 바이트 동일성을 주장하지 않는다.
 - 원시 종가로 독립 재검산한 스윙 극값 {v['independent_pivot_checks']}개 통과.
 - 과거 사건의 `asof_data_trusted`는 기준일 품질이고 과거 사건일의 완전 검증을 뜻하지 않는다.
   `event_date_quality_verified`를 별도 기록하며 이번에는 과거 사건일의 품질·수급을 이용한 성과 평가를 하지 않았다.

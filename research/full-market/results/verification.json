@@ -1,0 +1,168 @@
+{
+  "status": "passed",
+  "population": 2429,
+  "unique_symbols": 2429,
+  "independent_SQL_flow_checks": 12145,
+  "dated_market_sector_checks": 2429,
+  "official_market_cap_checks": 2429,
+  "raw_asof_flow_unit_checks": 2429,
+  "baseline_rule_flow_checks": 701,
+  "independent_pivot_checks": 82028,
+  "official_index_calendar": "passed",
+  "baseline_new_event_differences": {
+    "prior_only": [
+      [
+        "220180",
+        "조기"
+      ],
+      [
+        "417180",
+        "조기"
+      ]
+    ],
+    "new_only": [
+      [
+        "191420",
+        "조기"
+      ]
+    ]
+  },
+  "raw_response_hash_checks": 3322,
+  "physical_requests": 3345,
+  "planned_price_symbols": 1661,
+  "complete_price_pairs": 1661,
+  "missing_price_responses": 0,
+  "retry_requests": 0,
+  "rate_limit_responses": 0,
+  "minimum_request_start_gap_seconds": 1.050032,
+  "batch_collection_seconds": 3684.610860232,
+  "batches": [
+    {
+      "run": "39452957999-1",
+      "requests": 300,
+      "seconds": 314.63271306,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39452957999"
+    },
+    {
+      "run": "39453888919-1",
+      "requests": 300,
+      "seconds": 339.568110257,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39453888919"
+    },
+    {
+      "run": "39454827401-1",
+      "requests": 300,
+      "seconds": 340.80099586499995,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39454827401"
+    },
+    {
+      "run": "39455755801-1",
+      "requests": 300,
+      "seconds": 337.49705894300007,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39455755801"
+    },
+    {
+      "run": "39456682442-1",
+      "requests": 300,
+      "seconds": 314.65857974,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39456682442"
+    },
+    {
+      "run": "39457541572-1",
+      "requests": 300,
+      "seconds": 338.189978736,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39457541572"
+    },
+    {
+      "run": "39458470546-1",
+      "requests": 300,
+      "seconds": 340.708161402,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39458470546"
+    },
+    {
+      "run": "39459391341-1",
+      "requests": 300,
+      "seconds": 314.595072126,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39459391341"
+    },
+    {
+      "run": "39460297465-1",
+      "requests": 300,
+      "seconds": 347.007901351,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39460297465"
+    },
+    {
+      "run": "39461347630-1",
+      "requests": 300,
+      "seconds": 335.11934476600004,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39461347630"
+    },
+    {
+      "run": "39462238043-1",
+      "requests": 300,
+      "seconds": 314.667121345,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39462238043"
+    },
+    {
+      "run": "39463125682-1",
+      "requests": 34,
+      "seconds": 35.33816688600001,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39463125682"
+    },
+    {
+      "run": "39464198546-1",
+      "requests": 7,
+      "seconds": 8.032564993000001,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39464198546"
+    },
+    {
+      "run": "39464552741-1",
+      "requests": 4,
+      "seconds": 3.795090762000001,
+      "auth": 1,
+      "retry": 0,
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39464552741"
+    }
+  ],
+  "operational_files_changed": false,
+  "asof": "2026-10-19",
+  "no_future_performance_claim": true,
+  "completion_checks": {
+    "unique_population": true,
+    "all_stocks_classified": true,
+    "baseline_701_preserved": true,
+    "observations_preserved_separately": true,
+    "no_future_bars_in_pivots": true,
+    "same_L2_for_thresholds": true,
+    "flow_independent_match": true,
+    "unresolved_quality_excluded_from_verified_candidates": true,
+    "API_and_batch_limits": true,
+    "operational_assets_unchanged": true
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "conclusion": "success",
+  "createdAt": "2026-10-20T17:35:37Z",
+  "databaseId": 39467436494,
+  "event": "workflow_dispatch",
+  "headSha": "b42dc9f817098378cc0106eb291846c8080a0f1d",
+  "jobs": [
+    {
+      "completedAt": "2026-10-20T17:45:58Z",
+      "conclusion": "success",
+      "databaseId": 118782393208,
+      "name": "check",
+      "startedAt": "2026-10-20T17:39:39Z",
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install dashboard dependencies",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Test real snapshot, calculations, and UI without API secrets",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Start and check HTTP server",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39467436494/job/118782393208"
+    }
+  ],
+  "status": "completed",
+  "updatedAt": "2026-10-20T17:45:59Z",
+  "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39467436494"
+}
