@@ -198,9 +198,9 @@ def main():
 
   reasons.extend(response_issues)
   if entries and set(pair)!={'adjusted','raw'}:reasons.append('adjusted_raw_pair_incomplete')
-  missing40=sorted(expected-set(bars));prelisting40=[d for d in expected if d<listing]
-  zero40=[d for d in expected&set(bars) if bars[d]['volume']<=0 or bars[d]['turnover']<=0]
-  invalid40=[d for d in expected&set(bars) if not valid(bars[d])]
+  missing40=sorted(expected-set(bars));prelisting40=[d for d in sorted(expected) if d<listing]
+  zero40=[d for d in sorted(expected&set(bars)) if bars[d]['volume']<=0 or bars[d]['turnover']<=0]
+  invalid40=[d for d in sorted(expected&set(bars)) if not valid(bars[d])]
   if missing40:reasons.append('history_short_40')
   if prelisting40:reasons.append('listing_short_40')
   if zero40:reasons.append('zero_volume_or_turnover_40')
@@ -235,10 +235,10 @@ def main():
    for d in sorted(set(adj)&set(rawbars)):
     different=[k for k in FIELDS if adj[d][k]!=rawbars[d][k]]
     if different:
-     adjustment_dates.append(d);adjustments.append({'symbol':code,'date':d,'fields':','.join(different),'adjusted_close':adj[d]['close'],'raw_close':rawbars[d]['close'],'inside_40':d in expected,'official_action_basis':'미확인'})
+     adjustment_dates.append(d);adjustments.append({'symbol':code,'date':d,'fields':','.join(different),'adjusted_close':adj[d]['close'],'raw_close':rawbars[d]['close'],'inside_40':d in expected,'official_action_basis':'유상증자 권리락 확인; 조정 정밀도 검증 보류' if code=='042940' and action_review.get('event_confirmed') else '미확인'})
   if (action_dates|set(adjustment_dates))&expected:reasons.append('adjustment_precision_rule_unverified' if code=='042940' and action_review.get('event_confirmed') else 'corporate_action_adjustment_unverified')
   reference_bad=[];reference_count=0
-  for d in expected&set(bars):
+  for d in sorted(expected&set(bars)):
    ref=original_ref.get((code,d))
    if not ref:continue
    reference_count+=1;compare=(rawbars or bars).get(d)
