@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-19",
+  "asof": "2026-10-20",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-19-198808babfd248922e5057cd87d8c12941ebb3d3c69eefd1e27f29478c41d722",
-  "generated_at": "2026-10-20T11:45:11.808418+00:00",
+  "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+  "generated_at": "2026-10-20T12:51:55.419969+00:00",
   "market": "KOSPI",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kospi-65d13ee4c4e903e8ce2b7af4.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-20T11:45:11.808418+00:00",
+  "published_at": "2026-10-20T12:51:55.419969+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 5
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "통신",
   "sector_id": "kospi-65d13ee4c4e903e8ce2b7af4",
-  "source_snapshot_sha256": "198808babfd248922e5057cd87d8c12941ebb3d3c69eefd1e27f29478c41d722",
+  "source_snapshot_sha256": "d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
   "stock_count": 5,
   "stocks": [
     {
       "change_5d": 40000000.0,
-      "intensity_5d": 0.0019270833333333334,
+      "intensity_5d": 0.001366120218579235,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "프리티",
-      "net_1d": 7000000.0,
-      "net_20d": 81000000.0,
-      "net_5d": 37000000.0,
+      "net_1d": -1000000.0,
+      "net_20d": 92000000.0,
+      "net_5d": 25000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 12.0,
-      "previous_5d": -3000000.0,
+      "previous_5d": -15000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "006490"
     },
     {
-      "change_5d": 13222000000.0,
-      "intensity_5d": 0.0021464150496923805,
+      "change_5d": 11321000000.0,
+      "intensity_5d": 0.0022568264331696004,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "SK텔레콤",
-      "net_1d": 4831000000.0,
-      "net_20d": 111098000000.0,
-      "net_5d": 36283000000.0,
+      "net_1d": 8684000000.0,
+      "net_20d": 122001000000.0,
+      "net_5d": 36986000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 18.0,
-      "previous_5d": 23061000000.0,
+      "positive_days_20d": 19.0,
+      "previous_5d": 25665000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -92,8 +92,8 @@
       "symbol": "017670"
     },
     {
-      "change_5d": -4386000000.0,
-      "intensity_5d": -0.0005593500780251405,
+      "change_5d": -5884000000.0,
+      "intensity_5d": -0.0007035234755168832,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -106,12 +106,12 @@
         "previous_5d": "valid"
       },
       "name": "KT",
-      "net_1d": -1016000000.0,
-      "net_20d": -11454000000.0,
-      "net_5d": -7133000000.0,
+      "net_1d": -2561000000.0,
+      "net_20d": -14009000000.0,
+      "net_5d": -9007000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 0.0,
-      "previous_5d": -2747000000.0,
+      "previous_5d": -3123000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -121,8 +121,8 @@
       "symbol": "030200"
     },
     {
-      "change_5d": -9269000000.0,
-      "intensity_5d": -0.0020916983590660463,
+      "change_5d": -10484000000.0,
+      "intensity_5d": -0.0021947672193389366,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -135,12 +135,12 @@
         "previous_5d": "valid"
       },
       "name": "LG유플러스",
-      "net_1d": -7018000000.0,
-      "net_20d": -35301000000.0,
-      "net_5d": -13805000000.0,
+      "net_1d": -207000000.0,
+      "net_20d": -31196000000.0,
+      "net_5d": -14336000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 4.0,
-      "previous_5d": -4536000000.0,
+      "previous_5d": -3852000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -150,8 +150,8 @@
       "symbol": "032640"
     },
     {
-      "change_5d": 139000000.0,
-      "intensity_5d": 0.00013373362445414847,
+      "change_5d": -59000000.0,
+      "intensity_5d": -0.00019640387275242046,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -164,12 +164,12 @@
         "previous_5d": "valid"
       },
       "name": "현대퓨처넷",
-      "net_1d": 54000000.0,
-      "net_20d": -247000000.0,
-      "net_5d": 49000000.0,
+      "net_1d": -66000000.0,
+      "net_20d": -232000000.0,
+      "net_5d": -71000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 5.0,
-      "previous_5d": -90000000.0,
+      "previous_5d": -12000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
