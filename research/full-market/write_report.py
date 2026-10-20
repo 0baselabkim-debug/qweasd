@@ -14,8 +14,11 @@ def main():
  s=json.loads((OUT/'summary.json').read_text());v=json.loads((OUT/'verification.json').read_text());plan=json.loads((ROOT/'plan.json').read_text())['summary']
  f=pd.read_csv(OUT/'all-stocks.csv',dtype={'symbol':str});ev=pd.read_csv(OUT/'stage-events.csv',dtype={'symbol':str});core=f[f.final_group=='핵심 연구 후보'].copy();verified=pd.read_csv(OUT/'verified-candidates.csv',dtype={'symbol':str})
  ledger=json.loads((ROOT/'collection/ledger.json').read_text());state=json.loads((ROOT/'collection/state.json').read_text());complete=sum(set(e)=={'adjusted','raw'} for e in state['records'].values());responses=sum(map(len,state['records'].values()))
+ execution=json.loads((OUT/'execution-records.json').read_text())
  calpath=ROOT/'collection/calendar.json';cal=json.loads(calpath.read_text()) if calpath.exists() else {'status':'not_collected','sessions':[]}
  krx_path=ROOT/'collection/official-reference-probe.json';krx=json.loads(krx_path.read_text()) if krx_path.exists() else {'status':'not_collected'}
+ action_review=json.loads((ROOT/'evidence/sangji-review.json').read_text())
+ reference_summary=json.loads((ROOT/'evidence/reference-summary.json').read_text())
  action_path=ROOT/'collection/sangji-official-probe.json';action=json.loads(action_path.read_text()) if action_path.exists() else {'status':'not_collected'}
  calendar=pd.read_csv(ROOT/'inputs/calendar.csv').trade_date.tolist();expected=[d for d in calendar if '2026-06-01'<=d<='2026-10-19'];calendar_matches=cal.get('status')=='passed' and cal['sessions']==expected
  threshold=pd.read_csv(OUT/'threshold-comparison.csv');cross=pd.read_csv(OUT/'cross-tabulation.csv');runs=pd.DataFrame(v['batches'])
@@ -50,7 +53,9 @@ def main():
 
 - 고정 모집단: {s['population']}개. 40일 구조 자체를 계산할 수 있는 수: {s['structural_price_evaluable']}개.
 - 가격·필수 수급 및 확보한 증거 검사를 통과한 수: **{s['trusted_data_stocks']}개**.
-- 기존 701종목의 가격·원래 단계 판정·5일/직전5일 수급 기준선 **701개 모두 보존**.
+- 기존 701종목의 원본 가격·원래 단계 판정·5일/직전5일 수급 기준선 **701개 모두 보존**.
+- 그중 {s['baseline_revalidated_candidates']}종목은 10/20에 보존된 KIS 관측과 10/19 KRX 공식자료로
+  별도 연구 이력을 재검증했다. 원래 701종목 결과를 덮어쓰지 않았다.
 - 보존 자료 재사용 후 추가 요청 대상 {plan['targets']}개. 그중 수정·원주가 쌍 확보 {complete}개,
   저장 응답 {responses}개. 응답 확보와 가격 신뢰성 검증 통과는 다르다.
 - 기존 10종목 시범 응답 전부 재사용. 해당 종목 재호출 0회.
@@ -64,7 +69,9 @@ def main():
 - 실제 추가 물리 요청 **{v['physical_requests']}회** (인증·재시도·달력 검증 포함),
   재시도 {v['retry_requests']}회, 호출 제한 응답 {v['rate_limit_responses']}건.
 - 배치 수집 시간 합계 **{v['batch_collection_seconds']:.3f}초**. 이는 API 수집 단계 실측 합계이며
-  GitHub 대기·checkout·파일 보존을 포함한 전체 벽시계 시간은 실행 기록 별첨을 참조한다.
+  GitHub 대기·checkout·파일 보존·공식 자료 검증까지 포함한 전체 벽시계 시간은
+  **{execution['total_wall_seconds']:,.0f}초 ({execution['total_wall_seconds']/60:.2f}분)**이다.
+  첫 수동 실행 요청 `{execution['first_dispatch']}`, 마지막 작업 완료 `{execution['last_job_completed']}`.
 - 신규 외국인 수급 조회 **0회**. 과거 5·20일 수익률 계산 **미실시**.
 
 ### 실제 실행 기록
@@ -100,20 +107,26 @@ J=KRX·수정/원주가 옵션, 요청 종료일, 중복/미래 날짜, 이전 �
 
 ## 3. 기존 701종목과의 차이
 
-기존 가격과 원래 `stages_at` 계산은 바꾸지 않았다. 701종목 모두 원래 계산과 일치하며
-5일·직전5일 수급도 일치한다. 그러나 뒤에 보존된 10/20 체크포인트와 비교하면
-**{s['baseline_new_conflicts']}개**에서 새 가격 충돌 증거가 있다. 원래 신호를 지우지 않으며, 미해결 충돌이 남은 종목은
-이번 자료검증 통과 후보에서 분리한다.
+원래 가격과 원래 `stages_at` 코드를 이용한 **기준선 재현**은 701종목 모두 일치하며
+5일·직전5일 수급도 일치한다. 이것이 새 관측 후보의 결과까지 옛 결과와 같다는 뜻은 아니다.
+새 전수 결과에는 {s['baseline_revalidated_candidates']}종목의 검증된 별도 이력을 사용했다.
+이들은 변경일이 10/19 단 하루이고, 나머지 중첩 20일 이상은 KIS OHLCV 6필드가 모두 같으며,
+새 10/19 값은 KRX 원시세 6필드와 일치한다. KRX 종가를 끼워 넣지 않고 KIS 관측 전체를
+별도 후보로 연결했다. 10/20 가격 행은 분석에서 제외했다.
+[원본·새 후보 비교](baseline-revalidated.csv)에 변경값과 관측 시각을 남겼다.
+원본 기준선과 10/20 보존 체크포인트의 차이는 **{s['baseline_new_conflicts']}개**에서 발견됐다.
+이는 과거 관측 차이의 수이며 현재 미해결 충돌 수가 아니다. 위 별도 후보 검증으로
+해소한 차이도 감사 이력에 계속 남긴다. 여전히 미해결 충돌이 남은 종목은 후보에서 분리한다.
 
 원래 10/19 신규 사건 기준 조기96·중간9·확정0(수급 개선+10% 이내)과 아래 **현재 유지 상태**
 후보 수는 같은 통계가 아니다. 며칠 전에 발생해 유지 중인 상태가 포함되며 새 품질 보류도 반영된다.
-이벤트 기준 비교 결과: `{json.dumps(v['baseline_new_event_differences'],ensure_ascii=False)}`.
+가격 관측 정정 후보를 반영한 신규 사건 비교 결과: `{json.dumps(v['baseline_new_event_differences'],ensure_ascii=False)}`.
 
 기존 중간 단계 9종목의 현재 비교:
 
 {md(previous_nine,['symbol','name','price_structure','rise_pct','price_data_status','final_group','reasons'])}
 
-원본 가격을 바꾼 결과가 아니라, 원래 계산 위에 새 검증 증거를 별도로 반영한 차이다.
+원본은 그대로이며 별도 새 관측 후보로 계산한 결과와 품질 판정을 함께 비교한 것이다.
 
 ## 4. 신규 사건과 현재 상태
 
@@ -180,9 +193,12 @@ H3 자체가 L2의 110% 이상이면 해당 고정 H3의 **엄격한 종가 초�
 
 - 모집단 중복 0건, 2,429개 모두 고유 최종 분류 존재.
 - 독립 DuckDB SQL 수급 비교 {v['independent_SQL_flow_checks']}개 통과.
+- 5일 수급 강도의 분모는 동일 날짜 KRX 공식 시가총액을 종가×상장주식수로 검산해 사용했다.
+  기존 DB 시총은 `original_market_cap_krw`에 보존하며 운영 DB는 수정하지 않았다.
 - 기준일 유효 공식 업종·시장 구분 {v['dated_market_sector_checks']}종목 대조 통과.
 - 당일 원시 KIS 수급 금액의 백만원→KRW 대조 {v['raw_asof_flow_unit_checks']}개 통과.
-- 기존 701종목의 가격·원래 사건 규칙·수급 회귀 검증 통과.
+- 기존 701종목의 원본 재현·원래 사건 규칙·수급 회귀 검증 통과.
+  별도 새 관측 후보의 판정 변화는 `baseline-regression.csv`에서 비교한다.
 - 실제 수집 파일 해시 {v['raw_response_hash_checks']}개, 호출 장부·인증·재시도 상한 검증 통과.
 - 운영 DB·main·JSON·UI·정규 cron은 이번 연구에서 수정하지 않았다.
 - 유일한 운영 파일 경로 차이는 **연구 브랜치에만 있는 수동 진단 workflow**다.
@@ -201,11 +217,13 @@ H3 자체가 L2의 110% 이상이면 해당 고정 H3의 **엄격한 종가 초�
 
 ## 8. 미확인 사항과 다음 단계
 
-8개 시범 기업의 10/19 공식 KRX 직접 대조 자료와 상지건설의 정확한 기업행사 근거는
-별도의 공식 대조/공시 점검 기록으로 관리한다. 최신 값이나 어느 공급자를 임의로 정답으로 선택하지 않았다.
+기존 시범 8종목은 10/19 KRX 공식 자료를 새로 확보해 대조했다. 상지건설의 유상증자
+권리락 원문도 확보했다. 과거와 새 관측이 달라진 공급자 내부 원인은 아직 확정할 수 없으며,
+이를 시장 범위 차이나 갱신 지연으로 단정하지 않는다.
 이번 KRX 대조 결과: `{json.dumps([{'market':r.get('market'),'http':r.get('http'),'status':r.get('status')} for r in krx.get('records',[])],ensure_ascii=False)}`.
-상지건설 공식 공시 확인 결과: `{action.get('status')}`, 공급자 상태 `{action.get('provider_status')}`,
-목록 완전성 `{action.get('list_complete')}`. 공시 원문을 받았다는 사실만으로 가격 조정 근거가 확인된 것은 아니다.
+상지건설 공시 목록/원문 확인 결과: `{action.get('status')}`, 공급자 상태 `{action.get('provider_status')}`,
+목록 완전성 `{action.get('list_complete')}`. 행사 사실과 가격 계수의 관측 일치는 확인했지만
+공급자 정밀도 명세와 거래량 3일의 1주 차이는 별도 보류다.
 이번 전수 재조회에서 발견한 추가 충돌도 [신뢰성 보고서](RELIABILITY.md)에 분리했다.
 
 성과 검증을 하려면 동결 후보와 당시 관측 가능한 가격 버전, 다음 거래일 실제 거래 가능 원시가,
@@ -216,6 +234,9 @@ H3 자체가 L2의 110% 이상이면 해당 고정 H3의 **엄격한 종가 초�
 전체 연구 자료 ZIP: [full-market-20261019.zip](../full-market-20261019.zip)
 
 연구 브랜치: https://github.com/0baselabkim-debug/qweasd/tree/research/full-market-transition-20261019
+
+수동 실행의 실제 GitHub 시각·커밋·단계 결과: [execution-records.json](execution-records.json).
+자동 회귀 검증의 정확한 커밋과 결과는 [CI 기록](CI.md)에 별도로 기록한다.
 '''
  (OUT/'REPORT.md').write_text(report)
  details=['# 검증 통과 연구 후보의 가격·수급 근거','기준일 2026-10-19. 미래 성과·투자 추천을 의미하지 않는다.']
@@ -250,8 +271,8 @@ H3 자체가 L2의 110% 이상이면 해당 고정 H3의 **엄격한 종가 초�
 {md(eight)}
 
 기존 시범 원문은 재사용했으며 같은 10종목을 다시 조회하지 않았다.
-이 8종목의 10/19 재조회 수정주가와 원주가는 서로 같았다. 따라서 그날 기존 관측과의
-차이를 수정 옵션 하나로 설명할 근거는 없다. 상지건설의 과거 조정 차이는 별도 문제다.
+이 8종목의 10/19 재조회 수정주가와 원주가는 서로 같았으며 이번 공식 KRX 종가와도 모두 같았다. 따라서 그날 기존 관측과의
+차이를 수정 옵션 하나로 설명할 근거는 없다. [공식 대조 CSV](../evidence/previous-eight-official-comparison.csv)에서 6필드 전체를 확인할 수 있다. 상지건설의 과거 조정 차이는 별도 문제다.
 공식 명세의 `J=KRX`, `0=수정주가`, `1=원주가`는 `docs/official_itemchart.py`에 보존했다.
 보존 KRX 원시세는 10/14·10/15 대조에 활용했으나 10/19 대조를 대신하지 않는다.
 이번 공식 대조 시도 기록: `{json.dumps([{'market':r.get('market'),'http':r.get('http'),'status':r.get('status')} for r in krx.get('records',[])],ensure_ascii=False)}`.
@@ -260,8 +281,12 @@ H3 자체가 L2의 110% 이상이면 해당 고정 H3의 **엄격한 종가 초�
 ## 상지건설
 
 상지건설의 6/1~9/21 수정·원주가 차이, 9/22 조정 표시는 보존했지만
-정확한 기업행사 결정·효력일·기준가격·조정계수 공식 근거는 미확인이다.
-원래 상세 기록은 `inputs/sangji-status.json`에 있다. 분할·병합·권리락이라고 확정하지 않는다.
+이번에는 코스닥시장본부의 공식 권리락 원문에서 **유상증자, 실시일 2026-09-22, 기준가 5,680원**을 확인했다.
+원래 미확인 기록은 `inputs/sangji-status.json`에 보존하고 새 확인 내용은 `evidence/sangji-review.json`에 분리했다.
+KIS 원주가 전일 종가 5,900원 대비 계수 5,680/5,900으로 78일 × OHLC 4필드 **312개**가
+정수 절사 모델과 모두 일치한다. 다만 이 절사 모델의 공식 공급자 명세와 전일 KRX 원시가는
+별도로 확보하지 못했고, 거래량은 3일에 1주 차이가 남는다(모두 40일 분석창 이전).
+기업행사 원인 자체는 확인됐지만 정밀도 검증을 생략해 신호 사용을 강제하지 않았다.
 추가 종목도 조정 표시/수정·원가격 차이를 동일 원칙으로 분류했다.
 추가 공식 공시 목록/원문 확인 상태: `{action.get('status')}`.
 선택한 원문: `{json.dumps(action.get('selected_originals',[]),ensure_ascii=False)}`.

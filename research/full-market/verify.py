@@ -24,7 +24,17 @@ def main():
   case when count(net_amount)=20 then count(*) filter(where net_amount>0) end as positive_days_20
   from x group by symbol''').fetchdf().set_index('symbol')
  fields=['net_1d_krw','net_5d_krw','previous_5d_krw','net_20d_krw','positive_days_20'];checks=0
+ cap_checks=0;official_caps={}
+ for o in json.loads((ROOT/'collection/official-reference-probe.json').read_text()).get('records',[]):
+  if o.get('status')!='received_unreconciled':continue
+  p=ROOT/'collection'/o['file'];assert sha(p)==o['sha256']
+  for row in json.loads(gzip.decompress(p.read_bytes()))['response']['OutBlock_1']:
+   assert row['BAS_DD']=='20261019'
+   official_caps[row['ISU_CD']]=row
  for r in f.itertuples():
+  if r.market_cap_quality=='KRX_OFFICIAL_ASOF_CLOSE_X_LISTED_SHARES_MATCH':
+   v=official_caps[r.symbol]
+   assert r.market_cap_krw==int(v['MKTCAP'])==int(v['TDD_CLSPRC'])*int(v['LIST_SHRS']);cap_checks+=1
   for name in fields:
    assert same(getattr(r,name),sql.loc[r.symbol,name]),(r.symbol,name);checks+=1
   assert same(r.change_5d_krw,sql.loc[r.symbol,'net_5d_krw']-sql.loc[r.symbol,'previous_5d_krw'])
@@ -78,8 +88,8 @@ def main():
  now=events[(events.confirmed_date=='2026-10-19')&events.symbol.isin(originals)]
  prior_events=set(zip(prior.symbol,prior.stage));new_events=set(zip(now.symbol,now.stage))
  event_differences={'prior_only':sorted(prior_events-new_events),'new_only':sorted(new_events-prior_events)}
- # Repeated crossing exclusion may differ from the prior two-date observation sample;
- # never hide differences. The raw stages_at outputs are separately checked for all 701.
+ # New validated price observations may change events. Preserve the old inputs and
+ # disclose differences; the original 701 replay is checked separately.
  ledger=json.loads((ROOT/'collection/ledger.json').read_text());requests=0;runs=[];pairs=set();retries=0;ratelimits=0;min_gaps=[]
  for b in ledger['batches']:
   assert b['status']=='complete' and b['charged']<=300
@@ -110,6 +120,6 @@ def main():
   expected=[d for d in calendar if '2026-06-01'<=d<='2026-10-19']
   assert cal['status']=='passed' and cal['sessions']==expected and cal['market_sessions']['KOSPI']==cal['market_sessions']['KOSDAQ']
   for observation in cal['observations']:assert sha(ROOT/'collection'/observation['file'])==observation['sha256']
- result={'status':'passed','population':len(f),'unique_symbols':f.symbol.nunique(),'independent_SQL_flow_checks':checks,'dated_market_sector_checks':len(f),'raw_asof_flow_unit_checks':len(f),'baseline_rule_flow_checks':len(baseline),'independent_pivot_checks':pivot_checks,'official_index_calendar':calendar_status,'baseline_new_event_differences':event_differences,'raw_response_hash_checks':rawfiles,'physical_requests':requests,'planned_price_symbols':len(planned),'complete_price_pairs':sum(set(v)=={'adjusted','raw'} for v in state['records'].values()),'missing_price_responses':sum(kind not in state['records'].get(code,{}) for code in planned for kind in ['adjusted','raw']),'retry_requests':retries,'rate_limit_responses':ratelimits,'minimum_request_start_gap_seconds':min(min_gaps) if min_gaps else None,'batch_collection_seconds':sum(x['seconds'] for x in runs),'batches':runs,'operational_files_changed':False,'asof':'2026-10-19','no_future_performance_claim':True,'completion_checks':{'unique_population':True,'all_stocks_classified':True,'baseline_701_preserved':True,'observations_preserved_separately':True,'no_future_bars_in_pivots':True,'same_L2_for_thresholds':True,'flow_independent_match':True,'unresolved_quality_excluded_from_verified_candidates':True,'API_and_batch_limits':True,'operational_assets_unchanged':True}}
+ result={'status':'passed','population':len(f),'unique_symbols':f.symbol.nunique(),'independent_SQL_flow_checks':checks,'dated_market_sector_checks':len(f),'official_market_cap_checks':cap_checks,'raw_asof_flow_unit_checks':len(f),'baseline_rule_flow_checks':len(baseline),'independent_pivot_checks':pivot_checks,'official_index_calendar':calendar_status,'baseline_new_event_differences':event_differences,'raw_response_hash_checks':rawfiles,'physical_requests':requests,'planned_price_symbols':len(planned),'complete_price_pairs':sum(set(v)=={'adjusted','raw'} for v in state['records'].values()),'missing_price_responses':sum(kind not in state['records'].get(code,{}) for code in planned for kind in ['adjusted','raw']),'retry_requests':retries,'rate_limit_responses':ratelimits,'minimum_request_start_gap_seconds':min(min_gaps) if min_gaps else None,'batch_collection_seconds':sum(x['seconds'] for x in runs),'batches':runs,'operational_files_changed':False,'asof':'2026-10-19','no_future_performance_claim':True,'completion_checks':{'unique_population':True,'all_stocks_classified':True,'baseline_701_preserved':True,'observations_preserved_separately':True,'no_future_bars_in_pivots':True,'same_L2_for_thresholds':True,'flow_independent_match':True,'unresolved_quality_excluded_from_verified_candidates':True,'API_and_batch_limits':True,'operational_assets_unchanged':True}}
  (out/'verification.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

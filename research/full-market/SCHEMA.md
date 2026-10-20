@@ -14,6 +14,9 @@
   실제 0원은 0, 필수 날짜 결측은 빈칸이다. 수량이나 총매수액이 아니다.
 - `change_5d_krw`: 최근5일 − 직전의 겹치지 않는5일. 전일 대비가 아니다.
 - `intensity_5d_pct`: 기준일 검증 시가총액 대비 최근5일 순매수 ×100. 퍼센트 단위다.
+- `market_cap_krw`: 같은 날짜 KRX 공식 종가×상장주식수와 일치한 공식 시가총액.
+  `original_market_cap_krw`는 동결 운영 DB의 원래 값이다. 운영 DB는 변경하지 않는다.
+  검산 상태는 `market_cap_quality`에 기록한다.
 - `H1/L1/H2/L2/H3/L3_*`: 종가 스윙의 가격·발생일·2거래일 뒤 확인일.
 - `early/middle/confirmed_confirmation_date`: 현재 유효한 L2 구조와 연결된 원래 단계 사건 확인일.
 - `current_structure_only`: 현재 구조는 관측되지만 과거 사건일에 필요한 40일 가격이 없는 경우.
@@ -35,3 +38,7 @@
 
 연구용 DuckDB의 `prices`는 선택한 관측 버전이며, 경쟁 관측은 입력·collection 파일과
 `observation-conflicts.csv`에 별도로 보존된다. 운영 DB의 테이블을 수정하지 않는다.
+
+`baseline_revalidated_observation`은 기존 701종목 중 보존 KIS의 변경된 10/19 행을
+공식 KRX 6필드 및 나머지 중첩 이력과 검증한 별도 후보이다. 원본 기준선은
+`baseline-regression.csv`에서 별도로 재현하고, 변경 근거는 `baseline-revalidated.csv`에 있다.

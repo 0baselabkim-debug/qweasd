@@ -25,9 +25,7 @@ jobs:
         env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
-          DART_API_KEY: ${{ secrets.DART_API_KEY }}
-        run: python research/full-market/collect_calendar.py
+        run: python research/full-market/collect_batch.py
       - name: Preserve research checkpoint even on failure
         if: always()
         run: |

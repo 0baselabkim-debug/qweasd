@@ -1,0 +1,39 @@
+{
+  "symbol": "042940",
+  "event_confirmed": true,
+  "event": "유상증자 권리락",
+  "effective_date": "2026-09-22",
+  "official_base_price": 5680,
+  "official_receipt": "20260921900481",
+  "official_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921900481",
+  "notice_source_file": "collection/sangji-responses/9c3bca73f4f32cef0eca4b9e9907c4b22090bdc3d08bf2f31823b710f79bb47a.zip",
+  "notice_sha256": "9c3bca73f4f32cef0eca4b9e9907c4b22090bdc3d08bf2f31823b710f79bb47a",
+  "decoded_encoding": "utf-8",
+  "prior_raw_close_KIS": 5900,
+  "prior_close_KRX_crosscheck": false,
+  "price_ratio": 0.9627118644067797,
+  "observational_rounding_model": "floor(raw_price*5680/5900)",
+  "rounding_model_officially_documented": false,
+  "price_field_checks": 312,
+  "price_field_differences": [],
+  "volume_rounding_differences": [
+    {
+      "date": "20260609",
+      "expected": 87186,
+      "observed": 87185
+    },
+    {
+      "date": "20260702",
+      "expected": 4251701,
+      "observed": 4251700
+    },
+    {
+      "date": "20260729",
+      "expected": 64927,
+      "observed": 64926
+    }
+  ],
+  "turnover_equal_all": true,
+  "post_effective_OHLCV_equal": true,
+  "signal_quality_status": "보류: 공급자 정밀도 규칙 미확인; 기업행사 자체는 확인됨"
+}

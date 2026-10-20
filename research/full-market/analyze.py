@@ -4,6 +4,7 @@ import collections,datetime as dt,gzip,hashlib,json,math
 import duckdb,pandas as pd
 from stages import stages_at
 from strategy import pivots
+from revalidate_existing import candidate as revised_candidate
 ROOT=Path(__file__).resolve().parent;ASOF='2026-10-19'
 FIELDS=['open','high','low','close','volume','turnover']
 KIS=['stck_oprc','stck_hgpr','stck_lwpr','stck_clpr','acml_vol','acml_tr_pbmn']
@@ -141,11 +142,13 @@ def main():
  cp19=read(inp/'checkpoint-20261019.json.gz')['records'];cp20=read(inp/'checkpoint-20261020.json.gz')['records']
  pilot=read(inp/'pilot/run.json')['records'];col=read(ROOT/'collection/state.json') if (ROOT/'collection/state.json').exists() else {'records':{},'failures':{}}
  refs=read(inp/'official-reference.json.gz');original_ref={}
+ action_review=read(ROOT/'evidence/sangji-review.json') if (ROOT/'evidence/sangji-review.json').exists() else {}
+ if action_review:assert sha(ROOT/action_review['notice_source_file'])==action_review['notice_sha256']
  for key,values in refs.items():
   for v in values:
    r=v['row'];s=r.get('ISU_CD');d=date(r['BAS_DD'])
    original_ref.setdefault((s,d),set()).add(tuple(float(str(r[k]).replace(',','')) for k in KRX))
- extra_ref_ids=[]
+ extra_ref_ids=[];official_caps={}
  probe_path=ROOT/'collection/official-reference-probe.json'
  if probe_path.exists():
   for observation in read(probe_path).get('records',[]):
@@ -155,17 +158,22 @@ def main():
    for r in rx['response']['OutBlock_1']:
     assert r['BAS_DD']=='20261019'
     original_ref.setdefault((r['ISU_CD'],ASOF),set()).add(tuple(float(str(r[k]).replace(',','')) for k in KRX))
+    if r['ISU_CD'] in base.index:
+     assert base.loc[r['ISU_CD'],'market']==rx['market']
+     cp=int(r['TDD_CLSPRC']);shares=int(r['LIST_SHRS']);cap_value=int(r['MKTCAP'])
+     if cp>0 and shares>0 and cp*shares==cap_value:official_caps[r['ISU_CD']]=cap_value
  with duckdb.connect(str(inp/'asof19.duckdb'),read_only=True) as c:
   inst=c.execute('select * from instruments').fetchdf().set_index('symbol')
   flows=c.execute("select symbol,trade_date,net_amount,exchange from flows where trade_date<=?",[ASOF]).fetchdf()
   caps=c.execute('select symbol,market_cap,market_cap_quality from prices where trade_date=?',[ASOF]).fetchdf().set_index('symbol')
  assert not flows.duplicated(['symbol','trade_date']).any() and set(flows.exchange)=={'KRX'}
  flowmap={(s,str(d.date())):n for s,d,n in flows[['symbol','trade_date','net_amount']].itertuples(index=False,name=None)}
- results=[];events_all=[];differences=[];price_dataset=[];adjustments=[];baseline_checks=[];coverage=[];response_coverage=[]
+ results=[];events_all=[];differences=[];revalidations=[];price_dataset=[];adjustments=[];baseline_checks=[];coverage=[];response_coverage=[]
  panels={p['symbol']:p for p in read(inp/'previous-study/results/as-observed-panels.json.gz') if p['date']==ASOF}
+ cp20_id='inputs/checkpoint-20261020.json.gz:'+sha(inp/'checkpoint-20261020.json.gz')
  baseline_ids=['inputs/'+name+':'+sha(inp/name) for name in ['baseline-prices.parquet','checkpoint-20261019.json.gz']]
  for code,row in base.iterrows():
-  listing=date(inst.loc[code,'listing_date']);bars=baselinebars[code];source='baseline';observed=row.latest_observed_at;source_ids=[str(row.source),*baseline_ids];reasons=[];warnings=[];rawbars=None;pair={};response_issues=[]
+  listing=date(inst.loc[code,'listing_date']);bars=baselinebars[code];source='baseline';observed=row.latest_observed_at;source_ids=[str(row.source),*baseline_ids];reasons=[];warnings=[];rawbars=None;pair={};response_issues=[];revision=None;revision_raw={}
   # Preserve original 701 series even when a later pilot contains revised observations.
   entries=pilot.get(code) or col['records'].get(code)
   entrydir=inp/'pilot' if code in pilot else ROOT/'collection'
@@ -177,6 +185,17 @@ def main():
   if not bool(row.research_price_eligible) and 'adjusted' in pair:
    bars=pair['adjusted'][0];source='pilot_requery' if code in pilot else 'full_requery';observed=pair['adjusted'][1]['observed_at']
   if 'raw' in pair:rawbars=pair['raw'][0]
+  if bool(row.research_price_eligible) and code in cp20:
+   record20=cp20[code];observed20={d:b for d,b in normalized(record20['adjusted_prices']).items() if d<=ASOF}
+   actions20=[r['stck_bsop_date'] for r in record20['adjusted_prices'] if date(r['stck_bsop_date']) in expected and (str(r.get('prtt_rate','')).strip() not in ['','0','0.0','0.00'] or str(r.get('revl_issu_reas','')).strip())]
+   old_actions=str(row.corporate_action_flag_dates) if pd.notna(row.corporate_action_flag_dates) else ''
+   revision=revised_candidate(baselinebars[code],observed20,ASOF,original_ref.get((code,ASOF)),record20.get('request_scope'),code,actions20 or ([old_actions] if old_actions else []))
+   if revision is not None:
+    bars=revision['bars'];source='baseline_revalidated_observation';observed=record20['observed_at']
+    source_ids.append(cp20_id)
+    revision_raw[ASOF]=dict(zip(FIELDS,next(iter(original_ref[code,ASOF]))))
+    revalidations.append({'symbol':code,'name':row['name'],'old_close':baselinebars[code][ASOF]['close'],'new_close':bars[ASOF]['close'],'matched_unchanged_days':revision['matched_overlap'],'changed_dates':ASOF,'official_six_fields_match':True,'old_observation_preserved':True,'new_observed_at':observed})
+
   reasons.extend(response_issues)
   if entries and set(pair)!={'adjusted','raw'}:reasons.append('adjusted_raw_pair_incomplete')
   missing40=sorted(expected-set(bars));prelisting40=[d for d in expected if d<listing]
@@ -199,7 +218,7 @@ def main():
     if d in expected:
      conflict_dates.add(d)
      if 'close' in changed:close_conflict_dates.add(d)
-  resolved_dates={d for d in conflict_dates if reference_resolves(bars.get(d),(rawbars or {}).get(d),original_ref.get((code,d)))}
+  resolved_dates={d for d in conflict_dates if reference_resolves(bars.get(d),(rawbars or {}).get(d) or revision_raw.get(d),original_ref.get((code,d)))}
   unresolved_dates=conflict_dates-resolved_dates
   if unresolved_dates:reasons.append('unresolved_observation_conflict')
   if extra_ref_ids:source_ids.extend(extra_ref_ids)
@@ -217,7 +236,7 @@ def main():
     different=[k for k in FIELDS if adj[d][k]!=rawbars[d][k]]
     if different:
      adjustment_dates.append(d);adjustments.append({'symbol':code,'date':d,'fields':','.join(different),'adjusted_close':adj[d]['close'],'raw_close':rawbars[d]['close'],'inside_40':d in expected,'official_action_basis':'미확인'})
-  if (action_dates|set(adjustment_dates))&expected:reasons.append('corporate_action_adjustment_unverified')
+  if (action_dates|set(adjustment_dates))&expected:reasons.append('adjustment_precision_rule_unverified' if code=='042940' and action_review.get('event_confirmed') else 'corporate_action_adjustment_unverified')
   reference_bad=[];reference_count=0
   for d in expected&set(bars):
    ref=original_ref.get((code,d))
@@ -234,8 +253,8 @@ def main():
   if not flow_ok:reasons.append('flow_missing_required_10')
   if n20 is None:warnings.append('flow_missing_optional_20')
   positive20=sum(flowmap[code,d]>0 for d in calendar[-20:]) if n20 is not None else None
-  cap=caps.loc[code,'market_cap'];cap_quality=caps.loc[code,'market_cap_quality']
-  intensity=n5/cap*100 if n5 is not None and pd.notna(cap) and cap>0 and cap_quality=='CLOSE_VOLUME_DATED_MASTER_SHARES_MATCH' else None
+  original_cap=caps.loc[code,'market_cap'];cap=official_caps.get(code,original_cap);cap_quality='KRX_OFFICIAL_ASOF_CLOSE_X_LISTED_SHARES_MATCH' if code in official_caps else caps.loc[code,'market_cap_quality']
+  intensity=n5/cap*100 if n5 is not None and pd.notna(cap) and cap>0 and cap_quality in ['KRX_OFFICIAL_ASOF_CLOSE_X_LISTED_SHARES_MATCH','CLOSE_VOLUME_DATED_MASTER_SHARES_MATCH'] else None
   # No inserting/filling gaps. Only the contiguous suffix ending on the fixed date.
   suffix=[]
   for d in reversed(calendar):
@@ -255,7 +274,7 @@ def main():
   else:data_status='가격·수급 모두 정상'
   group=classify_candidate(state,e,current_close,improving,structural_ok,flow_ok,trusted)
   new=[x for x in found if x['confirmed_date']==ASOF]
-  item={'asof':ASOF,'symbol':code,'name':row['name'],'market':row.market,'sector':row.sector,'price_data_status':data_status,'price_rows':len(bars),'earliest_price_date':min(bars) if bars else None,'last_price_date':max(bars) if bars else None,'first_evaluable_event_date':suffix[39] if len(suffix)>=40 else None,'continuous_sessions':len(suffix),'continuous_40':len(suffix)>=40,'continuous_60':len(suffix)>=60,'baseline_701':bool(row.research_price_eligible),'selected_source':source,'observed_at':observed,'knowledge_basis':'당시 보존 관측' if source=='baseline' else '사후 재조회·당시 관측 아님','provider_finality':'UNVERIFIED','close':current_close,'price_structure':state,'current_close_above_H3':bool(current_close>e['H3_price']) if e and e.get('H3_price') else None,'middle_before_breakout':bool(state=='중간 전환' and current_close<=e['H3_price']) if e and e.get('H3_price') else False,'new_events':','.join(x['stage'] for x in new),'new_event_count':len(new),'current_stage_confirmation_date':e['confirmed_date'] if e else None,'current_structure_only':bool(e and e.get('current_structure_only')), 'rise_pct':rise,'rise_band':band(rise),'within10':within(current_close,e['reference_low'],10) if e else None,'within15':within(current_close,e['reference_low'],15) if e else None,'within20':within(current_close,e['reference_low'],20) if e else None,'net_1d_krw':n1,'net_5d_krw':n5,'previous_5d_krw':p5,'change_5d_krw':change,'net_20d_krw':n20,'positive_days_20':positive20,'market_cap_krw':cap,'market_cap_quality':cap_quality,'intensity_5d_pct':intensity,'flow_state':'수급 개선 충족' if improving else ('수급 개선 미충족' if flow_ok else '자료 부족'),'flow_improving':improving,'trusted_candidate_data':trusted,'final_group':group,'reasons':';'.join(sorted(set(reasons))),'warnings':';'.join(warnings),'conflicting_dates':','.join(sorted(conflict_dates)),'unresolved_conflicting_dates':','.join(sorted(unresolved_dates)),'reference_resolved_dates':','.join(sorted(resolved_dates)),'close_conflicting_dates':','.join(sorted(close_conflict_dates)),'adjustment_different_dates':len(adjustment_dates),'official_reference_days':reference_count,'official_reference_bad_dates':','.join(reference_bad),'source_identifiers':' | '.join(source_ids),'h3_above_l2_10':e.get('H3_price',0)>e['L2_price']*1.10 if e else None,'breakout_within10_impossible':e.get('H3_price',0)>=e['L2_price']*1.10 if e and e.get('H3_price') else None}
+  item={'asof':ASOF,'symbol':code,'name':row['name'],'market':row.market,'sector':row.sector,'price_data_status':data_status,'price_rows':len(bars),'earliest_price_date':min(bars) if bars else None,'last_price_date':max(bars) if bars else None,'first_evaluable_event_date':suffix[39] if len(suffix)>=40 else None,'continuous_sessions':len(suffix),'continuous_40':len(suffix)>=40,'continuous_60':len(suffix)>=60,'baseline_701':bool(row.research_price_eligible),'selected_source':source,'observed_at':observed,'knowledge_basis':'당시 보존 관측' if source=='baseline' else ('사후 보존 관측 재검증·추가 호출 없음' if revision is not None else '사후 재조회·당시 관측 아님'),'provider_finality':'UNVERIFIED','close':current_close,'price_structure':state,'current_close_above_H3':bool(current_close>e['H3_price']) if e and e.get('H3_price') else None,'middle_before_breakout':bool(state=='중간 전환' and current_close<=e['H3_price']) if e and e.get('H3_price') else False,'new_events':','.join(x['stage'] for x in new),'new_event_count':len(new),'current_stage_confirmation_date':e['confirmed_date'] if e else None,'current_structure_only':bool(e and e.get('current_structure_only')), 'rise_pct':rise,'rise_band':band(rise),'within10':within(current_close,e['reference_low'],10) if e else None,'within15':within(current_close,e['reference_low'],15) if e else None,'within20':within(current_close,e['reference_low'],20) if e else None,'net_1d_krw':n1,'net_5d_krw':n5,'previous_5d_krw':p5,'change_5d_krw':change,'net_20d_krw':n20,'positive_days_20':positive20,'market_cap_krw':cap,'original_market_cap_krw':original_cap,'market_cap_quality':cap_quality,'intensity_5d_pct':intensity,'flow_state':'수급 개선 충족' if improving else ('수급 개선 미충족' if flow_ok else '자료 부족'),'flow_improving':improving,'trusted_candidate_data':trusted,'final_group':group,'reasons':';'.join(sorted(set(reasons))),'warnings':';'.join(warnings),'conflicting_dates':','.join(sorted(conflict_dates)),'unresolved_conflicting_dates':','.join(sorted(unresolved_dates)),'reference_resolved_dates':','.join(sorted(resolved_dates)),'close_conflicting_dates':','.join(sorted(close_conflict_dates)),'adjustment_different_dates':len(adjustment_dates),'official_reference_days':reference_count,'official_reference_bad_dates':','.join(reference_bad),'source_identifiers':' | '.join(source_ids),'h3_above_l2_10':e.get('H3_price',0)>e['L2_price']*1.10 if e else None,'breakout_within10_impossible':e.get('H3_price',0)>=e['L2_price']*1.10 if e and e.get('H3_price') else None}
   for name in ['H1','L1','H2','L2','H3','L3']:
    for k in ['price','date','confirmed_date']:item[name+'_'+k]=e.get(name+'_'+k) if e else None
   for label,stage in [('early','조기'),('middle','중간'),('confirmed','확정')]:
@@ -264,15 +283,16 @@ def main():
   coverage.append({'symbol':code,'missing_40':','.join(missing40),'prelisting_40':','.join(prelisting40),'zero_volume_40':','.join(zero40),'invalid_40':','.join(invalid40),'reasons':item['reasons'],'response_issues':';'.join(response_issues)})
   for event in found:events_all.append({'symbol':code,'name':row['name'],'market':row.market,'sector':row.sector,'selected_source':source,'observed_at':observed,'asof_data_trusted':trusted,'event_date_quality_verified':bool(trusted and event['confirmed_date']==ASOF),'flow_improving_asof':improving,'event_new_asof':event['confirmed_date']==ASOF,'point_in_time_observation_available':pd.Timestamp(observed)<=pd.Timestamp(event['confirmed_date']+'T23:59:59+09:00'),**event})
   for d,b in sorted(bars.items()):
-   prov=bar_provenance.get((code,d),{}) if source=='baseline' else {}
+   prov=bar_provenance.get((code,d),{}) if source=='baseline' or (revision is not None and d not in revision['new_observation_dates']) else {}
    original_observed=(prov.get('update_observed_at') if str(prov.get('value_source','')).startswith('checkpoint:') else prov.get('base_observed_at')) if prov else observed
    price_dataset.append({'symbol':code,'trade_date':d,'source':source,'observed_at':original_observed,'series_observed_at':observed,'original_value_source':prov.get('value_source'),**b})
   if bool(row.research_price_eligible):
    prior=[panels[code]]
    assert len(prior)==1
-   current=stages_at([bars[d]['close'] for d in calendar[-40:]],39);baseline_result=stages_at(prior[0]['closes'],39)
+   original=baselinebars[code]
+   current=stages_at([original[d]['close'] for d in calendar[-40:]],39);revised=stages_at([bars[d]['close'] for d in calendar[-40:]],39);baseline_result=stages_at(prior[0]['closes'],39)
    assert current==baseline_result and n5==row.net_5d and p5==row.previous_5d,(code,'baseline changed')
-   baseline_checks.append({'symbol':code,'prices_and_events_identical':True,'net5_and_previous5_identical':True,'new_evidence_conflict':bool(conflict_dates)})
+   baseline_checks.append({'symbol':code,'prices_and_events_identical':True,'net5_and_previous5_identical':True,'new_evidence_conflict':bool(conflict_dates),'new_candidate_selected':revision is not None,'original_event_stages':','.join(sorted(current)),'new_event_stages':','.join(sorted(revised)),'event_stages_changed':set(current)!=set(revised)})
  f=pd.DataFrame(results);ev=pd.DataFrame(events_all)
  assert len(f)==2429 and f.symbol.nunique()==2429 and len(baseline_checks)==701
  f.to_csv(out/'all-stocks.csv',index=False,encoding='utf-8-sig')
@@ -288,7 +308,7 @@ def main():
  for label,name in [('핵심 연구 후보','core-candidates'),('확장 연구 후보','expanded-candidates'),('확정 전환 연구군','confirmed-candidates')]:candidate[candidate.final_group==label].to_csv(out/(name+'.csv'),index=False,encoding='utf-8-sig')
  f[f.final_group.str.startswith('잠정')].to_csv(out/'provisional-only.csv',index=False,encoding='utf-8-sig')
  ev.to_csv(out/'stage-events.csv',index=False,encoding='utf-8-sig');ev[ev.event_new_asof].to_csv(out/'new-events-asof.csv',index=False,encoding='utf-8-sig')
- for name,rows in [('observation-conflicts',differences),('adjustment-differences',adjustments),('coverage',coverage),('baseline-regression',baseline_checks),('response-coverage',response_coverage)]:pd.DataFrame(rows).to_csv(out/(name+'.csv'),index=False,encoding='utf-8-sig')
+ for name,rows in [('observation-conflicts',differences),('adjustment-differences',adjustments),('coverage',coverage),('baseline-regression',baseline_checks),('response-coverage',response_coverage),('baseline-revalidated',revalidations)]:pd.DataFrame(rows).to_csv(out/(name+'.csv'),index=False,encoding='utf-8-sig')
  prices=pd.DataFrame(price_dataset);prices.to_parquet(out/'research-prices.parquet',index=False)
  with duckdb.connect(str(out/'research.duckdb')) as c:
   c.execute('create or replace table prices as select * from prices');c.execute('create or replace table screening as select * from f');c.execute('create or replace table events as select * from ev');c.execute('create or replace table frozen_flows as select * from flows')
@@ -300,7 +320,7 @@ def main():
    thresholds.append({'trusted':trusted,'stage':stage,'before_limit':len(g),'rise_available':int(g.rise_pct.notna().sum()),'rise_unavailable':int(g.rise_pct.isna().sum()),'within10':int(g.within10.fillna(False).sum()),'within15':int(g.within15.fillna(False).sum()),'within20':int(g.within20.fillna(False).sum())})
  pd.DataFrame(thresholds).to_csv(out/'threshold-comparison.csv',index=False,encoding='utf-8-sig')
  candidate.groupby(['market','sector','final_group']).size().reset_index(name='stocks').to_csv(out/'candidate-sectors.csv',index=False,encoding='utf-8-sig')
- summary={'asof':ASOF,'population':len(f),'baseline_701_identical':len(baseline_checks),'structural_price_evaluable':int((f.price_structure!='판정 불가').sum()),'trusted_data_stocks':int(f.trusted_candidate_data.sum()),'reused_baseline_rows':int((f.selected_source=='baseline').sum()),'pilot_selected':int((f.selected_source=='pilot_requery').sum()),'new_selected':int((f.selected_source=='full_requery').sum()),'continuous40':int(f.continuous_40.sum()),'continuous60':int(f.continuous_60.sum()),'data_states':f.price_data_status.value_counts().to_dict(),'current_price_states':f.price_structure.value_counts().to_dict(),'flow_improving':int(f.flow_improving.sum()),'final_groups':f.final_group.value_counts().to_dict(),'new_events_raw':ev[ev.event_new_asof].stage.value_counts().to_dict(),'new_events_trusted':ev[ev.event_new_asof & ev.asof_data_trusted].stage.value_counts().to_dict(),'core_candidates':candidate[candidate.final_group=='핵심 연구 후보'][['symbol','name','rise_pct','net_5d_krw','change_5d_krw']].to_dict('records'),'thresholds':thresholds,'baseline_new_conflicts':sum(r['new_evidence_conflict'] for r in baseline_checks),'reason_counts':dict(collections.Counter(r for line in f.reasons for r in line.split(';') if r)),'future_returns_computed':False,'fresh_flow_requests':0}
+ summary={'asof':ASOF,'population':len(f),'baseline_701_identical':len(baseline_checks),'baseline_revalidated_candidates':len(revalidations),'structural_price_evaluable':int((f.price_structure!='판정 불가').sum()),'trusted_data_stocks':int(f.trusted_candidate_data.sum()),'reused_baseline_rows':int((f.selected_source=='baseline').sum()),'pilot_selected':int((f.selected_source=='pilot_requery').sum()),'new_selected':int((f.selected_source=='full_requery').sum()),'continuous40':int(f.continuous_40.sum()),'continuous60':int(f.continuous_60.sum()),'data_states':f.price_data_status.value_counts().to_dict(),'current_price_states':f.price_structure.value_counts().to_dict(),'flow_improving':int(f.flow_improving.sum()),'final_groups':f.final_group.value_counts().to_dict(),'new_events_raw':ev[ev.event_new_asof].stage.value_counts().to_dict(),'new_events_trusted':ev[ev.event_new_asof & ev.asof_data_trusted].stage.value_counts().to_dict(),'core_candidates':candidate[candidate.final_group=='핵심 연구 후보'][['symbol','name','rise_pct','net_5d_krw','change_5d_krw']].to_dict('records'),'thresholds':thresholds,'baseline_new_conflicts':sum(r['new_evidence_conflict'] for r in baseline_checks),'reason_counts':dict(collections.Counter(r for line in f.reasons for r in line.split(';') if r)),'future_returns_computed':False,'fresh_flow_requests':0}
  (out/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
  print(json.dumps(summary,ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

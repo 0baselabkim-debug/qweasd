@@ -19,6 +19,7 @@
 ```sh
 python -m pip install -r research/full-market/requirements.txt
 PYTHONPATH=research/full-market python -m pytest -q research/full-market/tests
+python research/full-market/review_official.py
 python research/full-market/analyze.py
 python research/full-market/verify.py
 python research/full-market/write_report.py
@@ -74,6 +75,20 @@ ZIP에는 연구용 동결 DB·선행 관측·새 가격 응답·분류 결과�
 전체 요청 상한은 시장 데이터 공급자에 보내는 HTTP 요청을 대상으로 하며,
 인증·실패·재시도·지수/공식 시세 대조를 모두 포함한다. GitHub 상태 조회/파일 전송은
 시장 데이터 API 요청 수에 합산하지 않고 별도의 실행 벽시계 시간에 포함한다.
+
+## 원본 기준선과 검증된 별도 관측
+
+기존 701종목의 원본 및 판정 결과는 보존했다. 그중 563종목은 이미 보존된 KIS
+10/20 응답에서 10/19까지만 선택한 별도 후보를 사용한다. 달라진 날짜가 10/19
+하루뿐이고, 나머지 20일 이상 중첩 구간의 6필드가 같으며, 변경된 10/19의 6필드가
+KRX 공식 원시세와 모두 같은 경우만 허용한다. 조정 표시가 있으면 허용하지 않는다.
+`revalidate_existing.py`가 이를 검사하며 원본 대신 운영 데이터를 변경하지 않는다.
+당시 알고 있던 값의 재현과 사후 검증된 관측으로 재구성한 결과를 구분한다.
+
+시가총액은 동일 날짜 KRX 공식 값과 종가×상장주식수의 일치를 검산한다.
+기존 DB 시가총액도 별도 필드에 남긴다. 수급 원본·합계는 변경하지 않는다.
+상지건설의 9/22 유상증자 권리락은 공식 원문으로 확인했으나, 공급자의 정밀도
+명세와 일부 거래량 차이는 여전히 보류다. `evidence/`에 근거와 미확인 사항이 있다.
 
 ## 중간 확인 후 H3를 이미 넘은 경계 사례
 
