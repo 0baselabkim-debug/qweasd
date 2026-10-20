@@ -1,0 +1,74 @@
+{
+  "fixed_current_cohort": 701,
+  "dates": [
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-19"
+  ],
+  "coverage": {
+    "2026-10-15": 0,
+    "2026-10-16": 701,
+    "2026-10-19": 701
+  },
+  "asof19_flow_value_checks": 1402,
+  "archival_versions_read": 2321,
+  "price_events": 204,
+  "summary": [
+    {
+      "scope": "2026-10-19",
+      "stage": "조기",
+      "price_events": 158,
+      "price_events_within10": 132,
+      "flow_improving_events": 109,
+      "flow_improving_within10": 96,
+      "distinct_stocks_within10_with_flow": 96
+    },
+    {
+      "scope": "2026-10-19",
+      "stage": "중간",
+      "price_events": 31,
+      "price_events_within10": 13,
+      "flow_improving_events": 15,
+      "flow_improving_within10": 9,
+      "distinct_stocks_within10_with_flow": 9
+    },
+    {
+      "scope": "2026-10-19",
+      "stage": "확정",
+      "price_events": 3,
+      "price_events_within10": 0,
+      "flow_improving_events": 2,
+      "flow_improving_within10": 0,
+      "distinct_stocks_within10_with_flow": 0
+    },
+    {
+      "scope": "관측가능3일",
+      "stage": "조기",
+      "price_events": 163,
+      "price_events_within10": 137,
+      "flow_improving_events": 110,
+      "flow_improving_within10": 97,
+      "distinct_stocks_within10_with_flow": 97
+    },
+    {
+      "scope": "관측가능3일",
+      "stage": "중간",
+      "price_events": 34,
+      "price_events_within10": 14,
+      "flow_improving_events": 17,
+      "flow_improving_within10": 10,
+      "distinct_stocks_within10_with_flow": 10
+    },
+    {
+      "scope": "관측가능3일",
+      "stage": "확정",
+      "price_events": 7,
+      "price_events_within10": 0,
+      "flow_improving_events": 3,
+      "flow_improving_within10": 0,
+      "distinct_stocks_within10_with_flow": 0
+    }
+  ],
+  "new_market_api_calls": 0,
+  "scope_limit": "fixed current 701-stock cohort; no retrospective results before contemporaneous preserved observations; no forward returns"
+}
