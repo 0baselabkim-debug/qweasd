@@ -1,0 +1,563 @@
+{
+  "code_commit": "79cedf4fccd0eb5b4034895e31cf1b4ad98ffd0d",
+  "publication_commit": "31e62df98d9e37dab36b50c5cc250ae07d4378c4",
+  "recovery_run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39425171247",
+  "code_ci": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39425139817",
+  "published_data_ci": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39425791990",
+  "local_tests": {
+    "passed": 227,
+    "seconds": 297.09
+  },
+  "provider_flow_fields_changed": {
+    "stck_clpr": {
+      "earlier": "3020",
+      "later": "2995"
+    },
+    "prdy_vrss": {
+      "earlier": "50",
+      "later": "25"
+    },
+    "prdy_ctrt": {
+      "earlier": "1.68",
+      "later": "0.84"
+    }
+  },
+  "checkpoint": {
+    "status": "complete",
+    "records": 2429,
+    "excluded": 112,
+    "failures": {},
+    "unchanged_prior_successes": 2428,
+    "excluded_unchanged": true,
+    "latest_attempt": {
+      "started_at": "2026-10-20T12:49:19.659666+00:00",
+      "run_id": "39425171247",
+      "restored": 0,
+      "cached_successes": 2428,
+      "physical_requests": 3,
+      "retries": 0,
+      "endpoints": {
+        "/oauth2/tokenP": 1,
+        "/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily": 1,
+        "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice": 1
+      },
+      "elapsed_seconds": 4.983,
+      "successful": 2429,
+      "failed": 0
+    },
+    "metrics": [
+      {
+        "http": 200,
+        "code": "",
+        "seconds": 0.7017,
+        "kind": "authentication",
+        "attempt": 1,
+        "endpoint": "/oauth2/tokenP",
+        "symbol": null,
+        "started_at_unix": 1792500559.6598523
+      },
+      {
+        "http": 200,
+        "code": "MCA00000",
+        "seconds": 1.3392,
+        "kind": "market",
+        "attempt": 1,
+        "endpoint": "/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily",
+        "symbol": "001420",
+        "started_at_unix": 1792500560.8727107
+      },
+      {
+        "http": 200,
+        "code": "MCA00000",
+        "seconds": 0.5827,
+        "kind": "market",
+        "attempt": 1,
+        "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+        "symbol": "001420",
+        "started_at_unix": 1792500562.2121851
+      }
+    ],
+    "taewon": {
+      "flow": {
+        "stck_bsop_date": "20261020",
+        "stck_clpr": "2995",
+        "prdy_vrss": "25",
+        "prdy_vrss_sign": "2",
+        "prdy_ctrt": "0.84",
+        "acml_vol": "33786",
+        "acml_tr_pbmn": "102119270",
+        "stck_oprc": "2975",
+        "stck_hgpr": "3095",
+        "stck_lwpr": "2950",
+        "frgn_ntby_qty": "2353",
+        "frgn_reg_ntby_qty": "2353",
+        "frgn_nreg_ntby_qty": "0",
+        "prsn_ntby_qty": "-13245",
+        "orgn_ntby_qty": "730",
+        "scrt_ntby_qty": "730",
+        "ivtr_ntby_qty": "0",
+        "pe_fund_ntby_vol": "0",
+        "bank_ntby_qty": "0",
+        "insu_ntby_qty": "0",
+        "mrbn_ntby_qty": "0",
+        "fund_ntby_qty": "0",
+        "etc_ntby_qty": "10162",
+        "etc_corp_ntby_vol": "10162",
+        "etc_orgt_ntby_vol": "0",
+        "frgn_reg_ntby_pbmn": "7",
+        "frgn_ntby_tr_pbmn": "7",
+        "frgn_nreg_ntby_pbmn": "0",
+        "prsn_ntby_tr_pbmn": "-40",
+        "orgn_ntby_tr_pbmn": "2",
+        "scrt_ntby_tr_pbmn": "2",
+        "pe_fund_ntby_tr_pbmn": "0",
+        "ivtr_ntby_tr_pbmn": "0",
+        "bank_ntby_tr_pbmn": "0",
+        "insu_ntby_tr_pbmn": "0",
+        "mrbn_ntby_tr_pbmn": "0",
+        "fund_ntby_tr_pbmn": "0",
+        "etc_ntby_tr_pbmn": "31",
+        "etc_corp_ntby_tr_pbmn": "31",
+        "etc_orgt_ntby_tr_pbmn": "0",
+        "frgn_seln_vol": "8354",
+        "frgn_shnu_vol": "10707",
+        "frgn_seln_tr_pbmn": "25",
+        "frgn_shnu_tr_pbmn": "32",
+        "frgn_reg_askp_qty": "8354",
+        "frgn_reg_bidp_qty": "10707",
+        "frgn_reg_askp_pbmn": "25",
+        "frgn_reg_bidp_pbmn": "32",
+        "frgn_nreg_askp_qty": "0",
+        "frgn_nreg_bidp_qty": "0",
+        "frgn_nreg_askp_pbmn": "0",
+        "frgn_nreg_bidp_pbmn": "0",
+        "prsn_seln_vol": "15281",
+        "prsn_shnu_vol": "2036",
+        "prsn_seln_tr_pbmn": "46",
+        "prsn_shnu_tr_pbmn": "6",
+        "orgn_seln_vol": "5313",
+        "orgn_shnu_vol": "6043",
+        "orgn_seln_tr_pbmn": "16",
+        "orgn_shnu_tr_pbmn": "18",
+        "scrt_seln_vol": "5313",
+        "scrt_shnu_vol": "6043",
+        "scrt_seln_tr_pbmn": "16",
+        "scrt_shnu_tr_pbmn": "18",
+        "ivtr_seln_vol": "0",
+        "ivtr_shnu_vol": "0",
+        "ivtr_seln_tr_pbmn": "0",
+        "ivtr_shnu_tr_pbmn": "0",
+        "pe_fund_seln_tr_pbmn": "0",
+        "pe_fund_seln_vol": "0",
+        "pe_fund_shnu_tr_pbmn": "0",
+        "pe_fund_shnu_vol": "0",
+        "bank_seln_vol": "0",
+        "bank_shnu_vol": "0",
+        "bank_seln_tr_pbmn": "0",
+        "bank_shnu_tr_pbmn": "0",
+        "insu_seln_vol": "0",
+        "insu_shnu_vol": "0",
+        "insu_seln_tr_pbmn": "0",
+        "insu_shnu_tr_pbmn": "0",
+        "mrbn_seln_vol": "0",
+        "mrbn_shnu_vol": "0",
+        "mrbn_seln_tr_pbmn": "0",
+        "mrbn_shnu_tr_pbmn": "0",
+        "fund_seln_vol": "0",
+        "fund_shnu_vol": "0",
+        "fund_seln_tr_pbmn": "0",
+        "fund_shnu_tr_pbmn": "0",
+        "etc_seln_vol": "4838",
+        "etc_shnu_vol": "15000",
+        "etc_seln_tr_pbmn": "15",
+        "etc_shnu_tr_pbmn": "45",
+        "etc_orgt_seln_vol": "0",
+        "etc_orgt_shnu_vol": "0",
+        "etc_orgt_seln_tr_pbmn": "0",
+        "etc_orgt_shnu_tr_pbmn": "0",
+        "etc_corp_seln_vol": "4838",
+        "etc_corp_shnu_vol": "15000",
+        "etc_corp_seln_tr_pbmn": "15",
+        "etc_corp_shnu_tr_pbmn": "45",
+        "bold_yn": "N"
+      },
+      "chart": {
+        "stck_bsop_date": "20261020",
+        "stck_clpr": "2995",
+        "stck_oprc": "2975",
+        "stck_hgpr": "3095",
+        "stck_lwpr": "2950",
+        "acml_vol": "33786",
+        "acml_tr_pbmn": "102119270",
+        "flng_cls_code": "00",
+        "prtt_rate": "0.00",
+        "mod_yn": "N",
+        "prdy_vrss_sign": "2",
+        "prdy_vrss": "25",
+        "revl_issu_reas": ""
+      },
+      "quote": {
+        "stck_shrn_iscd": "001420",
+        "stck_prpr": "2995",
+        "acml_vol": "33786",
+        "acml_tr_pbmn": "102119270",
+        "lstn_stcn": "7600000",
+        "hts_avls": "228",
+        "bstp_kor_isnm": null,
+        "iscd_stat_cls_code": null
+      },
+      "observed_at": "2026-10-20T12:49:22.795028+00:00",
+      "quote_source": "FHKST03010100.output1"
+    }
+  },
+  "publication": {
+    "checked_main_commit": "8c1108f7fa80d7a0378c9fc31538fe3732c3eb0b",
+    "asof": "2026-10-20",
+    "snapshot_sha256": "d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+    "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+    "publication_status": "ready_for_briefing",
+    "validation_status": "passed",
+    "provider_finality": "UNVERIFIED",
+    "published_at": "2026-10-20T12:51:42.243665+00:00",
+    "source_run": "39425171247",
+    "flow_checkpoint_rows_reconciled": 2429,
+    "independent_full_dataset_reconciliation": {
+      "status": "passed",
+      "sectors_checked": 50,
+      "stocks_checked": 2429,
+      "metric_checks": 20232
+    },
+    "taewon_database_values": {
+      "close": 2995.0,
+      "adjusted_close": 2995.0,
+      "volume": 33786,
+      "turnover": 102119270.0,
+      "market_cap": 22800000000.0,
+      "foreign_net_krw": 7000000
+    },
+    "public_files": {
+      "snapshot/manifest.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/manifest.json",
+        "http": 200,
+        "file_sha256": "31d170f640d2f0e6d2b8eaae5452cec7a83dc52887a8c3876d083785f4a5cadd",
+        "asof": "2026-10-20",
+        "dataset_id": null,
+        "validation_status": null,
+        "publication_status": null
+      },
+      "snapshot/publication-ledger.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/publication-ledger.json",
+        "http": 200,
+        "file_sha256": "d9900953a490ed1612eda46640c27b7da70f7f802777618db437cc6776a9ee4c",
+        "asof": null,
+        "dataset_id": null,
+        "validation_status": null,
+        "publication_status": null
+      },
+      "snapshot/daily-validation.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/daily-validation.json",
+        "http": 200,
+        "file_sha256": "5eefa6c22143e9e9370d2d74c11854a4bf05bf22c02b8e1eec0fcd13e4f290a4",
+        "asof": "2026-10-20",
+        "dataset_id": null,
+        "validation_status": null,
+        "publication_status": null
+      },
+      "snapshot/briefing/index.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/index.json",
+        "http": 200,
+        "file_sha256": "7ff32e3927856154d16429b28b7df9ac232a1e74cf0a3f2b4391635a7d0af526",
+        "asof": "2026-10-20",
+        "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      },
+      "snapshot/daily_briefing.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/daily_briefing.json",
+        "http": 200,
+        "file_sha256": "a6040ac63098c57e3147c40a94256a184a367a31245f4dfbc8ef8cd1910d3208",
+        "asof": "2026-10-20",
+        "dataset_id": null,
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      },
+      "snapshot/briefing/sectors/kosdaq-3e6ffb5436df98f1284156f8.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/sectors/kosdaq-3e6ffb5436df98f1284156f8.json",
+        "http": 200,
+        "file_sha256": "d47b7dbd09923b1757d29a3bff3f54f3d46db1e8a43ad1715f88d64b5ec9d133",
+        "asof": "2026-10-20",
+        "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      },
+      "snapshot/briefing/sectors/kospi-4568f2f682af64bee1ade18d.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/sectors/kospi-4568f2f682af64bee1ade18d.json",
+        "http": 200,
+        "file_sha256": "f48658b3fc0aa4e63966c5aedca027e6d6305d8f27025c91f3def7cacd2086eb",
+        "asof": "2026-10-20",
+        "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      },
+      "snapshot/briefing/sectors/kospi-59ea626efa4b283132c311fc.json": {
+        "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/briefing/sectors/kospi-59ea626efa4b283132c311fc.json",
+        "http": 200,
+        "file_sha256": "76e8d5b478303980aa67d903087da7b280e26671ff2bebff9d9c06635605f3bf",
+        "asof": "2026-10-20",
+        "dataset_id": "flow-v3-2026-10-20-d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+        "validation_status": "passed",
+        "publication_status": "ready_for_briefing"
+      }
+    },
+    "ledger_20261020": {
+      "run_id": "39425171247",
+      "mode": "collect",
+      "published_at_utc": "2026-10-20T12:51:42.243665+00:00",
+      "sha256": "d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c",
+      "validation": {
+        "trade_date": "2026-10-20",
+        "records": 2429,
+        "excluded": 112,
+        "adjusted_updates": 94607,
+        "source_run": "39404777750",
+        "planned_start_at": "2026-10-20T18:30:00+09:00",
+        "collection_started_at": "2026-10-20T10:00:49.808523+00:00",
+        "collection_completed_at": "2026-10-20T12:49:23.294280+00:00",
+        "input_mode": "live_daily_collection",
+        "adjusted_close_conflict_symbols": 0,
+        "complete_stock_scores": 1159,
+        "complete_sector_scores": 0,
+        "full_20d_symbols": 2420,
+        "preservation_verified": true,
+        "phase_seconds": {
+          "bundle_validation": 0.7031833810000023,
+          "database_copy": 0.008296897999997555,
+          "database_update": 27.106584821000013,
+          "preservation_comparison": 0.09242758099999548,
+          "aggregate_validation": 8.396037696999997
+        },
+        "candidate_total_seconds": 36.30675908500001,
+        "sha256": "d39550c85cadf82ca5590bb86512ef985944815652b4b50cdb0bddf10b54497c"
+      }
+    }
+  },
+  "market_requests_including_auth": {
+    "kis_diagnostic": 4,
+    "krx_reference": 1,
+    "production_resume": 3,
+    "total": 8
+  },
+  "remaining_limitations": [
+    "KIS internal reason for delayed price-field revision not confirmed",
+    "Independent KRX request returned HTTP 403; denial origin not determined",
+    "Provider finality remains UNVERIFIED; existing operational checks passed"
+  ],
+  "code_ci_result": {
+    "conclusion": "success",
+    "databaseId": 39425139817,
+    "headSha": "79cedf4fccd0eb5b4034895e31cf1b4ad98ffd0d",
+    "status": "completed"
+  },
+  "published_data_ci_result": {
+    "conclusion": "success",
+    "databaseId": 39425791990,
+    "headSha": "8c1108f7fa80d7a0378c9fc31538fe3732c3eb0b",
+    "jobs": [
+      {
+        "completedAt": "2026-10-20T12:57:57Z",
+        "conclusion": "success",
+        "databaseId": 118637899500,
+        "name": "check",
+        "startedAt": "2026-10-20T12:53:19Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Install dashboard dependencies",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Test real snapshot, calculations, and UI without API secrets",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Start and check HTTP server",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 13,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39425791990/job/118637899500"
+      }
+    ],
+    "status": "completed"
+  },
+  "recovery_run_result": {
+    "conclusion": "success",
+    "createdAt": "2026-10-20T12:48:36Z",
+    "databaseId": 39425171247,
+    "headSha": "79cedf4fccd0eb5b4034895e31cf1b4ad98ffd0d",
+    "jobs": [
+      {
+        "completedAt": "2026-10-20T12:52:07Z",
+        "conclusion": "success",
+        "databaseId": 118635803837,
+        "name": "refresh",
+        "startedAt": "2026-10-20T12:48:41Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run pip install -r requirements.txt pytest==9.1.1",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Record actual runner start",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Choose scheduled trading date and restore only its checkpoint",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Load checkpoint",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Collect only missing stocks for this trading date",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Verify official holiday endpoint during real-data rehearsal",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Preserve resume ledger independently of publication",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Build from latest main and validate without touching published files",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Publish validated snapshot in one Git commit",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Record this attempt without changing market data",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 29,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 30,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 31,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39425171247/job/118635803837"
+      }
+    ],
+    "status": "completed",
+    "updatedAt": "2026-10-20T12:52:08Z"
+  }
+}
