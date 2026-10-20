@@ -139,6 +139,7 @@ jobs:
             daily-results/bundle.json.gz
             daily-results/calendar-check.json
             daily-results/successes.jsonl
+            daily-results/diagnostics
           retention-days: 7
           if-no-files-found: ignore
 

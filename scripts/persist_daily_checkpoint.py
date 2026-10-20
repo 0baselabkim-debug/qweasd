@@ -7,6 +7,7 @@ def persist(repo,day,remote='origin',prefix='data/daily-'):
     repo=Path(repo).resolve();branch=prefix+day
     files=[p for p in ['daily-results/bundle.json.gz','daily-results/successes.jsonl'] if (repo/p).exists()]
     if not files or files[0]!='daily-results/bundle.json.gz':return {'status':'no_checkpoint'}
+    files += sorted(str(p.relative_to(repo)) for p in (repo/'daily-results/diagnostics').rglob('*.json'))
     def git(*args,env=None,input=None):
         return subprocess.check_output(['git',*args],cwd=repo,env=env,input=input).decode().strip()
     ref='refs/heads/'+branch

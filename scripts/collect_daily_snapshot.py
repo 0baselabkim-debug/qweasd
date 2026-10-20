@@ -6,6 +6,7 @@ from html.parser import HTMLParser
 from kis_public_client import KIS
 from daily_checkpoint import Journal
 from daily_metrics import summarize
+from daily_diagnostics import preserve_failure,redact
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from screener.daily import validate_bundle
 from screener.collection_schedule import window
@@ -73,14 +74,16 @@ def delisted(row,info,day):
     date=info.get('lstg_abol_dt','')
     return bool(re.fullmatch(r'\d{8}',date) and row['listing_date']<=date<=day and info.get(field)==date)
 
-def fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline):
-    code=row['symbol']
+def fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline,diagnostic_dir=None):
+    code=row['symbol'];observations=[]
     try:
         if dt.datetime.now(ZONE)>=cutoff:raise ValueError('Quote date window expired')
         if time.monotonic()>=deadline:raise ValueError('Run time budget exhausted; retry pending only')
         p={'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':code,'FID_INPUT_DATE_1':day,'FID_ORG_ADJ_PRC':'','FID_ETC_CLS_CODE':''}
         flow=api.request('/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily',p,'FHPTJ04160001')
+        observations.append({'endpoint':'investor-trade-by-stock-daily','tr_id':'FHPTJ04160001','params':p,'observed_at':utcnow(),'response':flow})
         series=api.prices(code,since,day)
+        observations.append({'endpoint':'inquire-daily-itemchartprice','tr_id':'FHKST03010100','params':{'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':code,'FID_INPUT_DATE_1':since,'FID_INPUT_DATE_2':day,'FID_PERIOD_DIV_CODE':'D','FID_ORG_ADJ_PRC':'0'},'observed_at':utcnow(),'response':series})
         price=[r for r in series.get('output2',[]) if r.get('stck_bsop_date')==day]
         matched=[r for r in flow.get('output2',[]) if r.get('stck_bsop_date')==day]
         if len(price)==1 and int(price[0]['acml_vol'])==0:
@@ -106,7 +109,12 @@ def fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline):
         _,checked=validate_bundle({**result,'records':{code:record},'universe':[row],'excluded':{},'failures':{},'status':'complete'})
         if code in known_industry and checked[0]['sector']=='업종 미분류':raise ValueError('Current official industry missing')
         return code,record,None,None
-    except Exception as e:return code,None,None,type(e).__name__+': '+str(e)
+    except Exception as e:
+        secrets=[getattr(api,k,None) for k in ['key','secret','token']]
+        error=redact(type(e).__name__+': '+str(e),secrets)
+        try:preserve_failure(diagnostic_dir,day,code,error,observations,secrets)
+        except Exception as diagnostic_error:error+='; diagnostic persistence failed: '+type(diagnostic_error).__name__
+        return code,None,None,error
 
 def benchmark_ready(response,day):
     import math
@@ -193,7 +201,7 @@ def collect(day,out):
         pending=[r for r in result['universe'] if r['symbol'] not in result['records'] and r['symbol'] not in result['excluded']]
         if not pending:break
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-            for i,(code,record,excluded,error) in enumerate(pool.map(lambda row:fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline),pending),1):
+            for i,(code,record,excluded,error) in enumerate(pool.map(lambda row:fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline,out/'diagnostics'),pending),1):
                 if error:result['failures'][code]=error
                 else:
                     result['failures'].pop(code,None)
