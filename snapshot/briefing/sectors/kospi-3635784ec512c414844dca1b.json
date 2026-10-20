@@ -1,0 +1,96 @@
+{
+  "asof": "2026-10-19",
+  "classification": "official_sector",
+  "dataset_id": "flow-v3-2026-10-19-cce160ee1dab74a88e9bbd3ba7e5c1e7878a5eef632027d7e2ae58232f532bd0",
+  "generated_at": "2026-10-20T02:47:51.690045+00:00",
+  "market": "KOSPI",
+  "membership_basis": "current_asof_membership_applied_to_history",
+  "metric_definitions": {
+    "breadth_20d": "percent; positive_20d / evaluable_20d * 100",
+    "breadth_5d": "percent; positive_5d / evaluable_5d * 100",
+    "change_5d": "KRW; net_5d minus previous_5d (nonoverlapping)",
+    "intensity_5d": "ratio; net_5d / positive asof market_cap; multiply by 100 for percent",
+    "members": "included dashboard universe, not all registered securities",
+    "net_1d": "KRW; last trading day foreign net purchases",
+    "net_20d": "KRW; last 20 trading days, all observations required",
+    "net_5d": "KRW; last 5 trading days, all observations required",
+    "observed_days_20d": "days; available complete observations in calendar window of at most 20 days",
+    "positive_days_20d": "days; strictly positive complete daily net amounts; null unless 20 complete days",
+    "previous_5d": "KRW; five trading days immediately before the latest five",
+    "registered_members": "instruments with this asof membership, including those outside dashboard universe"
+  },
+  "path": "sectors/kospi-3635784ec512c414844dca1b.json",
+  "provider_finality": "UNVERIFIED",
+  "publication_status": "ready_for_briefing",
+  "published_at": "2026-10-20T02:47:51.690045+00:00",
+  "raw_flow_reconciliation": {
+    "status": "passed",
+    "stocks_checked": 2
+  },
+  "schema_version": 3,
+  "sector": "부동산",
+  "sector_id": "kospi-3635784ec512c414844dca1b",
+  "source_snapshot_sha256": "cce160ee1dab74a88e9bbd3ba7e5c1e7878a5eef632027d7e2ae58232f532bd0",
+  "stock_count": 2,
+  "stocks": [
+    {
+      "change_5d": 290000000.0,
+      "intensity_5d": 0.0021023765996343695,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "SK디앤디",
+      "net_1d": 10000000.0,
+      "net_20d": 20000000.0,
+      "net_5d": 115000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 8.0,
+      "previous_5d": -175000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-3635784ec512c414844dca1b",
+      "symbol": "210980"
+    },
+    {
+      "change_5d": 4338000000.0,
+      "intensity_5d": 0.02102283105022831,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "자이에스앤디",
+      "net_1d": 596000000.0,
+      "net_20d": 8738000000.0,
+      "net_5d": 6906000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 2568000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-3635784ec512c414844dca1b",
+      "symbol": "317400"
+    }
+  ],
+  "validation_status": "passed"
+}

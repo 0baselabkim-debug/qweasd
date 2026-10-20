@@ -1,0 +1,560 @@
+{
+  "asof": "2026-10-19",
+  "classification": "official_sector",
+  "dataset_id": "flow-v3-2026-10-19-cce160ee1dab74a88e9bbd3ba7e5c1e7878a5eef632027d7e2ae58232f532bd0",
+  "generated_at": "2026-10-20T02:47:51.690045+00:00",
+  "market": "KOSPI",
+  "membership_basis": "current_asof_membership_applied_to_history",
+  "metric_definitions": {
+    "breadth_20d": "percent; positive_20d / evaluable_20d * 100",
+    "breadth_5d": "percent; positive_5d / evaluable_5d * 100",
+    "change_5d": "KRW; net_5d minus previous_5d (nonoverlapping)",
+    "intensity_5d": "ratio; net_5d / positive asof market_cap; multiply by 100 for percent",
+    "members": "included dashboard universe, not all registered securities",
+    "net_1d": "KRW; last trading day foreign net purchases",
+    "net_20d": "KRW; last 20 trading days, all observations required",
+    "net_5d": "KRW; last 5 trading days, all observations required",
+    "observed_days_20d": "days; available complete observations in calendar window of at most 20 days",
+    "positive_days_20d": "days; strictly positive complete daily net amounts; null unless 20 complete days",
+    "previous_5d": "KRW; five trading days immediately before the latest five",
+    "registered_members": "instruments with this asof membership, including those outside dashboard universe"
+  },
+  "path": "sectors/kospi-c39c0454810e005af855ff10.json",
+  "provider_finality": "UNVERIFIED",
+  "publication_status": "ready_for_briefing",
+  "published_at": "2026-10-20T02:47:51.690045+00:00",
+  "raw_flow_reconciliation": {
+    "status": "passed",
+    "stocks_checked": 18
+  },
+  "schema_version": 3,
+  "sector": "증권",
+  "sector_id": "kospi-c39c0454810e005af855ff10",
+  "source_snapshot_sha256": "cce160ee1dab74a88e9bbd3ba7e5c1e7878a5eef632027d7e2ae58232f532bd0",
+  "stock_count": 18,
+  "stocks": [
+    {
+      "change_5d": 613000000.0,
+      "intensity_5d": -0.0002518682535289233,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "유진투자증권",
+      "net_1d": -47000000.0,
+      "net_20d": -1875000000.0,
+      "net_5d": -91000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": -704000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "001200"
+    },
+    {
+      "change_5d": 176000000.0,
+      "intensity_5d": -0.000288481351741191,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "부국증권",
+      "net_1d": 17000000.0,
+      "net_20d": -529000000.0,
+      "net_5d": -140000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 5.0,
+      "previous_5d": -316000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "001270"
+    },
+    {
+      "change_5d": 205000000.0,
+      "intensity_5d": 0.000915576694411415,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "상상인증권",
+      "net_1d": 15000000.0,
+      "net_20d": 165000000.0,
+      "net_5d": 77000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": -128000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "001290"
+    },
+    {
+      "change_5d": 679000000.0,
+      "intensity_5d": 0.0014510250569476082,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "현대차증권",
+      "net_1d": 205000000.0,
+      "net_20d": -371000000.0,
+      "net_5d": 637000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -42000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "001500"
+    },
+    {
+      "change_5d": 1831000000.0,
+      "intensity_5d": 0.003458485303582922,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "SK증권",
+      "net_1d": -140000000.0,
+      "net_20d": 3568000000.0,
+      "net_5d": 1612000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": -219000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "001510"
+    },
+    {
+      "change_5d": -579000000.0,
+      "intensity_5d": 0.0004919855461873436,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "신영증권",
+      "net_1d": 113000000.0,
+      "net_20d": 4819000000.0,
+      "net_5d": 1062000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 14.0,
+      "previous_5d": 1641000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "001720"
+    },
+    {
+      "change_5d": 79000000.0,
+      "intensity_5d": -0.0008172571027709576,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "한양증권",
+      "net_1d": -9000000.0,
+      "net_20d": -941000000.0,
+      "net_5d": -233000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 2.0,
+      "previous_5d": -312000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "001750"
+    },
+    {
+      "change_5d": 104000000.0,
+      "intensity_5d": 0.00013221153846153846,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "유화증권",
+      "net_1d": 6000000.0,
+      "net_20d": -236000000.0,
+      "net_5d": 22000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -82000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "003460"
+    },
+    {
+      "change_5d": 1066000000.0,
+      "intensity_5d": 0.0013071474565357372,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "유안타증권",
+      "net_1d": -46000000.0,
+      "net_20d": -1569000000.0,
+      "net_5d": 1015000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 8.0,
+      "previous_5d": -51000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "003470"
+    },
+    {
+      "change_5d": 3075000000.0,
+      "intensity_5d": 0.0033887154326494202,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "한화투자증권",
+      "net_1d": 224000000.0,
+      "net_20d": 1225000000.0,
+      "net_5d": 3039000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 12.0,
+      "previous_5d": -36000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "003530"
+    },
+    {
+      "change_5d": 2735000000.0,
+      "intensity_5d": 0.0011617458279845957,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "대신증권",
+      "net_1d": 128000000.0,
+      "net_20d": -4130000000.0,
+      "net_5d": 1267000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -1468000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "003540"
+    },
+    {
+      "change_5d": 11663000000.0,
+      "intensity_5d": -0.000691747572815534,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "NH투자증권",
+      "net_1d": -2053000000.0,
+      "net_20d": -46812000000.0,
+      "net_5d": -6270000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 3.0,
+      "previous_5d": -17933000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "005940"
+    },
+    {
+      "change_5d": 67522000000.0,
+      "intensity_5d": 0.0024178264835095975,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "미래에셋증권",
+      "net_1d": 989000000.0,
+      "net_20d": 3114000000.0,
+      "net_5d": 34727000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 10.0,
+      "previous_5d": -32795000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "006800"
+    },
+    {
+      "change_5d": 18444000000.0,
+      "intensity_5d": -0.0006474297138223657,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "삼성증권",
+      "net_1d": -107000000.0,
+      "net_20d": -14886000000.0,
+      "net_5d": -4631000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": -23075000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "016360"
+    },
+    {
+      "change_5d": -8000000.0,
+      "intensity_5d": -0.0008625271804783765,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "DB증권",
+      "net_1d": -142000000.0,
+      "net_20d": -2156000000.0,
+      "net_5d": -357000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 2.0,
+      "previous_5d": -349000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "016610"
+    },
+    {
+      "change_5d": 150000000.0,
+      "intensity_5d": 0.0003108108108108108,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "다올투자증권",
+      "net_1d": -10000000.0,
+      "net_20d": -446000000.0,
+      "net_5d": 69000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -81000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "030210"
+    },
+    {
+      "change_5d": 875000000.0,
+      "intensity_5d": 0.0007653309934678756,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "교보증권",
+      "net_1d": 47000000.0,
+      "net_20d": 306000000.0,
+      "net_5d": 785000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -90000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "030610"
+    },
+    {
+      "change_5d": -7387000000.0,
+      "intensity_5d": 0.0008416516572121131,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "키움증권",
+      "net_1d": -116000000.0,
+      "net_20d": 23148000000.0,
+      "net_5d": 5000000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 12.0,
+      "previous_5d": 12387000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-c39c0454810e005af855ff10",
+      "symbol": "039490"
+    }
+  ],
+  "validation_status": "passed"
+}

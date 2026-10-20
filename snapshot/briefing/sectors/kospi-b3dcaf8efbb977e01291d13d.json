@@ -1,0 +1,792 @@
+{
+  "asof": "2026-10-19",
+  "classification": "official_sector",
+  "dataset_id": "flow-v3-2026-10-19-cce160ee1dab74a88e9bbd3ba7e5c1e7878a5eef632027d7e2ae58232f532bd0",
+  "generated_at": "2026-10-20T02:47:51.690045+00:00",
+  "market": "KOSPI",
+  "membership_basis": "current_asof_membership_applied_to_history",
+  "metric_definitions": {
+    "breadth_20d": "percent; positive_20d / evaluable_20d * 100",
+    "breadth_5d": "percent; positive_5d / evaluable_5d * 100",
+    "change_5d": "KRW; net_5d minus previous_5d (nonoverlapping)",
+    "intensity_5d": "ratio; net_5d / positive asof market_cap; multiply by 100 for percent",
+    "members": "included dashboard universe, not all registered securities",
+    "net_1d": "KRW; last trading day foreign net purchases",
+    "net_20d": "KRW; last 20 trading days, all observations required",
+    "net_5d": "KRW; last 5 trading days, all observations required",
+    "observed_days_20d": "days; available complete observations in calendar window of at most 20 days",
+    "positive_days_20d": "days; strictly positive complete daily net amounts; null unless 20 complete days",
+    "previous_5d": "KRW; five trading days immediately before the latest five",
+    "registered_members": "instruments with this asof membership, including those outside dashboard universe"
+  },
+  "path": "sectors/kospi-b3dcaf8efbb977e01291d13d.json",
+  "provider_finality": "UNVERIFIED",
+  "publication_status": "ready_for_briefing",
+  "published_at": "2026-10-20T02:47:51.690045+00:00",
+  "raw_flow_reconciliation": {
+    "status": "passed",
+    "stocks_checked": 26
+  },
+  "schema_version": 3,
+  "sector": "섬유·의류",
+  "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+  "source_snapshot_sha256": "cce160ee1dab74a88e9bbd3ba7e5c1e7878a5eef632027d7e2ae58232f532bd0",
+  "stock_count": 26,
+  "stocks": [
+    {
+      "change_5d": -13000000.0,
+      "intensity_5d": -0.0002594810379241517,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "전방",
+      "net_1d": 2000000.0,
+      "net_20d": -48000000.0,
+      "net_5d": -13000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 3.0,
+      "previous_5d": 0.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "000950"
+    },
+    {
+      "change_5d": 32000000.0,
+      "intensity_5d": -0.00018867924528301886,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "대한방직",
+      "net_1d": 4000000.0,
+      "net_20d": -102000000.0,
+      "net_5d": -6000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 2.0,
+      "previous_5d": -38000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "001070"
+    },
+    {
+      "change_5d": 219000000.0,
+      "intensity_5d": 0.0005711813067935959,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "BYC",
+      "net_1d": 42000000.0,
+      "net_20d": 219000000.0,
+      "net_5d": 132000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": -87000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "001460"
+    },
+    {
+      "change_5d": 27000000.0,
+      "intensity_5d": 0.0011320754716981133,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "비비안",
+      "net_1d": -3000000.0,
+      "net_20d": -91000000.0,
+      "net_5d": 18000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -9000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "002070"
+    },
+    {
+      "change_5d": 3000000.0,
+      "intensity_5d": 5.802707930367505e-05,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "SYTS",
+      "net_1d": 9000000.0,
+      "net_20d": 8000000.0,
+      "net_5d": 9000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 10.0,
+      "previous_5d": 6000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "002170"
+    },
+    {
+      "change_5d": 402000000.0,
+      "intensity_5d": 0.0005026061057334326,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "일신방직",
+      "net_1d": -384000000.0,
+      "net_20d": 296000000.0,
+      "net_5d": 135000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": -267000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "003200"
+    },
+    {
+      "change_5d": 191000000.0,
+      "intensity_5d": -0.0011351968054763263,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "방림",
+      "net_1d": -55000000.0,
+      "net_20d": -1095000000.0,
+      "net_5d": -199000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 2.0,
+      "previous_5d": -390000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "003610"
+    },
+    {
+      "change_5d": 28000000.0,
+      "intensity_5d": 7.452574525745257e-05,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "조광피혁",
+      "net_1d": -1000000.0,
+      "net_20d": 85000000.0,
+      "net_5d": 33000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 5000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "004700"
+    },
+    {
+      "change_5d": 31000000.0,
+      "intensity_5d": -6.734006734006734e-05,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "신영와코루",
+      "net_1d": 5000000.0,
+      "net_20d": -335000000.0,
+      "net_5d": -8000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 4.0,
+      "previous_5d": -39000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "005800"
+    },
+    {
+      "change_5d": 2000000.0,
+      "intensity_5d": 0.0,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "원림",
+      "net_1d": 0.0,
+      "net_20d": -14000000.0,
+      "net_5d": 0.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -2000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "005820"
+    },
+    {
+      "change_5d": 626000000.0,
+      "intensity_5d": 0.002825,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "TP",
+      "net_1d": -26000000.0,
+      "net_20d": -226000000.0,
+      "net_5d": 226000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 5.0,
+      "previous_5d": -400000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "007980"
+    },
+    {
+      "change_5d": -821000000.0,
+      "intensity_5d": 0.0004399323181049069,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "신원",
+      "net_1d": -10000000.0,
+      "net_20d": 993000000.0,
+      "net_5d": 52000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": 873000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "009270"
+    },
+    {
+      "change_5d": -16000000.0,
+      "intensity_5d": -0.0014807692307692308,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "우성머티리얼스",
+      "net_1d": 4000000.0,
+      "net_20d": 30000000.0,
+      "net_5d": -77000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 4.0,
+      "previous_5d": -61000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "011300"
+    },
+    {
+      "change_5d": 118000000.0,
+      "intensity_5d": 0.002972027972027972,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "인디에프",
+      "net_1d": 30000000.0,
+      "net_20d": 14000000.0,
+      "net_5d": 170000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": 52000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "014990"
+    },
+    {
+      "change_5d": -5000000.0,
+      "intensity_5d": 0.00033070866141732285,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "대현",
+      "net_1d": 9000000.0,
+      "net_20d": -85000000.0,
+      "net_5d": 21000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": 26000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "016090"
+    },
+    {
+      "change_5d": 77000000.0,
+      "intensity_5d": 0.00022619047619047618,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "한세예스24홀딩스",
+      "net_1d": 11000000.0,
+      "net_20d": -91000000.0,
+      "net_5d": 38000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -39000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "016450"
+    },
+    {
+      "change_5d": -999000000.0,
+      "intensity_5d": 0.00272768463978251,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "한섬",
+      "net_1d": 230000000.0,
+      "net_20d": -3428000000.0,
+      "net_5d": 1204000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": 2203000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "020000"
+    },
+    {
+      "change_5d": 5000000.0,
+      "intensity_5d": 6.696428571428572e-05,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "TBH글로벌",
+      "net_1d": 0.0,
+      "net_20d": -79000000.0,
+      "net_5d": 3000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 3.0,
+      "previous_5d": -2000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "084870"
+    },
+    {
+      "change_5d": 15000000.0,
+      "intensity_5d": 0.00028662420382165603,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "메타랩스",
+      "net_1d": -1000000.0,
+      "net_20d": -7000000.0,
+      "net_5d": 9000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -6000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "090370"
+    },
+    {
+      "change_5d": 360000000.0,
+      "intensity_5d": -0.0009579404280796288,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "LF",
+      "net_1d": -47000000.0,
+      "net_20d": -2372000000.0,
+      "net_5d": -640000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 3.0,
+      "previous_5d": -1000000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "093050"
+    },
+    {
+      "change_5d": -148000000.0,
+      "intensity_5d": -0.0005085714285714285,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "한세실업",
+      "net_1d": -1000000.0,
+      "net_20d": -781000000.0,
+      "net_5d": -178000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 4.0,
+      "previous_5d": -30000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "105630"
+    },
+    {
+      "change_5d": 39000000.0,
+      "intensity_5d": 0.00039451114922813035,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "호전실업",
+      "net_1d": 4000000.0,
+      "net_20d": -8000000.0,
+      "net_5d": 23000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -16000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "111110"
+    },
+    {
+      "change_5d": 33000000.0,
+      "intensity_5d": -0.00015915119363395225,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "동인기연",
+      "net_1d": -17000000.0,
+      "net_20d": -113000000.0,
+      "net_5d": -12000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 3.0,
+      "previous_5d": -45000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "111380"
+    },
+    {
+      "change_5d": -128000000.0,
+      "intensity_5d": -0.0010573426573426573,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "제이에스코퍼레이션",
+      "net_1d": -186000000.0,
+      "net_20d": -1329000000.0,
+      "net_5d": -378000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -250000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "194370"
+    },
+    {
+      "change_5d": 17000000.0,
+      "intensity_5d": 0.00048444976076555024,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "화승엔터프라이즈",
+      "net_1d": -53000000.0,
+      "net_20d": 26000000.0,
+      "net_5d": 81000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 14.0,
+      "previous_5d": 64000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "241590"
+    },
+    {
+      "change_5d": 5442000000.0,
+      "intensity_5d": 0.0032149318760846288,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "F&F",
+      "net_1d": 9562000000.0,
+      "net_20d": 11452000000.0,
+      "net_5d": 8707000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 3265000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
+      "symbol": "383220"
+    }
+  ],
+  "validation_status": "passed"
+}

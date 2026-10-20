@@ -1,0 +1,328 @@
+{
+  "asof": "2026-10-19",
+  "classification": "official_sector",
+  "dataset_id": "flow-v3-2026-10-19-cce160ee1dab74a88e9bbd3ba7e5c1e7878a5eef632027d7e2ae58232f532bd0",
+  "generated_at": "2026-10-20T02:47:51.690045+00:00",
+  "market": "KOSPI",
+  "membership_basis": "current_asof_membership_applied_to_history",
+  "metric_definitions": {
+    "breadth_20d": "percent; positive_20d / evaluable_20d * 100",
+    "breadth_5d": "percent; positive_5d / evaluable_5d * 100",
+    "change_5d": "KRW; net_5d minus previous_5d (nonoverlapping)",
+    "intensity_5d": "ratio; net_5d / positive asof market_cap; multiply by 100 for percent",
+    "members": "included dashboard universe, not all registered securities",
+    "net_1d": "KRW; last trading day foreign net purchases",
+    "net_20d": "KRW; last 20 trading days, all observations required",
+    "net_5d": "KRW; last 5 trading days, all observations required",
+    "observed_days_20d": "days; available complete observations in calendar window of at most 20 days",
+    "positive_days_20d": "days; strictly positive complete daily net amounts; null unless 20 complete days",
+    "previous_5d": "KRW; five trading days immediately before the latest five",
+    "registered_members": "instruments with this asof membership, including those outside dashboard universe"
+  },
+  "path": "sectors/kospi-8fdff951ce1e7584efdfc5ee.json",
+  "provider_finality": "UNVERIFIED",
+  "publication_status": "ready_for_briefing",
+  "published_at": "2026-10-20T02:47:51.690045+00:00",
+  "raw_flow_reconciliation": {
+    "status": "passed",
+    "stocks_checked": 10
+  },
+  "schema_version": 3,
+  "sector": "전기·가스",
+  "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+  "source_snapshot_sha256": "cce160ee1dab74a88e9bbd3ba7e5c1e7878a5eef632027d7e2ae58232f532bd0",
+  "stock_count": 10,
+  "stocks": [
+    {
+      "change_5d": 133000000.0,
+      "intensity_5d": 0.0002666666666666667,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "한진중공업홀딩스",
+      "net_1d": 56000000.0,
+      "net_20d": -131000000.0,
+      "net_5d": 36000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -97000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "003480"
+    },
+    {
+      "change_5d": 525000000.0,
+      "intensity_5d": 0.0006482698204117389,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "삼천리",
+      "net_1d": -61000000.0,
+      "net_20d": -434000000.0,
+      "net_5d": 296000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": -229000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "004690"
+    },
+    {
+      "change_5d": 2518000000.0,
+      "intensity_5d": 0.0026726364732219737,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "SGC에너지",
+      "net_1d": 101000000.0,
+      "net_20d": 1070000000.0,
+      "net_5d": 1552000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 8.0,
+      "previous_5d": -966000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "005090"
+    },
+    {
+      "change_5d": 31776000000.0,
+      "intensity_5d": 0.0006444815031288373,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "한국전력",
+      "net_1d": 3013000000.0,
+      "net_20d": -73197000000.0,
+      "net_5d": 12019000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -19757000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "015760"
+    },
+    {
+      "change_5d": 226000000.0,
+      "intensity_5d": 0.0010691103474608629,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "서울가스",
+      "net_1d": 20000000.0,
+      "net_20d": -59000000.0,
+      "net_5d": 280000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 10.0,
+      "previous_5d": 54000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "017390"
+    },
+    {
+      "change_5d": 25000000.0,
+      "intensity_5d": 3.484320557491289e-05,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "인천도시가스",
+      "net_1d": -2000000.0,
+      "net_20d": -51000000.0,
+      "net_5d": 4000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 1.0,
+      "previous_5d": -21000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "034590"
+    },
+    {
+      "change_5d": 1327000000.0,
+      "intensity_5d": 0.0013446947243627742,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "한국가스공사",
+      "net_1d": 896000000.0,
+      "net_20d": 4754000000.0,
+      "net_5d": 4537000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 16.0,
+      "previous_5d": 3210000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "036460"
+    },
+    {
+      "change_5d": 36000000.0,
+      "intensity_5d": 0.00043409806567701304,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "지역난방공사",
+      "net_1d": 300000000.0,
+      "net_20d": -1955000000.0,
+      "net_5d": 386000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 8.0,
+      "previous_5d": 350000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "071320"
+    },
+    {
+      "change_5d": 723000000.0,
+      "intensity_5d": 0.003830111902339776,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "대성에너지",
+      "net_1d": 48000000.0,
+      "net_20d": 1182000000.0,
+      "net_5d": 753000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 30000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "117580"
+    },
+    {
+      "change_5d": 67000000.0,
+      "intensity_5d": 0.00012892828364222402,
+      "market": "KOSPI",
+      "metric_validity": {
+        "change_5d": "valid",
+        "intensity_5d": "valid",
+        "net_1d": "valid",
+        "net_20d": "valid",
+        "net_5d": "valid",
+        "observed_days_20d": "valid",
+        "positive_days_20d": "valid",
+        "previous_5d": "valid"
+      },
+      "name": "경동도시가스",
+      "net_1d": -10000000.0,
+      "net_20d": -336000000.0,
+      "net_5d": 16000000.0,
+      "observed_days_20d": 20.0,
+      "positive_days_20d": 3.0,
+      "previous_5d": -51000000.0,
+      "quality": {
+        "incomplete": false,
+        "missing_metrics": [],
+        "missing_reason": null
+      },
+      "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
+      "symbol": "267290"
+    }
+  ],
+  "validation_status": "passed"
+}
