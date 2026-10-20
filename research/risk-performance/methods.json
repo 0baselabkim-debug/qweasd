@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "study_status": "data_insufficient_for_strategy_validation",
+  "scope": "research_only",
+  "signal_rules": {
+    "lookback_sessions": 40,
+    "swing_left": 2,
+    "swing_right": 2,
+    "flow_recent_sessions": 5,
+    "flow_previous_nonoverlap_sessions": 5,
+    "flow_test": "recent > 0 and recent > previous",
+    "rise_caps_pct": [
+      10,
+      15,
+      20
+    ],
+    "C_new_breakout_event_only": true
+  },
+  "entry": "next official session raw open after all input evidence available",
+  "holding_sessions": [
+    5,
+    20,
+    60
+  ],
+  "entry_day_counts_as": 1,
+  "exit_policies": [
+    "fixed horizon close",
+    "L3 strict close breach then next official session raw open"
+  ],
+  "D_L3_policy": "not_applicable_no_common_L3",
+  "roundtrip_cost_assumptions_bps": [
+    0,
+    10,
+    30,
+    60
+  ],
+  "costs_are_actual_schedule": false,
+  "missing_values": "null_not_zero",
+  "reference_candidates_are_tradeable_signals": false,
+  "matching": "same market and dated sector; top3 by abs(log(cap_ratio))+abs(log(turnover_ratio)); symbol tie break",
+  "market_API_calls": 0,
+  "new_schedules": 0
+}

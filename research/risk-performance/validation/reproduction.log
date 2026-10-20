@@ -1,0 +1,86 @@
+Archive audit complete: 6508 versions; 183 eligible stock/dates
+{
+  "verdict": "데이터 부족으로 검증 불가",
+  "latest_operating_date": "2026-10-20",
+  "operating_ranges": {
+    "prices": [
+      "2026-09-03",
+      "2026-10-20",
+      30,
+      73282
+    ],
+    "flows": [
+      "2026-09-11",
+      "2026-10-20",
+      24,
+      58285
+    ],
+    "calendar": [
+      "2026-08-18",
+      "2026-10-20",
+      42,
+      84
+    ],
+    "benchmarks": [
+      "2026-08-18",
+      "2026-10-20",
+      42,
+      84
+    ]
+  },
+  "archive_price_range": [
+    "2025-06-23",
+    "2026-10-15"
+  ],
+  "prior_research_through": "2026-10-19",
+  "first_preserved_bundle_observed": "2026-10-15T11:48:57.939433+00:00",
+  "last_preserved_bundle_observed": "2026-10-16T05:49:37.452812+00:00",
+  "archived_versions_scanned": 6508,
+  "daily_accepted_asof_dates": [
+    "2026-10-14",
+    "2026-10-15"
+  ],
+  "pit_eligible_versions": 183,
+  "pit_unique_stock_dates": 183,
+  "pit_dates": [
+    "2026-10-15"
+  ],
+  "historical_signal_counts": {
+    "D": 54,
+    "A": 1
+  },
+  "reference_counts": {
+    "D": 1216,
+    "A": 36,
+    "C": 20,
+    "B": 15
+  },
+  "reference_raw_next_open_present": 1287,
+  "historical_raw_entry_OHLC_present": 55,
+  "historical_later_adjusted_entry_OHLC_present": 54,
+  "historical_entry_later_observation_conflicts": 37,
+  "additional_preserved_checkpoints": [
+    {
+      "day": "20261015",
+      "records": 2430,
+      "updated_at": "2026-10-15T14:14:26.777642+00:00",
+      "sha256": "2dbcad39cf6245e018c3fee229bdcd923f8c98c0a860739fb14e09a8567f940a"
+    },
+    {
+      "day": "20261016",
+      "records": 2430,
+      "updated_at": "2026-10-16T11:33:14.761221+00:00",
+      "sha256": "486de1d69089796fd5346697c5f6d4b0c9907861b803b715bce19b4d426addd8"
+    }
+  ],
+  "whole_market_replay_days": 0,
+  "mature_outcome_counts": {
+    "5": 0,
+    "20": 0,
+    "60": 0
+  },
+  "market_API_calls": 0,
+  "actual_trades_executed": 0,
+  "retrospective_references_used_as_trade_signals": 0,
+  "prospective_signals_frozen": 0
+}
