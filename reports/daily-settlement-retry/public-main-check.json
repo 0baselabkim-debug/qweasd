@@ -1,0 +1,27 @@
+{
+  "scripts/daily_retry.py": {
+    "http": 200,
+    "sha256": "e502f9a3a12e0220983dc9ae769fcdb979b458f05d70c5e070e95abbf08d57f4",
+    "matches_local": true
+  },
+  "scripts/collect_daily_snapshot.py": {
+    "http": 200,
+    "sha256": "d37ff8faddb5f18aaee04f5f09d8f62439a00292834e526f8258b0e0be7ccb9e",
+    "matches_local": true
+  },
+  ".github/workflows/daily-dashboard.yml": {
+    "http": 200,
+    "sha256": "74c439c258740005ac0705c641f7df225108f7faf47ee9abf1f257b3e18ca2cb",
+    "matches_local": true
+  },
+  "snapshot/manifest.json": {
+    "http": 200,
+    "sha256": "31d170f640d2f0e6d2b8eaae5452cec7a83dc52887a8c3876d083785f4a5cadd",
+    "matches_local": true
+  },
+  "snapshot/briefing/index.json": {
+    "http": 200,
+    "sha256": "7ff32e3927856154d16429b28b7df9ac232a1e74cf0a3f2b4391635a7d0af526",
+    "matches_local": true
+  }
+}
