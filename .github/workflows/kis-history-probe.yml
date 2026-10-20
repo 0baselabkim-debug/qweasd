@@ -1,37 +1,43 @@
-name: KIS ten-stock historical flow probe
+name: Manual bounded full-market price research
 on:
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: kis-validation-auth
   cancel-in-progress: false
   queue: max
 jobs:
   probe:
+    if: github.ref_name == 'research/full-market-transition-20261019'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Read historical KRX flow and public quotes
+        with:
+          ref: research/full-market-transition-20261019
+      - name: Configure research-only checkpoint commits
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Collect one bounded research batch
+        timeout-minutes: 13
         env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python research/full-market/collect_batch.py
+      - name: Preserve research checkpoint even on failure
+        if: always()
         run: |
-          python - <<'PY'
-          import runpy,traceback,json,os
-          try:runpy.run_path('.github/scripts/kis_history_probe.py',run_name='__main__')
-          except Exception:
-              message=traceback.format_exc()
-              for name in ['KIS_APP_KEY','KIS_APP_SECRET']:
-                  value=os.environ.get(name)
-                  if value:message=message.replace(value,'[REDACTED]')
-              print('::error title=Probe diagnostic::'+message.replace('%','%25').replace('\n','%0A').replace('\r','%0D'),flush=True)
-              raise SystemExit(1)
-          PY
+          test "$GITHUB_REF_NAME" = 'research/full-market-transition-20261019'
+          git add -- research/full-market/collection
+          if ! git diff --cached --quiet; then
+            git commit -m "Preserve bounded research batch $GITHUB_RUN_ID"
+            git push origin HEAD:refs/heads/research/full-market-transition-20261019
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: kis-ten-stock-history
-          path: kis-history-probe.json
+          name: research-batch-${{ github.run_id }}
+          path: research/full-market/collection
           retention-days: 30

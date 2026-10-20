@@ -1,0 +1,26 @@
+import json
+from pathlib import Path
+from collect_batch import GLOBAL_LIMIT,BATCH_LIMIT,BRANCH
+ROOT=Path(__file__).resolve().parents[1]
+def test_plan_excludes_all_existing_baseline_and_pilot():
+ import pandas as pd
+ plan=json.loads((ROOT/'plan.json').read_text());targets={r['symbol'] for r in plan['targets']}
+ base=pd.read_csv(ROOT/'inputs/baseline-screening.csv',dtype={'symbol':str})
+ pilot=json.loads((ROOT/'inputs/pilot/run.json').read_text())['records']
+ assert not targets & set(base.loc[base.research_price_eligible,'symbol'])
+ assert not targets & set(base.loc[base.consecutive_60,'symbol'])
+ assert not targets & set(pilot)
+ assert len(targets)==len(plan['targets']) and 2*len(targets)+20<GLOBAL_LIMIT
+ assert GLOBAL_LIMIT==3800 and BATCH_LIMIT==300
+
+def test_research_workflow_has_no_schedule_and_never_pushes_main():
+ text=(ROOT.parents[1]/'.github/workflows/kis-history-probe.yml').read_text()
+ assert 'cron:' not in text and 'schedule:' not in text
+ assert 'kis-validation-auth' in text and 'timeout-minutes: 15' in text
+ assert 'HEAD:refs/heads/'+BRANCH in text and 'HEAD:main' not in text
+
+def test_old_rule_modules_byte_identical():
+ import hashlib
+ # Original research modules are pinned, rather than silently reinterpreted.
+ expected=json.loads((ROOT/'rule-hashes.json').read_text())
+ for file,sha in expected.items():assert hashlib.sha256((ROOT/file).read_bytes()).hexdigest()==sha
