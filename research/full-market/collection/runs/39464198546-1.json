@@ -1,0 +1,79 @@
+{
+  "run": "39464198546-1",
+  "kind": "calendar_validation",
+  "physical_requests": 7,
+  "elapsed_seconds": 8.032564993000001,
+  "metrics": [
+    {
+      "number": 1,
+      "endpoint": "/oauth2/tokenP",
+      "attempt": 1,
+      "kind": "authentication",
+      "started_at": "2026-10-20T17:13:58.834108+00:00",
+      "http": 200,
+      "code": "",
+      "seconds": 0.6347
+    },
+    {
+      "number": 2,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:13:59.884238+00:00",
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.4761
+    },
+    {
+      "number": 3,
+      "endpoint": "/svc/apis/sto/stk_bydd_trd",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:14:00.934358+00:00",
+      "http": 200,
+      "code": "",
+      "seconds": 1.596
+    },
+    {
+      "number": 4,
+      "endpoint": "/svc/apis/sto/ksq_bydd_trd",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:14:02.530718+00:00",
+      "http": 200,
+      "code": "",
+      "seconds": 1.4938
+    },
+    {
+      "number": 5,
+      "endpoint": "/api/list.json",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:14:04.060513+00:00",
+      "http": 200,
+      "code": "DART_000",
+      "seconds": 0.8291
+    },
+    {
+      "number": 6,
+      "endpoint": "/api/document.xml",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:14:05.110676+00:00",
+      "http": 200,
+      "code": "",
+      "seconds": 0.5341
+    },
+    {
+      "number": 7,
+      "endpoint": "/api/document.xml",
+      "attempt": 1,
+      "kind": "market",
+      "started_at": "2026-10-20T17:14:06.160815+00:00",
+      "http": 200,
+      "code": "",
+      "seconds": 0.7047
+    }
+  ],
+  "error": "ValueError"
+}

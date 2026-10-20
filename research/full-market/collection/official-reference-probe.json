@@ -1,0 +1,31 @@
+{
+  "asof": "2026-10-19",
+  "records": [
+    {
+      "market": "KOSPI",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261019",
+      "asof": "2026-10-19",
+      "observed_at": "2026-10-20T17:14:00.934397+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "response_sha256": "d520345d448c6604ff6bf26c19017b6c65a44b9db0929c19ed9f58cda18b8d54",
+      "status": "received_unreconciled",
+      "file": "reference-responses/KOSPI-abb33b3d3ce6485e6e0210bd82c31d486a44faf991761fa778c26e1673cd1305.json.gz",
+      "sha256": "abb33b3d3ce6485e6e0210bd82c31d486a44faf991761fa778c26e1673cd1305",
+      "rows": 940,
+      "http": 200
+    },
+    {
+      "market": "KOSDAQ",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261019",
+      "asof": "2026-10-19",
+      "observed_at": "2026-10-20T17:14:02.530735+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "response_sha256": "ba0bcae00599d62a6ca27649bd130ff5349f12a9af0b451b556675278e86238f",
+      "status": "received_unreconciled",
+      "file": "reference-responses/KOSDAQ-4b5a4879ee79b24ddd91f9c6c6a80c6a0c9a54fd93139c29dc05d7e193c04a73.json.gz",
+      "sha256": "4b5a4879ee79b24ddd91f9c6c6a80c6a0c9a54fd93139c29dc05d7e193c04a73",
+      "rows": 1821,
+      "http": 200
+    }
+  ]
+}

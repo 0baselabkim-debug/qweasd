@@ -1,0 +1,591 @@
+{
+  "symbol": "042940",
+  "corp_code": "00232007",
+  "asof": "2026-10-19",
+  "status": "received_for_offline_review",
+  "observations": [
+    {
+      "path": "/api/list.json",
+      "params": {
+        "corp_code": "00232007",
+        "bgn_de": "20260101",
+        "end_de": "20261019",
+        "page_no": "1",
+        "page_count": "100",
+        "sort": "date",
+        "sort_mth": "desc"
+      },
+      "observed_at": "2026-10-20T17:14:04.060541+00:00",
+      "content_type": "application/json;charset=UTF-8",
+      "file": "sangji-responses/db184be6b5d8f6e78a3512be96c5954810fa5bfde9364ab784861a95673c1f10.json",
+      "sha256": "db184be6b5d8f6e78a3512be96c5954810fa5bfde9364ab784861a95673c1f10",
+      "bytes": 10956,
+      "status": "received",
+      "http": 200
+    },
+    {
+      "path": "/api/document.xml",
+      "params": {
+        "rcept_no": "20260921900481"
+      },
+      "observed_at": "2026-10-20T17:14:05.110716+00:00",
+      "content_type": "application/x-msdownload;charset=UTF-8",
+      "file": "sangji-responses/9c3bca73f4f32cef0eca4b9e9907c4b22090bdc3d08bf2f31823b710f79bb47a.zip",
+      "sha256": "9c3bca73f4f32cef0eca4b9e9907c4b22090bdc3d08bf2f31823b710f79bb47a",
+      "bytes": 1205,
+      "status": "received",
+      "http": 200,
+      "receipt": "20260921900481",
+      "public_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921900481",
+      "zip_members": [
+        "20260921900481.xml"
+      ],
+      "zip_valid": true
+    },
+    {
+      "path": "/api/document.xml",
+      "params": {
+        "rcept_no": "20260921000184"
+      },
+      "observed_at": "2026-10-20T17:14:06.160852+00:00",
+      "content_type": "application/x-msdownload;charset=UTF-8",
+      "file": "sangji-responses/91fc48e6227fb71a841a2e6000beb49ac882e2e87d492099647dd6d22848a4f0.zip",
+      "sha256": "91fc48e6227fb71a841a2e6000beb49ac882e2e87d492099647dd6d22848a4f0",
+      "bytes": 7902,
+      "status": "received",
+      "http": 200,
+      "receipt": "20260921000184",
+      "public_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260921000184",
+      "zip_members": [
+        "20260921000184.xml"
+      ],
+      "zip_valid": true
+    }
+  ],
+  "action_confirmed": false,
+  "provider_status": "000",
+  "total_page": 1,
+  "total_count": 45,
+  "list_complete": true,
+  "filings": [
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]단일판매ㆍ공급계약체결              ",
+      "rcept_no": "20260930900952",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260930",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "소송등의제기ㆍ신청(일정금액이상의청구)              ",
+      "rcept_no": "20260928900800",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260928",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "권리락              (유상증자)",
+      "rcept_no": "20260921900481",
+      "flr_nm": "코스닥시장본부",
+      "rcept_dt": "20260921",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "투자설명서",
+      "rcept_no": "20260921000309",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260921",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[발행조건확정]증권신고서(지분증권)",
+      "rcept_no": "20260921000308",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260921",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260921000184",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260921",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "유상증자1차발행가액결정              ",
+      "rcept_no": "20260921900061",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260921",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "효력발생안내( 2026.9.4. 제출 증권신고서(지분증권) )",
+      "rcept_no": "20260904100019",
+      "flr_nm": "금융감독원",
+      "rcept_dt": "20260921",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]증권신고서(지분증권)",
+      "rcept_no": "20260904000344",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260904",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260904000065",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260904",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[첨부추가]반기보고서 (2026.06)",
+      "rcept_no": "20260814004111",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260814",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]반기보고서 (2026.06)",
+      "rcept_no": "20260818000293",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260818",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]반기보고서 (2026.06)",
+      "rcept_no": "20260814004260",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260814",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260807000339",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260807",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[첨부정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260807000306",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260807",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "정정신고서제출요구( 2026.07.24. 제출 증권신고서(지분증권) )",
+      "rcept_no": "20260731100003",
+      "flr_nm": "금융감독원",
+      "rcept_dt": "20260731",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "단일판매ㆍ공급계약체결              ",
+      "rcept_no": "20260728900242",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260728",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[정정제출요구][기재정정]증권신고서(지분증권)",
+      "rcept_no": "20260724000555",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260724",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260724000278",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260724",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260716000809",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260716",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "정정신고서제출요구( 2026.07.02. 제출 증권신고서(지분증권) )",
+      "rcept_no": "20260716100003",
+      "flr_nm": "금융감독원",
+      "rcept_dt": "20260716",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[정정제출요구][기재정정]증권신고서(지분증권)",
+      "rcept_no": "20260702000567",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260702",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260625000325",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260625",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]단일판매ㆍ공급계약체결              ",
+      "rcept_no": "20260624900632",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260624",
+      "rm": "코정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260619000662",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260619",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "정정신고서제출요구( 2026.06.05. 제출 증권신고서(지분증권) )",
+      "rcept_no": "20260619100004",
+      "flr_nm": "금융감독원",
+      "rcept_dt": "20260619",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]단일판매ㆍ공급계약체결              ",
+      "rcept_no": "20260609900614",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260609",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[정정제출요구][기재정정]증권신고서(지분증권)",
+      "rcept_no": "20260605000572",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260605",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260605000403",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260605",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "정정신고서제출요구( 2026.05.15. 제출 증권신고서(지분증권) )",
+      "rcept_no": "20260601100055",
+      "flr_nm": "금융감독원",
+      "rcept_dt": "20260601",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[정정제출요구]증권신고서(지분증권)",
+      "rcept_no": "20260515002980",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260515",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "분기보고서 (2026.03)",
+      "rcept_no": "20260513000857",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260513",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "주요사항보고서(유상증자결정)",
+      "rcept_no": "20260508000511",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260508",
+      "rm": "정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "독립이사의선임ㆍ해임또는중도퇴임에관한신고",
+      "rcept_no": "20260327001179",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260327",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "정기주주총회결과              ",
+      "rcept_no": "20260327901375",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260327",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "사업보고서 (2025.12)",
+      "rcept_no": "20260319001104",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260319",
+      "rm": "연"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "감사보고서제출              ",
+      "rcept_no": "20260319900726",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260319",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "의결권대리행사권유참고서류",
+      "rcept_no": "20260312001370",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260312",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "주주총회소집공고",
+      "rcept_no": "20260312001155",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260312",
+      "rm": ""
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "주주총회집중일개최사유신고              ",
+      "rcept_no": "20260312900852",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260312",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "주주총회소집결의              ",
+      "rcept_no": "20260312900538",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260312",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "매출액또는손익구조30%(대규모법인은15%)이상변동              ",
+      "rcept_no": "20260312900427",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260312",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "단일판매ㆍ공급계약체결              ",
+      "rcept_no": "20260130901340",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260130",
+      "rm": "코정"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]단일판매ㆍ공급계약체결              ",
+      "rcept_no": "20260116900676",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260116",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]단일판매ㆍ공급계약체결              ",
+      "rcept_no": "20260113900001",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260113",
+      "rm": "코"
+    }
+  ],
+  "selected_originals": [
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "권리락              (유상증자)",
+      "rcept_no": "20260921900481",
+      "flr_nm": "코스닥시장본부",
+      "rcept_dt": "20260921",
+      "rm": "코"
+    },
+    {
+      "corp_code": "00232007",
+      "corp_name": "상지건설",
+      "stock_code": "042940",
+      "corp_cls": "K",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)",
+      "rcept_no": "20260921000184",
+      "flr_nm": "상지건설",
+      "rcept_dt": "20260921",
+      "rm": ""
+    }
+  ]
+}
