@@ -19,9 +19,8 @@ jobs:
           python-version: '3.12'
       - name: Observe only Taewon without checkpoint mutation
         env:
-          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
-          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python scripts/probe_taewon.py
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+        run: python scripts/probe_taewon_krx.py
       - name: Preserve public market evidence on this diagnostic branch
         run: |
           test "$GITHUB_REF_NAME" = "fix/taewon-20261020"
