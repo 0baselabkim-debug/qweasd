@@ -16,6 +16,20 @@
     "passed": 395,
     "seconds": 252.95
   },
-  "final_exact_commit_CI": "pending",
-  "scope": "research only; no production publication; retrospective analysis"
+  "final_exact_commit_CI": {
+    "code_commit": "36db007e8d8c1866dd9ad617741c8aab4b3790e9",
+    "conclusion": "success",
+    "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39544758647",
+    "full_pytest_step": "success",
+    "local_HTTP_server_step": "success",
+    "exact_remote_test_count": "not_observed_log_download_403"
+  },
+  "scope": "research only; no production publication; retrospective analysis",
+  "ci_log_download": {
+    "status": "blocked",
+    "http": 403,
+    "origin": "GitHub Actions log storage URL; response issuer not independently identified",
+    "workaround_attempted": false,
+    "signed_URL_not_saved": true
+  }
 }
