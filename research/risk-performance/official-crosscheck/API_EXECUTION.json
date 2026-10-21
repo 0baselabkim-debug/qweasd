@@ -120,8 +120,18 @@
       "authentication": false,
       "run_id": "39550940669",
       "reserved_at": "2026-10-21T05:41:53.130197+00:00",
-      "status": "reserved",
-      "retry": false
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T05:41:54.390896+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json",
+      "tr_cont": "M",
+      "response_sha256": "0813378083a74b4566897b5da235445bd8b61a1a094f710f0bd41f5a0c46e3a5",
+      "file": "responses/0813378083a74b4566897b5da235445bd8b61a1a094f710f0bd41f5a0c46e3a5.bin.gz",
+      "file_sha256": "9df0f9b1ef701ef3516957c5a59ee348bb9ef2440ca53e6dc61636b4515309ba",
+      "completed_at": "2026-10-21T05:41:54.873585+00:00",
+      "seconds": 0.4822
     }
   ],
   "created_at": "2026-10-21T05:41:30.124597+00:00"
