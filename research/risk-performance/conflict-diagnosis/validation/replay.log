@@ -1,0 +1,95 @@
+{
+  "asof": "2026-10-20",
+  "main_read_commit": "7ee2b7d533ddc08dc5eb316dc406fe0fbfdfdecc",
+  "snapshot_sha256": "faa4636a513a57e6a11ee862d05654075545b692683ff7f32f04b6dbbaf4f744",
+  "population": 2429,
+  "unresolved_conflict_stocks": 2163,
+  "legacy_raw_adjusted_label": 2162,
+  "explicit_raw_adjusted_pair_stocks": 51,
+  "source_type_unique_counts": {
+    "adjusted_chart_observation_drift": 23,
+    "investor_blank_option_vs_adjusted_chart": 2159,
+    "raw_chart_vs_adjusted_chart": 51
+  },
+  "exclusive_type_partitions": {
+    "investor_blank_option_vs_adjusted_chart": 2089,
+    "investor_blank_option_vs_adjusted_chart;raw_chart_vs_adjusted_chart": 48,
+    "adjusted_chart_observation_drift;investor_blank_option_vs_adjusted_chart": 22,
+    "raw_chart_vs_adjusted_chart": 3,
+    "adjusted_chart_observation_drift": 1
+  },
+  "oct16_stocks": 2159,
+  "oct16_market_counts": {
+    "KOSDAQ": 1444,
+    "KOSPI": 715
+  },
+  "oct16_original_flow_equals_original_chart": 2159,
+  "oct16_later_pair_available": 1664,
+  "oct16_later_raw_adjusted_identical": 1661,
+  "oct16_pair_identical_and_candidate_equal": 1661,
+  "oct16_changed_volume_or_turnover": 1226,
+  "oct16_field_patterns": {
+    "close,volume,turnover": 738,
+    "close": 547,
+    "high,close": 276,
+    "high,close,volume,turnover": 258,
+    "volume,turnover": 107,
+    "low,close,volume,turnover": 65,
+    "low,close": 55,
+    "high,low,close": 36,
+    "high,low,close,volume,turnover": 30,
+    "high,volume,turnover": 14,
+    "high": 13,
+    "low,volume,turnover": 7,
+    "high,low,volume,turnover": 4,
+    "open,high,low,close,volume,turnover": 3,
+    "high,low": 3,
+    "low": 3
+  },
+  "oct16_old_chart_adjustment_flags": {
+    "{'prtt_rate': '0.00', 'revl_issu_reas': '', 'mod_yn': 'N', 'flng_cls_code': '00'}": 2158,
+    "{'prtt_rate': '0.00', 'revl_issu_reas': '', 'mod_yn': 'N', 'flng_cls_code': '05'}": 1
+  },
+  "adjusted_overlap_stocks": 23,
+  "overlap23_new_matches_official": 23,
+  "linked_history_validated_unchanged": 227,
+  "prior_quarantine37_unchanged": 37,
+  "snapshot31_officially_reconciled": 31,
+  "research_comparison_passed": 227,
+  "previous196_missing50_restored": 50,
+  "all_linked_original20_replay_ready": 227,
+  "independent_original_amount_checks": 4540,
+  "independent_original_quantity_checks": 4540,
+  "research_groups": {
+    "D": 83,
+    "A": 4,
+    "B": 1
+  },
+  "registered_signals": 0,
+  "market_API_calls": 0,
+  "new_schedules": 0,
+  "latest_vs_previous_snapshot_changed_rows": 0,
+  "latest_vs_previous_snapshot_flow_equal": true,
+  "source_observation_times": {
+    "2026-10-15": {
+      "first": "2026-10-15T12:06:42.469563+00:00",
+      "last": "2026-10-15T14:14:23.983296+00:00"
+    },
+    "2026-10-16": {
+      "first": "2026-10-16T10:02:31.100066+00:00",
+      "last": "2026-10-16T11:33:14.219395+00:00"
+    },
+    "2026-10-19": {
+      "first": "2026-10-19T09:55:55.940789+00:00",
+      "last": "2026-10-19T11:27:29.140423+00:00"
+    },
+    "2026-10-20": {
+      "first": "2026-10-20T10:02:55.314823+00:00",
+      "last": "2026-10-20T12:49:22.795028+00:00"
+    }
+  },
+  "run_observed_at": "2026-10-21T04:31:34.654190+00:00",
+  "evidence_captured_at": "2026-10-21T04:18:51.206790+00:00",
+  "elapsed_seconds": 26.02389732102165,
+  "result_scope": "retrospective_research_only; no real signal or price finality promotion"
+}
