@@ -16,7 +16,9 @@ def test_plan_excludes_all_existing_baseline_and_pilot():
 def test_research_workflow_has_no_schedule_and_never_pushes_main():
  text=(ROOT.parents[1]/'.github/workflows/kis-history-probe.yml').read_text()
  assert 'cron:' not in text and 'schedule:' not in text
- assert 'kis-validation-auth' in text and 'timeout-minutes: 15' in text
+ import re
+ assert 'kis-validation-auth' in text
+ assert all(0 < int(n) <= 15 for n in re.findall(r'timeout-minutes: (\d+)', text))
  assert 'HEAD:refs/heads/'+BRANCH in text and 'HEAD:main' not in text
 
 def test_old_rule_modules_byte_identical():

@@ -61,8 +61,20 @@ jobs:
           cache: pip
       - name: Install dashboard dependencies
         run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Verify official research evidence offline
+        if: github.ref_name == 'research/full-market-transition-20261019'
+        run: python research/risk-performance/verify_official_study.py
       - name: Test real snapshot, calculations, and UI without API secrets
-        run: python -m pytest -q
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m pytest -q | tee /tmp/pytest-results.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ github.run_id }}
+          path: /tmp/pytest-results.log
+          retention-days: 30
       - name: Start and check HTTP server
         shell: bash
         run: |
