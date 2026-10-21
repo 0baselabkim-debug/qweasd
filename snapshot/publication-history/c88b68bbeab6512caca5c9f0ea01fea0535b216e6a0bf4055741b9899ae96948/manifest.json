@@ -1,0 +1,112 @@
+{
+  "asof": "2026-10-21",
+  "flow_rows": 60715,
+  "preserved_asof_flow_rows": 2430,
+  "financial_rows": 2415,
+  "price_rows": 75820,
+  "exchange": "KRX",
+  "source_run": "https://github.com/0baselabkim-debug/qweasd/actions/runs/38560757360",
+  "enrichment_runs": {
+    "quotes": {
+      "run_id": "38588849816",
+      "success": 2430,
+      "failed": 0,
+      "failures": {},
+      "elapsed_seconds": 2529.587,
+      "requests": 2422,
+      "rate_limit_responses": 1,
+      "ending_interval_seconds": 1.05
+    },
+    "history": {
+      "run_id": "38593812905",
+      "success": 2430,
+      "failed": 0,
+      "failures": {},
+      "elapsed_seconds": 2542.041,
+      "requests": 2421,
+      "rate_limit_responses": 0,
+      "ending_interval_seconds": 1.05
+    }
+  },
+  "sha256": "c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948",
+  "finality": "UNVERIFIED",
+  "automatic_snapshot_sync": true,
+  "secrets_required": false,
+  "current_day_flow_rows": 2430,
+  "daily_run": "39581571988",
+  "daily_validation": {
+    "trade_date": "2026-10-21",
+    "records": 2430,
+    "excluded": 110,
+    "adjusted_updates": 94652,
+    "source_run": "39581571988",
+    "planned_start_at": "2026-10-21T18:30:00+09:00",
+    "collection_started_at": "2026-10-21T10:02:48.614497+00:00",
+    "collection_completed_at": "2026-10-21T11:35:52.815611+00:00",
+    "input_mode": "live_daily_collection",
+    "adjusted_close_conflict_symbols": 0,
+    "complete_stock_scores": 1159,
+    "complete_sector_scores": 0,
+    "full_20d_symbols": 2419,
+    "preservation_verified": true,
+    "phase_seconds": {
+      "bundle_validation": 0.39454343499983224,
+      "database_copy": 0.007863269999688782,
+      "database_update": 17.515886542999397,
+      "preservation_comparison": 0.0639620769998146,
+      "aggregate_validation": 4.0115620730002775
+    },
+    "candidate_total_seconds": 21.994012721000217,
+    "sha256": "c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948"
+  },
+  "recovery_validation": {
+    "baseline_sha256": "5d9ea673e4e53ca318429ecabb09d064739bffdc85d55cbb98c1e0384937ab9a",
+    "sha256": "4311adf478793ddece22553fff5a561ff535135e050c40a183eac0d318fe23ba",
+    "added": [
+      {
+        "asof": "2026-10-14",
+        "symbol": "002870",
+        "bundle_sha256": "22dd937581a2300c6a6fe14c2e9e76bb5d165f93acdcbd57697e39cc732705c7"
+      },
+      {
+        "asof": "2026-10-14",
+        "symbol": "002880",
+        "bundle_sha256": "78833bd9fdfc97af38be3c9c2e718300508aaedd06eed11c8e0654b6db16e0e2"
+      },
+      {
+        "asof": "2026-10-14",
+        "symbol": "002900",
+        "bundle_sha256": "f46177363e768d624a842fdb04fc47612c2fbb165c71e081b6b2f9208e5023e0"
+      },
+      {
+        "asof": "2026-10-14",
+        "symbol": "002920",
+        "bundle_sha256": "da818b99f9b061781ec3fbc170711e77069e38f126c7d986c99c96587d657fe3"
+      },
+      {
+        "asof": "2026-10-14",
+        "symbol": "002960",
+        "bundle_sha256": "e9b4de6c301a35546d5a5e5eee58ba976e587d619fc00136a6e7fa3d55713a86"
+      },
+      {
+        "asof": "2026-10-14",
+        "symbol": "002990",
+        "bundle_sha256": "97cb1e68d135ae71a86e2ac5d71d2a08b247f48195ebdbbcea4f3cad93846575"
+      }
+    ],
+    "before": {
+      "stocks": 2429,
+      "stock_activity": 530,
+      "sectors": 50,
+      "sector_activity": 10
+    },
+    "after": {
+      "stocks": 2429,
+      "stock_activity": 536,
+      "sectors": 50,
+      "sector_activity": 10
+    },
+    "raw_tables_preserved": true,
+    "observed_at": "2026-10-21T08:49:35.817680+00:00"
+  }
+}
