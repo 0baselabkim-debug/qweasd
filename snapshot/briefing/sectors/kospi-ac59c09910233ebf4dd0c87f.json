@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-20",
+  "asof": "2026-10-21",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-20-4311adf478793ddece22553fff5a561ff535135e050c40a183eac0d318fe23ba",
-  "generated_at": "2026-10-21T08:49:42.291399+00:00",
+  "dataset_id": "flow-v3-2026-10-21-c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948",
+  "generated_at": "2026-10-21T11:37:23.054164+00:00",
   "market": "KOSPI",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kospi-ac59c09910233ebf4dd0c87f.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-21T08:49:42.291399+00:00",
+  "published_at": "2026-10-21T11:37:23.054164+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 2
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "표준산업 · 어로 어업",
   "sector_id": "kospi-ac59c09910233ebf4dd0c87f",
-  "source_snapshot_sha256": "4311adf478793ddece22553fff5a561ff535135e050c40a183eac0d318fe23ba",
+  "source_snapshot_sha256": "c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948",
   "stock_count": 2,
   "stocks": [
     {
-      "change_5d": 71000000.0,
-      "intensity_5d": -0.0001384083044982699,
+      "change_5d": 90000000.0,
+      "intensity_5d": -4.851004851004851e-05,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "신라교역",
-      "net_1d": -2000000.0,
-      "net_20d": -240000000.0,
-      "net_5d": -20000000.0,
+      "net_1d": -10000000.0,
+      "net_20d": -220000000.0,
+      "net_5d": -7000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 4.0,
-      "previous_5d": -91000000.0,
+      "previous_5d": -97000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "004970"
     },
     {
-      "change_5d": -76000000.0,
-      "intensity_5d": -0.00016597510373443983,
+      "change_5d": -150000000.0,
+      "intensity_5d": -0.001161825726141079,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "동원수산",
-      "net_1d": -15000000.0,
-      "net_20d": -162000000.0,
-      "net_5d": -4000000.0,
+      "net_1d": -2000000.0,
+      "net_20d": -135000000.0,
+      "net_5d": -28000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 7.0,
-      "previous_5d": 72000000.0,
+      "previous_5d": 122000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],

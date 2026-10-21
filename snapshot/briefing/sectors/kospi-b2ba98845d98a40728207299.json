@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-20",
+  "asof": "2026-10-21",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-20-4311adf478793ddece22553fff5a561ff535135e050c40a183eac0d318fe23ba",
-  "generated_at": "2026-10-21T08:49:42.291399+00:00",
+  "dataset_id": "flow-v3-2026-10-21-c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948",
+  "generated_at": "2026-10-21T11:37:23.054164+00:00",
   "market": "KOSPI",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kospi-b2ba98845d98a40728207299.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-21T08:49:42.291399+00:00",
+  "published_at": "2026-10-21T11:37:23.054164+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 8
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "의료·정밀기기",
   "sector_id": "kospi-b2ba98845d98a40728207299",
-  "source_snapshot_sha256": "4311adf478793ddece22553fff5a561ff535135e050c40a183eac0d318fe23ba",
+  "source_snapshot_sha256": "c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948",
   "stock_count": 8,
   "stocks": [
     {
-      "change_5d": -17227000000.0,
-      "intensity_5d": 0.004198074559606718,
+      "change_5d": -16476000000.0,
+      "intensity_5d": -0.0006342867756315007,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "디아이",
-      "net_1d": 3916000000.0,
-      "net_20d": 57047000000.0,
-      "net_5d": 4099000000.0,
+      "net_1d": 1124000000.0,
+      "net_20d": 59939000000.0,
+      "net_5d": -683000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 12.0,
-      "previous_5d": 21326000000.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 15793000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "003160"
     },
     {
-      "change_5d": -2138000000.0,
-      "intensity_5d": -0.004255800792303339,
+      "change_5d": 493000000.0,
+      "intensity_5d": -7.327796775769418e-05,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "미래산업",
-      "net_1d": -29000000.0,
-      "net_20d": 1176000000.0,
-      "net_5d": -752000000.0,
+      "net_1d": -104000000.0,
+      "net_20d": 1129000000.0,
+      "net_5d": -15000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 10.0,
-      "previous_5d": 1386000000.0,
+      "previous_5d": -508000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -92,8 +92,8 @@
       "symbol": "025560"
     },
     {
-      "change_5d": -1773000000.0,
-      "intensity_5d": -0.0016042094455852155,
+      "change_5d": -524000000.0,
+      "intensity_5d": -0.0003654320987654321,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -106,12 +106,12 @@
         "previous_5d": "valid"
       },
       "name": "케이씨",
-      "net_1d": -8000000.0,
-      "net_20d": 2453000000.0,
-      "net_5d": -625000000.0,
+      "net_1d": 0.0,
+      "net_20d": 2360000000.0,
+      "net_5d": -148000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 12.0,
-      "previous_5d": 1148000000.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": 376000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -121,8 +121,8 @@
       "symbol": "029460"
     },
     {
-      "change_5d": 1644000000.0,
-      "intensity_5d": 0.007497648165569144,
+      "change_5d": 919000000.0,
+      "intensity_5d": 0.007171810225702441,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -135,12 +135,12 @@
         "previous_5d": "valid"
       },
       "name": "우진",
-      "net_1d": 307000000.0,
-      "net_20d": -435000000.0,
-      "net_5d": 1594000000.0,
+      "net_1d": 176000000.0,
+      "net_20d": 2000000.0,
+      "net_5d": 1557000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 13.0,
-      "previous_5d": -50000000.0,
+      "positive_days_20d": 14.0,
+      "previous_5d": 638000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -150,8 +150,8 @@
       "symbol": "105840"
     },
     {
-      "change_5d": 256000000.0,
-      "intensity_5d": 0.0006464202951579461,
+      "change_5d": 296000000.0,
+      "intensity_5d": 0.0005504587155963303,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -164,12 +164,12 @@
         "previous_5d": "valid"
       },
       "name": "에스디바이오센서",
-      "net_1d": -114000000.0,
-      "net_20d": 648000000.0,
-      "net_5d": 530000000.0,
+      "net_1d": -22000000.0,
+      "net_20d": 564000000.0,
+      "net_5d": 444000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 13.0,
-      "previous_5d": 274000000.0,
+      "positive_days_20d": 12.0,
+      "previous_5d": 148000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -179,8 +179,8 @@
       "symbol": "137310"
     },
     {
-      "change_5d": -10074000000.0,
-      "intensity_5d": -0.03133373385401021,
+      "change_5d": -9623000000.0,
+      "intensity_5d": -0.03049825174825175,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -193,12 +193,12 @@
         "previous_5d": "valid"
       },
       "name": "덴티움",
-      "net_1d": -10148000000.0,
-      "net_20d": -11426000000.0,
-      "net_5d": -10431000000.0,
+      "net_1d": -258000000.0,
+      "net_20d": -11637000000.0,
+      "net_5d": -10467000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 5.0,
-      "previous_5d": -357000000.0,
+      "previous_5d": -844000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -208,8 +208,8 @@
       "symbol": "145720"
     },
     {
-      "change_5d": -30007000000.0,
-      "intensity_5d": -5.605889014722537e-05,
+      "change_5d": -35013000000.0,
+      "intensity_5d": -0.003739309789717275,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -222,12 +222,12 @@
         "previous_5d": "valid"
       },
       "name": "케이씨텍",
-      "net_1d": 5193000000.0,
-      "net_20d": 8406000000.0,
-      "net_5d": -99000000.0,
+      "net_1d": -9204000000.0,
+      "net_20d": -121000000.0,
+      "net_5d": -7433000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 8.0,
-      "previous_5d": 29908000000.0,
+      "previous_5d": 27580000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -237,8 +237,8 @@
       "symbol": "281820"
     },
     {
-      "change_5d": -132000000.0,
-      "intensity_5d": 0.003005366726296959,
+      "change_5d": -263000000.0,
+      "intensity_5d": 0.0013489208633093526,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -251,12 +251,12 @@
         "previous_5d": "valid"
       },
       "name": "한컴라이프케어",
-      "net_1d": 9000000.0,
-      "net_20d": 847000000.0,
-      "net_5d": 168000000.0,
+      "net_1d": -34000000.0,
+      "net_20d": 872000000.0,
+      "net_5d": 75000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 15.0,
-      "previous_5d": 300000000.0,
+      "previous_5d": 338000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],

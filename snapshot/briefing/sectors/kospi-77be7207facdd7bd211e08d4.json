@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-20",
+  "asof": "2026-10-21",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-20-4311adf478793ddece22553fff5a561ff535135e050c40a183eac0d318fe23ba",
-  "generated_at": "2026-10-21T08:49:42.291399+00:00",
+  "dataset_id": "flow-v3-2026-10-21-c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948",
+  "generated_at": "2026-10-21T11:37:23.054164+00:00",
   "market": "KOSPI",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kospi-77be7207facdd7bd211e08d4.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-21T08:49:42.291399+00:00",
+  "published_at": "2026-10-21T11:37:23.054164+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 11
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "보험",
   "sector_id": "kospi-77be7207facdd7bd211e08d4",
-  "source_snapshot_sha256": "4311adf478793ddece22553fff5a561ff535135e050c40a183eac0d318fe23ba",
+  "source_snapshot_sha256": "c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948",
   "stock_count": 11,
   "stocks": [
     {
-      "change_5d": -2559000000.0,
-      "intensity_5d": -0.0029156690609204576,
+      "change_5d": -2638000000.0,
+      "intensity_5d": -0.0028769188596491227,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "한화손해보험",
-      "net_1d": 379000000.0,
-      "net_20d": 947000000.0,
-      "net_5d": -2192000000.0,
+      "net_1d": 6000000.0,
+      "net_20d": 1375000000.0,
+      "net_5d": -2099000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 8.0,
-      "previous_5d": 367000000.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": 539000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "000370"
     },
     {
-      "change_5d": 3871000000.0,
-      "intensity_5d": 0.006167687595712098,
+      "change_5d": -551000000.0,
+      "intensity_5d": 0.0035719754977029095,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "롯데손해보험",
-      "net_1d": 609000000.0,
-      "net_20d": 6228000000.0,
-      "net_5d": 4833000000.0,
+      "net_1d": 404000000.0,
+      "net_20d": 6390000000.0,
+      "net_5d": 2799000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 14.0,
-      "previous_5d": 962000000.0,
+      "previous_5d": 3350000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -92,8 +92,8 @@
       "symbol": "000400"
     },
     {
-      "change_5d": 13000000.0,
-      "intensity_5d": 6.622516556291391e-05,
+      "change_5d": -18000000.0,
+      "intensity_5d": 1.4478764478764478e-05,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -106,12 +106,12 @@
         "previous_5d": "valid"
       },
       "name": "흥국화재",
-      "net_1d": -5000000.0,
-      "net_20d": -24000000.0,
-      "net_5d": 14000000.0,
+      "net_1d": -8000000.0,
+      "net_20d": -77000000.0,
+      "net_5d": 3000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 10.0,
-      "previous_5d": 1000000.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": 21000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -121,8 +121,8 @@
       "symbol": "000540"
     },
     {
-      "change_5d": -14299000000.0,
-      "intensity_5d": -0.001230351057399572,
+      "change_5d": 14900000000.0,
+      "intensity_5d": -0.0006901038745428847,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -135,12 +135,12 @@
         "previous_5d": "valid"
       },
       "name": "삼성화재",
-      "net_1d": -8804000000.0,
-      "net_20d": -87241000000.0,
-      "net_5d": -33179000000.0,
+      "net_1d": 5288000000.0,
+      "net_20d": -81133000000.0,
+      "net_5d": -18456000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 6.0,
-      "previous_5d": -18880000000.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -33356000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -150,8 +150,8 @@
       "symbol": "000810"
     },
     {
-      "change_5d": -1081000000.0,
-      "intensity_5d": 0.0023772892770127846,
+      "change_5d": 727000000.0,
+      "intensity_5d": 0.0025925721233558087,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -164,12 +164,12 @@
         "previous_5d": "valid"
       },
       "name": "현대해상",
-      "net_1d": 2085000000.0,
-      "net_20d": 40526000000.0,
-      "net_5d": 8684000000.0,
+      "net_1d": 2038000000.0,
+      "net_20d": 41241000000.0,
+      "net_5d": 9382000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 16.0,
-      "previous_5d": 9765000000.0,
+      "previous_5d": 8655000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -179,8 +179,8 @@
       "symbol": "001450"
     },
     {
-      "change_5d": 1916000000.0,
-      "intensity_5d": -0.0005225438078361882,
+      "change_5d": 3594000000.0,
+      "intensity_5d": -0.0002218063077413189,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -193,12 +193,12 @@
         "previous_5d": "valid"
       },
       "name": "코리안리",
-      "net_1d": -976000000.0,
-      "net_20d": -7888000000.0,
-      "net_5d": -1327000000.0,
+      "net_1d": -330000000.0,
+      "net_20d": -7902000000.0,
+      "net_5d": -557000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 7.0,
-      "previous_5d": -3243000000.0,
+      "previous_5d": -4151000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -208,8 +208,8 @@
       "symbol": "003690"
     },
     {
-      "change_5d": -2555000000.0,
-      "intensity_5d": -0.0021195490594691888,
+      "change_5d": 67818000000.0,
+      "intensity_5d": 0.0007702845447943487,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -222,12 +222,12 @@
         "previous_5d": "valid"
       },
       "name": "DB손해보험",
-      "net_1d": -3076000000.0,
-      "net_20d": -55946000000.0,
-      "net_5d": -26378000000.0,
+      "net_1d": 2747000000.0,
+      "net_20d": -45596000000.0,
+      "net_5d": 9334000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 10.0,
-      "previous_5d": -23823000000.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": -58484000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -237,8 +237,8 @@
       "symbol": "005830"
     },
     {
-      "change_5d": 1244000000.0,
-      "intensity_5d": 0.00028211284513805524,
+      "change_5d": -253000000.0,
+      "intensity_5d": -0.0001647058823529412,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -251,12 +251,12 @@
         "previous_5d": "valid"
       },
       "name": "서울보증보험",
-      "net_1d": 59000000.0,
-      "net_20d": -3742000000.0,
-      "net_5d": 846000000.0,
+      "net_1d": -1688000000.0,
+      "net_20d": -5620000000.0,
+      "net_5d": -483000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 8.0,
-      "previous_5d": -398000000.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -230000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -266,8 +266,8 @@
       "symbol": "031210"
     },
     {
-      "change_5d": -30006000000.0,
-      "intensity_5d": -0.0005246284501061571,
+      "change_5d": -20092000000.0,
+      "intensity_5d": -0.0003836363636363636,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -280,12 +280,12 @@
         "previous_5d": "valid"
       },
       "name": "삼성생명",
-      "net_1d": -3949000000.0,
-      "net_20d": -46193000000.0,
-      "net_5d": -24710000000.0,
+      "net_1d": -2132000000.0,
+      "net_20d": -43107000000.0,
+      "net_5d": -18568000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 6.0,
-      "previous_5d": 5296000000.0,
+      "previous_5d": 1524000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -295,8 +295,8 @@
       "symbol": "032830"
     },
     {
-      "change_5d": -63000000.0,
-      "intensity_5d": -0.00010281432430077547,
+      "change_5d": 836000000.0,
+      "intensity_5d": -3.617115130127922e-05,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -309,12 +309,12 @@
         "previous_5d": "valid"
       },
       "name": "미래에셋생명",
-      "net_1d": -334000000.0,
-      "net_20d": -419000000.0,
-      "net_5d": -236000000.0,
+      "net_1d": -58000000.0,
+      "net_20d": -497000000.0,
+      "net_5d": -82000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 13.0,
-      "previous_5d": -173000000.0,
+      "positive_days_20d": 12.0,
+      "previous_5d": -918000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -324,8 +324,8 @@
       "symbol": "085620"
     },
     {
-      "change_5d": -7012000000.0,
-      "intensity_5d": -0.0014389031188790115,
+      "change_5d": -1355000000.0,
+      "intensity_5d": -0.0015205416879383077,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -338,12 +338,12 @@
         "previous_5d": "valid"
       },
       "name": "한화생명",
-      "net_1d": -871000000.0,
-      "net_20d": -9187000000.0,
-      "net_5d": -5730000000.0,
+      "net_1d": -5524000000.0,
+      "net_20d": -18271000000.0,
+      "net_5d": -5659000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 10.0,
-      "previous_5d": 1282000000.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": -4304000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
