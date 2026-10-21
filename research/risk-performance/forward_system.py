@@ -5,7 +5,7 @@ import argparse,datetime as dt,gzip,hashlib,json,math,os,tempfile
 from pathlib import Path
 import duckdb
 import forward
-from engine import digest,instant,decision_gate,cohort,trade,nav_statistics
+from engine import digest,instant,decision_gate,cohort,trade,nav_statistics,suppress_duplicates
 from screener.liquidity_quality import digest as evidence_digest
 from scripts.briefing_schema import payload as briefing_payload,digest as briefing_digest
 
@@ -158,7 +158,7 @@ def generate(directory,bundle_directory,calendar,store,now=None):
     store.verify_links()
     if len(universe)!=publication['records']:raise ValueError('instrument_join_loss')
     store.put('snapshots',publication['sha256'],publication)
-    results=[]
+    results=[];existing=store.records('signals')
     try:official_next_session(publication['asof'],calendar,now);calendar_reason=None
     except ValueError as e:calendar_reason=str(e)
     for symbol,name,market,listed in universe:
@@ -179,13 +179,17 @@ def generate(directory,bundle_directory,calendar,store,now=None):
                 b=load(p)
                 if b.get('symbol')!=symbol or b.get('market')!=market:raise ValueError('bundle_identity_mismatch')
                 signal=build_signal(b,publication,prices.get(symbol,{}),f,sessions[market],calendar,now)
+                if signal['group']!='D' and any(all(old.get(k)==signal.get(k) for k in ['symbol','group','L2_date','L3_date']) for old in existing):
+                    results.append({'symbol':symbol,'name':name,'status':'repeat_pattern','group':signal['group'],'reason':'existing_same_group_pivot_pattern','snapshot_price_days':price_count});continue
                 # Persist the exact input before its signal; hash verifies recovery.
                 store.put('observations',digest(b),{'kind':'signal_bundle','data':b})
                 store.put('observations',digest(calendar),{'kind':'official_calendar','data':calendar})
                 store.put('signals',key,signal)
+                existing.append(signal)
                 results.append({'symbol':symbol,'name':name,'status':'frozen','group':signal['group'],'reason':'','signal_sha256':digest(signal),'snapshot_price_days':price_count});continue
             except (ValueError,KeyError,TypeError) as e:reasons.append(str(e))
-        results.append({'symbol':symbol,'name':name,'status':'condition_not_met' if reasons==['flow_condition_not_met'] else 'hold','group':None,'reason':';'.join(sorted(set(reasons))),'snapshot_price_days':price_count})
+        status='condition_not_met' if reasons==['flow_condition_not_met'] else ('no_new_event' if reasons==['C_requires_new_confirmed_event'] else 'hold')
+        results.append({'symbol':symbol,'name':name,'status':status,'group':None,'reason':';'.join(sorted(set(reasons))),'snapshot_price_days':price_count})
     run={'publication':publication,'results':results,'recorded_at':instant(now).isoformat(),'calendar_sha256':digest(calendar)}
     store.put('runs',digest(run),run)
     return run
@@ -239,6 +243,18 @@ def evaluate_signal(signal,verified_bars,calendar,benchmarks=None):
                     if a and b and a.get('verified') and b.get('verified') and a.get('market')==signal['market']==b.get('market'):
                         excess=t['net_return']-(b[t['exit_basis']]/a['open']-1)
                 records.append({'symbol':signal['symbol'],'group':signal['group'],'horizon':horizon,'policy':policy,'roundtrip_bps':cost,**t,'market_excess':excess})
+    return records
+
+def evaluate_registry(signals,bars_by_symbol,calendar,benchmarks=None):
+    """Independent group/holding-period experiments, no overlapping same-stock
+    entries within each. D daily flow candidates receive horizon-specific cooldown.
+    A/B/C repeated patterns are suppressed even if imported from older registries.
+    """
+    records=[]
+    eligible=[s for s in signals if s.get('record_kind')=='prospective' and s.get('pit_eligible')]
+    for horizon in [5,20,60]:
+        for signal in suppress_duplicates(eligible,horizon,calendar):
+            records.extend(r for r in evaluate_signal(signal,bars_by_symbol.get(signal['symbol'],{}),calendar,benchmarks) if r['horizon']==horizon)
     return records
 
 if __name__=='__main__':

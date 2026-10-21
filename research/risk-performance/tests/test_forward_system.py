@@ -144,3 +144,12 @@ def test_whole_pipeline_freezes_once_and_keeps_original_input(real_bundle,tmp_pa
     (store.root/'observations'/(before['calendar_sha256']+'.json')).unlink()
     with pytest.raises(FileNotFoundError):
         generate(p,bundles,holiday(),store,dt.datetime.fromisoformat('2026-10-16T00:31:00+00:00'))
+
+def test_registry_per_horizon_duplicate_limits_and_reference_exclusion():
+    from forward_system import evaluate_registry
+    from datetime import date,timedelta
+    calendar=[str(date(2026,1,1)+timedelta(days=i)) for i in range(10)]
+    s={'symbol':'001234','market':'KOSPI','group':'D','record_kind':'prospective','pit_eligible':True,'signal_date':calendar[0]}
+    rows=evaluate_registry([s,{**s,'signal_date':calendar[1]},{**s,'symbol':'999999','record_kind':'retrospective_reference'}],{},calendar)
+    assert len(rows)==12 and {r['symbol'] for r in rows}=={'001234'}
+    assert all(r['net_return'] is None for r in rows)
