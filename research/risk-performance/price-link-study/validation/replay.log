@@ -1,0 +1,73 @@
+{
+  "asof": "2026-10-20",
+  "main_read_commit": "e376ea00f4904d3ead312198267ca5736e3767b7",
+  "checkpoint_commit": "c9e24ddc6a597233fc46da5c1e2f4eeeaa13da6b",
+  "population": 2429,
+  "price_40_covered": 2420,
+  "linked_history_validated": 227,
+  "linked_hold": 2202,
+  "adjusted_overlap_conflict": 23,
+  "unresolved_price_conflict_stocks": 2163,
+  "raw_adjusted_unresolved": 2162,
+  "prior_37_still_quarantined": 37,
+  "classification_states": {
+    "unclassifiable": 2202,
+    "research_classified": 88,
+    "condition_not_met": 139
+  },
+  "research_only_group_counts": {
+    "D": 83,
+    "A": 4,
+    "B": 1
+  },
+  "snapshot_compatible_linked": 196,
+  "integrated_research_states": {
+    "unclassifiable": 2233,
+    "condition_not_met": 122,
+    "research_classified": 74
+  },
+  "integrated_research_groups": {
+    "D": 70,
+    "A": 3,
+    "B": 1
+  },
+  "raw_flow_replay_ready": 684,
+  "linked_raw_flow_replay_ready": 152,
+  "preparation_gate_errors": {
+    "latest_official_KRX_evidence_missing": 227
+  },
+  "registration_eligible": 0,
+  "registered_signals": 0,
+  "link_reason_counts": {
+    "raw_adjusted_conflict_unresolved": 2162,
+    "prior_zero_volume_or_turnover_40": 99,
+    "zero_trading_last40": 99,
+    "prior_corporate_action_adjustment_unverified": 55,
+    "adjusted_overlap_conflict": 23,
+    "official_reference_conflict": 29,
+    "prior_official_reference_conflict": 24,
+    "prior_unresolved_observation_conflict": 24,
+    "new_corporate_action_flag_unverified": 12,
+    "prior_adjustment_precision_rule_unverified": 1,
+    "history_short_40": 9,
+    "no_overlap_to_validate": 2,
+    "prior_previous_research_symbol_missing": 2,
+    "oct16_37_outcome_quarantine": 37,
+    "listing_short_40": 8,
+    "prior_history_short_40": 8,
+    "prior_listing_short_40": 8,
+    "checkpoint_date_or_listing_mismatch": 1
+  },
+  "official_reference_dates": [
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-19"
+  ],
+  "reference_files_used": 86,
+  "calendar_blocker": "next_official_session_evidence_missing",
+  "elapsed_seconds": 24.01908405200811,
+  "market_API_calls": 0,
+  "new_schedules": 0,
+  "known_at": "2026-10-21T01:09:24.689034+00:00",
+  "all_results_are_retrospective_research": true
+}
