@@ -21,7 +21,7 @@
 - 기존 원본 10/20과 이미 확보한 KRX는 재사용한다. KRX/수급 API는 호출하지 않는다.
 - 실행 후 원본과 해시를 보존하고 `kis_version_analysis.py`가 표·가설 보고서를 다시 생성한다. 실패 응답을 성공으로 처리하지 않는다.
 
-23시 이후 사용자가 직접 실행할 경우: GitHub 저장소 → **Actions → KIS ten-stock historical flow probe(기존 workflow ID; 표시 이름은 연구 브랜치에 따라 다를 수 있음)** → **Run workflow → Branch: research/full-market-transition-20261019 → Run workflow**. main은 선택하지 않는다. 정확한 진입 주소: https://github.com/0baselabkim-debug/qweasd/actions/workflows/kis-history-probe.yml . 연구 브랜치 외에는 실행 조건으로 차단된다.
+23시 이후 사용자가 직접 실행할 경우: GitHub 저장소 → **Actions → KIS ten-stock historical flow probe(기존 workflow ID; 표시 이름은 연구 브랜치에 따라 다를 수 있음)** → **Run workflow → Branch: research/full-market-transition-20261019 → Run workflow**. main은 선택하지 않는다. 정확한 진입 주소: https://github.com/0baselabkim-debug/qweasd/actions/workflows/kis-history-probe.yml . 이번 수정본의 job은 연구 브랜치에서만 실행된다. **main의 기존 동명 워크플로는 다른 조회를 수행하므로 이번 승인으로 실행하지 않는다. 반드시 Branch 선택을 확인한다.**
 
 새 예약·백그라운드 지연 실행은 설정하지 않았다. 현재 턴이 끝났다고 23시에 자동 실행되는 것은 아니다. 23시 이후 실행을 이어 달라고 요청하면 기존 승인 범위 안에서 운영 상태 확인 후 수행할 수 있다.
 
@@ -34,3 +34,12 @@
 ## 기존 정기 수집 중간 관측 추가 확인
 
 새 API 호출 없이 10/21 정기 수집의 10/20 행을 확인했다. 두 종목의 수정주가 옵션 0 값이 최초 관측과 달라졌고, 각각 공식 KRX 6필드와 모두 일치했다. 다만 요청 종료일도 10/21로 변경되어 시간 효과와 요청 범위 효과를 분리할 수 없다. 신규 승인 재조회 C와 원주가 옵션 1은 여전히 미확보다. 상세 수치·시각·해시 및 가설 해석은 [REGULAR_COLLECTION_INTERMEDIATE.md](REGULAR_COLLECTION_INTERMEDIATE.md)를 참조한다.
+
+## 공급자 확인이 필요한 질문 — 문의 발송하지 않음
+
+1. `FHKST03010100`, 시장 J에서 `20261020` 행이 종료일 `20261020`/`20261021` 요청에 따라 달라질 수 있는가? 동일 과거 행의 조회 종료일 의존성이 공식적으로 존재하는가?
+2. 옵션 0/1에서 OHLC·거래량·거래대금 각각에 적용되는 조정과 과거 값 정정 정책은 무엇인가? 변경 이력·정정 시각·확정 표시를 제공하는가?
+3. J 응답의 거래량·거래대금에 정규장 외 거래가 포함되는 범위와 일별 반영 시각은 무엇인가? NXT/통합 값이 반영될 수 있는 예외가 있는가?
+4. AJ네트웍스 10/20 종가 4190→4195·거래량 91062→91919, AK홀딩스 종가 7140→7010 사례의 공급자 원본 변경 사유를 요청 파라미터와 관측 로그 기준으로 확인할 수 있는가?
+
+공식 답변이 없어도 관측 버전별 6필드·날짜·시장·수신 시각을 독립 보존할 수 있다. 다만 일괄 정상 처리, 확정 시각 추정, 과거 신호 소급 등록의 근거로 사용해서는 안 된다.
