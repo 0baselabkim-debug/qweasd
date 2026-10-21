@@ -1,4 +1,4 @@
-name: Manual bounded official research crosscheck
+name: Manual bounded two-stock KIS version research
 on:
   workflow_dispatch:
 permissions:
@@ -20,18 +20,21 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-      - name: Collect approved official references (maximum eight physical requests)
+      - name: Collect approved two-stock versions (maximum five physical requests)
         timeout-minutes: 6
         env:
-          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python research/risk-performance/official_probe.py
+        run: python research/risk-performance/kis_version_probe.py
+      - name: Generate offline comparison without promoting signals
+        if: always()
+        run: python research/risk-performance/kis_version_analysis.py
       - name: Preserve research checkpoint even on failure
         if: always()
         run: |
           test "$GITHUB_REF_NAME" = 'research/full-market-transition-20261019'
-          git add -- research/risk-performance/official-crosscheck
+          git add -- research/risk-performance/kis-price-version-study
           if ! git diff --cached --quiet; then
             git commit -m "Preserve bounded research batch $GITHUB_RUN_ID"
             git push origin HEAD:refs/heads/research/full-market-transition-20261019
@@ -40,5 +43,5 @@ jobs:
         if: always()
         with:
           name: research-batch-${{ github.run_id }}
-          path: research/risk-performance/official-crosscheck
+          path: research/risk-performance/kis-price-version-study
           retention-days: 30
