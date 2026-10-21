@@ -1,0 +1,32 @@
+{
+  "latest_asof": "2026-10-20",
+  "dataset_id": "flow-v3-2026-10-20-29e2ec146c19b401157d7f3930818e919d8b605c8f7fd903f896cc80dfefaf51",
+  "main_read_only_commit": "2a8b6d46a3cd2d2a866f30364fde427cf4fce5bc",
+  "reference_files_audited": 124,
+  "official_KRX_20261016_payloads": 0,
+  "price_conflict_stocks": 37,
+  "price_conflict_resolved": 0,
+  "normal_snapshot_stocks": 2429,
+  "frozen_signals": 0,
+  "group_counts": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "D": 0
+  },
+  "holds": 2429,
+  "hold_reasons": {
+    "next_official_session_evidence_missing": 2429,
+    "validated_current_40_session_bundle_missing": 2429,
+    "flow_20_sessions_missing": 9
+  },
+  "max_snapshot_price_sessions": 30,
+  "observations_saved": 74,
+  "matching_repeated_trial": true,
+  "trial_seconds": 0.49352301500039175,
+  "total_seconds": 5.656040791014675,
+  "completed_performance_rows": 0,
+  "new_market_API_calls": 0,
+  "new_schedules": 0,
+  "provider_finality_promoted": false
+}

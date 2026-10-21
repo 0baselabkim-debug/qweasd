@@ -89,7 +89,7 @@ def trade(signal, bars, calendar, horizon, policy='fixed', roundtrip_bps=0):
         raise ValueError('invalid_policy_or_cost')
     result = {'status':'관측 대기', 'entry_date':None, 'exit_date':None,
               'entry_price':None, 'exit_price':None, 'gross_return':None,
-              'net_return':None, 'mae':None, 'entry_gap':None, 'reason':''}
+              'net_return':None, 'mae':None, 'entry_gap':None, 'exit_basis':None, 'reason':''}
     if not signal.get('pit_eligible') or signal.get('record_kind') == 'retrospective_reference':
         result.update(status='진입 불가', reason='signal_not_point_in_time'); return result
     day = next_session(signal['signal_date'], calendar)
@@ -105,7 +105,7 @@ def trade(signal, bars, calendar, horizon, policy='fixed', roundtrip_bps=0):
     result['entry_price']=entry['open']
     if signal.get('raw_signal_close'):
         result['entry_gap']=entry['open']/signal['raw_signal_close']-1
-    lows=[]; exit_price=None; exit_day=None
+    lows=[]; exit_price=None; exit_day=None;exit_basis='close'
     for step in range(horizon):
         if start+step >= len(calendar): result['reason']='horizon_not_elapsed'; return result
         d=calendar[start+step]; b=bars.get(d)
@@ -124,13 +124,14 @@ def trade(signal, bars, calendar, horizon, policy='fixed', roundtrip_bps=0):
                 result['reason']='stop_next_open_unverified'; return result
             if nxt.get('tradable') is not True or nxt.get('volume',0)<=0:
                 result['reason']='stop_exit_not_tradable'; return result
-            exit_price=nxt['open']; lows.append(exit_price); break
+            exit_price=nxt['open'];exit_basis='open'; lows.append(exit_price); break
     if exit_price is None: return result
     gross=exit_price/entry['open']-1
     # Explicit hypothetical all-in round-trip friction, half allocated per side.
     cost=roundtrip_bps/20000
     net=exit_price*(1-cost)/(entry['open']*(1+cost))-1
     result.update(status='관측 완료', exit_date=exit_day, exit_price=exit_price,
+                  exit_basis=exit_basis,
                   gross_return=gross, net_return=net,
                   mae=min(0,min(lows)/entry['open']-1),reason='')
     return result
@@ -166,3 +167,31 @@ def nav_statistics(dated_nav, annual_risk_free=None, calendar=None):
     if vol:result['sharpe']=statistics.mean(rets)/vol*252**.5
     if down:result['sortino']=statistics.mean(rets)/down*252**.5
     return result
+
+
+def cohort_nav(completed, bars_by_symbol, calendar, roundtrip_bps=0):
+    """Equal initial cash in a SAME-entry-day cohort, no leverage/reinvestment.
+    This is a cohort NAV, not an overlapping multi-date strategy NAV. A missing
+    mark or unverified action interval produces no curve or MDD.
+    """
+    empty={'status':'관측 대기','nav':[],'mdd':None,'reason':'complete_verified_trades_required'}
+    if not completed or any(t.get('status')!='관측 완료' for t in completed):return empty
+    if len({t['entry_date'] for t in completed})!=1:return {**empty,'reason':'mixed_entry_dates_need_capital_allocation_policy'}
+    if len({t['symbol'] for t in completed})!=len(completed):return {**empty,'reason':'duplicate_positions'}
+    if not 0<=roundtrip_bps<20000:raise ValueError('invalid_cost')
+    entry=completed[0]['entry_date'];end=max(t['exit_date'] for t in completed)
+    if entry not in calendar or end not in calendar:return {**empty,'reason':'official_calendar_missing'}
+    days=calendar[calendar.index(entry):calendar.index(end)+1];cost=roundtrip_bps/20000;n=len(completed)
+    nav=[];peak=1.;mdd=0.
+    for day in days:
+        total=0.
+        for t in completed:
+            units=1/n/(t['entry_price']*(1+cost))
+            if day>=t['exit_date']:total+=units*t['exit_price']*(1-cost)
+            else:
+                b=bars_by_symbol.get(t['symbol'],{}).get(day)
+                if not b or not b.get('execution_verified') or not b.get('action_interval_verified') or b.get('basis')!='raw':return {**empty,'reason':'daily_NAV_mark_unverified'}
+                if not math.isfinite(b['close']) or b['close']<=0:return {**empty,'reason':'invalid_NAV_mark'}
+                total+=units*b['close']
+        peak=max(peak,total);mdd=min(mdd,total/peak-1);nav.append((day,total))
+    return {'status':'관측 완료','kind':'same_entry_day_cohort_NAV','nav':nav,'mdd':mdd,'reason':''}

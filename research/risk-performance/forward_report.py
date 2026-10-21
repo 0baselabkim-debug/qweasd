@@ -1,0 +1,104 @@
+"""Report actual manual trial; no collection or automatic scheduling."""
+from pathlib import Path
+import json,gzip,collections
+ROOT=Path(__file__).resolve().parent;OUT=ROOT/'forward-study'
+s=json.loads((OUT/'SUMMARY.json').read_text());cpu=json.loads((OUT/'CPU_BENCHMARK.json').read_text());source=json.loads((OUT/'inputs/source.json').read_text())
+cp=json.loads(gzip.decompress((ROOT.parent/'full-market/inputs/checkpoint-20261020.json.gz').read_bytes()))
+readiness={'snapshot_price_sessions_max':s['max_snapshot_price_sessions'],
+ 'saved_20261020_chart_length_distribution':dict(collections.Counter(len(r.get('adjusted_prices',[])) for r in cp['records'].values())),
+ 'prior_full_market_adjusted_raw_pairs_end':'2026-10-19','prior_accepted_price_flow_subset_asof':'2026-10-15',
+ 'latest_asof_validated_40_session_bundles_found':0,'next_official_session_evidence_found':False,
+ 'current_day_KRX_attempt_saved_status':'HTTP_ERROR 403 (preserved report; no new request)',
+ 'interpretation':'Historical long bars exist; not a claim all histories are shorter than 40. Latest validated contiguous bundle is missing.'}
+(OUT/'INPUT_READINESS.json').write_text(json.dumps(readiness,ensure_ascii=False,indent=2)+'\n')
+report=f'''# 전향 신호 연구 시스템 — 수동 시험 결과
+
+**판정: 구현·수동 보류 처리 검증 완료, 실제 신규 신호 확정 및 성과 검증은 미완료. 정기 자동화 적용 보류.**
+
+## 이번에 실제로 한 일
+
+- 최신 정상 게시본을 main `{source['main_commit']}`에서 읽어 별도 연구 사본으로 보존했다. 기준일 **{s['latest_asof']}**, 정상 수급 대상 **{s['normal_snapshot_stocks']:,}종목**이다.
+- 데이터셋: `{s['dataset_id']}`. DB·manifest·daily-validation·publication-ledger·v3 index의 날짜/해시·게시 상태·행 수를 함께 확인했다. 원래 게시 시각만 쓰지 않고, 복구 리비전의 확인 시각과 실제 연구 사본 확보 시각도 반영한다.
+- 시장 API 추가 호출 **0회**, 신규 예약 **0개**, 운영 main·DB·JSON·앱·수집 일정 변경 **없음**. GitHub 저장소·실행 메타데이터 조회는 수행했다.
+- 이전 연구 결과와 데이터는 그대로 보존했다. `forward.py`의 검증·가격 단계 계산과 `engine.py`를 재사용했다. 매매 조건이나 40일 기준을 완화하지 않았다.
+
+## 10월 16일 37종목 공식 교차검증
+
+현재 main의 보존 reference, 기존 아카이브, 연구 및 다른 보존 작업 공간에서 중복 해시를 제외한 **{s['reference_files_audited']}개 참조 파일**을 조사했다. 해당 날짜의 종목별 공식 KRX 원문은 **0개**였다. 다른 날짜의 KRX 값이나 KIS의 `시장 J` 값을 공식 KRX 원문으로 대체하지 않았다.
+
+따라서 **공식 교차검증 완료 0종목, 충돌 해소 0종목, 검증 보류 37종목**이다. 이것은 새 KRX API를 호출했다가 실패했다는 뜻이 아니다. 이번에는 추가 호출 승인이 없어 보존 자료 조사까지만 수행했다.
+
+`krx-crosscheck-37.csv`에 종목명·코드, 원시/후속 관측의 OHLC·거래량·거래대금 6필드, 관측 시각, 원본 SHA256, 불일치 필드를 저장했다. **74개 가격 관측**을 독립적으로 보존하고 별도 비교 판정을 추가했다. 반복 처리로 같은 원문이 중복 저장되거나 이전 원문이 덮어써지지 않는다.
+
+예: 하이브(352820) 10/16 원시 종가 **177,600원**, 후속 수정주가 응답 종가 **176,800원**, 두 시가는 **164,700원**이다. 날짜 지연·KRX/NXT 차이·기업행사를 원인으로 확정할 근거가 없어 원인 미확정 상태를 유지한다. 같은 날짜 공식 KRX 두 시장 원문이 있으면 6필드를 비교하도록 구현했으며 날짜·시장·단위·중복·해시가 다르면 보류한다. 가격 일치 자체를 기업행사 구간 검증이나 공급자 최종 확정으로 승격시키지 않는다.
+
+## 최신 게시본 신호 생성 수동 시험
+
+| 결과 | 수량 |
+|---|---:|
+| 최신 게시본 대상 | {s['normal_snapshot_stocks']:,} |
+| 실제 새로 고정 저장한 A/B/C/D 신호 | **0** |
+| 미판정·검증 보류 | **{s['holds']:,}** |
+| 최신 기준일의 검증된 연속 40일 묶음 부재 | 2,429 |
+| 다음 공식 거래일 근거 부재 | 2,429 |
+| 그중 수급 20일 부족 | 9 |
+| 성과 완료 행 | 0 |
+
+보류 사유는 중복되므로 더하지 않는다. **등록 0건은 조건 충족 기업 0개라는 결과가 아니다.** `latest-screening.csv`의 group은 미판정일 때 빈칸으로 유지했다.
+
+운영 DB의 가격 이력은 최대 **30거래일**이다. 별도 10/20 체크포인트의 보존 차트는 2,423종목이 **39행**이고 나머지는 더 짧다. 기존 전수 연구에는 60~94일 이상 이력이 있지만 종료일이 10/19이며, 10/20 정합성·조정 기준을 검증하지 않은 채 다른 관측을 이어 붙이지 않았다. 과거 검증된 183개 묶음은 10/15 자료여서 10/20 신호에 사용하지 않았다. 즉 과거 장기 이력이 전혀 없다는 설명이 아니라 **최신 검증 묶음의 부재**다.
+
+보존된 공식 거래일 자료와 최신 DB 달력은 10/20까지다. 체크포인트 휴장일 응답도 10/20 한 날짜만 포함한다. 평일이라는 이유로 다음 개장일을 추측하지 않았다. 최초 실제 수동 실행은 10/21 한국시간 08:58 무렵이고, 이후 재실행에서도 동일하게 2,429개 보류 판정이었다. 시간이 지나도 이전 시각으로 소급 등록하지 않는다. 실제 시한 경과 거절은 독립 테스트로 확인했다.
+
+## 구현된 신호·관측 보존
+
+`forward_system.py`는 정상 게시본 검사 → 현재 날짜·종목의 검증 묶음 연결 → 원본 수급 20일 및 겹치는 가격 구간 대조 → A/B/C/D 분류 → 개장 전 시한 검사 → 신호 고정을 수행한다.
+
+신호에는 기준일, 구조 확인일, 실제 확인/고정 시각, 종목·시장, 가격 구조, L2/L3/H3의 날짜와 가격, 저점 대비 상승률, 1·5·20일 수급, 직전 5일 대비 개선액, 양수 일수, 가격/수급/달력/게시 데이터 해시를 보존한다. C군은 그날 새로 확인된 돌파 사건만 허용한다. 조건 미충족과 데이터 부족을 구분한다.
+
+저장은 임시 파일 fsync 후 원자적 생성, 내용 해시 검사, 종목·기준일 고정 식별자로 수행한다. 입력 원문은 신호보다 먼저 기록하며 신호와 원문 링크도 재검사한다. 같은 종목·날짜의 후속 리비전으로 기존 신호를 바꾸지 않는다. 동시 실행·반복 실행·파일 변조·누락된 증거 링크를 검사할 수 있다.
+
+**보장 범위:** 애플리케이션의 덮어쓰기 금지와 해시/Git 이력에 의한 변경 탐지다. 파일 소유자나 저장소 관리자의 삭제·강제 변경까지 막는 물리적 WORM은 아니다. 별도 유료 저장소나 권한은 추가하지 않았다.
+
+## 후속 성과 구조
+
+`observe`는 원시·수정·공식 관측을 각각 보존하고 비교 결과를 분리한다. 단순 저장이나 가격 일치를 이유로 execution_verified를 켜지 않는다. 기업행사 구간·거래 가능성·원주가 기준이 미확인인 실제 자료는 계속 보류한다.
+
+`evaluate_signal`은 검증된 체결 자료를 입력받아 기존 규칙대로 다음 거래일 시가 진입, 5/20/60일 고정 보유 및 L3 종가 이탈 다음 시가 청산, 비용 0/10/30/60bp 가정, MAE와 동일 시장 지수 초과수익을 계산한다. 시가 청산은 기준지수도 같은 날짜 시가로 비교한다. D군에는 공통 L3가 없어 해당 전략을 적용하지 않는다.
+
+`cohort_nav`는 동일 진입일 집단의 동일 초기 금액·현금 보존·무레버리지 조건으로 일별 평가 및 MDD를 계산한다. 서로 다른 날짜의 거래 수익률을 임의로 이어 붙이지 않는다. 여러 진입일의 통합 전략 NAV는 자본 배분 규칙이 별도로 필요하며 이번에 완성했다고 주장하지 않는다. 실제 계산 가능한 신호/후속 검증 자료가 없으므로 현재 performance.csv는 **헤더만 있고 가짜 성과는 없다**.
+
+**남은 연결:** 실제 공식 기업행사/거래상태 근거를 검증하여 체결 자료로 승격시키는 입력 어댑터와, 다중 진입일 포트폴리오 자본 배분은 아직 미완료다. 순수 계산 모듈 테스트 성공을 실제 성과 검증 완료로 해석하지 않는다.
+
+## 시간 측정과 자동화 적용안 — 설정하지 않음
+
+- 실제 2,429종목 게시본 검증·보류 판정: **{s['trial_seconds']:.3f}초**. 이는 전체 가격 구조를 성공 판정한 소요시간이 아니다.
+- 참조 파일 조사·74개 관측 보존을 포함한 수동 실행: **{s['total_seconds']:.3f}초**.
+- 기존 183개 검증 묶음의 가격 구조 CPU 시험: **{cpu['total_seconds']:.3f}초**, 종목당 중앙값 **{cpu['median_seconds']:.4f}초**, P95 **{cpu['p95_seconds']:.4f}초**.
+- 같은 비용을 2,429개에 기계적으로 적용한 계산 부분 추정은 **{cpu['linear_2429_seconds_estimate']:.1f}초**다. 체크아웃, 데이터 검증·저장, Git 게시, 실행 대기는 별도이며 전체 성공 경로 실측은 아니다.
+
+기존 정규 수집 18:30/재시도 21:00, liquidity recovery, macro 작업은 `kis-validation-auth`를 공유한다. corporate 작업은 별도 `corporate-disclosures` 그룹이다. 실행 목록에서 예약 복구 [39516969735](https://github.com/0baselabkim-debug/qweasd/actions/runs/39516969735)의 실제 성공과 공시 작업 병행 상태를 확인했다. 미래 예약 성공을 검증했다고 주장하지 않는다.
+
+승인 후 적용 후보는 **검증 스냅샷 게시 완료 이벤트 이후 연구 검사**다. 시간만 보고 미완성 자료를 읽지 않고, 정확한 게시 커밋을 별도 체크아웃한다. 자료가 보강되면 다시 검사하되 다음 공식 개장 시한을 넘으면 기록만 남기고 새 실제 신호를 만들지 않는다.
+
+연구 작업이 원본 읽기·계산만 한다면 KIS 호출은 0회이므로 인증/호출 경쟁이 없다. 연구 브랜치 전용 동시 실행 잠금으로 중복 게시만 막고 운영 수집의 공유 잠금을 불필요하게 점유하지 않는 방안을 권한다. 향후 KIS 조회가 필요해지면 기존 호출 간격·공유 인증 직렬화에 참여하도록 별도 승인/설계를 받아야 한다. 워크플로·cron·권한은 이번에 추가/변경하지 않았다.
+
+**자동화 승인 전 필요한 조건:** 10/16 공식 KRX 양 시장 원문, 최신 날짜의 검증된 40일 가격·20일 수급 묶음, 다음 개장일의 공식 달력 응답, 기업행사/거래상태 근거, 실제 신규 신호가 하나 이상 고정되는 수동 시험과 후속 가격 검증. 기존 보존 자료를 넘는 조회는 승인 후 별도로 수행한다.
+
+## 재현
+
+저장소 루트에서 연구 환경의 Python으로:
+
+```sh
+python research/risk-performance/forward_trial.py
+python -m pytest research/risk-performance/tests -q
+```
+
+`forward_trial.py`는 네트워크 연결을 차단한 채 로컬 Git 객체와 보존 자료만 조사한다. 현재 기준일 신호 등록 CLI는 `forward_system.py --snapshot ... --bundles ... --calendar ...`이며 실제 시스템 시각을 사용하고 소급 시각 옵션은 제공하지 않는다. 시험용 달력·가격은 테스트의 임시 폴더에만 존재하며 실제 연구 결과와 섞지 않았다.
+'''
+validation=OUT/'validation/results.json'
+if validation.exists():
+    tests=json.loads(validation.read_text())
+    report+=f"\n## 검증 기록\n\n로컬 전체 회귀 **{tests['full_regression']['passed']}개 통과({tests['full_regression']['seconds']}초)**, 연구 테스트 **{tests['research_suite']['passed']}개 통과({tests['research_suite']['seconds']}초)**. 후자는 전체 회귀에 포함되므로 합산하지 않는다. 실제 게시본 반복 판정 일치와 원본 보존도 확인했다. 정상 신호 저장 성공 경로는 테스트 임시 자료로 검증했으며 실제 신규 신호 성공으로 표현하지 않는다.\n"
+(OUT/'REPORT.md').write_text(report)
+print('Forward report generated')
