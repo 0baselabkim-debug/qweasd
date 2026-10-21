@@ -115,8 +115,18 @@
       "authentication": false,
       "run_id": "39613932076",
       "reserved_at": "2026-10-21T14:07:45.705581+00:00",
-      "status": "reserved",
-      "retry": false
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T14:07:49.616125+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json",
+      "response_sha256": "9c76e5f66ffd1c61c6143ce13b821ba775a800d754aae26955438380020833ec",
+      "file": "responses/9c76e5f66ffd1c61c6143ce13b821ba775a800d754aae26955438380020833ec.json.gz",
+      "file_sha256": "0837ec40e40e5f03635b4ed1b234fab72aae9c4b7115cd0bedbb18bb7618c338",
+      "provider_code": "MCA00000",
+      "completed_at": "2026-10-21T14:07:51.214619+00:00",
+      "seconds": 1.5978
     }
   ],
   "checks": [
@@ -221,6 +231,17 @@
     },
     {
       "checked_at": "2026-10-21T14:07:45.705542+00:00",
+      "active_other_market_or_operating_runs": [],
+      "statuses_checked": [
+        "in_progress",
+        "queued",
+        "waiting",
+        "pending",
+        "requested"
+      ]
+    },
+    {
+      "checked_at": "2026-10-21T14:07:49.616055+00:00",
       "active_other_market_or_operating_runs": [],
       "statuses_checked": [
         "in_progress",
