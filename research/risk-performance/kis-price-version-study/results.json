@@ -4,7 +4,7 @@
     {
       "symbol": "095570",
       "name": "AJ네트웍스",
-      "classification": "6_검증불가",
+      "classification": "1_수정_원주가_모두_KRX일치",
       "old_adjusted": {
         "open": 4235.0,
         "high": 4250.0,
@@ -21,19 +21,43 @@
         "volume": 91919.0,
         "turnover": 385842973.0
       },
-      "new_adjusted": null,
-      "new_raw": null,
-      "errors": {
-        "0": "not_requested_or_no_response",
-        "1": "not_requested_or_no_response"
+      "new_adjusted": {
+        "open": 4235.0,
+        "high": 4250.0,
+        "low": 4150.0,
+        "close": 4195.0,
+        "volume": 91919.0,
+        "turnover": 385842973.0
       },
-      "adjustment_flags": {},
+      "new_raw": {
+        "open": 4235.0,
+        "high": 4250.0,
+        "low": 4150.0,
+        "close": 4195.0,
+        "volume": 91919.0,
+        "turnover": 385842973.0
+      },
+      "errors": {},
+      "adjustment_flags": {
+        "0": {
+          "prtt_rate": "0.00",
+          "revl_issu_reas": "",
+          "mod_yn": "N",
+          "flng_cls_code": "00"
+        },
+        "1": {
+          "prtt_rate": "0.00",
+          "revl_issu_reas": "",
+          "mod_yn": "N",
+          "flng_cls_code": "00"
+        }
+      },
       "signal_registered": false
     },
     {
       "symbol": "006840",
       "name": "AK홀딩스",
-      "classification": "6_검증불가",
+      "classification": "1_수정_원주가_모두_KRX일치",
       "old_adjusted": {
         "open": 7300.0,
         "high": 7300.0,
@@ -50,18 +74,42 @@
         "volume": 5107.0,
         "turnover": 36478190.0
       },
-      "new_adjusted": null,
-      "new_raw": null,
-      "errors": {
-        "0": "not_requested_or_no_response",
-        "1": "not_requested_or_no_response"
+      "new_adjusted": {
+        "open": 7300.0,
+        "high": 7300.0,
+        "low": 7010.0,
+        "close": 7010.0,
+        "volume": 5107.0,
+        "turnover": 36478190.0
       },
-      "adjustment_flags": {},
+      "new_raw": {
+        "open": 7300.0,
+        "high": 7300.0,
+        "low": 7010.0,
+        "close": 7010.0,
+        "volume": 5107.0,
+        "turnover": 36478190.0
+      },
+      "errors": {},
+      "adjustment_flags": {
+        "0": {
+          "prtt_rate": "0.00",
+          "revl_issu_reas": "",
+          "mod_yn": "N",
+          "flng_cls_code": "00"
+        },
+        "1": {
+          "prtt_rate": "0.00",
+          "revl_issu_reas": "",
+          "mod_yn": "N",
+          "flng_cls_code": "00"
+        }
+      },
       "signal_registered": false
     }
   ],
   "actual_new_signals": 0,
-  "requests": 0,
+  "requests": 5,
   "data_missing_is_not_zero_candidates": true,
   "previous189_status_unchanged": true
 }
