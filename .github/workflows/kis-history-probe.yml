@@ -1,4 +1,4 @@
-name: Manual bounded full-market price research
+name: Manual bounded official research crosscheck
 on:
   workflow_dispatch:
 permissions:
@@ -11,7 +11,7 @@ jobs:
   probe:
     if: github.ref_name == 'research/full-market-transition-20261019'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,17 +20,18 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-      - name: Collect one bounded research batch
-        timeout-minutes: 13
+      - name: Collect approved official references (maximum eight physical requests)
+        timeout-minutes: 6
         env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python research/full-market/collect_batch.py
+        run: python research/risk-performance/official_probe.py
       - name: Preserve research checkpoint even on failure
         if: always()
         run: |
           test "$GITHUB_REF_NAME" = 'research/full-market-transition-20261019'
-          git add -- research/full-market/collection
+          git add -- research/risk-performance/official-crosscheck
           if ! git diff --cached --quiet; then
             git commit -m "Preserve bounded research batch $GITHUB_RUN_ID"
             git push origin HEAD:refs/heads/research/full-market-transition-20261019
@@ -39,5 +40,5 @@ jobs:
         if: always()
         with:
           name: research-batch-${{ github.run_id }}
-          path: research/full-market/collection
+          path: research/risk-performance/official-crosscheck
           retention-days: 30
