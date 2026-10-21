@@ -9,8 +9,16 @@
       "authentication": true,
       "run_id": "39613932076",
       "reserved_at": "2026-10-21T14:07:09.215345+00:00",
-      "status": "reserved",
-      "retry": false
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T14:07:14.827054+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json",
+      "response_sha256": "2d2e48901aebd6dc269b8b896b8b89da60f0c8bb4d0de3cb1b6fd71051dd1e3d",
+      "authenticated": true,
+      "completed_at": "2026-10-21T14:07:15.429091+00:00",
+      "seconds": 0.6015
     }
   ],
   "checks": [
@@ -27,6 +35,17 @@
     },
     {
       "checked_at": "2026-10-21T14:07:09.215305+00:00",
+      "active_other_market_or_operating_runs": [],
+      "statuses_checked": [
+        "in_progress",
+        "queued",
+        "waiting",
+        "pending",
+        "requested"
+      ]
+    },
+    {
+      "checked_at": "2026-10-21T14:07:14.826988+00:00",
       "active_other_market_or_operating_runs": [],
       "statuses_checked": [
         "in_progress",
