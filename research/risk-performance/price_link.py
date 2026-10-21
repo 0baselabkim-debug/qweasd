@@ -165,6 +165,12 @@ def make_forward_bundle(link,flows,raw_flow_rows,flow_sources,reference,verified
 
 def verify_flow_sources(raw,symbol,repo):
     """Every submitted API row must occur verbatim in hash-checked saved input."""
+    if raw.get('schema')=='research-raw-flow-replay-v2':
+        from conflict_reconciliation import verify_replay_sources
+        if raw.get('symbol')!=symbol or raw.get('status')!='replay_ready' or len(raw.get('rows',[]))!=20:
+            raise ValueError('raw_flow_replay_incomplete_or_wrong_symbol')
+        verify_replay_sources(raw,repo)
+        return
     import gzip,hashlib,json,tarfile
     from forward_system import load,sha
     allowed=set()
