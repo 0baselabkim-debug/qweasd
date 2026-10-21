@@ -1,0 +1,73 @@
+{
+  "conclusion": "success",
+  "headSha": "31b38ec0ceeab284693dcdda3d1fac0e2e4ca04f",
+  "jobs": [
+    {
+      "completedAt": "2026-10-21T01:15:03Z",
+      "conclusion": "success",
+      "databaseId": 118979768436,
+      "name": "check",
+      "startedAt": "2026-10-21T01:10:16Z",
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install dashboard dependencies",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Test real snapshot, calculations, and UI without API secrets",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Start and check HTTP server",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39525713638/job/118979768436"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39525713638"
+}
