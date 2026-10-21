@@ -30,6 +30,11 @@ def classify(original,official,adjusted,raw):
  if adjusted!=raw:return '4_수정_원주가_서로다름_둘다불일치'
  if adjusted==original:return '5_최초관측그대로_KRX불일치'
  return '추가유형_두옵션동일하게변경_둘다KRX불일치'
+def assess_update(original,official,new_adjusted):
+ if new_adjusted is None:return '판정 불가: 신규 수정주가 응답 미확보'
+ if new_adjusted==original:return '반증(이번 관측쌍에 한정): 동일 옵션0 가격 변경 없음'
+ if new_adjusted==official:return '지지: 동일 옵션0 가격이 변경되어 공식값과 일치'
+ return '부분 지지: 동일 옵션0 관측 변경 확인, 공식값과는 불일치'
 def main():
  OUT.mkdir(exist_ok=True);inputs={}
  def source(p):inputs[str(p.relative_to(REPO))]=sha(p.read_bytes());return inputs[str(p.relative_to(REPO))]
@@ -78,7 +83,7 @@ def main():
  hypotheses=['# 원인 가설 판정','', '|가설|증거에 따른 판정|한계|','|---|---|---|']
  for c in cases:
   a=c['new_adjusted'];b=c['new_raw'];o=c['old_adjusted'];official=c['official']
-  text='판정 불가: 신규 응답 미확보' if a is None or b is None else ('지지: 후속 가격이 변경되어 공식값과 일치' if (a!=o and a==official) or (b!=o and b==official) else '이번 표본에서 공식값 방향 사후 변경 미확인')
+  text=assess_update(o,official,a)
   hypotheses.append(f"|A 사후 갱신 / {c['name']}|{text}|변경 이유·정확한 확정 시각은 증명하지 않음|")
   text='판정 불가: 신규 응답 미확보' if a is None or b is None else ('옵션 차이 관측; 기업행사 원인 판정 불가' if a!=b else '수정/원 옵션 차이 설명은 이번 날짜 표본에서 지지되지 않음')
   hypotheses.append(f"|B 조정 옵션 / {c['name']}|{text}|전 기간 기업행사 부재를 증명하는 것은 아님|")

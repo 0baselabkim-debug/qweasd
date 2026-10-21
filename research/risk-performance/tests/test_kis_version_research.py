@@ -59,3 +59,10 @@ def test_full_six_fields_and_missing_are_distinct():
 def test_nonfinite_observation_rejected():
  e,x=fixture();x['output2'][0]['acml_vol']='inf'
  with pytest.raises(ValueError):validate_new(e,x,'095570','0')
+
+def test_raw_only_match_does_not_prove_same_option_revision():
+ from kis_version_analysis import assess_update
+ e,x=fixture();official,_=validate_new(e,x,'095570','0');original={**official,'close':10}
+ assert classify(original,official,original,official).startswith('3_')
+ assert assess_update(original,official,original).startswith('반증')
+ assert assess_update(original,official,official).startswith('지지')
