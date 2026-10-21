@@ -100,6 +100,23 @@
       "provider_code": "MCA00000",
       "completed_at": "2026-10-21T14:07:41.558439+00:00",
       "seconds": 0.631
+    },
+    {
+      "key": "006840-1",
+      "params": {
+        "FID_COND_MRKT_DIV_CODE": "J",
+        "FID_INPUT_ISCD": "006840",
+        "FID_INPUT_DATE_1": "20261001",
+        "FID_INPUT_DATE_2": "20261020",
+        "FID_PERIOD_DIV_CODE": "D",
+        "FID_ORG_ADJ_PRC": "1"
+      },
+      "endpoint": "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice",
+      "authentication": false,
+      "run_id": "39613932076",
+      "reserved_at": "2026-10-21T14:07:45.705581+00:00",
+      "status": "reserved",
+      "retry": false
     }
   ],
   "checks": [
@@ -193,6 +210,17 @@
     },
     {
       "checked_at": "2026-10-21T14:07:40.926755+00:00",
+      "active_other_market_or_operating_runs": [],
+      "statuses_checked": [
+        "in_progress",
+        "queued",
+        "waiting",
+        "pending",
+        "requested"
+      ]
+    },
+    {
+      "checked_at": "2026-10-21T14:07:45.705542+00:00",
       "active_other_market_or_operating_runs": [],
       "statuses_checked": [
         "in_progress",
