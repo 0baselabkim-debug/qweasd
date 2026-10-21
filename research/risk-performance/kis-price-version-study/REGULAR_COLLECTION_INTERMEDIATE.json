@@ -1,0 +1,42 @@
+{
+  "source_commit": "5ff62b062658463b9130b55576b7207b73aaf737",
+  "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e",
+  "source_path": "daily-results/bundle.json.gz",
+  "records": [
+    {
+      "symbol": "095570",
+      "regular_collection_observed_at": "2026-10-21T10:26:00.645891+00:00",
+      "request_scope": {
+        "market": "J",
+        "symbol": "095570",
+        "end": "20261021",
+        "adjustment": "0"
+      },
+      "changed_fields": [
+        "close",
+        "volume",
+        "turnover"
+      ],
+      "six_fields_match_KRX": true,
+      "raw_option1_available": false
+    },
+    {
+      "symbol": "006840",
+      "regular_collection_observed_at": "2026-10-21T10:13:36.923254+00:00",
+      "request_scope": {
+        "market": "J",
+        "symbol": "006840",
+        "end": "20261021",
+        "adjustment": "0"
+      },
+      "changed_fields": [
+        "close"
+      ],
+      "six_fields_match_KRX": true,
+      "raw_option1_available": false
+    }
+  ],
+  "new_market_API_requests": 0,
+  "confounder": "request_end changed from 20261020 to 20261021 as well as observation time",
+  "not_the_authorized_new_requery": true
+}

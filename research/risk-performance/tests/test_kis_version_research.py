@@ -66,3 +66,7 @@ def test_raw_only_match_does_not_prove_same_option_revision():
  assert classify(original,official,original,official).startswith('3_')
  assert assess_update(original,official,original).startswith('반증')
  assert assess_update(original,official,official).startswith('지지')
+
+def test_preserved_regular_observation_matches_all_twelve_official_fields():
+ import runpy
+ runpy.run_path(str(probe.OUT/'verify_intermediate.py'),run_name='__main__')
