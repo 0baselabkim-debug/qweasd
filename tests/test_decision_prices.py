@@ -92,3 +92,15 @@ def test_bad_history_never_accepted(defect):
     if defect=='missing':a['response']['output2'].pop()
     result=candidate(objects,'000720','KOSPI',asof,'2020-01-01',official,db,days[-30:],{})
     assert result['error'] or asof not in result['accepted']
+
+
+def test_unverified_event_blocks_crossing_not_verified_post_event_suffix():
+    from screener.decision_support.history import candidate
+    from screener.decision_support.indicators import technical
+    days,objects,official,db=history_fixture();asof=days[-1]
+    objects[f'kis:{asof}:000720:0:0'][0][1]['response']['output2'][-31]['flng_cls_code']='05'
+    result=candidate(objects,'000720','KOSPI',asof,'2020-01-01',official,db,days[-30:],{})
+    assert len(result['accepted'])==30
+    values=technical(result['days'],result['accepted'])
+    assert values['sma_20']['value']==105
+    assert values['sma_60']['value'] is None

@@ -58,7 +58,12 @@ def candidate(objects,code,market,asof,listing,official,db_prices,operating_days
         if overlap!=[d for d in days if d in set(operating_days)]:raise ValueError('calendar_order_conflict')
         if operating_days and [d for d in days if d>=max(days[0],operating_days[0])]!=overlap:raise ValueError('calendar_session_conflict')
         if any(d not in index for d in adjusted if days[0]<=d<=asof):raise ValueError('stock_date_outside_official_calendar')
-        blocked=any(adjustment_pending(adjusted[d]) or adjustment_pending(original[d]) for d in days if d in adjusted and d in original)
+        # Never bridge an unverified adjustment. Subsequent no-adjustment bars
+        # can still qualify independently; a past event cannot taint every
+        # later candle forever. Indicators require a fully qualified suffix.
+        barriers=[d for d in days if d in adjusted and d in original and
+                  (adjustment_pending(adjusted[d]) or adjustment_pending(original[d]))]
+        barrier=max(barriers) if barriers else None
         accepted={};series=[];benchmarks={};comparison=[]
         for d in days:
             try:
@@ -69,7 +74,7 @@ def candidate(objects,code,market,asof,listing,official,db_prices,operating_days
             except (KeyError,ValueError,TypeError):pass
             raw=adjusted.get(d)
             if raw is None:continue
-            q=accept_chart(raw,code,d,market,at,official,listing,blocked=blocked)
+            q=accept_chart(raw,code,d,market,at,official,listing,blocked=bool(barrier and d<=barrier))
             try:
                 unadjusted=bar(original[d],KIS_FIELDS)
                 if unadjusted!=q['value']:raise ValueError('adjusted_original_six_field_conflict')

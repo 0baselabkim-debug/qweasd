@@ -50,7 +50,8 @@ jobs:
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
           MODE: ${{ inputs.mode }}
         run: |
-          sleep 65
+          # Authentication cooldown is only relevant to the KIS pilot.
+          if [ "$MODE" = pilot ]; then sleep 65; fi
           python scripts/collect_decision_prices.py "$MODE"
       - name: Preserve evidence and failures outside main
         if: always()
