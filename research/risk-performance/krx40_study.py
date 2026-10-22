@@ -173,8 +173,10 @@ def flow_audit(snapshot, universe, flows, sessions, captured_at):
                     ROOT/'inputs/checkpoint-20261015.json.gz', ROOT/'inputs/checkpoint-20261016.json.gz',
                     FULL/'inputs/checkpoint-20261019.json.gz', FULL/'inputs/checkpoint-20261020.json.gz',
                     ROOT/'kis-price-version-study/inputs/checkpoint-20261021.json.gz']
+    from krx40_checkpoint import captured_paths
+    source_paths += captured_paths()
     index = {}; sources = {}
-    for path in source_paths:
+    for path in dict.fromkeys(source_paths):
         if not path.exists():
             continue
         h = hash_bytes(path.read_bytes()); sources[str(path.relative_to(REPO))] = h
@@ -238,6 +240,12 @@ def prepare(commit):
     with explicit_path.open(encoding='utf-8-sig') as f:
         explicit = {r['symbol'] for r in csv.DictReader(f)}
     cp_path = ROOT/'kis-price-version-study/inputs/checkpoint-20261021.json.gz'
+    if (snapshot/'checkpoint-source.json').exists():
+        saved = load(snapshot/'checkpoint-source.json')
+        cp_path = (REPO/saved['file']).resolve()
+        if not cp_path.is_relative_to((OUT/'daily-checkpoints').resolve()) or hash_bytes(cp_path.read_bytes()) != saved['sha256']:
+            raise ValueError('captured_checkpoint_hash_mismatch')
+        sources[str((snapshot/'checkpoint-source.json').relative_to(REPO))] = hash_bytes((snapshot/'checkpoint-source.json').read_bytes())
     checkpoint = load(cp_path)
     # The independent current-checkpoint gate never silently uses Oct21 as a
     # newer date. A future plan without its matching original checkpoint holds.
@@ -361,6 +369,35 @@ def prepare(commit):
     return execution, stats
 
 
+def prepare_latest():
+    """Fresh normal publication + matching saved source; no market calls."""
+    from krx40_checkpoint import capture_latest
+    subprocess.run(['git', 'fetch', 'origin', 'main'], cwd=REPO, check=True)
+    commit = git('rev-parse', 'origin/main')
+    snapshot, publication = freeze_main(commit)
+    universe = snapshot_rows(snapshot)[0]
+    capture_latest(snapshot, {r[0] for r in universe})
+    return prepare(commit)
+
+
+def execute_batch(plan_path, retry_failed=False):
+    """The same path used by the CLI and the manual Actions entry point."""
+    require_window(utcnow())
+    plan_path = Path(plan_path)
+    if not plan_path.resolve().is_relative_to((OUT/'plans').resolve()):
+        raise ValueError('pinned_research_plan_required')
+    plan = load(plan_path)
+    if plan_path.stem != digest(plan):
+        raise ValueError('plan_hash_mismatch')
+    github_preflight(plan)
+    _, current = prepare(plan['source_commit'])
+    if current['plan_sha256'] != digest(plan):
+        raise ValueError('stale_plan_refresh_required')
+    import os
+    return collect_batch(plan, OUT/'collection', os.environ.get('KRX_API_KEY'),
+                         lambda: github_preflight(plan), persist_research, retry_failed=retry_failed)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('mode', choices=['prepare', 'collect-batch'])
@@ -370,26 +407,18 @@ def main():
     if git('branch', '--show-current') != BRANCH:
         raise ValueError('research_branch_required')
     if args.mode == 'prepare':
-        subprocess.run(['git', 'fetch', 'origin', 'main'], cwd=REPO, check=True)
-        run, stats = prepare(git('rev-parse', 'origin/main'))
+        run, stats = prepare_latest()
         print(json.dumps({'execution': run, 'summary': {k: v for k, v in stats.items() if k not in ('source_sha256', 'publication')}}, ensure_ascii=False))
     else:
-        require_window(utcnow())  # FIRST: no delayed run, no market request in daytime
-        if not args.plan or not args.plan.resolve().is_relative_to((OUT/'plans').resolve()):
+        if not args.plan:
+            require_window(utcnow())
             raise ValueError('pinned_research_plan_required')
-        plan = load(args.plan)
-        if args.plan.stem != digest(plan):
-            raise ValueError('plan_hash_mismatch')
-        github_preflight(plan)
-        # Rebuild offline with the same snapshot and re-import all response
-        # checkpoints. Any old plan must be refreshed after a batch or new main.
-        _, current = prepare(plan['source_commit'])
-        if current['plan_sha256'] != digest(plan):
-            raise ValueError('stale_plan_refresh_required')
-        import os
-        result = collect_batch(plan, OUT/'collection', os.environ.get('KRX_API_KEY'),
-                               lambda: github_preflight(plan), persist_research, retry_failed=args.retry_failed)
+        result = execute_batch(args.plan, args.retry_failed)
         print(json.dumps({'batch_requests': result['batch_requests'], 'remaining_budget': result['remaining_budget']}))
+        recent = result['requests'][-result['batch_requests']:] if result['batch_requests'] else []
+        if any(r.get('status') != 'validated' for r in recent):
+            raise SystemExit(1)
+
 
 
 if __name__ == '__main__':

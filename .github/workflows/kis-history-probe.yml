@@ -1,6 +1,16 @@
-name: Manual bounded two-stock KIS version research
+name: Manual bounded official KRX 40-day research
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: prepare has no market requests; collect-batch requires same-night dispatch (23-09 KST)
+        type: choice
+        options: [prepare, collect-batch]
+        default: prepare
+      retry_failed:
+        description: Explicitly retry failed market-dates within the same cumulative 80-call ledger
+        type: boolean
+        default: false
 permissions:
   contents: write
   actions: read
@@ -9,40 +19,51 @@ concurrency:
   cancel-in-progress: false
   queue: max
 jobs:
-  probe:
+  research:
     if: github.ref_name == 'research/full-market-transition-20261019'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 25
+    env:
+      PYTHONPATH: research/risk-performance:.
     steps:
       - uses: actions/checkout@v4
         with:
           ref: research/full-market-transition-20261019
-      - name: Configure research-only checkpoint commits
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-      - name: Collect approved two-stock versions (maximum five physical requests)
-        timeout-minutes: 6
-        env:
-          GH_TOKEN: ${{ github.token }}
-          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
-          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python research/risk-performance/kis_version_probe.py
-      - name: Generate offline comparison without promoting signals
-        if: always()
-        run: python research/risk-performance/kis_version_analysis.py
-      - name: Preserve research checkpoint even on failure
-        if: always()
+          fetch-depth: 0
+      - name: Reject stale dispatch code and configure research-only commits
         run: |
           test "$GITHUB_REF_NAME" = 'research/full-market-transition-20261019'
-          git add -- research/risk-performance/kis-price-version-study
-          if ! git diff --cached --quiet; then
-            git commit -m "Preserve bounded research batch $GITHUB_RUN_ID"
-            git push origin HEAD:refs/heads/research/full-market-transition-20261019
-          fi
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install existing dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Prepare latest validated publication offline (no market credential)
+        if: inputs.mode == 'prepare' || inputs.mode == ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESEARCH_MODE: prepare
+        run: python research/risk-performance/krx40_manual.py
+      - name: Collect one bounded KRX batch and reclassify offline (never register signals)
+        if: inputs.mode == 'collect-batch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          RESEARCH_MODE: collect-batch
+          RETRY_FAILED: ${{ inputs.retry_failed }}
+        run: python research/risk-performance/krx40_manual.py
+      - name: Preserve only KRX research evidence even on failure
+        if: always()
+        env:
+          PYTHONPATH: research/risk-performance:.
+        run: python -c 'from krx40_collect import persist_research; persist_research()'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: research-batch-${{ github.run_id }}
-          path: research/risk-performance/kis-price-version-study
+          name: krx40-manual-${{ github.run_id }}-${{ github.run_attempt }}
+          path: research/risk-performance/krx-40d-study
           retention-days: 30

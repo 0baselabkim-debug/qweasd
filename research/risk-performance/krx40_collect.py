@@ -42,6 +42,16 @@ def require_window(now):
         raise ValueError('outside_approved_2300_0900_KST_window')
 
 
+def require_dispatch_window(created, current):
+    """A daytime queued/re-run dispatch must never turn into a nighttime call."""
+    require_window(created); require_window(current)
+    def night(value):
+        t = instant(value).astimezone(ZoneInfo('Asia/Seoul'))
+        return t.date() if t.hour >= 23 else t.date()-dt.timedelta(days=1)
+    if instant(created) > instant(current) or night(created) != night(current):
+        raise ValueError('dispatch_not_in_current_approved_night')
+
+
 def endpoint(market):
     part = {'KOSPI': 'stk', 'KOSDAQ': 'ksq'}[market]
     return f'https://data-dbg.krx.co.kr/svc/apis/sto/{part}_bydd_trd'
@@ -257,6 +267,7 @@ def github_preflight(plan):
         raise ValueError('shared_Actions_runner_required_no_local_market_calls')
     run = json.loads(subprocess.check_output([
         'gh', 'api', 'repos/0baselabkim-debug/qweasd/actions/runs/'+this_run], cwd=REPO))
+    require_dispatch_window(run['created_at'], utcnow())
     workflow_path = run.get('path', '').split('@')[0]
     if not workflow_path.startswith('.github/workflows/') or not workflow_path.endswith('.yml'):
         raise ValueError('workflow_identity_missing')
@@ -283,6 +294,11 @@ def persist_research():
     if any(not p.startswith(rel+'/') for p in staged):
         raise ValueError('unrelated_staged_changes')
     subprocess.run(['git', 'add', '--', rel], cwd=REPO, check=True)
+    # The repository ignores *.duckdb globally. Preserve only frozen public
+    # research inputs, never omit the DB required to reproduce their manifests.
+    databases = sorted((OUT/'inputs').glob('*/dashboard.duckdb'))
+    if databases:
+        subprocess.run(['git', 'add', '-f', '--', *[str(p.relative_to(REPO)) for p in databases]], cwd=REPO, check=True)
     if git('diff', '--cached', '--name-only'):
         subprocess.run(['git', 'commit', '-q', '-m', 'Preserve bounded official 40-day research checkpoint'], cwd=REPO, check=True)
         subprocess.run(['git', 'push', 'origin', 'HEAD:refs/heads/'+BRANCH], cwd=REPO, check=True)
