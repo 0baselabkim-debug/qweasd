@@ -50,6 +50,7 @@ result={'asof':index['asof'],'dataset_id':index['dataset_id'],'source_sha256':in
     'all_stock_independent_checks':verify(d,root/'snapshot'),'real_samples':samples,'coverage':index['coverage'],
     'operating_price_history':{'min':str(lo),'max':str(hi),'rows':n,'max_rows_per_symbol':max(n for _,n in counts)},
     'verified_contiguous_price_days_distribution':dict(counts40),'original_record_counts':records,
+    'annual_financial_field_coverage':{k:sum(bool(s['financial']['annual']) and s['financial']['annual'][0].get(k) is not None for s in stocks.values()) for k in ('revenue','operating_profit','net_income','equity','liabilities','ocf')},
     'source_collection_seconds_historical':seconds,'original_publishing_candidate_seconds':phases['candidate_total_seconds'],
     'sidecar_build_seconds':read(d/'validation.json')['total_build_and_validation_seconds'],
     'market_api_calls_added':0,

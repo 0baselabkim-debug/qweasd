@@ -22,3 +22,7 @@ Official KRX history uses two market-wide responses per missing date (KOSPI/KOSD
 For 10 selected symbols, a single full-day minute download could require ~130 requests / at least 136.5 seconds spacing, before network/auth/retries/validation. This conditional estimate is not evidence of live success or a proposed new schedule. Requesting whole-session history every poll would waste calls; any future approved implementation should retain timestamped incremental raw observations. Without multiple comparable provisional snapshots, do not calculate flow acceleration.
 
 No new subscription or paid provider was introduced. Existing provider/account eligibility and limits still apply. Intraday automation, additional market calls and new schedules remain **disabled**.
+
+## Cross-check against the existing research archive
+
+The separately maintained `research/full-market-transition-20261019` branch at `d31ffa137b653a65602444145ee7ca0717c2a4a5` was inspected read-only. Its `krx-40d-study/LATEST_MANUAL_RESULT.json` explicitly records **prepare only, 0/80 market requests, zero complete official 40-day series**, and 70 missing market/date combinations. Its saved official dates are likewise October 14/15/16/19/20. Thus no additional current-day official price was available to reuse from that archive. This task did not consume that research authorization, start a delayed/night job, change its research branch or weaken acceptance to populate indicators.

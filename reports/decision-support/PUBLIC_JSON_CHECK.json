@@ -1,0 +1,27 @@
+{
+  "ref": "main",
+  "authenticated": false,
+  "index_http_status": 200,
+  "asof": "2026-10-21",
+  "dataset_id": "decision-v1-2026-10-21-dac1ef1c107ac74582a08342c36bc61f669a73a8d6acb9029196a14cb537ae9a",
+  "index_sha256": "415eb2a492b6968ea94b1ace59e742dc06881c2983885680416525d10de82327",
+  "source_snapshot_sha256": "827a7cbaf02fc938e914f9955729e6877fda4b931c7e3e325876031161042b8b",
+  "normal_generation_match": true,
+  "shards": [
+    {
+      "file": "sectors/kospi-185cbf181fd734a41b28e870-1.json",
+      "http_status": 200,
+      "sha256": "742eeea96bc0570222ae11af1c33c4b57200fb7405cfb639ff2ad595a04f8d4f",
+      "symbols": 26
+    },
+    {
+      "file": "sectors/kosdaq-048ed9f64ab7af3a75982b08-1.json",
+      "http_status": 200,
+      "sha256": "0f4bd6b6af73143aba9df4200822a13d939bc32bd96d023d442baf61a6a703cf",
+      "symbols": 4
+    }
+  ],
+  "database_http_status": 200,
+  "database_hash_match": true,
+  "seconds": 1.32
+}

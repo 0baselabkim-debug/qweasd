@@ -50,3 +50,30 @@ DB는 `institution_flows_daily`, `stock_ohlcv_daily`, `indicator_snapshots`, `so
 최신 데이터 진입점: https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/decision-support/index.json
 
 기존 대시보드: https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/
+
+## 실제 배포 및 최종 검증 (2026-10-22)
+
+- 구현 커밋: [`b26431bb`](https://github.com/0baselabkim-debug/qweasd/commit/b26431bb97e859598958f31fe3398abc998b3bda).
+- **GitHub Actions가 직접 생성·게시한 데이터 커밋**: [`c2e3eaef`](https://github.com/0baselabkim-debug/qweasd/commit/c2e3eaef4d05b8d4be49680349f0149d310e7493).
+- 실제 생성·게시 [실행 39731694568](https://github.com/0baselabkim-debug/qweasd/actions/runs/39731694568): 성공. 실행 06:04:32~06:05:55 UTC(한국시간 15:04:32~15:05:55), 전체 **83초**, 생성·독립검증 **33.355초**, 시장 API **0회**.
+- [동일 입력 재실행 39732000928](https://github.com/0baselabkim-debug/qweasd/actions/runs/39732000928): 성공. main은 `c2e3eaef`를 유지하여 중복 게시하지 않음.
+- 최종 게시 코드·자료 커밋 `c2e3eaef`의 [CI 39731997930](https://github.com/0baselabkim-debug/qweasd/actions/runs/39731997930): 회귀 및 Streamlit HTTP health 성공.
+- 최종 로컬 전체 회귀 **269개 통과 / 실패 0개**, 272.65초. [원문](published-regression.txt). 초기 268개 회귀 후 교체 실패 복구 테스트 1개를 추가했다. CI 콘솔 로그 직접 다운로드는 403으로 막혔지만, 공식 run/job/step 상태와 실제 게시 파일은 별도로 확인했다. [실행 기록](EXECUTION_RESULTS.json).
+- 2,430종목 외국인 1·3·5·20일·직전5일·개선액 **14,580건 독립 SQL 대조**, 별도 DB와 JSON 동등성 및 기관 수량 집계 검증. KOSPI·KOSDAQ 10종목 원본 표본 대조 통과. [재현 기록](REAL_DATA_CHECKS.json).
+- 인증 없는 **main 공개 JSON HTTP 200**, 기준일/정상 manifest 해시 일치, KOSPI·KOSDAQ 표본 shard 해시와 압축 DB 해시 확인. [공개 URL 검사](PUBLIC_JSON_CHECK.json).
+- 기존 운영 DB·manifest·검증·ledger·v2/v3·기업 상태·app·정규 workflow 9개 파일은 통합한 최신 운영 main `4ce53478`과 동일. [최종 보존 검사](PROTECTED_FINAL.json). 작업 도중 기존 운영 복구·공시가 게시한 변경도 보존했다.
+- 기존 공개 브라우저 검사에 실제 배포 해시를 실패 전 기록하도록 진단 순서만 보완한 커밋 `fae680aa`. UI·허용 기준을 바꾸지 않았다. 이후 보고서/검증 기록 보충은 분석 코드·원본 데이터 변경이 아니다.
+
+최종 데이터: **2026-10-21**, 정상 원천 DB SHA-256 `827a7cbaf02fc938e914f9955729e6877fda4b931c7e3e325876031161042b8b`.
+
+### 공개 앱 별도 차단 사항
+
+[공개 웹 재검사 39732428691](https://github.com/0baselabkim-debug/qweasd/actions/runs/39732428691)는 **실패**했다. 앱 접속은 HTTP 200이지만 실제 실행 커밋은 `5545fce140411702b77ad19419b1bba03fc25a62`(2026-10-21 20:37:30 KST)이며, 데이터 해시는 `c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948`이다. 최신 정상 게시본도 기준일은 10월 21일이지만 이후 가격 복구 버전이므로 **기준일만 같다고 최신 반영 성공이라고 할 수 없다**. [실제 배포 비교](PUBLIC_APP_CHECK.json).
+
+버전 검사에서 멈췄으므로 이번 공개 앱의 전체 조작·CSV 검증을 완료했다고 보고하지 않는다. 로컬/CI 앱 검사와 공개 앱 반영은 구분한다. 클라우드 내부 동기화 지연/정지의 원인은 아직 확정하지 않았다. 로컬 추가 브라우저 확인도 환경의 터널 연결 오류로 실패했으며 우회하지 않았다.
+
+JSON 자동 생성·공개 접근에는 사용자 조치가 없다. **웹 최신 버전 반영을 위한 최소 조치**는 Streamlit Community Cloud(`https://share.streamlit.io/`) 앱 목록 → 해당 앱의 `⋮` → **Reboot app**이다. 관리 권한이 없어 직접 재부팅하지 않았다. 재부팅 후에도 다르면 연결 브랜치가 `main`인지와 앱 로그를 확인해야 한다. 코드 수정이나 인증키 재발급은 필요하지 않다.
+
+### 완료 수준
+
+**구현·Actions 실제 생성·게시·공개 JSON 검증 완료 / 지표 데이터 검증은 부분 완료 / 공개 웹 최신 반영은 미완료.** 오늘 18:30의 미래 정기 실행 성공을 주장하지 않는다. 기존 성공 게시 후 분석 작업이 실행되도록 연결했으며, 기관 금액 공식 단위와 충분한 공식 가격·기업행사 근거가 없는 지표는 앞으로도 보류한다.

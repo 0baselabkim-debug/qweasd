@@ -1,0 +1,587 @@
+{
+  "observed_at": "2026-10-22T06:16:33.041462+00:00",
+  "market_api_calls_added": 0,
+  "runs": [
+    {
+      "conclusion": "success",
+      "databaseId": 39730890806,
+      "event": "workflow_dispatch",
+      "headSha": "17ba83718b814aeb3aeb14746b9aca266e9206af",
+      "jobs": [
+        {
+          "completedAt": "2026-10-22T06:01:54Z",
+          "conclusion": "success",
+          "databaseId": 119665428239,
+          "name": "check",
+          "startedAt": "2026-10-22T05:56:26Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Install dashboard dependencies",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Test real snapshot, calculations, and UI without API secrets",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Start and check HTTP server",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 12,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 13,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39730890806/job/119665428239"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39730890806"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 39731461643,
+      "event": "push",
+      "headSha": "b26431bb97e859598958f31fe3398abc998b3bda",
+      "jobs": [
+        {
+          "completedAt": "2026-10-22T06:08:51Z",
+          "conclusion": "success",
+          "databaseId": 119667222104,
+          "name": "check",
+          "startedAt": "2026-10-22T06:02:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Install dashboard dependencies",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Test real snapshot, calculations, and UI without API secrets",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Start and check HTTP server",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 12,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 13,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39731461643/job/119667222104"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39731461643"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 39731694568,
+      "event": "workflow_dispatch",
+      "headSha": "b26431bb97e859598958f31fe3398abc998b3bda",
+      "jobs": [
+        {
+          "completedAt": "2026-10-22T06:05:55Z",
+          "conclusion": "success",
+          "databaseId": 119667969019,
+          "name": "publish",
+          "startedAt": "2026-10-22T06:04:32Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run pip install -r requirements.txt pytest==9.1.1",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Test isolated analytics and evidence gates without market credentials",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Build from saved responses only; independent publication failure",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Publish auxiliary files only; concurrent main changes reject the push",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "skipped",
+              "name": "Keep failed auxiliary attempt visibly failed",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39731694568/job/119667969019"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39731694568"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 39732000928,
+      "event": "workflow_dispatch",
+      "headSha": "c2e3eaef4d05b8d4be49680349f0149d310e7493",
+      "jobs": [
+        {
+          "completedAt": "2026-10-22T06:08:31Z",
+          "conclusion": "success",
+          "databaseId": 119668930540,
+          "name": "publish",
+          "startedAt": "2026-10-22T06:07:29Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run pip install -r requirements.txt pytest==9.1.1",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Test isolated analytics and evidence gates without market credentials",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Build from saved responses only; independent publication failure",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Publish auxiliary files only; concurrent main changes reject the push",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "skipped",
+              "name": "Keep failed auxiliary attempt visibly failed",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39732000928/job/119668930540"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39732000928"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 39731997930,
+      "event": "workflow_dispatch",
+      "headSha": "c2e3eaef4d05b8d4be49680349f0149d310e7493",
+      "jobs": [
+        {
+          "completedAt": "2026-10-22T06:14:00Z",
+          "conclusion": "success",
+          "databaseId": 119668921471,
+          "name": "check",
+          "startedAt": "2026-10-22T06:07:27Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Install dashboard dependencies",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Test real snapshot, calculations, and UI without API secrets",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Start and check HTTP server",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 12,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 13,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39731997930/job/119668921471"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39731997930"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 39731737188,
+      "event": "workflow_dispatch",
+      "headSha": "b26431bb97e859598958f31fe3398abc998b3bda",
+      "jobs": [
+        {
+          "completedAt": "2026-10-22T06:06:24Z",
+          "conclusion": "failure",
+          "databaseId": 119668100811,
+          "name": "browser",
+          "startedAt": "2026-10-22T06:04:56Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python -m pip install -r requirements.txt playwright==1.58.0",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "failure",
+              "name": "Verify existing public app without credentials",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Preserve public UI evidence",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "skipped",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 13,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 14,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 15,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39731737188/job/119668100811"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39731737188"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 39732428691,
+      "event": "workflow_dispatch",
+      "headSha": "fae680aa6ac588ab7bd253899196340c404bacdc",
+      "jobs": [
+        {
+          "completedAt": "2026-10-22T06:13:27Z",
+          "conclusion": "failure",
+          "databaseId": 119670289673,
+          "name": "browser",
+          "startedAt": "2026-10-22T06:11:42Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@v5",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python -m pip install -r requirements.txt playwright==1.58.0",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "failure",
+              "name": "Verify existing public app without credentials",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Preserve public UI evidence",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "skipped",
+              "name": "Post Run actions/setup-python@v5",
+              "number": 13,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 14,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 15,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39732428691/job/119670289673"
+        }
+      ],
+      "status": "completed",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39732428691"
+    }
+  ],
+  "idempotence": {
+    "first_publication_commit": "c2e3eaef4d05b8d4be49680349f0149d310e7493",
+    "repeat_run": 39732000928,
+    "main_after_repeat": "c2e3eaef4d05b8d4be49680349f0149d310e7493",
+    "extra_data_commit": false
+  },
+  "ci_console_log_download": "403 also on elevated retry; official run/step status and published artifacts verified independently",
+  "public_web": "HTTP 200 but previous commit 5545fce140411702b77ad19419b1bba03fc25a62; full public interaction/CSV check stopped on generation mismatch"
+}
