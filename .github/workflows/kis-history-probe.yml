@@ -22,7 +22,7 @@ jobs:
   research:
     if: github.ref_name == 'research/full-market-transition-20261019'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 15
     env:
       PYTHONPATH: research/risk-performance:.
     steps:

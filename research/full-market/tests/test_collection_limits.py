@@ -19,7 +19,18 @@ def test_research_workflow_has_no_schedule_and_never_pushes_main():
  import re
  assert 'kis-validation-auth' in text
  assert all(0 < int(n) <= 15 for n in re.findall(r'timeout-minutes: (\d+)', text))
- assert 'HEAD:refs/heads/'+BRANCH in text and 'HEAD:main' not in text
+ assert 'HEAD:main' not in text
+ if 'from krx40_collect import persist_research' in text:
+  # The manual workflow now delegates durable writes to the bounded collector.
+  # Verify the real push boundary and branch guard instead of a YAML literal.
+  helper=(ROOT.parent/'risk-performance/krx40_collect.py').read_text()
+  persistence=helper.split('def persist_research():',1)[1]
+  assert "BRANCH = '"+BRANCH+"'" in helper
+  assert "git('branch', '--show-current') != BRANCH" in persistence
+  assert "['git', 'push', 'origin', 'HEAD:refs/heads/'+BRANCH]" in persistence
+  assert "unrelated_staged_changes" in persistence and "HEAD:main" not in persistence
+ else:
+  assert 'HEAD:refs/heads/'+BRANCH in text
 
 def test_old_rule_modules_byte_identical():
  import hashlib

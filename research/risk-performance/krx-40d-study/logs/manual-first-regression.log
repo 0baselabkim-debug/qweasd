@@ -1,0 +1,24 @@
+.....................F.................................................. [ 13%]
+........................................................................ [ 27%]
+........................................................................ [ 41%]
+........................................................................ [ 55%]
+........................................................................ [ 68%]
+........................................................................ [ 82%]
+........................................................................ [ 96%]
+..................                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_research_workflow_has_no_schedule_and_never_pushes_main _________
+
+    def test_research_workflow_has_no_schedule_and_never_pushes_main():
+     text=(ROOT.parents[1]/'.github/workflows/kis-history-probe.yml').read_text()
+     assert 'cron:' not in text and 'schedule:' not in text
+     import re
+     assert 'kis-validation-auth' in text
+>    assert all(0 < int(n) <= 15 for n in re.findall(r'timeout-minutes: (\d+)', text))
+E    assert False
+E     +  where False = all(<generator object test_research_workflow_has_no_schedule_and_never_pushes_main.<locals>.<genexpr> at 0x7f737ae873e0>)
+
+research/full-market/tests/test_collection_limits.py:21: AssertionError
+=========================== short test summary info ============================
+FAILED research/full-market/tests/test_collection_limits.py::test_research_workflow_has_no_schedule_and_never_pushes_main
+1 failed, 521 passed in 273.83s (0:04:33)
