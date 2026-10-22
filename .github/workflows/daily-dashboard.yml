@@ -8,17 +8,18 @@ on:
       mode:
         description: 'Collect today or replay saved observations and check the official calendar'
         type: choice
-        options: [collect, verify_saved]
+        options: [collect, verify_saved, recover_artifact]
         default: collect
 permissions:
   contents: write
   actions: read
-concurrency:
-  group: kis-validation-auth
-  cancel-in-progress: false
-  queue: max
 jobs:
   refresh:
+    if: github.ref_name == 'main' && inputs.mode != 'recover_artifact'
+    concurrency:
+      group: kis-validation-auth
+      cancel-in-progress: false
+      queue: max
     runs-on: ubuntu-latest
     timeout-minutes: 320
     steps:
@@ -166,3 +167,33 @@ jobs:
           name: market-attempt-${{ github.run_id }}-${{ github.run_attempt }}
           path: operations/market-runs
           if-no-files-found: ignore
+
+  saved_artifact:
+    if: github.ref_name == 'recovery/verify-artifact-20261022' && inputs.mode == 'recover_artifact'
+    concurrency:
+      group: saved-artifact-verification-20261022
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Verify and preserve artifact outside operating branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/recover_saved_artifact_20261022.py
+      - name: Prepare isolated candidate without publication or market calls
+        run: python scripts/prepare_daily_publish.py --bundle daily-results/bundle.json.gz
+      - name: Existing regressions without market credentials
+        run: python -m pytest -q
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: saved-artifact-verification-${{ github.run_id }}
+          path: |
+            daily-results/diagnostics/artifact-recovery-verification.json
+            daily-candidate/manifest.json
+            daily-candidate/validation.json
