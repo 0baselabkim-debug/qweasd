@@ -1,0 +1,72 @@
+{
+  "checked_at": "2026-10-22T21:27:51.940251+09:00",
+  "main_sha": "34cccb65c36f09643a2d3799e5404cf4ef28abf5",
+  "active_runs": [
+    {
+      "id": 39778225150,
+      "path": ".github/workflows/decision-price-evidence.yml",
+      "status": "pending",
+      "head_branch": "main",
+      "head_sha": "34cccb65c36f09643a2d3799e5404cf4ef28abf5",
+      "created_at": "2026-10-22T12:25:32Z"
+    },
+    {
+      "id": 39772674704,
+      "path": ".github/workflows/liquidity-recovery.yml",
+      "status": "pending",
+      "head_branch": "main",
+      "head_sha": "683f4c6457a56824b22baaec0b709ef83ff5a446",
+      "created_at": "2026-10-22T11:43:01Z"
+    },
+    {
+      "id": 39770486247,
+      "path": ".github/workflows/decision-price-evidence.yml",
+      "status": "pending",
+      "head_branch": "main",
+      "head_sha": "683f4c6457a56824b22baaec0b709ef83ff5a446",
+      "created_at": "2026-10-22T11:25:36Z"
+    },
+    {
+      "id": 39760291133,
+      "path": ".github/workflows/daily-dashboard.yml",
+      "status": "in_progress",
+      "head_branch": "main",
+      "head_sha": "45498d61984e78ff8341d200e480c1cd727d4d11",
+      "created_at": "2026-10-22T10:04:12Z"
+    }
+  ],
+  "daily_exact_path": [
+    {
+      "id": 39760291133,
+      "path": ".github/workflows/daily-dashboard.yml",
+      "status": "in_progress",
+      "head_branch": "main",
+      "head_sha": "45498d61984e78ff8341d200e480c1cd727d4d11",
+      "created_at": "2026-10-22T10:04:12Z"
+    }
+  ],
+  "published": {
+    "manifest": {
+      "asof": "2026-10-21",
+      "sha256": "57ee8f4ea5bbeef7afd949b7b772745516b1a747e866c6aa6eecaf76d3a8b378"
+    },
+    "validation": {
+      "asof": "2026-10-21",
+      "sha256": "57ee8f4ea5bbeef7afd949b7b772745516b1a747e866c6aa6eecaf76d3a8b378"
+    },
+    "ledger_latest": "2026-10-21",
+    "ledger_today": null,
+    "briefing": {
+      "asof": "2026-10-21",
+      "source_snapshot_sha256": "57ee8f4ea5bbeef7afd949b7b772745516b1a747e866c6aa6eecaf76d3a8b378",
+      "dataset_id": "flow-v3-2026-10-21-57ee8f4ea5bbeef7afd949b7b772745516b1a747e866c6aa6eecaf76d3a8b378",
+      "validation_status": "passed"
+    },
+    "decision_support": {
+      "asof": "2026-10-21",
+      "source_snapshot_sha256": "57ee8f4ea5bbeef7afd949b7b772745516b1a747e866c6aa6eecaf76d3a8b378",
+      "dataset_id": "decision-v1-2026-10-21-d47d1f5b04817bb17217119a931bc77b84388020d882657799844a306eab8f86",
+      "validation_status": "passed_with_metric_holds"
+    }
+  }
+}
