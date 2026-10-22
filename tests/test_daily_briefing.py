@@ -96,8 +96,10 @@ def test_stage_no_duplicate_day_and_failure_isolation(snapshot16,tmp_path,monkey
 def test_workflow_atomic_files_and_unchanged_schedule():
     w=Path('.github/workflows/daily-dashboard.yml').read_text()
     assert "cron: '30 9 * * 1-5'" in w and "cron: '0 12 * * 1-5'" in w
-    assert 'python -m scripts.stage_daily_publication' in w
-    assert 'snapshot/publication-ledger.json snapshot/daily_briefing.json' in w
+    assert 'python scripts/daily_publish_transaction.py' in w
+    transaction=Path('scripts/daily_publish_transaction.py').read_text()
+    assert "'-m', 'scripts.stage_daily_publication'" in transaction
+    assert "'snapshot/publication-ledger.json'" in transaction and "'snapshot/daily_briefing.json'" in transaction
     assert 'kis-validation-auth' in w and 'cancel-in-progress: false' in w
     assert 'daily_briefing.json' in Path('scripts/publish_liquidity.py').read_text()
 

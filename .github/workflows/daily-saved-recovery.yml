@@ -1,0 +1,48 @@
+name: Recover preserved daily publication
+on:
+  workflow_run:
+    workflows: [Daily validated dashboard refresh]
+    types: [completed]
+# Same existing privilege ceiling as the collector; no actions:write or new secrets.
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+  queue: max
+jobs:
+  recover:
+    if: >-
+      github.run_attempt == 1 &&
+      github.event.workflow_run.conclusion == 'failure' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      (github.event.workflow_run.event == 'schedule' || github.event.workflow_run.event == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt pytest==9.1.1
+      - name: Recover only verified originals without collecting
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: ${{ github.event.workflow_run.id }}
+        run: python scripts/daily_saved_recovery.py recover --source-run "$SOURCE_RUN"
+      - name: Preserve recovery outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-recovery-${{ github.event.workflow_run.id }}-${{ github.run_id }}
+          path: |
+            daily-recovery-result.json
+            daily-publish-report.json
+            daily-publication-evidence
+          retention-days: 30
+          if-no-files-found: error

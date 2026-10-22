@@ -41,6 +41,8 @@ jobs:
         env:
           MODE: ${{ inputs.mode || 'collect' }}
         run: |
+          git fetch origin main
+          git merge --ff-only origin/main
           python - <<'PY'
           import datetime as dt,json,os
           from pathlib import Path
@@ -48,29 +50,29 @@ jobs:
           now=dt.datetime.now(ZoneInfo('Asia/Seoul'))
           # A queued late-evening run may start after midnight; never query that new day before its close.
           from screener.collection_schedule import target_date
-          created=dt.datetime.fromisoformat(os.environ['RUN_CREATED_AT'].replace('Z','+00:00')) if os.environ.get('GITHUB_EVENT_NAME')=='schedule' else None
+          created=dt.datetime.fromisoformat(os.environ['RUN_CREATED_AT'].replace('Z','+00:00'))
           day=target_date(now,created)
           if os.environ['MODE']=='verify_saved':day=dt.date.fromisoformat(json.loads(Path('snapshot/manifest.json').read_text())['asof'])
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('day='+day.strftime('%Y%m%d')+'\n')
           ledger=Path('snapshot/publication-ledger.json')
-          done=ledger.exists() and str(day) in json.loads(ledger.read_text()) and os.environ['MODE']=='collect'
+          done=os.environ['MODE']=='collect' and ((ledger.exists() and str(day) in json.loads(ledger.read_text())) or json.loads(Path('snapshot/manifest.json').read_text())['asof']>=str(day))
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('already_published='+str(done).lower()+'\n')
           Path('daily-results').mkdir(exist_ok=True)
           PY
-      - name: Load checkpoint
+      - name: Load checkpoint or trusted complete artifact
         if: steps.target.outputs.already_published != 'true'
         env:
           DAY: ${{ steps.target.outputs.day }}
           MODE: ${{ inputs.mode || 'collect' }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ "$MODE" = verify_saved ]; then
             cp research/daily-replay.json.gz daily-results/bundle.json.gz
-          elif git ls-remote --exit-code --heads origin "data/daily-$DAY" >/dev/null 2>&1; then
-            git fetch origin "data/daily-$DAY"
-            git show FETCH_HEAD:daily-results/bundle.json.gz > daily-results/bundle.json.gz
-            python scripts/checkpoint_storage.py --ref FETCH_HEAD
+          else
+            python scripts/daily_saved_recovery.py load --day "$DAY"
           fi
       - name: Collect only missing stocks for this trading date
+        id: collect
         if: inputs.mode != 'verify_saved' && steps.target.outputs.already_published != 'true'
         env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
@@ -96,35 +98,50 @@ jobs:
           Path('daily-results/calendar-check.json').write_text(json.dumps({'trade_date':day,'endpoint':'CTCA0903R','actual_response':rows[0]},ensure_ascii=False,indent=2)+'\n')
           print('Official trading-day calendar validated')
           PY
+      - name: Seal preserved original bytes
+        id: seal
+        if: always() && inputs.mode != 'verify_saved' && steps.target.outputs.already_published != 'true' && hashFiles('daily-results/bundle.json.gz') != ''
+        env:
+          DAY: ${{ steps.target.outputs.day }}
+        run: python scripts/daily_saved_recovery.py receipt --day "$DAY"
       - name: Preserve resume ledger independently of publication
-        if: always() && inputs.mode != 'verify_saved' && steps.target.outputs.already_published != 'true'
+        id: checkpoint
+        if: always() && steps.seal.outcome == 'success'
+        continue-on-error: true
         env:
           DAY: ${{ steps.target.outputs.day }}
         run: python scripts/persist_daily_checkpoint.py --date "$DAY"
-      - name: Build from latest main and validate without touching published files
-        if: steps.target.outputs.already_published != 'true'
-        run: |
-          git fetch origin main
-          git merge --ff-only origin/main
-          python scripts/prepare_daily_publish.py --bundle daily-results/bundle.json.gz
-          python -m pytest -q tests/test_dashboard.py tests/test_enrichment.py tests/test_daily.py
-      - name: Publish validated snapshot in one Git commit
+      - name: Preserve source artifact before publication
+        id: source_backup
+        if: always() && steps.seal.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-source-${{ steps.target.outputs.day }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: daily-results/
+          retention-days: 7
+          if-no-files-found: error
+      - name: Require a durable original before publication
+        if: always() && steps.collect.outcome == 'success' && steps.target.outputs.already_published != 'true'
+        env:
+          SEALED: ${{ steps.seal.outcome }}
+          CHECKPOINT: ${{ steps.checkpoint.outcome }}
+          ARTIFACT: ${{ steps.source_backup.outcome }}
+        run: python scripts/daily_saved_recovery.py durable
+      - name: Validate and publish preserved bytes against current main
         if: steps.target.outputs.already_published != 'true'
         env:
           DAY: ${{ steps.target.outputs.day }}
           MODE: ${{ inputs.mode || 'collect' }}
-        run: |
-          if [ ! -f daily-candidate/manifest.json ]; then exit 0; fi
-          python -m scripts.stage_daily_publication
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add snapshot/dashboard.duckdb snapshot/manifest.json snapshot/daily-validation.json snapshot/publication-ledger.json snapshot/daily_briefing.json
-          git add snapshot/publication-history snapshot/briefing
-          if [ -f snapshot/calendar-check.json ]; then git add snapshot/calendar-check.json; fi
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Publish validated KRX snapshot $DAY"
-          # A concurrent main change causes a safe push rejection; the previous snapshot remains published.
-          git push origin HEAD:main
+        run: python scripts/daily_publish_transaction.py --bundle daily-results/bundle.json.gz --day "$DAY" --source-run "$GITHUB_RUN_ID" --mode "$MODE"
+      - name: Preserve classified publication outcome
+        if: always() && hashFiles('daily-publish-report.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-publish-status-${{ github.run_id }}-${{ github.run_attempt }}
+          path: daily-publish-report.json
+          retention-days: 7
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -134,6 +151,8 @@ jobs:
             daily-candidate/daily_briefing.json
             daily-candidate/briefing/index.json
             briefing-failure.json
+            daily-publication-evidence
+            daily-recovery-result.json
             daily-results/bundle.json.gz
             daily-results/calendar-check.json
             daily-results/successes.jsonl
@@ -151,6 +170,8 @@ jobs:
           SCHEDULE: ${{ github.event.schedule }}
           JOB_STATUS: ${{ job.status }}
         run: |
+          git fetch origin main
+          git merge --ff-only origin/main
           python scripts/record_market_run.py
           python - <<'PY'
           import base64,json,os

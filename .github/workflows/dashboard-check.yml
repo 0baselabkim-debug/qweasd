@@ -48,6 +48,7 @@ on:
       - 'scripts/daily_*.py'
       - 'scripts/checkpoint_storage.py'
       - 'scripts/persist_daily_checkpoint.py'
+      - '.github/workflows/daily-saved-recovery.yml'
       - 'scripts/record_market_run.py'
       - 'tests/test_daily_*.py'
       - 'scripts/prepare_daily_publish.py'
