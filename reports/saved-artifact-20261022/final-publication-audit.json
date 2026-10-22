@@ -1,0 +1,51 @@
+{
+  "asof": "2026-10-22",
+  "source_snapshot_sha256": "33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
+  "flow_dataset_id": "flow-v3-2026-10-22-33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
+  "decision_dataset_id": "decision-v1-2026-10-22-701cce68a4c31986cfa8176fe7415ac5a3f591bae449695412367e0c1b07ff08",
+  "raw_flow_matches": 2432,
+  "briefing": {
+    "status": "passed",
+    "checks": 54,
+    "windows": [
+      1,
+      5,
+      20
+    ],
+    "additional_value_checks": 33,
+    "sector_rank_checks": 3,
+    "stock_rank_checks": 15,
+    "universe_count": 2432
+  },
+  "market_briefing": {
+    "status": "passed",
+    "sectors_checked": 50,
+    "stocks_checked": 2432,
+    "metric_checks": 20256
+  },
+  "decision_support": {
+    "symbols": 2432,
+    "foreign_value_checks": 14592,
+    "status": "passed"
+  },
+  "decision_coverage": {
+    "accepted_ohlcv_asof": 0,
+    "annual_financial": 2409,
+    "atr_14": 0,
+    "foreign_20d": 2419,
+    "ichimoku_current_span_b": 0,
+    "institution_quantity_1d": 2432,
+    "institution_quantity_20d": 2335,
+    "institution_quantity_5d": 2341,
+    "market_excess_5d_pp": 0,
+    "period_financial": 2409,
+    "raw_ohlcv_asof": 2432,
+    "sma_120": 0,
+    "sma_20": 0,
+    "sma_5": 0,
+    "sma_60": 0,
+    "stocks": 2432
+  },
+  "provider_finality": "UNVERIFIED",
+  "additional_market_api_calls": 0
+}

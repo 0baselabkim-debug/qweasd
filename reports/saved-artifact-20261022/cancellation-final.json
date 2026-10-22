@@ -1,0 +1,185 @@
+{
+  "observed_at": "2026-10-22T12:48:20.283729+00:00",
+  "runs": {
+    "39778580042": {
+      "run": {
+        "id": 39778580042,
+        "path": ".github/workflows/daily-dashboard.yml",
+        "head_sha": "34cccb65c36f09643a2d3799e5404cf4ef28abf5",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "created_at": "2026-10-22T12:28:10Z",
+        "updated_at": "2026-10-22T12:44:38Z",
+        "html_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39778580042"
+      },
+      "jobs": []
+    },
+    "39760291133": {
+      "run": {
+        "id": 39760291133,
+        "path": ".github/workflows/daily-dashboard.yml",
+        "head_sha": "45498d61984e78ff8341d200e480c1cd727d4d11",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "created_at": "2026-10-22T10:04:12Z",
+        "updated_at": "2026-10-22T12:46:26Z",
+        "html_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/39760291133"
+      },
+      "jobs": [
+        {
+          "id": 119796448360,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "started_at": "2026-10-22T11:25:37Z",
+          "completed_at": "2026-10-22T12:46:25Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-10-22T11:25:38Z",
+              "completed_at": "2026-10-22T11:25:39Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-10-22T11:25:39Z",
+              "completed_at": "2026-10-22T11:25:52Z"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-10-22T11:25:52Z",
+              "completed_at": "2026-10-22T11:25:56Z"
+            },
+            {
+              "name": "Run pip install -r requirements.txt pytest==9.1.1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-10-22T11:25:56Z",
+              "completed_at": "2026-10-22T11:26:15Z"
+            },
+            {
+              "name": "Record actual runner start",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-10-22T11:26:15Z",
+              "completed_at": "2026-10-22T11:26:16Z"
+            },
+            {
+              "name": "Choose scheduled trading date and restore only its checkpoint",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-10-22T11:26:16Z",
+              "completed_at": "2026-10-22T11:26:16Z"
+            },
+            {
+              "name": "Load checkpoint",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-10-22T11:26:16Z",
+              "completed_at": "2026-10-22T11:26:16Z"
+            },
+            {
+              "name": "Collect only missing stocks for this trading date",
+              "status": "completed",
+              "conclusion": "cancelled",
+              "number": 8,
+              "started_at": "2026-10-22T11:26:16Z",
+              "completed_at": "2026-10-22T12:46:01Z"
+            },
+            {
+              "name": "Verify official holiday endpoint during real-data rehearsal",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 9,
+              "started_at": "2026-10-22T12:46:01Z",
+              "completed_at": "2026-10-22T12:46:01Z"
+            },
+            {
+              "name": "Preserve resume ledger independently of publication",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 10,
+              "started_at": "2026-10-22T12:46:01Z",
+              "completed_at": "2026-10-22T12:46:11Z"
+            },
+            {
+              "name": "Build from latest main and validate without touching published files",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11,
+              "started_at": "2026-10-22T12:46:11Z",
+              "completed_at": "2026-10-22T12:46:11Z"
+            },
+            {
+              "name": "Publish validated snapshot in one Git commit",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12,
+              "started_at": "2026-10-22T12:46:11Z",
+              "completed_at": "2026-10-22T12:46:11Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-10-22T12:46:11Z",
+              "completed_at": "2026-10-22T12:46:17Z"
+            },
+            {
+              "name": "Record this attempt without changing market data",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-10-22T12:46:17Z",
+              "completed_at": "2026-10-22T12:46:21Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-10-22T12:46:21Z",
+              "completed_at": "2026-10-22T12:46:22Z"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 29,
+              "started_at": "2026-10-22T12:46:22Z",
+              "completed_at": "2026-10-22T12:46:22Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 30,
+              "started_at": "2026-10-22T12:46:22Z",
+              "completed_at": "2026-10-22T12:46:22Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 31,
+              "started_at": "2026-10-22T12:46:22Z",
+              "completed_at": "2026-10-22T12:46:23Z"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
