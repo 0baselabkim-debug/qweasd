@@ -41,3 +41,54 @@ def test_manual_collector_keeps_shared_lock_and_no_cron():
     assert 'kis-validation-auth' in s and 'schedule:' not in s
     assert 'git push origin HEAD:refs/heads/evidence/decision-price-source' in s
     assert 'HEAD:main' not in s
+
+
+def history_fixture():
+    import datetime as dt
+    from screener.decision_support.evidence import KIS_FIELDS
+    days=[(dt.date(2025,1,1)+dt.timedelta(days=i)).isoformat() for i in range(200)]
+    asof=days[-1];objects={};official={};db={}
+    for code,options in [('000720',('0','1')),('0001',('index',))]:
+        for option in options:
+            end=asof.replace('-','')
+            for page,ds in enumerate((days[150:],days[100:150],days[50:100]) if option=='index' else (days[100:],days[:100])):
+                params={'FID_COND_MRKT_DIV_CODE':'U' if option=='index' else 'J','FID_INPUT_ISCD':code,
+                        'FID_INPUT_DATE_1':'20240101','FID_INPUT_DATE_2':end,'FID_PERIOD_DIV_CODE':'D'}
+                if option!='index':params['FID_ORG_ADJ_PRC']=option
+                rows=[]
+                for d in ds:
+                    value={'open':100,'high':110,'low':90,'close':105,'volume':1000,'turnover':105000}
+                    row={v:value[k] for k,v in KIS_FIELDS.items()}
+                    row.update(stck_bsop_date=d.replace('-',''),mod_yn='N',flng_cls_code='00',prtt_rate='0',revl_issu_reas='',bstp_nmix_prpr='100')
+                    rows.append(row)
+                    official['000720',d,'KOSPI']=[{'value':value,'source_id':'krx'}]
+                    db['000720',d]=(104,1000,105000) # old observation stays unchanged
+                objects[f'kis:{asof}:{code}:{option}:{page}']=[(f'{code}-{option}-{page}',{
+                    'params':params,'endpoint':'/uapi/domestic-stock/v1/quotations/'+('inquire-daily-indexchartprice' if option=='index' else 'inquire-daily-itemchartprice'),
+                    'observed_at':'2026-01-01T01:00:00+00:00','response':{'rt_cd':'0','output1':{'stck_shrn_iscd':code},'output2':rows}})]
+                end=(dt.date.fromisoformat(ds[0])-dt.timedelta(days=1)).strftime('%Y%m%d')
+    return days,objects,official,db
+
+
+def test_whole_verified_candidate_keeps_operating_conflict_as_audit():
+    from screener.decision_support.history import candidate
+    days,objects,official,db=history_fixture()
+    result=candidate(objects,'000720','KOSPI',days[-1],'2020-01-01',official,db,days[-30:],{})
+    assert result['error'] is None and len(result['accepted'])==121
+    assert len(result['operating_version_comparison'])==121
+    assert db['000720',days[-1]][0]==104
+
+
+@pytest.mark.parametrize('defect',['official','adjustment','original','calendar','vintage','missing'])
+def test_bad_history_never_accepted(defect):
+    from screener.decision_support.history import candidate
+    days,objects,official,db=history_fixture();asof=days[-1]
+    a=objects[f'kis:{asof}:000720:0:0'][0][1]
+    if defect=='official':official['000720',asof,'KOSPI'][0]['value']['close']=106
+    if defect=='adjustment':a['response']['output2'][-1]['prtt_rate']='2'
+    if defect=='original':objects[f'kis:{asof}:000720:1:0'][0][1]['response']['output2'][-1]['stck_clpr']=106
+    if defect=='calendar':objects[f'kis:{asof}:0001:index:0'][0][1]['response']['output2'].pop(-2)
+    if defect=='vintage':a['observed_at']='2026-01-02T01:00:00+00:00'
+    if defect=='missing':a['response']['output2'].pop()
+    result=candidate(objects,'000720','KOSPI',asof,'2020-01-01',official,db,days[-30:],{})
+    assert result['error'] or asof not in result['accepted']

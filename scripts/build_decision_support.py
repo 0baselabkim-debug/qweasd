@@ -23,6 +23,7 @@ from screener.publication import coherent
 from screener.decision_support.evidence import (encoded,sha,read,integer,date,timestamp,
     institution,official_rows,accept_chart,KIS_FIELDS,bar)
 from screener.decision_support.indicators import flow_metrics,technical,observations,metric
+from screener.decision_support.history import load_objects, candidate
 from scripts.briefing_raw import reference
 from scripts.briefing_schema import sector_id
 
@@ -66,6 +67,34 @@ def source_inventory(previous, out, snapshot, fetch):
             inventory['checkpoints'][h]={'file':rel,'sha256':h,'git_commit':commit,'git_ref':ref,
                 'asof':date(compact),'observed_at':b.get('completed_at') or b.get('updated_at'),
                 'source_run':str(b.get('source_run'))}
+    inventory.setdefault('auxiliary',{})
+    # Only preserved auxiliary responses are fetched. This exporter has no
+    # market credentials and never starts a market collector.
+    if fetch:
+        listing=git('ls-remote','--heads','origin','refs/heads/evidence/decision-price-source')
+        if listing:
+            commit,ref=listing.split()
+            subprocess.run(['git','fetch','origin',ref],cwd=ROOT,check=True,capture_output=True)
+            if git('rev-parse','FETCH_HEAD')!=commit:raise ValueError('auxiliary_branch_changed_during_read')
+            raw=subprocess.check_output(['git','show',commit+':auxiliary-prices/index.json'],cwd=ROOT)
+            auxiliary=json.loads(raw)
+            for key,versions in auxiliary['objects'].items():
+                for v in versions:
+                    h=v['sha256']
+                    if h in inventory['auxiliary']:continue
+                    source='auxiliary-prices/'+v['file']
+                    if '..' in Path(source).parts:raise ValueError('invalid_auxiliary_source_path')
+                    raw=subprocess.check_output(['git','show',commit+':'+source],cwd=ROOT)
+                    if sha(raw)!=h:raise ValueError('auxiliary_source_hash_mismatch')
+                    obj=json.loads(gzip.decompress(raw))
+                    if sha(encoded(obj))!=v['payload_sha256']:raise ValueError('auxiliary_payload_hash_mismatch')
+                    if obj.get('asof','9999')>asof:continue
+                    rel='evidence/auxiliary/'+h+'.json.gz';put(out/rel,raw)
+                    inventory['auxiliary'][h]={'file':rel,'sha256':h,'key':key,'git_commit':commit,
+                        'asof':obj['asof'],'observed_at':obj['observed_at']}
+                    if key.startswith('krx:'):
+                        inventory['references'][h]={'file':rel,'sha256':h,'source_file':source,'git_commit':commit,
+                            'asof':obj['asof'],'observed_at':obj['observed_at'],'url':obj['url']}
     # Official reference observations are already collected by the operating system.
     paths=list((ROOT/'liquidity/reference').rglob('*.json.gz'))+list((ROOT/'liquidity/reference-observations').rglob('*.json.gz'))
     for p in paths:
@@ -137,6 +166,7 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
         benchmarks={m:{str(d):v for d,v in c.execute('select trade_date,close from benchmarks where market=? and trade_date<=?',[m,asof]).fetchall()} for m in calendars}
     if any(not ds or ds[-1]!=asof or len(ds)!=len(set(ds)) for ds in calendars.values()):raise ValueError('calendar_identity_mismatch')
     refs,ref_sources,ref_errors=official_rows([out/x['file'] for x in inventory['references'].values()],asof)
+    aux_objects=load_objects(out,inventory)
     inst_versions=collections.defaultdict(list);inst_rows=[];obs_rows=[];errors=[]
     # No endpoint-specific official amount multiplier was obtained. Do not
     # silently borrow the foreign amount unit for institutional amount fields.
@@ -213,12 +243,27 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
                      **(qualified['value'] or {k:None for k in KIS_FIELDS})}
             series.append(payload);obs_rows.append({**payload,'reasons':json.dumps(payload['reasons']),
                 'official_source_ids':json.dumps(payload['official_source_ids']),'adjustment_fields':json.dumps(payload['adjustment_fields'])})
+        # A newly qualified whole vintage can replace the analytical input,
+        # never the original operating DB or its financial/flow history.
+        history=candidate(aux_objects,code,market,asof,listing,refs,db_prices,days,benchmarks[market])
+        price_days=days;price_benchmarks=benchmarks[market];history_selection=None
+        if history and history.get('error'):
+            errors.append({'symbol':code,'asof':asof,'reason':history['error']})
+        elif history and asof in history['accepted'] and len(history['accepted'])>=len(accepted):
+            accepted=history['accepted'];series=history['series'];price_days=history['days'];price_benchmarks=history['benchmarks']
+            observed=history['observed_at']
+            history_selection={'source_ids':history['source_ids'],'operating_version_comparison':history['operating_version_comparison'],
+                'basis':'both KIS bases + official KRX exact six fields; operating originals preserved',
+                'calendar':'preserved official market index sessions, exact operating calendar overlap'}
+            obs_rows[:]=[x for x in obs_rows if x['symbol']!=code]
+            obs_rows.extend({**x,'reasons':json.dumps(x['reasons']),'official_source_ids':json.dumps(x['official_source_ids']),
+                'adjustment_fields':json.dumps(x['adjustment_fields'])} for x in series)
         f=flow_metrics(days,{d:fvalues.get((code,d)) for d in days},{d:fquantities.get((code,d)) for d in days})
         inst=flow_metrics(days,imaps[code],iqmaps[code])
         for k in inst:
             if k.startswith('net_quantity'):continue
             inst[k]=metric(None,'institution_amount_unit_not_officially_confirmed')
-        px=technical(days,accepted,benchmarks[market]);extra=observations(f,px)
+        px=technical(price_days,accepted,price_benchmarks);extra=observations(f,px)
         foreign_series=[{'trade_date':d,'net_amount_krw':fvalues.get((code,d)),'net_quantity_shares':fquantities.get((code,d)),
             'institution_net_quantity_shares':iqmaps[code].get(d),'institution_net_amount_krw':imaps[code].get(d),
             'institution_net_amount_provider_units':rawmaps[code].get(d)} for d in days[-60:]]
@@ -228,7 +273,8 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
             'foreign_minus_institution_quantity_1d':metric(f['net_quantity_1d']['value']-inst['net_quantity_1d']['value'] if f['net_quantity_1d']['value'] is not None and inst['net_quantity_1d']['value'] is not None else None,'missing_quantity'),
             'foreign_buy_institution_sell_quantity_conflict':metric(f['net_quantity_1d']['value']>0 and inst['net_quantity_1d']['value']<0 if f['net_quantity_1d']['value'] is not None and inst['net_quantity_1d']['value'] is not None else None,'missing_quantity'),
             'ohlcv':next((b for b in series if b['trade_date']==asof),None),
-            'price_series':{'basis':'KIS_adjusted_option_0','observed_at':observed,'source_id':current[0]['sha256'],
+            'price_series':{'basis':series[-1]['basis'] if series else 'KIS_adjusted_option_0','observed_at':observed,'source_id':current[0]['sha256'] if history_selection is None else sha(encoded(history_selection['source_ids'])),
+                'qualified_auxiliary_history':history_selection,
                 'columns':['trade_date','open','high','low','close','volume','turnover','validation_status','reasons'],
                 'rows':[[v[k] for k in ('trade_date','open','high','low','close','volume','turnover','validation_status','reasons')] for v in series]},
             'flow_series':{'columns':['trade_date','net_amount_krw','net_quantity_shares','institution_net_quantity_shares','institution_net_amount_krw','institution_net_amount_provider_units'],
@@ -237,9 +283,9 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
             'financial':{'annual':annual[code][:1],'verified_period_reports':financials[code][:4],
                 'recent_disclosures':filings[code][:5],'borrowing_details':None,'contracts_funding_shareholder_return':'not_inferred_from_periodic_filings',
                 'TTM_PER_ROE':metric(None,'comparable_TTM_and_parent_basis_not_verified'),'source_state_sha256':corp_hash},
-            'validity':{'verified_contiguous_price_days':next((n for n,d in enumerate(reversed(days)) if d not in accepted),len(days)),
+            'validity':{'verified_contiguous_price_days':next((n for n,d in enumerate(reversed(price_days)) if d not in accepted),len(price_days)),
                 'available_adjusted_rows':len(series),'official_six_field_pass_rows':len(accepted),
-                'price_policy':'same response vintage; same-day six-field KRX match; unchanged source DB comparison; no unverified adjustments',
+                'price_policy':('whole auxiliary vintage; both bases and exact KRX six fields; operating version differences audited' if history_selection else 'same response vintage; same-day six-field KRX match; unchanged source DB comparison; no unverified adjustments'),
                 'data_vintage':observed,'historical_backtest_eligible':False,'no_personal_data':True}}
         tables[stock['sector_id']].append(item);rows.append(item)
         counts['stocks']+=1
@@ -252,7 +298,7 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
         counts['annual_financial']+=bool(annual[code]);counts['period_financial']+=bool(financials[code])
         for key in ('sma_5','sma_20','sma_60','sma_120','atr_14','ichimoku_current_span_b','market_excess_5d_pp'):
             counts[key]+=px[key]['value'] is not None
-    source_files={str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in [ROOT/'screener/decision_support/indicators.py',ROOT/'screener/decision_support/evidence.py',Path(__file__).resolve()]}
+    source_files={str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in [ROOT/'screener/decision_support/indicators.py',ROOT/'screener/decision_support/evidence.py',ROOT/'screener/decision_support/history.py',Path(__file__).resolve()]}
     identity={'schema_version':SCHEMA_VERSION,'asof':asof,'source_snapshot_sha256':source_hash,'source_inventory_sha256':sha(encoded(inventory)),
               'corporate_state_sha256':corp_hash,'code_sha256':source_files,'institution_spec_sha256':institution_proof}
     dataset_id='decision-v1-'+asof+'-'+sha(encoded(identity))
@@ -271,6 +317,7 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
         'provider_finality':'UNVERIFIED','generated_at':dt.datetime.now(dt.timezone.utc).isoformat(),
         'source_dataset_id':v3['dataset_id'],'source_collected_at':manifest['daily_validation'].get('collection_completed_at'),
         'coverage':dict(counts),'source_population':coverage,'sectors':[],
+        'price_hold_reasons_asof':dict(collections.Counter(reason for r in rows for reason in (r['ohlcv']['reasons'] if r['ohlcv'] else ['missing_ohlcv']))),
         'database':{'file':'analysis.duckdb.gz','sha256':sha(compressed),'uncompressed_sha256':sha(rawdb)},
         'units':{'foreign_amount':'KRW','institution_amount':'unit_pending; normalized amounts null','quantity':'shares','price':'KRW','volume':'shares','turnover':'KRW','returns':'percent','excess_return':'percentage_points'},
         'freshness_policy':'Require index.source_snapshot_sha256 == snapshot/manifest.json.sha256 and asof match before use; old successful files are not today data',

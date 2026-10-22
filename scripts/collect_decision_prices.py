@@ -138,7 +138,7 @@ def kis_series(root,budget,asof):
     pending=False
     for code in SYMBOLS+('0001','1001'):
         for option in (('0','1') if len(code)==6 else ('index',)):
-            if not cached(root,f'kis:{asof}:{code}:{option}:1'):pending=True
+            if not cached(root,f'kis:{asof}:{code}:{option}:{1 if len(code)==6 else 2}'):pending=True
     if not pending:return
     if not all(os.environ.get(k) for k in ('KIS_APP_KEY','KIS_APP_SECRET')):raise ValueError('KIS_credentials_not_bound')
     token=REQUEST_BUDGET.set(budget)
@@ -147,7 +147,7 @@ def kis_series(root,budget,asof):
         for code in SYMBOLS+('0001','1001'):
             for option in (('0','1') if len(code)==6 else ('index',)):
                 end=asof.replace('-','')
-                for page in range(2):
+                for page in range(2 if len(code)==6 else 3):
                     key=f'kis:{asof}:{code}:{option}:{page}'
                     existing=cached(root,key)
                     if existing:obj=existing[-1]
@@ -176,7 +176,7 @@ def kis_series(root,budget,asof):
 
 def index_days(root,asof,code):
     rows={}
-    for page in range(2):
+    for page in range(2 if len(code)==6 else 3):
         parts=cached(root,f'kis:{asof}:{code}:index:{page}')
         if len(parts)!=1:raise ValueError('index_history_missing_or_ambiguous')
         for r in parts[0]['response']['output2']:
