@@ -1,0 +1,13 @@
+{
+  "url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "success": false,
+  "checks": [],
+  "asof": "2026-10-21",
+  "http_status": 200,
+  "error_type": "AssertionError",
+  "error": "Published data generation differs from test snapshot",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/qweasd/qweasd/scripts/check_live_dashboard.py\", line 109, in <module>\n    assert stamp.get_attribute('data-snapshot-sha256')==expected_build['data_sha256'],'Published data generation differs from test snapshot'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Published data generation differs from test snapshot\n",
+  "visible_text": "한국 증시 수급 필터\n\n매크로 지표\n\n수급 필터\n\n조회 조건\n\n수급 기준일\n\n시장\n\n분류체계\n\n공식 업종\n\n투자 테마\n\nFork\n증시 지수\n항목명\t최신 데이터 값\t전일 대비\nS&P 500\t7,690.73\t+0.41% (+31.29)\n나스닥 종합\t26,430.89\t+1.11% (+290.86)\n필라델피아 반도체\t11,316.34\t+1.61% (+179.05)\n다우존스 산업평균\t52,495.88\t+1.02% (+529.85)\nKOSPI\t5,552.74\t-3.73% (-215.27)\nKOSDAQ\t781.97\t-3.33% (-26.92)\n투자자별 거래 동향\n시장\t투자자\t당일 순매수(억원)\nKOSPI\t개인\t미확보\n외국인\t미확보\n기관\t미확보\nKOSDAQ\t개인\t미확보\n외국인\t미확보\n기관\t미확보\n금리\n항목명\t최신 데이터 값\t전일 대비\n미국 국채 2년\t4.770 %\t+3.00bp (+0.030)\n미국 국채 10년\t5.150 %\t+6.00bp (+0.060)\n한국 국고채 3년\t3.840 %\t-3.70bp (-0.037)\n기타 경제지표\n항목명\t최신 데이터 값\t전일 대비\nUSD/KRW\t1,332.10\t-0.77% (-10.30)\nVIX\t18.44\t-7.75% (-1.55)\nWTI\t101.91\t+1.04% (+1.05)\n\n매크로 현황 CSV",
+  "final_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/",
+  "app_frame_url": "https://0baselabkim-debug-qweasd-app-nuf4kg.streamlit.app/~/+/"
+}
