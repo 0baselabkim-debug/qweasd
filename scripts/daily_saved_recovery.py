@@ -284,7 +284,10 @@ def load_available(repo, day, output):
     for run in runs:
         if run.get('path') != WORKFLOW or run.get('conclusion') != 'failure':
             continue
-        source_run(run)
+        try:
+            source_run(run)
+        except Blocked:
+            continue  # Unrelated branches/events/attempts are not candidate sources.
         artifacts = pages(f'repos/{REPO}/actions/runs/{run["id"]}/artifacts', 'artifacts')
         name = 'daily-source-' + day + '-' + str(run['id']) + '-1'
         if not any(a['name'] == name for a in artifacts):

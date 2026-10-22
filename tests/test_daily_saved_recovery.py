@@ -318,3 +318,10 @@ def test_publish_skips_newer_main_before_build(tmp_path,monkeypatch):
     repo=repository(tmp_path);source(tmp_path/'source')
     monkeypatch.setattr(p,'guard_ref',lambda *args:'same_or_newer_publication')
     assert p.publish(repo,tmp_path/'source/bundle.json.gz',DAY,100)['status']=='same_or_newer_publication'
+
+
+def test_unrelated_failed_run_does_not_block_regular_start(tmp_path,monkeypatch):
+    run=run_info();run['head_branch']='feature'
+    monkeypatch.setattr(r,'checkpoint',lambda *args:False)
+    monkeypatch.setattr(r,'pages',lambda path,key:[run] if key=='workflow_runs' else pytest.fail('untrusted artifact lookup'))
+    assert r.load_available(tmp_path,DAY,tmp_path/'out')['status']=='no_saved_source'
