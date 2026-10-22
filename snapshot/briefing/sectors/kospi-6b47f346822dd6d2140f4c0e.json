@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-21",
+  "asof": "2026-10-22",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-21-210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
-  "generated_at": "2026-10-22T12:49:42.909398+00:00",
+  "dataset_id": "flow-v3-2026-10-22-33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
+  "generated_at": "2026-10-22T12:58:52.354302+00:00",
   "market": "KOSPI",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kospi-6b47f346822dd6d2140f4c0e.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-22T12:49:42.909398+00:00",
+  "published_at": "2026-10-22T12:58:52.354302+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 8
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "제조",
   "sector_id": "kospi-6b47f346822dd6d2140f4c0e",
-  "source_snapshot_sha256": "210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
+  "source_snapshot_sha256": "33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
   "stock_count": 8,
   "stocks": [
     {
-      "change_5d": 22000000.0,
-      "intensity_5d": 0.0006611570247933885,
+      "change_5d": 0.0,
+      "intensity_5d": 0.00043613707165109035,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,11 +48,11 @@
         "previous_5d": "valid"
       },
       "name": "삼익악기",
-      "net_1d": -2000000.0,
-      "net_20d": -150000000.0,
-      "net_5d": 64000000.0,
+      "net_1d": 5000000.0,
+      "net_20d": -129000000.0,
+      "net_5d": 42000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 6.0,
+      "positive_days_20d": 7.0,
       "previous_5d": 42000000.0,
       "quality": {
         "incomplete": false,
@@ -63,8 +63,8 @@
       "symbol": "002450"
     },
     {
-      "change_5d": 9000000.0,
-      "intensity_5d": 0.0039336492890995264,
+      "change_5d": -75000000.0,
+      "intensity_5d": -9.47867298578199e-05,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "에넥스",
-      "net_1d": -12000000.0,
-      "net_20d": 120000000.0,
-      "net_5d": 83000000.0,
+      "net_1d": -17000000.0,
+      "net_20d": 119000000.0,
+      "net_5d": -2000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 9.0,
-      "previous_5d": 74000000.0,
+      "previous_5d": 73000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -92,8 +92,8 @@
       "symbol": "011090"
     },
     {
-      "change_5d": 76000000.0,
-      "intensity_5d": 0.0006043165467625899,
+      "change_5d": -17000000.0,
+      "intensity_5d": 0.0002501839587932303,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -106,12 +106,12 @@
         "previous_5d": "valid"
       },
       "name": "지누스",
-      "net_1d": -37000000.0,
-      "net_20d": -206000000.0,
-      "net_5d": 84000000.0,
+      "net_1d": -25000000.0,
+      "net_20d": -224000000.0,
+      "net_5d": 34000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 7.0,
-      "previous_5d": 8000000.0,
+      "previous_5d": 51000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -121,8 +121,8 @@
       "symbol": "013890"
     },
     {
-      "change_5d": -12000000.0,
-      "intensity_5d": 3.6231884057971013e-06,
+      "change_5d": -17000000.0,
+      "intensity_5d": -1.0984987184181619e-05,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -135,12 +135,12 @@
         "previous_5d": "valid"
       },
       "name": "퍼시스",
-      "net_1d": 0.0,
-      "net_20d": 11000000.0,
-      "net_5d": 1000000.0,
+      "net_1d": -2000000.0,
+      "net_20d": 12000000.0,
+      "net_5d": -3000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 10.0,
-      "previous_5d": 13000000.0,
+      "previous_5d": 14000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -150,8 +150,8 @@
       "symbol": "016800"
     },
     {
-      "change_5d": 65000000.0,
-      "intensity_5d": 0.0019534883720930232,
+      "change_5d": 64000000.0,
+      "intensity_5d": 0.002330097087378641,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -164,12 +164,12 @@
         "previous_5d": "valid"
       },
       "name": "코아스",
-      "net_1d": -4000000.0,
+      "net_1d": 0.0,
       "net_20d": 248000000.0,
-      "net_5d": 42000000.0,
+      "net_5d": 48000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 9.0,
-      "previous_5d": -23000000.0,
+      "previous_5d": -16000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -179,8 +179,8 @@
       "symbol": "071950"
     },
     {
-      "change_5d": -50000000.0,
-      "intensity_5d": -0.0006238532110091743,
+      "change_5d": -64000000.0,
+      "intensity_5d": -0.0007169459962756052,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -193,12 +193,12 @@
         "previous_5d": "valid"
       },
       "name": "현대리바트",
-      "net_1d": -113000000.0,
-      "net_20d": -175000000.0,
-      "net_5d": -68000000.0,
+      "net_1d": 14000000.0,
+      "net_20d": -149000000.0,
+      "net_5d": -77000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 7.0,
-      "previous_5d": -18000000.0,
+      "positive_days_20d": 8.0,
+      "previous_5d": -13000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -208,8 +208,8 @@
       "symbol": "079430"
     },
     {
-      "change_5d": 30000000.0,
-      "intensity_5d": -0.0007231040564373897,
+      "change_5d": 37000000.0,
+      "intensity_5d": -0.00048192771084337347,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -222,12 +222,12 @@
         "previous_5d": "valid"
       },
       "name": "이월드",
-      "net_1d": -3000000.0,
-      "net_20d": -202000000.0,
-      "net_5d": -41000000.0,
+      "net_1d": 14000000.0,
+      "net_20d": -188000000.0,
+      "net_5d": -28000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 2.0,
-      "previous_5d": -71000000.0,
+      "positive_days_20d": 3.0,
+      "previous_5d": -65000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -237,8 +237,8 @@
       "symbol": "084680"
     },
     {
-      "change_5d": 3000000.0,
-      "intensity_5d": 2.857142857142857e-05,
+      "change_5d": -2000000.0,
+      "intensity_5d": -2.8328611898016997e-05,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -253,10 +253,10 @@
       "name": "시디즈",
       "net_1d": 0.0,
       "net_20d": -10000000.0,
-      "net_5d": 1000000.0,
+      "net_5d": -1000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 1.0,
-      "previous_5d": -2000000.0,
+      "previous_5d": 1000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],

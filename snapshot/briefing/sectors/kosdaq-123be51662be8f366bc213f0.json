@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-21",
+  "asof": "2026-10-22",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-21-210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
-  "generated_at": "2026-10-22T12:49:42.909398+00:00",
+  "dataset_id": "flow-v3-2026-10-22-33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
+  "generated_at": "2026-10-22T12:58:52.354302+00:00",
   "market": "KOSDAQ",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kosdaq-123be51662be8f366bc213f0.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-22T12:49:42.909398+00:00",
+  "published_at": "2026-10-22T12:58:52.354302+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 3
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "표준산업 · 부동산 임대 및 공급업",
   "sector_id": "kosdaq-123be51662be8f366bc213f0",
-  "source_snapshot_sha256": "210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
+  "source_snapshot_sha256": "33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
   "stock_count": 3,
   "stocks": [
     {
-      "change_5d": 15000000.0,
-      "intensity_5d": -0.014558823529411765,
+      "change_5d": 320000000.0,
+      "intensity_5d": -0.0005737704918032787,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "신라섬유",
-      "net_1d": 8000000.0,
-      "net_20d": -424000000.0,
-      "net_5d": -198000000.0,
+      "net_1d": 79000000.0,
+      "net_20d": -343000000.0,
+      "net_5d": -7000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 8.0,
-      "previous_5d": -213000000.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": -327000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "001000"
     },
     {
-      "change_5d": 33000000.0,
-      "intensity_5d": -0.00035647279549718574,
+      "change_5d": 32000000.0,
+      "intensity_5d": -0.0002824858757062147,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "부방",
-      "net_1d": -3000000.0,
-      "net_20d": -106000000.0,
-      "net_5d": -19000000.0,
+      "net_1d": -6000000.0,
+      "net_20d": -93000000.0,
+      "net_5d": -15000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 4.0,
-      "previous_5d": -52000000.0,
+      "previous_5d": -47000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -92,8 +92,8 @@
       "symbol": "014470"
     },
     {
-      "change_5d": 12000000.0,
-      "intensity_5d": -0.00025083612040133777,
+      "change_5d": 5000000.0,
+      "intensity_5d": -0.00035889070146818925,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -106,9 +106,9 @@
         "previous_5d": "valid"
       },
       "name": "디티씨",
-      "net_1d": 11000000.0,
-      "net_20d": -121000000.0,
-      "net_5d": -15000000.0,
+      "net_1d": -18000000.0,
+      "net_20d": -139000000.0,
+      "net_5d": -22000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 4.0,
       "previous_5d": -27000000.0,

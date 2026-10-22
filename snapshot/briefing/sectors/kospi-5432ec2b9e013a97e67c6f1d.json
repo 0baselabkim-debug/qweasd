@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-21",
+  "asof": "2026-10-22",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-21-210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
-  "generated_at": "2026-10-22T12:49:42.909398+00:00",
+  "dataset_id": "flow-v3-2026-10-22-33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
+  "generated_at": "2026-10-22T12:58:52.354302+00:00",
   "market": "KOSPI",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kospi-5432ec2b9e013a97e67c6f1d.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-22T12:49:42.909398+00:00",
+  "published_at": "2026-10-22T12:58:52.354302+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 28
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "기계·장비",
   "sector_id": "kospi-5432ec2b9e013a97e67c6f1d",
-  "source_snapshot_sha256": "210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
+  "source_snapshot_sha256": "33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
   "stock_count": 28,
   "stocks": [
     {
-      "change_5d": -23000000.0,
-      "intensity_5d": 0.0025776244455396747,
+      "change_5d": -482000000.0,
+      "intensity_5d": 0.0008956692913385827,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "대동",
-      "net_1d": 51000000.0,
-      "net_20d": 1111000000.0,
-      "net_5d": 523000000.0,
+      "net_1d": -213000000.0,
+      "net_20d": 923000000.0,
+      "net_5d": 182000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 14.0,
-      "previous_5d": 546000000.0,
+      "previous_5d": 664000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "000490"
     },
     {
-      "change_5d": -22000000.0,
-      "intensity_5d": 0.0010835509138381202,
+      "change_5d": -152000000.0,
+      "intensity_5d": 0.000423841059602649,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "화천기공",
-      "net_1d": -7000000.0,
-      "net_20d": 196000000.0,
-      "net_5d": 83000000.0,
+      "net_1d": 10000000.0,
+      "net_20d": 131000000.0,
+      "net_5d": 32000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 12.0,
-      "previous_5d": 105000000.0,
+      "previous_5d": 184000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -92,8 +92,8 @@
       "symbol": "000850"
     },
     {
-      "change_5d": -130000000.0,
-      "intensity_5d": -0.001660546715626275,
+      "change_5d": 281000000.0,
+      "intensity_5d": -0.0010329029571012078,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -106,12 +106,12 @@
         "previous_5d": "valid"
       },
       "name": "TYM",
-      "net_1d": -111000000.0,
-      "net_20d": 3823000000.0,
-      "net_5d": -407000000.0,
+      "net_1d": -45000000.0,
+      "net_20d": 3411000000.0,
+      "net_5d": -248000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 13.0,
-      "previous_5d": -277000000.0,
+      "positive_days_20d": 12.0,
+      "previous_5d": -529000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -121,8 +121,8 @@
       "symbol": "002900"
     },
     {
-      "change_5d": 87000000.0,
-      "intensity_5d": 0.0001552393272962484,
+      "change_5d": -98000000.0,
+      "intensity_5d": -0.00047972972972972974,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -135,12 +135,12 @@
         "previous_5d": "valid"
       },
       "name": "삼익THK",
-      "net_1d": -14000000.0,
-      "net_20d": -392000000.0,
-      "net_5d": 24000000.0,
+      "net_1d": -21000000.0,
+      "net_20d": -395000000.0,
+      "net_5d": -71000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 6.0,
-      "previous_5d": -63000000.0,
+      "previous_5d": 27000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -150,8 +150,8 @@
       "symbol": "004380"
     },
     {
-      "change_5d": 146000000.0,
-      "intensity_5d": 0.00157973174366617,
+      "change_5d": -108000000.0,
+      "intensity_5d": -0.00041055718475073314,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -164,12 +164,12 @@
         "previous_5d": "valid"
       },
       "name": "화천기계",
-      "net_1d": -16000000.0,
-      "net_20d": 57000000.0,
-      "net_5d": 106000000.0,
+      "net_1d": -50000000.0,
+      "net_20d": 12000000.0,
+      "net_5d": -28000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 10.0,
-      "previous_5d": -40000000.0,
+      "previous_5d": 80000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -179,8 +179,8 @@
       "symbol": "010660"
     },
     {
-      "change_5d": 382000000.0,
-      "intensity_5d": 0.002064156206415621,
+      "change_5d": 89000000.0,
+      "intensity_5d": 0.001683599419448476,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -193,12 +193,12 @@
         "previous_5d": "valid"
       },
       "name": "한신기계",
-      "net_1d": 26000000.0,
-      "net_20d": 28000000.0,
-      "net_5d": 148000000.0,
+      "net_1d": -14000000.0,
+      "net_20d": -10000000.0,
+      "net_5d": 116000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 14.0,
-      "previous_5d": -234000000.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 27000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -208,8 +208,8 @@
       "symbol": "011700"
     },
     {
-      "change_5d": 488000000.0,
-      "intensity_5d": 0.00297071129707113,
+      "change_5d": -20000000.0,
+      "intensity_5d": 0.0021012931034482757,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -222,12 +222,12 @@
         "previous_5d": "valid"
       },
       "name": "계양전기",
-      "net_1d": 75000000.0,
-      "net_20d": -1126000000.0,
-      "net_5d": 284000000.0,
+      "net_1d": 41000000.0,
+      "net_20d": -321000000.0,
+      "net_5d": 195000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 11.0,
-      "previous_5d": -204000000.0,
+      "positive_days_20d": 12.0,
+      "previous_5d": 215000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -237,8 +237,8 @@
       "symbol": "012200"
     },
     {
-      "change_5d": -94000000.0,
-      "intensity_5d": -0.0002695167286245353,
+      "change_5d": -122000000.0,
+      "intensity_5d": -0.0005586080586080587,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -251,12 +251,12 @@
         "previous_5d": "valid"
       },
       "name": "DKME",
-      "net_1d": -9000000.0,
-      "net_20d": 135000000.0,
-      "net_5d": -29000000.0,
+      "net_1d": -4000000.0,
+      "net_20d": 83000000.0,
+      "net_5d": -61000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 10.0,
-      "previous_5d": 65000000.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": 61000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -266,8 +266,8 @@
       "symbol": "015590"
     },
     {
-      "change_5d": -20000000.0,
-      "intensity_5d": -1.497005988023952e-05,
+      "change_5d": -35000000.0,
+      "intensity_5d": -0.00014771048744460856,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -281,11 +281,11 @@
       },
       "name": "우신시스템",
       "net_1d": -6000000.0,
-      "net_20d": -28000000.0,
-      "net_5d": -1000000.0,
+      "net_20d": -27000000.0,
+      "net_5d": -10000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 8.0,
-      "previous_5d": 19000000.0,
+      "previous_5d": 25000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -295,8 +295,8 @@
       "symbol": "017370"
     },
     {
-      "change_5d": -1000000.0,
-      "intensity_5d": -0.00018331805682859762,
+      "change_5d": 95000000.0,
+      "intensity_5d": 2.7675276752767528e-05,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -309,12 +309,12 @@
         "previous_5d": "valid"
       },
       "name": "수산세보틱스",
-      "net_1d": 0.0,
-      "net_20d": 184000000.0,
-      "net_5d": -20000000.0,
+      "net_1d": -52000000.0,
+      "net_20d": -15000000.0,
+      "net_5d": 3000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 10.0,
-      "previous_5d": -19000000.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": -92000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -324,8 +324,8 @@
       "symbol": "017550"
     },
     {
-      "change_5d": -4896000000.0,
-      "intensity_5d": -0.0027217228464419476,
+      "change_5d": -3624000000.0,
+      "intensity_5d": -0.0025145819831497085,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -338,12 +338,12 @@
         "previous_5d": "valid"
       },
       "name": "현대엘리베이터",
-      "net_1d": -2128000000.0,
-      "net_20d": -18391000000.0,
-      "net_5d": -7267000000.0,
+      "net_1d": -921000000.0,
+      "net_20d": -17866000000.0,
+      "net_5d": -6596000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 3.0,
-      "previous_5d": -2371000000.0,
+      "previous_5d": -2972000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -353,8 +353,8 @@
       "symbol": "017800"
     },
     {
-      "change_5d": 9234000000.0,
-      "intensity_5d": -0.003011154305460274,
+      "change_5d": 12069000000.0,
+      "intensity_5d": -0.0022457361096578426,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -367,12 +367,12 @@
         "previous_5d": "valid"
       },
       "name": "한온시스템",
-      "net_1d": -2051000000.0,
-      "net_20d": -45664000000.0,
-      "net_5d": -11851000000.0,
+      "net_1d": -723000000.0,
+      "net_20d": -47626000000.0,
+      "net_5d": -8585000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 5.0,
-      "previous_5d": -21085000000.0,
+      "positive_days_20d": 4.0,
+      "previous_5d": -20654000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -382,8 +382,8 @@
       "symbol": "018880"
     },
     {
-      "change_5d": -8000000.0,
-      "intensity_5d": 0.00017921146953405018,
+      "change_5d": -21000000.0,
+      "intensity_5d": 0.00017793594306049823,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -396,12 +396,12 @@
         "previous_5d": "valid"
       },
       "name": "한국주강",
-      "net_1d": 2000000.0,
-      "net_20d": 3000000.0,
+      "net_1d": 0.0,
+      "net_20d": 19000000.0,
       "net_5d": 5000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 9.0,
-      "previous_5d": 13000000.0,
+      "previous_5d": 26000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -411,8 +411,8 @@
       "symbol": "025890"
     },
     {
-      "change_5d": 210627000000.0,
-      "intensity_5d": -1.7332258159682955e-05,
+      "change_5d": 220064000000.0,
+      "intensity_5d": 0.000635428763523012,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -425,12 +425,12 @@
         "previous_5d": "valid"
       },
       "name": "두산에너빌리티",
-      "net_1d": 8487000000.0,
-      "net_20d": -594357000000.0,
-      "net_5d": -705000000.0,
+      "net_1d": 2460000000.0,
+      "net_20d": -535867000000.0,
+      "net_5d": 24951000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 5.0,
-      "previous_5d": -211332000000.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -195113000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -440,8 +440,8 @@
       "symbol": "034020"
     },
     {
-      "change_5d": -57224000000.0,
-      "intensity_5d": -0.004340028359069449,
+      "change_5d": 39165000000.0,
+      "intensity_5d": -0.0025165001513775356,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -454,12 +454,12 @@
         "previous_5d": "valid"
       },
       "name": "한미반도체",
-      "net_1d": -16219000000.0,
-      "net_20d": -6649000000.0,
-      "net_5d": -83559000000.0,
+      "net_1d": -10043000000.0,
+      "net_20d": -50143000000.0,
+      "net_5d": -45716000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 11.0,
-      "previous_5d": -26335000000.0,
+      "positive_days_20d": 10.0,
+      "previous_5d": -84881000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -469,8 +469,8 @@
       "symbol": "042700"
     },
     {
-      "change_5d": 37000000.0,
-      "intensity_5d": -2.6246719160104988e-05,
+      "change_5d": 9000000.0,
+      "intensity_5d": -0.0003601108033240997,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -483,12 +483,12 @@
         "previous_5d": "valid"
       },
       "name": "우진플라임",
-      "net_1d": -8000000.0,
-      "net_20d": -74000000.0,
-      "net_5d": -1000000.0,
+      "net_1d": -7000000.0,
+      "net_20d": -77000000.0,
+      "net_5d": -13000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 6.0,
-      "previous_5d": -38000000.0,
+      "previous_5d": -22000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -498,8 +498,8 @@
       "symbol": "049800"
     },
     {
-      "change_5d": -7082000000.0,
-      "intensity_5d": -0.004071239105721864,
+      "change_5d": -5215000000.0,
+      "intensity_5d": -0.0011162457174727113,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -512,12 +512,12 @@
         "previous_5d": "valid"
       },
       "name": "HD현대마린엔진",
-      "net_1d": 52000000.0,
-      "net_20d": -12056000000.0,
-      "net_5d": -5372000000.0,
+      "net_1d": 1410000000.0,
+      "net_20d": -13390000000.0,
+      "net_5d": -1401000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 9.0,
-      "previous_5d": 1710000000.0,
+      "previous_5d": 3814000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -527,8 +527,8 @@
       "symbol": "071970"
     },
     {
-      "change_5d": 5041000000.0,
-      "intensity_5d": 0.004571306087453558,
+      "change_5d": 6216000000.0,
+      "intensity_5d": 0.006769025367156208,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -541,12 +541,12 @@
         "previous_5d": "valid"
       },
       "name": "STX엔진",
-      "net_1d": 1356000000.0,
-      "net_20d": -3307000000.0,
-      "net_5d": 3199000000.0,
+      "net_1d": 379000000.0,
+      "net_20d": -1710000000.0,
+      "net_5d": 4563000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 9.0,
-      "previous_5d": -1842000000.0,
+      "positive_days_20d": 10.0,
+      "previous_5d": -1653000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -556,8 +556,8 @@
       "symbol": "077970"
     },
     {
-      "change_5d": -485000000.0,
-      "intensity_5d": 0.0004729228486646884,
+      "change_5d": -1411000000.0,
+      "intensity_5d": -0.0006234324614833393,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -570,12 +570,12 @@
         "previous_5d": "valid"
       },
       "name": "전진건설로봇",
-      "net_1d": -202000000.0,
-      "net_20d": 992000000.0,
-      "net_5d": 255000000.0,
+      "net_1d": -609000000.0,
+      "net_20d": 204000000.0,
+      "net_5d": -348000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 11.0,
-      "previous_5d": 740000000.0,
+      "positive_days_20d": 10.0,
+      "previous_5d": 1063000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -585,8 +585,8 @@
       "symbol": "079900"
     },
     {
-      "change_5d": 15401000000.0,
-      "intensity_5d": 0.0018385050574318532,
+      "change_5d": 23860000000.0,
+      "intensity_5d": 0.0065802772162864565,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -599,12 +599,12 @@
         "previous_5d": "valid"
       },
       "name": "한화엔진",
-      "net_1d": 5181000000.0,
-      "net_20d": -30920000000.0,
-      "net_5d": 5362000000.0,
+      "net_1d": 8396000000.0,
+      "net_20d": -7491000000.0,
+      "net_5d": 18230000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 10.0,
-      "previous_5d": -10039000000.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": -5630000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -614,8 +614,8 @@
       "symbol": "082740"
     },
     {
-      "change_5d": -36000000.0,
-      "intensity_5d": -0.0005586592178770949,
+      "change_5d": 7000000.0,
+      "intensity_5d": -0.00017408123791102514,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -628,12 +628,12 @@
         "previous_5d": "valid"
       },
       "name": "기신정기",
-      "net_1d": -1000000.0,
-      "net_20d": -108000000.0,
-      "net_5d": -30000000.0,
+      "net_1d": 0.0,
+      "net_20d": -99000000.0,
+      "net_5d": -9000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 7.0,
-      "previous_5d": 6000000.0,
+      "previous_5d": -16000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -643,8 +643,8 @@
       "symbol": "092440"
     },
     {
-      "change_5d": -1493000000.0,
-      "intensity_5d": 0.0005698427382053654,
+      "change_5d": -1217000000.0,
+      "intensity_5d": 0.0006269654088050314,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -657,12 +657,12 @@
         "previous_5d": "valid"
       },
       "name": "SNT에너지",
-      "net_1d": -7000000.0,
-      "net_20d": 2457000000.0,
-      "net_5d": 308000000.0,
+      "net_1d": 150000000.0,
+      "net_20d": 2691000000.0,
+      "net_5d": 319000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 12.0,
-      "previous_5d": 1801000000.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 1536000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -672,8 +672,8 @@
       "symbol": "100840"
     },
     {
-      "change_5d": 34000000.0,
-      "intensity_5d": -0.00044105173876166244,
+      "change_5d": 65000000.0,
+      "intensity_5d": 0.0002147766323024055,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -686,12 +686,12 @@
         "previous_5d": "valid"
       },
       "name": "디와이파워",
-      "net_1d": -53000000.0,
-      "net_20d": -260000000.0,
-      "net_5d": -52000000.0,
+      "net_1d": 52000000.0,
+      "net_20d": -186000000.0,
+      "net_5d": 25000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 5.0,
-      "previous_5d": -86000000.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -40000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -701,8 +701,8 @@
       "symbol": "210540"
     },
     {
-      "change_5d": -5817000000.0,
-      "intensity_5d": -0.0007547986722470775,
+      "change_5d": -2760000000.0,
+      "intensity_5d": -0.000571374811841445,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -715,12 +715,12 @@
         "previous_5d": "valid"
       },
       "name": "두산밥캣",
-      "net_1d": -1948000000.0,
-      "net_20d": -21093000000.0,
-      "net_5d": -3661000000.0,
+      "net_1d": -280000000.0,
+      "net_20d": -13877000000.0,
+      "net_5d": -2733000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 7.0,
-      "previous_5d": 2156000000.0,
+      "previous_5d": 27000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -730,8 +730,8 @@
       "symbol": "241560"
     },
     {
-      "change_5d": -16912000000.0,
-      "intensity_5d": -0.0002962300033560801,
+      "change_5d": -29633000000.0,
+      "intensity_5d": -0.00272300575425928,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -744,12 +744,12 @@
         "previous_5d": "valid"
       },
       "name": "HD건설기계",
-      "net_1d": -1795000000.0,
-      "net_20d": -13584000000.0,
-      "net_5d": -1324000000.0,
+      "net_1d": -10390000000.0,
+      "net_20d": -15973000000.0,
+      "net_5d": -12067000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 9.0,
-      "previous_5d": 15588000000.0,
+      "previous_5d": 17566000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -759,8 +759,8 @@
       "symbol": "267270"
     },
     {
-      "change_5d": 19787000000.0,
-      "intensity_5d": -0.001958757611420969,
+      "change_5d": 20835000000.0,
+      "intensity_5d": -0.0014345474407822867,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -773,12 +773,12 @@
         "previous_5d": "valid"
       },
       "name": "두산로보틱스",
-      "net_1d": -1362000000.0,
-      "net_20d": -27508000000.0,
-      "net_5d": -7656000000.0,
+      "net_1d": -1330000000.0,
+      "net_20d": -29413000000.0,
+      "net_5d": -5384000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 6.0,
-      "previous_5d": -27443000000.0,
+      "positive_days_20d": 5.0,
+      "previous_5d": -26219000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -788,8 +788,8 @@
       "symbol": "454910"
     },
     {
-      "change_5d": 205000000.0,
-      "intensity_5d": 0.000985691573926868,
+      "change_5d": -12000000.0,
+      "intensity_5d": -0.00022375215146299484,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -802,12 +802,12 @@
         "previous_5d": "valid"
       },
       "name": "씨케이솔루션",
-      "net_1d": -52000000.0,
-      "net_20d": -239000000.0,
-      "net_5d": 62000000.0,
+      "net_1d": 48000000.0,
+      "net_20d": -291000000.0,
+      "net_5d": -13000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 7.0,
-      "previous_5d": -143000000.0,
+      "previous_5d": -1000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -817,8 +817,8 @@
       "symbol": "480370"
     },
     {
-      "change_5d": 205000000.0,
-      "intensity_5d": -0.004923146473779385,
+      "change_5d": 1079000000.0,
+      "intensity_5d": -0.0031141704248753856,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -831,12 +831,12 @@
         "previous_5d": "valid"
       },
       "name": "엠앤씨솔루션",
-      "net_1d": -157000000.0,
-      "net_20d": -6706000000.0,
-      "net_5d": -2178000000.0,
+      "net_1d": 167000000.0,
+      "net_20d": -7042000000.0,
+      "net_5d": -1312000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 4.0,
-      "previous_5d": -2383000000.0,
+      "previous_5d": -2391000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],

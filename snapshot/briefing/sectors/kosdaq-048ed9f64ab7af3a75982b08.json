@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-21",
+  "asof": "2026-10-22",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-21-210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
-  "generated_at": "2026-10-22T12:49:42.909398+00:00",
+  "dataset_id": "flow-v3-2026-10-22-33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
+  "generated_at": "2026-10-22T12:58:52.354302+00:00",
   "market": "KOSDAQ",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kosdaq-048ed9f64ab7af3a75982b08.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-22T12:49:42.909398+00:00",
+  "published_at": "2026-10-22T12:58:52.354302+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 4
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "운송·창고",
   "sector_id": "kosdaq-048ed9f64ab7af3a75982b08",
-  "source_snapshot_sha256": "210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
+  "source_snapshot_sha256": "33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
   "stock_count": 4,
   "stocks": [
     {
-      "change_5d": 244000000.0,
-      "intensity_5d": 0.0001233616037008481,
+      "change_5d": 150000000.0,
+      "intensity_5d": -5.5074744295830055e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "선광",
-      "net_1d": -26000000.0,
-      "net_20d": -273000000.0,
-      "net_5d": 16000000.0,
+      "net_1d": -38000000.0,
+      "net_20d": -280000000.0,
+      "net_5d": -7000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 6.0,
-      "previous_5d": -228000000.0,
+      "previous_5d": -157000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "003100"
     },
     {
-      "change_5d": 23000000.0,
-      "intensity_5d": -0.00021156558533145275,
+      "change_5d": -1000000.0,
+      "intensity_5d": -0.00028169014084507044,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "유성티엔에스",
-      "net_1d": -1000000.0,
-      "net_20d": 19000000.0,
-      "net_5d": -30000000.0,
+      "net_1d": 1000000.0,
+      "net_20d": 37000000.0,
+      "net_5d": -40000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 9.0,
-      "previous_5d": -53000000.0,
+      "positive_days_20d": 10.0,
+      "previous_5d": -39000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -92,8 +92,8 @@
       "symbol": "024800"
     },
     {
-      "change_5d": 16000000.0,
-      "intensity_5d": 0.0002487562189054726,
+      "change_5d": 14000000.0,
+      "intensity_5d": 0.00015075376884422112,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -106,9 +106,9 @@
         "previous_5d": "valid"
       },
       "name": "삼일",
-      "net_1d": 0.0,
-      "net_20d": 6000000.0,
-      "net_5d": 5000000.0,
+      "net_1d": -1000000.0,
+      "net_20d": 5000000.0,
+      "net_5d": 3000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 8.0,
       "previous_5d": -11000000.0,
@@ -121,8 +121,8 @@
       "symbol": "032280"
     },
     {
-      "change_5d": 52000000.0,
-      "intensity_5d": 0.0008047493403693932,
+      "change_5d": 0.0,
+      "intensity_5d": 0.0004953145917001338,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -135,12 +135,12 @@
         "previous_5d": "valid"
       },
       "name": "태웅로직스",
-      "net_1d": 5000000.0,
-      "net_20d": 6000000.0,
-      "net_5d": 61000000.0,
+      "net_1d": 3000000.0,
+      "net_20d": 12000000.0,
+      "net_5d": 37000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 8.0,
-      "previous_5d": 9000000.0,
+      "positive_days_20d": 9.0,
+      "previous_5d": 37000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],

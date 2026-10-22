@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-21",
+  "asof": "2026-10-22",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-21-210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
-  "generated_at": "2026-10-22T12:49:42.909398+00:00",
+  "dataset_id": "flow-v3-2026-10-22-33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
+  "generated_at": "2026-10-22T12:58:52.354302+00:00",
   "market": "KOSDAQ",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kosdaq-2371e4b47077b9949372f9b0.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-22T12:49:42.909398+00:00",
+  "published_at": "2026-10-22T12:58:52.354302+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 46
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "음식료·담배",
   "sector_id": "kosdaq-2371e4b47077b9949372f9b0",
-  "source_snapshot_sha256": "210f1453c580f83f343a5da4b9f7b0dba3a48fa09133905a2e726d49c3aa2cd1",
+  "source_snapshot_sha256": "33ac8b315fe75a42d31c5c53715e8564852ef1b13b5e2d70f1eb74d10b1f4c40",
   "stock_count": 46,
   "stocks": [
     {
-      "change_5d": 88000000.0,
-      "intensity_5d": 0.000663716814159292,
+      "change_5d": 190000000.0,
+      "intensity_5d": 0.001091703056768559,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "한탑",
-      "net_1d": 4000000.0,
-      "net_20d": 17000000.0,
-      "net_5d": 15000000.0,
+      "net_1d": -1000000.0,
+      "net_20d": -16000000.0,
+      "net_5d": 25000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 9.0,
-      "previous_5d": -73000000.0,
+      "positive_days_20d": 8.0,
+      "previous_5d": -165000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "002680"
     },
     {
-      "change_5d": -178000000.0,
-      "intensity_5d": 0.00035294117647058826,
+      "change_5d": -40000000.0,
+      "intensity_5d": 0.0014115646258503402,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "대주산업",
-      "net_1d": -37000000.0,
-      "net_20d": 260000000.0,
-      "net_5d": 21000000.0,
+      "net_1d": 4000000.0,
+      "net_20d": 250000000.0,
+      "net_5d": 83000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 10.0,
-      "previous_5d": 199000000.0,
+      "previous_5d": 123000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -92,8 +92,8 @@
       "symbol": "003310"
     },
     {
-      "change_5d": -57000000.0,
-      "intensity_5d": 0.0006712962962962962,
+      "change_5d": -38000000.0,
+      "intensity_5d": 0.00023121387283236994,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -106,12 +106,12 @@
         "previous_5d": "valid"
       },
       "name": "창해에탄올",
-      "net_1d": 1000000.0,
-      "net_20d": 165000000.0,
-      "net_5d": 58000000.0,
+      "net_1d": -38000000.0,
+      "net_20d": 131000000.0,
+      "net_5d": 20000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 11.0,
-      "previous_5d": 115000000.0,
+      "previous_5d": 58000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -121,8 +121,8 @@
       "symbol": "004650"
     },
     {
-      "change_5d": 75000000.0,
-      "intensity_5d": 0.0004084967320261438,
+      "change_5d": 26000000.0,
+      "intensity_5d": 4.966887417218543e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -135,12 +135,12 @@
         "previous_5d": "valid"
       },
       "name": "푸드웰",
-      "net_1d": -1000000.0,
-      "net_20d": 7000000.0,
-      "net_5d": 25000000.0,
+      "net_1d": -4000000.0,
+      "net_20d": -14000000.0,
+      "net_5d": 3000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 8.0,
-      "previous_5d": -50000000.0,
+      "positive_days_20d": 7.0,
+      "previous_5d": -23000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -150,8 +150,8 @@
       "symbol": "005670"
     },
     {
-      "change_5d": 109000000.0,
-      "intensity_5d": 0.005364238410596026,
+      "change_5d": -70000000.0,
+      "intensity_5d": 0.005140924464487035,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -164,12 +164,12 @@
         "previous_5d": "valid"
       },
       "name": "한일사료",
-      "net_1d": -118000000.0,
-      "net_20d": 579000000.0,
-      "net_5d": 486000000.0,
+      "net_1d": 223000000.0,
+      "net_20d": 1054000000.0,
+      "net_5d": 456000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 14.0,
-      "previous_5d": 377000000.0,
+      "positive_days_20d": 15.0,
+      "previous_5d": 526000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -179,8 +179,8 @@
       "symbol": "005860"
     },
     {
-      "change_5d": 60000000.0,
-      "intensity_5d": 0.0,
+      "change_5d": 54000000.0,
+      "intensity_5d": -3.8255547054322874e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -193,12 +193,12 @@
         "previous_5d": "valid"
       },
       "name": "매일홀딩스",
-      "net_1d": 0.0,
-      "net_20d": -105000000.0,
-      "net_5d": 0.0,
+      "net_1d": -5000000.0,
+      "net_20d": -103000000.0,
+      "net_5d": -5000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 3.0,
-      "previous_5d": -60000000.0,
+      "previous_5d": -59000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -208,8 +208,8 @@
       "symbol": "005990"
     },
     {
-      "change_5d": 164000000.0,
-      "intensity_5d": 0.0003975058456742011,
+      "change_5d": 83000000.0,
+      "intensity_5d": 0.00027091633466135457,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -222,12 +222,12 @@
         "previous_5d": "valid"
       },
       "name": "엠에스씨",
-      "net_1d": -11000000.0,
-      "net_20d": -69000000.0,
-      "net_5d": 51000000.0,
+      "net_1d": -3000000.0,
+      "net_20d": -60000000.0,
+      "net_5d": 34000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 6.0,
-      "previous_5d": -113000000.0,
+      "previous_5d": -49000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -237,8 +237,8 @@
       "symbol": "009780"
     },
     {
-      "change_5d": 20000000.0,
-      "intensity_5d": 0.00017304189435336976,
+      "change_5d": -17000000.0,
+      "intensity_5d": 0.0,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -251,12 +251,12 @@
         "previous_5d": "valid"
       },
       "name": "진로발효",
-      "net_1d": 0.0,
-      "net_20d": -10000000.0,
-      "net_5d": 19000000.0,
+      "net_1d": -1000000.0,
+      "net_20d": -11000000.0,
+      "net_5d": 0.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 2.0,
-      "previous_5d": -1000000.0,
+      "previous_5d": 17000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -266,8 +266,8 @@
       "symbol": "018120"
     },
     {
-      "change_5d": 11000000.0,
-      "intensity_5d": 0.00022701475595913735,
+      "change_5d": 30000000.0,
+      "intensity_5d": 0.00028669724770642203,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -280,12 +280,12 @@
         "previous_5d": "valid"
       },
       "name": "풍국주정",
-      "net_1d": 6000000.0,
-      "net_20d": -109000000.0,
-      "net_5d": 20000000.0,
+      "net_1d": 1000000.0,
+      "net_20d": -104000000.0,
+      "net_5d": 25000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 7.0,
-      "previous_5d": 9000000.0,
+      "positive_days_20d": 8.0,
+      "previous_5d": -5000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -295,8 +295,8 @@
       "symbol": "023900"
     },
     {
-      "change_5d": 24000000.0,
-      "intensity_5d": 0.0006233766233766234,
+      "change_5d": -36000000.0,
+      "intensity_5d": -2.604166666666667e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -309,12 +309,12 @@
         "previous_5d": "valid"
       },
       "name": "케이씨피드",
-      "net_1d": -4000000.0,
-      "net_20d": -162000000.0,
-      "net_5d": 24000000.0,
+      "net_1d": 0.0,
+      "net_20d": -139000000.0,
+      "net_5d": -1000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 5.0,
-      "previous_5d": 0.0,
+      "previous_5d": 35000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -324,8 +324,8 @@
       "symbol": "025880"
     },
     {
-      "change_5d": 379000000.0,
-      "intensity_5d": 0.003586206896551724,
+      "change_5d": 70000000.0,
+      "intensity_5d": 0.0022043010752688173,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -338,12 +338,12 @@
         "previous_5d": "valid"
       },
       "name": "팜스토리",
-      "net_1d": -89000000.0,
-      "net_20d": 433000000.0,
-      "net_5d": 468000000.0,
+      "net_1d": 13000000.0,
+      "net_20d": 436000000.0,
+      "net_5d": 287000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 10.0,
-      "previous_5d": 89000000.0,
+      "previous_5d": 217000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -353,8 +353,8 @@
       "symbol": "027710"
     },
     {
-      "change_5d": -294000000.0,
-      "intensity_5d": 0.001600418410041841,
+      "change_5d": -520000000.0,
+      "intensity_5d": 0.0008418457203240578,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -367,12 +367,12 @@
         "previous_5d": "valid"
       },
       "name": "이지홀딩스",
-      "net_1d": 37000000.0,
-      "net_20d": 189000000.0,
-      "net_5d": 459000000.0,
+      "net_1d": -31000000.0,
+      "net_20d": 316000000.0,
+      "net_5d": 239000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 12.0,
-      "previous_5d": 753000000.0,
+      "previous_5d": 759000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -382,8 +382,8 @@
       "symbol": "035810"
     },
     {
-      "change_5d": 64000000.0,
-      "intensity_5d": 0.0013290113452188005,
+      "change_5d": 21000000.0,
+      "intensity_5d": 0.0010339256865912762,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -396,12 +396,12 @@
         "previous_5d": "valid"
       },
       "name": "국순당",
-      "net_1d": 15000000.0,
-      "net_20d": -53000000.0,
-      "net_5d": 82000000.0,
+      "net_1d": -3000000.0,
+      "net_20d": -23000000.0,
+      "net_5d": 64000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 7.0,
-      "previous_5d": 18000000.0,
+      "previous_5d": 43000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -411,8 +411,8 @@
       "symbol": "043650"
     },
     {
-      "change_5d": -11000000.0,
-      "intensity_5d": -0.0003693181818181818,
+      "change_5d": -19000000.0,
+      "intensity_5d": -0.0004970760233918128,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -425,12 +425,12 @@
         "previous_5d": "valid"
       },
       "name": "체리부로",
-      "net_1d": -9000000.0,
-      "net_20d": -83000000.0,
-      "net_5d": -13000000.0,
+      "net_1d": -1000000.0,
+      "net_20d": -75000000.0,
+      "net_5d": -17000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 5.0,
-      "previous_5d": -2000000.0,
+      "previous_5d": 2000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -440,8 +440,8 @@
       "symbol": "066360"
     },
     {
-      "change_5d": 121000000.0,
-      "intensity_5d": 0.0010776699029126213,
+      "change_5d": 8000000.0,
+      "intensity_5d": 0.0005145631067961165,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -454,12 +454,12 @@
         "previous_5d": "valid"
       },
       "name": "우리손에프앤지",
-      "net_1d": 13000000.0,
-      "net_20d": 36000000.0,
-      "net_5d": 111000000.0,
+      "net_1d": 6000000.0,
+      "net_20d": 48000000.0,
+      "net_5d": 53000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 12.0,
-      "previous_5d": -10000000.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 45000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -469,8 +469,8 @@
       "symbol": "073560"
     },
     {
-      "change_5d": 233000000.0,
-      "intensity_5d": 0.00048723897911832946,
+      "change_5d": 244000000.0,
+      "intensity_5d": 0.0007142857142857143,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -483,12 +483,12 @@
         "previous_5d": "valid"
       },
       "name": "우리바이오",
-      "net_1d": -1000000.0,
-      "net_20d": -188000000.0,
-      "net_5d": 21000000.0,
+      "net_1d": -12000000.0,
+      "net_20d": -194000000.0,
+      "net_5d": 30000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 9.0,
-      "previous_5d": -212000000.0,
+      "previous_5d": -214000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -498,8 +498,8 @@
       "symbol": "082850"
     },
     {
-      "change_5d": -27000000.0,
-      "intensity_5d": -0.0006967213114754099,
+      "change_5d": -23000000.0,
+      "intensity_5d": -0.0008281573498964803,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -512,12 +512,12 @@
         "previous_5d": "valid"
       },
       "name": "동우팜투테이블",
-      "net_1d": -19000000.0,
-      "net_20d": -182000000.0,
-      "net_5d": -34000000.0,
+      "net_1d": -29000000.0,
+      "net_20d": -195000000.0,
+      "net_5d": -40000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 5.0,
-      "previous_5d": -7000000.0,
+      "previous_5d": -17000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -527,8 +527,8 @@
       "symbol": "088910"
     },
     {
-      "change_5d": 173000000.0,
-      "intensity_5d": 0.0021022727272727274,
+      "change_5d": -53000000.0,
+      "intensity_5d": 0.00035190615835777126,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -541,12 +541,12 @@
         "previous_5d": "valid"
       },
       "name": "아미코젠",
-      "net_1d": -43000000.0,
-      "net_20d": 325000000.0,
-      "net_5d": 148000000.0,
+      "net_1d": -53000000.0,
+      "net_20d": 296000000.0,
+      "net_5d": 24000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 10.0,
-      "previous_5d": -25000000.0,
+      "previous_5d": 77000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -556,8 +556,8 @@
       "symbol": "092040"
     },
     {
-      "change_5d": 52000000.0,
-      "intensity_5d": 0.00076,
+      "change_5d": 30000000.0,
+      "intensity_5d": 0.0005928853754940712,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -570,12 +570,12 @@
         "previous_5d": "valid"
       },
       "name": "우양",
-      "net_1d": 0.0,
-      "net_20d": -121000000.0,
-      "net_5d": 19000000.0,
+      "net_1d": 2000000.0,
+      "net_20d": -117000000.0,
+      "net_5d": 15000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 5.0,
-      "previous_5d": -33000000.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": -15000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -585,8 +585,8 @@
       "symbol": "103840"
     },
     {
-      "change_5d": 13000000.0,
-      "intensity_5d": -0.0001606425702811245,
+      "change_5d": 10000000.0,
+      "intensity_5d": -8e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -599,12 +599,12 @@
         "previous_5d": "valid"
       },
       "name": "뉴온",
-      "net_1d": 3000000.0,
-      "net_20d": 4000000.0,
-      "net_5d": -4000000.0,
+      "net_1d": 2000000.0,
+      "net_20d": -14000000.0,
+      "net_5d": -2000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 10.0,
-      "previous_5d": -17000000.0,
+      "previous_5d": -12000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -614,8 +614,8 @@
       "symbol": "123840"
     },
     {
-      "change_5d": 28000000.0,
-      "intensity_5d": 0.002016895459345301,
+      "change_5d": 68000000.0,
+      "intensity_5d": 0.0017950530035335689,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -628,12 +628,12 @@
         "previous_5d": "valid"
       },
       "name": "하림",
-      "net_1d": 65000000.0,
-      "net_20d": 603000000.0,
-      "net_5d": 573000000.0,
+      "net_1d": 60000000.0,
+      "net_20d": 763000000.0,
+      "net_5d": 508000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 13.0,
-      "previous_5d": 545000000.0,
+      "positive_days_20d": 14.0,
+      "previous_5d": 440000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -643,8 +643,8 @@
       "symbol": "136480"
     },
     {
-      "change_5d": 12000000.0,
-      "intensity_5d": -0.001072961373390558,
+      "change_5d": 20000000.0,
+      "intensity_5d": -0.0005128205128205128,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -657,12 +657,12 @@
         "previous_5d": "valid"
       },
       "name": "바이오포트",
-      "net_1d": -8000000.0,
-      "net_20d": -104000000.0,
-      "net_5d": -25000000.0,
+      "net_1d": 11000000.0,
+      "net_20d": -88000000.0,
+      "net_5d": -12000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 0.0,
-      "previous_5d": -37000000.0,
+      "positive_days_20d": 1.0,
+      "previous_5d": -32000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -672,8 +672,8 @@
       "symbol": "188040"
     },
     {
-      "change_5d": 17000000.0,
-      "intensity_5d": -0.0004751619870410367,
+      "change_5d": 22000000.0,
+      "intensity_5d": -0.0004424778761061947,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -686,12 +686,12 @@
         "previous_5d": "valid"
       },
       "name": "흥국에프엔비",
-      "net_1d": -8000000.0,
-      "net_20d": -125000000.0,
-      "net_5d": -22000000.0,
+      "net_1d": -7000000.0,
+      "net_20d": -129000000.0,
+      "net_5d": -20000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 0.0,
-      "previous_5d": -39000000.0,
+      "previous_5d": -42000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -701,8 +701,8 @@
       "symbol": "189980"
     },
     {
-      "change_5d": 169000000.0,
-      "intensity_5d": 0.0012549019607843138,
+      "change_5d": 11000000.0,
+      "intensity_5d": 0.000564652738565782,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -715,12 +715,12 @@
         "previous_5d": "valid"
       },
       "name": "노바렉스",
-      "net_1d": -16000000.0,
-      "net_20d": 166000000.0,
-      "net_5d": 224000000.0,
+      "net_1d": 17000000.0,
+      "net_20d": 286000000.0,
+      "net_5d": 100000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 12.0,
-      "previous_5d": 55000000.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 89000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -730,8 +730,8 @@
       "symbol": "194700"
     },
     {
-      "change_5d": -43000000.0,
-      "intensity_5d": 0.0028525641025641028,
+      "change_5d": -11000000.0,
+      "intensity_5d": 0.0039354838709677415,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -744,12 +744,12 @@
         "previous_5d": "valid"
       },
       "name": "마니커에프앤지",
-      "net_1d": 26000000.0,
-      "net_20d": 168000000.0,
-      "net_5d": 89000000.0,
+      "net_1d": 25000000.0,
+      "net_20d": 215000000.0,
+      "net_5d": 122000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 10.0,
-      "previous_5d": 132000000.0,
+      "positive_days_20d": 11.0,
+      "previous_5d": 133000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -759,8 +759,8 @@
       "symbol": "195500"
     },
     {
-      "change_5d": 5000000.0,
-      "intensity_5d": 0.000855614973262032,
+      "change_5d": -24000000.0,
+      "intensity_5d": 0.0006738544474393531,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -773,12 +773,12 @@
         "previous_5d": "valid"
       },
       "name": "정다운",
-      "net_1d": 7000000.0,
-      "net_20d": 178000000.0,
-      "net_5d": 64000000.0,
+      "net_1d": 8000000.0,
+      "net_20d": 184000000.0,
+      "net_5d": 50000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 19.0,
-      "previous_5d": 59000000.0,
+      "previous_5d": 74000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -788,8 +788,8 @@
       "symbol": "208140"
     },
     {
-      "change_5d": 62000000.0,
-      "intensity_5d": 0.00300531914893617,
+      "change_5d": 31000000.0,
+      "intensity_5d": 0.0029189189189189188,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -802,12 +802,12 @@
         "previous_5d": "valid"
       },
       "name": "미래생명자원",
-      "net_1d": 23000000.0,
-      "net_20d": 203000000.0,
-      "net_5d": 113000000.0,
+      "net_1d": 24000000.0,
+      "net_20d": 210000000.0,
+      "net_5d": 108000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 16.0,
-      "previous_5d": 51000000.0,
+      "previous_5d": 77000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -817,8 +817,8 @@
       "symbol": "218150"
     },
     {
-      "change_5d": -1920000000.0,
-      "intensity_5d": 0.002664092664092664,
+      "change_5d": -2536000000.0,
+      "intensity_5d": -0.0007654075546719681,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -831,12 +831,12 @@
         "previous_5d": "valid"
       },
       "name": "코스맥스엔비티",
-      "net_1d": -47000000.0,
-      "net_20d": 3067000000.0,
-      "net_5d": 276000000.0,
+      "net_1d": -97000000.0,
+      "net_20d": 2760000000.0,
+      "net_5d": -77000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 13.0,
-      "previous_5d": 2196000000.0,
+      "positive_days_20d": 12.0,
+      "previous_5d": 2459000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -846,8 +846,8 @@
       "symbol": "222040"
     },
     {
-      "change_5d": 57000000.0,
-      "intensity_5d": 0.00026737967914438503,
+      "change_5d": 59000000.0,
+      "intensity_5d": 0.0005128205128205128,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -860,12 +860,12 @@
         "previous_5d": "valid"
       },
       "name": "한국맥널티",
-      "net_1d": 2000000.0,
+      "net_1d": 0.0,
       "net_20d": -81000000.0,
-      "net_5d": 5000000.0,
+      "net_5d": 10000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 5.0,
-      "previous_5d": -52000000.0,
+      "previous_5d": -49000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -875,8 +875,8 @@
       "symbol": "222980"
     },
     {
-      "change_5d": 4000000.0,
-      "intensity_5d": 9.389671361502347e-05,
+      "change_5d": 0.0,
+      "intensity_5d": -4.784688995215311e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -889,12 +889,12 @@
         "previous_5d": "valid"
       },
       "name": "비피도",
-      "net_1d": 0.0,
-      "net_20d": 1000000.0,
-      "net_5d": 2000000.0,
+      "net_1d": -3000000.0,
+      "net_20d": -1000000.0,
+      "net_5d": -1000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 4.0,
-      "previous_5d": -2000000.0,
+      "previous_5d": -1000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -904,7 +904,7 @@
       "symbol": "238200"
     },
     {
-      "change_5d": 4000000.0,
+      "change_5d": 5000000.0,
       "intensity_5d": 0.0,
       "market": "KOSDAQ",
       "metric_validity": {
@@ -923,7 +923,7 @@
       "net_5d": 0.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 1.0,
-      "previous_5d": -4000000.0,
+      "previous_5d": -5000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -933,8 +933,8 @@
       "symbol": "239610"
     },
     {
-      "change_5d": 197000000.0,
-      "intensity_5d": 0.0008366993652625505,
+      "change_5d": -192000000.0,
+      "intensity_5d": 0.00037959667852906285,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -947,12 +947,12 @@
         "previous_5d": "valid"
       },
       "name": "에스앤디",
-      "net_1d": 53000000.0,
-      "net_20d": -46000000.0,
-      "net_5d": 145000000.0,
+      "net_1d": 139000000.0,
+      "net_20d": -68000000.0,
+      "net_5d": 64000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 7.0,
-      "previous_5d": -52000000.0,
+      "previous_5d": 256000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -962,8 +962,8 @@
       "symbol": "260970"
     },
     {
-      "change_5d": -218000000.0,
-      "intensity_5d": 0.0001638095238095238,
+      "change_5d": -269000000.0,
+      "intensity_5d": -6.917755572636433e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -976,12 +976,12 @@
         "previous_5d": "valid"
       },
       "name": "매일유업",
-      "net_1d": -25000000.0,
+      "net_1d": -14000000.0,
       "net_20d": -336000000.0,
-      "net_5d": 43000000.0,
+      "net_5d": -18000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 8.0,
-      "previous_5d": 261000000.0,
+      "previous_5d": 251000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -991,8 +991,8 @@
       "symbol": "267980"
     },
     {
-      "change_5d": 10000000.0,
-      "intensity_5d": 0.0003184713375796178,
+      "change_5d": 8000000.0,
+      "intensity_5d": 0.0003289473684210526,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1005,12 +1005,12 @@
         "previous_5d": "valid"
       },
       "name": "뉴트리",
-      "net_1d": 5000000.0,
-      "net_20d": 113000000.0,
+      "net_1d": 3000000.0,
+      "net_20d": 114000000.0,
       "net_5d": 10000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 12.0,
-      "previous_5d": 0.0,
+      "previous_5d": 2000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1020,8 +1020,8 @@
       "symbol": "270870"
     },
     {
-      "change_5d": 92000000.0,
-      "intensity_5d": 0.004114583333333333,
+      "change_5d": 55000000.0,
+      "intensity_5d": 0.003048128342245989,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1034,12 +1034,12 @@
         "previous_5d": "valid"
       },
       "name": "한울앤제주",
-      "net_1d": 3000000.0,
-      "net_20d": 98000000.0,
-      "net_5d": 79000000.0,
+      "net_1d": -6000000.0,
+      "net_20d": 87000000.0,
+      "net_5d": 57000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 14.0,
-      "previous_5d": -13000000.0,
+      "positive_days_20d": 13.0,
+      "previous_5d": 2000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1049,8 +1049,8 @@
       "symbol": "276730"
     },
     {
-      "change_5d": 31000000.0,
-      "intensity_5d": 0.0005797101449275362,
+      "change_5d": 19000000.0,
+      "intensity_5d": 0.0003431372549019608,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1063,12 +1063,12 @@
         "previous_5d": "valid"
       },
       "name": "인산가",
-      "net_1d": 0.0,
-      "net_20d": -42000000.0,
-      "net_5d": 12000000.0,
+      "net_1d": -2000000.0,
+      "net_20d": -36000000.0,
+      "net_5d": 7000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 3.0,
-      "previous_5d": -19000000.0,
+      "previous_5d": -12000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1078,8 +1078,8 @@
       "symbol": "277410"
     },
     {
-      "change_5d": -23000000.0,
-      "intensity_5d": 0.0006802721088435374,
+      "change_5d": -37000000.0,
+      "intensity_5d": 0.0003767123287671233,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1092,12 +1092,12 @@
         "previous_5d": "valid"
       },
       "name": "네오크레마",
-      "net_1d": 0.0,
-      "net_20d": 11000000.0,
-      "net_5d": 20000000.0,
+      "net_1d": -3000000.0,
+      "net_20d": 9000000.0,
+      "net_5d": 11000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 10.0,
-      "previous_5d": 43000000.0,
+      "previous_5d": 48000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1107,7 +1107,7 @@
       "symbol": "311390"
     },
     {
-      "change_5d": 6000000.0,
+      "change_5d": 2000000.0,
       "intensity_5d": 0.0,
       "market": "KOSDAQ",
       "metric_validity": {
@@ -1126,7 +1126,7 @@
       "net_5d": 0.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 2.0,
-      "previous_5d": -6000000.0,
+      "previous_5d": -2000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1136,8 +1136,8 @@
       "symbol": "318010"
     },
     {
-      "change_5d": 34000000.0,
-      "intensity_5d": 0.0019642857142857144,
+      "change_5d": 19000000.0,
+      "intensity_5d": 0.002038216560509554,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1150,12 +1150,12 @@
         "previous_5d": "valid"
       },
       "name": "휴럼",
-      "net_1d": 3000000.0,
-      "net_20d": 28000000.0,
-      "net_5d": 33000000.0,
+      "net_1d": 13000000.0,
+      "net_20d": 42000000.0,
+      "net_5d": 32000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 5.0,
-      "previous_5d": -1000000.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": 13000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1165,8 +1165,8 @@
       "symbol": "353190"
     },
     {
-      "change_5d": 311000000.0,
-      "intensity_5d": 0.00032555615843733043,
+      "change_5d": 336000000.0,
+      "intensity_5d": 0.0002673213311511184,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1179,12 +1179,12 @@
         "previous_5d": "valid"
       },
       "name": "이지바이오",
-      "net_1d": -68000000.0,
-      "net_20d": -1159000000.0,
-      "net_5d": 60000000.0,
+      "net_1d": 11000000.0,
+      "net_20d": -1161000000.0,
+      "net_5d": 49000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 6.0,
-      "previous_5d": -251000000.0,
+      "previous_5d": -287000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1194,8 +1194,8 @@
       "symbol": "353810"
     },
     {
-      "change_5d": 18000000.0,
-      "intensity_5d": 0.0002140309155766944,
+      "change_5d": -21000000.0,
+      "intensity_5d": -1.2165450121654501e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1208,12 +1208,12 @@
         "previous_5d": "valid"
       },
       "name": "에이치피오",
-      "net_1d": 0.0,
-      "net_20d": -10000000.0,
-      "net_5d": 18000000.0,
+      "net_1d": -3000000.0,
+      "net_20d": -22000000.0,
+      "net_5d": -1000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 7.0,
-      "previous_5d": 0.0,
+      "positive_days_20d": 6.0,
+      "previous_5d": 20000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1223,8 +1223,8 @@
       "symbol": "357230"
     },
     {
-      "change_5d": -2000000.0,
-      "intensity_5d": -0.00012396694214876033,
+      "change_5d": -11000000.0,
+      "intensity_5d": -0.00034934497816593884,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1237,12 +1237,12 @@
         "previous_5d": "valid"
       },
       "name": "오에스피",
-      "net_1d": 1000000.0,
-      "net_20d": -185000000.0,
-      "net_5d": -3000000.0,
+      "net_1d": -1000000.0,
+      "net_20d": -112000000.0,
+      "net_5d": -8000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 4.0,
-      "previous_5d": -1000000.0,
+      "previous_5d": 3000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1252,8 +1252,8 @@
       "symbol": "368970"
     },
     {
-      "change_5d": -314000000.0,
-      "intensity_5d": -0.01828358208955224,
+      "change_5d": -90000000.0,
+      "intensity_5d": -0.0128125,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1266,12 +1266,12 @@
         "previous_5d": "valid"
       },
       "name": "프롬바이오",
-      "net_1d": 60000000.0,
-      "net_20d": -198000000.0,
-      "net_5d": -245000000.0,
+      "net_1d": -52000000.0,
+      "net_20d": -245000000.0,
+      "net_5d": -164000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 9.0,
-      "previous_5d": 69000000.0,
+      "previous_5d": -74000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1281,8 +1281,8 @@
       "symbol": "377220"
     },
     {
-      "change_5d": 67000000.0,
-      "intensity_5d": 0.0008888888888888889,
+      "change_5d": 58000000.0,
+      "intensity_5d": 0.0009782608695652175,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1295,12 +1295,12 @@
         "previous_5d": "valid"
       },
       "name": "우듬지팜",
-      "net_1d": -4000000.0,
-      "net_20d": -104000000.0,
-      "net_5d": 16000000.0,
+      "net_1d": 6000000.0,
+      "net_20d": -82000000.0,
+      "net_5d": 18000000.0,
       "observed_days_20d": 20.0,
-      "positive_days_20d": 4.0,
-      "previous_5d": -51000000.0,
+      "positive_days_20d": 5.0,
+      "previous_5d": -40000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -1310,8 +1310,8 @@
       "symbol": "403490"
     },
     {
-      "change_5d": 7000000.0,
-      "intensity_5d": 0.00011650485436893204,
+      "change_5d": 5000000.0,
+      "intensity_5d": 7.797270955165692e-05,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1324,9 +1324,9 @@
         "previous_5d": "valid"
       },
       "name": "에르코스",
-      "net_1d": 1000000.0,
-      "net_20d": 21000000.0,
-      "net_5d": 6000000.0,
+      "net_1d": 0.0,
+      "net_20d": 28000000.0,
+      "net_5d": 4000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 15.0,
       "previous_5d": -1000000.0,
@@ -1339,8 +1339,8 @@
       "symbol": "435570"
     },
     {
-      "change_5d": 25000000.0,
-      "intensity_5d": 0.0002188183807439825,
+      "change_5d": 22000000.0,
+      "intensity_5d": 0.00015184381778741865,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -1353,9 +1353,9 @@
         "previous_5d": "valid"
       },
       "name": "셀로맥스사이언스",
-      "net_1d": 0.0,
-      "net_20d": -17000000.0,
-      "net_5d": 10000000.0,
+      "net_1d": -1000000.0,
+      "net_20d": -13000000.0,
+      "net_5d": 7000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 6.0,
       "previous_5d": -15000000.0,
