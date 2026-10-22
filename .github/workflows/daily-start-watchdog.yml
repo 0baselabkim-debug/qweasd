@@ -1,0 +1,54 @@
+name: Daily collection start watchdog
+on:
+  schedule:
+    # KST weekdays 18:45 and 19:15. GitHub cron is best effort.
+    - cron: '45 9 * * 1-5'
+    - cron: '15 10 * * 1-5'
+  workflow_run:
+    workflows: [Incremental corporate disclosures and theme review]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Check current state without requesting collection
+        type: boolean
+        default: true
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: daily-start-watchdog
+  cancel-in-progress: false
+jobs:
+  check:
+    if: >-
+      github.ref_name == 'main' &&
+      (github.event_name != 'workflow_run' ||
+       (github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.head_repository.full_name == github.repository))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check missing daily start and safely request existing collector
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+        run: |
+          if [ "$DRY_RUN" = true ]; then
+            python scripts/daily_start_watchdog.py --dry-run
+          else
+            python scripts/daily_start_watchdog.py
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daily-start-watchdog-${{ github.run_id }}-${{ github.run_attempt }}
+          path: watchdog-results/check.json
+          retention-days: 30
+          if-no-files-found: error
