@@ -14,6 +14,7 @@ import sys
 import time
 import urllib.request
 import urllib.error
+from functools import lru_cache
 from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -47,8 +48,10 @@ class Budget:
         self.root = root; self.path = root/'requests.json'
         self.state = read(self.path) if self.path.exists() else {'schema':1, 'requests':[]}
         self.lease_id=os.getenv('GITHUB_RUN_ID','local')+'-'+os.getenv('GITHUB_RUN_ATTEMPT','1')
+        self.routine=os.getenv('COLLECTION_CLASS')=='routine_reference'
+        self.budget_date=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat()
         self.start = time.monotonic(); self.initial = len(self.state['requests'])
-        self.limit = min(20, limit); self.seconds = min(600, seconds); self.last = 0
+        self.limit = min(2 if self.routine else 20, limit); self.seconds = min(600, seconds); self.last = 0
 
     def before_http(self, path, attempt=0):
         guard()
@@ -56,13 +59,23 @@ class Budget:
             raise ValueError('automatic_retry_disabled')
         n = len(self.state['requests'])
         unknown=sum(x['maximum_unrecorded_requests'] for x in self.state.get('unrecovered_runs',[]))
-        reserved=sum(x['limit'] for k,x in self.state.get('leases',{}).items() if k!=self.lease_id and x['status']=='reserved')
-        if n+unknown+reserved >= TOTAL_LIMIT or n-self.initial >= self.limit or time.monotonic()-self.start >= self.seconds:
+        leases=[x for k,x in self.state.get('leases',{}).items() if k!=self.lease_id and x['status']=='reserved']
+        if self.routine:
+            spent=sum(r.get('budget_class')=='routine_reference' and r.get('budget_date')==self.budget_date for r in self.state['requests'])
+            spent+=sum(x['limit'] for x in leases if x.get('budget_class')=='routine_reference' and x.get('budget_date')==self.budget_date)
+            maximum=4
+            if '/svc/apis/sto/' not in path:raise ValueError('routine_KRX_only')
+        else:
+            spent=sum(r.get('budget_class')!='routine_reference' for r in self.state['requests'])+unknown
+            spent+=sum(x['limit'] for x in leases if x.get('budget_class')!='routine_reference')
+            maximum=TOTAL_LIMIT
+        if spent >= maximum or n-self.initial >= self.limit or time.monotonic()-self.start >= self.seconds:
             raise ValueError('physical_or_time_budget_exhausted')
         time.sleep(max(0, 1.05-(time.monotonic()-self.last)))
         self.last = time.monotonic()
         self.state['requests'].append({'sequence':n+1, 'endpoint':path, 'started_at':now(),
             'run_id':os.getenv('GITHUB_RUN_ID'), 'status':'attempted',
+            'budget_class':'routine_reference' if self.routine else 'bootstrap','budget_date':self.budget_date,
             'kind':'authentication' if path=='/oauth2/tokenP' else 'market'})
         save(self.path, self.state)
 
@@ -102,17 +115,27 @@ def cached(root,key):
     return result
 
 
-def krx(day,market,root,budget):
-    key=f'krx:{market}:{day}'
-    if cached(root,key):return
-    # Already preserved official references need no new API request.
-    from screener.decision_support.evidence import official_rows
+@lru_cache(maxsize=1)
+def preserved_references():
+    # An immutable checkout: decompress/validate archives once per batch, not
+    # once per missing market/day. This changes no HTTP rate or acceptance.
+    result={}
     paths=list(Path('liquidity/reference').rglob('*.json.gz'))+list(Path('liquidity/reference-observations').rglob('*.json.gz'))+list(Path('auxiliary-reference-imports').glob('*.json.gz'))
     for p in paths:
         obj=read(p)
-        if obj.get('asof')==day and ('/stk_' if market=='KOSPI' else '/ksq_') in obj.get('url',''):
+        day=obj.get('asof');url=obj.get('url','')
+        market='KOSPI' if '/stk_bydd_trd?' in url else 'KOSDAQ' if '/ksq_bydd_trd?' in url else None
+        if day and market:
             status,_=classify_rows({'OutBlock_1':obj.get('rows')},day)
-            if status=='RECEIVED':cache(root,key,obj);return
+            if status=='RECEIVED':result.setdefault((day,market),obj)
+    return result
+
+
+def krx(day,market,root,budget):
+    key=f'krx:{market}:{day}'
+    if cached(root,key):return
+    obj=preserved_references().get((day,market))
+    if obj:cache(root,key,obj);return
     credential=os.environ.get('KRX_API_KEY')
     if not credential:raise ValueError('KRX_credential_not_bound')
     url=f'https://data-dbg.krx.co.kr/svc/apis/sto/{"stk" if market=="KOSPI" else "ksq"}_bydd_trd?basDd='+day.replace('-','')
@@ -193,9 +216,13 @@ def index_days(root,asof,code):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('mode',choices=['reserve','reference','pilot','history-references']);a=p.parse_args()
-    guard();asof=read(Path('snapshot/manifest.json'))['asof']
+    from screener.publication import coherent
+    guard()
+    if not coherent(Path('snapshot')):raise ValueError('normal_publication_incoherent')
+    asof=read(Path('snapshot/manifest.json'))['asof']
     if asof>=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat():raise ValueError('previous_published_day_only')
     budget=Budget(ROOT)
+    if budget.routine and a.mode not in ('reserve','reference'):raise ValueError('routine_cannot_backfill_or_call_KIS')
     if a.mode=='reserve':
         # One earlier run lost its local ledger during evidence publication.
         # Deduct its full batch maximum, not an invented actual request count.
@@ -203,7 +230,8 @@ def main():
         if any(r.get('run_id')=='39735702048' for r in budget.state['requests']) and not any(r['run_id']=='39736095088' for r in lost):
             lost.append({'run_id':'39736095088','maximum_unrecorded_requests':20,
                          'actual_physical_requests':None,'reason':'collection_step_success_evidence_publication_failed_logs_inaccessible'})
-        budget.state.setdefault('leases',{}).setdefault(budget.lease_id,{'status':'reserved','limit':20,'reserved_at':now(),
+        budget.state.setdefault('leases',{}).setdefault(budget.lease_id,{'status':'reserved','limit':budget.limit,'reserved_at':now(),
+             'budget_class':'routine_reference' if budget.routine else 'bootstrap','budget_date':budget.budget_date,
              'initial_recorded_count':len(budget.state['requests'])})
         save(budget.path,budget.state)
         return

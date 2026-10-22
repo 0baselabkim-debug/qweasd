@@ -45,6 +45,18 @@ def test_lost_response_and_unfinished_leases_consume_budget(tmp_path,monkeypatch
     assert c.read(tmp_path/'requests.json')['requests']==[]
 
 
+def test_routine_is_KRX_only_two_per_run_four_per_day(tmp_path,monkeypatch):
+    monkeypatch.setenv('COLLECTION_CLASS','routine_reference')
+    monkeypatch.setattr(c,'guard',lambda:None);monkeypatch.setattr(c.time,'sleep',lambda _:None)
+    b=c.Budget(tmp_path)
+    with pytest.raises(ValueError,match='KRX_only'):b.before_http('/oauth2/tokenP')
+    for _ in range(2):b.before_http('https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd');b.finish('received')
+    with pytest.raises(ValueError,match='exhausted'):b.before_http('https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd')
+    b=c.Budget(tmp_path)
+    for _ in range(2):b.before_http('https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd');b.finish('received')
+    with pytest.raises(ValueError,match='exhausted'):c.Budget(tmp_path).before_http('https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd')
+
+
 def test_manual_collector_keeps_shared_lock_and_no_cron():
     from pathlib import Path
     s=Path('.github/workflows/decision-price-evidence.yml').read_text()
@@ -52,6 +64,7 @@ def test_manual_collector_keeps_shared_lock_and_no_cron():
     assert 'python scripts/preserve_decision_evidence.py' in s
     assert 'fetch-depth: 0' in s and 'actions/upload-artifact@v4' in s
     assert 'HEAD:main' not in s
+    assert "inputs.mode || 'reference'" in s and 'routine_reference' in s
 
 
 def history_fixture():

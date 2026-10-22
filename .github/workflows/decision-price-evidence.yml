@@ -6,6 +6,11 @@ on:
         type: choice
         options: [reference, pilot, history-references]
         default: reference
+  workflow_run:
+    workflows:
+      - Daily validated dashboard refresh
+      - Independent liquidity evidence recovery
+    types: [completed]
 permissions:
   contents: write
   actions: read
@@ -15,9 +20,14 @@ concurrency:
   queue: max
 jobs:
   collect:
-    if: github.ref_name == 'main'
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref_name == 'main') ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      COLLECTION_CLASS: ${{ github.event_name == 'workflow_run' && 'routine_reference' || 'bootstrap' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -27,13 +37,27 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
+      - name: Defer reference checks until next-day official data can be used
+        id: eligibility
+        run: |
+          python - <<'PY'
+          import datetime,json,os
+          from zoneinfo import ZoneInfo
+          now=datetime.datetime.now(ZoneInfo('Asia/Seoul'))
+          asof=json.load(open('snapshot/manifest.json'))['asof']
+          allowed=not 18<=now.hour<23 and asof<now.date().isoformat()
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('allowed='+str(allowed).lower()+'\n')
+          print('eligible' if allowed else 'deferred: preserve prior analysis; no market request')
+          PY
       - name: Reuse prior immutable evidence and persistent physical budget
+        if: steps.eligibility.outputs.allowed == 'true'
         run: |
           if git ls-remote --exit-code origin refs/heads/evidence/decision-price-source; then
             git fetch origin evidence/decision-price-source
             git restore --source=FETCH_HEAD -- auxiliary-prices
           fi
       - name: Reject overlapping queued operating work
+        if: steps.eligibility.outputs.allowed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -44,16 +68,18 @@ jobs:
           if any(r['name'] in names and r['status'] in ('queued','in_progress','waiting','pending','requested') for r in runs):raise SystemExit('Operating work has priority; retry manually later')
           PY
       - name: Persist request reservation before any market request
+        if: steps.eligibility.outputs.allowed == 'true'
         run: |
           python scripts/collect_decision_prices.py reserve
           python scripts/preserve_decision_evidence.py
       - name: Collect a bounded auxiliary batch
+        if: steps.eligibility.outputs.allowed == 'true'
         id: collect
         env:
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-          MODE: ${{ inputs.mode }}
+          MODE: ${{ inputs.mode || 'reference' }}
         run: |
           # Authentication cooldown is only relevant to the KIS pilot.
           if [ "$MODE" = pilot ]; then sleep 65; fi
