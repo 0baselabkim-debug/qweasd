@@ -1,0 +1,1029 @@
+{
+  "schema": 1,
+  "indicators": {
+    "kr3y": {
+      "id": "kr3y",
+      "name": "한국 국고채 3년",
+      "group": "금리",
+      "provider": "ECOS",
+      "series": "817Y002/010200000",
+      "unit": "%",
+      "rate": true,
+      "timezone": "Asia/Seoul",
+      "basis": "",
+      "source_url": "https://ecos.bok.or.kr/",
+      "official_unit": "연%",
+      "daily_fixing": false,
+      "observations": [
+        {
+          "date": "2026-08-18",
+          "value": 3.847
+        },
+        {
+          "date": "2026-08-19",
+          "value": 3.798
+        },
+        {
+          "date": "2026-08-20",
+          "value": 3.811
+        },
+        {
+          "date": "2026-08-21",
+          "value": 3.854
+        },
+        {
+          "date": "2026-08-24",
+          "value": 3.836
+        },
+        {
+          "date": "2026-08-25",
+          "value": 3.83
+        },
+        {
+          "date": "2026-08-26",
+          "value": 3.816
+        },
+        {
+          "date": "2026-08-27",
+          "value": 3.755
+        },
+        {
+          "date": "2026-08-28",
+          "value": 3.788
+        },
+        {
+          "date": "2026-08-31",
+          "value": 3.838
+        },
+        {
+          "date": "2026-09-01",
+          "value": 3.878
+        },
+        {
+          "date": "2026-09-02",
+          "value": 3.93
+        },
+        {
+          "date": "2026-09-03",
+          "value": 3.888
+        },
+        {
+          "date": "2026-09-04",
+          "value": 3.884
+        },
+        {
+          "date": "2026-09-07",
+          "value": 3.9
+        },
+        {
+          "date": "2026-09-08",
+          "value": 3.901
+        },
+        {
+          "date": "2026-09-09",
+          "value": 3.91
+        },
+        {
+          "date": "2026-09-10",
+          "value": 3.93
+        },
+        {
+          "date": "2026-09-11",
+          "value": 4.014
+        },
+        {
+          "date": "2026-09-14",
+          "value": 4.025
+        },
+        {
+          "date": "2026-09-15",
+          "value": 4.091
+        },
+        {
+          "date": "2026-09-16",
+          "value": 4.053
+        },
+        {
+          "date": "2026-09-17",
+          "value": 4.063
+        },
+        {
+          "date": "2026-09-18",
+          "value": 4.035
+        },
+        {
+          "date": "2026-09-21",
+          "value": 4.056
+        },
+        {
+          "date": "2026-09-22",
+          "value": 4.04
+        },
+        {
+          "date": "2026-09-23",
+          "value": 4.006
+        },
+        {
+          "date": "2026-09-28",
+          "value": 4.119
+        },
+        {
+          "date": "2026-09-29",
+          "value": 4.076
+        },
+        {
+          "date": "2026-09-30",
+          "value": 4.011
+        },
+        {
+          "date": "2026-10-01",
+          "value": 4.01
+        },
+        {
+          "date": "2026-10-02",
+          "value": 3.937
+        },
+        {
+          "date": "2026-10-06",
+          "value": 3.933
+        },
+        {
+          "date": "2026-10-07",
+          "value": 3.961
+        },
+        {
+          "date": "2026-10-08",
+          "value": 3.983
+        },
+        {
+          "date": "2026-10-12",
+          "value": 3.921
+        },
+        {
+          "date": "2026-10-13",
+          "value": 3.857
+        },
+        {
+          "date": "2026-10-14",
+          "value": 3.883
+        },
+        {
+          "date": "2026-10-15",
+          "value": 3.867
+        },
+        {
+          "date": "2026-10-16",
+          "value": 3.854
+        },
+        {
+          "date": "2026-10-19",
+          "value": 3.877
+        },
+        {
+          "date": "2026-10-20",
+          "value": 3.84
+        },
+        {
+          "date": "2026-10-21",
+          "value": 3.822
+        }
+      ],
+      "date": "2026-10-21",
+      "value": 3.822,
+      "previous_date": "2026-10-20",
+      "previous_value": 3.84,
+      "change": -1.7999999999999794,
+      "change_unit": "bp",
+      "change_percent": null,
+      "observed_at": "2026-10-22T00:48:59.173775+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "usdkrw": {
+      "id": "usdkrw",
+      "name": "USD/KRW",
+      "group": "환율·원자재",
+      "provider": "ECOS",
+      "series": "731Y001/0000001",
+      "unit": "원",
+      "rate": false,
+      "timezone": "Asia/Seoul",
+      "basis": "한국은행 공표 매매기준율 · 시장 종가와 구분",
+      "source_url": "https://ecos.bok.or.kr/",
+      "official_unit": "원",
+      "daily_fixing": true,
+      "observations": [
+        {
+          "date": "2026-08-18",
+          "value": 1415.2
+        },
+        {
+          "date": "2026-08-19",
+          "value": 1411.0
+        },
+        {
+          "date": "2026-08-20",
+          "value": 1402.5
+        },
+        {
+          "date": "2026-08-21",
+          "value": 1393.0
+        },
+        {
+          "date": "2026-08-24",
+          "value": 1383.6
+        },
+        {
+          "date": "2026-08-25",
+          "value": 1380.6
+        },
+        {
+          "date": "2026-08-26",
+          "value": 1383.1
+        },
+        {
+          "date": "2026-08-27",
+          "value": 1384.6
+        },
+        {
+          "date": "2026-08-28",
+          "value": 1380.3
+        },
+        {
+          "date": "2026-08-31",
+          "value": 1376.5
+        },
+        {
+          "date": "2026-09-01",
+          "value": 1373.6
+        },
+        {
+          "date": "2026-09-02",
+          "value": 1370.3
+        },
+        {
+          "date": "2026-09-03",
+          "value": 1369.4
+        },
+        {
+          "date": "2026-09-04",
+          "value": 1359.5
+        },
+        {
+          "date": "2026-09-07",
+          "value": 1355.2
+        },
+        {
+          "date": "2026-09-08",
+          "value": 1342.6
+        },
+        {
+          "date": "2026-09-09",
+          "value": 1341.1
+        },
+        {
+          "date": "2026-09-10",
+          "value": 1337.9
+        },
+        {
+          "date": "2026-09-11",
+          "value": 1338.2
+        },
+        {
+          "date": "2026-09-14",
+          "value": 1346.4
+        },
+        {
+          "date": "2026-09-15",
+          "value": 1345.3
+        },
+        {
+          "date": "2026-09-16",
+          "value": 1353.3
+        },
+        {
+          "date": "2026-09-17",
+          "value": 1368.3
+        },
+        {
+          "date": "2026-09-18",
+          "value": 1380.3
+        },
+        {
+          "date": "2026-09-21",
+          "value": 1383.8
+        },
+        {
+          "date": "2026-09-22",
+          "value": 1384.3
+        },
+        {
+          "date": "2026-09-23",
+          "value": 1360.0
+        },
+        {
+          "date": "2026-09-28",
+          "value": 1352.0
+        },
+        {
+          "date": "2026-09-29",
+          "value": 1360.0
+        },
+        {
+          "date": "2026-09-30",
+          "value": 1358.4
+        },
+        {
+          "date": "2026-10-01",
+          "value": 1355.7
+        },
+        {
+          "date": "2026-10-02",
+          "value": 1359.6
+        },
+        {
+          "date": "2026-10-06",
+          "value": 1358.5
+        },
+        {
+          "date": "2026-10-07",
+          "value": 1343.4
+        },
+        {
+          "date": "2026-10-08",
+          "value": 1339.2
+        },
+        {
+          "date": "2026-10-12",
+          "value": 1338.0
+        },
+        {
+          "date": "2026-10-13",
+          "value": 1335.8
+        },
+        {
+          "date": "2026-10-14",
+          "value": 1340.5
+        },
+        {
+          "date": "2026-10-15",
+          "value": 1338.6
+        },
+        {
+          "date": "2026-10-16",
+          "value": 1348.5
+        },
+        {
+          "date": "2026-10-19",
+          "value": 1342.4
+        },
+        {
+          "date": "2026-10-20",
+          "value": 1332.1
+        },
+        {
+          "date": "2026-10-21",
+          "value": 1328.0
+        }
+      ],
+      "date": "2026-10-21",
+      "value": 1328.0,
+      "previous_date": "2026-10-20",
+      "previous_value": 1332.1,
+      "change": -4.099999999999909,
+      "change_unit": "원",
+      "change_percent": -0.30778470084827786,
+      "observed_at": "2026-10-22T00:49:00.172545+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "kospi": {
+      "id": "kospi",
+      "name": "KOSPI",
+      "group": "한국 증시",
+      "provider": "KIS",
+      "series": "0001",
+      "unit": "포인트",
+      "rate": false,
+      "timezone": "Asia/Seoul",
+      "basis": "KRX",
+      "source_url": "https://apiportal.koreainvestment.com/apiservice",
+      "observations": [
+        {
+          "date": "2026-09-11",
+          "value": 6909.91
+        },
+        {
+          "date": "2026-09-14",
+          "value": 6684.37
+        },
+        {
+          "date": "2026-09-15",
+          "value": 6627.26
+        },
+        {
+          "date": "2026-09-16",
+          "value": 6717.97
+        },
+        {
+          "date": "2026-09-17",
+          "value": 6715.41
+        },
+        {
+          "date": "2026-09-18",
+          "value": 6894.23
+        },
+        {
+          "date": "2026-09-21",
+          "value": 7007.72
+        },
+        {
+          "date": "2026-09-22",
+          "value": 7017.91
+        },
+        {
+          "date": "2026-09-23",
+          "value": 7080.92
+        },
+        {
+          "date": "2026-09-28",
+          "value": 6889.74
+        },
+        {
+          "date": "2026-09-29",
+          "value": 6870.81
+        },
+        {
+          "date": "2026-09-30",
+          "value": 6838.04
+        },
+        {
+          "date": "2026-10-01",
+          "value": 6971.35
+        },
+        {
+          "date": "2026-10-02",
+          "value": 7003.74
+        },
+        {
+          "date": "2026-10-06",
+          "value": 6941.39
+        },
+        {
+          "date": "2026-10-07",
+          "value": 6803.9
+        },
+        {
+          "date": "2026-10-08",
+          "value": 6625.93
+        },
+        {
+          "date": "2026-10-12",
+          "value": 6384.24
+        },
+        {
+          "date": "2026-10-13",
+          "value": 6035.35
+        },
+        {
+          "date": "2026-10-14",
+          "value": 6008.81
+        },
+        {
+          "date": "2026-10-15",
+          "value": 5554.22
+        },
+        {
+          "date": "2026-10-16",
+          "value": 5668.05
+        },
+        {
+          "date": "2026-10-19",
+          "value": 5768.01
+        },
+        {
+          "date": "2026-10-20",
+          "value": 5552.74
+        },
+        {
+          "date": "2026-10-21",
+          "value": 5735.66
+        }
+      ],
+      "date": "2026-10-21",
+      "value": 5735.66,
+      "previous_date": "2026-10-20",
+      "previous_value": 5552.74,
+      "change": 182.92000000000007,
+      "change_unit": "포인트",
+      "change_percent": 3.294229515518466,
+      "observed_at": "2026-10-22T00:49:02.971177+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    },
+    "kosdaq": {
+      "id": "kosdaq",
+      "name": "KOSDAQ",
+      "group": "한국 증시",
+      "provider": "KIS",
+      "series": "1001",
+      "unit": "포인트",
+      "rate": false,
+      "timezone": "Asia/Seoul",
+      "basis": "KRX",
+      "source_url": "https://apiportal.koreainvestment.com/apiservice",
+      "observations": [
+        {
+          "date": "2026-09-11",
+          "value": 820.64
+        },
+        {
+          "date": "2026-09-14",
+          "value": 806.79
+        },
+        {
+          "date": "2026-09-15",
+          "value": 812.41
+        },
+        {
+          "date": "2026-09-16",
+          "value": 815.98
+        },
+        {
+          "date": "2026-09-17",
+          "value": 822.18
+        },
+        {
+          "date": "2026-09-18",
+          "value": 827.12
+        },
+        {
+          "date": "2026-09-21",
+          "value": 836.27
+        },
+        {
+          "date": "2026-09-22",
+          "value": 834.38
+        },
+        {
+          "date": "2026-09-23",
+          "value": 844.48
+        },
+        {
+          "date": "2026-09-28",
+          "value": 846.58
+        },
+        {
+          "date": "2026-09-29",
+          "value": 849.8
+        },
+        {
+          "date": "2026-09-30",
+          "value": 855.91
+        },
+        {
+          "date": "2026-10-01",
+          "value": 894.29
+        },
+        {
+          "date": "2026-10-02",
+          "value": 893.29
+        },
+        {
+          "date": "2026-10-06",
+          "value": 919.92
+        },
+        {
+          "date": "2026-10-07",
+          "value": 898.43
+        },
+        {
+          "date": "2026-10-08",
+          "value": 892.27
+        },
+        {
+          "date": "2026-10-12",
+          "value": 849.19
+        },
+        {
+          "date": "2026-10-13",
+          "value": 837.03
+        },
+        {
+          "date": "2026-10-14",
+          "value": 823.88
+        },
+        {
+          "date": "2026-10-15",
+          "value": 760.82
+        },
+        {
+          "date": "2026-10-16",
+          "value": 794.78
+        },
+        {
+          "date": "2026-10-19",
+          "value": 808.89
+        },
+        {
+          "date": "2026-10-20",
+          "value": 781.97
+        },
+        {
+          "date": "2026-10-21",
+          "value": 792.76
+        }
+      ],
+      "date": "2026-10-21",
+      "value": 792.76,
+      "previous_date": "2026-10-20",
+      "previous_value": 781.97,
+      "change": 10.789999999999964,
+      "change_unit": "포인트",
+      "change_percent": 1.379848331777429,
+      "observed_at": "2026-10-22T00:49:03.961764+00:00",
+      "finality": "공급원 공표 일별값 · 추후 수정 가능"
+    }
+  },
+  "investors": {},
+  "attempts": {
+    "us2y": {
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
+    },
+    "us10y": {
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
+    },
+    "kr3y": {
+      "status": "success"
+    },
+    "usdkrw": {
+      "status": "success"
+    },
+    "vix": {
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
+    },
+    "wti": {
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
+    },
+    "sp500": {
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
+    },
+    "nasdaq": {
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
+    },
+    "sox": {
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
+    },
+    "dow": {
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
+    },
+    "kospi": {
+      "status": "success"
+    },
+    "kosdaq": {
+      "status": "success"
+    },
+    "investor_KOSPI": {
+      "status": "unit_scope_pending",
+      "data_date": "20261021"
+    },
+    "investor_KOSDAQ": {
+      "status": "unit_scope_pending",
+      "data_date": "20261021"
+    }
+  },
+  "last_attempt_at": "2026-10-22T00:48:57.066261+00:00",
+  "credential_presence": {
+    "FRED_API_KEY": true,
+    "ECOS_API_KEY": true,
+    "KIS_APP_KEY": true,
+    "KIS_APP_SECRET": true
+  },
+  "investor_probe": {
+    "KOSPI": {
+      "output": [
+        {
+          "stck_bsop_date": "20261021",
+          "bstp_nmix_prpr": "5735.66",
+          "bstp_nmix_prdy_vrss": "182.92",
+          "prdy_vrss_sign": "2",
+          "bstp_nmix_prdy_ctrt": "3.29",
+          "bstp_nmix_oprc": "5666.34",
+          "bstp_nmix_hgpr": "5816.43",
+          "bstp_nmix_lwpr": "5630.14",
+          "stck_prdy_clpr": "5552.74",
+          "frgn_ntby_qty": "-2011",
+          "frgn_reg_ntby_qty": "-1979",
+          "frgn_nreg_ntby_qty": "-32",
+          "prsn_ntby_qty": "2044",
+          "orgn_ntby_qty": "-577",
+          "scrt_ntby_qty": "-2186",
+          "ivtr_ntby_qty": "1291",
+          "pe_fund_ntby_vol": "1057",
+          "bank_ntby_qty": "-58",
+          "insu_ntby_qty": "476",
+          "mrbn_ntby_qty": "57",
+          "fund_ntby_qty": "-1215",
+          "etc_ntby_qty": "545",
+          "etc_orgt_ntby_vol": "0",
+          "etc_corp_ntby_vol": "545",
+          "frgn_ntby_tr_pbmn": "649804",
+          "frgn_reg_ntby_pbmn": "652690",
+          "frgn_nreg_ntby_pbmn": "-2885",
+          "prsn_ntby_tr_pbmn": "-1115863",
+          "orgn_ntby_tr_pbmn": "-81714",
+          "scrt_ntby_tr_pbmn": "-548988",
+          "ivtr_ntby_tr_pbmn": "268425",
+          "pe_fund_ntby_tr_pbmn": "223320",
+          "bank_ntby_tr_pbmn": "-4319",
+          "insu_ntby_tr_pbmn": "65041",
+          "mrbn_ntby_tr_pbmn": "-144",
+          "fund_ntby_tr_pbmn": "-85049",
+          "etc_ntby_tr_pbmn": "547773",
+          "etc_orgt_ntby_tr_pbmn": "0",
+          "etc_corp_ntby_tr_pbmn": "547773"
+        },
+        {
+          "stck_bsop_date": "20261020",
+          "bstp_nmix_prpr": "5552.74",
+          "bstp_nmix_prdy_vrss": "-215.27",
+          "prdy_vrss_sign": "5",
+          "bstp_nmix_prdy_ctrt": "-3.73",
+          "bstp_nmix_oprc": "5733.57",
+          "bstp_nmix_hgpr": "5733.57",
+          "bstp_nmix_lwpr": "5493.24",
+          "stck_prdy_clpr": "5768.01",
+          "frgn_ntby_qty": "-12873",
+          "frgn_reg_ntby_qty": "-12819",
+          "frgn_nreg_ntby_qty": "-53",
+          "prsn_ntby_qty": "14164",
+          "orgn_ntby_qty": "-2405",
+          "scrt_ntby_qty": "-595",
+          "ivtr_ntby_qty": "-1022",
+          "pe_fund_ntby_vol": "-1325",
+          "bank_ntby_qty": "-31",
+          "insu_ntby_qty": "388",
+          "mrbn_ntby_qty": "19",
+          "fund_ntby_qty": "162",
+          "etc_ntby_qty": "1113",
+          "etc_orgt_ntby_vol": "0",
+          "etc_corp_ntby_vol": "1113",
+          "frgn_ntby_tr_pbmn": "-522068",
+          "frgn_reg_ntby_pbmn": "-525584",
+          "frgn_nreg_ntby_pbmn": "3517",
+          "prsn_ntby_tr_pbmn": "847539",
+          "orgn_ntby_tr_pbmn": "-956500",
+          "scrt_ntby_tr_pbmn": "-279884",
+          "ivtr_ntby_tr_pbmn": "-250998",
+          "pe_fund_ntby_tr_pbmn": "-419595",
+          "bank_ntby_tr_pbmn": "-6314",
+          "insu_ntby_tr_pbmn": "59323",
+          "mrbn_ntby_tr_pbmn": "-3763",
+          "fund_ntby_tr_pbmn": "-55269",
+          "etc_ntby_tr_pbmn": "631028",
+          "etc_orgt_ntby_tr_pbmn": "0",
+          "etc_corp_ntby_tr_pbmn": "631028"
+        },
+        {
+          "stck_bsop_date": "20261019",
+          "bstp_nmix_prpr": "5768.01",
+          "bstp_nmix_prdy_vrss": "99.96",
+          "prdy_vrss_sign": "2",
+          "bstp_nmix_prdy_ctrt": "1.76",
+          "bstp_nmix_oprc": "5488.41",
+          "bstp_nmix_hgpr": "5768.01",
+          "bstp_nmix_lwpr": "5488.41",
+          "stck_prdy_clpr": "5668.05",
+          "frgn_ntby_qty": "2337",
+          "frgn_reg_ntby_qty": "2397",
+          "frgn_nreg_ntby_qty": "-60",
+          "prsn_ntby_qty": "-13782",
+          "orgn_ntby_qty": "16224",
+          "scrt_ntby_qty": "10958",
+          "ivtr_ntby_qty": "897",
+          "pe_fund_ntby_vol": "651",
+          "bank_ntby_qty": "4",
+          "insu_ntby_qty": "303",
+          "mrbn_ntby_qty": "82",
+          "fund_ntby_qty": "3327",
+          "etc_ntby_qty": "-4778",
+          "etc_orgt_ntby_vol": "0",
+          "etc_corp_ntby_vol": "-4778",
+          "frgn_ntby_tr_pbmn": "94733",
+          "frgn_reg_ntby_pbmn": "96186",
+          "frgn_nreg_ntby_pbmn": "-1453",
+          "prsn_ntby_tr_pbmn": "-1239330",
+          "orgn_ntby_tr_pbmn": "1037846",
+          "scrt_ntby_tr_pbmn": "601470",
+          "ivtr_ntby_tr_pbmn": "167385",
+          "pe_fund_ntby_tr_pbmn": "-5821",
+          "bank_ntby_tr_pbmn": "1389",
+          "insu_ntby_tr_pbmn": "57259",
+          "mrbn_ntby_tr_pbmn": "1032",
+          "fund_ntby_tr_pbmn": "215130",
+          "etc_ntby_tr_pbmn": "106752",
+          "etc_orgt_ntby_tr_pbmn": "0",
+          "etc_corp_ntby_tr_pbmn": "106752"
+        }
+      ],
+      "endpoint": "inquire-investor-daily-by-market",
+      "requested_day": "20261021",
+      "status": "unit_scope_pending"
+    },
+    "KOSDAQ": {
+      "output": [
+        {
+          "stck_bsop_date": "20261021",
+          "bstp_nmix_prpr": "792.76",
+          "bstp_nmix_prdy_vrss": "10.79",
+          "prdy_vrss_sign": "2",
+          "bstp_nmix_prdy_ctrt": "1.38",
+          "bstp_nmix_oprc": "793.40",
+          "bstp_nmix_hgpr": "803.68",
+          "bstp_nmix_lwpr": "785.53",
+          "stck_prdy_clpr": "781.97",
+          "frgn_ntby_qty": "-11000",
+          "frgn_reg_ntby_qty": "-11121",
+          "frgn_nreg_ntby_qty": "121",
+          "prsn_ntby_qty": "10694",
+          "orgn_ntby_qty": "1964",
+          "scrt_ntby_qty": "-52",
+          "ivtr_ntby_qty": "1139",
+          "pe_fund_ntby_vol": "201",
+          "bank_ntby_qty": "-71",
+          "insu_ntby_qty": "149",
+          "mrbn_ntby_qty": "-184",
+          "fund_ntby_qty": "782",
+          "etc_ntby_qty": "-1659",
+          "etc_orgt_ntby_vol": "0",
+          "etc_corp_ntby_vol": "-1659",
+          "frgn_ntby_tr_pbmn": "-175640",
+          "frgn_reg_ntby_pbmn": "-175482",
+          "frgn_nreg_ntby_pbmn": "-157",
+          "prsn_ntby_tr_pbmn": "55334",
+          "orgn_ntby_tr_pbmn": "105533",
+          "scrt_ntby_tr_pbmn": "1823",
+          "ivtr_ntby_tr_pbmn": "48085",
+          "pe_fund_ntby_tr_pbmn": "26942",
+          "bank_ntby_tr_pbmn": "-1341",
+          "insu_ntby_tr_pbmn": "7431",
+          "mrbn_ntby_tr_pbmn": "-2156",
+          "fund_ntby_tr_pbmn": "24750",
+          "etc_ntby_tr_pbmn": "14772",
+          "etc_orgt_ntby_tr_pbmn": "0",
+          "etc_corp_ntby_tr_pbmn": "14772"
+        },
+        {
+          "stck_bsop_date": "20261020",
+          "bstp_nmix_prpr": "781.97",
+          "bstp_nmix_prdy_vrss": "-26.92",
+          "prdy_vrss_sign": "5",
+          "bstp_nmix_prdy_ctrt": "-3.33",
+          "bstp_nmix_oprc": "805.37",
+          "bstp_nmix_hgpr": "807.22",
+          "bstp_nmix_lwpr": "773.32",
+          "stck_prdy_clpr": "808.89",
+          "frgn_ntby_qty": "-13502",
+          "frgn_reg_ntby_qty": "-13537",
+          "frgn_nreg_ntby_qty": "35",
+          "prsn_ntby_qty": "13243",
+          "orgn_ntby_qty": "-215",
+          "scrt_ntby_qty": "572",
+          "ivtr_ntby_qty": "-727",
+          "pe_fund_ntby_vol": "-9",
+          "bank_ntby_qty": "-38",
+          "insu_ntby_qty": "120",
+          "mrbn_ntby_qty": "-101",
+          "fund_ntby_qty": "-32",
+          "etc_ntby_qty": "474",
+          "etc_orgt_ntby_vol": "0",
+          "etc_corp_ntby_vol": "474",
+          "frgn_ntby_tr_pbmn": "-177162",
+          "frgn_reg_ntby_pbmn": "-179475",
+          "frgn_nreg_ntby_pbmn": "2314",
+          "prsn_ntby_tr_pbmn": "277806",
+          "orgn_ntby_tr_pbmn": "-101199",
+          "scrt_ntby_tr_pbmn": "-26439",
+          "ivtr_ntby_tr_pbmn": "-69984",
+          "pe_fund_ntby_tr_pbmn": "9143",
+          "bank_ntby_tr_pbmn": "-1986",
+          "insu_ntby_tr_pbmn": "3917",
+          "mrbn_ntby_tr_pbmn": "-5175",
+          "fund_ntby_tr_pbmn": "-10676",
+          "etc_ntby_tr_pbmn": "554",
+          "etc_orgt_ntby_tr_pbmn": "0",
+          "etc_corp_ntby_tr_pbmn": "554"
+        },
+        {
+          "stck_bsop_date": "20261019",
+          "bstp_nmix_prpr": "808.89",
+          "bstp_nmix_prdy_vrss": "14.11",
+          "prdy_vrss_sign": "2",
+          "bstp_nmix_prdy_ctrt": "1.78",
+          "bstp_nmix_oprc": "773.06",
+          "bstp_nmix_hgpr": "808.92",
+          "bstp_nmix_lwpr": "773.06",
+          "stck_prdy_clpr": "794.78",
+          "frgn_ntby_qty": "1118",
+          "frgn_reg_ntby_qty": "1206",
+          "frgn_nreg_ntby_qty": "-88",
+          "prsn_ntby_qty": "-3961",
+          "orgn_ntby_qty": "2014",
+          "scrt_ntby_qty": "1808",
+          "ivtr_ntby_qty": "632",
+          "pe_fund_ntby_vol": "-351",
+          "bank_ntby_qty": "-5",
+          "insu_ntby_qty": "23",
+          "mrbn_ntby_qty": "-56",
+          "fund_ntby_qty": "-36",
+          "etc_ntby_qty": "829",
+          "etc_orgt_ntby_vol": "0",
+          "etc_corp_ntby_vol": "829",
+          "frgn_ntby_tr_pbmn": "-161816",
+          "frgn_reg_ntby_pbmn": "-159774",
+          "frgn_nreg_ntby_pbmn": "-2041",
+          "prsn_ntby_tr_pbmn": "78297",
+          "orgn_ntby_tr_pbmn": "68606",
+          "scrt_ntby_tr_pbmn": "72415",
+          "ivtr_ntby_tr_pbmn": "45619",
+          "pe_fund_ntby_tr_pbmn": "-1252",
+          "bank_ntby_tr_pbmn": "147",
+          "insu_ntby_tr_pbmn": "-115",
+          "mrbn_ntby_tr_pbmn": "-1412",
+          "fund_ntby_tr_pbmn": "-46797",
+          "etc_ntby_tr_pbmn": "14913",
+          "etc_orgt_ntby_tr_pbmn": "0",
+          "etc_corp_ntby_tr_pbmn": "14913"
+        }
+      ],
+      "endpoint": "inquire-investor-daily-by-market",
+      "requested_day": "20261021",
+      "status": "unit_scope_pending"
+    }
+  },
+  "kis_metrics": [
+    {
+      "http": 200,
+      "code": "",
+      "seconds": 0.732,
+      "kind": "authentication",
+      "attempt": 1,
+      "endpoint": "/oauth2/tokenP",
+      "symbol": null,
+      "started_at_unix": 1792630141.2693756
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.6512,
+      "kind": "market",
+      "attempt": 1,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+      "symbol": "0001",
+      "started_at_unix": 1792630142.3195312
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 0.5918,
+      "kind": "market",
+      "attempt": 1,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice",
+      "symbol": "1001",
+      "started_at_unix": 1792630143.3696601
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 4.2033,
+      "kind": "market",
+      "attempt": 1,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market",
+      "symbol": "0001",
+      "started_at_unix": 1792630144.419779
+    },
+    {
+      "http": 200,
+      "code": "MCA00000",
+      "seconds": 3.8618,
+      "kind": "market",
+      "attempt": 1,
+      "endpoint": "/uapi/domestic-stock/v1/quotations/inquire-investor-daily-by-market",
+      "symbol": "1001",
+      "started_at_unix": 1792630148.6233132
+    }
+  ]
+}
