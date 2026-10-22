@@ -1,0 +1,69 @@
+name: Bounded decision price evidence
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [reference, pilot, history-references]
+        default: reference
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+  queue: max
+jobs:
+  collect:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Reuse prior immutable evidence and persistent physical budget
+        run: |
+          if git ls-remote --exit-code origin refs/heads/evidence/decision-price-source; then
+            git fetch origin evidence/decision-price-source
+            git restore --source=FETCH_HEAD -- auxiliary-prices
+          fi
+      - name: Reject overlapping queued operating work
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          runs=json.loads(subprocess.check_output(['gh','run','list','--limit','100','--json','databaseId,name,status']))
+          names={'Daily validated dashboard refresh','Independent liquidity evidence recovery','Incremental corporate disclosures and theme review'}
+          if any(r['name'] in names and r['status'] in ('queued','in_progress','waiting','pending','requested') for r in runs):raise SystemExit('Operating work has priority; retry manually later')
+          PY
+      - name: Collect a bounded auxiliary batch
+        id: collect
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          sleep 65
+          python scripts/collect_decision_prices.py "$MODE"
+      - name: Preserve evidence and failures outside main
+        if: always()
+        run: |
+          if [ ! -d auxiliary-prices ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add auxiliary-prices
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Preserve bounded auxiliary price evidence'
+          # The evidence branch is append-only; merge its history, never force.
+          if git ls-remote --exit-code origin refs/heads/evidence/decision-price-source; then
+            git fetch origin evidence/decision-price-source
+            git merge -s ours --no-edit FETCH_HEAD
+          fi
+          git push origin HEAD:refs/heads/evidence/decision-price-source
