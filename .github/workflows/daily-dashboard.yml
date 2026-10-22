@@ -68,9 +68,7 @@ jobs:
           elif git ls-remote --exit-code --heads origin "data/daily-$DAY" >/dev/null 2>&1; then
             git fetch origin "data/daily-$DAY"
             git show FETCH_HEAD:daily-results/bundle.json.gz > daily-results/bundle.json.gz
-            if git cat-file -e FETCH_HEAD:daily-results/successes.jsonl 2>/dev/null; then
-              git show FETCH_HEAD:daily-results/successes.jsonl > daily-results/successes.jsonl
-            fi
+            python scripts/checkpoint_storage.py --ref FETCH_HEAD
           fi
       - name: Collect only missing stocks for this trading date
         if: inputs.mode != 'verify_saved' && steps.target.outputs.already_published != 'true'

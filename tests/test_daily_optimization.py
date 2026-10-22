@@ -192,4 +192,4 @@ def test_checkpoint_git_publish_keeps_running_checkout_and_resumes(tmp_path):
  second=persist(repo,'20261016');assert second['status']=='saved' and second['commit']!=first['commit']
  assert run('rev-parse',second['commit']+'^',cwd=repo)==first['commit']
  assert run('rev-parse','HEAD',cwd=repo)==head and (repo/'unrelated.txt').read_text()=='preserve'
- assert set(run('ls-tree','--name-only',second['commit']+':daily-results',cwd=repo).splitlines())=={'bundle.json.gz','successes.jsonl'}
+ assert set(run('ls-tree','--name-only',second['commit']+':daily-results',cwd=repo).splitlines())=={'bundle.json.gz','successes.jsonl.gz','successes.manifest.json'}
