@@ -1,0 +1,30 @@
+........................................................................ [ 14%]
+........................................................................ [ 28%]
+...........F............................................................ [ 43%]
+........................................................................ [ 57%]
+........................................................................ [ 72%]
+........................................................................ [ 86%]
+...................................................................      [100%]
+=================================== FAILURES ===================================
+_____________________ test_shared_operations_lock_required _____________________
+
+    def test_shared_operations_lock_required():
+        run = {'head_branch': c.BRANCH, 'status': 'in_progress', 'event': 'workflow_dispatch'}
+        good = 'concurrency:\n  group: kis-validation-auth\n  cancel-in-progress: false\n'
+>       c.validate_shared_runner(run, good)
+
+research/risk-performance/tests/test_krx40.py:215: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = {'head_branch': 'research/full-market-transition-20261019', 'status': 'in_progress', 'event': 'workflow_dispatch'}
+workflow = 'concurrency:\n  group: kis-validation-auth\n  cancel-in-progress: false\n'
+
+    def validate_shared_runner(run, workflow):
+        """Require the existing shared Actions lock, not a local process-only lock."""
+>       import yaml
+E       ModuleNotFoundError: No module named 'yaml'
+
+research/risk-performance/krx40_collect.py:222: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED research/risk-performance/tests/test_krx40.py::test_shared_operations_lock_required
+1 failed, 498 passed in 270.44s (0:04:30)
