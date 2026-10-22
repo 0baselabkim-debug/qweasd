@@ -21,7 +21,7 @@
     "aggregate_validation": 4.0115620730002775
   },
   "candidate_total_seconds": 21.994012721000217,
-  "sha256": "7f581e3e456540477220687c5d1c2a6b76f3c1ce12b907dbdcd4cb7afe2d4423",
+  "sha256": "827a7cbaf02fc938e914f9955729e6877fda4b931c7e3e325876031161042b8b",
   "recovery_revisions": [
     {
       "previous_sha256": "c88b68bbeab6512caca5c9f0ea01fea0535b216e6a0bf4055741b9899ae96948",
@@ -183,6 +183,60 @@
         },
         "raw_tables_preserved": true,
         "observed_at": "2026-10-22T02:45:37.513134+00:00"
+      }
+    },
+    {
+      "previous_sha256": "7f581e3e456540477220687c5d1c2a6b76f3c1ce12b907dbdcd4cb7afe2d4423",
+      "sha256": "827a7cbaf02fc938e914f9955729e6877fda4b931c7e3e325876031161042b8b",
+      "audit": {
+        "baseline_sha256": "7f581e3e456540477220687c5d1c2a6b76f3c1ce12b907dbdcd4cb7afe2d4423",
+        "sha256": "827a7cbaf02fc938e914f9955729e6877fda4b931c7e3e325876031161042b8b",
+        "added": [
+          {
+            "asof": "2026-10-14",
+            "symbol": "003460",
+            "bundle_sha256": "e4f71d7c3f4a937556c01e7f4d7aa59bdfadb79d34d9e2e5673c0b0173775b34"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "003470",
+            "bundle_sha256": "588b392a2f457625f1c971e0ac1d5ac84e6b7e87da2e8ce6f97eaba63b685641"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "003480",
+            "bundle_sha256": "2cad97b71d84cb4111dbb625c0e6bf809df89ff8e533c70148cad431a7c6dac1"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "003490",
+            "bundle_sha256": "02435f2b10a9279855129d9056ba53364404b75f11350c2f1a6514499198c434"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "003520",
+            "bundle_sha256": "685400a93598e20e7800c43398d13a8d22d81108e0c3c5988d7600880b11a4d2"
+          },
+          {
+            "asof": "2026-10-14",
+            "symbol": "003530",
+            "bundle_sha256": "edbc2e944f941551a9bd6e2758c9ee8d602d9f3aad9457dc4f27889cab90f777"
+          }
+        ],
+        "before": {
+          "stocks": 2430,
+          "stock_activity": 553,
+          "sectors": 50,
+          "sector_activity": 10
+        },
+        "after": {
+          "stocks": 2430,
+          "stock_activity": 559,
+          "sectors": 50,
+          "sector_activity": 10
+        },
+        "raw_tables_preserved": true,
+        "observed_at": "2026-10-22T05:43:39.281959+00:00"
       }
     }
   ]
