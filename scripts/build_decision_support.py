@@ -23,7 +23,7 @@ from screener.publication import coherent
 from screener.decision_support.evidence import (encoded,sha,read,integer,date,timestamp,
     institution,official_rows,accept_chart,KIS_FIELDS,bar)
 from screener.decision_support.indicators import flow_metrics,technical,observations,metric
-from screener.decision_support.history import load_objects, candidate
+from screener.decision_support.history import load_objects, candidate, continuation
 from scripts.briefing_raw import reference
 from scripts.briefing_schema import sector_id
 
@@ -246,6 +246,8 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
         # A newly qualified whole vintage can replace the analytical input,
         # never the original operating DB or its financial/flow history.
         history=candidate(aux_objects,code,market,asof,listing,refs,db_prices,days,benchmarks[market])
+        if history is None:
+            history=continuation(aux_objects,code,market,asof,listing,refs,db_prices,days,benchmarks[market],r,current[0]['sha256'])
         price_days=days;price_benchmarks=benchmarks[market];history_selection=None
         if history and history.get('error'):
             errors.append({'symbol':code,'asof':asof,'reason':history['error']})
@@ -253,6 +255,7 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
             accepted=history['accepted'];series=history['series'];price_days=history['days'];price_benchmarks=history['benchmarks']
             observed=history['observed_at']
             history_selection={'source_ids':history['source_ids'],'operating_version_comparison':history['operating_version_comparison'],
+                'validated_continuation':history.get('link_proof'),
                 'basis':'both KIS bases + official KRX exact six fields; operating originals preserved',
                 'calendar':'preserved official market index sessions, exact operating calendar overlap'}
             obs_rows[:]=[x for x in obs_rows if x['symbol']!=code]

@@ -115,3 +115,24 @@ def test_unverified_event_blocks_crossing_not_verified_post_event_suffix():
     values=technical(result['days'],result['accepted'])
     assert values['sma_20']['value']==105
     assert values['sma_60']['value'] is None
+
+
+@pytest.mark.parametrize('defect',[None,'overlap','new_reference','short_overlap','new_adjustment'])
+def test_incremental_history_links_only_proven_whole_candles(defect):
+    import copy,datetime as dt
+    from screener.decision_support.history import continuation
+    days,objects,official,db=history_fixture();asof=days[-1]
+    newday=(dt.date.fromisoformat(asof)+dt.timedelta(days=1)).isoformat()
+    old=objects[f'kis:{asof}:000720:0:0'][0][1]['response']['output2']
+    rows=copy.deepcopy(old[-30:]);new=copy.deepcopy(rows[-1]);new['stck_bsop_date']=newday.replace('-','');rows.append(new)
+    official['000720',newday,'KOSPI']=copy.deepcopy(official['000720',asof,'KOSPI'])
+    if defect=='overlap':rows[-2]['stck_clpr']=106
+    if defect=='new_reference':official['000720',newday,'KOSPI'][0]['value']['close']=106
+    if defect=='short_overlap':rows=rows[-10:]
+    if defect=='new_adjustment':rows[-1]['flng_cls_code']='05'
+    r=continuation(objects,'000720','KOSPI',newday,'2020-01-01',official,db,days[-30:]+[newday],{},
+        {'adjusted_prices':rows,'observed_at':'2026-01-02T00:00:00+00:00'},'checkpoint')
+    if defect:assert r.get('error') or newday not in r['accepted']
+    else:
+        assert len(r['accepted'])==122 and r['link_proof']['overlap_days']==30
+        assert db['000720',asof][0]==104

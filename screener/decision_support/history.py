@@ -96,3 +96,51 @@ def candidate(objects,code,market,asof,listing,official,db_prices,operating_days
                 'source_ids':aid+oid+iid,'operating_version_comparison':comparison,'error':None}
     except (ValueError,KeyError,TypeError) as e:
         return {'error':str(e) if isinstance(e,ValueError) else 'malformed_auxiliary_history'}
+
+
+def continuation(objects,code,market,asof,listing,official,db_prices,days,benchmarks,record,checkpoint_id):
+    """Extend saved qualified history only across an exact 20+ session overlap.
+
+No old bar is replaced. Every overlapping whole candle must agree, no pending
+adjustment may cross the link, and each new candle needs official KRX evidence.
+An unavailable official day remains a gap and blocks affected indicators.
+"""
+    prior=sorted({key.split(':')[1] for key in objects if key.startswith('kis:') and
+                  key.split(':')[2]==code and key.split(':')[1]<asof},reverse=True)
+    if not prior:return None
+    base_asof=prior[0]
+    base=candidate(objects,code,market,base_asof,listing,official,db_prices,
+                   [d for d in days if d<=base_asof],benchmarks)
+    if not base or base.get('error'):return base
+    try:
+        fresh={}
+        for r in record['adjusted_prices']:
+            d=date(r['stck_bsop_date'])
+            if d in fresh or d>asof:raise ValueError('continuation_duplicate_or_future')
+            fresh[d]=r
+        observed=record.get('analysis_source',{}).get('chart_observed_at',record['observed_at'])
+        timestamp(observed)
+        old={r['trade_date']:r for r in base['series']}
+        overlap=sorted(set(fresh)&set(old))
+        if len(overlap)<20 or overlap[-1]!=base_asof:raise ValueError('continuation_overlap_short')
+        for d in overlap:
+            if adjustment_pending(fresh[d]) or any(bar(fresh[d],KIS_FIELDS)[k]!=old[d][k] for k in KIS_FIELDS):
+                raise ValueError('continuation_overlap_or_adjustment_conflict')
+        extension=[d for d in days if d>base_asof]
+        if not extension or extension[-1]!=asof or any(d not in fresh for d in extension):raise ValueError('continuation_session_gap')
+        for d in extension:
+            raw=fresh[d];q=accept_chart(raw,code,d,market,observed,official,listing)
+            if q['accepted']:base['accepted'][d]=q['accepted']
+            base['series'].append({'symbol':code,'trade_date':d,'market':market,'exchange':'KRX',
+                'basis':'KIS_adjusted_equals_official_KRX_original','observed_at':observed,'source_id':checkpoint_id,
+                'raw_row_sha256':sha(encoded(raw)),'validation_status':q['status'],'provider_finality':'UNVERIFIED',
+                'reasons':q['reasons'],'official_source_ids':q['official_source_ids'],
+                'adjustment_fields':{k:raw.get(k) for k in ('flng_cls_code','prtt_rate','mod_yn','revl_issu_reas')},
+                **(q['value'] or {k:None for k in KIS_FIELDS})})
+        base['days']+=extension;base['observed_at']=observed;base['source_ids'].append(checkpoint_id)
+        base['benchmarks'].update({d:benchmarks[d] for d in extension if d in benchmarks})
+        base['link_proof']={'base_asof':base_asof,'overlap_days':len(overlap),'whole_six_field_overlap_equal':True,
+                            'new_days':extension,'no_original_overwrite':True}
+        return base
+    except (ValueError,KeyError,TypeError) as e:
+        return {'error':str(e) if isinstance(e,ValueError) else 'malformed_continuation'}
