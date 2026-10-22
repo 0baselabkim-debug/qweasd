@@ -136,3 +136,14 @@ def test_incremental_history_links_only_proven_whole_candles(defect):
     else:
         assert len(r['accepted'])==122 and r['link_proof']['overlap_days']==30
         assert db['000720',asof][0]==104
+
+
+def test_official_mod_flag_is_no_trade_not_a_corporate_adjustment():
+    from screener.decision_support.evidence import accept_chart
+    days,objects,official,db=history_fixture();asof=days[-1]
+    raw=objects[f'kis:{asof}:000720:0:0'][0][1]['response']['output2'][-1]
+    raw['mod_yn']='Y'
+    r=accept_chart(raw,'000720',asof,'KOSPI','2026-01-01T00:00:00+00:00',official,'2020-01-01')
+    assert r['accepted'] is None
+    assert 'no_trade_or_indicative_candle_unverified' in r['reasons']
+    assert 'corporate_action_adjustment_unverified' not in r['reasons']

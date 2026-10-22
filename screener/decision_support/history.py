@@ -5,7 +5,7 @@ An auxiliary bar needs both KIS bases and exact official KRX six-field evidence.
 """
 import collections
 import datetime as dt
-from .evidence import read,encoded,sha,date,timestamp,bar,KIS_FIELDS,accept_chart,adjustment_pending
+from .evidence import read,encoded,sha,date,timestamp,bar,KIS_FIELDS,accept_chart,adjustment_pending,corporate_adjustment_pending
 
 
 def load_objects(directory,inventory):
@@ -62,7 +62,7 @@ def candidate(objects,code,market,asof,listing,official,db_prices,operating_days
         # can still qualify independently; a past event cannot taint every
         # later candle forever. Indicators require a fully qualified suffix.
         barriers=[d for d in days if d in adjusted and d in original and
-                  (adjustment_pending(adjusted[d]) or adjustment_pending(original[d]))]
+                  (corporate_adjustment_pending(adjusted[d]) or corporate_adjustment_pending(original[d]))]
         barrier=max(barriers) if barriers else None
         accepted={};series=[];benchmarks={};comparison=[]
         for d in days:
@@ -78,6 +78,7 @@ def candidate(objects,code,market,asof,listing,official,db_prices,operating_days
             try:
                 unadjusted=bar(original[d],KIS_FIELDS)
                 if unadjusted!=q['value']:raise ValueError('adjusted_original_six_field_conflict')
+                if original[d].get('mod_yn')!='N':raise ValueError('original_no_trade_or_indicative_candle')
             except (ValueError,KeyError) as e:
                 q['reasons'].append(str(e) if isinstance(e,ValueError) else 'original_price_missing')
                 q['accepted']=None;q['status']='hold'

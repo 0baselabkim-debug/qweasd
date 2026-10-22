@@ -36,10 +36,14 @@ def bar(raw, fields):
     return out
 
 
-def adjustment_pending(row):
-    if row.get('flng_cls_code') not in ('00',) or row.get('mod_yn')!='N' or row.get('revl_issu_reas') not in ('',None):return True
+def corporate_adjustment_pending(row):
+    if row.get('flng_cls_code') not in ('00',) or row.get('revl_issu_reas') not in ('',None):return True
     try:return Decimal(row['prtt_rate'])!=0
     except (KeyError,ValueError,ArithmeticError):return True
+
+
+def adjustment_pending(row):
+    return row.get('mod_yn')!='N' or corporate_adjustment_pending(row)
 
 
 def institution(raw, amount_multiplier=None):
@@ -96,7 +100,8 @@ def accept_chart(raw, code, day, market, observed, official, listing_date, block
         timestamp(observed)
         if date(raw['stck_bsop_date'])!=day or day<listing_date:raise ValueError('chart_date_or_listing_mismatch')
     except (ValueError,KeyError) as e:reasons.append(str(e) if isinstance(e,ValueError) else 'missing_chart_field')
-    if adjustment_pending(raw):reasons.append('corporate_action_adjustment_unverified')
+    if corporate_adjustment_pending(raw):reasons.append('corporate_action_adjustment_unverified')
+    if raw.get('mod_yn')!='N':reasons.append('no_trade_or_indicative_candle_unverified')
     if blocked:reasons.append('historical_adjustment_basis_unverified')
     refs=official.get((code,day,market),[])
     variants={encoded(r['value']) for r in refs}
