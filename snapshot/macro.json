@@ -477,7 +477,7 @@
       "change": -1.7999999999999794,
       "change_unit": "bp",
       "change_percent": null,
-      "observed_at": "2026-10-21T13:46:28.434135+00:00",
+      "observed_at": "2026-10-22T00:48:59.173775+00:00",
       "finality": "공급원 공표 일별값 · 추후 수정 가능"
     },
     "usdkrw": {
@@ -674,7 +674,7 @@
       "change": -4.099999999999909,
       "change_unit": "원",
       "change_percent": -0.30778470084827786,
-      "observed_at": "2026-10-21T13:46:29.292103+00:00",
+      "observed_at": "2026-10-22T00:49:00.172545+00:00",
       "finality": "공급원 공표 일별값 · 추후 수정 가능"
     },
     "vix": {
@@ -1663,7 +1663,7 @@
       "change": 182.92000000000007,
       "change_unit": "포인트",
       "change_percent": 3.294229515518466,
-      "observed_at": "2026-10-21T13:46:35.309980+00:00",
+      "observed_at": "2026-10-22T00:49:02.971177+00:00",
       "finality": "공급원 공표 일별값 · 추후 수정 가능"
     },
     "kosdaq": {
@@ -1786,17 +1786,21 @@
       "change": 10.789999999999964,
       "change_unit": "포인트",
       "change_percent": 1.379848331777429,
-      "observed_at": "2026-10-21T13:46:36.347099+00:00",
+      "observed_at": "2026-10-22T00:49:03.961764+00:00",
       "finality": "공급원 공표 일별값 · 추후 수정 가능"
     }
   },
   "investors": {},
   "attempts": {
     "us2y": {
-      "status": "success"
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
     },
     "us10y": {
-      "status": "success"
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
     },
     "kr3y": {
       "status": "success"
@@ -1805,22 +1809,34 @@
       "status": "success"
     },
     "vix": {
-      "status": "success"
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
     },
     "wti": {
-      "status": "success"
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
     },
     "sp500": {
-      "status": "success"
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
     },
     "nasdaq": {
-      "status": "success"
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
     },
     "sox": {
-      "status": "success"
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
     },
     "dow": {
-      "status": "success"
+      "status": "failed",
+      "error_type": "JSONDecodeError",
+      "http": null
     },
     "kospi": {
       "status": "success"
@@ -11240,5 +11256,5 @@
       }
     }
   ],
-  "last_attempt_at": "2026-10-21T13:46:26.229193+00:00"
+  "last_attempt_at": "2026-10-22T00:48:57.066261+00:00"
 }
