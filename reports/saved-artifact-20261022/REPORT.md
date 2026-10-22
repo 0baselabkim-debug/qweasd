@@ -73,6 +73,10 @@ repository-level `/actions/runs`를 requested/queued/waiting/pending/in_progress
 - 39772674704: 유동성 복구, pending.
 - 39770486247, 39778225150: 보조 가격 증거, pending.
 
+21:31 KST 최종 확인에서는 정규 재시도 39778580042도 pending으로 추가됐다.
+39760291133은 여전히 in_progress였다. 공개 manifest·v3·decision-support URL은
+HTTP 200이지만 모두 10/21이며 같은 원천 해시였다. main은 여전히 34cccb65다.
+
 격리 검증 실행은 처음에 기존 워크플로 이름을 사용해 후속 이벤트 1건이 만들어졌다.
 그 후속 가격 workflow는 `workflow_run.head_branch == main` 조건 때문에 이 복구
 브랜치를 실제 수집 대상으로 허용하지 않는다. 향후 반복 시 이벤트 자체도 만들지
