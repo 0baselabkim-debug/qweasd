@@ -1,0 +1,705 @@
+{
+  "reference_dates": [
+    "20261014",
+    "20261015"
+  ],
+  "reference_files": [
+    {
+      "path": "technical/reference/2026-10-15/KOSDAQ.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-15T23:04:59.382357+00:00",
+      "sha256": "9494713f7f48f441937b7ee8c0b138410d60d5027b221ef8d187eb34e8cce05c"
+    },
+    {
+      "path": "technical/reference/2026-10-15/KOSPI.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-15T23:04:56.692018+00:00",
+      "sha256": "b1c78536e7a19ce53a7e935504160368476f09b619d85c532cd47b32823b0136"
+    },
+    {
+      "path": "technical/reference/KOSDAQ.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-15T10:56:37.775215+00:00",
+      "sha256": "1abb8855352f569e71bece10b4f0177eaa32f59a91e91613f801f20ae834bd7d"
+    },
+    {
+      "path": "technical/reference/KOSPI.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-15T10:56:34.332560+00:00",
+      "sha256": "715cb61dc6688ed8fc493abd9abd4983d0a0f7615151999b01d910a666003eb0"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/01c3415c7feccfe7e3b726ca506eed4c94b4e6a7cf12652026fe2fba8c6053d4.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:16:51.857258+00:00",
+      "sha256": "011ebfd7c83fba1446cb54a7a3172773a9a34eb1d8933714a5391f7db9e73344"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/0d8abb9c49daa5b947266247894762d4b624c1b4851b4aa54ac818bccf473248.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:34:48.042359+00:00",
+      "sha256": "ed8866df6070da76d597f5fbb9cda6aa8504d624198c9dde41f0a73c3d6fb644"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/3c22b33b60dd0f822533ffdc0d138b83a0173bb6188ecdff98dd9a204ffba587.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:08:42.159556+00:00",
+      "sha256": "953b56ebf144edd84642c274b36af0701e8997541f1bd109f502de67454e7f71"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/3d46f6b5c39c011063fb826d2354a26cfe06ea94c572b647d4692fe3a924109c.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T01:41:53.976955+00:00",
+      "sha256": "69c8115ccfca22dab5f0b77a809ce19c4a064635b6ae481c9de0857a1f53037c"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/515c841b73acf02f30b7cf8db199624e7dad9fb697ec1380812153295076d5bc.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T03:10:57.663674+00:00",
+      "sha256": "56e06f938086b6ca58171c1bdad9bf764fe17a6b09275fd5e65b82ee3ec9a3e1"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/5a5912845c60fd9d464783b2558a636ae6ed5044c73b1290986dbcb400409ddf.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:03:23.677163+00:00",
+      "sha256": "01dc7175f144add7318d5df8fa3426cc82b551545fb267376f7c53c010bb5378"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/5b883ef161662821aab9e6984e4358f9a40e86775803fb8ec1c8b2c2cdad5155.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:11:15.112149+00:00",
+      "sha256": "9609f26bdbda5125c2db5db69cdd5386cbf6260ae2287ce2790915514c3c1d7a"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/7022b5140dfd3a7e14c81b02d8b2af81da0a8fe6263959258d4d37e679bab0cb.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:28:45.103155+00:00",
+      "sha256": "1ea58cc0d1e11c2583ee59f70cda9bc7fc3abfaebcaa4e968ce4232c47737fd3"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/8479e66f3c15d49a631cb1ba38d5723a909e0623e6a42ab5b3dca9a9357febcc.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:24:45.291667+00:00",
+      "sha256": "81f918cdb1a580f42b7bcd656880c46822ceca04796c3d8037a6f10085accd95"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/864336317c14d9d9ab53b9832d0e61b81c8e2d6a955496514d4c50db02d3ff96.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T02:50:49.008289+00:00",
+      "sha256": "5e7c8047a063025d48a27457c2bb401c1712a20b5f6019593361479c4401fbb3"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/88bc6d23b863887c79822f70aca862874ef0ada0caa377fffe711043be39363b.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:29:41.641412+00:00",
+      "sha256": "918a4ce022237b4d822b1ab9963e909836bcca5d08534b32c7247a66a2e90ac6"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/91375b70520909f3092abaa6696fa562b5defbab0e7219206175c25f6b97a291.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T01:47:23.607043+00:00",
+      "sha256": "b10339f86e99dcc061e95fd6d72172c86838b381772e7e765b82e91331d794a0"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/97fe5473092d8e7c34d5f2e8f79e0d30fdb81f2b7ed34723ad91e61a85f076a7.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-15T10:56:37.775215+00:00",
+      "sha256": "1abb8855352f569e71bece10b4f0177eaa32f59a91e91613f801f20ae834bd7d"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/a6886275c04056f2e1feee359ac3846f258e93bcf8fbc511f92ed79b1d8edba6.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:22:44.070721+00:00",
+      "sha256": "97839efbd378bbc96cbf53b9240f607e3a3972fa2fc381bd74ca96490f13461d"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/aafb098966a292acfc153d3b9a4907d200c121cc90c1289cd5e957d684909657.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T03:05:01.529998+00:00",
+      "sha256": "cfda39c88831eeff34bdb91ed27056b4351b4b2bd1672809f98976b9da21c8fc"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/baab0c3037352a59e084fd658afba48dca3ac9748dee35929837a4f2db6b0650.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:15:38.194395+00:00",
+      "sha256": "180b5c8a9679b5a90ca2ddcfc2f509f313b277672fd54b53c0796631c66dce4b"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/dca8f01012fe2499838cc3e8df7210c98e797a64e8193eddc2bef3b196ca4367.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:20:47.108052+00:00",
+      "sha256": "a9b7b287ea01f4cabbadfa03e45a9569487dcc5c8ede49c3150c2f16b7c91336"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSDAQ/f1a0658f4381c7f792738c2a6c0a76ca6fdf340c3f90b3865a5516fc72ce2318.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:48:57.075792+00:00",
+      "sha256": "28d64bbf61df59c35e444aab3c69b8c4346c6d1818e90ce602bd78ef0c9424a8"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/006e5fbd7ed40ec2d8f93faa1d942b1ae7de0afbe11bd52d785c4f39f4eed275.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T01:47:21.703439+00:00",
+      "sha256": "4ae47754be03fa38c0ba48f4f675a8232423f762454287e5d254286af7d1ddf8"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/0230028688aa7025a3dd457815bb8a59b4949f5e431cf9e9c615fb0c0c210aea.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:22:42.288674+00:00",
+      "sha256": "1cc579f257c348065aac7e677a1e261ba89eafa24e777233cdc0d139b41a982d"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/0355608aa4268f88a4916ddfb43abfb2c50468303ea0bbe234cfff610e127d2e.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:20:45.381838+00:00",
+      "sha256": "746f50cb82d8d61b5b372f742a85c189d6aa3a81146ea1ee112eec96c5e2f9d5"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/198a1572871d82af2dcc22bf87e348d6932054cf939c3dd4f690d12a1ded8210.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:08:39.438595+00:00",
+      "sha256": "38c59ad540facf63dfe06fc5bc4a3c73b080d71d0a4b77b3aa06183bbf414b75"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/1c18c71315190afbb83dbcf3db7cf2674cfdec13ce5a648fa145d58e9aa9a75d.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T02:50:46.405535+00:00",
+      "sha256": "7d78b6ca7157d27f5cc450922dfb046987f2c72148733bb427a7d25ac2002982"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/63c217b1b97a462cb17977fe840baeb1203bca42e821f81ccbd4574b81aa603d.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:11:13.630829+00:00",
+      "sha256": "84f39ab5ebb2713d5ba9b31a27b9d3b40040c1beafeb0d4d840371f947e9c7c6"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/713eae36d79b5ce238a942c00f29208e5bb7bdabc06b3855b35217f019889835.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T03:10:54.899097+00:00",
+      "sha256": "1f0ca427248999f21556a9675b5e3cac11dc978424125de02e708158dadcabec"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/7363de50417cd70f8c8c6022874dcf03f489d44d52a3eae9791b847bdd9c851b.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-15T10:56:34.332560+00:00",
+      "sha256": "715cb61dc6688ed8fc493abd9abd4983d0a0f7615151999b01d910a666003eb0"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/73bb4fa0373b6ba29324c15d65a69c29417be3492e9594a85ad1d0188bbfa203.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T03:04:58.623622+00:00",
+      "sha256": "db4ed42a6acbb99e0816a9043f3511ca89798ddc369de9c6908cb325383ee819"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/83f251f47cf52c1e73456784d8c054ee4531bf52a690cd88b156c43329a36bd9.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:28:43.445527+00:00",
+      "sha256": "54b36ebde7e9ee0e842595241e32373eff2f72532398033b239e77716aa884cd"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/9ada2b3a4d67471408c12fc1e67582e1f3ce099db37af24e423577dcf8832ce2.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:48:54.848626+00:00",
+      "sha256": "9d9d76681fb9a6d09579ef2d342d73ef30ca0c19424f487827824e4b24680a39"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/c34262d2928c006600974fe4c5314d5593c9a2dd2d83d4b8d67e2549c04f6bef.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:24:43.445276+00:00",
+      "sha256": "4d3208e9620a5e0f31a748b63db8ed12aa12e88618dc2c1e67e2c727a21518ef"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/c6929c421f738bf7500e0ab5818dd7b788f9697aff817bc9fd5b46895dbcde43.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:29:40.294655+00:00",
+      "sha256": "56064dac6d30e9da106385a1212308f4f12b145e6d25609dae161daefb485352"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/c822b1c7b99ff8c8d5af7b68ef5bdce04685fbe1d89d7d6b476db996f8415f4d.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:15:36.543190+00:00",
+      "sha256": "bfe96133fd939dac75be523460e956a7edf237714b4e21910c2f658b330318d0"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/d085b63c48c673570fea18c6e4baa9a7ce17fcbdceeadbaa93d660ce6e9b07f1.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:03:21.955368+00:00",
+      "sha256": "024735e746a20186df8e7b9e02d52a8d89e608e1d866bdf01a43f80e8195c94a"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/ea5008b9f9e4c9788bbb98fbaa5262b778c9997013966472140a51c3afc729f9.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T05:34:46.598770+00:00",
+      "sha256": "0d4f0b0119cdbf6020792585d8bb6079697635f058393c57f0d24b5b46211d05"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/eb0a88b35a955eadda7feee40d3890e78cdf6dd0ca61089d63fdc17c25b153bd.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T04:16:49.670643+00:00",
+      "sha256": "a5479660768d8768ceb6764349250c4fe451adf03d8943d23957422d9767e992"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-14/KOSPI/f0a4ea66ea458704b677a0146f74f6dd6723dbd1c2efdbd85229c666b605f535.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "observed_at": "2026-10-16T01:41:52.267417+00:00",
+      "sha256": "65ce0dbe35b7cb0878c3c2f9de75d4434f7924fc1ef6ce7db250a52feb98771e"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/0fe9df663d3603bd7235035b24f8b9715651541b0fb1ca5eeeae9650d6c28dc9.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T00:56:39.535670+00:00",
+      "sha256": "7d36af7e4cf73cd1e848ec4b169dce77ba5b89f241631b32d9225b069ea0264f"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/2e489d66c19d8a9f707611c851fa77bb5b845f3a12952f6a49b75eadc85efed3.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:15:46.895790+00:00",
+      "sha256": "61175e0328114623e7538a540dcfbb069b583f63ccdf07a0c6b2dab60d198c4e"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/3170378f9652a59058a176ee43f5e4c08a5046d5a4ad4f23ca1ba4803c68b21a.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:49:05.937101+00:00",
+      "sha256": "63f392f60209bc13d12465d8bcd11afdbcda95f4032d2ce7cd5e5b13a4cbd702"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/3fd64a4776c0f8d61e72fb4d309d51a048955a295d10b81f2498159a78ab65f1.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T01:47:34.113405+00:00",
+      "sha256": "6ba404c730f380282bc9f16f72d9c2eb110e0443ec8c02ec8cf1cbd7833ab062"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/43b8dabba0d39c0f2b0995233438b83dd70e2a5bca86f7c73e9f055e331f049a.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T01:29:32.539072+00:00",
+      "sha256": "b3efdb60d3e42ff9a76395d15f7f543e10628edf0d6520406fa8062752591f83"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/574bf386fcc75c5093fa895593fc306dd604683aa191a4a124bd5b9e99d95a10.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:06:18.433315+00:00",
+      "sha256": "5c38934ecf8dc4483ad5faa37c2d8483f22307b8f8e01554cb4e6bb607690e13"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/615311ddb41b6f68bc2bc0974ab0a0b0af4225bfb47c8ced2d37171368600fef.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:16:59.902366+00:00",
+      "sha256": "50d3e6a9bbdf7f021b7c1804667c1eb181ec4c991a19c794bbb157ff6504d73c"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/8d1a046f74b0c42b11c03cc9e31cec2ecd08d85aafe2ef8f21caf9f2f53c1eca.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:11:26.170856+00:00",
+      "sha256": "b8d481a68876987ece1cf80962aa88482f0c958dd05de0197b34ee9aa67a0cc8"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/9137f717eea005c6c0b6962fa19351471b6c421cd5e3d63021c8ce17509e66ce.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T02:59:42.078661+00:00",
+      "sha256": "a601d943ed2c577e6f06f07780367d767765ab518f84648241cede53bdfab6cc"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/96a664560c8057e5bb667cdc951be0e340ee8e6f8cec151a0780905f7694cf79.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:28:54.133116+00:00",
+      "sha256": "69aef490aae88e8ef63c844dec3b283bfeb553b4b8c54c722fb2e83b9e77fe44"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/aa1cbf1ef00c926e0ee4fc526415835451175370a5c68e36904b6fc26eb1a562.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T02:55:19.666730+00:00",
+      "sha256": "160edc136c9159e41a15de148088918c4eb8c658611a8866519a80e5c598a047"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/b2aa4621a01e17518777f1b923231c56df3eacc25913e1bdf452d8770f798673.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:24:54.745224+00:00",
+      "sha256": "c9e6bc0809ce99791f05243f2b1cf5fd9e3b13c6a21f14cca56b274e39ed44df"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/b8d3a21ea8ba8d6d0ffad12bcfddd5c316238b39ff5c4668cb769efc621b714d.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T01:42:11.905516+00:00",
+      "sha256": "6d96c3d0f99f88575f3d9118f428518a39953d578fdcf34e6a3c4dcf2e250694"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/cd1b3bf3874f9d2d8f0e3c718a3a75c62efe6587b5007004ded3c19ca2c1036e.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T02:51:00.108103+00:00",
+      "sha256": "6d3fc55ddfad5c389efcec4ff44d8f4edcc6bfcc49ceb956b7a5ace522fdd18c"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/d67cbe0471c392d54ebbb0f37d58b51e76cc4d6db031f56c6c81d0bb4ab4fbde.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:20:32.586276+00:00",
+      "sha256": "92f1c581426f168ab86e1c9018113ba91952fa984b3e6985040fc346db6d0c07"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/da056ea5ab52326547bb64c217f5fb9e5f6f806ad09e8d48bf0bb1823f4459ff.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:03:34.995340+00:00",
+      "sha256": "6df2a385955add126915a8334e03b352b97ac0a3014751e51dc0306646d4ec1c"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/f1c8f6cc0466c4b373bf8032673605883083a814fa2695a25b0b4634f9e94f76.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:08:51.190154+00:00",
+      "sha256": "233a644164e61d733065a37171b8abd9ea64b5c62079d5d13892bfe3f433789f"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/f29b07e76a2692a5d25203d5612ba3d7a4f9e87fde3d602806479b81329beb24.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-15T23:04:59.382357+00:00",
+      "sha256": "9494713f7f48f441937b7ee8c0b138410d60d5027b221ef8d187eb34e8cce05c"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSDAQ/fc61e410688cf0bc0a42cae33dd5b41c8cd1858e90bdfe12301171a547e65386.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:22:52.355810+00:00",
+      "sha256": "d795c614a395dd6331e1e18b8913a57f102f624b73e64ba14f4625f8a6502cfd"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/12429502e938b48c29b183f2fde0ce8012f8f66d47e88ee898216544249aca6f.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:20:26.543919+00:00",
+      "sha256": "0eb37f5bd709febf081187af3343f049313443acfde61c04df0d97701c92b26e"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/199c139007093316cabdf37228f5a52f5b0664adfe7f9f711dd8a84b0624dd0f.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:16:57.990641+00:00",
+      "sha256": "b79668a8f2fcbd95a6e35779fdbb90179cbfbb08c64bbb2231166c826a552e2e"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/1fc1f7eec3f24aadd6f381545106c4a3332652afc058bb5e502bf6f1621f29bd.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-15T23:04:56.692018+00:00",
+      "sha256": "b1c78536e7a19ce53a7e935504160368476f09b619d85c532cd47b32823b0136"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/3cbce078ad7bd169a754ca89e7f14b0fcfb748c16aec67a3d38ba1f5a3303998.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:11:21.917960+00:00",
+      "sha256": "c5233266caeafb71d7077ddbf9fc623e62a13f840a3b06939e1647c87904c6d0"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/43475b9266743a258d830d3b456e9c4e8e5366fe329fd56b5556cfca7a36f6e1.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:22:50.302258+00:00",
+      "sha256": "1b9bf4bc2353e4999147a4e770f8acd1f841ecfcfd4bb5b272541f15267cff73"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/696ea502819a05e5cf77c35e97aed2533e52d3cf3659d89e1fee3fc8748ff8f8.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T02:50:56.583428+00:00",
+      "sha256": "d67d9e88a3f744c499ed6c71ef287f72d5506cf7fb6b8906b5228d8957a1a32e"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/77258d4d9345ef6b8ff0074bdbed71190d9bdad52188c9688e00e417bed1c3ac.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:08:48.498097+00:00",
+      "sha256": "748c6345c0737a1bf54916fed5a7f5efd6166589f00cd53f131ecd6d7e93f33c"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/8194e106e8b23c80a6953c25ee3af4ff0e2e44ac78f9a29a20d14feb989def17.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:49:03.429348+00:00",
+      "sha256": "1b3daff135534877b655f749165064cb69d45566b32d343437df88cd26c9fea7"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/82c428d247064d29601518221e2da1356955e5cf31268b9c9f41c303377fe9bd.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:28:51.611522+00:00",
+      "sha256": "5ae01cf9cc2c900931732910fc9cdc3e611728825bbeee29999759d4067e9202"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/98df493bfe5c60501585a479e36ac04653750405187816287f6f46bede21df53.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T02:59:38.555570+00:00",
+      "sha256": "ee7576cac317f2b4938a4bf6c1242dba92f9232035745e08f86f3e7bcd90ccce"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/9ed0d1368c189b1e2571faa25632ff2fc9af7fd71866f1143bc479ed58ba8aff.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T01:29:29.377406+00:00",
+      "sha256": "e334e08002399a94c781bbee5e49e974c903d6f47a72fc557b9dc3837c083360"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/a33863d2799cdd4e799779e5195bebe941d34973edb03b571f20a92fc823b855.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:24:52.303380+00:00",
+      "sha256": "04381bd7248915144606f67e3c2fa69f925763bed265661811f1c79f746d3500"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/ba62ba45f2e6dc319123921518dbe6ed4e5714e333bc499d155b3186a3bc20a9.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T04:06:15.931243+00:00",
+      "sha256": "5db7b3e279090383179105f0feb61e53303c851b24baf65c472ec4de52176681"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/c060605abb96e17b9e920fd7f3953ce88ba36b8c579e49c54334e019f3b8dbfa.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:03:30.201632+00:00",
+      "sha256": "755d30cdbe7f2f33ee9ad015ee07fb9ee3943b51ca5c48196b648e0021b35f25"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/cf41e4bdb8666677c4b69a7921bce00381dd840d9caf81ff28b690fb84a4616a.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T05:15:44.832107+00:00",
+      "sha256": "1d12a1c4d1695da733857bfe25d1f6aedd4f3358d9b13f8093c212e4174c6554"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/d930c6dcbe2fe448d2d79e18c4baa2decf8fecf7cc938e0748802c5b8a152d09.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T00:56:35.799329+00:00",
+      "sha256": "dac15c340aa2d374d28852ce7ecbe2a05b5ce7e14848b9e7ff9d2852a10c667c"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/ecf1deb8db0af81b7d8b62156d1bd02361ae5deabfe060f2ad35be4008da3381.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T01:42:03.798888+00:00",
+      "sha256": "47015187a7be6da16488b650f524f0ff1334d8a86babd6b0283c42eb0aa4e73c"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/ef9e94c6f9e0ea586b69605c68257e1bdbef3c74cb337f190cd0f23cc929ae9b.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T02:55:15.762067+00:00",
+      "sha256": "ba244eee960cdfb43fef45bb1a9f5c967640ffea51cbc8f72aeffbca6ec23f72"
+    },
+    {
+      "path": "technical/reference-observations/2026-10-15/KOSPI/fea41ce54cecfa7687a6ebfe2786152d3f6817d6b8225e28b3cd89933e566b99.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "observed_at": "2026-10-16T01:47:31.184505+00:00",
+      "sha256": "14ac89bb06ffb893bde32e971782e49aee48f1c9d7abc214fef2552f1eca1620"
+    },
+    {
+      "path": "liquidity/reference/2026-10-15/KOSDAQ.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "sha256": "9494713f7f48f441937b7ee8c0b138410d60d5027b221ef8d187eb34e8cce05c"
+    },
+    {
+      "path": "liquidity/reference/2026-10-15/KOSPI.json.gz",
+      "dates": [
+        "20261015"
+      ],
+      "sha256": "b1c78536e7a19ce53a7e935504160368476f09b619d85c532cd47b32823b0136"
+    },
+    {
+      "path": "liquidity/reference/KOSDAQ.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "sha256": "1abb8855352f569e71bece10b4f0177eaa32f59a91e91613f801f20ae834bd7d"
+    },
+    {
+      "path": "liquidity/reference/KOSPI.json.gz",
+      "dates": [
+        "20261014"
+      ],
+      "sha256": "715cb61dc6688ed8fc493abd9abd4983d0a0f7615151999b01d910a666003eb0"
+    }
+  ],
+  "same_day_20261019_rows": 0,
+  "saved_attempts_by_requested_date": {
+    "2026-10-15": 48,
+    "2026-10-14": 60
+  },
+  "latest_saved_attempts": [
+    {
+      "market": "KOSPI",
+      "requested_date": "2026-10-14",
+      "checked_at": "2026-10-20T05:43:09.617725+00:00",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261014",
+      "http": 200,
+      "received_rows": 941,
+      "returned_dates": [
+        "20261014"
+      ],
+      "request_attempted": true,
+      "run_id": "39376212912",
+      "event": "schedule",
+      "credential_present": true,
+      "refresh_required": true,
+      "response_sha256": "089fbc3395dcece04b920c0120fb0d9c338ee5650dc8c52221e42ace5da96c9d",
+      "content_type": "application/json; charset=utf-8",
+      "status": "REFERENCE_RECEIVED"
+    },
+    {
+      "market": "KOSDAQ",
+      "requested_date": "2026-10-14",
+      "checked_at": "2026-10-20T05:43:11.113566+00:00",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261014",
+      "http": 200,
+      "received_rows": 1820,
+      "returned_dates": [
+        "20261014"
+      ],
+      "request_attempted": true,
+      "run_id": "39376212912",
+      "event": "schedule",
+      "credential_present": true,
+      "refresh_required": true,
+      "response_sha256": "f7995e2d19d216c4a0eb0d049c6941431f61598250125c3cdc2f64d11739d58e",
+      "content_type": "application/json; charset=utf-8",
+      "status": "REFERENCE_RECEIVED"
+    }
+  ]
+}

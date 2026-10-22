@@ -1,0 +1,66 @@
+{
+  "mode": "live_KRX_reference_check_with_saved_real_bundles",
+  "snapshot": "snapshot/dashboard.duckdb",
+  "result": {
+    "asof": "2026-10-15",
+    "finished_at": "2026-10-15T22:45:59.118642+00:00",
+    "outcome": "WAITING_REFERENCE",
+    "evaluated": 0,
+    "requests": 0,
+    "deferred_no_reference": 2430,
+    "reference_dates": {
+      "2026-10-15": {
+        "KOSPI": "REFERENCE_NOT_AVAILABLE",
+        "KOSDAQ": "REFERENCE_NOT_AVAILABLE"
+      }
+    }
+  },
+  "reference_checks": {
+    "dates": {
+      "2026-10-15": {
+        "KOSPI": {
+          "requested_date": "2026-10-15",
+          "checked_at": "2026-10-15T22:45:52.912295+00:00",
+          "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261015",
+          "http": 200,
+          "received_rows": 0,
+          "returned_dates": [],
+          "status": "REFERENCE_NOT_AVAILABLE"
+        },
+        "KOSDAQ": {
+          "requested_date": "2026-10-15",
+          "checked_at": "2026-10-15T22:45:55.519847+00:00",
+          "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261015",
+          "http": 200,
+          "received_rows": 0,
+          "returned_dates": [],
+          "status": "REFERENCE_NOT_AVAILABLE"
+        }
+      }
+    },
+    "checks": [
+      {
+        "market": "KOSPI",
+        "requested_date": "2026-10-15",
+        "checked_at": "2026-10-15T22:45:52.912295+00:00",
+        "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261015",
+        "http": 200,
+        "received_rows": 0,
+        "returned_dates": [],
+        "status": "REFERENCE_NOT_AVAILABLE"
+      },
+      {
+        "market": "KOSDAQ",
+        "requested_date": "2026-10-15",
+        "checked_at": "2026-10-15T22:45:55.519847+00:00",
+        "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261015",
+        "http": 200,
+        "received_rows": 0,
+        "returned_dates": [],
+        "status": "REFERENCE_NOT_AVAILABLE"
+      }
+    ]
+  },
+  "bundles_unchanged": true,
+  "bundle_count": 2432
+}

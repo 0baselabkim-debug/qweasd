@@ -1,0 +1,139 @@
+{
+  "authorization": "official-crosscheck-20261021",
+  "maximum": 8,
+  "requests": [
+    {
+      "key": "KOSPI-20261016",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd",
+      "params": {
+        "basDd": "20261016"
+      },
+      "authentication": false,
+      "run_id": "39550940669",
+      "reserved_at": "2026-10-21T05:41:30.131875+00:00",
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T05:41:32.357976+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json; charset=utf-8",
+      "tr_cont": null,
+      "response_sha256": "405ff9a6edc940d48e1f4c8eb7d415b717f08c58ae7dffee06cc4e1745050266",
+      "file": "responses/405ff9a6edc940d48e1f4c8eb7d415b717f08c58ae7dffee06cc4e1745050266.bin.gz",
+      "file_sha256": "baa4382d6d9c6b707cff1245e98e09b910dc6f130ae0d3ae639f82f4a8bcf40d",
+      "completed_at": "2026-10-21T05:41:34.156048+00:00",
+      "seconds": 1.7035
+    },
+    {
+      "key": "KOSDAQ-20261016",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd",
+      "params": {
+        "basDd": "20261016"
+      },
+      "authentication": false,
+      "run_id": "39550940669",
+      "reserved_at": "2026-10-21T05:41:35.856259+00:00",
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T05:41:37.608371+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json; charset=utf-8",
+      "tr_cont": null,
+      "response_sha256": "6c81b7ca5fddd48412dbd25505bfd6da435d43dd224ee8e51c26684076e1c893",
+      "file": "responses/6c81b7ca5fddd48412dbd25505bfd6da435d43dd224ee8e51c26684076e1c893.bin.gz",
+      "file_sha256": "2f45e9139111f1715deab8b4455c1ad5d9686aeb55c4258152d1708aee106c02",
+      "completed_at": "2026-10-21T05:41:38.883099+00:00",
+      "seconds": 1.1789
+    },
+    {
+      "key": "KOSPI-20261020",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd",
+      "params": {
+        "basDd": "20261020"
+      },
+      "authentication": false,
+      "run_id": "39550940669",
+      "reserved_at": "2026-10-21T05:41:40.225297+00:00",
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T05:41:41.417655+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json; charset=utf-8",
+      "tr_cont": null,
+      "response_sha256": "6e000d56cf0f03f1ab039861d2b77fad060a58d84b6b44541c750fce470b95df",
+      "file": "responses/6e000d56cf0f03f1ab039861d2b77fad060a58d84b6b44541c750fce470b95df.bin.gz",
+      "file_sha256": "7a673c08c8ba53c7aac1dc9e27936e9f56f26eca44bce511aa1c28ea1156e7b2",
+      "completed_at": "2026-10-21T05:41:43.429910+00:00",
+      "seconds": 2.0117
+    },
+    {
+      "key": "KOSDAQ-20261020",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd",
+      "params": {
+        "basDd": "20261020"
+      },
+      "authentication": false,
+      "run_id": "39550940669",
+      "reserved_at": "2026-10-21T05:41:44.841585+00:00",
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T05:41:46.782569+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json; charset=utf-8",
+      "tr_cont": null,
+      "response_sha256": "06490e03c934417006d38a47ca718358af8edced5759f01bbe1ca6c153c82b6d",
+      "file": "responses/06490e03c934417006d38a47ca718358af8edced5759f01bbe1ca6c153c82b6d.bin.gz",
+      "file_sha256": "800c0b4f79344ef2d684adb6ba94dec645201c0fdde30a655c48752efae22d64",
+      "completed_at": "2026-10-21T05:41:48.684514+00:00",
+      "seconds": 1.9013
+    },
+    {
+      "key": "auth",
+      "url": "https://openapi.koreainvestment.com:9443/oauth2/tokenP",
+      "params": null,
+      "authentication": true,
+      "run_id": "39550940669",
+      "reserved_at": "2026-10-21T05:41:50.071667+00:00",
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T05:41:51.333295+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json",
+      "tr_cont": null,
+      "response_sha256": "8a401f350e1b067e5e7cddd7334fea25a46834b4ecc4366386bdecd58e85c358",
+      "authenticated": true,
+      "completed_at": "2026-10-21T05:41:51.911266+00:00",
+      "seconds": 0.5775
+    },
+    {
+      "key": "holiday",
+      "url": "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/chk-holiday",
+      "params": {
+        "BASS_DT": "20261020",
+        "CTX_AREA_FK": "",
+        "CTX_AREA_NK": ""
+      },
+      "authentication": false,
+      "run_id": "39550940669",
+      "reserved_at": "2026-10-21T05:41:53.130197+00:00",
+      "status": "received",
+      "retry": false,
+      "started_at": "2026-10-21T05:41:54.390896+00:00",
+      "physical_request": true,
+      "http": 200,
+      "content_type": "application/json",
+      "tr_cont": "M",
+      "response_sha256": "0813378083a74b4566897b5da235445bd8b61a1a094f710f0bd41f5a0c46e3a5",
+      "file": "responses/0813378083a74b4566897b5da235445bd8b61a1a094f710f0bd41f5a0c46e3a5.bin.gz",
+      "file_sha256": "9df0f9b1ef701ef3516957c5a59ee348bb9ef2440ca53e6dc61636b4515309ba",
+      "completed_at": "2026-10-21T05:41:54.873585+00:00",
+      "seconds": 0.4822
+    }
+  ],
+  "created_at": "2026-10-21T05:41:30.124597+00:00",
+  "finished_at": "2026-10-21T05:41:56.125578+00:00"
+}

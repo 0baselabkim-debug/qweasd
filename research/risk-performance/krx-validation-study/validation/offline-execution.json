@@ -1,0 +1,52 @@
+{
+  "run_directory": "research/risk-performance/krx-validation-study/runs/8b46003a17889757d11d6e04621323eee718819d5fe8d56d7b8fb6754df6ddad",
+  "schema": "offline-official-validation-trial-v1",
+  "asof": "2026-10-20",
+  "population": 2429,
+  "new_market_API_requests": 0,
+  "oct22_manual_validation_executed": false,
+  "signals_registered": 0,
+  "first_six_field_equal": 231,
+  "later_six_field_equal": 2427,
+  "later_operational_pass": 2376,
+  "later_hold": 53,
+  "selected_operational_pass": 2377,
+  "selected_hold": 52,
+  "whole_first_observation_reused": 1,
+  "later_hold_reasons_overlapping": {
+    "corporate_action_or_adjustment_review_required": 51,
+    "price_observation_conflict": 1,
+    "checkpoint_symbol_absent": 1
+  },
+  "official_40_complete": 0,
+  "new_policy_ABCD_classifiable": 0,
+  "legacy_189_classification_not_changed": true,
+  "valid_official_days_per_symbol": {
+    "5": 2423,
+    "1": 2,
+    "4": 3,
+    "3": 1
+  },
+  "additional_full_market_date_requests_for_40_window": 70,
+  "next_session_after_oct22_from_saved_calendar": "2026-10-23",
+  "condition_not_met_count": null,
+  "session_evidence_by_market": {
+    "KOSPI": {
+      "index_sources": [
+        "8f8ca0f3ea89f13e643074436ff22170adf8669e0c3dac3efe3417356f11a25f",
+        "bc7936c3c95f39b7f51a5e035bcf477023cdb612bd8c22890fbe8077ee480953"
+      ],
+      "holiday_source": "d183b6e25924faea3074e0bf3416f6de630db930d2cf783689723c77bcab08bc"
+    },
+    "KOSDAQ": {
+      "index_sources": [
+        "2e1c9cd4ab76603a2c219e16934a8e0919c32fb2872f221ce0a00f7dfa447f4c",
+        "65fcff696d30af4df4c5f71e6fdac88c92a11382563898dd8c7bc103a8e30279"
+      ],
+      "holiday_source": "d183b6e25924faea3074e0bf3416f6de630db930d2cf783689723c77bcab08bc"
+    }
+  },
+  "run_id": "8b46003a17889757d11d6e04621323eee718819d5fe8d56d7b8fb6754df6ddad",
+  "elapsed_seconds": 18.005,
+  "executed_at": "2026-10-22T01:32:58.682229+00:00"
+}

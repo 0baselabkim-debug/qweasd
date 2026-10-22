@@ -1,0 +1,58 @@
+{
+  "observed_at": "2026-10-15T11:38:51.932822+00:00",
+  "documentation_access": {
+    "https://openapi.krx.co.kr/": 200,
+    "https://openapi.krx.co.kr/contents/OPP/MAIN/main/index.cmd": 403
+  },
+  "publication_time": "NOT_CONFIRMED",
+  "markets": {
+    "KOSPI": {
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261014",
+      "rows": 941,
+      "fields": [
+        "ACC_TRDVAL",
+        "ACC_TRDVOL",
+        "BAS_DD",
+        "CMPPREVDD_PRC",
+        "FLUC_RT",
+        "ISU_CD",
+        "ISU_NM",
+        "LIST_SHRS",
+        "MKTCAP",
+        "MKT_NM",
+        "SECT_TP_NM",
+        "TDD_CLSPRC",
+        "TDD_HGPRC",
+        "TDD_LWPRC",
+        "TDD_OPNPRC"
+      ],
+      "finality_fields": [],
+      "same_as_saved": true,
+      "previous_observed_at": "2026-10-15T10:56:34.332560+00:00"
+    },
+    "KOSDAQ": {
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261014",
+      "rows": 1820,
+      "fields": [
+        "ACC_TRDVAL",
+        "ACC_TRDVOL",
+        "BAS_DD",
+        "CMPPREVDD_PRC",
+        "FLUC_RT",
+        "ISU_CD",
+        "ISU_NM",
+        "LIST_SHRS",
+        "MKTCAP",
+        "MKT_NM",
+        "SECT_TP_NM",
+        "TDD_CLSPRC",
+        "TDD_HGPRC",
+        "TDD_LWPRC",
+        "TDD_OPNPRC"
+      ],
+      "finality_fields": [],
+      "same_as_saved": true,
+      "previous_observed_at": "2026-10-15T10:56:37.775215+00:00"
+    }
+  }
+}
