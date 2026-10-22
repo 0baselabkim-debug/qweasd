@@ -105,7 +105,13 @@ def fetch_stock(row,api,day,since,result,known_industry,cutoff,deadline,diagnost
         record={'flow':matched[0],'adjusted_prices':series['output2'],'chart_header':series.get('output1',{}),
                 'quote':{k:quote.get(k) for k in FIELDS},'observed_at':observed,
                 'quote_source':source,'quote_fallback_reasons':reasons,'validation_profile':'dated_close_volume_turnover_v2',
-                'request_scope':{'market':'J','symbol':code,'end':day,'adjustment':'0'}}
+                'request_scope':{'market':'J','symbol':code,'end':day,'adjustment':'0'},
+                # Preserve fields already returned, without adding requests or
+                # letting optional analytics change existing acceptance gates.
+                'analysis_source':{'schema':1,'flow_rows':flow.get('output2',[]),
+                    'flow_request':p,'flow_observed_at':observations[0]['observed_at'],
+                    'chart_request':observations[1]['params'],'chart_observed_at':observations[1]['observed_at'],
+                    'flow_response_code':flow.get('rt_cd'),'chart_response_code':series.get('rt_cd')}}
         # Invalid units/alignment remain retryable failures, never durable successes.
         _,checked=validate_bundle({**result,'records':{code:record},'universe':[row],'excluded':{},'failures':{},'status':'complete'})
         if code in known_industry and checked[0]['sector']=='업종 미분류':raise ValueError('Current official industry missing')

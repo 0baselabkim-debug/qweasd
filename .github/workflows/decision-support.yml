@@ -1,0 +1,66 @@
+name: Publish validated decision-support sidecar
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Daily validated dashboard refresh
+      - Independent liquidity evidence recovery
+      - Incremental corporate disclosures and theme review
+    types: [completed]
+permissions:
+  contents: write
+concurrency:
+  group: decision-support-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref_name == 'main') ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt pytest==9.1.1
+      - name: Test isolated analytics and evidence gates without market credentials
+        run: python -m pytest -q tests/test_decision_support.py
+      - name: Build from saved responses only; independent publication failure
+        id: build
+        continue-on-error: true
+        run: python scripts/build_decision_support.py --fetch-checkpoints --install
+      - name: Publish auxiliary files only; concurrent main changes reject the push
+        if: always() && steps.build.outcome != 'skipped'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if [ ! -d snapshot/decision-support ]; then exit 0; fi
+          if [ '${{ steps.build.outcome }}' = 'success' ]; then
+            git add snapshot/decision-support
+          elif [ -f snapshot/decision-support/status.json ]; then
+            # A killed/failed build can never publish partial data files.
+            git add snapshot/decision-support/status.json
+          else
+            exit 0
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Publish independently validated decision-support data or failure status'
+          git push origin HEAD:main
+      - name: Keep failed auxiliary attempt visibly failed
+        if: steps.build.outcome == 'failure'
+        run: exit 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: decision-support-${{ github.run_id }}
+          path: |
+            snapshot/decision-support/index.json
+            snapshot/decision-support/status.json
+            snapshot/decision-support/validation.json
+          if-no-files-found: ignore

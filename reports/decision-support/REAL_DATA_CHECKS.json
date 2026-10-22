@@ -1,0 +1,348 @@
+{
+  "asof": "2026-10-21",
+  "dataset_id": "decision-v1-2026-10-21-dafe36a63d73ca8c440343ac0bccae53bd1c7bb31efadd3aa4c304926eb721e9",
+  "source_sha256": "7f581e3e456540477220687c5d1c2a6b76f3c1ce12b907dbdcd4cb7afe2d4423",
+  "all_stock_independent_checks": {
+    "symbols": 2430,
+    "foreign_value_checks": 14580,
+    "status": "passed"
+  },
+  "real_samples": [
+    {
+      "symbol": "000020",
+      "name": "동화약품",
+      "market": "KOSPI",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": -16000000,
+      "institution_net_1d_shares": -94,
+      "institution_amount_raw_provider_units": "-1",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 5470,
+        "high": 5530,
+        "low": 5330,
+        "close": 5360,
+        "volume": 150629,
+        "turnover": 814754100
+      },
+      "source_observed_at": "2026-10-21T10:04:51.789485+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "000040",
+      "name": "KR모터스",
+      "market": "KOSPI",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": -30000000,
+      "institution_net_1d_shares": 0,
+      "institution_amount_raw_provider_units": "0",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 1402,
+        "high": 1485,
+        "low": 1192,
+        "close": 1248,
+        "volume": 1237030,
+        "turnover": 1606436032
+      },
+      "source_observed_at": "2026-10-21T10:04:52.848374+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "000050",
+      "name": "경방",
+      "market": "KOSPI",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": -4000000,
+      "institution_net_1d_shares": -532,
+      "institution_amount_raw_provider_units": "-4",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 7830,
+        "high": 7890,
+        "low": 7750,
+        "close": 7830,
+        "volume": 12854,
+        "turnover": 100722320
+      },
+      "source_observed_at": "2026-10-21T10:04:55.984783+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "000070",
+      "name": "삼양홀딩스",
+      "market": "KOSPI",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": -238000000,
+      "institution_net_1d_shares": 912,
+      "institution_amount_raw_provider_units": "49",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 53800,
+        "high": 53800,
+        "low": 52800,
+        "close": 53300,
+        "volume": 7190,
+        "turnover": 382492350
+      },
+      "source_observed_at": "2026-10-21T10:04:57.066530+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "000080",
+      "name": "하이트진로",
+      "market": "KOSPI",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": 186000000,
+      "institution_net_1d_shares": -7119,
+      "institution_amount_raw_provider_units": "-112",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 15930,
+        "high": 16060,
+        "low": 15730,
+        "close": 15850,
+        "volume": 72053,
+        "turnover": 1143305840
+      },
+      "source_observed_at": "2026-10-21T10:05:00.206127+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "000250",
+      "name": "삼천당제약",
+      "market": "KOSDAQ",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": -1380000000,
+      "institution_net_1d_shares": 4858,
+      "institution_amount_raw_provider_units": "1035",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 208000,
+        "high": 215000,
+        "low": 205000,
+        "close": 212000,
+        "volume": 88288,
+        "turnover": 18610422000
+      },
+      "source_observed_at": "2026-10-21T10:32:12.797850+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "000440",
+      "name": "중앙에너비스",
+      "market": "KOSDAQ",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": 59000000,
+      "institution_net_1d_shares": 2,
+      "institution_amount_raw_provider_units": "0",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 11820,
+        "high": 12260,
+        "low": 11820,
+        "close": 12170,
+        "volume": 9754,
+        "turnover": 117399780
+      },
+      "source_observed_at": "2026-10-21T10:32:13.750516+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "001000",
+      "name": "신라섬유",
+      "market": "KOSDAQ",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": 8000000,
+      "institution_net_1d_shares": 0,
+      "institution_amount_raw_provider_units": "0",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 3000,
+        "high": 3120,
+        "low": 2800,
+        "close": 2800,
+        "volume": 291898,
+        "turnover": 865427702
+      },
+      "source_observed_at": "2026-10-21T10:32:20.040314+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "001540",
+      "name": "안국약품",
+      "market": "KOSDAQ",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": -134000000,
+      "institution_net_1d_shares": -3314,
+      "institution_amount_raw_provider_units": "-32",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 9680,
+        "high": 9710,
+        "low": 9390,
+        "close": 9460,
+        "volume": 44380,
+        "turnover": 423550865
+      },
+      "source_observed_at": "2026-10-21T10:32:18.109701+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    },
+    {
+      "symbol": "001810",
+      "name": "무림SP",
+      "market": "KOSDAQ",
+      "checks": {
+        "foreign_amount": true,
+        "institution_quantity": true,
+        "institution_buy_minus_sell": true,
+        "institution_amount_held": true,
+        "saved_ohlcv_six_fields": true,
+        "annual_disclosure_cutoff": true,
+        "period_disclosure_cutoff": true,
+        "no_orders": true
+      },
+      "foreign_net_1d_krw": 2000000,
+      "institution_net_1d_shares": 0,
+      "institution_amount_raw_provider_units": "0",
+      "institution_amount_multiplier": null,
+      "ohlcv": {
+        "open": 1000,
+        "high": 1047,
+        "low": 1000,
+        "close": 1028,
+        "volume": 52238,
+        "turnover": 52833878
+      },
+      "source_observed_at": "2026-10-21T10:32:23.334708+00:00",
+      "source_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e"
+    }
+  ],
+  "coverage": {
+    "accepted_ohlcv_asof": 0,
+    "annual_financial": 2408,
+    "atr_14": 0,
+    "foreign_20d": 2419,
+    "ichimoku_current_span_b": 0,
+    "institution_quantity_1d": 2430,
+    "institution_quantity_20d": 0,
+    "institution_quantity_5d": 0,
+    "market_excess_5d_pp": 0,
+    "period_financial": 2408,
+    "raw_ohlcv_asof": 2430,
+    "sma_120": 0,
+    "sma_20": 0,
+    "sma_5": 0,
+    "sma_60": 0,
+    "stocks": 2430
+  },
+  "operating_price_history": {
+    "min": "2026-09-03",
+    "max": "2026-10-21",
+    "rows": 75820,
+    "max_rows_per_symbol": 31
+  },
+  "verified_contiguous_price_days_distribution": {
+    "0": 2430
+  },
+  "original_record_counts": {
+    "flows": 60715,
+    "prices": 75820,
+    "financials": 2415
+  },
+  "source_collection_seconds_historical": 5584.201114,
+  "original_publishing_candidate_seconds": 21.994012721000217,
+  "sidecar_build_seconds": 15.638,
+  "market_api_calls_added": 0,
+  "normal_source_hashes": {
+    "dashboard.duckdb": "7f581e3e456540477220687c5d1c2a6b76f3c1ce12b907dbdcd4cb7afe2d4423",
+    "manifest.json": "96ce46fe84916b03b99bab96545ae8a3dd1588fccd6333df42fa360c6d08620a",
+    "daily-validation.json": "34b0f1b19ff8341db8e446fce9793a523dae108f89efacee979c652850f72bfb",
+    "publication-ledger.json": "fcdbec5f595da41d74c36503949bb67f1a7d0fe2c3ef967aa86b0eed3135ff25",
+    "daily_briefing.json": "f8d687a8e97fceb07b02065ee77c086ead2e45ea615dcaa070591dbbf9ff7b46",
+    "briefing/index.json": "e87c1401b93f992edefece8d41fb2fde62e82ae112065491c81bc0488443815c",
+    "corporate-state.json.gz": "b75979932f87b13d1b83d9eb6439a7c482fdcc6a141c753a458ad37a307bd228"
+  },
+  "new_scheduled_trading_day_verified": false
+}
