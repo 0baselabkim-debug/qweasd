@@ -35,11 +35,22 @@ def test_missing_calendar_not_weekday_synthesized(tmp_path):
     with pytest.raises(ValueError,match='missing'):c.index_days(tmp_path,'2026-10-21','0001')
 
 
+def test_lost_response_and_unfinished_leases_consume_budget(tmp_path,monkeypatch):
+    monkeypatch.setattr(c,'guard',lambda:None)
+    monkeypatch.setattr(c,'TOTAL_LIMIT',4)
+    c.save(tmp_path/'requests.json',{'requests':[],
+        'unrecovered_runs':[{'maximum_unrecorded_requests':2}],
+        'leases':{'earlier':{'status':'reserved','limit':2}}})
+    with pytest.raises(ValueError,match='exhausted'):c.Budget(tmp_path).before_http('/price')
+    assert c.read(tmp_path/'requests.json')['requests']==[]
+
+
 def test_manual_collector_keeps_shared_lock_and_no_cron():
     from pathlib import Path
     s=Path('.github/workflows/decision-price-evidence.yml').read_text()
     assert 'kis-validation-auth' in s and 'schedule:' not in s
-    assert 'git push origin HEAD:refs/heads/evidence/decision-price-source' in s
+    assert 'python scripts/preserve_decision_evidence.py' in s
+    assert 'fetch-depth: 0' in s and 'actions/upload-artifact@v4' in s
     assert 'HEAD:main' not in s
 
 

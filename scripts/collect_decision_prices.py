@@ -46,6 +46,7 @@ class Budget:
     def __init__(self, root, limit=20, seconds=600):
         self.root = root; self.path = root/'requests.json'
         self.state = read(self.path) if self.path.exists() else {'schema':1, 'requests':[]}
+        self.lease_id=os.getenv('GITHUB_RUN_ID','local')+'-'+os.getenv('GITHUB_RUN_ATTEMPT','1')
         self.start = time.monotonic(); self.initial = len(self.state['requests'])
         self.limit = min(20, limit); self.seconds = min(600, seconds); self.last = 0
 
@@ -54,7 +55,9 @@ class Budget:
         if attempt:
             raise ValueError('automatic_retry_disabled')
         n = len(self.state['requests'])
-        if n >= TOTAL_LIMIT or n-self.initial >= self.limit or time.monotonic()-self.start >= self.seconds:
+        unknown=sum(x['maximum_unrecorded_requests'] for x in self.state.get('unrecovered_runs',[]))
+        reserved=sum(x['limit'] for k,x in self.state.get('leases',{}).items() if k!=self.lease_id and x['status']=='reserved')
+        if n+unknown+reserved >= TOTAL_LIMIT or n-self.initial >= self.limit or time.monotonic()-self.start >= self.seconds:
             raise ValueError('physical_or_time_budget_exhausted')
         time.sleep(max(0, 1.05-(time.monotonic()-self.last)))
         self.last = time.monotonic()
@@ -189,10 +192,21 @@ def index_days(root,asof,code):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('mode',choices=['reference','pilot','history-references']);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('mode',choices=['reserve','reference','pilot','history-references']);a=p.parse_args()
     guard();asof=read(Path('snapshot/manifest.json'))['asof']
     if asof>=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat():raise ValueError('previous_published_day_only')
     budget=Budget(ROOT)
+    if a.mode=='reserve':
+        # One earlier run lost its local ledger during evidence publication.
+        # Deduct its full batch maximum, not an invented actual request count.
+        lost=budget.state.setdefault('unrecovered_runs',[])
+        if any(r.get('run_id')=='39735702048' for r in budget.state['requests']) and not any(r['run_id']=='39736095088' for r in lost):
+            lost.append({'run_id':'39736095088','maximum_unrecorded_requests':20,
+                         'actual_physical_requests':None,'reason':'collection_step_success_evidence_publication_failed_logs_inaccessible'})
+        budget.state.setdefault('leases',{}).setdefault(budget.lease_id,{'status':'reserved','limit':20,'reserved_at':now(),
+             'initial_recorded_count':len(budget.state['requests'])})
+        save(budget.path,budget.state)
+        return
     try:
         if a.mode=='pilot':kis_series(ROOT,budget,asof)
         else:
@@ -202,6 +216,9 @@ def main():
         status='complete'
     except Exception as e:
         status=str(e) if isinstance(e,ValueError) else type(e).__name__
+    if budget.lease_id in budget.state.get('leases',{}):
+        budget.state['leases'][budget.lease_id].update(status='recorded',physical_requests=len(budget.state['requests'])-budget.initial)
+        save(budget.path,budget.state)
     save(ROOT/'last-run.json',{'asof':asof,'mode':a.mode,'status':status,'run_id':os.getenv('GITHUB_RUN_ID'),
          'physical_requests':len(budget.state['requests'])-budget.initial,'total_physical_requests':len(budget.state['requests']),
          'seconds':round(time.monotonic()-budget.start,3),'completed_at':now()})

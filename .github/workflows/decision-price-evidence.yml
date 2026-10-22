@@ -22,6 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -42,6 +43,10 @@ jobs:
           names={'Daily validated dashboard refresh','Independent liquidity evidence recovery','Incremental corporate disclosures and theme review'}
           if any(r['name'] in names and r['status'] in ('queued','in_progress','waiting','pending','requested') for r in runs):raise SystemExit('Operating work has priority; retry manually later')
           PY
+      - name: Persist request reservation before any market request
+        run: |
+          python scripts/collect_decision_prices.py reserve
+          python scripts/preserve_decision_evidence.py
       - name: Collect a bounded auxiliary batch
         id: collect
         env:
@@ -53,18 +58,12 @@ jobs:
           # Authentication cooldown is only relevant to the KIS pilot.
           if [ "$MODE" = pilot ]; then sleep 65; fi
           python scripts/collect_decision_prices.py "$MODE"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: decision-price-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: auxiliary-prices
+          if-no-files-found: ignore
       - name: Preserve evidence and failures outside main
         if: always()
-        run: |
-          if [ ! -d auxiliary-prices ]; then exit 0; fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add auxiliary-prices
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Preserve bounded auxiliary price evidence'
-          # The evidence branch is append-only; merge its history, never force.
-          if git ls-remote --exit-code origin refs/heads/evidence/decision-price-source; then
-            git fetch origin evidence/decision-price-source
-            git merge -s ours --no-edit FETCH_HEAD
-          fi
-          git push origin HEAD:refs/heads/evidence/decision-price-source
+        run: python scripts/preserve_decision_evidence.py
