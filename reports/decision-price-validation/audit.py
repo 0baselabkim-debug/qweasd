@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 import pandas as pd
+import duckdb
 from screener.decision_support.evidence import read,sha,bar,KRX_FIELDS,KIS_FIELDS,date,encoded
 
 
@@ -15,12 +16,15 @@ def audit(directory=ROOT/'snapshot/decision-support'):
     current=[r for r in source['checkpoints'].values() if r['asof']==ix['asof']]
     if len(current)!=1:raise ValueError('ambiguous_current_checkpoint')
     checkpoint=read(directory/current[0]['file'])
-    official={};conflicts=collections.Counter();initial=collections.Counter();details=[]
+    official={};all_official=collections.defaultdict(set);conflicts=collections.Counter();initial=collections.Counter();details=[]
     for v in source['references'].values():
         obj=read(directory/v['file'])
-        if obj['asof']!=ix['asof']:continue
         for raw in obj['rows']:
-            try:official[raw['ISU_CD']]=bar(raw,KRX_FIELDS)
+            try:
+                value=bar(raw,KRX_FIELDS)
+                if raw['BAS_DD']!=obj['asof'].replace('-',''):raise ValueError('date')
+                all_official[raw['ISU_CD'],obj['asof']].add(tuple(value[k] for k in KIS_FIELDS))
+                if obj['asof']==ix['asof']:official[raw['ISU_CD']]=value
             except ValueError:pass
     for code,r in checkpoint['records'].items():
         raw=[x for x in r['adjusted_prices'] if date(x['stck_bsop_date'])==ix['asof']]
@@ -56,8 +60,16 @@ def audit(directory=ROOT/'snapshot/decision-support'):
             seeded=pd.concat([pd.Series([tr.iloc[:14].mean()]),tr.iloc[14:].reset_index(drop=True)],ignore_index=True)
             atr=seeded.ewm(alpha=1/14,adjust=False).mean().iloc[-1]
         check('atr_14',atr)
+        with duckdb.connect(str(ROOT/'snapshot/dashboard.duckdb'),read_only=True) as db:
+            benchmarks={str(d):v for d,v in db.execute('select trade_date,close from benchmarks where market=?',[r['market']]).fetchall()}
+        for n in (5,20):
+            w=values.close.iloc[-(n+1):];bench=[benchmarks.get(d) for d in w.index]
+            stock_return=100*(w.iloc[-1]/w.iloc[0]-1) if len(w)==n+1 and w.notna().all() else None
+            excess=stock_return-100*(bench[-1]/bench[0]-1) if stock_return is not None and all(v is not None and v>0 for v in bench) else None
+            check(f'return_{n}d_pct',stock_return);check(f'market_excess_{n}d_pp',excess)
         if not all(v['passed'] for v in checks.values()):raise ValueError('independent_indicator_mismatch:'+code)
         results[code]={'name':r['name'],'range':[frame.index[0],frame.index[-1]],'validity':r['validity'],
+            'raw_six_field_match_days':sum(all_official[code,d]=={tuple(row[k] for k in KIS_FIELDS)} for d,row in frame.iterrows()),
             'hold_reasons':dict(collections.Counter(reason for reasons in frame.reasons for reason in reasons)),
             'technical':r['technical'],'independent_checks':checks,
             'auxiliary_vintage':s.get('qualified_auxiliary_history')}

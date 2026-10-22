@@ -1,0 +1,170 @@
+{
+  "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/decision-support/index.json",
+  "http": 200,
+  "asof": "2026-10-21",
+  "dataset_id": "decision-v1-2026-10-21-d3f9524dab3a43fd33a6fb3fdb4b7d64e100c352b357af97b8dd7ac4673d9e52",
+  "index_sha256": "4cbbc416b696662c2b763e2f420a090ba1a8c54a353c503921ba508fb7f3dc5d",
+  "source_snapshot_sha256": "827a7cbaf02fc938e914f9955729e6877fda4b931c7e3e325876031161042b8b",
+  "coverage": {
+    "accepted_ohlcv_asof": 255,
+    "annual_financial": 2408,
+    "atr_14": 123,
+    "foreign_20d": 2419,
+    "ichimoku_current_span_b": 2,
+    "institution_quantity_1d": 2430,
+    "institution_quantity_20d": 0,
+    "institution_quantity_5d": 0,
+    "market_excess_5d_pp": 133,
+    "period_financial": 2408,
+    "raw_ohlcv_asof": 2430,
+    "sma_120": 2,
+    "sma_20": 119,
+    "sma_5": 135,
+    "sma_60": 2,
+    "stocks": 2430
+  },
+  "samples": {
+    "178320": {
+      "name": "서진시스템",
+      "close": 34000,
+      "verified_days": 121,
+      "technical": {
+        "sma_5": {
+          "reason": null,
+          "status": "valid",
+          "value": 37560.0
+        },
+        "sma_20": {
+          "reason": null,
+          "status": "valid",
+          "value": 37940.0
+        },
+        "sma_60": {
+          "reason": null,
+          "status": "valid",
+          "value": 36819.166666666664
+        },
+        "sma_120": {
+          "reason": null,
+          "status": "valid",
+          "value": 48682.5
+        },
+        "atr_14": {
+          "reason": null,
+          "status": "valid",
+          "value": 3329.3561366604117
+        },
+        "ichimoku_current_span_b": {
+          "reason": null,
+          "status": "valid",
+          "value": 42550.0
+        },
+        "market_excess_5d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": -12.16836275255322
+        },
+        "market_excess_20d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 2.848364850931284
+        }
+      }
+    },
+    "000720": {
+      "name": "현대건설",
+      "close": 92500,
+      "verified_days": 121,
+      "technical": {
+        "sma_5": {
+          "reason": null,
+          "status": "valid",
+          "value": 92760.0
+        },
+        "sma_20": {
+          "reason": null,
+          "status": "valid",
+          "value": 109305.0
+        },
+        "sma_60": {
+          "reason": null,
+          "status": "valid",
+          "value": 112951.66666666667
+        },
+        "sma_120": {
+          "reason": null,
+          "status": "valid",
+          "value": 123418.33333333333
+        },
+        "atr_14": {
+          "reason": null,
+          "status": "valid",
+          "value": 6556.009748496418
+        },
+        "ichimoku_current_span_b": {
+          "reason": null,
+          "status": "valid",
+          "value": 109850.0
+        },
+        "market_excess_5d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": -1.8306930053116899
+        },
+        "market_excess_20d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": -11.587596482254547
+        }
+      }
+    },
+    "064400": {
+      "name": "LG씨엔에스",
+      "close": 72300,
+      "verified_days": 41,
+      "technical": {
+        "sma_5": {
+          "reason": null,
+          "status": "valid",
+          "value": 67600.0
+        },
+        "sma_20": {
+          "reason": null,
+          "status": "valid",
+          "value": 68860.0
+        },
+        "sma_60": {
+          "reason": "insufficient_verified_history",
+          "status": "unavailable",
+          "value": null
+        },
+        "sma_120": {
+          "reason": "insufficient_verified_history",
+          "status": "unavailable",
+          "value": null
+        },
+        "atr_14": {
+          "reason": null,
+          "status": "valid",
+          "value": 3389.463983672191
+        },
+        "ichimoku_current_span_b": {
+          "reason": "insufficient_verified_history",
+          "status": "unavailable",
+          "value": null
+        },
+        "market_excess_5d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 13.925552898637061
+        },
+        "market_excess_20d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 19.220547907534133
+        }
+      }
+    }
+  },
+  "passed": true
+}
