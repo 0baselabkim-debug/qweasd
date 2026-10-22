@@ -107,7 +107,7 @@ def krx(day,market,root,budget):
     if cached(root,key):return
     # Already preserved official references need no new API request.
     from screener.decision_support.evidence import official_rows
-    paths=list(Path('liquidity/reference').rglob('*.json.gz'))+list(Path('liquidity/reference-observations').rglob('*.json.gz'))
+    paths=list(Path('liquidity/reference').rglob('*.json.gz'))+list(Path('liquidity/reference-observations').rglob('*.json.gz'))+list(Path('auxiliary-reference-imports').glob('*.json.gz'))
     for p in paths:
         obj=read(p)
         if obj.get('asof')==day and ('/stk_' if market=='KOSPI' else '/ksq_') in obj.get('url',''):

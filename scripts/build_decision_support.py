@@ -96,7 +96,7 @@ def source_inventory(previous, out, snapshot, fetch):
                         inventory['references'][h]={'file':rel,'sha256':h,'source_file':source,'git_commit':commit,
                             'asof':obj['asof'],'observed_at':obj['observed_at'],'url':obj['url']}
     # Official reference observations are already collected by the operating system.
-    paths=list((ROOT/'liquidity/reference').rglob('*.json.gz'))+list((ROOT/'liquidity/reference-observations').rglob('*.json.gz'))
+    paths=list((ROOT/'liquidity/reference').rglob('*.json.gz'))+list((ROOT/'liquidity/reference-observations').rglob('*.json.gz'))+list((ROOT/'auxiliary-reference-imports').glob('*.json.gz'))
     for p in paths:
         raw=p.read_bytes();h=sha(raw)
         if h in inventory['references']:continue
