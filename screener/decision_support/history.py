@@ -145,3 +145,37 @@ An unavailable official day remains a gap and blocks affected indicators.
         return base
     except (ValueError,KeyError,TypeError) as e:
         return {'error':str(e) if isinstance(e,ValueError) else 'malformed_continuation'}
+
+
+def refreshed_continuation(objects,code,market,asof,listing,official,db_prices,days,benchmarks):
+    """A bounded paired re-observation may repair a whole-vintage link.
+
+    Exact six-field overlap and corporate-action gates remain in continuation.
+    Prior observations/operating DB are never mutated or mixed field by field.
+    """
+    versions=[objects.get(f'recent:{asof}:{code}:{option}',[]) for option in ('0','1')]
+    if not any(versions):return None
+    try:
+        if any(len(v)!=1 for v in versions):raise ValueError('recent_pair_missing_or_ambiguous')
+        maps=[];times=[];source_ids=[]
+        for option,items in zip(('0','1'),versions):
+            sid,obj=items[0];p=obj.get('params',{});response=obj.get('response',{})
+            expected={'FID_COND_MRKT_DIV_CODE':'J','FID_INPUT_ISCD':code,'FID_INPUT_DATE_2':asof.replace('-',''),'FID_PERIOD_DIV_CODE':'D','FID_ORG_ADJ_PRC':option}
+            if obj.get('endpoint')!='/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice' or response.get('rt_cd')!='0' or response.get('output1',{}).get('stck_shrn_iscd')!=code or any(p.get(k)!=v for k,v in expected.items()):raise ValueError('recent_pair_identity_mismatch')
+            m={};times.append(timestamp(obj['observed_at']));source_ids.append(sid)
+            for r in response.get('output2',[]):
+                d=date(r['stck_bsop_date'])
+                if d in m or not p.get('FID_INPUT_DATE_1','99999999')<=r['stck_bsop_date']<=p['FID_INPUT_DATE_2']:raise ValueError('recent_pair_date_mismatch')
+                m[d]=r
+            maps.append(m)
+        if (max(times)-min(times)).total_seconds()>900:raise ValueError('recent_pair_vintage_mismatch')
+        if set(maps[0])!=set(maps[1]) or asof not in maps[0]:raise ValueError('recent_pair_calendar_mismatch')
+        for d in maps[0]:
+            if adjustment_pending(maps[0][d]) or adjustment_pending(maps[1][d]) or bar(maps[0][d],KIS_FIELDS)!=bar(maps[1][d],KIS_FIELDS):raise ValueError('recent_pair_adjustment_or_price_conflict')
+        record={'adjusted_prices':list(maps[0].values()),'observed_at':max(times).isoformat()}
+        result=continuation(objects,code,market,asof,listing,official,db_prices,days,benchmarks,record,sha(encoded(source_ids)))
+        if result and not result.get('error'):
+            result['source_ids']+=source_ids
+            result['link_proof']['paired_reobservation_source_ids']=source_ids
+        return result
+    except (ValueError,KeyError,TypeError) as e:return {'error':str(e) if isinstance(e,ValueError) else 'malformed_recent_pair'}

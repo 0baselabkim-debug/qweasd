@@ -248,10 +248,14 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
         history=candidate(aux_objects,code,market,asof,listing,refs,db_prices,days,benchmarks[market])
         if history is None:
             history=continuation(aux_objects,code,market,asof,listing,refs,db_prices,days,benchmarks[market],r,current[0]['sha256'])
+        if not history or history.get('error') or asof not in history.get('accepted',{}):
+            from screener.decision_support.history import refreshed_continuation
+            repaired=refreshed_continuation(aux_objects,code,market,asof,listing,refs,db_prices,days,benchmarks[market])
+            if repaired is not None:history=repaired
         price_days=days;price_benchmarks=benchmarks[market];history_selection=None
         if history and history.get('error'):
             errors.append({'symbol':code,'asof':asof,'reason':history['error']})
-        elif history and asof in history['accepted'] and len(history['accepted'])>=len(accepted):
+        elif history and len(history['accepted'])>=len(accepted):
             accepted=history['accepted'];series=history['series'];price_days=history['days'];price_benchmarks=history['benchmarks']
             observed=history['observed_at']
             history_selection={'source_ids':history['source_ids'],'operating_version_comparison':history['operating_version_comparison'],
@@ -267,6 +271,8 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
             if k.startswith('net_quantity'):continue
             inst[k]=metric(None,'institution_amount_unit_not_officially_confirmed')
         px=technical(price_days,accepted,price_benchmarks);extra=observations(f,px)
+        quantity=inst['net_quantity_1d']['value']
+        extra['institution_quantity_direction']=metric(('net_buying' if quantity>0 else 'net_selling' if quantity<0 else 'zero_net') if quantity is not None else None,'institution_quantity_missing')
         foreign_series=[{'trade_date':d,'net_amount_krw':fvalues.get((code,d)),'net_quantity_shares':fquantities.get((code,d)),
             'institution_net_quantity_shares':iqmaps[code].get(d),'institution_net_amount_krw':imaps[code].get(d),
             'institution_net_amount_provider_units':rawmaps[code].get(d)} for d in days[-60:]]
@@ -283,6 +289,8 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
             'flow_series':{'columns':['trade_date','net_amount_krw','net_quantity_shares','institution_net_quantity_shares','institution_net_amount_krw','institution_net_amount_provider_units'],
                 'rows':[[v[k] for k in ('trade_date','net_amount_krw','net_quantity_shares','institution_net_quantity_shares','institution_net_amount_krw','institution_net_amount_provider_units')] for v in foreign_series]},
             'technical':px,'observations':extra,
+            'latest_verified_price':({'asof':max(accepted),'value':accepted[max(accepted)],'status':'operational_crosscheck_pass','current':max(accepted)==asof} if accepted else {'asof':None,'value':None,'status':'unavailable','current':False}),
+            'metric_provenance':{'asof':asof,'price_observed_at':observed,'price_source_ids':history_selection['source_ids'] if history_selection else [current[0]['sha256']], 'official_source_ids':sorted({sid for bar in series for sid in bar.get('official_source_ids',[])}),'foreign_source_snapshot_sha256':source_hash,'institution_basis':'net_quantity_shares; amount multiplier unverified'},
             'financial':{'annual':annual[code][:1],'verified_period_reports':financials[code][:4],
                 'recent_disclosures':filings[code][:5],'borrowing_details':None,'contracts_funding_shareholder_return':'not_inferred_from_periodic_filings',
                 'TTM_PER_ROE':metric(None,'comparable_TTM_and_parent_basis_not_verified'),'source_state_sha256':corp_hash},
@@ -326,6 +334,13 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
         'freshness_policy':'Require index.source_snapshot_sha256 == snapshot/manifest.json.sha256 and asof match before use; old successful files are not today data',
         'price_policy':'operational crosscheck is separate from provider finality; rejected values preserved as observations',
         'api_calls_added':0,'order_signals_generated':False,
+        'requested_analysis_policy':{'objective_evidence_only':True,'personal_guide_on_request_only':True,
+            'automatic_sell_on_target_touch':False,'account_risk_inputs_stored':False,
+            'final_account_risk_defense_price':None,'risk_defense_requires_request_time_account_limit':True,
+            'lower_defense_merely_to_avoid_realizing_loss':False,
+            'resistance_and_trend_levels_require_fresh_reassessment':True,
+            'price_pullback_alone_is_not_an_order':True,
+            'flow_and_structure_evidence_are_separate':True},
         'definitions':{'sma_slope':'one trading day difference, KRW','atr':'Wilder 14; seed needs 15 consecutive valid OHLC bars; seed start explicit',
             'ichimoku_current_cloud':'span calculations from 26 sessions earlier; span B needs 78 valid sessions',
             'ichimoku_projected_cloud':'today calculation, displayed 26 sessions ahead, never today cloud',

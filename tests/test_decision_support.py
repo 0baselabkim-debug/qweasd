@@ -218,3 +218,16 @@ def test_install_failure_rolls_back_entire_previous_generation(tmp_path,monkeypa
     with pytest.raises(OSError):b.install(out,dest,tmp_path)
     assert (dest/'index.json').read_bytes()==b'old-index'
     assert (dest/'data.json').read_bytes()==b'old-data'
+
+
+def test_daily_price_changes_and_swings_never_use_future():
+    days,b=fixture();r=technical(days,b)
+    assert r['close_change_1d']['value']==b[days[-1]]['close']-b[days[-2]]['close']
+    assert r['intraday_range']['value']==b[days[-1]]['high']-b[days[-1]]['low']
+    assert all(x['confirmed_on']<=days[-1] for k in ('high','low') for x in r[f'confirmed_swing_{k}s']['value'])
+    prefix=technical(days[:-2],b)
+    b[days[-1]]['close']=999999
+    assert technical(days[:-2],b)==prefix
+    b.pop(days[-2])
+    held=technical(days[:-1],b)
+    assert held['close']['value'] is None and held['sma_5']['value'] is None

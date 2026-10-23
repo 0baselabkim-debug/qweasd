@@ -4,7 +4,7 @@ on:
     inputs:
       mode:
         type: choice
-        options: [reference, pilot, history-references]
+        options: [reference, pilot, history-references, daily-refresh]
         default: reference
   workflow_run:
     workflows:
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      COLLECTION_CLASS: ${{ github.event_name == 'workflow_run' && 'routine_reference' || 'bootstrap' }}
+      COLLECTION_CLASS: ${{ (github.event_name == 'workflow_run' || inputs.mode == 'daily-refresh') && 'daily_priority' || 'bootstrap' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -79,10 +79,10 @@ jobs:
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-          MODE: ${{ inputs.mode || 'reference' }}
+          MODE: ${{ inputs.mode || 'daily-refresh' }}
         run: |
-          # Authentication cooldown is only relevant to the KIS pilot.
-          if [ "$MODE" = pilot ]; then sleep 65; fi
+          # Keep the existing shared-auth cooldown for bounded KIS refreshes.
+          if [ "$MODE" = pilot ] || [ "$MODE" = daily-refresh ]; then sleep 65; fi
           python scripts/collect_decision_prices.py "$MODE"
       - uses: actions/upload-artifact@v4
         if: always()

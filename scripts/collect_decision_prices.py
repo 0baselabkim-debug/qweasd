@@ -49,6 +49,8 @@ class Budget:
         self.state = read(self.path) if self.path.exists() else {'schema':1, 'requests':[]}
         self.lease_id=os.getenv('GITHUB_RUN_ID','local')+'-'+os.getenv('GITHUB_RUN_ATTEMPT','1')
         self.routine=os.getenv('COLLECTION_CLASS')=='routine_reference'
+        self.priority=os.getenv('COLLECTION_CLASS')=='daily_priority'
+        self.budget_class='daily_priority' if self.priority else 'routine_reference' if self.routine else 'bootstrap'
         self.budget_date=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat()
         self.start = time.monotonic(); self.initial = len(self.state['requests'])
         self.limit = min(2 if self.routine else 20, limit); self.seconds = min(600, seconds); self.last = 0
@@ -60,7 +62,11 @@ class Budget:
         n = len(self.state['requests'])
         unknown=sum(x['maximum_unrecorded_requests'] for x in self.state.get('unrecovered_runs',[]))
         leases=[x for k,x in self.state.get('leases',{}).items() if k!=self.lease_id and x['status']=='reserved']
-        if self.routine:
+        if self.priority:
+            spent=sum(r.get('budget_class')=='daily_priority' and r.get('budget_date')==self.budget_date for r in self.state['requests'])
+            spent+=sum(x['limit'] for x in leases if x.get('budget_class')=='daily_priority' and x.get('budget_date')==self.budget_date)
+            maximum=40
+        elif self.routine:
             spent=sum(r.get('budget_class')=='routine_reference' and r.get('budget_date')==self.budget_date for r in self.state['requests'])
             spent+=sum(x['limit'] for x in leases if x.get('budget_class')=='routine_reference' and x.get('budget_date')==self.budget_date)
             maximum=4
@@ -75,7 +81,7 @@ class Budget:
         self.last = time.monotonic()
         self.state['requests'].append({'sequence':n+1, 'endpoint':path, 'started_at':now(),
             'run_id':os.getenv('GITHUB_RUN_ID'), 'status':'attempted',
-            'budget_class':'routine_reference' if self.routine else 'bootstrap','budget_date':self.budget_date,
+            'budget_class':self.budget_class,'budget_date':self.budget_date,
             'kind':'authentication' if path=='/oauth2/tokenP' else 'market'})
         save(self.path, self.state)
 
@@ -159,18 +165,19 @@ def krx(day,market,root,budget):
         raise
 
 
-def kis_series(root,budget,asof):
-    """Two bounded pages per basis; 4 index pages provide calendar + benchmarks."""
+def kis_series(root,budget,asof,symbols=SYMBOLS,index_codes=('0001','1001'),api=None):
+    """Two pages per stock basis; three pages per requested market index."""
     pending=False
-    for code in SYMBOLS+('0001','1001'):
+    for code in tuple(symbols)+tuple(index_codes):
         for option in (('0','1') if len(code)==6 else ('index',)):
             if not cached(root,f'kis:{asof}:{code}:{option}:{1 if len(code)==6 else 2}'):pending=True
     if not pending:return
     if not all(os.environ.get(k) for k in ('KIS_APP_KEY','KIS_APP_SECRET')):raise ValueError('KIS_credentials_not_bound')
     token=REQUEST_BUDGET.set(budget)
     try:
-        api=KIS(interval=1.05);budget.finish('authenticated',http=200)
-        for code in SYMBOLS+('0001','1001'):
+        if api is None:
+            api=KIS(interval=1.05);budget.finish('authenticated',http=200)
+        for code in tuple(symbols)+tuple(index_codes):
             for option in (('0','1') if len(code)==6 else ('index',)):
                 end=asof.replace('-','')
                 for page in range(2 if len(code)==6 else 3):
@@ -215,12 +222,13 @@ def index_days(root,asof,code):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('mode',choices=['reserve','reference','pilot','history-references']);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('mode',choices=['reserve','reference','pilot','history-references','daily-refresh']);a=p.parse_args()
     from screener.publication import coherent
     guard()
     if not coherent(Path('snapshot')):raise ValueError('normal_publication_incoherent')
     asof=read(Path('snapshot/manifest.json'))['asof']
     if asof>=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat():raise ValueError('previous_published_day_only')
+    if a.mode=='daily-refresh':os.environ['COLLECTION_CLASS']='daily_priority'
     budget=Budget(ROOT)
     if budget.routine and a.mode not in ('reserve','reference'):raise ValueError('routine_cannot_backfill_or_call_KIS')
     if a.mode=='reserve':
@@ -231,12 +239,15 @@ def main():
             lost.append({'run_id':'39736095088','maximum_unrecorded_requests':20,
                          'actual_physical_requests':None,'reason':'collection_step_success_evidence_publication_failed_logs_inaccessible'})
         budget.state.setdefault('leases',{}).setdefault(budget.lease_id,{'status':'reserved','limit':budget.limit,'reserved_at':now(),
-             'budget_class':'routine_reference' if budget.routine else 'bootstrap','budget_date':budget.budget_date,
+             'budget_class':budget.budget_class,'budget_date':budget.budget_date,
              'initial_recorded_count':len(budget.state['requests'])})
         save(budget.path,budget.state)
         return
     try:
-        if a.mode=='pilot':kis_series(ROOT,budget,asof)
+        if a.mode=='daily-refresh':
+            from scripts.refresh_decision_prices import refresh
+            refresh(ROOT,budget,asof)
+        elif a.mode=='pilot':kis_series(ROOT,budget,asof)
         else:
             for market,code in [('KOSPI','0001'),('KOSDAQ','1001')]:
                 days=[asof] if a.mode=='reference' else list(reversed(index_days(ROOT,asof,code)))

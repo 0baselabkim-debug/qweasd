@@ -64,7 +64,7 @@ def test_manual_collector_keeps_shared_lock_and_no_cron():
     assert 'python scripts/preserve_decision_evidence.py' in s
     assert 'fetch-depth: 0' in s and 'actions/upload-artifact@v4' in s
     assert 'HEAD:main' not in s
-    assert "inputs.mode || 'reference'" in s and 'routine_reference' in s
+    assert "inputs.mode || 'daily-refresh'" in s and 'daily_priority' in s
 
 
 def history_fixture():
@@ -160,3 +160,53 @@ def test_official_mod_flag_is_no_trade_not_a_corporate_adjustment():
     assert r['accepted'] is None
     assert 'no_trade_or_indicative_candle_unverified' in r['reasons']
     assert 'corporate_action_adjustment_unverified' not in r['reasons']
+
+
+def test_priority_daily_budget_counts_auth_failed_and_unknown_leases(tmp_path,monkeypatch):
+    monkeypatch.setenv('COLLECTION_CLASS','daily_priority')
+    monkeypatch.setattr(c,'guard',lambda:None);monkeypatch.setattr(c.time,'sleep',lambda _:None)
+    for _ in range(2):
+        b=c.Budget(tmp_path)
+        for i in range(20):b.before_http('/oauth2/tokenP' if i==0 else '/price');b.finish('failed')
+        with pytest.raises(ValueError,match='exhausted'):b.before_http('/price')
+    with pytest.raises(ValueError,match='exhausted'):c.Budget(tmp_path).before_http('/price')
+    assert len(c.read(tmp_path/'requests.json')['requests'])==40
+
+
+@pytest.mark.parametrize('defect',[None,'raw_basis','identity','future','corporate','official','missing','vintage','overlap'])
+def test_paired_reobservation_never_weakens_acceptance(defect):
+    import copy,datetime as dt
+    from screener.decision_support.history import refreshed_continuation
+    days,objects,official,db=history_fixture();old=days[-1]
+    new=(dt.date.fromisoformat(old)+dt.timedelta(days=1)).isoformat()
+    rows=copy.deepcopy(objects[f'kis:{old}:000720:0:0'][0][1]['response']['output2'][-30:])
+    row=copy.deepcopy(rows[-1]);row['stck_bsop_date']=new.replace('-','');rows.append(row)
+    official['000720',new,'KOSPI']=copy.deepcopy(official['000720',old,'KOSPI'])
+    for option in ('0','1'):
+        obj=copy.deepcopy(objects[f'kis:{old}:000720:{option}:0'][0][1]);obj['params']['FID_INPUT_DATE_2']=new.replace('-','');obj['response']['output2']=copy.deepcopy(rows)
+        objects[f'recent:{new}:000720:{option}']=[('recent'+option,obj)]
+    pair=objects[f'recent:{new}:000720:1'][0][1]
+    if defect=='raw_basis':pair['response']['output2'][-1]['stck_clpr']=106
+    if defect=='identity':pair['params']['FID_COND_MRKT_DIV_CODE']='NX'
+    if defect=='future':pair['response']['output2'][-1]['stck_bsop_date']='20990101'
+    if defect=='corporate':pair['response']['output2'][-1]['prtt_rate']='2'
+    if defect=='official':official['000720',new,'KOSPI'][0]['value']['close']=106
+    if defect=='missing':objects.pop(f'recent:{new}:000720:1')
+    if defect=='vintage':pair['observed_at']='2026-01-02T01:00:00+00:00'
+    if defect=='overlap':
+        for o in ('0','1'):objects[f'recent:{new}:000720:{o}'][0][1]['response']['output2'][-2]['stck_clpr']=106
+    before=copy.deepcopy(db)
+    r=refreshed_continuation(objects,'000720','KOSPI',new,'2020-01-01',official,db,days+[new],{})
+    assert db==before
+    if defect:assert r.get('error') or new not in r['accepted']
+    else:assert len(r['accepted'])==122 and r['link_proof']['paired_reobservation_source_ids']==['recent0','recent1']
+
+
+def test_priority_reuses_success_and_never_full_market(tmp_path):
+    from scripts.refresh_decision_prices import plan,PRIORITY
+    assert len(PRIORITY)==5
+    for code in PRIORITY:
+        for option in ('0','1'):c.cache(tmp_path,f'kis:2026-10-21:{code}:{option}:1',{'saved':True})
+    boot,recent=plan(tmp_path,'2026-10-22');assert boot==[] and len(recent)==10
+    for code,option in recent:c.cache(tmp_path,f'recent:2026-10-22:{code}:{option}',{'saved':True})
+    assert plan(tmp_path,'2026-10-22')==([],[])

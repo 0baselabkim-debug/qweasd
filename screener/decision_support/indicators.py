@@ -106,6 +106,29 @@ def technical(days, observations, benchmarks=None):
         out[f'return_{n}d_pct']=metric(ret)
         rs=ret-(idx[-1]/idx[0]-1)*100 if ret is not None and len(idx)==n+1 and all(v is not None and v>0 for v in idx) else None
         out[f'market_excess_{n}d_pp']=metric(rs,'price_or_same_market_benchmark_missing')
+    out['close']=metric(close,'latest_price_not_verified')
+    out['volume']=metric(latest['volume'] if latest else None,'latest_price_not_verified')
+    out['close_change_1d']=metric(close-prev['close'] if latest and prev else None)
+    out['close_change_1d_pct']=metric((close/prev['close']-1)*100 if latest and prev else None)
+    out['volume_change_1d']=metric(latest['volume']-prev['volume'] if latest and prev else None)
+    out['volume_change_1d_pct']=metric((latest['volume']/prev['volume']-1)*100 if latest and prev and prev['volume']>0 else None)
+    out['intraday_range']=metric(latest['high']-latest['low'] if latest else None)
+    out['intraday_range_pct']=metric((latest['high']-latest['low'])/close*100 if latest else None)
+    for n in (5,20,60):
+        ph=out[f'prior_high_{n}']['value'];pl=out[f'prior_low_{n}']['value']
+        out[f'new_high_{n}']=metric(latest['high']>ph if latest and ph is not None else None)
+        out[f'new_low_{n}']=metric(latest['low']<pl if latest and pl is not None else None)
+    w=window(40);swings={'high':[],'low':[]}
+    if w:
+        ds=days[-40:]
+        for i in range(2,38):
+            neighbors=[w[j]['close'] for j in range(i-2,i+3) if j!=i]
+            for kind,confirmed in [('high',all(w[i]['close']>v for v in neighbors)),('low',all(w[i]['close']<v for v in neighbors))]:
+                if confirmed:swings[kind].append({'price':w[i]['close'],'occurred_on':ds[i],'confirmed_on':ds[i+2]})
+    for kind in ('high','low'):
+        out[f'confirmed_swing_{kind}s']=metric(swings[kind][-2:] if w else None,'missing_40_verified_sessions')
+        values=swings[kind]
+        out[f'swing_{kind}_change']=metric(values[-1]['price']-values[-2]['price'] if len(values)>=2 else None,'two_confirmed_swings_missing')
     return out
 
 

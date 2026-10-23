@@ -1,0 +1,225 @@
+{
+  "main": "4c1a351ef848ce7151695eff9661e25e3a9375b6",
+  "protected_sha256": {
+    "snapshot/dashboard.duckdb": "22eec7d16615496681cb55a63bad307942a31814f6b2fb609bb3b0fc76a3c6d2",
+    "snapshot/manifest.json": "387af68964daa4d91976cc697575b2b79996113d7a09cc2162f673a6bcdcedd1",
+    "snapshot/daily_briefing.json": "42199e635a30620777eb18a79975d9ef233ccd464c7b469022fcfa8dd358f4b7",
+    "snapshot/briefing/index.json": "b94c9367fe07ba6fb58ed3cbbec14fe96f0dc32898698c1271c642d6d8d6cda7",
+    ".github/workflows/daily-dashboard.yml": "c20d935583dbbdc1c0a82eab7e890fb12f5f147529b60c04ac90716b6a4a82ad"
+  },
+  "stocks": [
+    {
+      "symbol": "285130",
+      "name": "SK케미칼",
+      "asof": "2026-10-22",
+      "validity": {
+        "available_adjusted_rows": 40,
+        "data_vintage": "2026-10-22T10:18:03.567211+00:00",
+        "historical_backtest_eligible": false,
+        "no_personal_data": true,
+        "official_six_field_pass_rows": 25,
+        "price_policy": "same response vintage; same-day six-field KRX match; unchanged source DB comparison; no unverified adjustments",
+        "verified_contiguous_price_days": 0
+      },
+      "ohlcv": {
+        "adjustment_fields": {
+          "flng_cls_code": "00",
+          "mod_yn": "N",
+          "prtt_rate": "0.00",
+          "revl_issu_reas": ""
+        },
+        "basis": "KIS_adjusted_option_0",
+        "close": 40750,
+        "exchange": "KRX",
+        "high": 42450,
+        "low": 40750,
+        "market": "KOSPI",
+        "observed_at": "2026-10-22T10:18:03.567211+00:00",
+        "official_source_ids": [],
+        "open": 42450,
+        "provider_finality": "UNVERIFIED",
+        "raw_row_sha256": "0afd61a1a83d7b33e0de92b23e6cd351abe14abd42671419ab1794183d2c97b0",
+        "reasons": [
+          "official_KRX_not_available"
+        ],
+        "source_id": "7663f159e67b0c40eeb1278e2d7ef656036fd5b5af2bff4ab99b04c704fb47ac",
+        "symbol": "285130",
+        "trade_date": "2026-10-22",
+        "turnover": 2580651800,
+        "validation_status": "hold",
+        "volume": 62522
+      }
+    },
+    {
+      "symbol": "018260",
+      "name": "삼성에스디에스",
+      "asof": "2026-10-22",
+      "validity": {
+        "available_adjusted_rows": 40,
+        "data_vintage": "2026-10-22T10:07:10.496083+00:00",
+        "historical_backtest_eligible": false,
+        "no_personal_data": true,
+        "official_six_field_pass_rows": 25,
+        "price_policy": "same response vintage; same-day six-field KRX match; unchanged source DB comparison; no unverified adjustments",
+        "verified_contiguous_price_days": 0
+      },
+      "ohlcv": {
+        "adjustment_fields": {
+          "flng_cls_code": "00",
+          "mod_yn": "N",
+          "prtt_rate": "0.00",
+          "revl_issu_reas": ""
+        },
+        "basis": "KIS_adjusted_option_0",
+        "close": 206000,
+        "exchange": "KRX",
+        "high": 218000,
+        "low": 198000,
+        "market": "KOSPI",
+        "observed_at": "2026-10-22T10:07:10.496083+00:00",
+        "official_source_ids": [],
+        "open": 198500,
+        "provider_finality": "UNVERIFIED",
+        "raw_row_sha256": "b27fc09c02b2bbb422c81af738c92d2488009859168219676247445bbb024407",
+        "reasons": [
+          "official_KRX_not_available"
+        ],
+        "source_id": "7663f159e67b0c40eeb1278e2d7ef656036fd5b5af2bff4ab99b04c704fb47ac",
+        "symbol": "018260",
+        "trade_date": "2026-10-22",
+        "turnover": 86672988900,
+        "validation_status": "hold",
+        "volume": 410628
+      }
+    },
+    {
+      "symbol": "064400",
+      "name": "LG씨엔에스",
+      "asof": "2026-10-22",
+      "validity": {
+        "available_adjusted_rows": 40,
+        "data_vintage": "2026-10-22T10:11:37.119442+00:00",
+        "historical_backtest_eligible": false,
+        "no_personal_data": true,
+        "official_six_field_pass_rows": 25,
+        "price_policy": "same response vintage; same-day six-field KRX match; unchanged source DB comparison; no unverified adjustments",
+        "verified_contiguous_price_days": 0
+      },
+      "ohlcv": {
+        "adjustment_fields": {
+          "flng_cls_code": "00",
+          "mod_yn": "N",
+          "prtt_rate": "0.00",
+          "revl_issu_reas": ""
+        },
+        "basis": "KIS_adjusted_option_0",
+        "close": 72000,
+        "exchange": "KRX",
+        "high": 74800,
+        "low": 71000,
+        "market": "KOSPI",
+        "observed_at": "2026-10-22T10:11:37.119442+00:00",
+        "official_source_ids": [],
+        "open": 72000,
+        "provider_finality": "UNVERIFIED",
+        "raw_row_sha256": "b035573c34b0a483480af77953713a8df3fe96106e4ea67cfd1abbd75d8e56bf",
+        "reasons": [
+          "official_KRX_not_available"
+        ],
+        "source_id": "7663f159e67b0c40eeb1278e2d7ef656036fd5b5af2bff4ab99b04c704fb47ac",
+        "symbol": "064400",
+        "trade_date": "2026-10-22",
+        "turnover": 77921462400,
+        "validation_status": "hold",
+        "volume": 1061550
+      }
+    },
+    {
+      "symbol": "017670",
+      "name": "SK텔레콤",
+      "asof": "2026-10-22",
+      "validity": {
+        "available_adjusted_rows": 40,
+        "data_vintage": "2026-10-22T10:06:53.703882+00:00",
+        "historical_backtest_eligible": false,
+        "no_personal_data": true,
+        "official_six_field_pass_rows": 25,
+        "price_policy": "same response vintage; same-day six-field KRX match; unchanged source DB comparison; no unverified adjustments",
+        "verified_contiguous_price_days": 0
+      },
+      "ohlcv": {
+        "adjustment_fields": {
+          "flng_cls_code": "00",
+          "mod_yn": "N",
+          "prtt_rate": "0.00",
+          "revl_issu_reas": ""
+        },
+        "basis": "KIS_adjusted_option_0",
+        "close": 75400,
+        "exchange": "KRX",
+        "high": 77100,
+        "low": 75200,
+        "market": "KOSPI",
+        "observed_at": "2026-10-22T10:06:53.703882+00:00",
+        "official_source_ids": [],
+        "open": 76100,
+        "provider_finality": "UNVERIFIED",
+        "raw_row_sha256": "04d1b75ea7f35c37959c76ffe0deec63da8114c397273387fd4027c6a0e5c237",
+        "reasons": [
+          "official_KRX_not_available"
+        ],
+        "source_id": "7663f159e67b0c40eeb1278e2d7ef656036fd5b5af2bff4ab99b04c704fb47ac",
+        "symbol": "017670",
+        "trade_date": "2026-10-22",
+        "turnover": 22557117150,
+        "validation_status": "hold",
+        "volume": 296174
+      }
+    },
+    {
+      "symbol": "000720",
+      "name": "현대건설",
+      "asof": "2026-10-22",
+      "validity": {
+        "available_adjusted_rows": 40,
+        "data_vintage": "2026-10-22T09:53:59.626811+00:00",
+        "historical_backtest_eligible": false,
+        "no_personal_data": true,
+        "official_six_field_pass_rows": 25,
+        "price_policy": "same response vintage; same-day six-field KRX match; unchanged source DB comparison; no unverified adjustments",
+        "verified_contiguous_price_days": 0
+      },
+      "ohlcv": {
+        "adjustment_fields": {
+          "flng_cls_code": "00",
+          "mod_yn": "N",
+          "prtt_rate": "0.00",
+          "revl_issu_reas": ""
+        },
+        "basis": "KIS_adjusted_option_0",
+        "close": 92400,
+        "exchange": "KRX",
+        "high": 96900,
+        "low": 91500,
+        "market": "KOSPI",
+        "observed_at": "2026-10-22T09:53:59.626811+00:00",
+        "official_source_ids": [],
+        "open": 92600,
+        "provider_finality": "UNVERIFIED",
+        "raw_row_sha256": "08d7e55648fc25b758d4242bfdc52ff75a57be082933ce04ca5bbe0f1f7ebbd3",
+        "reasons": [
+          "official_KRX_not_available"
+        ],
+        "source_id": "7663f159e67b0c40eeb1278e2d7ef656036fd5b5af2bff4ab99b04c704fb47ac",
+        "symbol": "000720",
+        "trade_date": "2026-10-22",
+        "turnover": 48993770800,
+        "validation_status": "hold",
+        "volume": 519441
+      }
+    }
+  ],
+  "requests_before": 255,
+  "last_price_event": "39874213749",
+  "last_price_event_failure": "queued operating workflow gate; no market request"
+}
