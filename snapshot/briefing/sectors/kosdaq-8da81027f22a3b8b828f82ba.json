@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-22",
+  "asof": "2026-10-23",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-22-5a6c3c8ad79eed39df3f3b1ea56c3f745a7ace925d22cea2e32232d6c41e8e62",
-  "generated_at": "2026-10-23T08:48:19.667263+00:00",
+  "dataset_id": "flow-v3-2026-10-23-0599fd7d92d2e56d2325b4bbfa8145eb22bc70f5b4c384395c4740cebe56a65f",
+  "generated_at": "2026-10-23T11:21:30.172968+00:00",
   "market": "KOSDAQ",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kosdaq-8da81027f22a3b8b828f82ba.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-23T08:48:19.667263+00:00",
+  "published_at": "2026-10-23T11:21:30.172968+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 2
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "표준산업 · 작물 재배업",
   "sector_id": "kosdaq-8da81027f22a3b8b828f82ba",
-  "source_snapshot_sha256": "5a6c3c8ad79eed39df3f3b1ea56c3f745a7ace925d22cea2e32232d6c41e8e62",
+  "source_snapshot_sha256": "0599fd7d92d2e56d2325b4bbfa8145eb22bc70f5b4c384395c4740cebe56a65f",
   "stock_count": 2,
   "stocks": [
     {
-      "change_5d": -2000000.0,
-      "intensity_5d": -0.0005571030640668524,
+      "change_5d": -45000000.0,
+      "intensity_5d": -0.0007798165137614678,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "NH농우바이오",
-      "net_1d": -13000000.0,
-      "net_20d": -319000000.0,
-      "net_5d": -60000000.0,
+      "net_1d": -18000000.0,
+      "net_20d": -326000000.0,
+      "net_5d": -85000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 4.0,
-      "previous_5d": -58000000.0,
+      "previous_5d": -40000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "054050"
     },
     {
-      "change_5d": -13000000.0,
-      "intensity_5d": 0.00010869565217391305,
+      "change_5d": -17000000.0,
+      "intensity_5d": 0.0,
       "market": "KOSDAQ",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "아시아종묘",
-      "net_1d": 0.0,
-      "net_20d": 10000000.0,
-      "net_5d": 2000000.0,
+      "net_1d": 1000000.0,
+      "net_20d": 6000000.0,
+      "net_5d": 0.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 12.0,
-      "previous_5d": 15000000.0,
+      "previous_5d": 17000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],

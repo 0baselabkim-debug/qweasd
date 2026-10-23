@@ -4519,5 +4519,36 @@
         }
       }
     ]
+  },
+  "2026-10-23": {
+    "run_id": "39934206571",
+    "mode": "collect",
+    "published_at_utc": "2026-10-23T11:21:23.912056+00:00",
+    "sha256": "0599fd7d92d2e56d2325b4bbfa8145eb22bc70f5b4c384395c4740cebe56a65f",
+    "validation": {
+      "trade_date": "2026-10-23",
+      "records": 2426,
+      "excluded": 113,
+      "adjusted_updates": 99348,
+      "source_run": "39934206571",
+      "planned_start_at": "2026-10-23T18:30:00+09:00",
+      "collection_started_at": "2026-10-23T09:46:28.464028+00:00",
+      "collection_completed_at": "2026-10-23T11:19:31.501793+00:00",
+      "input_mode": "live_daily_collection",
+      "adjusted_close_conflict_symbols": 0,
+      "complete_stock_scores": 1159,
+      "complete_sector_scores": 0,
+      "full_20d_symbols": 2413,
+      "preservation_verified": true,
+      "phase_seconds": {
+        "bundle_validation": 0.3737005960001625,
+        "database_copy": 0.007579794000776019,
+        "database_update": 17.924593996000112,
+        "preservation_comparison": 0.06421428399971774,
+        "aggregate_validation": 3.931025590999525
+      },
+      "candidate_total_seconds": 22.30131730300036,
+      "sha256": "0599fd7d92d2e56d2325b4bbfa8145eb22bc70f5b4c384395c4740cebe56a65f"
+    }
   }
 }

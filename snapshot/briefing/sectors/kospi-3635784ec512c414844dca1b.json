@@ -1,8 +1,8 @@
 {
-  "asof": "2026-10-22",
+  "asof": "2026-10-23",
   "classification": "official_sector",
-  "dataset_id": "flow-v3-2026-10-22-5a6c3c8ad79eed39df3f3b1ea56c3f745a7ace925d22cea2e32232d6c41e8e62",
-  "generated_at": "2026-10-23T08:48:19.667263+00:00",
+  "dataset_id": "flow-v3-2026-10-23-0599fd7d92d2e56d2325b4bbfa8145eb22bc70f5b4c384395c4740cebe56a65f",
+  "generated_at": "2026-10-23T11:21:30.172968+00:00",
   "market": "KOSPI",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
@@ -22,7 +22,7 @@
   "path": "sectors/kospi-3635784ec512c414844dca1b.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-23T08:48:19.667263+00:00",
+  "published_at": "2026-10-23T11:21:30.172968+00:00",
   "raw_flow_reconciliation": {
     "status": "passed",
     "stocks_checked": 2
@@ -30,12 +30,12 @@
   "schema_version": 3,
   "sector": "부동산",
   "sector_id": "kospi-3635784ec512c414844dca1b",
-  "source_snapshot_sha256": "5a6c3c8ad79eed39df3f3b1ea56c3f745a7ace925d22cea2e32232d6c41e8e62",
+  "source_snapshot_sha256": "0599fd7d92d2e56d2325b4bbfa8145eb22bc70f5b4c384395c4740cebe56a65f",
   "stock_count": 2,
   "stocks": [
     {
-      "change_5d": -126000000.0,
-      "intensity_5d": -0.0008333333333333334,
+      "change_5d": -152000000.0,
+      "intensity_5d": -0.0008840864440078585,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -48,12 +48,12 @@
         "previous_5d": "valid"
       },
       "name": "SK디앤디",
-      "net_1d": 17000000.0,
-      "net_20d": 30000000.0,
-      "net_5d": -43000000.0,
+      "net_1d": 0.0,
+      "net_20d": 71000000.0,
+      "net_5d": -45000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 9.0,
-      "previous_5d": 83000000.0,
+      "previous_5d": 107000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
@@ -63,8 +63,8 @@
       "symbol": "210980"
     },
     {
-      "change_5d": -11220000000.0,
-      "intensity_5d": -0.008382523148148148,
+      "change_5d": -11105000000.0,
+      "intensity_5d": -0.014738219895287959,
       "market": "KOSPI",
       "metric_validity": {
         "change_5d": "valid",
@@ -77,12 +77,12 @@
         "previous_5d": "valid"
       },
       "name": "자이에스앤디",
-      "net_1d": -2679000000.0,
-      "net_20d": 6264000000.0,
-      "net_5d": -2897000000.0,
+      "net_1d": -2045000000.0,
+      "net_20d": 4942000000.0,
+      "net_5d": -4504000000.0,
       "observed_days_20d": 20.0,
       "positive_days_20d": 13.0,
-      "previous_5d": 8323000000.0,
+      "previous_5d": 6601000000.0,
       "quality": {
         "incomplete": false,
         "missing_metrics": [],
