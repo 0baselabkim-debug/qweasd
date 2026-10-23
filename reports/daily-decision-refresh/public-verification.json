@@ -1,0 +1,62 @@
+{
+  "url": "https://raw.githubusercontent.com/0baselabkim-debug/qweasd/main/snapshot/decision-support/index.json",
+  "index_sha256": "12d43a622c93aab9ef7a793595f8f0d0427f73e1290133dadfd4c50811d46c44",
+  "dataset_id": "decision-v1-2026-10-22-0eefa38a84a1d312b1740cabb78f7da450b1858bb8dd5fde1e404712f0867257",
+  "source_snapshot_sha256": "22eec7d16615496681cb55a63bad307942a31814f6b2fb609bb3b0fc76a3c6d2",
+  "publication_status": "validated_auxiliary",
+  "validation_status": "passed_with_metric_holds",
+  "stocks": [
+    {
+      "symbol": "000720",
+      "close": 93000,
+      "asof": "2026-10-22",
+      "verified_days": 122
+    },
+    {
+      "symbol": "018260",
+      "close": 207000,
+      "asof": "2026-10-22",
+      "verified_days": 121
+    },
+    {
+      "symbol": "064400",
+      "close": 72900,
+      "asof": "2026-10-22",
+      "verified_days": 42
+    },
+    {
+      "symbol": "285130",
+      "close": 41200,
+      "asof": "2026-10-22",
+      "verified_days": 50
+    },
+    {
+      "symbol": "017670",
+      "close": 76200,
+      "asof": "2026-10-22",
+      "verified_days": 35
+    }
+  ],
+  "shards": [
+    {
+      "file": "sectors/kospi-185cbf181fd734a41b28e870-1.json",
+      "sha256": "d88b4784dc596bae2558918951caaa8a95e54f36d5219a0ceaf3529233fe3c4b",
+      "http": 200
+    },
+    {
+      "file": "sectors/kospi-48dde53ee6571be843b9f93f-1.json",
+      "sha256": "04cf5e4ebe6e01575471325d26a1990ef35151731f153c1fd98fd4058ad057bd",
+      "http": 200
+    },
+    {
+      "file": "sectors/kospi-59ea626efa4b283132c311fc-2.json",
+      "sha256": "1be736644e1393a36ccf8c02ff5d49eb29ba0612dfffc548d406aa1f70af3d78",
+      "http": 200
+    },
+    {
+      "file": "sectors/kospi-65d13ee4c4e903e8ce2b7af4-1.json",
+      "sha256": "c1cd9e8cf4e4b4fbc00814dea5524228f51934a1fa106c4353c77c59e6f42c24",
+      "http": 200
+    }
+  ]
+}
