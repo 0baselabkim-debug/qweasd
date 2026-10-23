@@ -262,6 +262,20 @@ def build(snapshot=Path('snapshot'), previous=Path('snapshot/decision-support'),
                 'validated_continuation':history.get('link_proof'),
                 'basis':'both KIS bases + official KRX exact six fields; operating originals preserved',
                 'calendar':'preserved official market index sessions, exact operating calendar overlap'}
+            # Audit the new vintage against the preserved same-day observation;
+            # this comparison never overwrites or qualifies either source.
+            original=[x for x in rawbars if date(x['stck_bsop_date'])==asof]
+            selected=accepted.get(asof)
+            if len(original)==1 and selected:
+                try:
+                    old_bar=bar(original[0],KIS_FIELDS)
+                    history_selection['current_observation_comparison']={
+                        'asof':asof,'original_source_id':current[0]['sha256'],
+                        'original_preserved':True,'differences':{
+                            k:{'original':old_bar[k],'verified':selected[k]}
+                            for k in KIS_FIELDS if old_bar[k]!=selected[k]}}
+                except (ValueError,KeyError,TypeError):
+                    history_selection['current_observation_comparison']={'asof':asof,'status':'original_invalid','original_preserved':True}
             obs_rows[:]=[x for x in obs_rows if x['symbol']!=code]
             obs_rows.extend({**x,'reasons':json.dumps(x['reasons']),'official_source_ids':json.dumps(x['official_source_ids']),
                 'adjustment_fields':json.dumps(x['adjustment_fields'])} for x in series)

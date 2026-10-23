@@ -122,7 +122,14 @@ An unavailable official day remains a gap and blocks affected indicators.
         observed=record.get('analysis_source',{}).get('chart_observed_at',record['observed_at'])
         timestamp(observed)
         old={r['trade_date']:r for r in base['series']}
-        overlap=sorted(set(fresh)&set(old))
+        # Only the already verified contiguous suffix may anchor a link.
+        # Pre-event/invalid older candles remain preserved and excluded; they
+        # must not permanently block independently verified post-event history.
+        suffix=[]
+        for d in reversed(base['days']):
+            if d not in base['accepted']:break
+            suffix.append(d)
+        overlap=sorted(set(fresh)&set(old)&set(suffix))
         if len(overlap)<20 or overlap[-1]!=base_asof:raise ValueError('continuation_overlap_short')
         for d in overlap:
             if adjustment_pending(fresh[d]) or any(bar(fresh[d],KIS_FIELDS)[k]!=old[d][k] for k in KIS_FIELDS):
@@ -141,7 +148,7 @@ An unavailable official day remains a gap and blocks affected indicators.
         base['days']+=extension;base['observed_at']=observed;base['source_ids'].append(checkpoint_id)
         base['benchmarks'].update({d:benchmarks[d] for d in extension if d in benchmarks})
         base['link_proof']={'base_asof':base_asof,'overlap_days':len(overlap),'whole_six_field_overlap_equal':True,
-                            'new_days':extension,'no_original_overwrite':True}
+                            'overlap_dates':overlap,'new_days':extension,'no_original_overwrite':True}
         return base
     except (ValueError,KeyError,TypeError) as e:
         return {'error':str(e) if isinstance(e,ValueError) else 'malformed_continuation'}
@@ -170,11 +177,12 @@ def refreshed_continuation(objects,code,market,asof,listing,official,db_prices,d
             maps.append(m)
         if (max(times)-min(times)).total_seconds()>900:raise ValueError('recent_pair_vintage_mismatch')
         if set(maps[0])!=set(maps[1]) or asof not in maps[0]:raise ValueError('recent_pair_calendar_mismatch')
-        for d in maps[0]:
-            if adjustment_pending(maps[0][d]) or adjustment_pending(maps[1][d]) or bar(maps[0][d],KIS_FIELDS)!=bar(maps[1][d],KIS_FIELDS):raise ValueError('recent_pair_adjustment_or_price_conflict')
         record={'adjusted_prices':list(maps[0].values()),'observed_at':max(times).isoformat()}
         result=continuation(objects,code,market,asof,listing,official,db_prices,days,benchmarks,record,sha(encoded(source_ids)))
         if result and not result.get('error'):
+            relevant=result['link_proof']['overlap_dates']+result['link_proof']['new_days']
+            for d in relevant:
+                if adjustment_pending(maps[0][d]) or adjustment_pending(maps[1][d]) or bar(maps[0][d],KIS_FIELDS)!=bar(maps[1][d],KIS_FIELDS):raise ValueError('recent_pair_adjustment_or_price_conflict')
             result['source_ids']+=source_ids
             result['link_proof']['paired_reobservation_source_ids']=source_ids
         return result

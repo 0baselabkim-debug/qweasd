@@ -210,3 +210,22 @@ def test_priority_reuses_success_and_never_full_market(tmp_path):
     boot,recent=plan(tmp_path,'2026-10-22');assert boot==[] and len(recent)==10
     for code,option in recent:c.cache(tmp_path,f'recent:2026-10-22:{code}:{option}',{'saved':True})
     assert plan(tmp_path,'2026-10-22')==([],[])
+
+
+def test_post_event_verified_suffix_can_continue_without_crossing_event():
+    import copy,datetime as dt
+    from screener.decision_support.history import continuation
+    from screener.decision_support.indicators import technical
+    days,objects,official,db=history_fixture();old=days[-1];new=(dt.date.fromisoformat(old)+dt.timedelta(days=1)).isoformat()
+    rows=objects[f'kis:{old}:000720:0:0'][0][1]['response']['output2']
+    rows[-36]['flng_cls_code']='05'
+    fresh=copy.deepcopy(rows);last=copy.deepcopy(rows[-1]);last['stck_bsop_date']=new.replace('-','');fresh.append(last)
+    official['000720',new,'KOSPI']=copy.deepcopy(official['000720',old,'KOSPI'])
+    result=continuation(objects,'000720','KOSPI',new,'2020-01-01',official,db,days+[new],{}, {'adjusted_prices':fresh,'observed_at':'2026-01-02T01:00:00+00:00'},'saved')
+    assert not result.get('error') and len(result['accepted'])==36
+    assert result['link_proof']['overlap_days']==35
+    values=technical(result['days'],result['accepted'])
+    assert values['sma_20']['value']==105 and values['sma_60']['value'] is None
+    fresh[-2]['stck_clpr']=106
+    blocked=continuation(objects,'000720','KOSPI',new,'2020-01-01',official,db,days+[new],{}, {'adjusted_prices':fresh,'observed_at':'2026-01-02T01:00:00+00:00'},'saved')
+    assert blocked['error']=='continuation_overlap_or_adjustment_conflict'
