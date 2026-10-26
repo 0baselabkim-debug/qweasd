@@ -8,8 +8,8 @@ CONTROL='.github/experiments/full-market-control.json'
 
 
 def validate(c,now):
-    if set(c)!= {'schema','experiment','asof','action','round','request_id'} or c['schema']!=1 or c['experiment']!=EXPERIMENT_ID or c['asof']!=ASOF or c['action'] not in ('inspect','recover_missing') or type(c['round']) is not int or c['round'] not in (1,2,3,4):raise Failure('bad_admin_control')
-    if now.date()!=dt.date(2026,10,26):raise Failure('admin_bootstrap_expired')
+    if set(c)!= {'schema','experiment','asof','action','round','request_id'} or c['schema']!=1 or c['experiment']!=EXPERIMENT_ID or c['asof']!=ASOF or c['action'] not in ('inspect','recover_missing','stop') or type(c['round']) is not int or c['round'] not in (1,2,3,4):raise Failure('bad_admin_control')
+    if c['action']!='stop' and now.date()!=dt.date(2026,10,26):raise Failure('admin_bootstrap_expired')
     if c['action']=='recover_missing':
         start,_=window(c['round'],now)
         if now<start+dt.timedelta(minutes=15):raise Failure('scheduled_run_grace_period')
@@ -49,6 +49,9 @@ def main():
     changed=subprocess.check_output(['git','diff','--name-only',parent,'HEAD'],text=True).splitlines()
     if changed!=[CONTROL]:raise Failure('only_admin_control_may_change')
     c=json.loads(Path(CONTROL).read_bytes());current=utcnow();validate(c,current)
+    if c['action']=='stop':
+        from .halt import stop
+        stop();return
     meta=runtime.api(f'repos/{runtime.REPO}/actions/workflows/{runtime.WORKFLOW}')
     if meta['path']!='.github/workflows/'+runtime.WORKFLOW:raise Failure('unexpected_workflow')
     data=runtime.api(f'repos/{runtime.REPO}/actions/workflows/{meta["id"]}/runs?per_page=100')
