@@ -1,0 +1,37 @@
+{
+  "status": "NOT_APPROVED_NOT_RUN",
+  "market": "KOSPI",
+  "method": "GET",
+  "credential_binding": "KRX_API_KEY",
+  "header_names": [
+    "AUTH_KEY"
+  ],
+  "max_physical_http": 2,
+  "automatic_retries": 0,
+  "parallelism": 1,
+  "stop_on_first_transport_or_authorization_error": true,
+  "requires_separate_explicit_execution_approval": true,
+  "requests": [
+    {
+      "role": "known_success_control",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd",
+      "params": {
+        "basDd": "20261015"
+      }
+    },
+    {
+      "role": "incident_target",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd",
+      "params": {
+        "basDd": "20261026"
+      }
+    }
+  ],
+  "interpretation": {
+    "control_nonempty_target_empty": "Supports date-specific unavailability; does not establish publication schedule or prove its sole cause",
+    "both_nonempty": "Current access works; original incident cause remains retrospective and unresolved",
+    "both_empty": "Cannot distinguish entitlement, request policy, missing data, or provider issue",
+    "401_or_403": "Check account/service approval and denial origin; no bypass or retry",
+    "429_or_5xx_or_timeout": "Stop at the first transport error and preserve it; provider incident requires independent evidence"
+  }
+}

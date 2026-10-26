@@ -1,0 +1,22 @@
+{
+  "evidence_level": "reconstruction_from_executed_source_not_redownloaded_request_metadata",
+  "run_id": 40311038702,
+  "source_commit": "a9a8f05a2f98a0a3ffb551946b0d624c3f8246f8",
+  "source_file": "collector_v1/experiment/engine.py",
+  "source_file_sha256": "9d45fa01ee9575ce967dc12a706bfcd83ac3ea983a83440e52e5546e1dfcd282",
+  "method": "GET",
+  "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd",
+  "params": {
+    "basDd": "20261026"
+  },
+  "header_names": [
+    "AUTH_KEY"
+  ],
+  "credential_binding_name": "KRX_API_KEY",
+  "credential_value_recorded": false,
+  "response_semantic_content_confirmed_by_user": {
+    "OutBlock_1": []
+  },
+  "original_response_bytes_recreated": false,
+  "root_cause": "UNDETERMINED"
+}

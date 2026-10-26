@@ -1,0 +1,26 @@
+{
+  "observed_at": "2026-10-26T11:29:50.186394+00:00",
+  "market_api_requests_this_task": 0,
+  "official_documents": [
+    {
+      "url": "https://openapi.krx.co.kr/contents/OPP/MAIN/main/index.cmd",
+      "status": "BLOCKED",
+      "failure": "environment_proxy_Tunnel_connection_failed_403",
+      "publication_policy_verified": false,
+      "service_approval_policy_verified": false
+    },
+    {
+      "url": "https://data-dbg.krx.co.kr/contents/OPP/MAIN/main/index.cmd",
+      "status": "BLOCKED",
+      "failure": "environment_proxy_Tunnel_connection_failed_403",
+      "publication_policy_verified": false,
+      "service_approval_policy_verified": false
+    }
+  ],
+  "cached_homepage": {
+    "path": "reports/operations-stabilization/official-documents/krx-public.html",
+    "sha256": "fbb490f85bf3b91e2a814e422de7ef0580619357c31ae046f713a70f87209b0b",
+    "kind": "redirect_only_not_service_specification"
+  },
+  "incident_zip_redownload": "BLOCKED_NOT_PERFORMED_WORKFLOWS_REMAIN_DISABLED"
+}

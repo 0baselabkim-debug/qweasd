@@ -105,35 +105,42 @@ def fetch_task(t,api,budget,cache,attempts,metrics):
     raise Failure('task_retry_budget_exhausted')
 
 
-def qualify(row,cache,store,round_id):
+def qualify_kis(row,cache,store,round_id):
+    """KIS internal checks; a passing row is still pending official validation."""
     code=row['symbol'];market=row['market']
-    def evidence(kind,**kw):return cache[identity(task(kind,ASOF,round=round_id,**kw))]
-    fe=evidence('flow',symbol=code,market=market);pe=evidence('price',symbol=code,market=market);ke=evidence('krx',market=market)
+    fe=cache[identity(task('flow',ASOF,round=round_id,symbol=code,market=market))]
+    pe=cache[identity(task('price',ASOF,round=round_id,symbol=code,market=market))]
     f=parse(store.raw(fe),fe)[0];p=parse(store.raw(pe),pe)[0]
-    maps=getattr(store,'reference_maps',{})
-    refkey=sha(encoded(ke))
-    if refkey not in maps:maps[refkey]={r['ISU_CD']:r for r in parse(store.raw(ke),ke)}
-    store.reference_maps=maps
-    refs=[maps[refkey][code]] if code in maps[refkey] else []
-    if len(refs)!=1:raise Failure('KRX_symbol_missing_or_duplicate')
-    ref=refs[0]
-    diffs={k:{'kis':p[k],'krx':integer(ref[field]),'delta':p[k]-integer(ref[field])} for k,field in KRX_FIELDS.items() if p[k]!=integer(ref[field])}
-    if diffs:
-        exc=Failure('KIS_KRX_six_field_conflict');exc.details=diffs;exc.symbol=code;raise exc
     if any(f[k]!=p[k] for k in ('close','volume','turnover')):raise Failure('flow_price_conflict')
     if f['institution_net_quantity'] is None:raise Failure('institution_quantity_unverified')
     if f['institution_amount_raw'] in (None,''):raise Failure('institution_raw_amount_missing')
-    cap=integer(ref['MKTCAP'])
-    if cap<=0:raise Failure('invalid_market_cap')
-    # Independent provisional observations, never daily-accepted operating rows.
     return dict(symbol=code,market=market,asof=ASOF,foreign_net_quantity=f['foreign_net_quantity'],foreign_net_amount=f['foreign_net_amount'],
                 institution_net_quantity=f['institution_net_quantity'],institution_amount_raw=f['institution_amount_raw'],institution_net_amount=None,
-                **{k:p[k] for k in KRX_FIELDS},market_cap=cap,validation_status='PASS',observation_mode='after_close_provisional',provider_finality='UNVERIFIED',
-                exchange='KRX',adjustment='original',foreign_amount_unit='KRW',institution_amount_status='unit_unverified',flow_observed_at=fe['collected_at'],price_observed_at=pe['collected_at'],reference_observed_at=ke['collected_at'],observation_ids=[sha(encoded(fe)),sha(encoded(pe)),sha(encoded(ke))],source_hashes=[fe['source_hash'],pe['source_hash'],ke['source_hash']])
+                **{k:p[k] for k in KRX_FIELDS},market_cap=None,validation_status='PENDING_KRX',kis_validation_status='PASS',official_price_status='PENDING_KRX',
+                observation_mode='after_close_provisional',provider_finality='UNVERIFIED',exchange='KRX',adjustment='original',foreign_amount_unit='KRW',institution_amount_status='unit_unverified',
+                flow_observed_at=fe['collected_at'],price_observed_at=pe['collected_at'],observation_ids=[sha(encoded(fe)),sha(encoded(pe))],source_hashes=[fe['source_hash'],pe['source_hash']])
 
 
-def plan(round_id,universe):
-    common=[task(k,ASOF,round=round_id,market=m) for k in ('index','krx') for m in ('KOSPI','KOSDAQ')]
+def qualify(row,cache,store,round_id):
+    result=qualify_kis(row,cache,store,round_id)
+    code=row['symbol'];market=row['market'];ke=cache[identity(task('krx',ASOF,round=round_id,market=market))]
+    maps=getattr(store,'reference_maps',{});refkey=sha(encoded(ke))
+    if refkey not in maps:maps[refkey]={r['ISU_CD']:r for r in parse(store.raw(ke),ke)}
+    store.reference_maps=maps
+    if code not in maps[refkey]:raise Failure('KRX_symbol_missing_or_duplicate')
+    ref=maps[refkey][code]
+    diffs={k:{'kis':result[k],'krx':integer(ref[field]),'delta':result[k]-integer(ref[field])} for k,field in KRX_FIELDS.items() if result[k]!=integer(ref[field])}
+    if diffs:
+        exc=Failure('KIS_KRX_six_field_conflict');exc.details=diffs;exc.symbol=code;raise exc
+    cap=integer(ref['MKTCAP'])
+    if cap<=0:raise Failure('invalid_market_cap')
+    result.update(market_cap=cap,validation_status='PASS',official_price_status='SIX_FIELD_MATCH',reference_observed_at=ke['collected_at'])
+    result['observation_ids'].append(sha(encoded(ke)));result['source_hashes'].append(ke['source_hash'])
+    return result
+
+
+def plan(round_id,universe,kis_only=False):
+    common=[task(k,ASOF,round=round_id,market=m) for k in (('index',) if kis_only else ('index','krx')) for m in ('KOSPI','KOSDAQ')]
     selected=[r for r in universe if r['eligible']]
     probe=[r for r in selected if r['symbol'] in trial.TARGETS]
     rest=[r for r in selected if r['symbol'] not in trial.TARGETS]
@@ -142,7 +149,8 @@ def plan(round_id,universe):
     return common,tasks(probe),tasks(rest),selected
 
 
-def run_round(root,round_id,universe,rate_proof,run_id,opener=None,config=None):
+def run_round(root,round_id,universe,rate_proof,run_id,opener=None,config=None,*,kis_only=False,budget_factory=ExperimentBudget):
+    if kis_only and opener is None:raise Failure('live_execution_requires_separate_approval_and_launcher')
     scheduled,deadline=window(round_id);metrics=Metrics();profile=config or {'gzip_level':9,'profile':'baseline'}
     store=Evidence(root,metrics,profile['gzip_level']);previous=store.read('report.json',{});start=previous.get('actual_started_at') or now();wall=time.monotonic();cache=replay(store,round_id)
     old_metrics=previous.get('metrics',{});metrics.seconds.update(old_metrics.get('seconds',{}));metrics.counts.update(old_metrics.get('counts',{}))
@@ -151,17 +159,17 @@ def run_round(root,round_id,universe,rate_proof,run_id,opener=None,config=None):
     for e in events(store.root/'failures.jsonl'):
         attempts[identity(e['task'])]=max(attempts.get(identity(e['task']),0),e['attempt'])
         if not e.get('retryable',True):store.blocked_tasks.add(identity(e['task']))
-    budget=ExperimentBudget(store,round_id,metrics,run_id);api=ProvisionalAPI(store,budget,metrics,opener)
-    common,probe,rest,selected=plan(round_id,universe);rows=[];errors=[];probe_proof=store.read('probe.json',{})
+    budget=budget_factory(store,round_id,metrics,run_id);api=ProvisionalAPI(store,budget,metrics,opener)
+    common,probe,rest,selected=plan(round_id,universe,kis_only);qualifier=qualify_kis if kis_only else qualify;rows=[];errors=[];probe_proof=store.read('probe.json',{})
     status='UNRESOLVED'
     try:
         if rate_proof.get('status')!='PASS' or rate_proof.get('interval_seconds')!=1.05:raise Failure('request_policy_evidence_missing')
         # All three live probe rows and common official references qualify first.
         for t in common+probe:fetch_task(t,api,budget,cache,attempts,metrics)
         for row in selected:
-            if row['symbol'] in trial.TARGETS:qualify(row,cache,store,round_id)
+            if row['symbol'] in trial.TARGETS:qualifier(row,cache,store,round_id)
         probe_proof=dict(status='PASS',round=round_id,symbols=sorted(trial.TARGETS),physical_http=budget.used,
-                         mode='after_close_provisional',standard_next_day_pilot_status='NOT_RUN',checked_at=now())
+                         mode='after_close_provisional',standard_next_day_pilot_status='NOT_RUN',validation_basis='KIS_INTERNAL' if kis_only else 'KIS_KRX_SIX_FIELDS',checked_at=now())
         store.write('probe.json',probe_proof);budget.promote(probe_proof)
         costs={}
         for kind,suffix in [('flow','investor-trade-by-stock-daily'),('price','inquire-daily-itemchartprice')]:
@@ -191,13 +199,13 @@ def run_round(root,round_id,universe,rate_proof,run_id,opener=None,config=None):
         # One bounded same-date reference refresh can recover stale publication.
         for row in selected:
             started=time.monotonic()
-            try:rows.append(qualify(row,cache,store,round_id))
+            try:rows.append(qualifier(row,cache,store,round_id))
             except (Failure,KeyError,ValueError,TypeError) as exc:
                 errors.append(dict(symbol=row['symbol'],market=row['market'],reason=exc.code if isinstance(exc,Failure) else 'required_evidence_missing',details=getattr(exc,'details',None)))
             metrics.add('validation',time.monotonic()-started)
         conflicts={e['market'] for e in errors if e['reason']=='KIS_KRX_six_field_conflict'}
         refreshes=store.read('reference-refreshes.json',{})
-        if conflicts and budget.remaining_seconds()>90:
+        if not kis_only and conflicts and budget.remaining_seconds()>90:
             for market in sorted(conflicts):
                 if refreshes.get(market,0)>=2:continue
                 refreshes[market]=refreshes.get(market,0)+1;store.write('reference-refreshes.json',refreshes)
@@ -207,7 +215,7 @@ def run_round(root,round_id,universe,rate_proof,run_id,opener=None,config=None):
                 except Failure:pass
             rows=[];errors=[]
             for row in selected:
-                try:rows.append(qualify(row,cache,store,round_id))
+                try:rows.append(qualifier(row,cache,store,round_id))
                 except (Failure,KeyError,ValueError,TypeError) as exc:errors.append(dict(symbol=row['symbol'],market=row['market'],reason=exc.code if isinstance(exc,Failure) else 'required_evidence_missing',details=getattr(exc,'details',None)))
         status='COMPLETE' if len(rows)==len(selected) and not errors else 'PARTIAL'
     except (Failure,Stop) as exc:errors.append(dict(reason=exc.code if isinstance(exc,Failure) else str(exc),symbol=getattr(exc,'symbol',None),details=getattr(exc,'details',None)))
@@ -217,12 +225,12 @@ def run_round(root,round_id,universe,rate_proof,run_id,opener=None,config=None):
     # Qualify already-preserved successes even when the collection loop stopped.
     if not rows:
         for row in selected:
-            try:rows.append(qualify(row,cache,store,round_id))
+            try:rows.append(qualifier(row,cache,store,round_id))
             except (Failure,KeyError,ValueError,TypeError):pass
     # Even blocked/partial rounds have an explicit report; never infer completeness.
     complete_received=sum(all(identity(task(k,ASOF,round=round_id,symbol=r['symbol'],market=r['market'])) in cache for k in ('flow','price')) for r in selected)
     observed=[e['collected_at'] for e in cache.values()]
-    hard={'authentication_failure','token_expired','missing_KIS_APP_KEY','missing_KIS_APP_SECRET','network_policy_denied','local_storage_unavailable','institution_quantity_unverified','institution_raw_amount_missing','KIS_KRX_six_field_conflict','request_policy_evidence_missing','insufficient_time_for_full_population_at_verified_rate'}
+    hard={'authentication_failure','token_expired','missing_KIS_APP_KEY','missing_KIS_APP_SECRET','network_policy_denied','local_storage_unavailable','institution_quantity_unverified','institution_raw_amount_missing','flow_price_conflict','KIS_KRX_six_field_conflict','request_policy_evidence_missing','insufficient_time_for_full_population_at_verified_rate'}
     gate_exhausted=any(identity(t) not in cache and (attempts.get(identity(t),0)>=6 or identity(t) in store.blocked_tasks) for t in common+probe)
     can_retry=not gate_exhausted and budget.used<budget.limit and any(identity(t) not in cache and attempts.get(identity(t),0)<6 and identity(t) not in store.blocked_tasks for t in common+probe+rest) and not any(e['reason'] in hard for e in errors)
     if can_retry and status!='COMPLETE':status='PARTIAL / RECOVERING'
@@ -233,6 +241,16 @@ def run_round(root,round_id,universe,rate_proof,run_id,opener=None,config=None):
                 physical_http=budget.used,physical_http_this_run=budget.used-budget.initial,provider_finality='UNVERIFIED',observation_mode='after_close_provisional',rows=rows,errors=errors,
                 retries=sum(max(0,n-1) for n in attempts.values()),metrics=metrics.result(),config=profile,probe=probe_proof,
                 observation_window={'first':min(observed) if observed else None,'last':max(observed) if observed else None},comparison_value_sha256=value_hash(rows))
+    if kis_only:
+        report.update(phase='KIS_PROVISIONAL',kis_validated=len(rows),kis_failed_or_held=len(selected)-len(rows),
+                      validated=0,failed_or_held=len(selected),official_validation_status='PENDING_KRX',official_accepted=0,
+                      kis_success_rate=len(rows)/len(selected),success_rate=0,
+                      status='PROVISIONAL_COMPLETE' if status=='COMPLETE' else status)
+        indices=[]
+        for market in ('KOSPI','KOSDAQ'):
+            e=cache.get(identity(task('index',ASOF,round=round_id,market=market)))
+            if e:indices.append(dict(**parse(store.raw(e),e)[0],observed_at=e['collected_at'],source_hash=e['source_hash'],observation_id=sha(encoded(e))))
+        report['indices']=indices
     t=time.monotonic()
     try:
         import duckdb

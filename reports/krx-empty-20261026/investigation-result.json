@@ -1,0 +1,61 @@
+{
+  "overall": "IMPLEMENTED_OFFLINE_ROOT_CAUSE_UNDETERMINED",
+  "incident_run": 40311038702,
+  "causes": {
+    "same_day_not_published": {
+      "result": "UNRESOLVED",
+      "reason": "Empty lists alone and no verified publication policy cannot prove this"
+    },
+    "service_entitlement": {
+      "result": "UNRESOLVED",
+      "reason": "Historical successful service access does not establish current credential approval"
+    },
+    "request_format": {
+      "result": "HISTORICAL_COMPATIBILITY_CONFIRMED_CURRENT_SPEC_BLOCKED",
+      "reason": "Same GET endpoint and basDd shape succeeded for 20261015"
+    },
+    "provider_incident": {
+      "result": "UNRESOLVED",
+      "reason": "No transport/5xx failure observed; no authoritative incident notice verified"
+    },
+    "collector_dependency": {
+      "result": "CONFIRMED_AND_REFACTORED",
+      "reason": "KRX common task previously preceded all per-symbol KIS tasks; new KIS-only stage has no KRX dependency"
+    }
+  },
+  "actual_market_api_requests_this_task": 0,
+  "incident_historical_http": 9,
+  "original_incident_archive_redownload": "NOT_PERFORMED_ACCESS_BLOCKED",
+  "evidence": "Existing user-confirmed response, prior independent Actions audit, frozen execution source, hash-verified historical parsed caches",
+  "tests": {
+    "full_suite": {
+      "passed": 499,
+      "failed": 0,
+      "seconds": 368.87
+    },
+    "expanded_four_round_post_validation": {
+      "passed": 1,
+      "failed": 0,
+      "seconds": 28.35
+    }
+  },
+  "diagnostic_plan": {
+    "approved": false,
+    "executed": false,
+    "max_http": 2,
+    "retries": 0
+  },
+  "invariants": {
+    "snapshot_files": 743,
+    "snapshot_unchanged": true,
+    "main_unchanged": true,
+    "workflow_files_unchanged": true,
+    "control_files_unchanged": true,
+    "workflow_reactivation": false,
+    "schedules_added": false
+  },
+  "limitations": [
+    "Current provider publication policy and service approval are unverified",
+    "A future approved launcher must bind dated policy, validated master, shared ledger/artifact recovery and transport; no live CLI is enabled"
+  ]
+}

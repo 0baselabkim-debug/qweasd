@@ -1,0 +1,97 @@
+{
+  "source_url": "https://github.com/0baselabkim-debug/qweasd/issues/1",
+  "retrieved_at": "2026-10-26T11:15:33.061621+00:00",
+  "kind": "prior_independent_actions_audit_not_archive_redownload",
+  "audits": [
+    {
+      "run_id": 40311038702,
+      "manifest_files": 18,
+      "raw_hashes_verified": 3,
+      "physical_http": 9,
+      "http_statuses": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "db_json_match": true,
+      "database_rows": 0,
+      "status": "UNRESOLVED",
+      "sources": [
+        {
+          "kind": "krx",
+          "market": "KOSPI",
+          "observed_at": "2026-10-26T10:51:05.718402+00:00",
+          "rows": 0,
+          "requested_date_present": false
+        },
+        {
+          "kind": "krx",
+          "market": "KOSPI",
+          "observed_at": "2026-10-26T10:56:20.292752+00:00",
+          "rows": 0,
+          "requested_date_present": false
+        },
+        {
+          "kind": "krx",
+          "market": "KOSPI",
+          "observed_at": "2026-10-26T10:54:06.685332+00:00",
+          "rows": 0,
+          "requested_date_present": false
+        },
+        {
+          "kind": "krx",
+          "market": "KOSPI",
+          "observed_at": "2026-10-26T10:59:21.176463+00:00",
+          "rows": 0,
+          "requested_date_present": false
+        },
+        {
+          "kind": "krx",
+          "market": "KOSPI",
+          "observed_at": "2026-10-26T10:52:06.221940+00:00",
+          "rows": 0,
+          "requested_date_present": false
+        },
+        {
+          "kind": "index",
+          "market": "KOSPI",
+          "observed_at": "2026-10-26T10:51:03.216965+00:00",
+          "rows": 39,
+          "requested_date_present": true
+        },
+        {
+          "kind": "index",
+          "market": "KOSDAQ",
+          "observed_at": "2026-10-26T10:51:04.259540+00:00",
+          "rows": 39,
+          "requested_date_present": true
+        },
+        {
+          "kind": "krx",
+          "market": "KOSPI",
+          "observed_at": "2026-10-26T10:57:20.778185+00:00",
+          "rows": 0,
+          "requested_date_present": false
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12644378705,
+          "name": "full-market-20261026-R1-40311038702",
+          "digest": "sha256:466dcdb27bc838700643266b8d4f77f1110d124e02335d107904e9ea828a24a8"
+        },
+        {
+          "id": 12644114783,
+          "name": "full-market-20261026-reports-40311038702",
+          "digest": "sha256:bfee64793a4f9342c4c1376de9bb648235db26d4596d5c5595b715de51770c05"
+        }
+      ]
+    }
+  ]
+}
