@@ -98,6 +98,17 @@ def restore_round(run,target):
     return json.loads((target/'report.json').read_bytes())
 
 
+def compact_comparison(value):
+    if isinstance(value,list):return [compact_comparison(v) for v in value]
+    if not isinstance(value,dict):return value
+    out={}
+    for key,item in value.items():
+        if key in ('changed','unavailable','status_changed') and isinstance(item,list):out[key+'_count']=len(item)
+        elif key=='changed_by_category':out[key]={k:len(v) for k,v in item.items()}
+        else:out[key]=compact_comparison(item)
+    return out
+
+
 def issue_report(report,kind='round'):
     # Explicitly user-authorized experiment reports; no credentials or raw bodies.
     title='['+EXPERIMENT_ID+'] 네 회차 수집·복구·안정성 보고'
@@ -105,7 +116,7 @@ def issue_report(report,kind='round'):
     match=next((i for i in items if i['title']==title and 'pull_request' not in i),None)
     if not match:match=api(f'repos/{REPO}/issues','POST',{'title':title,'body':'2026-10-26 일회성 실험. 공급자 최종성은 UNVERIFIED입니다. 모든 회차 결과 및 차단 사유를 여기에 기록합니다.'})
     keys=('round','asof','status','scheduled_at','actual_started_at','completed_at','elapsed_seconds','target','received','validated','failed_or_held','physical_http','retries','reason','comparison','next_profile','physical_http_reserved_limit','stability_notice','recovery_possible','recovery','bottleneck','pure_api_seconds','symbols_per_minute')
-    summary={k:report[k] for k in keys if k in report}
+    summary={k:compact_comparison(report[k]) if k=='comparison' else report[k] for k in keys if k in report}
     if report.get('errors'):summary['first_errors']=report['errors'][:3]
     body='### '+kind+'\n\n```json\n'+json.dumps(summary,ensure_ascii=False,indent=2)+'\n```\n\nRun: https://github.com/'+REPO+'/actions/runs/'+os.environ['GITHUB_RUN_ID']
     api(f'repos/{REPO}/issues/{match["number"]}/comments','POST',{'body':body})
@@ -181,7 +192,7 @@ def execute(round_id):
         (ROOT/'round/report.json').write_bytes(encoded(r))
         (ROOT/'round/manifest.json').write_bytes(encoded(dict(asof=ASOF,round=round_id,run_id=os.environ['GITHUB_RUN_ID'],files=inventory(ROOT/'round'))))
         r['issue_url']=issue_report(r,'provisional stability' if 'stability_notice' in r else 'round result')
-        summary={k:v for k,v in r.items() if k not in ('rows','target_symbols','errors')}
+        summary={k:compact_comparison(v) if k=='comparison' else v for k,v in r.items() if k not in ('rows','target_symbols','errors')}
         with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('```json\n'+json.dumps(summary,ensure_ascii=False,indent=2)+'\n```\n')
         return 0 if r['status']=='COMPLETE' else 1
 
@@ -198,8 +209,9 @@ def finalize():
     from .analysis import aggregate
     analysis=aggregate(reports)
     report=dict(analysis=analysis,status='COMPLETE' if all(r['status']=='COMPLETE' for r in reports) else 'UNRESOLVED',asof=ASOF,rounds=reports,provider_finality='UNVERIFIED',operating_time_recommendation='Do not infer a stable collection time without complete comparable rounds')
-    (ROOT/'final-report.json').write_bytes(encoded(report));issue_report({'status':report['status'],'asof':ASOF,'reason':report['operating_time_recommendation'],'comparison':[{'round':r['round'],'status':r['status'],'elapsed_seconds':r.get('elapsed_seconds'),'physical_http':r.get('physical_http'),'comparison':r.get('comparison')} for r in reports]},'final experiment report')
-    api(f'repos/{REPO}/actions/workflows/{current["workflow_id"]}/disable','PUT')
+    (ROOT/'final-report.json').write_bytes(encoded(report))
+    try:issue_report({'status':report['status'],'asof':ASOF,'reason':report['operating_time_recommendation'],'comparison':[{'round':r['round'],'status':r['status'],'elapsed_seconds':r.get('elapsed_seconds'),'physical_http':r.get('physical_http'),'comparison':r.get('comparison')} for r in reports]},'final experiment report')
+    finally:api(f'repos/{REPO}/actions/workflows/{current["workflow_id"]}/disable','PUT')
 
 
 def watch():

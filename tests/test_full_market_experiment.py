@@ -234,3 +234,10 @@ def test_pinned_seed_can_be_revalidated_without_next_day_pilot_override(env,monk
     rows=runtime.seed()
     assert len(rows)==3950 and sum(r['eligible'] for r in rows)==2349
     assert (env/'seed/receipt.json').exists()
+
+
+def test_large_comparison_is_compact_for_issue_and_summary_but_keeps_artifact_data():
+    full={'classification':'VALUES_CHANGED','changed':[{'symbol':str(i),'fields':{'close':{'previous':1,'current':2}}} for i in range(2349)],'unavailable':['X'],'status_changed':[],'changed_by_category':{'price':['A','B'],'foreign':[]}}
+    brief=runtime.compact_comparison(full)
+    assert brief['changed_count']==2349 and brief['changed_by_category']['price']==2
+    assert len(encoded(brief))<1000 and len(full['changed'])==2349
