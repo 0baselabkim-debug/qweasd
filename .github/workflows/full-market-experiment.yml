@@ -1,0 +1,114 @@
+name: Full market one-date experiment
+run-name: full-market-20261026 R${{ inputs.round || (github.event.schedule == '0 10 26 10 *' && '1') || (github.event.schedule == '0 13 26 10 *' && '2') || (github.event.schedule == '0 16 26 10 *' && '3') || (github.event.schedule == '0 19 26 10 *' && '4') || 'watch' }}
+on:
+  schedule:
+    - cron: '0 10 26 10 *'
+    - cron: '0 13 26 10 *'
+    - cron: '0 16 26 10 *'
+    - cron: '0 19 26 10 *'
+    - cron: '*/15 10-22 26 10 *'
+    - cron: '0 0,1 27 10 *'
+  workflow_dispatch:
+    inputs:
+      round:
+        description: 'Dated recovery round 1-4; absolute time, history and HTTP budgets still apply'
+        required: true
+        type: choice
+        options: ['1','2','3','4']
+permissions:
+  contents: read
+  actions: write
+  issues: write
+jobs:
+  observe:
+    if: github.event_name == 'workflow_dispatch' || contains(fromJSON('["0 10 26 10 *","0 13 26 10 *","0 16 26 10 *","0 19 26 10 *"]'), github.event.schedule)
+    concurrency:
+      group: kis-validation-auth
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 175
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: EXPERIMENT_SOURCE_SHA
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Date guard and identify exact requested round
+        id: date
+        env:
+          ROUND_INPUT: ${{ inputs.round }}
+          REQUESTED_CRON: ${{ github.event.schedule }}
+        run: |
+          python - <<'PY'
+          import os,datetime as d
+          from collector_v1.experiment.policy import window
+          r=int(os.environ['ROUND_INPUT']) if os.environ['ROUND_INPUT'] else {'0 10 26 10 *':1,'0 13 26 10 *':2,'0 16 26 10 *':3,'0 19 26 10 *':4}[os.environ['REQUESTED_CRON']]
+          window(r)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('round='+str(r)+'\n')
+          PY
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Offline integration guards before live access
+        run: python -m pytest -q tests/test_full_market_experiment.py
+      - name: Bounded fresh round and in-round recovery
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+        run: python -m collector_v1.experiment.runtime run --round '${{ steps.date.outputs.round }}'
+      - name: Seal even interrupted work without new provider calls
+        if: always() && steps.date.outcome == 'success'
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+        run: python -m collector_v1.experiment.runtime seal --round '${{ steps.date.outputs.round }}'
+      - name: Preserve exact round raw data and physical-call ledger
+        if: always() && hashFiles('data/full-market-20261026/round/manifest.json') != '' && hashFiles('data/full-market-20261026/DO_NOT_UPLOAD') == ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-market-20261026-R${{ steps.date.outputs.round }}-${{ github.run_id }}
+          path: data/full-market-20261026/round
+          retention-days: 7
+          if-no-files-found: error
+      - name: Final report and disable this experiment after round four
+        if: always() && steps.date.outputs.round == '4'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m collector_v1.experiment.runtime finalize
+      - name: Preserve process policy, final and blocked reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-market-20261026-reports-${{ github.run_id }}
+          path: data/full-market-20261026/*.json
+          retention-days: 7
+          if-no-files-found: warn
+  monitor:
+    if: github.event.schedule == '*/15 10-22 26 10 *' || github.event.schedule == '0 0,1 27 10 *'
+    concurrency:
+      group: full-market-20261026-monitor
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: EXPERIMENT_SOURCE_SHA
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Detect missing rounds, recover only verified prior state, disable after expiry
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m collector_v1.experiment.runtime watch
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-market-20261026-monitor-${{ github.run_id }}
+          path: data/full-market-20261026/*.json
+          retention-days: 7
+          if-no-files-found: warn
