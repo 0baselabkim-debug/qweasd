@@ -11,6 +11,10 @@
 | 3 | 2026-10-28 00:00 | 2026-10-27 | kis-stability-20261027-v1-0000 | market-20261027-0000 |
 | 4 | 2026-10-28 03:00 | 2026-10-27 | kis-stability-20261027-v1-0300 | market-20261027-0300 |
 
+## 실제 예약 등록 확인
+
+[Actions Run 40411772564](https://github.com/0baselabkim-debug/qweasd/actions/runs/40411772564)의 authorize Job이 성공했고 wait1 Job이 실제 실행 중임을 확인했다. 예약 제어 커밋은 `6e4a00ad`, 코드 커밋은 `c5c4c395`다. Actions가 저장한 schedule.json과 제어 파일의 네 시각·기준일·generation ID가 모두 일치한다. 확인 시점에 마스터·4개 시장 관측은 아직 SCHEDULED_NOT_RUN 상태이며 시장 API 호출은 0회다. 이 문단은 등록 시점의 기록이다. 이후 상태는 회차별 결과와 최종 보고서를 확인한다.
+
 ## 적용한 실행 방식
 
 신규 `.github/workflows/market-20261027.yml`만 사용한다. 기능 브랜치의 `.github/experiments/market-20261027.json` **단독 커밋·push 한 번**이 유한한 Job 그래프를 시작한다. main에서만 작동하는 cron을 사용하지 않는다. 기존 중단된 워크플로는 활성화하지 않는다.

@@ -1,0 +1,57 @@
+{
+  "status": "SCHEDULED_NOT_COLLECTED",
+  "checked_at": "2026-10-26T22:24:33.135827+00:00",
+  "run_id": "40411772564",
+  "run_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/40411772564",
+  "source_code_commit": "c5c4c3954e8f506f7c0d503edf8fb14ba0b054a8",
+  "arming_commit": "6e4a00add9a80fa92d600f3459d262889275bdac",
+  "authorization_job": "SUCCESS",
+  "first_wait_job": "IN_PROGRESS",
+  "control_plan_match": true,
+  "snapshot_files_unchanged": 743,
+  "protected_paths_unchanged": true,
+  "legacy_workflows_disabled_manually": 3,
+  "market_http_so_far": 0,
+  "official_master_status": "SCHEDULED_NOT_COLLECTED",
+  "rounds": [
+    {
+      "artifact": "market-20261027-1800",
+      "generation_id": "kis-stability-20261027-v1-1800",
+      "round": 1,
+      "scheduled_at": "2026-10-27T18:00:00+09:00",
+      "state": "SCHEDULED_NOT_RUN"
+    },
+    {
+      "artifact": "market-20261027-2100",
+      "generation_id": "kis-stability-20261027-v1-2100",
+      "round": 2,
+      "scheduled_at": "2026-10-27T21:00:00+09:00",
+      "state": "SCHEDULED_NOT_RUN"
+    },
+    {
+      "artifact": "market-20261027-0000",
+      "generation_id": "kis-stability-20261027-v1-0000",
+      "round": 3,
+      "scheduled_at": "2026-10-28T00:00:00+09:00",
+      "state": "SCHEDULED_NOT_RUN"
+    },
+    {
+      "artifact": "market-20261027-0300",
+      "generation_id": "kis-stability-20261027-v1-0300",
+      "round": 4,
+      "scheduled_at": "2026-10-28T03:00:00+09:00",
+      "state": "SCHEDULED_NOT_RUN"
+    }
+  ],
+  "tests": {
+    "full_regression_passed": 534,
+    "full_regression_seconds": 394.08,
+    "final_related_regression_passed": 62,
+    "final_related_regression_seconds": 26.06,
+    "final_new_tests_passed": 26
+  },
+  "workflow_validation": "actionlint 1.7.7 PASS",
+  "official_price_status": "PENDING_KRX",
+  "NXT_scope": "NOT_OBSERVED_J_ONLY",
+  "recurring_schedules_created": 0
+}
