@@ -50,7 +50,8 @@ def prepare(c):
         if not meta.get('digest','').startswith('sha256:'):raise Failure('manual_artifact_digest_missing')
         archive=ROOT.parent/(str(meta['id'])+'.zip');archive.parent.mkdir(parents=True,exist_ok=True)
         runtime.api(f'repos/{REPO}/actions/artifacts/{meta["id"]}/zip',binary=archive)
-        runtime.safe_extract(archive,ROOT,meta['digest'][7:]);runtime.verify(ROOT)
+        runtime.safe_extract(archive,ROOT,meta['digest'][7:]);manifest=runtime.verify(ROOT)
+        if str(manifest.get('run_id'))!=str(previous['id']) or manifest.get('asof')!=manual.ASOF:raise Failure('manual_previous_artifact_identity_mismatch')
         Store(ROOT).write('restoration.json',dict(previous_run=previous['id'],artifact_id=meta['id'],zip_sha256=meta['digest'][7:]))
     elif c['previous_run'] is not None:raise Failure('manual_unexpected_previous_run')
     ROOT.mkdir(parents=True,exist_ok=True)
@@ -142,6 +143,7 @@ def main():
     except Exception as e:
         if a.mode=='run':
             ROOT.mkdir(parents=True,exist_ok=True)
+            if not (ROOT/'universe.json').exists():(ROOT/'UNKNOWN_PREVIOUS_USAGE').touch()
             reason=e.code if isinstance(e,Failure) else 'manual_program_failure'
             Store(ROOT).write('blocked.json',dict(status='FAIL',reason=reason,exception_type=type(e).__name__,run_id=os.environ.get('GITHUB_RUN_ID'),observed_at=now()))
         raise

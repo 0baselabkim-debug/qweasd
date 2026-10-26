@@ -123,3 +123,14 @@ def test_full_interruption_resumes_without_repeating_successful_symbols(setup):
     assert len(calls)==4693
     assert not any(any('FID_INPUT_ISCD='+code in url for code in manual.TARGETS) or 'indexchartprice' in url for url in calls)
     assert second['failed_http_requests']==1
+
+
+def test_failed_context_cannot_create_a_fresh_resettable_call_budget(setup,monkeypatch):
+    root,c,u=setup
+    monkeypatch.setattr(actions,'ROOT',root/'state')
+    monkeypatch.setattr('sys.argv',['kis_manual_actions','run'])
+    def invalid():raise Failure('manual_control_scope')
+    monkeypatch.setattr(actions,'context',invalid)
+    with pytest.raises(Failure,match='control_scope'):actions.main()
+    assert (root/'state/UNKNOWN_PREVIOUS_USAGE').exists()
+    assert json.loads((root/'state/blocked.json').read_bytes())['status']=='FAIL'
