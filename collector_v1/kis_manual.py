@@ -98,7 +98,7 @@ def run(root,control,universe,run_id,opener=None):
             k=engine.identity(e['task']);attempts[k]=max(attempts.get(k,0),e['attempt'])
             if not e.get('retryable',True) and k not in cache:store.blocked_tasks.add(k)
         budget=ManualBudget(store,control,metrics,run_id);api=ManualAPI(store,budget,metrics,opener);api.allowed={r['symbol'] for r in selected}
-        previous=store.read('report.json',{});started=previous.get('actual_started_at') or now();wall=time.monotonic();errors=[]
+        previous=store.read('report.json',{});metrics.seconds.update(previous.get('metrics',{}).get('seconds',{}));metrics.counts.update(previous.get('metrics',{}).get('counts',{}));started=previous.get('actual_started_at') or now();wall=time.monotonic();errors=[]
         common=[task('index',ASOF,round=1,market=m) for m in ('KOSPI','KOSDAQ')]
         probes=[r for r in selected if r['symbol'] in TARGETS];rest=[r for r in selected if r['symbol'] not in TARGETS]
         tasks=lambda rows:[task(k,ASOF,round=1,symbol=r['symbol'],market=r['market']) for r in rows for k in ('flow','price')]
@@ -126,9 +126,11 @@ def run(root,control,universe,run_id,opener=None):
                 if not pending:break
         except (Failure,Stop) as exc:errors.append(dict(reason=exc.code if isinstance(exc,Failure) else str(exc),endpoint=budget.current.get('endpoint') if budget.current else None))
         rows=[]
+        validation_begin=time.monotonic()
         for row in selected:
             try:rows.append(engine.qualify_kis(row,cache,store,1))
             except (Failure,KeyError,TypeError,ValueError) as exc:errors.append(dict(symbol=row['symbol'],reason=exc.code if isinstance(exc,Failure) else 'missing_required_evidence',details=getattr(exc,'details',None)))
+        metrics.add('internal_validation',time.monotonic()-validation_begin)
         indices=[]
         for t in common:
             e=cache.get(engine.identity(t))
@@ -139,19 +141,44 @@ def run(root,control,universe,run_id,opener=None):
                     physical_http=budget.used,physical_http_this_run=budget.used-budget.initial,http_limit=budget.limit,retries=sum(max(0,n-1) for n in attempts.values()),metrics=metrics.result(),population_sha256=binding['population_sha256'],target_symbols=sorted(api.allowed),
                     first_http_at=min((e['started_at'] for e in budget.entries if e['event']=='started'),default=None),last_http_at=max((e['completed_at'] for e in budget.entries if e['event']=='finished'),default=None))
         import duckdb
+        db_begin=time.monotonic()
         path=root/'derived'/(sha(encoded(rows))+'.duckdb');path.parent.mkdir(exist_ok=True);exists=path.exists()
         with duckdb.connect(str(path),read_only=exists) as db:
             if not exists:
                 db.execute('CREATE TABLE observations(symbol VARCHAR PRIMARY KEY,payload JSON)')
                 if rows:db.executemany('INSERT INTO observations VALUES (?,?)',[(r['symbol'],encoded(r).decode()) for r in rows])
             saved={s:json.loads(v) for s,v in db.execute('SELECT symbol,payload FROM observations').fetchall()}
+        metrics.add('DuckDB_write_and_readback',time.monotonic()-db_begin)
         report['db_json_match']=saved=={r['symbol']:r for r in rows};report['database_file']=str(path.relative_to(root))
         if not report['db_json_match']:report['status']='FAIL'
         report['failure_responses']=[]
         for event in events(root/'responses.jsonl'):
             e=event['evidence'];d=json.loads(store.raw(e))
             if d.get('rt_cd')!='0':report['failure_responses'].append(dict(endpoint=e['endpoint'],params=e['params'],source_hash=e['source_hash'],rt_cd=d.get('rt_cd'),msg_cd=d.get('msg_cd'),msg1=d.get('msg1')))
-        store.write('report.json',report);return report
+        report['completed_at']=now()
+        report['elapsed_seconds']=(dt.datetime.fromisoformat(report['completed_at'])-dt.datetime.fromisoformat(started)).total_seconds()
+        report['this_run_seconds']=time.monotonic()-wall
+        report['elapsed_semantics']='cumulative_wall_including_recovery_pauses'
+        report['metrics']=metrics.result()
+        report['pure_api_seconds']=sum(v for k,v in metrics.seconds.items() if k.startswith('api:'))
+        finished=[e for e in budget.entries if e['event']=='finished']
+        report['failed_http_requests']=sum(e['status']!='received' for e in finished)+budget.used-len(finished)
+        report['http_failure_rate']=report['failed_http_requests']/budget.used if budget.used else 0
+        failures=events(root/'failures.jsonl')
+        report['task_failures']=len(failures)
+        report['recovered_tasks']=len({engine.identity(e['task']) for e in failures}&set(cache))
+        report['recovery_intervals']=[]
+        for key in {engine.identity(e['task']) for e in failures}:
+            failed_at=min(e['observed_at'] for e in failures if engine.identity(e['task'])==key)
+            recovered_at=cache[key]['collected_at'] if key in cache else None
+            report['recovery_intervals'].append(dict(task=key,failed_at=failed_at,recovered_at=recovered_at,wall_seconds=(dt.datetime.fromisoformat(recovered_at)-dt.datetime.fromisoformat(failed_at)).total_seconds() if recovered_at else None))
+        report['symbols_per_minute']=len(rows)/max(report['elapsed_seconds']/60,1e-9)
+        report['bottleneck']=max(metrics.seconds,key=metrics.seconds.get) if metrics.seconds else None
+        report['code_commit']=__import__('subprocess').check_output(['git','rev-parse','HEAD'],text=True).strip()
+        report['config_sha256']=sha(encoded(control))
+        json_begin=time.monotonic();store.write('report.json',report);metrics.add('JSON_generation_and_storage',time.monotonic()-json_begin)
+        report['metrics']=metrics.result();store.write('report.json',report)
+        return report
 
 
 def full_plan(sample,universe):

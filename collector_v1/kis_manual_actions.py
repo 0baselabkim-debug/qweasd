@@ -104,6 +104,8 @@ def publish():
     if c['mode']=='full':report={k:v for k,v in report.items() if k!='rows'} | {'rows_preserved_in_state_artifact':True}
     state=runtime.verify(ROOT)
     receipt=dict(report=report,run_id=os.environ['GITHUB_RUN_ID'],run_url=f'https://github.com/{REPO}/actions/runs/'+os.environ['GITHUB_RUN_ID'],source_commit=os.environ['GITHUB_SHA'],state_manifest_sha256=sha(encoded(state)),full_plan=s.read('full-plan.json'),restoration=s.read('restoration.json'),published_at=now())
+    artifacts=runtime.api(f'repos/{REPO}/actions/runs/{os.environ["GITHUB_RUN_ID"]}/artifacts?per_page=100')['artifacts']
+    receipt['artifacts']=[{k:a.get(k) for k in ('id','name','digest','size_in_bytes')} for a in artifacts]
     raw=encoded(receipt)
     for name in ('KIS_APP_KEY','KIS_APP_SECRET'):
         value=os.getenv(name)

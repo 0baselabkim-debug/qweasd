@@ -90,3 +90,35 @@ def test_new_workflow_has_no_schedule_and_old_control_is_not_used():
     assert 'kis-manual-20261026.json' in text and 'kis-validation-auth' in text
     assert 'contents: write' in text and 'actions: read' in text and 'actions: write' not in text
     assert 'kis_manual_actions publish' in text and 'kis_manual_actions seal' in text
+
+
+def test_full_population_executor_fresh_data_and_full_DB_readback(setup):
+    root,c,u=setup;sample_calls,opener=transport(u)
+    sample=manual.run(root/'sample',c,u,'SYNTHETIC_SAMPLE',opener=opener)
+    manual.full_plan(sample,u)
+    c.update(mode='full',trial_id='kis-full-20261026',approval=manual.FULL_APPROVAL,max_total_http=5600,not_before='2026-10-26T11:45:00+00:00',expires_at='2026-10-26T14:35:00+00:00')
+    calls,opener=transport(u)
+    r=manual.run(root/'full',c,u,'SYNTHETIC_FULL',opener=opener)
+    assert r['status']=='PASS' and r['target']==r['kis_validated']==2349
+    assert r['physical_http']==len(calls)==4701 and len(sample_calls)==9
+    assert r['db_json_match'] and r['http_failure_rate']==0
+    assert r['metrics']['seconds']['DuckDB_write_and_readback']>=0 and r['bottleneck']
+    assert not any('krx.co.kr' in x for x in calls)
+    actions.verify_mode(root/'full',r)
+
+
+def test_full_interruption_resumes_without_repeating_successful_symbols(setup):
+    root,c,u=setup
+    c.update(mode='full',trial_id='kis-full-20261026',approval=manual.FULL_APPROVAL,max_total_http=5600,not_before='2026-10-26T11:45:00+00:00',expires_at='2026-10-26T14:35:00+00:00')
+    first_calls,original=transport(u)
+    def interrupted(req,timeout):
+        if 'FID_INPUT_ISCD=100000' in req.full_url:raise Stop('SYNTHETIC_INTERRUPTION')
+        return original(req,timeout)
+    first=manual.run(root/'resume',c,u,'SYNTHETIC_INTERRUPTED',opener=interrupted)
+    assert first['status']=='FAIL' and first['kis_validated']==3 and first['physical_http']==10
+    calls,opener=transport(u)
+    second=manual.run(root/'resume',c,u,'SYNTHETIC_RESUMED',opener=opener)
+    assert second['status']=='PASS' and second['physical_http']==4703
+    assert len(calls)==4693
+    assert not any(any('FID_INPUT_ISCD='+code in url for code in manual.TARGETS) or 'indexchartprice' in url for url in calls)
+    assert second['failed_http_requests']==1
