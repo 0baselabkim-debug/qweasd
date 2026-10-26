@@ -1172,16 +1172,16 @@
     "registered_instruments": 2438,
     "unclassified_included": 0
   },
-  "dataset_id": "flow-v3-2026-10-23-002496a9cc8e6607c17c6f2a08cff3c60034df5536de5d1f2456187af6d0dc39",
+  "dataset_id": "flow-v3-2026-10-23-46c328a497c4c990ddae82506fcb13c32d796e1fcc61bcaa07681dc8630ec1e6",
   "freshness_policy": {
     "publication_time_basis": "Commit preparation time; publication is established by this file being readable on main",
     "require_asof_equals_requested_trade_date": true,
     "stale_action": "Do not describe as today; report unavailable or delayed",
     "timezone": "Asia/Seoul"
   },
-  "generated_at": "2026-10-25T23:45:08.995576+00:00",
+  "generated_at": "2026-10-26T02:48:08.371951+00:00",
   "hash_contract": "index_content_sha256 = SHA256(canonical JSON excluding this field); child sha256 hashes exact file bytes",
-  "index_content_sha256": "f72d39520407b7e1e8c786ecc6b61bdbd9aa13c624f1bf0c97c52ea82f60d370",
+  "index_content_sha256": "8da70ccf6815e70496ea55affff0f9a8ecc603144ca86ccaa8833442ae5c034b",
   "membership_basis": "current_asof_membership_applied_to_history",
   "metric_definitions": {
     "breadth_20d": "percent; positive_20d / evaluable_20d * 100",
@@ -1200,7 +1200,7 @@
   "path": "index.json",
   "provider_finality": "UNVERIFIED",
   "publication_status": "ready_for_briefing",
-  "published_at": "2026-10-25T23:45:08.995576+00:00",
+  "published_at": "2026-10-26T02:48:08.371951+00:00",
   "raw_flow_reconciliation": {
     "metric_checks": 20208,
     "sectors_checked": 50,
@@ -1256,7 +1256,7 @@
       "registered_members": 213,
       "sector": "IT 서비스",
       "sector_id": "kosdaq-3e6ffb5436df98f1284156f8",
-      "sha256": "a53451bb3a3b8ee6f051bdabfee16e472107351f551e52014bd79bc5002758ef"
+      "sha256": "ac905273a3aa5418612fa568d08f7b3775d73eff957a6ca7c43e08a60b362f87"
     },
     {
       "breadth_20d": 41.66666666666667,
@@ -1305,7 +1305,7 @@
       "registered_members": 24,
       "sector": "건설",
       "sector_id": "kosdaq-151c6827e59d691e228edff5",
-      "sha256": "f874f5393734ccd5063d16bf158ea9fd526ad9f78a24611ad05882b7849a6261"
+      "sha256": "a4617594d2cbffa8c39c11c8a3dc9d3c9737e9c013281d7c0b50cd3011049e69"
     },
     {
       "breadth_20d": 33.80281690140845,
@@ -1354,7 +1354,7 @@
       "registered_members": 71,
       "sector": "금속",
       "sector_id": "kosdaq-218d611ae12635f97171621a",
-      "sha256": "a2e761aeadada3d56e26a0d40973e6b01b16d771befc17f972afe45742e8c39d"
+      "sha256": "49ad59648f3b882cd46760751bd8a5c47bc964d9719b1b8cf796206c4bbd400c"
     },
     {
       "breadth_20d": 26.984126984126984,
@@ -1409,7 +1409,7 @@
       "registered_members": 64,
       "sector": "금융",
       "sector_id": "kosdaq-ecda11a0eaa793a16b368d21",
-      "sha256": "85471687d0282b59b69b6897331b657afc9343157493343aca1608cf19e99a80"
+      "sha256": "fd5c6c180d3af4c135c51582eec87d7432950370c51180b9551af020414325b4"
     },
     {
       "breadth_20d": 40.229885057471265,
@@ -1465,7 +1465,7 @@
       "registered_members": 177,
       "sector": "기계·장비",
       "sector_id": "kosdaq-ed3c1ca7c08678cecb90c662",
-      "sha256": "aae7c022c983d25340a5299c0b767e8e6cf61eec230c0d1f3dfa30b67ad01f60"
+      "sha256": "2b4bb6ec46cb12981242aa14f5b64b12e820c1e248db14a2edfaf971d4e43fb5"
     },
     {
       "breadth_20d": 50.0,
@@ -1514,7 +1514,7 @@
       "registered_members": 14,
       "sector": "기타제조",
       "sector_id": "kosdaq-361a6956b467a54fbf2736b7",
-      "sha256": "d34b4c1bbf4b516c6f6ea59dc0e1013594d3cf95ed4e75ba544eac76b16f1ccc"
+      "sha256": "9cbd880678eb88888fd7d04fcab22c4c358ec6bbcb4e7d103b2fd8e3a379ada3"
     },
     {
       "breadth_20d": 53.333333333333336,
@@ -1563,7 +1563,7 @@
       "registered_members": 15,
       "sector": "비금속",
       "sector_id": "kosdaq-35098fa3fffc95481802cee4",
-      "sha256": "7fa69f3d91bcab7fae250fd5e4c3a50aaf8e03c827bff2462d3cb44299a8bfc7"
+      "sha256": "69f4a87128c09a98c3a08d2e2244602aca17c3d5a458eeb5ad5a046cadf38ff1"
     },
     {
       "breadth_20d": 31.818181818181817,
@@ -1612,7 +1612,7 @@
       "registered_members": 22,
       "sector": "섬유·의류",
       "sector_id": "kosdaq-1796a9aba07d21f667ad0b53",
-      "sha256": "d48513b846bcec5d9a4a174089944bdc29339cbf7bea6ff40e8eec2c99ff09b6"
+      "sha256": "39e2217a1c90c4b661fdf0465ad7e15fa06e2e98926be01f7a8ba10d8ad582ed"
     },
     {
       "breadth_20d": 45.83333333333333,
@@ -1661,7 +1661,7 @@
       "registered_members": 48,
       "sector": "오락·문화",
       "sector_id": "kosdaq-233dd97a44368feeb46a5165",
-      "sha256": "e29b5047af79a81ffaec2e160dfc2f63579690e3277a92b29ffce3eeca2cd030"
+      "sha256": "56385d0b2c3fe5fc8853a7dd6c50bd9510a34c65da657c5e48804c42a5b59b95"
     },
     {
       "breadth_20d": 75.0,
@@ -1710,7 +1710,7 @@
       "registered_members": 4,
       "sector": "운송·창고",
       "sector_id": "kosdaq-048ed9f64ab7af3a75982b08",
-      "sha256": "f858ba59225ad8fe2e39d2d15a8ad49ea2f69e5cdc0995d0c22d4fd712b068a9"
+      "sha256": "976fd34caa48747f0ebe637791f26b6c705cf62b7aa799c0e4d661bcd2687014"
     },
     {
       "breadth_20d": 38.35616438356164,
@@ -1762,7 +1762,7 @@
       "registered_members": 74,
       "sector": "운송장비·부품",
       "sector_id": "kosdaq-063b1b6e589f737e8a7532f1",
-      "sha256": "1507f22b37435adf820165218ed7f618bb26bf3e4092cac560838a0c4b396fda"
+      "sha256": "fabfe21f9b0f6b787f135c9027f54d4aeabe8bb4033bd033a689ce90c9a99b21"
     },
     {
       "breadth_20d": 42.70833333333333,
@@ -1811,7 +1811,7 @@
       "registered_members": 96,
       "sector": "유통",
       "sector_id": "kosdaq-efbbc9fb4dc07da212f45949",
-      "sha256": "8441952ea895271deecbe8e1668f8cc592dea8aaa5009dd0426352e76a177d16"
+      "sha256": "2bc5f7e781fa06cdd9a1276e858bf00c1ca99fff7bd9b1bd315b976aac957ef2"
     },
     {
       "breadth_20d": 41.30434782608695,
@@ -1860,7 +1860,7 @@
       "registered_members": 46,
       "sector": "음식료·담배",
       "sector_id": "kosdaq-2371e4b47077b9949372f9b0",
-      "sha256": "c41d7f4a6ff763d241fd75f7feb3ee286aa4f3315bcad964f4010fb3d5818654"
+      "sha256": "d0c92bd33059074eb42e441098e15f7bab95c256367f98e430229319065b564a"
     },
     {
       "breadth_20d": 38.88888888888889,
@@ -1916,7 +1916,7 @@
       "registered_members": 91,
       "sector": "의료·정밀기기",
       "sector_id": "kosdaq-ca3aa9545405ccc207c04907",
-      "sha256": "67a3d4c1fb22d5d4f3326243ed63d1c822e27bcd22a2313421872ff3700f7caa"
+      "sha256": "c37bf9bbdcd084c6e1970dfab07ca46b6e1303d91d28bdc36cea29bdd5da6ae2"
     },
     {
       "breadth_20d": 44.96124031007752,
@@ -1970,7 +1970,7 @@
       "registered_members": 131,
       "sector": "일반서비스",
       "sector_id": "kosdaq-b799448c828a59cb6bf595e6",
-      "sha256": "5e624decde73b7e1298a45361eadeb4540595aa1c39a790a6c36263bf48c544c"
+      "sha256": "046d626437e98f00f427f3510a1193292cc76ff574f1f6a34ef51d6ef69d9a70"
     },
     {
       "breadth_20d": 47.97297297297297,
@@ -2026,7 +2026,7 @@
       "registered_members": 299,
       "sector": "전기·전자",
       "sector_id": "kosdaq-28c7ae72ebc86b8496b0d1d1",
-      "sha256": "2ba754befea24a982a3f0ca04c86862289f90c7e965c64555d2deca12d6762e3"
+      "sha256": "30bde17ad8b51034bf287eb4e51317e806c74751225ac2087e8506b0b1483db8"
     },
     {
       "breadth_20d": 53.84615384615385,
@@ -2075,7 +2075,7 @@
       "registered_members": 117,
       "sector": "제약",
       "sector_id": "kosdaq-472b2f26928a94ca375cbdaf",
-      "sha256": "e37b5163936cfc2124dfcab163efec223eba144bf6c9bd468e95c2a2ba7746de"
+      "sha256": "e66e957bc5343cdab966611043921236211d24e3148d7ef8e73fedd6fd4b5332"
     },
     {
       "breadth_20d": 77.77777777777779,
@@ -2124,7 +2124,7 @@
       "registered_members": 9,
       "sector": "종이·목재",
       "sector_id": "kosdaq-d71f66576e15175ac31518f9",
-      "sha256": "09cfa505a73d856cbf3ccb599d53059e085164e5e2fbeb11285c97c68661c6a2"
+      "sha256": "f67ea3e3bf10a6256589b2349e1b0d250ba833f73c6c3942c7b3adc07adf6b20"
     },
     {
       "breadth_20d": 50.0,
@@ -2173,7 +2173,7 @@
       "registered_members": 2,
       "sector": "출판·매체복제",
       "sector_id": "kosdaq-9021bf10a442ce8f76ac2e4a",
-      "sha256": "b508f0b192ae9792de7e17a3eded7d0ea14bcb95917afdda25d69f8b25876aea"
+      "sha256": "5f5783ddbd306646bde13de9b304a277a7673f118837ac1d5765dfccc25d3210"
     },
     {
       "breadth_20d": 25.0,
@@ -2222,7 +2222,7 @@
       "registered_members": 8,
       "sector": "통신",
       "sector_id": "kosdaq-f19c579edcc32abb45074812",
-      "sha256": "b85b8230d5e25b26ab0563259911633c0504ce47fdb75e89ebe3f02440b3ec9f"
+      "sha256": "b76fc8f8f709634e0655be94e5dbee48981d95ebeef4e3d6807c8d4090cc8f52"
     },
     {
       "breadth_20d": 0.0,
@@ -2271,7 +2271,7 @@
       "registered_members": 3,
       "sector": "표준산업 · 부동산 임대 및 공급업",
       "sector_id": "kosdaq-123be51662be8f366bc213f0",
-      "sha256": "3e750f07963816ac7b043dc55f1fa9bee496216b3d639cd308b558030b9f0d9f"
+      "sha256": "0d32303219eca5727b2d2268fe4a20b4cbef5e931ed8b5dd9b64ab5ee5a5a225"
     },
     {
       "breadth_20d": 100.0,
@@ -2320,7 +2320,7 @@
       "registered_members": 1,
       "sector": "표준산업 · 연료용 가스 제조 및 배관공급업",
       "sector_id": "kosdaq-ca775e09f005fb4fe081c9eb",
-      "sha256": "fcc181b30e87cffa11f175e5e20c63461d384f68ffe9538a3f73ae6ad100542e"
+      "sha256": "78e46b1c75a13057e2b2c121c0cf7b3cabb6f97f7c8354828dcdc5dd4a679e50"
     },
     {
       "breadth_20d": 50.0,
@@ -2369,7 +2369,7 @@
       "registered_members": 2,
       "sector": "표준산업 · 작물 재배업",
       "sector_id": "kosdaq-8da81027f22a3b8b828f82ba",
-      "sha256": "587781a2d0b8e46be7c0213a6bc3ea61c62fdb3972cced9c7c5520c6d2e07c76"
+      "sha256": "82f9792113624609ca1b6d7726dde64df65586b198599ca0b8b27cb66f54581b"
     },
     {
       "breadth_20d": 100.0,
@@ -2418,7 +2418,7 @@
       "registered_members": 1,
       "sector": "표준산업 · 전기업",
       "sector_id": "kosdaq-52caf6219296d71621186b71",
-      "sha256": "75ee7e9ccce88ddaa41ff333b9099e1e597f52b8321ac75fcd35619c82014877"
+      "sha256": "51b4fdb8f0945be45fa85be24f4f874181c8d7165ddff274ce86dbcc73ba8ef3"
     },
     {
       "breadth_20d": 50.0,
@@ -2472,7 +2472,7 @@
       "registered_members": 117,
       "sector": "화학",
       "sector_id": "kosdaq-067903d5e447ed2ee5059c00",
-      "sha256": "150bedcc6eafefa03091982de10798ba9e0828ffa474c0ad3faf9502e2dee0dd"
+      "sha256": "d6d509dfe7630b6f93bc177babf01416255c7b1c38320093891e246b993d4434"
     },
     {
       "breadth_20d": 60.0,
@@ -2521,7 +2521,7 @@
       "registered_members": 25,
       "sector": "IT 서비스",
       "sector_id": "kospi-48dde53ee6571be843b9f93f",
-      "sha256": "7ef8b51e3ae2dcc3a53b93a50fe4a239a0980c930cb94d20e5fc048589f0c6b9"
+      "sha256": "6525a996cd40fb31b98a264745ae0dd564140e20bf10b2111b906cc87c30c4c2"
     },
     {
       "breadth_20d": 57.692307692307686,
@@ -2570,7 +2570,7 @@
       "registered_members": 26,
       "sector": "건설",
       "sector_id": "kospi-185cbf181fd734a41b28e870",
-      "sha256": "e804a621dc613bcba3e594258703bb6b667516892187ad18c92edcc3c863fb2c"
+      "sha256": "3fa3057007cc3f542a89fc3e0380406fe085520f35fc3efdee2f23b1009eb921"
     },
     {
       "breadth_20d": 29.310344827586203,
@@ -2619,7 +2619,7 @@
       "registered_members": 58,
       "sector": "금속",
       "sector_id": "kospi-d48154bdb70dffea850ea3bd",
-      "sha256": "675f7b5b240625197a63fe00b567dc0489722919ef7a4f64b2e60843d000e494"
+      "sha256": "fcde6066b46ad74e9a631e5d9eec10fd5411e8384ecf08ac21aad9bddbe3c940"
     },
     {
       "breadth_20d": 46.666666666666664,
@@ -2668,7 +2668,7 @@
       "registered_members": 75,
       "sector": "금융",
       "sector_id": "kospi-b87b179057b70736c3a66b77",
-      "sha256": "4d298136ccb388701b8ed5a4c6c282f140ad65cb3b3c2808258dcebaa9b95829"
+      "sha256": "677cb4e3565dfe7e5b89a3db87f384b3ba6a9b21eebc8cf39cdee90721215f40"
     },
     {
       "breadth_20d": 42.857142857142854,
@@ -2717,7 +2717,7 @@
       "registered_members": 28,
       "sector": "기계·장비",
       "sector_id": "kospi-5432ec2b9e013a97e67c6f1d",
-      "sha256": "16cc85b68d48a214a3990f1cbff8033a64a159a132d21b669180190dea0fbcc1"
+      "sha256": "19c70ac5e840cab1fe6cf252fee7be7c08eebbe1591ae3dc48721098e9fd4ede"
     },
     {
       "breadth_20d": 36.36363636363637,
@@ -2766,7 +2766,7 @@
       "registered_members": 11,
       "sector": "보험",
       "sector_id": "kospi-77be7207facdd7bd211e08d4",
-      "sha256": "e483e864f996c4ed2a252ff4d2d22bd0e8599a0c844c21e8e841838e51f2710b"
+      "sha256": "94c1f6c3cc442af558dc837e2912ae77bd06608b1d610c97befe3b8131d856a0"
     },
     {
       "breadth_20d": 100.0,
@@ -2815,7 +2815,7 @@
       "registered_members": 2,
       "sector": "부동산",
       "sector_id": "kospi-3635784ec512c414844dca1b",
-      "sha256": "1bec1b89c932e80b08370b0eb2c271d4ec70df015bb9ff5b896410894a40d71f"
+      "sha256": "fb5ea3883e0cb91940d412a365f54eac39781e5457c9992459fa4ec449594183"
     },
     {
       "breadth_20d": 47.61904761904761,
@@ -2864,7 +2864,7 @@
       "registered_members": 21,
       "sector": "비금속",
       "sector_id": "kospi-33aee1f746a9046e9bef0c58",
-      "sha256": "1fb1de5d17cedd618fa4069e7a882a03aa0c0be768785124581cc289fe30d6a6"
+      "sha256": "d61701468c09d2fa3c78d228f49a72c39fdd2352f94560fbb169c9cee452c477"
     },
     {
       "breadth_20d": 38.46153846153847,
@@ -2920,7 +2920,7 @@
       "registered_members": 27,
       "sector": "섬유·의류",
       "sector_id": "kospi-b3dcaf8efbb977e01291d13d",
-      "sha256": "96d1fd4d1fa35b73ec8245647def1edd7d730ad404d9d7ecbf0063e270fa68b0"
+      "sha256": "b8e8aaad7f29849cb072081df1baa3499bbc2a2af7f64138dcaf19577834d9ef"
     },
     {
       "breadth_20d": 7.6923076923076925,
@@ -2969,7 +2969,7 @@
       "registered_members": 13,
       "sector": "오락·문화",
       "sector_id": "kospi-a96467f4e1e536db7142e3bf",
-      "sha256": "a3b8bc31b73f41e5d4edca11a018bc18630ebc5c35791593fdaa3763e8d21940"
+      "sha256": "be7e0f14a06ad53a35a7fb34a038850b0d0deac421300e88364a61686ef0c1de"
     },
     {
       "breadth_20d": 54.166666666666664,
@@ -3018,7 +3018,7 @@
       "registered_members": 24,
       "sector": "운송·창고",
       "sector_id": "kospi-64b30aeba8d343ba6c3593b3",
-      "sha256": "1f463bd5391722d0493f8b24bb0f605d8dd60221470b63f6302f80f6b806da4f"
+      "sha256": "fe0a71f07a1be4c6e33b179ba94fafb022d93b36364709ea9fb6bf6a2a662342"
     },
     {
       "breadth_20d": 32.758620689655174,
@@ -3067,7 +3067,7 @@
       "registered_members": 58,
       "sector": "운송장비·부품",
       "sector_id": "kospi-4568f2f682af64bee1ade18d",
-      "sha256": "403fdfdc841e6e12da24a59a67cf321dea2d97f868680d76ef3ce1df776013ac"
+      "sha256": "cc3974a17dfb9149c1c9d955faf8d0042d904595b68d180ab8f82500fa6b8b1c"
     },
     {
       "breadth_20d": 42.3728813559322,
@@ -3116,7 +3116,7 @@
       "registered_members": 59,
       "sector": "유통",
       "sector_id": "kospi-aa107aeca2161b80ed82dd4d",
-      "sha256": "6cd33ce777b8ce736fd7de090b28089ab11e10d9ae263d4ef0e87a3c3bc1a4fb"
+      "sha256": "d026d63f5e8f6dbf070d8aa1bc1eb9a870beb8f54a4cfc69728a05385bfdac95"
     },
     {
       "breadth_20d": 36.11111111111111,
@@ -3165,7 +3165,7 @@
       "registered_members": 36,
       "sector": "음식료·담배",
       "sector_id": "kospi-d4d197667d521d9dc8228f4e",
-      "sha256": "73ea976890ee7fb9a30a8d3e0ea73df6eccf28b1ebbbffa1516ef167bfa6636c"
+      "sha256": "bb9de827eb946001064b77b21dc2c7985768c200229e6f40485febb2228fa11d"
     },
     {
       "breadth_20d": 62.5,
@@ -3214,7 +3214,7 @@
       "registered_members": 8,
       "sector": "의료·정밀기기",
       "sector_id": "kospi-b2ba98845d98a40728207299",
-      "sha256": "26cf22d7ca53b094dfd2ae12f4efb53684be547bef717b265bd999a19dfc0d19"
+      "sha256": "a6b52202916df10b2ba54f316458eaa9c99144b3fdb985bd743b60bdddcecb4a"
     },
     {
       "breadth_20d": 53.125,
@@ -3263,7 +3263,7 @@
       "registered_members": 32,
       "sector": "일반서비스",
       "sector_id": "kospi-789b5defc060cd3c5777c743",
-      "sha256": "a55c58d70c414d1b9fb398a367b16f28e172e95e379ec84c2e0832c2d71e2b60"
+      "sha256": "d97de08b4b2d63965d1cd9efc8447bb69d44edadd5c71498070864d17f2b26fb"
     },
     {
       "breadth_20d": 30.0,
@@ -3312,7 +3312,7 @@
       "registered_members": 10,
       "sector": "전기·가스",
       "sector_id": "kospi-8fdff951ce1e7584efdfc5ee",
-      "sha256": "0fe40eeaa022ba95773ad2a08e8b67cb997becac2d19a3d30c5bf1df42e62289"
+      "sha256": "f8383fb1d1c799f48dfb03d87dd40da02a7325efa96a5044463f1ab3fa84df48"
     },
     {
       "breadth_20d": 41.53846153846154,
@@ -3361,7 +3361,7 @@
       "registered_members": 65,
       "sector": "전기·전자",
       "sector_id": "kospi-b3660501d3b0501265bc5cf8",
-      "sha256": "9b6fdda476a6876d597e2f7f8197a6b3b6318af765c2cc8bf9f78dbb84fe0076"
+      "sha256": "5026779c1d04ba6c2c4d2230f577f073a529b7af5e59ce0ab18d2b3625e80fef"
     },
     {
       "breadth_20d": 55.319148936170215,
@@ -3410,7 +3410,7 @@
       "registered_members": 47,
       "sector": "제약",
       "sector_id": "kospi-da7ddf37525f1bd9756e331f",
-      "sha256": "b5c440c94dfed578cab6dfdf708d2b91ca393f49e46d5695941636e38b1857f4"
+      "sha256": "27b3d152f12301ae28dc38abe21c2502079ee80b74c045e757ef90ef33949743"
     },
     {
       "breadth_20d": 37.5,
@@ -3459,7 +3459,7 @@
       "registered_members": 8,
       "sector": "제조",
       "sector_id": "kospi-6b47f346822dd6d2140f4c0e",
-      "sha256": "bd7e3de1d30c1c640b7d51e9c6198c70dc25023400fc363a3a2aa9b9b86724d2"
+      "sha256": "bed120dc44069ef6cb6580aeb69e55a2556c079b3e7e059839ec7993de5991f3"
     },
     {
       "breadth_20d": 55.55555555555556,
@@ -3508,7 +3508,7 @@
       "registered_members": 18,
       "sector": "종이·목재",
       "sector_id": "kospi-c0575687d39de4035b6639d0",
-      "sha256": "747659822f698f9c0651f92a8df5c547ff85e894559437d8ae48a8725d549be0"
+      "sha256": "752ff509411377a8200df85831973532cfae45f3cfe1d96da7747288739e34b5"
     },
     {
       "breadth_20d": 27.77777777777778,
@@ -3557,7 +3557,7 @@
       "registered_members": 18,
       "sector": "증권",
       "sector_id": "kospi-c39c0454810e005af855ff10",
-      "sha256": "c69ab3d3fb81a807b1e92b3f5553d00bfe7a42868155c0de6c934be39e2dc6ec"
+      "sha256": "f61bc3de00d3320371a632c0b1aea51cece616dcab9b5b683f82381f51dff3ea"
     },
     {
       "breadth_20d": 40.0,
@@ -3606,7 +3606,7 @@
       "registered_members": 5,
       "sector": "통신",
       "sector_id": "kospi-65d13ee4c4e903e8ce2b7af4",
-      "sha256": "ab23f9413e69c14224b11756ab5a1094ef0346c78c6cd970edffe99f67665789"
+      "sha256": "9e8513e674c2dd2fdc557a2e044ace82e4e7b1a0533d2549f3e26a9b2533c82d"
     },
     {
       "breadth_20d": 0.0,
@@ -3655,7 +3655,7 @@
       "registered_members": 2,
       "sector": "표준산업 · 어로 어업",
       "sector_id": "kospi-ac59c09910233ebf4dd0c87f",
-      "sha256": "713d74e06f7b6b3b3bc7d219152e7d40365692b02ee524d47636b804968fd89f"
+      "sha256": "10a2d52eea895ff6c520601620eefd679ff40e7f1be74c490536e54e988d8ceb"
     },
     {
       "breadth_20d": 53.46534653465347,
@@ -3704,10 +3704,10 @@
       "registered_members": 101,
       "sector": "화학",
       "sector_id": "kospi-59ea626efa4b283132c311fc",
-      "sha256": "29cdaa70d28a44287c54e6f08acfd8ff78a8bdf095f46bd46d9d26c4dfba7067"
+      "sha256": "381ba8a3f429682df236c621c46658007122acb0ecef48310269794830e4cc27"
     }
   ],
   "snapshot_published_at": "2026-10-23T11:21:23.912056+00:00",
-  "source_snapshot_sha256": "002496a9cc8e6607c17c6f2a08cff3c60034df5536de5d1f2456187af6d0dc39",
+  "source_snapshot_sha256": "46c328a497c4c990ddae82506fcb13c32d796e1fcc61bcaa07681dc8630ec1e6",
   "validation_status": "passed"
 }
