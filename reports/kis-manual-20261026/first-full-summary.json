@@ -1,0 +1,76 @@
+{
+  "status": "COMPLETE_PROVISIONAL",
+  "run_id": "40326538555",
+  "asof": "2026-10-26",
+  "source_commit": "f36d03e78134a9e3fa051dc9cf2b24868e52dd5b",
+  "actual_started_at": "2026-10-26T12:58:40.591774+00:00",
+  "first_http_at": "2026-10-26T12:58:41.968806+00:00",
+  "last_http_at": "2026-10-26T14:33:04.043926+00:00",
+  "completed_at": "2026-10-26T14:33:14.031319+00:00",
+  "elapsed_seconds": 5673.439545,
+  "received": 2349,
+  "validated": 2349,
+  "target": 2349,
+  "failed_or_missing": 0,
+  "physical_http": 4701,
+  "failed_http": 0,
+  "retries": 0,
+  "recovered_tasks": 0,
+  "first_attempt_success_rate": 1.0,
+  "final_validation_rate": 1.0,
+  "symbols_per_minute": 24.84207311668816,
+  "phase_seconds": {
+    "API_response": 4392.307501319989,
+    "DuckDB": 1.818582353000238,
+    "JSON": 0.018730790000518027,
+    "backoff": 0,
+    "internal_validation": 2.2247513000002073,
+    "parsing": 2.804349056996159,
+    "preserved_response_rescan": 1.454290967999441,
+    "progress_reporting": 33.15360309499795,
+    "rate_wait": 1213.1982445909837,
+    "raw_DB_reverification": 3.019073290000051,
+    "raw_hash": 0.25822570599113703,
+    "raw_storage_compression": 11.839528395966894
+  },
+  "phase_percent": {
+    "API_response": 77.41877685452606,
+    "DuckDB": 0.03205431799485647,
+    "JSON": 0.00033014875459500513,
+    "backoff": 0.0,
+    "internal_validation": 0.039213448602988636,
+    "parsing": 0.04942943402768133,
+    "preserved_response_rescan": 0.025633320959260186,
+    "progress_reporting": 0.5843651427327926,
+    "rate_wait": 21.383822546592125,
+    "raw_DB_reverification": 0.05321416163957821,
+    "raw_hash": 0.004551484226507908,
+    "raw_storage_compression": 0.20868343272294254
+  },
+  "storage_validation_seconds": 23.437531859954646,
+  "artifacts": [
+    {
+      "digest": "sha256:eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+      "id": 12658373693,
+      "name": "kis-manual-state-20261026",
+      "size_in_bytes": 27223433
+    }
+  ],
+  "restoration": {
+    "artifact_id": 12649246422,
+    "previous_run": 40320922383,
+    "zip_sha256": "623d238d6a8a9b79ba1dfc9d0573469d2333b1d4623d4c95bd42b48c070f5949"
+  },
+  "KRX_api_requests": 0,
+  "new_sample_api_requests": 0,
+  "new_generations_started": 1,
+  "automatic_schedules_created": 0,
+  "official_price_status": "PENDING_KRX",
+  "original_raw_and_ledgers_preserved": true,
+  "offline_tests": {
+    "all_passed": 510,
+    "seconds": 383.47,
+    "manual_final_passed": 11
+  },
+  "result_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/40326538555"
+}
