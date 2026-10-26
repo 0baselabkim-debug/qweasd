@@ -251,3 +251,17 @@ def test_admin_recovery_cannot_collect_or_dispatch_before_grace():
     with pytest.raises(Failure):validate(c,policy.STARTS[0]+dt.timedelta(days=1))
     text=(Path(__file__).resolve().parents[1]/'.github/workflows/full-market-controller.yml').read_text()
     assert 'KIS_APP_KEY' not in text and 'KRX_API_KEY' not in text
+
+
+def test_independent_clock_dispatches_only_missing_or_verified_recoverable_rounds():
+    from collector_v1.experiment.timekeeper import recovery_decision
+    t=policy.STARTS[1]
+    assert recovery_decision(None,None,t,2)=='dispatch_missing'
+    assert recovery_decision({'status':'in_progress'},None,t,2)=='wait'
+    assert recovery_decision({'status':'completed'},None,t,2)=='blocked_unknown_usage'
+    assert recovery_decision({'status':'completed'},{'status':'COMPLETE'},t,2)=='complete'
+    assert recovery_decision({'status':'completed'},{'status':'PARTIAL','recovery_possible':True,'physical_http':100},t,2)=='dispatch_recovery'
+    with pytest.raises(Failure):recovery_decision(None,None,t-dt.timedelta(seconds=1),2)
+    text=(Path(__file__).resolve().parents[1]/'.github/workflows/full-market-clock.yml').read_text()
+    assert 'KIS_APP_KEY' not in text and 'KRX_API_KEY' not in text
+    assert text.count('timeout-minutes: 355')==4

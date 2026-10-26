@@ -28,7 +28,11 @@ def main():
     data=runtime.api(f'repos/{runtime.REPO}/actions/workflows/{meta["id"]}/runs?per_page=100')
     if len(data['workflow_runs'])>=100:raise Failure('history_requires_pagination')
     matching=[r for r in data['workflow_runs'] if runtime.run_round_id(r)==c['round']]
-    result=dict(status='INSPECTED',asof=ASOF,round=c['round'],workflow_state=meta['state'],matching_runs=[{'id':r['id'],'status':r['status'],'conclusion':r['conclusion']} for r in matching],provider_http=0,observed_at=current.isoformat())
+    step_states={}
+    for existing in matching[:3]:
+        jobs=runtime.api(f'repos/{runtime.REPO}/actions/runs/{existing["id"]}/jobs?per_page=20')['jobs']
+        step_states[str(existing['id'])]=[{'job':j['name'],'status':j['status'],'conclusion':j['conclusion'],'steps':[{'name':s['name'],'status':s['status'],'conclusion':s['conclusion']} for s in j.get('steps',[])]} for j in jobs]
+    result=dict(step_states=step_states,status='INSPECTED',asof=ASOF,round=c['round'],workflow_state=meta['state'],matching_runs=[{'id':r['id'],'status':r['status'],'conclusion':r['conclusion']} for r in matching],provider_http=0,observed_at=current.isoformat())
     if c['action']=='recover_missing' and not matching:
         if meta['state']!='active':raise Failure('workflow_not_active_no_override')
         runtime.api(f'repos/{runtime.REPO}/actions/workflows/{meta["id"]}/dispatches','POST',{'ref':'main','inputs':{'round':str(c['round'])}})
