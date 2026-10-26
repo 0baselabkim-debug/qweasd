@@ -1,0 +1,31 @@
+name: Full-market metadata and missing-run recovery bootstrap
+on:
+  push:
+    branches: [feat/market-data-collector-v1]
+    paths: [.github/experiments/full-market-control.json]
+permissions:
+  contents: read
+  actions: write
+  issues: write
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m collector_v1.experiment.controller
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-market-controller-${{ github.run_id }}
+          path: data/experiment-admin
+          if-no-files-found: warn
+          retention-days: 7

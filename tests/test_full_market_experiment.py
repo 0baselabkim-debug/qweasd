@@ -241,3 +241,13 @@ def test_large_comparison_is_compact_for_issue_and_summary_but_keeps_artifact_da
     brief=runtime.compact_comparison(full)
     assert brief['changed_count']==2349 and brief['changed_by_category']['price']==2
     assert len(encoded(brief))<1000 and len(full['changed'])==2349
+
+
+def test_admin_recovery_cannot_collect_or_dispatch_before_grace():
+    from collector_v1.experiment.controller import validate
+    c={'schema':1,'experiment':policy.EXPERIMENT_ID,'asof':policy.ASOF,'action':'recover_missing','round':1,'request_id':'test'}
+    with pytest.raises(Failure):validate(c,policy.STARTS[0]+dt.timedelta(minutes=14))
+    validate(c,policy.STARTS[0]+dt.timedelta(minutes=15))
+    with pytest.raises(Failure):validate(c,policy.STARTS[0]+dt.timedelta(days=1))
+    text=(Path(__file__).resolve().parents[1]/'.github/workflows/full-market-controller.yml').read_text()
+    assert 'KIS_APP_KEY' not in text and 'KRX_API_KEY' not in text
