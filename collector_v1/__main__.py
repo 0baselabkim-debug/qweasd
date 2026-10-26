@@ -69,8 +69,8 @@ def main(argv=None):
                 else:raise Failure('macro_needs_no_symbol_selection')
                 plan.update(tasks=tasks,symbols=codes);store.write('plan.json',plan)
             elif a.command=='collect':
-                budget=Budget(store,a.max_calls,a.seconds);api=Providers(store,budget)
-                result=collect_tasks(store,plan['tasks'],api.fetch,budget)
+                budget=Budget(store,a.max_calls,a.seconds,cumulative=20);api=Providers(store,budget)
+                result=collect_tasks(store,plan['tasks'],api.fetch,budget,fail_fast=True)
                 print(json.dumps(result,ensure_ascii=False))
                 return 0 if result['collection_status']=='complete' else 1
             else:

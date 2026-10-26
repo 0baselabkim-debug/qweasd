@@ -270,3 +270,27 @@ def test_source_metadata_binding_and_secret_redirect(store):
     from collector_v1.providers import NoRedirect
     req=__import__('urllib.request',fromlist=['Request']).Request('https://example.com',headers={'Authorization':'synthetic'})
     assert NoRedirect().redirect_request(req,None,302,'found',{},'https://other.example') is None
+
+
+@pytest.mark.parametrize('code',['missing_KIS_APP_KEY','authentication_failure','network_failure','network_policy_denied'])
+def test_phase2_failure_stops_following_requests(store,budget,code):
+    tasks=[task('calendar',DAY),task('krx',DAY,market='KOSPI'),task('flow',DAY,symbol='000720',market='KOSPI')]
+    attempted=[]
+    def fetch(t):
+        attempted.append(t)
+        raise Failure(code, code=='network_failure')
+    r=collect_tasks(store,tasks,fetch,budget,fail_fast=True)
+    assert len(attempted)==1 and r['stopped']==code and r['collection_status']=='partial'
+    assert r['tasks'][1]['collection_status']=='pending'
+    assert store.read('state.json')['tasks'][sha(encoded(tasks[0]))]['error']==code
+
+
+def test_cli_twenty_total_limit_survives_restart(store,monkeypatch):
+    store.write('plan.json',{'schema':1,'asof':DAY,'mode':'macro','tasks':[task('macro',DAY,indicator='us2y')]})
+    store.write('requests.json',[{'status':'attempted','source_run':'prior-process'}]*20)
+    def forbidden(*a):raise AssertionError('budget must stop before provider access')
+    monkeypatch.setattr(Providers,'fetch',forbidden)
+    for _ in range(2):
+        assert main(['--root',str(store.root),'collect','--max-calls','20'])==1
+        assert store.read('last-run.json')['physical_requests']==0
+        assert store.read('last-run.json')['total_reserved_requests']==20

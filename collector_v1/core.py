@@ -128,7 +128,7 @@ class Budget:
         self.store.write('requests.json', self.ledger)
 
 
-def collect_tasks(store, tasks, fetch, budget):
+def collect_tasks(store, tasks, fetch, budget, fail_fast=False):
     """Cache only exact task identities; validation and retrieval are separate."""
     state = store.read('state.json', {'schema': 1, 'tasks': {}})
     started = time.monotonic(); stopped = None
@@ -156,6 +156,9 @@ def collect_tasks(store, tasks, fetch, budget):
             state['tasks'][key] = failure
             history = store.read('errors.json', [])
             store.write('errors.json', history + [failure])
+            if fail_fast:
+                stopped = exc.code
+                break
         finally:
             store.write('state.json', state)
     selected = [state['tasks'].get(sha(encoded(t)), {'task': t, 'collection_status': 'pending'}) for t in tasks]

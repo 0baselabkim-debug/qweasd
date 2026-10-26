@@ -17,7 +17,7 @@ on:
         description: 'Up to 3 official symbols, comma-separated; blank collects bootstrap'
         type: string
       max_calls:
-        description: 'Physical requests including authentication; 1-20, cumulative 300'
+        description: 'Physical requests including authentication; 1-20, cumulative 20'
         default: '20'
         type: string
 permissions:
