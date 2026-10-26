@@ -18,16 +18,20 @@ class ProvisionalAPI(Providers):
         raw_opener=opener or urllib.request.build_opener(NoRedirect()).open
         def timed(req,timeout):
             started=time.monotonic();kind=budget.current['endpoint'] if budget.current else 'unknown'
+            repeated=budget.current.get('repeated_signature',False) if budget.current else False
+            def record_elapsed():
+                elapsed=time.monotonic()-started;metrics.add('api:'+kind,elapsed)
+                if repeated:metrics.add('retry_api:'+kind,elapsed)
             try:r=raw_opener(req,timeout=timeout)
             except Exception:
-                metrics.add('api:'+kind,time.monotonic()-started);raise
+                record_elapsed();raise
             class Response:
                 status=r.status
                 def __enter__(self):r.__enter__();return self
                 def read(self,n):return r.read(n)
                 def __exit__(self,*a):
                     try:return r.__exit__(*a)
-                    finally:metrics.add('api:'+kind,time.monotonic()-started)
+                    finally:record_elapsed()
             return Response()
         super().__init__(store,budget,timed)
     def check_task(self,t):
@@ -89,6 +93,7 @@ def fetch_task(t,api,budget,cache,attempts,metrics):
     while attempts.get(key,0)<batch_limit:
         budget.check();attempts[key]=attempts.get(key,0)+1
         try:
+            budget.current_task=t
             e=api.fetch(t);started=time.monotonic();parse(api.store.raw(e),e);metrics.add('parse',time.monotonic()-started)
             cache[key]=e;append(api.store.root/'tasks.jsonl',dict(task=t,status='received',evidence=e,attempt=attempts[key]));return e
         except (Failure,ValueError,KeyError,TypeError) as exc:

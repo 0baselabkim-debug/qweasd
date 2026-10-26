@@ -99,13 +99,24 @@ def test_full_population_executor_fresh_data_and_full_DB_readback(setup):
     manual.full_plan(sample,u)
     c.update(mode='full',trial_id='kis-full-20261026',approval=manual.FULL_APPROVAL,max_total_http=5600,not_before='2026-10-26T11:45:00+00:00',expires_at='2026-10-26T14:35:00+00:00')
     calls,opener=transport(u)
-    r=manual.run(root/'full',c,u,'SYNTHETIC_FULL',opener=opener)
+    checkpoints=[]
+    r=manual.run(root/'full',c,u,'SYNTHETIC_FULL',opener=opener,progress=checkpoints.append)
     assert r['status']=='PASS' and r['target']==r['kis_validated']==2349
     assert r['physical_http']==len(calls)==4701 and len(sample_calls)==9
     assert r['db_json_match'] and r['http_failure_rate']==0
+    assert r['first_attempt_success_rate']==r['final_validation_rate']==1 and r['physical_retries']==0
+    assert r['first_attempt_success_symbols']==r['received_symbols']==2349 and len(r['excluded_symbols'])==1601
+    assert r['uncollected_symbols']==r['validation_failed_symbols']==r['duplicate_source_failures']==[]
+    assert checkpoints[0]['physical_http']==0 and checkpoints[-1]['status']=='VALIDATING' and checkpoints[-1]['received']==2349
     assert r['metrics']['seconds']['DuckDB_write_and_readback']>=0 and r['bottleneck']
     assert not any('krx.co.kr' in x for x in calls)
     actions.verify_mode(root/'full',r)
+    from collector_v1.kis_full_analysis import analyze,markdown_table
+    analysis=analyze(r,events(root/'full/http.jsonl'))
+    assert analysis['status']=='COMPLETE_PROVISIONAL' and analysis['authentication_requests']==1 and analysis['index_requests']==2
+    assert analysis['first_attempt_success_rate']==1 and analysis['excluded_count']==1601
+    assert '수집 대상 종목' in markdown_table(r,analysis)
+    assert analysis['optimization_gains_are_upper_bounds_not_validated_speedups']
 
 
 def test_full_interruption_resumes_without_repeating_successful_symbols(setup):
@@ -134,3 +145,19 @@ def test_failed_context_cannot_create_a_fresh_resettable_call_budget(setup,monke
     with pytest.raises(Failure,match='control_scope'):actions.main()
     assert (root/'state/UNKNOWN_PREVIOUS_USAGE').exists()
     assert json.loads((root/'state/blocked.json').read_bytes())['status']=='FAIL'
+
+
+def test_failed_data_http_preserves_exact_response_without_new_request(setup):
+    import io,urllib.error
+    root,c,u=setup;calls,original=transport(u);failed=False
+    raw=b'official service temporary failure body'
+    def once(req,timeout):
+        nonlocal failed
+        if 'investor-trade-by-stock-daily' in req.full_url and not failed:
+            failed=True;raise urllib.error.HTTPError(req.full_url,503,'temporary',{},io.BytesIO(raw))
+        return original(req,timeout)
+    r=manual.run(root/'http-error',c,u,'SYNTHETIC',opener=once)
+    assert r['status']=='PASS' and r['physical_http']==10 and r['physical_retries']==1
+    assert r['first_attempt_success_symbols']==2 and r['retry_extra_seconds']>=0
+    e=r['http_error_evidence'][0]
+    assert e['http']==503 and Store(root/'http-error').raw(e)==raw

@@ -1,5 +1,5 @@
 """New feature-branch manual executor; never enables old workflows or calls KRX."""
-import argparse,base64,datetime as dt,json,os,subprocess
+import argparse,base64,datetime as dt,json,os,subprocess,time
 from pathlib import Path
 from .core import Failure,Store,encoded,now,sha
 from .trial import REPO,BRANCH,secret_scan
@@ -104,7 +104,7 @@ def publish():
     report=blocked if str(blocked.get('run_id'))==os.environ['GITHUB_RUN_ID'] else s.read('modes/'+c['mode']+'/report.json') or {'status':'FAIL','reason':'no_verified_report'}
     if c['mode']=='full':report={k:v for k,v in report.items() if k!='rows'} | {'rows_preserved_in_state_artifact':True}
     state=runtime.verify(ROOT)
-    receipt=dict(report=report,run_id=os.environ['GITHUB_RUN_ID'],run_url=f'https://github.com/{REPO}/actions/runs/'+os.environ['GITHUB_RUN_ID'],source_commit=os.environ['GITHUB_SHA'],state_manifest_sha256=sha(encoded(state)),full_plan=s.read('full-plan.json'),restoration=s.read('restoration.json'),published_at=now())
+    receipt=dict(report=report,run_id=os.environ['GITHUB_RUN_ID'],run_url=f'https://github.com/{REPO}/actions/runs/'+os.environ['GITHUB_RUN_ID'],source_commit=os.environ['GITHUB_SHA'],state_manifest_sha256=sha(encoded(state)),full_plan=s.read('full-plan.json'),analysis=s.read('full-analysis.json'),restoration=s.read('restoration.json'),published_at=now())
     artifacts=runtime.api(f'repos/{REPO}/actions/runs/{os.environ["GITHUB_RUN_ID"]}/artifacts?per_page=100')['artifacts']
     receipt['artifacts']=[{k:a.get(k) for k in ('id','name','digest','size_in_bytes')} for a in artifacts]
     raw=encoded(receipt)
@@ -114,19 +114,50 @@ def publish():
     if len(raw)>3000000:raise Failure('manual_receipt_size_cap')
     path=f'reports/kis-manual-20261026/{os.environ["GITHUB_RUN_ID"]}.json'
     runtime.api(f'repos/{REPO}/contents/{path}','PUT',dict(message='report: preserve KIS manual execution result '+os.environ['GITHUB_RUN_ID'],content=base64.b64encode(raw).decode(),branch=BRANCH.removeprefix('refs/heads/')))
-    with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('```json\n'+json.dumps(receipt,ensure_ascii=False,indent=2)+'\n```\n')
+    with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+        if c['mode']=='full' and receipt.get('analysis'):
+            from .kis_full_analysis import markdown_table
+            f.write(markdown_table(report,receipt['analysis'])+'\n')
+            concise={k:v for k,v in receipt.items() if k not in ('report','full_plan')}
+            f.write('```json\n'+json.dumps(concise,ensure_ascii=False,indent=2)+'\n```\n')
+        else:f.write('```json\n'+json.dumps(receipt,ensure_ascii=False,indent=2)+'\n```\n')
+
+
+def progress_report(payload):
+    # Approved machine progress record only; no raw responses or credential values.
+    path=f'reports/kis-manual-20261026/{os.environ["GITHUB_RUN_ID"]}-progress.json'
+    endpoint=f'repos/{REPO}/contents/{path}'
+    data=dict(message='progress: KIS full collection '+str(payload.get('physical_http')),content=base64.b64encode(encoded(payload)).decode(),branch=BRANCH.removeprefix('refs/heads/'))
+    if getattr(progress_report,'file_sha',None):data['sha']=progress_report.file_sha
+    result=runtime.api(endpoint,'PUT',data)
+    progress_report.file_sha=result['content']['sha']
 
 
 def execute():
-    c=context()
+    preparation_started=now();begin=time.monotonic();c=context()
     try:universe,folder=prepare(c)
     except Exception:
         ROOT.mkdir(parents=True,exist_ok=True);(ROOT/'UNKNOWN_PREVIOUS_USAGE').touch();raise
     (ROOT/'blocked.json').unlink(missing_ok=True)
-    result=manual.run(folder,c,universe,os.environ['GITHUB_RUN_ID'])
+    preparation_seconds=time.monotonic()-begin
+    result=manual.run(folder,c,universe,os.environ['GITHUB_RUN_ID'],progress=progress_report if c['mode']=='full' else None)
+    verification_start=time.monotonic()
     if result['status']=='PASS':
         verify_mode(folder,result)
         if c['mode']=='sample':Store(ROOT).write('full-plan.json',manual.full_plan(result,universe))
+    result['preparation_started_at']=preparation_started;result['preparation_seconds']=preparation_seconds
+    result['raw_DB_reverification_seconds']=time.monotonic()-verification_start
+    result['metrics']['seconds']['raw_DB_reverification']=result['raw_DB_reverification_seconds']
+    result['completed_at']=now()
+    result['elapsed_seconds']=(dt.datetime.fromisoformat(result['completed_at'])-dt.datetime.fromisoformat(result['actual_started_at'])).total_seconds()
+    result['symbols_per_minute']=result['kis_validated']/max(result['elapsed_seconds']/60,1e-9)
+    result['end_to_end_seconds']=(dt.datetime.fromisoformat(result['completed_at'])-dt.datetime.fromisoformat(preparation_started)).total_seconds()
+    Store(folder).write('report.json',result)
+    if c['mode']=='full':
+        from .kis_full_analysis import analyze
+        Store(ROOT).write('full-analysis.json',analyze(result,events(folder/'http.jsonl')))
+        try:progress_report(dict(run_id=os.environ['GITHUB_RUN_ID'],mode='full',asof=manual.ASOF,status=result['status'],target=result['target'],received=result['received_symbols'],validated=result['kis_validated'],physical_http=result['physical_http'],completed_at=result['completed_at']))
+        except Exception:pass
     return 0 if result['status']=='PASS' else 1
 
 

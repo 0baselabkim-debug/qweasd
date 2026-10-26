@@ -1,5 +1,6 @@
 """Manually approved KIS-only sample/full collection. No scheduler and no KRX."""
-import argparse,datetime as dt,json,os,re,time
+import argparse,datetime as dt,json,os,re,time,urllib.error,urllib.parse,urllib.request
+from collections import Counter
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from .core import Failure,Stop,Store,encoded,now,sha
@@ -36,6 +37,7 @@ class ManualBudget:
         self.path=store.root/'http.jsonl';self.entries=events(self.path)
         self.used=sum(e['event']=='started' for e in self.entries);self.initial=self.used
         self.limit=control['max_total_http'];self.current=None;self.last=0
+        self.signatures=Counter(e.get('request_signature',e['endpoint']) for e in self.entries if e['event']=='started')
         starts=[dt.datetime.fromisoformat(e['started_at']) for e in self.entries if e['event']=='started']
         if starts:self.last=time.monotonic()-max(0,(dt.datetime.now(dt.timezone.utc)-max(starts)).total_seconds())
     def check(self):
@@ -44,16 +46,44 @@ class ManualBudget:
         if self.used>=self.limit:raise Stop('manual_http_budget_exhausted')
     def before(self,source,endpoint,reason):
         if source!='KIS' or endpoint not in ENDPOINTS:raise Failure('manual_non_KIS_endpoint_forbidden')
-        self.check();start=time.monotonic();time.sleep(max(0,1.05-(time.monotonic()-self.last)));self.metrics.add('rate_wait',time.monotonic()-start);self.check()
+        t=getattr(self,'current_task',{})
+        signature=endpoint+'|'+(t.get('symbol',t.get('market','')) if endpoint!='/oauth2/tokenP' else '')
+        repeated=self.signatures[signature]>0
+        self.check();start=time.monotonic();time.sleep(max(0,1.05-(time.monotonic()-self.last)));self.metrics.add('rate_wait',time.monotonic()-start)
+        if repeated:self.metrics.add('retry_rate_wait',time.monotonic()-start)
+        self.check()
         self.last=time.monotonic();self.used+=1
-        entry=dict(event='started',sequence=self.used,round=1,mode=self.control['mode'],source=source,endpoint=endpoint,reason=reason,source_run=self.run_id,started_at=now())
-        append(self.path,entry);self.entries.append(entry);self.current=entry;return entry
+        entry=dict(event='started',sequence=self.used,round=1,mode=self.control['mode'],source=source,endpoint=endpoint,reason=reason,source_run=self.run_id,started_at=now(),request_signature=signature,repeated_signature=repeated,task_kind=t.get('kind'),symbol=t.get('symbol'),market=t.get('market'))
+        append(self.path,entry);self.entries.append(entry);self.current=entry;self.signatures[signature]+=1;return entry
     def finish(self,entry,status,**metadata):
         e=dict(event='finished',sequence=entry['sequence'],status=status,completed_at=now(),**metadata);append(self.path,e);self.entries.append(e)
     def remaining_seconds(self):return (dt.datetime.fromisoformat(self.control['expires_at'])-dt.datetime.now(dt.timezone.utc)).total_seconds()
 
 
 class ManualAPI(engine.ProvisionalAPI):
+    def __init__(self,store,budget,metrics,opener=None):
+        from .providers import NoRedirect
+        original=opener or urllib.request.build_opener(NoRedirect()).open
+        self.pending_error=None
+        def capture_error(req,timeout):
+            try:return original(req,timeout=timeout)
+            except urllib.error.HTTPError as exc:
+                # Token response bodies are never retained. Other error bodies
+                # are read inside network timing and preserved outside it.
+                if budget.current['endpoint']!='/oauth2/tokenP':
+                    raw=exc.read(1000001)
+                    self.pending_error=(raw[:1000000],dict(http=exc.code,truncated=len(raw)>1000000,params=dict(urllib.parse.parse_qsl(urllib.parse.urlparse(req.full_url).query))))
+                raise
+        super().__init__(store,budget,metrics,capture_error)
+    def fetch(self,t):
+        self.pending_error=None
+        try:return super().fetch(t)
+        except Failure:
+            if self.pending_error is not None:
+                raw,meta=self.pending_error
+                e=self.store.preserve(raw,dict(task=t,source='KIS',endpoint=self.budget.current['endpoint'],collected_at=now(),source_run=self.budget.run_id,**meta))
+                append(self.store.root/'http-errors.jsonl',dict(task=t,evidence=e))
+            raise
     def check_task(self,t):
         validate_control(self.budget.control)
         if t['asof']!=ASOF or t['round']!=1 or t['kind'] not in ('flow','price','index') or t['market'] not in ('KOSPI','KOSDAQ'):raise Failure('manual_task_scope')
@@ -80,7 +110,7 @@ def recover_preserved_responses(store,cache):
         cache[key]=e;append(store.root/'tasks.jsonl',dict(task=t,status='received',evidence=e,recovery='offline_reparse'))
 
 
-def run(root,control,universe,run_id,opener=None):
+def run(root,control,universe,run_id,opener=None,progress=None):
     validate_control(control);selected=eligible(universe)
     if control['mode']=='sample':selected=[r for r in selected if r['symbol'] in TARGETS]
     root=Path(root);metrics=Metrics();store=Evidence(root,metrics)
@@ -102,7 +132,20 @@ def run(root,control,universe,run_id,opener=None):
         common=[task('index',ASOF,round=1,market=m) for m in ('KOSPI','KOSDAQ')]
         probes=[r for r in selected if r['symbol'] in TARGETS];rest=[r for r in selected if r['symbol'] not in TARGETS]
         tasks=lambda rows:[task(k,ASOF,round=1,symbol=r['symbol'],market=r['market']) for r in rows for k in ('flow','price')]
+        last_progress=budget.used
+        def checkpoint(force=False,phase='COLLECTING'):
+            nonlocal last_progress
+            if not force and budget.used-last_progress<200:return
+            complete=sum(all(engine.identity(task(k,ASOF,round=1,symbol=r['symbol'],market=r['market'])) in cache for k in ('flow','price')) for r in selected)
+            payload=dict(run_id=run_id,mode=control['mode'],asof=ASOF,status=phase,target=len(selected),received=complete,physical_http=budget.used,http_limit=budget.limit,task_failures=len(events(root/'failures.jsonl')),observed_at=now(),actual_started_at=started)
+            store.write('progress.json',payload);last_progress=budget.used
+            if progress:
+                begin=time.monotonic()
+                try:progress(payload)
+                except Exception:metrics.counts['progress_reporting_failures']=metrics.counts.get('progress_reporting_failures',0)+1
+                metrics.add('progress_reporting',time.monotonic()-begin)
         try:
+            checkpoint(True)
             for t in common+tasks(probes):engine.fetch_task(t,api,budget,cache,attempts,metrics)
             for row in probes:engine.qualify_kis(row,cache,store,1)
             if rest:
@@ -113,9 +156,9 @@ def run(root,control,universe,run_id,opener=None):
                 failed=[]
                 for t in pending:
                     if attempts.get(engine.identity(t),0)>=6:continue
-                    try:engine.fetch_task(t,api,budget,cache,attempts,metrics);health_streak=0
+                    try:engine.fetch_task(t,api,budget,cache,attempts,metrics);health_streak=0;checkpoint()
                     except Failure as exc:
-                        if exc.code in ('authentication_failure','network_policy_denied','token_expired','provider_rate_limit','local_storage_unavailable'):raise
+                        if exc.code in ('authentication_failure','network_policy_denied','token_expired','provider_rate_limit','http_429','credential_echo','local_storage_unavailable'):raise
                         failed.append(t)
                         if exc.code in ('network_failure','KIS_response_rejected') or exc.code.startswith('http_5'):health_streak+=1
                         if health_streak>=3:
@@ -125,6 +168,7 @@ def run(root,control,universe,run_id,opener=None):
                 pending=failed
                 if not pending:break
         except (Failure,Stop) as exc:errors.append(dict(reason=exc.code if isinstance(exc,Failure) else str(exc),endpoint=budget.current.get('endpoint') if budget.current else None))
+        checkpoint(True,'VALIDATING')
         rows=[]
         validation_begin=time.monotonic()
         for row in selected:
@@ -151,10 +195,12 @@ def run(root,control,universe,run_id,opener=None):
         metrics.add('DuckDB_write_and_readback',time.monotonic()-db_begin)
         report['db_json_match']=saved=={r['symbol']:r for r in rows};report['database_file']=str(path.relative_to(root))
         if not report['db_json_match']:report['status']='FAIL'
+        response_scan_begin=time.monotonic()
         report['failure_responses']=[]
         for event in events(root/'responses.jsonl'):
             e=event['evidence'];d=json.loads(store.raw(e))
             if d.get('rt_cd')!='0':report['failure_responses'].append(dict(endpoint=e['endpoint'],params=e['params'],source_hash=e['source_hash'],rt_cd=d.get('rt_cd'),msg_cd=d.get('msg_cd'),msg1=d.get('msg1')))
+        metrics.add('preserved_response_rescan',time.monotonic()-response_scan_begin)
         report['completed_at']=now()
         report['elapsed_seconds']=(dt.datetime.fromisoformat(report['completed_at'])-dt.datetime.fromisoformat(started)).total_seconds()
         report['this_run_seconds']=time.monotonic()-wall
@@ -166,12 +212,20 @@ def run(root,control,universe,run_id,opener=None):
         report['http_failure_rate']=report['failed_http_requests']/budget.used if budget.used else 0
         failures=events(root/'failures.jsonl')
         report['task_failures']=len(failures)
+        report['http_error_evidence']=[e['evidence'] for e in events(root/'http-errors.jsonl')]
         report['recovered_tasks']=len({engine.identity(e['task']) for e in failures}&set(cache))
         report['recovery_intervals']=[]
         for key in {engine.identity(e['task']) for e in failures}:
             failed_at=min(e['observed_at'] for e in failures if engine.identity(e['task'])==key)
             recovered_at=cache[key]['collected_at'] if key in cache else None
             report['recovery_intervals'].append(dict(task=key,failed_at=failed_at,recovered_at=recovered_at,wall_seconds=(dt.datetime.fromisoformat(recovered_at)-dt.datetime.fromisoformat(failed_at)).total_seconds() if recovered_at else None))
+        completed_codes={r['symbol'] for r in rows};failed_keys={engine.identity(e['task']) for e in failures}
+        first_pass=[r['symbol'] for r in selected if r['symbol'] in completed_codes and all(attempts.get(engine.identity(t),0)==1 and engine.identity(t) not in failed_keys for t in tasks([r]))]
+        received=[r['symbol'] for r in selected if all(engine.identity(t) in cache for t in tasks([r]))]
+        attempted=[r['symbol'] for r in selected if any(engine.identity(t) in attempts for t in tasks([r]))]
+        report.update(received_symbols=len(received),attempted_symbols=len(attempted),first_attempt_success_symbols=len(first_pass),first_attempt_success_rate=len(first_pass)/len(selected),first_attempt_success_denominator='all_required_symbols',final_validation_rate=len(rows)/len(selected),uncollected_symbols=[r['symbol'] for r in selected if r['symbol'] not in received],validation_failed_symbols=[s for s in received if s not in completed_codes],excluded_symbols=[dict(symbol=r['symbol'],market=r['market'],reasons=r.get('exclusion_reasons',[])) for r in universe if not r['eligible']],duplicate_master_codes=[],duplicate_source_failures=[e for e in failures if 'duplicate' in e['reason']],physical_retries=sum(e.get('repeated_signature',False) for e in budget.entries if e['event']=='started'))
+        report['retry_extra_seconds']=sum(v for k,v in metrics.seconds.items() if k.startswith('retry_api:'))+sum(metrics.seconds.get(k,0) for k in ('retry_rate_wait','backoff_wait','reauth_backoff','provider_circuit_wait'))
+        report['retry_time_semantics']='repeated physical request signatures plus backoff; excludes unrelated work during unresolved task intervals'
         report['symbols_per_minute']=len(rows)/max(report['elapsed_seconds']/60,1e-9)
         report['bottleneck']=max(metrics.seconds,key=metrics.seconds.get) if metrics.seconds else None
         report['code_commit']=__import__('subprocess').check_output(['git','rev-parse','HEAD'],text=True).strip()
