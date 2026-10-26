@@ -8,9 +8,6 @@ on:
       symbols:
         type: string
         default: ''
-  schedule:
-    - cron: '17 23 * * 0-5'
-    - cron: '17 2,5,8,11 * * 1-5'
 permissions:
   contents: write
 concurrency:
