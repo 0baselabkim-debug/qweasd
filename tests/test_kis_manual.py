@@ -14,6 +14,7 @@ def setup(monkeypatch,tmp_path):
     real=manual.validate_control
     monkeypatch.setattr(manual,'validate_control',lambda c,current=None:real(c,current or dt.datetime(2026,10,26,12,tzinfo=dt.timezone.utc)))
     monkeypatch.setattr('collector_v1.experiment.storage.time.sleep',lambda _:None)
+    monkeypatch.setattr(manual.ManualBudget,'remaining_seconds',lambda self:10000)
     for key in ('KIS_APP_KEY','KIS_APP_SECRET'):monkeypatch.setenv(key,'SYNTHETIC_'+key)
     control=dict(schema=1,trial_id='kis-sample-20261026',request_id='SYNTHETIC',mode='sample',asof='2026-10-26',previous_run=None,max_total_http=12,not_before='2026-10-26T11:00:00+00:00',expires_at='2026-10-27T03:00:00+00:00',approval=manual.SAMPLE_APPROVAL)
     return tmp_path,control,universe()
