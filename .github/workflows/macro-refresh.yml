@@ -1,8 +1,6 @@
 name: Independent published macro refresh
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '10 0,13 * * 1-5'
 permissions:
   contents: write
 concurrency:
