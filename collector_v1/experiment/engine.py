@@ -76,11 +76,11 @@ class ProvisionalAPI(Providers):
 def identity(t):return sha(encoded(t))
 
 
-def replay(store,round_id):
+def replay(store,round_id,*,asof=ASOF,generation_id=None):
     cache={}
     for event in events(store.root/'tasks.jsonl'):
         t=event['task']
-        if t.get('round')!=round_id or t['asof']!=ASOF:raise Failure('cross_round_cache_forbidden')
+        if t.get('round')!=round_id or t['asof']!=asof or t.get('generation_id')!=generation_id:raise Failure('cross_round_cache_forbidden')
         if event['status']=='received':store.raw(event['evidence']);cache[identity(t)]=event['evidence']
     return cache
 
@@ -112,16 +112,16 @@ def fetch_task(t,api,budget,cache,attempts,metrics):
     raise Failure('task_retry_budget_exhausted')
 
 
-def qualify_kis(row,cache,store,round_id):
+def qualify_kis(row,cache,store,round_id,*,asof=ASOF,generation_id=None):
     """KIS internal checks; a passing row is still pending official validation."""
-    code=row['symbol'];market=row['market']
-    fe=cache[identity(task('flow',ASOF,round=round_id,symbol=code,market=market))]
-    pe=cache[identity(task('price',ASOF,round=round_id,symbol=code,market=market))]
+    code=row['symbol'];market=row['market'];identity_fields={'generation_id':generation_id} if generation_id else {}
+    fe=cache[identity(task('flow',asof,round=round_id,symbol=code,market=market,**identity_fields))]
+    pe=cache[identity(task('price',asof,round=round_id,symbol=code,market=market,**identity_fields))]
     f=parse(store.raw(fe),fe)[0];p=parse(store.raw(pe),pe)[0]
     if any(f[k]!=p[k] for k in ('close','volume','turnover')):raise Failure('flow_price_conflict')
     if f['institution_net_quantity'] is None:raise Failure('institution_quantity_unverified')
     if f['institution_amount_raw'] in (None,''):raise Failure('institution_raw_amount_missing')
-    return dict(symbol=code,market=market,asof=ASOF,foreign_net_quantity=f['foreign_net_quantity'],foreign_net_amount=f['foreign_net_amount'],
+    return dict(symbol=code,market=market,asof=asof,foreign_net_quantity=f['foreign_net_quantity'],foreign_net_amount=f['foreign_net_amount'],
                 institution_net_quantity=f['institution_net_quantity'],institution_amount_raw=f['institution_amount_raw'],institution_net_amount=None,
                 **{k:p[k] for k in KRX_FIELDS},market_cap=None,validation_status='PENDING_KRX',kis_validation_status='PASS',official_price_status='PENDING_KRX',
                 observation_mode='after_close_provisional',provider_finality='UNVERIFIED',exchange='KRX',adjustment='original',foreign_amount_unit='KRW',institution_amount_status='unit_unverified',

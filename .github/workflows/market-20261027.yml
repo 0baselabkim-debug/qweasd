@@ -1,0 +1,313 @@
+name: Four dated KIS market observations 2026-10-27
+run-name: KIS 20261027 four independent generations ${{ github.run_id }}
+on:
+  push:
+    branches: [feat/market-data-collector-v1]
+    paths: [.github/experiments/market-20261027.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: market-stability-20261027-one-shot
+  cancel-in-progress: false
+jobs:
+  authorize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Bind exactly four generations to this control-only push
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m collector_v1.time_slots.runner authorize
+      - uses: actions/upload-artifact@v4
+        with:
+          name: market-20261027-plan
+          path: data/market-stability-20261027/plan
+          retention-days: 30
+          if-no-files-found: error
+  wait1:
+    needs: [authorize]
+    if: always() && needs.authorize.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 275
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Finite wait phase 1 without market credentials
+        run: python -m collector_v1.time_slots.runner wait --phase 1
+  wait2:
+    needs: [authorize, wait1]
+    if: always() && needs.authorize.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 275
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Finite wait phase 2 without market credentials
+        run: python -m collector_v1.time_slots.runner wait --phase 2
+  wait3:
+    needs: [authorize, wait2]
+    if: always() && needs.authorize.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 275
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Finite wait phase 3 without market credentials
+        run: python -m collector_v1.time_slots.runner wait --phase 3
+  master:
+    needs: [authorize, wait3]
+    if: always() && needs.authorize.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: kis-validation-auth
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Fresh KST 2026-10-27 official master and trading-day check, at most four HTTP
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner master
+      - name: Scan and seal partial master after any failure
+        if: always()
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner seal --kind master
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('data/market-stability-20261027/master/UPLOAD_ALLOWED') != ''
+        with:
+          name: market-20261027-master
+          path: data/market-stability-20261027/master
+          retention-days: 30
+          if-no-files-found: error
+  round1:
+    needs: [authorize, master]
+    if: always() && needs.authorize.result == 'success' && needs.master.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: kis-validation-auth
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Offline generation and budget safeguards
+        run: python -m pytest -q tests/test_market_time_slots.py
+      - name: Wait for assigned slot, then collect one fresh full generation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner collect --round 1
+      - name: Scan and seal partial generation after any failure
+        if: always()
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner seal --round 1
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('data/market-stability-20261027/generations/kis-stability-20261027-v1-1800/UPLOAD_ALLOWED') != ''
+        with:
+          name: market-20261027-1800
+          path: data/market-stability-20261027/generations/kis-stability-20261027-v1-1800
+          retention-days: 30
+          if-no-files-found: error
+  round2:
+    needs: [authorize, master, round1]
+    if: always() && needs.authorize.result == 'success' && needs.master.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: kis-validation-auth
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Offline generation and budget safeguards
+        run: python -m pytest -q tests/test_market_time_slots.py
+      - name: Wait for assigned slot, then collect one fresh full generation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner collect --round 2
+      - name: Scan and seal partial generation after any failure
+        if: always()
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner seal --round 2
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('data/market-stability-20261027/generations/kis-stability-20261027-v1-2100/UPLOAD_ALLOWED') != ''
+        with:
+          name: market-20261027-2100
+          path: data/market-stability-20261027/generations/kis-stability-20261027-v1-2100
+          retention-days: 30
+          if-no-files-found: error
+  round3:
+    needs: [authorize, master, round2]
+    if: always() && needs.authorize.result == 'success' && needs.master.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: kis-validation-auth
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Offline generation and budget safeguards
+        run: python -m pytest -q tests/test_market_time_slots.py
+      - name: Wait for assigned slot, then collect one fresh full generation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner collect --round 3
+      - name: Scan and seal partial generation after any failure
+        if: always()
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner seal --round 3
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('data/market-stability-20261027/generations/kis-stability-20261027-v1-0000/UPLOAD_ALLOWED') != ''
+        with:
+          name: market-20261027-0000
+          path: data/market-stability-20261027/generations/kis-stability-20261027-v1-0000
+          retention-days: 30
+          if-no-files-found: error
+  round4:
+    needs: [authorize, master, round3]
+    if: always() && needs.authorize.result == 'success' && needs.master.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: kis-validation-auth
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Offline generation and budget safeguards
+        run: python -m pytest -q tests/test_market_time_slots.py
+      - name: Wait for assigned slot, then collect one fresh full generation
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner collect --round 4
+      - name: Scan and seal partial generation after any failure
+        if: always()
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.time_slots.runner seal --round 4
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('data/market-stability-20261027/generations/kis-stability-20261027-v1-0300/UPLOAD_ALLOWED') != ''
+        with:
+          name: market-20261027-0300
+          path: data/market-stability-20261027/generations/kis-stability-20261027-v1-0300
+          retention-days: 30
+          if-no-files-found: error
+  comparison:
+    needs: [authorize, master, round1, round2, round3, round4]
+    if: always() && needs.authorize.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Exact all-field and core comparisons, including incomplete-round reporting
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m collector_v1.time_slots.runner compare
+      - uses: actions/upload-artifact@v4
+        if: always() && hashFiles('data/market-stability-20261027/comparison/UPLOAD_ALLOWED') != ''
+        with:
+          name: market-20261027-comparison
+          path: data/market-stability-20261027/comparison
+          retention-days: 30
+          if-no-files-found: error

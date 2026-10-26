@@ -1,0 +1,47 @@
+{
+  "source_url": "https://raw.githubusercontent.com/koreainvestment/open-trading-api/cd63caee6aeb90553d506b15ab6866cfad23beda/examples_user/domestic_stock/domestic_stock_functions.py",
+  "source_commit": "cd63caee6aeb90553d506b15ab6866cfad23beda",
+  "source_sha256": "8040003ad8cd5ac6da914f46d1ad9844f167e78de2c9e5e01e55ab02bedd0151",
+  "checked_at": "2026-10-26T22:08:38.679200+00:00",
+  "stock_requests": {
+    "FID_COND_MRKT_DIV_CODE": "J",
+    "scope": "KRX",
+    "other_documented_options": {
+      "NX": "NXT",
+      "UN": "combined"
+    },
+    "extra_NX_UN_requests": false
+  },
+  "price": {
+    "endpoint": "inquire-daily-itemchartprice",
+    "tr_id": "FHKST03010100",
+    "FID_ORG_ADJ_PRC": "1",
+    "price_basis": "original",
+    "target_day_fields": {
+      "stck_clpr": "close",
+      "stck_oprc": "open",
+      "stck_hgpr": "high",
+      "stck_lwpr": "low",
+      "acml_vol": "volume_shares",
+      "acml_tr_pbmn": "turnover_KRW"
+    },
+    "output1": "current quote context; not assumed bound to target day",
+    "output2": "dated daily rows; equality uses target day only, all history remains raw"
+  },
+  "flow": {
+    "endpoint": "investor-trade-by-stock-daily",
+    "tr_id": "FHPTJ04160001",
+    "FID_ORG_ADJ_PRC": "",
+    "FID_ETC_CLS_CODE": "",
+    "foreign_net_quantity": "frgn_ntby_qty shares",
+    "foreign_net_amount": "frgn_ntby_tr_pbmn million KRW; existing verified conversion unchanged",
+    "institution_net_quantity": "orgn_ntby_qty shares with original buy/sell consistency checks",
+    "institution_amount": "orgn_ntby_tr_pbmn raw; normalized KRW remains null, unit unverified"
+  },
+  "index": {
+    "FID_COND_MRKT_DIV_CODE": "U",
+    "KOSPI": "0001",
+    "KOSDAQ": "1001"
+  },
+  "limitation": "J-only observations cannot establish NXT inclusion, NX-versus-J differences or causal effects of NXT close."
+}

@@ -32,8 +32,8 @@ def validate_control(c,current=None):
 
 
 class ManualBudget:
-    def __init__(self,store,control,metrics,run_id):
-        self.store=store;self.control=control;self.metrics=metrics;self.run_id=run_id;self.round_id=1
+    def __init__(self,store,control,metrics,run_id,*,validator=None):
+        self.store=store;self.control=control;self.metrics=metrics;self.run_id=run_id;self.round_id=1;self.validate=validator or validate_control
         self.path=store.root/'http.jsonl';self.entries=events(self.path)
         self.used=sum(e['event']=='started' for e in self.entries);self.initial=self.used
         self.limit=control['max_total_http'];self.current=None;self.last=0
@@ -41,7 +41,7 @@ class ManualBudget:
         starts=[dt.datetime.fromisoformat(e['started_at']) for e in self.entries if e['event']=='started']
         if starts:self.last=time.monotonic()-max(0,(dt.datetime.now(dt.timezone.utc)-max(starts)).total_seconds())
     def check(self):
-        validate_control(self.control)
+        self.validate(self.control)
         if (self.store.root/'STOP').exists():raise Stop('operator_stop')
         if self.used>=self.limit:raise Stop('manual_http_budget_exhausted')
     def before(self,source,endpoint,reason):
@@ -54,6 +54,7 @@ class ManualBudget:
         self.check()
         self.last=time.monotonic();self.used+=1
         entry=dict(event='started',sequence=self.used,round=1,mode=self.control['mode'],source=source,endpoint=endpoint,reason=reason,source_run=self.run_id,started_at=now(),request_signature=signature,repeated_signature=repeated,task_kind=t.get('kind'),symbol=t.get('symbol'),market=t.get('market'))
+        if t.get('generation_id'):entry['generation_id']=t['generation_id']
         append(self.path,entry);self.entries.append(entry);self.current=entry;self.signatures[signature]+=1;return entry
     def finish(self,entry,status,**metadata):
         e=dict(event='finished',sequence=entry['sequence'],status=status,completed_at=now(),**metadata);append(self.path,e);self.entries.append(e)
@@ -85,8 +86,9 @@ class ManualAPI(engine.ProvisionalAPI):
                 append(self.store.root/'http-errors.jsonl',dict(task=t,evidence=e))
             raise
     def check_task(self,t):
-        validate_control(self.budget.control)
-        if t['asof']!=ASOF or t['round']!=1 or t['kind'] not in ('flow','price','index') or t['market'] not in ('KOSPI','KOSDAQ'):raise Failure('manual_task_scope')
+        self.budget.validate(self.budget.control)
+        if t['asof']!=self.budget.control['asof'] or t['round']!=1 or t['kind'] not in ('flow','price','index') or t['market'] not in ('KOSPI','KOSDAQ'):raise Failure('manual_task_scope')
+        if t.get('generation_id')!=self.budget.control.get('generation_id'):raise Failure('manual_task_generation_mismatch')
         if t['kind']!='index' and t['symbol'] not in self.allowed:raise Failure('manual_symbol_not_authorized')
 
 
@@ -99,45 +101,52 @@ def eligible(universe):
     return selected
 
 
-def recover_preserved_responses(store,cache):
+def recover_preserved_responses(store,cache,*,asof=ASOF,generation_id=None):
     # Program fixes may reparse already saved successful HTTP without resending it.
     for event in events(store.root/'responses.jsonl'):
         e=event['evidence'];t=e['task'];key=engine.identity(t)
         if key in cache:continue
-        if t['asof']!=ASOF or t.get('round')!=1 or t['kind'] not in ('flow','price','index'):raise Failure('manual_response_generation_mismatch')
+        if t['asof']!=asof or t.get('round')!=1 or t.get('generation_id')!=generation_id or t['kind'] not in ('flow','price','index'):raise Failure('manual_response_generation_mismatch')
         try:parse(store.raw(e),e)
         except (Failure,ValueError,KeyError,TypeError):continue
         cache[key]=e;append(store.root/'tasks.jsonl',dict(task=t,status='received',evidence=e,recovery='offline_reparse'))
 
 
-def run(root,control,universe,run_id,opener=None,progress=None):
-    validate_control(control);selected=eligible(universe)
+def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None):
+    validator=policy.validate_control if policy else validate_control
+    validator(control);asof=control['asof'];generation_id=control.get('generation_id')
+    selected=policy.eligible(universe) if policy else eligible(universe)
+    def observation_task(kind,**fields):
+        if generation_id:fields['generation_id']=generation_id
+        return task(kind,asof,round=1,**fields)
+    def qualify(row,cache,store):return engine.qualify_kis(row,cache,store,1,asof=asof,generation_id=generation_id)
     if control['mode']=='sample':selected=[r for r in selected if r['symbol'] in TARGETS]
     root=Path(root);metrics=Metrics();store=Evidence(root,metrics)
     with store.lock():
-        binding=dict(trial_id=control['trial_id'],mode=control['mode'],asof=ASOF,max_total_http=control['max_total_http'],population_sha256=sha(encoded(universe)))
+        binding=dict(trial_id=control['trial_id'],mode=control['mode'],asof=asof,max_total_http=control['max_total_http'],population_sha256=sha(encoded(universe)))
+        if generation_id:binding['generation_id']=generation_id
         old=store.read('binding.json')
         if old and old!=binding:raise Failure('manual_state_binding_mismatch')
         if old and not (root/'http.jsonl').exists():raise Failure('manual_lost_ledger_no_reset')
         if not old:
             if any(p.name!='writer.lock' for p in root.iterdir()):raise Failure('manual_existing_root_without_binding')
             (root/'http.jsonl').touch();store.write('binding.json',binding)
-        cache=engine.replay(store,1);recover_preserved_responses(store,cache)
+        cache=engine.replay(store,1,asof=asof,generation_id=generation_id);recover_preserved_responses(store,cache,asof=asof,generation_id=generation_id)
         attempts={};store.blocked_tasks=set()
         for e in events(root/'failures.jsonl'):
             k=engine.identity(e['task']);attempts[k]=max(attempts.get(k,0),e['attempt'])
             if not e.get('retryable',True) and k not in cache:store.blocked_tasks.add(k)
-        budget=ManualBudget(store,control,metrics,run_id);api=ManualAPI(store,budget,metrics,opener);api.allowed={r['symbol'] for r in selected}
+        budget=ManualBudget(store,control,metrics,run_id,validator=validator);api=ManualAPI(store,budget,metrics,opener);api.allowed={r['symbol'] for r in selected}
         previous=store.read('report.json',{});metrics.seconds.update(previous.get('metrics',{}).get('seconds',{}));metrics.counts.update(previous.get('metrics',{}).get('counts',{}));started=previous.get('actual_started_at') or now();wall=time.monotonic();errors=[]
-        common=[task('index',ASOF,round=1,market=m) for m in ('KOSPI','KOSDAQ')]
+        common=[observation_task('index',market=m) for m in ('KOSPI','KOSDAQ')]
         probes=[r for r in selected if r['symbol'] in TARGETS];rest=[r for r in selected if r['symbol'] not in TARGETS]
-        tasks=lambda rows:[task(k,ASOF,round=1,symbol=r['symbol'],market=r['market']) for r in rows for k in ('flow','price')]
+        tasks=lambda rows:[observation_task(k,symbol=r['symbol'],market=r['market']) for r in rows for k in ('flow','price')]
         last_progress=budget.used
         def checkpoint(force=False,phase='COLLECTING'):
             nonlocal last_progress
             if not force and budget.used-last_progress<200:return
-            complete=sum(all(engine.identity(task(k,ASOF,round=1,symbol=r['symbol'],market=r['market'])) in cache for k in ('flow','price')) for r in selected)
-            payload=dict(run_id=run_id,mode=control['mode'],asof=ASOF,status=phase,target=len(selected),received=complete,physical_http=budget.used,http_limit=budget.limit,task_failures=len(events(root/'failures.jsonl')),observed_at=now(),actual_started_at=started)
+            complete=sum(all(engine.identity(observation_task(k,symbol=r['symbol'],market=r['market'])) in cache for k in ('flow','price')) for r in selected)
+            payload=dict(run_id=run_id,mode=control['mode'],asof=asof,status=phase,target=len(selected),received=complete,physical_http=budget.used,http_limit=budget.limit,task_failures=len(events(root/'failures.jsonl')),observed_at=now(),actual_started_at=started)
             store.write('progress.json',payload);last_progress=budget.used
             if progress:
                 begin=time.monotonic()
@@ -147,7 +156,7 @@ def run(root,control,universe,run_id,opener=None,progress=None):
         try:
             checkpoint(True)
             for t in common+tasks(probes):engine.fetch_task(t,api,budget,cache,attempts,metrics)
-            for row in probes:engine.qualify_kis(row,cache,store,1)
+            for row in probes:qualify(row,cache,store)
             if rest:
                 projected=sum(max(1.05,metrics.seconds.get('api:'+Q+suffix,0)/max(metrics.counts.get('api:'+Q+suffix,0),1)) for suffix in ('investor-trade-by-stock-daily','inquire-daily-itemchartprice'))*len(rest)+60
                 if projected>budget.remaining_seconds():raise Failure('manual_insufficient_time_for_population')
@@ -172,7 +181,7 @@ def run(root,control,universe,run_id,opener=None,progress=None):
         rows=[]
         validation_begin=time.monotonic()
         for row in selected:
-            try:rows.append(engine.qualify_kis(row,cache,store,1))
+            try:rows.append(qualify(row,cache,store))
             except (Failure,KeyError,TypeError,ValueError) as exc:errors.append(dict(symbol=row['symbol'],reason=exc.code if isinstance(exc,Failure) else 'missing_required_evidence',details=getattr(exc,'details',None)))
         metrics.add('internal_validation',time.monotonic()-validation_begin)
         indices=[]
@@ -180,7 +189,7 @@ def run(root,control,universe,run_id,opener=None,progress=None):
             e=cache.get(engine.identity(t))
             if e:indices.append(dict(**parse(store.raw(e),e)[0],observed_at=e['collected_at'],source_hash=e['source_hash']))
         status='PASS' if len(rows)==len(selected) and len(indices)==2 and not errors else 'FAIL'
-        report=dict(schema=1,mode=control['mode'],asof=ASOF,trial_id=control['trial_id'],request_id=control['request_id'],run_id=run_id,status=status,target=len(selected),kis_validated=len(rows),official_accepted=0,official_price_status='PENDING_KRX',provider_finality='UNVERIFIED',rows=rows,indices=indices,errors=errors,
+        report=dict(schema=1,mode=control['mode'],asof=asof,trial_id=control['trial_id'],request_id=control['request_id'],run_id=run_id,status=status,target=len(selected),kis_validated=len(rows),official_accepted=0,official_price_status='PENDING_KRX',provider_finality='UNVERIFIED',rows=rows,indices=indices,errors=errors,
                     actual_started_at=started,completed_at=now(),elapsed_seconds=(dt.datetime.fromisoformat(now())-dt.datetime.fromisoformat(started)).total_seconds(),this_run_seconds=time.monotonic()-wall,
                     physical_http=budget.used,physical_http_this_run=budget.used-budget.initial,http_limit=budget.limit,retries=sum(max(0,n-1) for n in attempts.values()),metrics=metrics.result(),population_sha256=binding['population_sha256'],target_symbols=sorted(api.allowed),
                     first_http_at=min((e['started_at'] for e in budget.entries if e['event']=='started'),default=None),last_http_at=max((e['completed_at'] for e in budget.entries if e['event']=='finished'),default=None))
