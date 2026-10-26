@@ -1,0 +1,79 @@
+name: Independent collector v1 (manual only)
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Dataset date YYYY-MM-DD (master bootstrap must be same KST date)'
+        required: true
+        type: string
+      mode:
+        type: choice
+        options: [market, macro, corporate]
+        default: market
+      previous_run:
+        description: 'Resume this workflow run artifact; blank initializes'
+        type: string
+      symbols:
+        description: 'Up to 3 official symbols, comma-separated; blank collects bootstrap'
+        type: string
+      max_calls:
+        description: 'Physical requests including authentication; 1-20, cumulative 300'
+        default: '20'
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  manual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - run: python -m pytest -q tests/test_collector_v1.py
+      - uses: actions/download-artifact@v4
+        if: inputs.previous_run != ''
+        with:
+          name: collector-v1-evidence
+          path: data/collector-v1
+          run-id: ${{ inputs.previous_run }}
+          github-token: ${{ github.token }}
+      - name: Collect only selected manual batch
+        env:
+          DATA_DATE: ${{ inputs.date }}
+          COLLECT_MODE: ${{ inputs.mode }}
+          PREVIOUS_RUN: ${{ inputs.previous_run }}
+          SYMBOLS: ${{ inputs.symbols }}
+          CALL_LIMIT: ${{ inputs.max_calls }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$PREVIOUS_RUN" ]; then
+            python -m collector_v1 init --date "$DATA_DATE" --mode "$COLLECT_MODE"
+          else
+            python -c 'import json,os; p=json.load(open("data/collector-v1/plan.json")); assert p["asof"]==os.environ["DATA_DATE"] and p["mode"]==os.environ["COLLECT_MODE"], "Resume date/mode mismatch"'
+            python -m collector_v1 resume
+          fi
+          if [ -n "$SYMBOLS" ]; then
+            python -m collector_v1 select --symbols "$SYMBOLS"
+          fi
+          python -m collector_v1 collect --max-calls "$CALL_LIMIT" --seconds 240
+          python -m collector_v1 validate
+      - name: Preserve checkpoint even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collector-v1-evidence
+          path: data/collector-v1
+          if-no-files-found: warn
+          retention-days: 30
