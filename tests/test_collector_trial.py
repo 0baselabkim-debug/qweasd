@@ -173,3 +173,12 @@ def test_auth_failure_counts_once_and_never_fetches_master(env,monkeypatch):
     r=json.loads((trial.ROOT/'receipt.json').read_bytes())
     assert len(calls)==1 and r['total_http']==1 and r['status']=='BLOCKED'
     assert not (trial.ROOT/'masters.json').exists()
+
+
+def test_date_guard_rechecks_after_rate_limit_wait(env,monkeypatch):
+    b=trial.MasterBudget(Store(trial.ROOT),DAY)
+    current=[DAY]
+    monkeypatch.setattr(trial,'local_date',lambda:current[0])
+    monkeypatch.setattr('collector_v1.core.time.sleep',lambda _:current.__setitem__(0,'2026-10-27'))
+    with pytest.raises(Stop,match='observation_date_changed'):b.before('KIS_MASTER','official','market')
+    assert b.used==0 and not b.ledger

@@ -124,8 +124,11 @@ class MasterBudget(Budget):
     def __init__(self,store,asof):
         super().__init__(store,calls=20,seconds=240,cumulative=20)
         self.asof=asof
-    def before(self,source,endpoint,reason):
+    def check(self):
         if local_date()!=self.asof:raise Stop('observation_date_changed')
+        super().check()
+    def before(self,source,endpoint,reason):
+        self.check()
         allowed=(source=='KIS_MASTER' or (source=='KIS' and endpoint in ('/oauth2/tokenP','/uapi/domestic-stock/v1/quotations/chk-holiday')))
         if not allowed:raise Failure('stage_forbids_endpoint')
         return super().before(source,endpoint,reason)
