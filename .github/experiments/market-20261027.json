@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "experiment_id": "kis-stability-20261027-v1",
+  "asof": "2026-10-27",
+  "request_id": "arm-20261026T222057Z",
+  "baseline_commit": "503d94135b03c0cb3f2365d6d13356ac726be587",
+  "approval": "USER_APPROVED_FOUR_INDEPENDENT_FULL_KIS_OBSERVATIONS",
+  "max_total_http_per_generation": 5600,
+  "max_master_http": 4,
+  "interval_seconds": 1.05,
+  "rounds": [
+    {
+      "round": 1,
+      "generation_id": "kis-stability-20261027-v1-1800",
+      "scheduled_at": "2026-10-27T18:00:00+09:00",
+      "artifact": "market-20261027-1800"
+    },
+    {
+      "round": 2,
+      "generation_id": "kis-stability-20261027-v1-2100",
+      "scheduled_at": "2026-10-27T21:00:00+09:00",
+      "artifact": "market-20261027-2100"
+    },
+    {
+      "round": 3,
+      "generation_id": "kis-stability-20261027-v1-0000",
+      "scheduled_at": "2026-10-28T00:00:00+09:00",
+      "artifact": "market-20261027-0000"
+    },
+    {
+      "round": 4,
+      "generation_id": "kis-stability-20261027-v1-0300",
+      "scheduled_at": "2026-10-28T03:00:00+09:00",
+      "artifact": "market-20261027-0300"
+    }
+  ]
+}
