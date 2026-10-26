@@ -30,10 +30,12 @@ class ProvisionalAPI(Providers):
                     finally:metrics.add('api:'+kind,time.monotonic()-started)
             return Response()
         super().__init__(store,budget,timed)
-    def fetch(self,t):
+    def check_task(self,t):
         window(self.budget.round_id)
         if t['asof']!=ASOF or t['round']!=self.budget.round_id:raise Failure('experiment_generation_mismatch')
-        kind=t['kind'];day=ASOF.replace('-','');source='KIS';params={}
+    def fetch(self,t):
+        self.check_task(t)
+        kind=t['kind'];day=t['asof'].replace('-','');source='KIS';params={}
         if kind=='krx':
             source='KRX';key=os.getenv('KRX_API_KEY')
             if not key:raise Failure('missing_KRX_API_KEY')
@@ -45,7 +47,7 @@ class ProvisionalAPI(Providers):
                 endpoint=Q+'investor-trade-by-stock-daily';params={**p,'FID_ORG_ADJ_PRC':'','FID_ETC_CLS_CODE':''};tr='FHPTJ04160001'
             elif kind in ('price','index'):
                 index=kind=='index';endpoint=Q+('inquire-daily-indexchartprice' if index else 'inquire-daily-itemchartprice')
-                params={**p,'FID_INPUT_DATE_1':(dt.date.fromisoformat(ASOF)-dt.timedelta(days=60)).strftime('%Y%m%d'),'FID_INPUT_DATE_2':day,'FID_PERIOD_DIV_CODE':'D'}
+                params={**p,'FID_INPUT_DATE_1':(dt.date.fromisoformat(t['asof'])-dt.timedelta(days=60)).strftime('%Y%m%d'),'FID_INPUT_DATE_2':day,'FID_PERIOD_DIV_CODE':'D'}
                 if index:params.update(FID_COND_MRKT_DIV_CODE='U',FID_INPUT_ISCD='0001' if t['market']=='KOSPI' else '1001')
                 else:params['FID_ORG_ADJ_PRC']='1'
                 tr='FHKUP03500100' if index else 'FHKST03010100'
