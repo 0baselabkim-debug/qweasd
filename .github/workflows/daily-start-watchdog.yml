@@ -1,12 +1,5 @@
 name: Daily collection start watchdog
 on:
-  schedule:
-    # KST weekdays 18:45 and 19:15. GitHub cron is best effort.
-    - cron: '45 9 * * 1-5'
-    - cron: '15 10 * * 1-5'
-  workflow_run:
-    workflows: [Incremental corporate disclosures and theme review]
-    types: [completed]
   workflow_dispatch:
     inputs:
       dry_run:
