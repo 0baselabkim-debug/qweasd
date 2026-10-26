@@ -1,7 +1,5 @@
 name: Incremental corporate disclosures and theme review
 on:
-  schedule:
-    - cron: '17 23,5,9,17 * * *'
   workflow_dispatch:
     inputs:
       mode:
