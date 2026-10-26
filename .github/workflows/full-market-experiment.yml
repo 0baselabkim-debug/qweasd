@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 84c30ea40550b80c1a32e6087c9831461773181d
+          ref: ${{ ((inputs.round == '1' || github.event.schedule == '0 10 26 10 *') && '84c30ea40550b80c1a32e6087c9831461773181d') || '0c40d644b6e91e357a8215aad0ff90707cb8c3cc' }}
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -96,7 +96,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 84c30ea40550b80c1a32e6087c9831461773181d
+          ref: ${{ ((inputs.round == '1' || github.event.schedule == '0 10 26 10 *') && '84c30ea40550b80c1a32e6087c9831461773181d') || '0c40d644b6e91e357a8215aad0ff90707cb8c3cc' }}
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
