@@ -113,7 +113,8 @@ def test_ids_and_scheduled_paths():
  assert sector_id('KOSPI','업종/특수')==sector_id('KOSPI','업종/특수')
  assert sector_id('KOSPI','업종/특수').isascii()
  daily=Path('.github/workflows/daily-dashboard.yml').read_text()
- assert "cron: '30 9 * * 1-5'" in daily and "cron: '0 12 * * 1-5'" in daily
+ assert '  workflow_dispatch:' in daily and '\n  schedule:' not in daily
+ assert '\n  push:' not in daily and '\n  workflow_run:' not in daily
  assert 'python scripts/daily_publish_transaction.py' in daily
  assert "'snapshot/briefing'" in Path('scripts/daily_publish_transaction.py').read_text()
  for name in ['stage_daily_publication.py','publish_liquidity.py']:

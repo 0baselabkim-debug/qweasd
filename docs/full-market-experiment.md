@@ -68,3 +68,16 @@ Job Summary와 다운로드 보고서 아티팩트, `[full-market-20261026] 네 
 얕은 checkout에서도 기존 pilot 제어 파일 불변 검사가 동작하도록 고정 baseline 커밋을 명시적으로 fetch한다. 시장 호출 단계가 모든 실행 시도에서 `skipped`였음을 GitHub Jobs API로 증명한 경우에만 이전 요청 수를 0으로 인정한다. 실제 호출 단계가 시작됐거나 job 기록이 불완전하거나 아티팩트 해시가 틀리면 이 예외를 적용하지 않는다. 호출 이력이 있을 수 있는 아티팩트 유실은 계속 전체 예산 소진으로 취급한다.
 
 cron 지연 보완용 일회성 clock은 제공처 Secret 없이 Actions 상태 조회/dispatch만 수행한다. 네 단계 각각 355분 이하이며 지정 UTC 날짜가 지나면 새로 arm할 수 없다. 제어 파일 단독 커밋에서만 arm되고, 회차별 수집 마감·공유 잠금·원장 한도를 그대로 따른다. 최종 단계는 보고서 생성 후 실험 워크플로를 disable한다.
+
+## 실제 실행 확인 (2026-10-26 19:56 KST)
+
+- 일회성 clock Run: https://github.com/0baselabkim-debug/qweasd/actions/runs/40310286918
+- 최초 실제 회차 Run: https://github.com/0baselabkim-debug/qweasd/actions/runs/40310389194 (실제 시작 19:51:01 KST, 19:00 정시 관측으로 취급하지 않음).
+- 첫 결과: 대상 2,349, 수집/검증 0, 물리적 HTTP 6회, `REFERENCE_NOT_AVAILABLE`, 대기 포함 185.18초. 전체시장 완료가 아니며 제공처 사전 기준자료에서 보류됐다.
+- 원장/성공 원문을 복원한 복구 Run: https://github.com/0baselabkim-debug/qweasd/actions/runs/40311038702 (결과 대기).
+- 모든 실제 회차·복구·최종 결과: https://github.com/0baselabkim-debug/qweasd/issues/1
+- 전체 기존 테스트 477개 통과(269.98초), 추가 아티팩트 검사 포함 실험 테스트 25개 통과(9.22초). 기존 정기 예약이 꺼진 상태인데 활성 cron을 기대하던 오래된 테스트 5개를 현재 수동 실행 정책에 맞췄다. 기존 운영 워크플로는 수정하지 않았다.
+- 실제 실행 소스는 `a9a8f05a2f98a0a3ffb551946b0d624c3f8246f8`로 고정한다. 이후 관리 보고/테스트 수정은 실행 중인 수집 소스와 섞지 않는다.
+- 관리 검사기는 새 아티팩트 ZIP digest/manifest·원문 SHA256·실제 호출 원장·DuckDB read-only 값과 JSON을 다시 비교한다. 제공처 API는 호출하지 않는다.
+
+22시/01시/04시 회차는 아직 실행 전이며, 회차별 보고 및 최종 안정성/성능 결과는 실제 수집 완료 후 Issue와 아티팩트에 생성된다. 미수집 또는 빈 결과로 안정 시각/성능 향상을 확정하지 않는다.

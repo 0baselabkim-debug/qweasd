@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: python -m pip install duckdb==1.5.6
       - env:
           GH_TOKEN: ${{ github.token }}
         run: python -m collector_v1.experiment.controller

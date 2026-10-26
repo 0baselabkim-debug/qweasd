@@ -1,5 +1,5 @@
 """Feature-branch metadata/recovery bootstrap. Never imports or calls provider code."""
-import datetime as dt,json,os,subprocess,re,tempfile,zipfile
+import datetime as dt,json,os,subprocess,re,tempfile,zipfile,gzip
 from pathlib import Path
 from ..core import Failure,encoded
 from . import runtime
@@ -13,6 +13,32 @@ def validate(c,now):
     if c['action']=='recover_missing':
         start,_=window(c['round'],now)
         if now<start+dt.timedelta(minutes=15):raise Failure('scheduled_run_grace_period')
+
+
+def artifact_audit(run):
+    runtime.ROOT.mkdir(parents=True,exist_ok=True)
+    folder=runtime.ROOT/('audit-'+str(run['id']))
+    report=runtime.restore_round(run,folder)
+    manifest=runtime.verify(folder);raw_count=0
+    for path in (folder/'raw').glob('*.gz'):
+        if runtime.sha(gzip.decompress(path.read_bytes()))!=path.stem:raise Failure('audit_source_hash_mismatch')
+        raw_count+=1
+    ledger=[json.loads(x) for x in (folder/'http.jsonl').read_text().splitlines()]
+    started=[e for e in ledger if e['event']=='started'];finished=[e for e in ledger if e['event']=='finished']
+    if len(started)!=report['physical_http']:raise Failure('audit_ledger_report_mismatch')
+    sources=[]
+    for path in (folder/'observations').glob('*.json'):
+        e=json.loads(path.read_bytes());body=json.loads(gzip.decompress((folder/'raw'/(e['source_hash']+'.gz')).read_bytes()))
+        records=body.get('OutBlock_1',body.get('output2',[]))
+        sources.append(dict(kind=e['task']['kind'],market=e['task'].get('market'),observed_at=e['collected_at'],rows=len(records),requested_date_present=any(r.get('BAS_DD',r.get('stck_bsop_date'))==ASOF.replace('-','') for r in records)))
+    import duckdb
+    dbpath=folder/report['database_file']
+    if folder.resolve() not in dbpath.resolve().parents:raise Failure('unsafe_derived_database_path')
+    with duckdb.connect(str(dbpath),read_only=True) as db:
+        saved={k:json.loads(v) for k,v in db.execute('SELECT symbol,payload FROM observations').fetchall()}
+    if saved!={r['symbol']:r for r in report['rows']}:raise Failure('audit_DB_JSON_mismatch')
+    artifacts=runtime.api(f'repos/{runtime.REPO}/actions/runs/{run["id"]}/artifacts?per_page=100')['artifacts']
+    return dict(run_id=run['id'],manifest_files=len(manifest['files']),raw_hashes_verified=raw_count,physical_http=len(started),http_statuses=[e.get('http') for e in finished],db_json_match=True,database_rows=len(saved),status=report['status'],sources=sources,artifacts=[dict(id=a['id'],name=a['name'],digest=a.get('digest')) for a in artifacts])
 
 
 def main():
@@ -46,7 +72,12 @@ def main():
                     found+=re.findall(r'FAILED (tests/[A-Za-z0-9_./]+::[A-Za-z0-9_]+)',content)
                     found+=re.findall(r"fatal: (?:invalid object name|bad revision) '[a-f0-9]+'",content)
             diagnostics[str(existing['id'])]=sorted(set(found))
-    result=dict(diagnostics=diagnostics,step_states=step_states,status='INSPECTED',asof=ASOF,round=c['round'],workflow_state=meta['state'],matching_runs=[{'id':r['id'],'status':r['status'],'conclusion':r['conclusion']} for r in matching],provider_http=0,observed_at=current.isoformat())
+    audit=None
+    completed=next((r for r in matching if r['status']=='completed'),None)
+    if completed:
+        try:audit=artifact_audit(completed)
+        except Failure as e:audit={'status':'BLOCKED','reason':e.code}
+    result=dict(artifact_audit=audit,diagnostics=diagnostics,step_states=step_states,status='INSPECTED',asof=ASOF,round=c['round'],workflow_state=meta['state'],matching_runs=[{'id':r['id'],'status':r['status'],'conclusion':r['conclusion']} for r in matching],provider_http=0,observed_at=current.isoformat())
     if c['action']=='recover_missing' and not matching:
         if meta['state']!='active':raise Failure('workflow_not_active_no_override')
         runtime.api(f'repos/{runtime.REPO}/actions/workflows/{meta["id"]}/dispatches','POST',{'ref':'main','inputs':{'round':str(c['round'])}})

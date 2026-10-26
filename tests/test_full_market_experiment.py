@@ -293,3 +293,23 @@ def test_artifact_integrity_failure_never_becomes_zero_usage(monkeypatch,tmp_pat
     monkeypatch.setattr(runtime,'restore_round',corrupt)
     monkeypatch.setattr(runtime,'zero_provider_proof',lambda *a:pytest.fail('cannot bypass corrupt state'))
     with pytest.raises(Failure,match='restored_round_hash_mismatch'):runtime.restore_or_zero({},tmp_path)
+
+
+def test_admin_audit_checks_raw_hash_and_actual_database(monkeypatch,tmp_path):
+    import gzip,duckdb
+    from collector_v1.experiment import controller
+    folder=tmp_path/'audit-123';(folder/'raw').mkdir(parents=True);(folder/'observations').mkdir()
+    raw=encoded({'OutBlock_1':[]});h=sha(raw);(folder/'raw'/(h+'.gz')).write_bytes(gzip.compress(raw))
+    (folder/'http.jsonl').write_bytes(encoded(dict(event='started'))+b'\n'+encoded(dict(event='finished',http=200))+b'\n')
+    dbpath=folder/'rows.duckdb'
+    with duckdb.connect(str(dbpath)) as db:db.execute('CREATE TABLE observations(symbol VARCHAR,payload JSON)')
+    report=dict(physical_http=1,database_file='rows.duckdb',rows=[],status='UNRESOLVED')
+    (folder/'report.json').write_bytes(encoded(report))
+    (folder/'manifest.json').write_bytes(encoded(dict(files=runtime.inventory(folder))))
+    monkeypatch.setattr(runtime,'ROOT',tmp_path)
+    monkeypatch.setattr(runtime,'restore_round',lambda *a:report)
+    monkeypatch.setattr(runtime,'api',lambda *a:{'artifacts':[]})
+    assert controller.artifact_audit({'id':123})['database_rows']==0
+    (folder/'raw'/(h+'.gz')).write_bytes(gzip.compress(b'{}'))
+    (folder/'manifest.json').write_bytes(encoded(dict(files=runtime.inventory(folder))))
+    with pytest.raises(Failure,match='audit_source_hash_mismatch'):controller.artifact_audit({'id':123})
