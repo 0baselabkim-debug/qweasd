@@ -174,7 +174,7 @@ def collect_tasks(store, tasks, fetch, budget, fail_fast=False):
     return report
 
 
-def publish(store, generation, rows, manifest, connect=None):
+def publish(store, generation, rows, manifest, connect=None, verify=None):
     """Immutable generation; a single pointer selects DB + JSON + manifest together."""
     import duckdb
     connect = connect or duckdb.connect
@@ -205,5 +205,6 @@ def publish(store, generation, rows, manifest, connect=None):
     existing = json.loads((target/'manifest.json').read_bytes())
     if existing.get('analysis_sha256') != sha(content) or sha((target/'analysis.json').read_bytes()) != sha(content) or sha((target/'data.duckdb').read_bytes()) != existing.get('db_sha256'):
         raise Failure('publication_hash_mismatch')
+    if verify is not None:verify(target,rows)
     store.write('published.json', {'generation': generation, 'manifest_hash': sha((target/'manifest.json').read_bytes())})
     return existing

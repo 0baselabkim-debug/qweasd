@@ -1,4 +1,4 @@
-"""Explicit push-controlled, master-only trial. All market HTTP shares one ledger."""
+"""Explicit push-controlled, staged trial. All market HTTP shares one ledger."""
 import argparse
 import datetime as dt
 import gzip
@@ -31,15 +31,18 @@ def control():
     c=json.loads(Path(CONTROL).read_bytes())
     if set(c)!={'schema','trial_id','request_id','stage','asof','previous_run','max_total_http'}:
         raise Failure('control_schema_mismatch')
-    if c['schema']!=1 or c['stage']!='master' or c['max_total_http']!=20:
-        raise Failure('only_master_stage_authorized')
+    if c['schema']!=1 or c['stage'] not in ('master','market') or c['max_total_http']!=20:
+        raise Failure('unknown_trial_stage')
     dt.date.fromisoformat(c['asof'])
     for key in ('trial_id','request_id'):
         if not isinstance(c[key],str) or not __import__('re').fullmatch(r'[a-zA-Z0-9_-]{1,80}',c[key]):
             raise Failure('invalid_control_identity')
     if c['previous_run'] is not None and (not isinstance(c['previous_run'],str) or not c['previous_run'].isdigit()):
         raise Failure('invalid_previous_run')
-    if c['asof']!=local_date():
+    if c['stage']=='market':
+        from .market_trial import stage_guard
+        stage_guard(c)
+    elif c['asof']!=local_date():
         raise Failure('observation_date_mismatch_no_collection')
     return c
 
@@ -88,11 +91,14 @@ def preflight():
         data=github_json(f'repos/{REPO}/actions/runs/{previous}/artifacts?per_page=100')
         matches=[a for a in data['artifacts'] if a['name']==ARTIFACT and not a['expired']]
         if data['total_count']>=100 or len(matches)!=1:raise Failure('previous_state_artifact_unavailable')
+        if c['stage']=='market':
+            from .market_trial import metadata_guard
+            metadata_guard(matches[0])
     ADMIN.mkdir(parents=True,exist_ok=True)
     snapshots={str(p):sha(p.read_bytes()) for p in Path('snapshot').rglob('*') if p.is_file()}
     (ADMIN/'snapshot-before.json').write_bytes(encoded(snapshots))
     (ADMIN/'preflight.json').write_bytes(encoded(dict(status='PASS',control=c,source_commit=git('rev-parse','HEAD'),previous_run=previous,checked_at=now())))
-    with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('previous_run='+previous+'\n')
+    with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('previous_run='+previous+'\n'+'stage='+c['stage']+'\n')
 
 
 def inventory(root):
@@ -165,6 +171,7 @@ def secret_scan(store,api):
 
 def collect_master():
     c=control();pre=json.loads((ADMIN/'preflight.json').read_bytes())
+    if c['stage']!='master':raise Failure('master_command_requires_master_stage')
     if pre['control']!=c or pre['source_commit']!=git('rev-parse','HEAD'):raise Failure('preflight_binding_mismatch')
     store=Store(ROOT);api=None;budget=None;started=now();result={'status':'BLOCKED'}
     with store.lock():
@@ -218,7 +225,7 @@ def finalize():
         if not receipt or receipt.get('github_run_id')!=os.environ['GITHUB_RUN_ID']:
             pre=json.loads((ADMIN/'preflight.json').read_bytes());c=pre['control']
             if receipt:store.write('prior-receipts/'+receipt['github_run_id']+'.json',receipt)
-            store.write('receipt.json',dict(status='BLOCKED',reason='trial_did_not_complete',stage='master',asof=c['asof'],trial_id=c['trial_id'],request_id=c['request_id'],github_run_id=os.environ['GITHUB_RUN_ID'],total_http=len(store.read('requests.json',[])),completed_at=now(),stage2_executed=False))
+            store.write('receipt.json',dict(status='BLOCKED',reason='trial_did_not_complete',stage=c['stage'],asof=c['asof'],trial_id=c['trial_id'],request_id=c['request_id'],github_run_id=os.environ['GITHUB_RUN_ID'],total_http=len(store.read('requests.json',[])),completed_at=now(),stage2_executed=c['stage']=='market' and len(store.read('requests.json',[]))>4))
         seal(store)
     return 0
 
