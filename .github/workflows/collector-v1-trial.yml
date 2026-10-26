@@ -1,0 +1,91 @@
+name: Collector v1 one-time master trial
+on:
+  push:
+    branches: [feat/market-data-collector-v1]
+    paths: [.github/trials/collector-v1.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+jobs:
+  master:
+    if: github.repository == '0baselabkim-debug/qweasd' && github.ref == 'refs/heads/feat/market-data-collector-v1' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned existing dependencies
+        run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Run offline guard and collector regressions
+        run: python -m pytest -q tests/test_collector_trial.py tests/test_collector_v1.py tests/test_corporate.py tests/test_market_reference.py tests/test_market_budget.py tests/test_decision_prices.py
+      - name: Bind branch, stage, KST date and predecessor receipt
+        id: preflight
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m collector_v1.trial preflight
+      - name: Restore exact previous trial artifact
+        if: steps.preflight.outputs.previous_run != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: collector-v1-trial-state
+          path: data/collector-v1-trial
+          run-id: ${{ steps.preflight.outputs.previous_run }}
+          github-token: ${{ github.token }}
+      - name: Collect official calendar and two masters only
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python -m collector_v1.trial master
+      - name: Seal current ledger even after interrupted collection
+        if: always() && steps.preflight.outcome == 'success'
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python -m collector_v1.trial finalize
+      - name: Preserve raw evidence, ledger and validation receipt
+        if: always() && hashFiles('data/collector-v1-trial/state-manifest.json') != '' && hashFiles('data/collector-v1-trial-admin/DO_NOT_UPLOAD_STATE') == ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: collector-v1-trial-state
+          path: data/collector-v1-trial
+          include-hidden-files: false
+          if-no-files-found: error
+          retention-days: 30
+      - name: Preserve nonsecret preflight outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collector-v1-trial-preflight-${{ github.run_id }}
+          path: data/collector-v1-trial-admin
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Job summary
+        if: always()
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          receipt=Path('data/collector-v1-trial/receipt.json')
+          blocked=Path('data/collector-v1-trial-admin/blocked.json')
+          r=json.loads(blocked.read_bytes()) if blocked.exists() else (json.loads(receipt.read_bytes()) if receipt.exists() else {'status':'BLOCKED','reason':'no_current_trial_receipt'})
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('## Master trial\n\n')
+              for key in ('status','asof','github_run_id','reason','physical_http_this_run','total_http','rows','markets','targets','snapshot_unchanged','stage2_executed'):
+                  if key in r:f.write('- '+key+': '+json.dumps(r[key],ensure_ascii=False)+'\n')
+          PY
