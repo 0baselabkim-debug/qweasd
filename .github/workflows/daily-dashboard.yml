@@ -1,8 +1,5 @@
 name: Daily validated dashboard refresh
 on:
-  schedule:
-    - cron: '30 9 * * 1-5'
-    - cron: '0 12 * * 1-5'
   workflow_dispatch:
     inputs:
       mode:
