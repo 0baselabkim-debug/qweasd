@@ -98,6 +98,37 @@ def restore_round(run,target):
     return json.loads((target/'report.json').read_bytes())
 
 
+LIVE_STEP='Bounded fresh round and in-round recovery'
+MISSING_ARTIFACT='latest_round_artifact_missing_unknown_requests_reserved_to_full_limit'
+
+
+def zero_provider_proof(run):
+    # Only an official completed job record with the sole provider step skipped
+    # proves zero. Lost artifacts after a started provider step remain unknown.
+    if run.get('status')!='completed' or run.get('path')!='.github/workflows/'+WORKFLOW or run.get('head_branch')!='main':raise Failure('zero_call_proof_unavailable')
+    data=api(f'repos/{REPO}/actions/runs/{run["id"]}/jobs?filter=all&per_page=100')
+    jobs=data['jobs']
+    if data.get('total_count',100)>=100 or len(jobs)!=data.get('total_count'):raise Failure('zero_call_proof_incomplete_jobs')
+    live=[]
+    for job in jobs:
+        if job['name']!='observe':continue
+        steps=[x for x in job.get('steps',[]) if x['name']==LIVE_STEP]
+        if job.get('status')!='completed' or len(steps)!=1 or steps[0].get('status')!='completed' or steps[0].get('conclusion')!='skipped':raise Failure('zero_call_proof_provider_may_have_started')
+        live.append({'job_id':job['id'],'provider_step':'skipped'})
+    if not live:raise Failure('zero_call_proof_missing_observe_job')
+    return dict(run_id=run['id'],physical_http=0,proof='official_jobs_all_attempts_provider_step_skipped',jobs=live)
+
+
+def restore_or_zero(run,target):
+    try:return restore_round(run,target)
+    except Failure as e:
+        if e.code!=MISSING_ARTIFACT:raise
+        proof=zero_provider_proof(run)
+        ROOT.mkdir(parents=True,exist_ok=True)
+        (ROOT/('zero-provider-'+str(run['id'])+'.json')).write_bytes(encoded(proof))
+        return dict(status='PREPARATION_FAILED',physical_http=0,recovery_possible=True,zero_provider_proof=proof)
+
+
 def compact_comparison(value):
     if isinstance(value,list):return [compact_comparison(v) for v in value]
     if not isinstance(value,dict):return value
@@ -144,7 +175,7 @@ def prepare(round_id):
     if prior and prior['status']=='queued' and int(prior['id'])>int(current['id']):prior=None
     if prior:
         if prior['status']!='completed':raise Failure('same_round_already_active')
-        previous=restore_round(prior,folder)
+        previous=restore_or_zero(prior,folder)
         round_profile=previous.get('config')
         if previous.get('code_commit') and previous['code_commit']!=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip():raise Failure('same_round_code_change_requires_review')
         (ROOT/'recovery-parent.json').write_bytes(encoded({'run_id':prior['id'],'restored_http':previous['physical_http']}))
@@ -225,7 +256,7 @@ def watch():
         previous=latest(runs,n)
         if previous and previous['status']!='completed':continue
         if previous:
-            try:r=restore_round(previous,ROOT/('watch-R'+str(n)))
+            try:r=restore_or_zero(previous,ROOT/('watch-R'+str(n)))
             except Failure:
                 issue_report(dict(round=n,asof=ASOF,status='UNRESOLVED',reason='missing_latest_artifact; unknown calls reserved to full round budget'),'watchdog');continue
             if r['status']=='COMPLETE' or r['physical_http']>=ROUND_LIMIT or not r.get('recovery_possible',False):continue

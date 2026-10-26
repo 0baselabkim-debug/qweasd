@@ -1,5 +1,5 @@
 """Feature-branch metadata/recovery bootstrap. Never imports or calls provider code."""
-import datetime as dt,json,os,subprocess
+import datetime as dt,json,os,subprocess,re,tempfile,zipfile
 from pathlib import Path
 from ..core import Failure,encoded
 from . import runtime
@@ -32,7 +32,21 @@ def main():
     for existing in matching[:3]:
         jobs=runtime.api(f'repos/{runtime.REPO}/actions/runs/{existing["id"]}/jobs?per_page=20')['jobs']
         step_states[str(existing['id'])]=[{'job':j['name'],'status':j['status'],'conclusion':j['conclusion'],'steps':[{'name':s['name'],'status':s['status'],'conclusion':s['conclusion']} for s in j.get('steps',[])]} for j in jobs]
-    result=dict(step_states=step_states,status='INSPECTED',asof=ASOF,round=c['round'],workflow_state=meta['state'],matching_runs=[{'id':r['id'],'status':r['status'],'conclusion':r['conclusion']} for r in matching],provider_http=0,observed_at=current.isoformat())
+    diagnostics={}
+    for existing in matching[:2]:
+        if existing['status']!='completed':continue
+        with tempfile.TemporaryDirectory() as tmp:
+            archive=Path(tmp)/'logs.zip'
+            runtime.api(f'repos/{runtime.REPO}/actions/runs/{existing["id"]}/logs',binary=archive)
+            found=[]
+            with zipfile.ZipFile(archive) as z:
+                for name in z.namelist():
+                    if 'Offline integration' not in name:continue
+                    content=z.read(name).decode('utf-8',errors='replace')
+                    found+=re.findall(r'FAILED (tests/[A-Za-z0-9_./]+::[A-Za-z0-9_]+)',content)
+                    found+=re.findall(r"fatal: (?:invalid object name|bad revision) '[a-f0-9]+'",content)
+            diagnostics[str(existing['id'])]=sorted(set(found))
+    result=dict(diagnostics=diagnostics,step_states=step_states,status='INSPECTED',asof=ASOF,round=c['round'],workflow_state=meta['state'],matching_runs=[{'id':r['id'],'status':r['status'],'conclusion':r['conclusion']} for r in matching],provider_http=0,observed_at=current.isoformat())
     if c['action']=='recover_missing' and not matching:
         if meta['state']!='active':raise Failure('workflow_not_active_no_override')
         runtime.api(f'repos/{runtime.REPO}/actions/workflows/{meta["id"]}/dispatches','POST',{'ref':'main','inputs':{'round':str(c['round'])}})

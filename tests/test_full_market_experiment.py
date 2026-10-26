@@ -265,3 +265,31 @@ def test_independent_clock_dispatches_only_missing_or_verified_recoverable_round
     text=(Path(__file__).resolve().parents[1]/'.github/workflows/full-market-clock.yml').read_text()
     assert 'KIS_APP_KEY' not in text and 'KRX_API_KEY' not in text
     assert text.count('timeout-minutes: 355')==4
+
+
+def test_zero_call_recovery_requires_official_skipped_step(monkeypatch,tmp_path):
+    from collector_v1.experiment import runtime
+    run=dict(id=123,status='completed',path='.github/workflows/'+runtime.WORKFLOW,head_branch='main')
+    job=dict(id=9,name='observe',status='completed',steps=[dict(name=runtime.LIVE_STEP,status='completed',conclusion='skipped')])
+    data=dict(total_count=1,jobs=[job])
+    monkeypatch.setattr(runtime,'api',lambda *a,**k:data)
+    assert runtime.zero_provider_proof(run)['physical_http']==0
+    monkeypatch.setattr(runtime,'ROOT',tmp_path)
+    def missing(*a):raise Failure(runtime.MISSING_ARTIFACT)
+    monkeypatch.setattr(runtime,'restore_round',missing)
+    assert runtime.restore_or_zero(run,tmp_path/'round')['recovery_possible']
+    for conclusion in ('success','failure',None):
+        job['steps'][0]['conclusion']=conclusion
+        with pytest.raises(Failure):runtime.restore_or_zero(run,tmp_path/'round')
+    job['steps']=[]
+    with pytest.raises(Failure):runtime.zero_provider_proof(run)
+    data['total_count']=100
+    with pytest.raises(Failure):runtime.zero_provider_proof(run)
+
+
+def test_artifact_integrity_failure_never_becomes_zero_usage(monkeypatch,tmp_path):
+    from collector_v1.experiment import runtime
+    def corrupt(*a):raise Failure('restored_round_hash_mismatch')
+    monkeypatch.setattr(runtime,'restore_round',corrupt)
+    monkeypatch.setattr(runtime,'zero_provider_proof',lambda *a:pytest.fail('cannot bypass corrupt state'))
+    with pytest.raises(Failure,match='restored_round_hash_mismatch'):runtime.restore_or_zero({},tmp_path)

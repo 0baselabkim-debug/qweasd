@@ -45,7 +45,7 @@ def phase(round_id):
         if run and run['status']=='completed':
             key=str(run['id'])
             if key not in reports:
-                try:reports[key]=runtime.restore_round(run,runtime.ROOT/('clock-R'+str(round_id)+'-'+key))
+                try:reports[key]=runtime.restore_or_zero(run,runtime.ROOT/('clock-R'+str(round_id)+'-'+key))
                 except Failure:reports[key]=None
             report=reports[key]
         decision=recovery_decision(run,report,utcnow(),round_id)
