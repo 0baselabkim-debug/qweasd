@@ -1,0 +1,331 @@
+{
+  "archive": {
+    "status": "PASS",
+    "prepared_uncommitted": [],
+    "generations": 11,
+    "unique_original_objects": 817,
+    "archived_observations": 2057272
+  },
+  "previous_restore": {
+    "status": "PASS",
+    "prepared_uncommitted": [],
+    "generations": 11,
+    "unique_original_objects": 817,
+    "archived_observations": 2057272
+  },
+  "preflight": {
+    "status": "BLOCKED_EXTERNAL_SETUP",
+    "archive_integrity": {
+      "status": "PASS",
+      "prepared_uncommitted": [],
+      "generations": 11,
+      "unique_original_objects": 817,
+      "archived_observations": 2057272
+    },
+    "backup_sha256": "4f21e3e727e02354e36b612727746c92ae8323f384dca3ab54c3c2f148ca94be",
+    "backup_bytes": 342815089,
+    "missing_external_requirements": [
+      "provider",
+      "private_target",
+      "recipient_fingerprint",
+      "credential_binding",
+      "remote_restore_test"
+    ],
+    "external_upload_performed": false,
+    "upload_authorized": false,
+    "encrypted_backup_prepared": false,
+    "independent_failure_domain_verified": false
+  },
+  "capacity": {
+    "status": "SCENARIO_NOT_FORECAST",
+    "sessions": 250,
+    "size_multiplier": 1,
+    "current_archive_bytes": 601720502,
+    "measured_publication_original_bytes": 30219685,
+    "measured_publication_parquet_bytes": 11872781,
+    "modeled_new_bytes_per_session": 42092466,
+    "annual_added_bytes": 10523116500,
+    "modeled_year_end_incremental_archive_bytes": 11124837002,
+    "retain_every_daily_full_archive_uncompressed_bytes": 1471081246250,
+    "assumptions": [
+      "One fixed-size operating publication per trading session; no analysis refreshes or experimental rounds.",
+      "Assumes each generation adds all its original/Parquet bytes; exact object reuse may reduce this.",
+      "Cumulative source DB/history growth can increase this; growth rate is unmeasured.",
+      "Encryption metadata, revisions, replicas and object-operation costs are excluded."
+    ]
+  },
+  "fresh_restore": {
+    "status": "PASS",
+    "prepared_uncommitted": [],
+    "generations": 11,
+    "unique_original_objects": 817,
+    "archived_observations": 2057272,
+    "operation": "BACKUP_RESTORED_AND_VERIFIED",
+    "destination": "/workspace/investment-assets-stabilization-restore"
+  },
+  "real_historical_query_equal": true,
+  "historical_generation_id": "0db39a97c3cb8a213c12958e4d96c050d8c09bf319d1ec1eadc9f4ac7d071938",
+  "protected_source_files_unchanged": 801,
+  "r2_year_end_monthly_storage_scenarios": [
+    {
+      "currency": "USD",
+      "billable_gb_month": "12",
+      "monthly_storage_only": "0.180",
+      "basis": "R2 Standard official public source; volume held all month; fees/tax/operations excluded",
+      "account_free_tier_assumed_gb_month": 0
+    },
+    {
+      "currency": "USD",
+      "billable_gb_month": "2",
+      "monthly_storage_only": "0.030",
+      "basis": "R2 Standard official public source; volume held all month; fees/tax/operations excluded",
+      "account_free_tier_assumed_gb_month": 10
+    }
+  ],
+  "seconds": 17.353957954997895,
+  "status": "LOCAL_STABILIZATION_PASS_EXTERNAL_BACKUP_AND_RAW_RESTORE_BLOCKED",
+  "generated_at": "2026-10-27T08:34:36.982054+00:00",
+  "branch": "feat/investment-asset-archive-v1",
+  "baseline_commit": "6ddaaadb9978b15026c9020f6a9a3e692955d3a5",
+  "changed_files": [
+    "investment_assets/stabilization.py",
+    "tests/test_asset_stabilization.py",
+    "docs/investment-asset-stabilization.md",
+    "reports/investment-assets/stabilization.json",
+    "reports/investment-assets/stabilization-pricing.json"
+  ],
+  "external_backup": {
+    "status": "NOT_RUN",
+    "recommended_candidate": "Private R2 Standard, conditional on actual setup; prefer existing S3 if usable account/IAM later confirmed",
+    "target_confirmed": false,
+    "usable_storage_credential_binding_confirmed": false,
+    "recipient_public_key_confirmed": false,
+    "real_encryption_performed": false,
+    "upload_performed": false,
+    "remote_restore_verified": false,
+    "local_plaintext_backup_still_present": true,
+    "configuration_findings": {
+      "AWS_profile_sections": 0,
+      "GCP_credentials_JSON_keys": 0,
+      "GitHub_Git_access": "PASS",
+      "GitHub_Actions_metadata_read": "PASS",
+      "storage_bucket_or_account": "NOT_CONFIRMED"
+    },
+    "security": "Private bucket, scoped credentials, recipient-pinned encryption, independent recovery key and off-machine restore test required; provider license terms unverified"
+  },
+  "original_20261026": {
+    "status": "BLOCKED_DOWNLOAD",
+    "run": {
+      "id": 40326538555,
+      "status": "completed",
+      "conclusion": "success",
+      "path": ".github/workflows/kis-manual-validation.yml",
+      "head_branch": "feat/market-data-collector-v1",
+      "head_sha": "f36d03e78134a9e3fa051dc9cf2b24868e52dd5b",
+      "created_at": "2026-10-26T12:57:23Z",
+      "updated_at": "2026-10-26T14:33:26Z",
+      "run_started_at": "2026-10-26T12:57:23Z",
+      "run_attempt": 1,
+      "html_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/40326538555"
+    },
+    "artifact_metadata": {
+      "id": 12658373693,
+      "name": "kis-manual-state-20261026",
+      "size_in_bytes": 27223433,
+      "digest": "sha256:eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+      "expired": false,
+      "created_at": "2026-10-26T14:33:21Z",
+      "updated_at": "2026-10-26T14:33:21Z",
+      "expires_at": "2026-11-09T14:33:17Z",
+      "workflow_run": {
+        "id": 40326538555,
+        "repository_id": 1418485164,
+        "head_repository_id": 1418485164,
+        "head_branch": "feat/market-data-collector-v1",
+        "head_sha": "f36d03e78134a9e3fa051dc9cf2b24868e52dd5b"
+      }
+    },
+    "receipt_expected_zip_sha256": "eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+    "metadata_receipt_match": true,
+    "expired": false,
+    "metadata_access": "PASS",
+    "zip_access": "BLOCKED",
+    "raw_zip_verified": false,
+    "raw_manifest_verified": false,
+    "restored_raw_stock_rows": 0,
+    "cause": "ARTIFACT_STORAGE_REDIRECT_EGRESS_POLICY",
+    "denied_host": "productionresultssa1.blob.core.windows.net",
+    "diagnosis": {
+      "observed_at": "2026-10-27T08:29:45.711934+00:00",
+      "official_cli": "gh api --include",
+      "requests": [
+        {
+          "path": "repos/0baselabkim-debug/qweasd",
+          "returncode": 0,
+          "http_status_line": "HTTP/2.0 200 OK",
+          "github_request_id_header_present": true,
+          "stdout_bytes": 7330,
+          "transport_forbidden": false
+        },
+        {
+          "path": "repos/0baselabkim-debug/qweasd/actions/artifacts/12658373693",
+          "returncode": 0,
+          "http_status_line": "HTTP/2.0 200 OK",
+          "github_request_id_header_present": true,
+          "stdout_bytes": 2202,
+          "transport_forbidden": false
+        }
+      ],
+      "live_network_configuration_changed": false
+    },
+    "download_diagnosis": {
+      "returncode": 1,
+      "stdout_bytes": 0,
+      "http_status_lines": [],
+      "error_url_hosts": [
+        "productionresultssa1.blob.core.windows.net"
+      ],
+      "transport_forbidden": true,
+      "github_request_id_header_present": false
+    },
+    "last_download": {
+      "returncode": 1,
+      "path": "/workspace/investment-assets-source-artifacts/12658373693-after-domain-draft.zip",
+      "bytes": 0,
+      "error_url_hosts": [
+        "productionresultssa1.blob.core.windows.net"
+      ],
+      "transport_forbidden": true,
+      "status": "BLOCKED_DOWNLOAD"
+    },
+    "initial_api_transport_denial": "Later official metadata API HTTP 200 succeeded; transition cause unconfirmed. Do not infer draft-save applied live configuration.",
+    "required_action": "Review/save and Publish environment network draft including observed artifact storage host; then retry official CLI, verify original ZIP and existing offline adapter. No token replacement inferred necessary from current metadata success."
+  },
+  "network_configuration": {
+    "status": "DRAFT_SAVED",
+    "requires_publish": true,
+    "live_configuration_application_verified": false,
+    "user_publish_performed": false,
+    "added_custom_domains": [
+      "api.github.com",
+      "docs.github.com",
+      "developers.cloudflare.com",
+      "aws.amazon.com",
+      "www.backblaze.com",
+      "productionresultssa1.blob.core.windows.net"
+    ],
+    "previous_custom_rules_preserved": true,
+    "presets_preserved": true
+  },
+  "handoff": {
+    "status": "OFFLINE_CONTRACT_IMPLEMENTED_NO_WORKER_REGISTERED",
+    "actual_saved_receipt_and_authenticated_metadata_candidate": {
+      "schema": 1,
+      "delivery_id": "86d98a1fc538aaa3d969fe34dab37fcf39c3fabdd6b7cf75b73bd660c9953a41",
+      "status": "READY_FOR_OFFLINE_FETCH_AND_VERIFY",
+      "identity": {
+        "kind": "manual_full",
+        "repository": "0baselabkim-debug/qweasd",
+        "branch": "feat/market-data-collector-v1",
+        "run_id": "40326538555",
+        "published_commit": "61386b7a07dd044c382b07ccc3a97fc5a6898baa",
+        "asof": "2026-10-26",
+        "generation_id": null,
+        "artifact": {
+          "id": 12658373693,
+          "name": "kis-manual-state-20261026",
+          "digest": "sha256:eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+          "expired": false,
+          "run_id": "40326538555"
+        }
+      },
+      "failures": [],
+      "provider_finality": "UNVERIFIED",
+      "official_price_status": "PENDING_KRX",
+      "archive_channel": "kis_full_trial",
+      "source_population_sha256": "294d71ae80120fd92ef0d94a7c6776ddacddef1149970339fdbd983b3f4e168d",
+      "raw_integrity_verified": false,
+      "DB_JSON_reported": true,
+      "required_postfetch_checks": [
+        "ZIP_SHA256",
+        "manifest",
+        "raw_hashes",
+        "population",
+        "DB_JSON"
+      ],
+      "archived": false,
+      "automatic_execution_registered": false,
+      "next_gate": "Authenticated retrieval, ZIP/manifest/raw hashes and source-specific read-only validation before ingestion"
+    },
+    "actual_event_evidence": {
+      "repository": "0baselabkim-debug/qweasd",
+      "branch": "feat/market-data-collector-v1",
+      "run_id": "40326538555",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-10-26T14:33:26Z",
+      "completion_time_basis": "Run updated_at after completed; conservative completion proxy, not observation time",
+      "published_commit": "61386b7a07dd044c382b07ccc3a97fc5a6898baa",
+      "collection_commit": "f36d03e78134a9e3fa051dc9cf2b24868e52dd5b",
+      "workflow_path": ".github/workflows/kis-manual-validation.yml",
+      "artifact": {
+        "id": 12658373693,
+        "name": "kis-manual-state-20261026",
+        "digest": "sha256:eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+        "expired": false,
+        "run_id": "40326538555"
+      }
+    },
+    "warning": "Candidate readiness is not download/archive/integrity/finality success",
+    "source_boundaries": [
+      "Operating data commit differs from producer head SHA",
+      "Manual receipt is published before run completion",
+      "Time-slot PASS JSON precedes artifact upload; require completed round job"
+    ],
+    "not_implemented": [
+      "Generic daily/time-slot raw adapter",
+      "Authenticated handoff worker and consumer retry queue",
+      "Incremental off-machine uploader"
+    ],
+    "automatic_execution_registered": false
+  },
+  "constraints": {
+    "market_api_requests": 0,
+    "external_uploads": 0,
+    "new_schedules": 0,
+    "existing_workflows_modified": false,
+    "operating_collector_modified": false,
+    "main_merged": false,
+    "deployed": false,
+    "existing_archive_generations_rewritten": false
+  },
+  "tests": {
+    "full_regression": {
+      "passed": 593,
+      "failed": 0,
+      "seconds": 419.27
+    },
+    "final_related_regression": {
+      "passed": 63,
+      "failed": 0,
+      "seconds": 25.17
+    },
+    "new_stabilization_tests": 34,
+    "baseline_archive_and_existing_tests": 565,
+    "synthetic_encryption_roundtrip": "PASS with test-only data and local recipient; actual recovery key NOT_RUN",
+    "sandbox_prerequisite": "Initial GnuPG agent tests had 3 fixture errors because local Unix sockets were forbidden; local socket-capable offline test execution passed without changing validation or making network requests",
+    "actual_full_KIS_ZIP_positive_path": "NOT_RUN; original ZIP download blocked",
+    "unique_tests_verified": 599,
+    "test_runs_overlap": true,
+    "full_suite_preceded_six_final_contract_tests": true
+  },
+  "stage2_signal_development": {
+    "status": "CONDITIONALLY_READY_FOR_SEPARATE_OFFLINE_DEVELOPMENT",
+    "conditions": [
+      "Keep unknown observation times/finality and historical_backtest_eligible=false restrictions",
+      "No Oct26 whole-market signal validation until actual raw restore",
+      "External durable backup and independent restore required before unattended operation"
+    ],
+    "production_automation_ready": false
+  }
+}

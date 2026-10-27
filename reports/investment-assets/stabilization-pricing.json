@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-10-27T08:34:36.982054+00:00",
+  "sources": [
+    {
+      "name": "r2-pricing",
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/1ad2be0778acac23cafade2b788d6876150528e8/src/content/docs/r2/pricing.mdx",
+      "sha256": "f2ae176fd2a010d607d15da855e27bafc8a083c9b48ca359e154e2c593da87c3",
+      "bytes": 11452,
+      "matches_researched_version": true,
+      "retrieved_at": "2026-10-27T08:26:22.034484+00:00"
+    },
+    {
+      "name": "github-releases",
+      "url": "https://raw.githubusercontent.com/github/docs/9568e964d18d76267faf57050dc662c450a13214/content/repositories/releasing-projects-on-github/about-releases.md",
+      "sha256": "4feedd93b6247e24cc148937348910ff5f3a0506d165821ae187557b5d11904c",
+      "bytes": 4143,
+      "matches_researched_version": true,
+      "retrieved_at": "2026-10-27T08:26:22.377144+00:00"
+    }
+  ],
+  "verified_r2_standard": {
+    "storage_USD_per_GB_month": "0.015",
+    "class_A_USD_per_million_requests": "4.50",
+    "class_B_USD_per_million_requests": "0.36",
+    "direct_egress_USD": "0",
+    "monthly_free_tier_GB_month": 10,
+    "monthly_free_class_A_requests": 1000000,
+    "monthly_free_class_B_requests": 10000000,
+    "round_up_billing_units": true,
+    "storage_measurement": "Average daily peak GB over billing period",
+    "account_free_tier_remaining": "UNVERIFIED"
+  },
+  "other_provider_prices": "NOT_VERIFIED; no S3/B2/GCS current price asserted",
+  "cost_exclusions": [
+    "Operations when account free tier unavailable",
+    "Tax and currency conversion",
+    "Extra replicas and generations",
+    "Provider/license/compliance service costs"
+  ],
+  "notes": [
+    "Public official documentation source was read, not a private artifact mirror",
+    "Capacity assumes fixed latest publication size; not a measured annual growth forecast",
+    "Current backup command is full-bundle only; scalable incremental transport is a design proposal"
+  ]
+}
