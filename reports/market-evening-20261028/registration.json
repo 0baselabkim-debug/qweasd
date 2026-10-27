@@ -1,0 +1,109 @@
+{
+  "status": "SCHEDULED_AND_WAITING_NOT_COLLECTED",
+  "checked_at": "2026-10-27T22:40:57.918517+00:00",
+  "asof": "2026-10-28",
+  "run_id": "40596424279",
+  "run_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/40596424279",
+  "implementation_commit": "97409440",
+  "arming_commit": "02e6b067d0915b79af0c295f7e5da6a1eca1c440",
+  "branch": "refs/heads/feat/market-data-collector-v1",
+  "execution_method": "one push, finite wait jobs, sequential collectors; no cron",
+  "rounds": [
+    {
+      "artifact": "market-20261028-2030",
+      "generation_id": "kis-evening-20261028-v1-2030",
+      "round": 1,
+      "scheduled_at": "2026-10-28T20:30:00+09:00",
+      "state": "SCHEDULED_NOT_RUN"
+    },
+    {
+      "artifact": "market-20261028-2330",
+      "generation_id": "kis-evening-20261028-v1-2330",
+      "round": 2,
+      "scheduled_at": "2026-10-28T23:30:00+09:00",
+      "state": "SCHEDULED_NOT_RUN"
+    }
+  ],
+  "job_states": [
+    {
+      "name": "authorize",
+      "status": "SUCCESS",
+      "job_ids": [
+        "122513380781"
+      ]
+    },
+    {
+      "name": "wait1",
+      "status": "IN_PROGRESS",
+      "job_ids": [
+        "122513603488"
+      ]
+    },
+    {
+      "name": "wait2",
+      "status": "PENDING",
+      "job_ids": []
+    },
+    {
+      "name": "wait3",
+      "status": "PENDING",
+      "job_ids": []
+    },
+    {
+      "name": "wait4",
+      "status": "PENDING",
+      "job_ids": []
+    },
+    {
+      "name": "master",
+      "status": "PENDING",
+      "job_ids": []
+    },
+    {
+      "name": "round1",
+      "status": "PENDING",
+      "job_ids": []
+    },
+    {
+      "name": "round2",
+      "status": "PENDING",
+      "job_ids": []
+    },
+    {
+      "name": "comparison",
+      "status": "PENDING",
+      "job_ids": []
+    }
+  ],
+  "control_schedule_match": true,
+  "market_http_so_far": 0,
+  "master_status": "SCHEDULED_NOT_COLLECTED",
+  "maximum_experiment_http": 11204,
+  "existing_schedule_changes": 0,
+  "old_workflows_reenabled": 0,
+  "main_merged": false,
+  "operating_snapshot_modified": false,
+  "tests": {
+    "full_regression": {
+      "passed": 553,
+      "failed": 0,
+      "seconds": 383.99
+    },
+    "final_related": {
+      "passed": 43,
+      "failed": 0,
+      "seconds": 7.77
+    },
+    "new_tests": 17,
+    "runs_overlap": true
+  },
+  "protected_source_verification": {
+    "protected_baseline_files_unchanged": 791,
+    "mismatches": [],
+    "old_workflows_unchanged": true,
+    "old_controls_unchanged": true
+  },
+  "official_price_status": "PENDING_KRX",
+  "automatic_comparison": true,
+  "recurring_schedules": 0
+}

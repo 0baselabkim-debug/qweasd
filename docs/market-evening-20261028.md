@@ -36,3 +36,5 @@
 코드 구현은 예약 완료와 다르다. 실제 control push 후 GitHub에 게시된 `schedule.json`의 Run/커밋/두 시각을 확인해야 **예약 등록 확인**으로 보고한다. 수집 전에는 결과를 모두 SCHEDULED_NOT_RUN으로 표시한다. 종료 후 추가 수집은 자동 생성하지 않는다.
 
 구현 전 검증 완료: 전체 회귀 553통과/0실패(383.99초), 최종 관련 회귀 43통과/0실패(7.77초), 신규 시험 17개 포함. 실행 간 테스트는 중복되므로 합산하지 않는다. 기존 보호 파일 791개 해시 동일, 기존 workflow/control/snapshot 변경 없음.
+
+실제 예약 확인: Run [40596424279](https://github.com/0baselabkim-debug/qweasd/actions/runs/40596424279), 제어 단독 커밋 `02e6b067`, authorize SUCCESS, wait1 IN_PROGRESS. 서버 게시 schedule.json의 두 시각·거래일·세대·커밋 일치를 확인했다. 확인 시점은 수집 전이며 시장 HTTP 0회, 두 회차 모두 SCHEDULED_NOT_RUN이다. 상세: reports/market-evening-20261028/registration.json.
