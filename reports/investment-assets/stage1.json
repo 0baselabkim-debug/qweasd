@@ -1,0 +1,172 @@
+{
+  "status": "LOCAL_STAGE1_IMPLEMENTED_AND_VERIFIED",
+  "generated_at": "2026-10-27T07:56:19.233188+00:00",
+  "branch": "feat/investment-asset-archive-v1",
+  "source_main_commit": "197aa2359ead47e1399f1d8767cdc6aea43da12b",
+  "source_feature_commit": "3d8387539a0d257b3b62e2e5ffc843d84f6887a1",
+  "archive_writer_code_commit": "4923994d79f395f36784b19f189db3a00e6019b3",
+  "changed_files": [
+    "investment_assets/__init__.py",
+    "investment_assets/__main__.py",
+    "investment_assets/archive.py",
+    "investment_assets/common.py",
+    "investment_assets/sources.py",
+    "tests/test_investment_assets.py",
+    "docs/investment-asset-archive.md",
+    "reports/investment-assets/stage1.json"
+  ],
+  "repository_decision": "Reuse existing repository for code on isolated branch; data outside Git; no new repository/service required",
+  "storage": {
+    "root": "/workspace/investment-assets-v1",
+    "catalog": "/workspace/investment-assets-v1/catalog.duckdb",
+    "format": "immutable SHA256 objects + generation Parquet + rebuildable DuckDB",
+    "cross_machine_persistence": "NOT_CONFIGURED; verified backup requires independent external retention",
+    "backup": {
+      "status": "BACKUP_CREATED",
+      "path": "/workspace/investment-assets-backups/stage1-20261027.tar.gz",
+      "sha256": "4f21e3e727e02354e36b612727746c92ae8323f384dca3ab54c3c2f148ca94be",
+      "bytes": 342815089,
+      "durability": "Local backup; independent storage durability requires an external persistent volume/object store."
+    },
+    "restored_root": "/workspace/investment-assets-restored-v1"
+  },
+  "archived": {
+    "status": "PASS",
+    "prepared_uncommitted": [],
+    "generations": 11,
+    "unique_original_objects": 817,
+    "archived_observations": 2057272
+  },
+  "operating_dates": [
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23"
+  ],
+  "operating_generations_restored": [
+    {
+      "generation_id": "0db39a97c3cb8a213c12958e4d96c050d8c09bf319d1ec1eadc9f4ac7d071938",
+      "asof": "2026-10-14",
+      "files": 4,
+      "exact_bytes_verified": true
+    },
+    {
+      "generation_id": "0eefdfb3c7f3506dd733da3eeded5949432f2c5cbeb46d184e68a1573864895a",
+      "asof": "2026-10-22",
+      "files": 56,
+      "exact_bytes_verified": true
+    },
+    {
+      "generation_id": "1c6047932421092330f85d7b0b16c546a47fa47fe89498299a0fb9bbea1bb9bf",
+      "asof": "2026-10-23",
+      "files": 56,
+      "exact_bytes_verified": true
+    },
+    {
+      "generation_id": "751b88b465c709ed53f3a15cd3bd2c8773eb1458afdacd9c0e7d8712c5d39ca3",
+      "asof": "2026-10-20",
+      "files": 56,
+      "exact_bytes_verified": true
+    },
+    {
+      "generation_id": "7c530ad450813d1ea80be32d355ccaf2474dc3a7fe9f75274539953023c5d1ff",
+      "asof": "2026-10-19",
+      "files": 5,
+      "exact_bytes_verified": true
+    },
+    {
+      "generation_id": "8793ba8be1f7ba94aae22ebf39b31971ee12b763ccf2ed33201b651d3e0b554e",
+      "asof": "2026-10-21",
+      "files": 56,
+      "exact_bytes_verified": true
+    },
+    {
+      "generation_id": "9085fd181e0780abf7a1e219e42686696ffa6a9874f6c87885efddf7429d88b2",
+      "asof": "2026-10-15",
+      "files": 4,
+      "exact_bytes_verified": true
+    },
+    {
+      "generation_id": "9cadd817ac203744655f9a9c8f6155b793c45e04efdd29791f343154948f4eab",
+      "asof": "2026-10-16",
+      "files": 4,
+      "exact_bytes_verified": true
+    },
+    {
+      "generation_id": "e3857454abbdb3f6cce34d8c974bc38fc7c86347272d537442e40eef705d8d35",
+      "asof": "2026-10-23",
+      "files": 56,
+      "exact_bytes_verified": true
+    }
+  ],
+  "analysis_historical_backtest_eligible": false,
+  "original_20261026": {
+    "status": "BLOCKED_RAW_RESTORE",
+    "run_id": "40326538555",
+    "artifact_id": 12658373693,
+    "expected_zip_sha256": "eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+    "reported_target": 2349,
+    "archived_stock_observations": 0,
+    "archived_scope": "Receipt only",
+    "reason": "Existing GitHub API request returned Forbidden; no authentication bypass or new collection attempted",
+    "next_action": "Obtain the existing original ZIP through authorized GitHub access and run offline ingest-kis-artifact"
+  },
+  "integrity": {
+    "protected_source_files_unchanged": 801,
+    "operating_code_and_workflow_diff_empty": true,
+    "bitemporal_version_selection_passed": true,
+    "reader_redeployment_idempotence": true,
+    "backup_restore_query_equal": true,
+    "actual_changed_adjusted_price_observations_preserved": 104,
+    "whole_committed_generation_loss_detection": "PASS; verify/query reject a committed generation removed from storage",
+    "incomplete_archive_cli_exit": "PASS; incomplete verification returns nonzero"
+  },
+  "tests": {
+    "full_regression": {
+      "passed": 563,
+      "failed": 0,
+      "seconds": 414.65
+    },
+    "final_related_regression": {
+      "passed": 56,
+      "failed": 0,
+      "seconds": 33.62
+    },
+    "unique_existing_tests_verified": 536,
+    "unique_new_tests_verified": 29,
+    "unique_tests_verified": 565,
+    "counts_overlap_between_runs": true,
+    "full_suite_preceded_final_redeployment_regression_addition": true,
+    "resolved_failure": "Initial full suite had 7 archive query failures reproducible with existing collector clock mocks; explicit ISO parameters and SQL TIMESTAMPTZ casts resolved the interaction without changing collector code or environment dependencies",
+    "diagnostic_note": "A separate unsupported native DuckDB/Python datetime monkeypatch probe crashed its isolated subprocess; native internals were not diagnosed. The archive no longer uses that Python datetime binding path; no operating files changed.",
+    "real_full_kis_zip_positive_path": "NOT_RUN; positive adapter path tested with explicitly synthetic responses only",
+    "full_suite_preceded_final_redeployment_and_missing_generation_regression_additions": true
+  },
+  "measurements": {
+    "archive_physical_bytes": 601720502,
+    "unique_original_bytes": 479240741,
+    "parquet_bytes": 121424152,
+    "backup_bytes": 342815089,
+    "initial_four_imports_seconds": 31.42683936600224,
+    "historical_imports_seconds": 51.93705444299849,
+    "restore_backup_verification_seconds": 52.45339240599424,
+    "new_pipeline_daily_sla": "NOT_MEASURED"
+  },
+  "limitations": [
+    "Provider finality remains UNVERIFIED; archive integrity is not market-data finality.",
+    "Operating per-row source observation times remain unknown; published snapshot and per-observation replay are distinct.",
+    "The 2026-10-26 source ZIP is not restored; 2349 raw stocks are not claimed as archived.",
+    "Local sibling backup is not an independent failure domain; off-machine persistence/retention/billing unverified.",
+    "Application append-only permissions are not hardware WORM; privileged filesystem changes can bypass permissions and are detected on verification."
+  ],
+  "market_api_requests": 0,
+  "new_schedules": 0,
+  "existing_actions_modified": false,
+  "main_merged": false,
+  "deployed": false,
+  "next_stage": "READY_FOR_SEPARATE_DEVELOPMENT_ON_PRESERVED_SOURCES; finality/coverage policies and durable deployment remain separate prerequisites"
+}

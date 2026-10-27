@@ -40,7 +40,8 @@ def main(argv=None):
                 elif a.command=='query':result=store.query(**{k:getattr(a,k) for k in ('channel','at','knowledge_at','generation','kind','entity','asof','limit','reproducible_only')})
                 elif a.command=='restore-generation':result=store.restore_generation(a.generation,a.destination)
                 else:result=store.backup(a.destination)
-        print(json.dumps(result,ensure_ascii=False,indent=2));return 0
+        print(json.dumps(result,ensure_ascii=False,indent=2))
+        return 1 if isinstance(result,dict) and result.get('status') in ('FAIL','INCOMPLETE') else 0
     except (ArchiveError,OSError,KeyError,ValueError,duckdb.Error) as exc:
         print(json.dumps(dict(status='FAIL',reason=str(exc) if isinstance(exc,ArchiveError) else type(exc).__name__,operating_writes_requested=False),ensure_ascii=False))
         return 1

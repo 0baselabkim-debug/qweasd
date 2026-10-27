@@ -72,6 +72,12 @@ class Archive:
             exclusive_write(p,encoded(dict(generation_id=generation,manifest_sha256=digest((self._generation(generation)/'manifest.json').read_bytes()),committed_at=timestamp(clock()).isoformat())))
         return self.verify_generation(generation)
 
+    def _check_committed_directories(self):
+        for receipt in (self.root/'commits').iterdir():
+            if receipt.is_symlink() or receipt.suffix!='.json':raise ArchiveError('invalid_commit_receipt_path')
+            generation=hash_name(receipt.stem)
+            if not self._generation(generation).is_dir():raise ArchiveError('committed_generation_missing')
+
     def _guard_destination(self, destination):
         path=Path(destination).resolve()
         if any(((p/'.git').is_file() or (p/'.git/HEAD').is_file()) for p in (path,*path.parents)):raise ArchiveError('destination_into_git_checkout_forbidden')
@@ -102,9 +108,27 @@ class Archive:
             population_version=digest(encoded(bundle['population'])),files=inventory,archive_status=bundle['archive_status'])
         generation=digest(encoded(identity));folder=self._generation(generation)
         with writer_lock(self.root):
+            # A reader/query-only redeployment must not duplicate an unchanged
+            # source generation. Different normalized output requires an explicit
+            # schema version, never replacement of previously accepted records.
+            equivalent=lambda value:{k:v for k,v in value.items() if k!='adapter_sha256'}
+            matches=[]
+            if not folder.exists():
+                for p in (self.root/'generations').iterdir():
+                    previous=_json(p/'manifest.json')
+                    if equivalent(previous['identity'])==equivalent(identity):matches.append(p.name)
+                if len(matches)>1:raise ArchiveError('ambiguous_source_generation')
+                if matches:
+                    generation=matches[0];folder=self._generation(generation)
+                    previous=self.verify_generation(generation,_prepared=True)
+                    expected=[digest(encoded(r)) for r in bundle['observations']]
+                    if len(expected)!=len(set(expected)):raise ArchiveError('duplicate_observation_not_silently_removed')
+                    with duckdb.connect(':memory:') as db:
+                        actual=[r[0] for r in db.execute('SELECT observation_id FROM read_parquet(?)',[str(folder/'observations.parquet')]).fetchall()]
+                    if sorted(actual)!=sorted(expected):raise ArchiveError('adapter_output_changed_requires_new_schema_version')
             if folder.exists():
                 old=self._seal_commit(generation,clock)
-                if old['identity']!=identity:raise ArchiveError('generation_identity_collision')
+                if equivalent(old['identity'])!=equivalent(identity):raise ArchiveError('generation_identity_collision')
                 self._catalog()
                 return dict(status='ALREADY_PRESENT',generation_id=generation,committed_at=old['committed_at'],**_json(folder/'summary.json'))
             for raw in files.values():self._put(raw)
@@ -159,6 +183,7 @@ class Archive:
 
     def verify_generation(self, generation, *, _prepared=False):
         folder=self._generation(generation)
+        if folder.is_symlink():raise ArchiveError('archive_symlink_forbidden')
         if digest((folder/'manifest.json').read_bytes())!=(folder/'manifest.sha256').read_text().strip():raise ArchiveError('manifest_checksum_mismatch')
         manifest=_json(folder/'manifest.json')
         if manifest['generation_id']!=generation or digest(encoded(manifest['identity']))!=generation:
@@ -200,6 +225,7 @@ class Archive:
 
     def _catalog(self):
         """Replace only a derived cache. Originals and generation files are immutable."""
+        self._check_committed_directories()
         manifests=[self.verify_generation(p.name) for p in sorted((self.root/'generations').iterdir()) if self._commit(p.name).exists()]
         path=self.root/('.catalog-'+str(os.getpid())+'.duckdb')
         try:
@@ -217,6 +243,7 @@ class Archive:
             path.unlink(missing_ok=True)
 
     def verify(self):
+        self._check_committed_directories()
         prepared=[p.name for p in (self.root/'generations').iterdir() if not self._commit(p.name).exists()]
         results=[self.verify_generation(p.name) for p in sorted((self.root/'generations').iterdir()) if self._commit(p.name).exists()]
         for p in (self.root/'objects').rglob('*'):
@@ -234,6 +261,7 @@ class Archive:
         if channel not in CHANNELS:raise ArchiveError('explicit_single_source_channel_required')
         when=timestamp(at);knowledge=timestamp(knowledge_at) if knowledge_at else when
         if type(limit) is not int or not 1<=limit<=10000:raise ArchiveError('query_limit_out_of_range')
+        self._check_committed_directories()
         candidates=[]
         for p in sorted((self.root/'generations').iterdir()):
             if not self._commit(p.name).exists():continue
@@ -248,8 +276,8 @@ class Archive:
         # DuckDB's Python timezone decoder optionally requires pytz. Keep the
         # existing environment unchanged and return explicit UTC text instead.
         columns=','.join((f'CAST("{k}" AS VARCHAR) AS "{k}"' if t=='TIMESTAMPTZ' else f'"{k}"') for k,t in OBS_SCHEMA.items())
-        sql='SELECT '+columns+' FROM read_parquet(?) WHERE (available_at IS NOT NULL AND available_at<=?) AND ingested_at<=?'
-        args=[str(folder/'observations.parquet'),when,knowledge]
+        sql='SELECT '+columns+' FROM read_parquet(?) WHERE (available_at IS NOT NULL AND available_at<=CAST(? AS TIMESTAMPTZ)) AND ingested_at<=CAST(? AS TIMESTAMPTZ)'
+        args=[str(folder/'observations.parquet'),when.isoformat(),knowledge.isoformat()]
         for col,v in [('kind',kind),('entity',entity)]:
             if v is not None:sql+=' AND '+col+'=?';args.append(v)
         if reproducible_only:sql+=" AND observation_time_status='KNOWN' AND historical_backtest_eligible IS NOT FALSE"

@@ -244,6 +244,8 @@ def test_uncommitted_prepared_generation_never_visible_and_resume_does_not_dupli
     monkeypatch.setattr(module,'exclusive_write',crash)
     with pytest.raises(OSError):ingest(a,bundle)
     assert a.verify()['status']=='INCOMPLETE'
+    from investment_assets.__main__ import main
+    assert main(['--root',str(a.root),'verify'])==1
     assert a.query(channel='operating_publication',at='2026-10-16T00:00:00Z')['status']=='NO_ELIGIBLE_GENERATION'
     monkeypatch.setattr(module,'exclusive_write',real)
     assert ingest(a,bundle)['status']=='ALREADY_PRESENT'
@@ -296,3 +298,34 @@ def test_full_artifact_adapter_positive_path_uses_synthetic_offline_responses(tm
     assert restored['archive_status']=='COMPLETE_BYTES' and len(restored['observations'])==4700
     assert restored['flow_validation']=='KIS_INTERNAL_PASS' and restored['price_validation']=='KIS_INTERNAL_PASS_PENDING_KRX'
     assert all(r['provider_finality']=='UNVERIFIED' for r in restored['observations'])
+
+
+def test_kst_and_utc_cutoffs_produce_identical_point_in_time_results(tmp_path,bundle):
+    a=Archive(tmp_path/'archive');ingest(a,bundle)
+    utc=a.query(channel='operating_publication',at='2026-10-15T02:00:00+00:00')
+    kst=a.query(channel='operating_publication',at='2026-10-15T11:00:00+09:00')
+    assert utc==kst and utc['total_rows']==1
+
+
+def test_reader_code_redeployment_reuses_unchanged_source_generation(tmp_path,bundle,monkeypatch):
+    import investment_assets.archive as module
+    a=Archive(tmp_path/'archive');one=ingest(a,bundle)
+    real=module.digest
+    def changed_reader(raw):
+        if b'Content-addressed immutable originals' in raw:return 'f'*64
+        return real(raw)
+    monkeypatch.setattr(module,'digest',changed_reader)
+    two=ingest(a,bundle)
+    assert two['status']=='ALREADY_PRESENT' and one['generation_id']==two['generation_id']
+    assert a.verify()['generations']==1 and a.verify()['archived_observations']==1
+    changed=copy.deepcopy(bundle);changed['observations'][0]['payload']['adjusted_close']=99
+    with pytest.raises(ArchiveError,match='schema_version'):ingest(a,changed)
+
+
+def test_missing_whole_committed_generation_is_detected_not_silently_omitted(tmp_path,bundle):
+    import shutil
+    a=Archive(tmp_path/'archive');g=ingest(a,bundle)['generation_id'];folder=a._generation(g)
+    folder.chmod(0o755);shutil.rmtree(folder)
+    with pytest.raises(ArchiveError,match='committed_generation_missing'):a.verify()
+    with pytest.raises(ArchiveError,match='committed_generation_missing'):
+        a.query(channel='operating_publication',at='2026-10-15T02:00:00Z')
