@@ -1,0 +1,37 @@
+{
+  "status": "IMPLEMENTED_NOT_ARMED",
+  "asof": "2026-10-28",
+  "branch": "feat/market-data-collector-v1",
+  "baseline_commit": "fb1c810bfc7b62610c8b61872224a27705677243",
+  "scheduled_KST": [
+    "2026-10-28T20:30:00+09:00",
+    "2026-10-28T23:30:00+09:00"
+  ],
+  "max_http_per_generation": 5600,
+  "max_master_http": 4,
+  "recurring_schedule": false,
+  "existing_operating_workflows_modified": false,
+  "market_http_during_preparation": 0,
+  "actionlint": "1.7.7 PASS; official release checksum verified",
+  "tests": {
+    "full_regression": {
+      "passed": 553,
+      "failed": 0,
+      "seconds": 383.99
+    },
+    "final_related": {
+      "passed": 43,
+      "failed": 0,
+      "seconds": 7.77
+    },
+    "new_tests": 17,
+    "runs_overlap": true
+  },
+  "run_registration": "NOT_YET_VERIFIED",
+  "protected_source_verification": {
+    "protected_baseline_files_unchanged": 791,
+    "mismatches": [],
+    "old_workflows_unchanged": true,
+    "old_controls_unchanged": true
+  }
+}

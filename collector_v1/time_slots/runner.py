@@ -176,41 +176,43 @@ def master():
     return 0 if report['status']=='PASS' else 1
 
 
-def verify_master(folder):
+def verify_master(folder, *, experiment_policy=None):
+    active_policy = experiment_policy or policy
     from ..validation import parse
     s=Store(folder);r=s.read('report.json',{});rows=[]
     for e in r.get('evidence',[]):
         values=parse(s.raw(e),e)
-        if e['task']['asof']!=policy.ASOF:raise Failure('master_task_asof_mismatch')
+        if e['task']['asof']!=active_policy.ASOF:raise Failure('master_task_asof_mismatch')
         if e['task']['kind']=='master':rows.extend(values)
     ledger=s.read('requests.json',[])
     if r.get('physical_http')!=4 or len(ledger)!=4 or any(e.get('status')!='received' or e.get('http')!=200 for e in ledger):
         raise Failure('master_ledger_mismatch')
-    policy.verify_population(rows,r)
+    active_policy.verify_population(rows,r)
     if rows!=s.read('universe.json'):raise Failure('master_raw_JSON_mismatch')
     return rows,r
 
 
-def verify_generation(folder, report):
+def verify_generation(folder, report, *, experiment_policy=None):
+    active_policy = experiment_policy or policy
     from ..core import Store
     from ..experiment import engine
     from ..experiment.storage import events
     import duckdb
-    n=report['round'];g=policy.generation(n);s=Store(folder/'collection')
-    if report.get('asof')!=policy.ASOF or report.get('generation_id')!=g:
+    n=report['round'];g=active_policy.generation(n);s=Store(folder/'collection')
+    if report.get('asof')!=active_policy.ASOF or report.get('generation_id')!=g:
         raise Failure('generation_report_identity_mismatch')
     universe=Store(folder).read('universe.json',[])
     master_receipt=Store(folder).read('master-receipt.json',{})
-    selected=policy.verify_population(universe,master_receipt)
+    selected=active_policy.verify_population(universe,master_receipt)
     expected={r['symbol']:r['market'] for r in selected}
     if (report.get('population_sha256'),report.get('target'),report.get('target_symbols'))!=(sha(encoded(universe)),len(selected),sorted(expected)):
         raise Failure('generation_fixed_population_mismatch')
-    cache=engine.replay(s,1,asof=policy.ASOF,generation_id=g)
+    cache=engine.replay(s,1,asof=active_policy.ASOF,generation_id=g)
     rows=report.get('rows',[])
     if len({r['symbol'] for r in rows})!=len(rows):raise Failure('duplicate_qualified_row')
     for row in rows:
         if row['symbol'] not in expected or row['market']!=expected[row['symbol']]:raise Failure('generation_row_market_or_population_mismatch')
-        if engine.qualify_kis(row,cache,s,1,asof=policy.ASOF,generation_id=g)!=row:
+        if engine.qualify_kis(row,cache,s,1,asof=active_policy.ASOF,generation_id=g)!=row:
             raise Failure('generation_row_raw_mismatch')
     entries=events(s.root/'http.jsonl')
     starts=[e for e in entries if e['event']=='started'];ends=[e for e in entries if e['event']=='finished']

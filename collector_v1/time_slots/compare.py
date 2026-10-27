@@ -82,12 +82,13 @@ def market_view(raw, kind, asof):
     return result, target
 
 
-def build_observations(folder, report, universe):
+def build_observations(folder, report, universe, *, asof=None):
+    asof = asof or policy.ASOF
     from ..core import Store
     from ..experiment import engine
     from ..providers import task
     s = Store(folder); generation_id = report['generation_id']
-    cache = engine.replay(s, 1, asof=policy.ASOF, generation_id=generation_id)
+    cache = engine.replay(s, 1, asof=asof, generation_id=generation_id)
     names = {r['symbol']: r for r in universe}
     observations = {}
     for row in report['rows']:
@@ -95,30 +96,31 @@ def build_observations(folder, report, universe):
             raise Failure('duplicate_comparison_symbol')
         full = {}; target = {}; metadata = {}
         for kind in ('flow', 'price'):
-            t = task(kind, policy.ASOF, round=1, symbol=row['symbol'], market=row['market'], generation_id=generation_id)
+            t = task(kind, asof, round=1, symbol=row['symbol'], market=row['market'], generation_id=generation_id)
             e = cache[engine.identity(t)]
-            fields, day_fields = market_view(s.raw(e), kind, policy.ASOF)
+            fields, day_fields = market_view(s.raw(e), kind, asof)
             full.update(fields); target.update(day_fields)
             metadata[kind] = dict(observed_at=e['collected_at'], source_hash=e['source_hash'], observation_id=sha(encoded(e)), params=e['params'])
         observations[row['symbol']] = dict(symbol=row['symbol'], name=names[row['symbol']].get('name'),
-            market=row['market'], asof=policy.ASOF, generation_id=generation_id,
+            market=row['market'], asof=asof, generation_id=generation_id,
             all_market_fields=full, target_day_fields=target,
             core={k: normalize(row[k], k) for k in CORE}, metadata=metadata,
             scope=dict(stock_market_code='J', exchange='KRX', NXT_included=False,
-                output1_date_binding='current_context_not_assumed_target_day', output2_target_date=policy.ASOF))
+                output1_date_binding='current_context_not_assumed_target_day', output2_target_date=asof))
     return observations
 
 
-def build_indices(folder, report):
+def build_indices(folder, report, *, asof=None):
+    asof = asof or policy.ASOF
     from ..core import Store
     from ..experiment import engine
     from ..providers import task
-    s=Store(folder);g=report['generation_id'];cache=engine.replay(s,1,asof=policy.ASOF,generation_id=g);out={}
+    s=Store(folder);g=report['generation_id'];cache=engine.replay(s,1,asof=asof,generation_id=g);out={}
     for market in ('KOSPI','KOSDAQ'):
-        t=task('index',policy.ASOF,round=1,market=market,generation_id=g)
+        t=task('index',asof,round=1,market=market,generation_id=g)
         e=cache.get(engine.identity(t))
         if e:
-            fields,_=market_view(s.raw(e),'index',policy.ASOF)
+            fields,_=market_view(s.raw(e),'index',asof)
             out[market]=dict(fields=fields,observed_at=e['collected_at'],source_hash=e['source_hash'])
     return out
 
@@ -148,12 +150,13 @@ def category_flags(a, b, core_diff):
         institution=any(k in core_diff for k in CORE_INSTITUTION) or any('orgn_' in k for k in target_diff))
 
 
-def compare_pair(left, right):
+def compare_pair(left, right, *, asof=None):
+    asof = asof or policy.ASOF
     lr, lo = left['report'], left.get('observations', {})
     rr, ro = right['report'], right.get('observations', {})
     lt, rt = set(lr.get('target_symbols', [])), set(rr.get('target_symbols', []))
     common = sorted(set(lo) & set(ro) & lt & rt)
-    comparable = [s for s in common if (lo[s]['market'], lo[s]['asof']) == (ro[s]['market'], ro[s]['asof']) == (lo[s]['market'], policy.ASOF)]
+    comparable = [s for s in common if (lo[s]['market'], lo[s]['asof']) == (ro[s]['market'], ro[s]['asof']) == (lo[s]['market'], asof)]
     identity_mismatches = sorted(set(common)-set(comparable))
     complete = (lr.get('status') == rr.get('status') == 'PASS' and lt == rt and bool(lt)
                 and set(comparable) == lt and lr.get('population_sha256') == rr.get('population_sha256'))
