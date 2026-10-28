@@ -1,0 +1,74 @@
+{
+  "status": "REGISTERED_OPERATION_UNVERIFIED_API_GATED",
+  "verified_at": "2026-10-28T23:23:53.916807+00:00",
+  "deployment_run": "40786589973",
+  "deployment_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/40786589973",
+  "deployment_job_status": "SUCCESS",
+  "native_GitHub_workflow_acceptance": true,
+  "default_branch": "main",
+  "registered_code_commit": "600f671e56aa8397574d2e4e8dca168d9294084f",
+  "registered_cron_UTC": "30 11 * * 1-5",
+  "next_weekday_cron_slot_KST": "2026-10-29T20:30:00+09:00",
+  "next_slot_is_not_verified_KRX_open_day": true,
+  "first_scheduled_collection": "NOT_RUN",
+  "first_real_regular_data_collection": "NOT_VERIFIED",
+  "operational_API_gate": "BLOCKED_ACCOUNT_ISOLATION_REVIEW",
+  "registered_schedule_does_not_imply_live_data_success": true,
+  "receipt": {
+    "access_profile_mode": "UNVERIFIED_SHARED_ACCOUNT",
+    "actual_default_branch": "main",
+    "application_reflection": "NOT_UPDATED",
+    "checked_at": "2026-10-28T23:21:53.341601+00:00",
+    "code_commit": "600f671e56aa8397574d2e4e8dca168d9294084f",
+    "dashboard_publication": "NOT_PUBLISHED",
+    "default_branch_workflow_blob_sha": "d03faec37e4b6d0020933ccc3c421206d9c4dd62",
+    "default_branch_workflow_sha256": "8b4d81fe5512aa0054fe88dcb228f32134e7ec28d15eb9e5d67d9483c51b4b97",
+    "external_run_inventory": {
+      "reason": "cross_repository_Actions_read_not_verified",
+      "status": "UNREADABLE"
+    },
+    "first_scheduled_collection": "NOT_YET_VERIFIED",
+    "market_http": 0,
+    "operational_readiness": "BLOCKED_ACCOUNT_ISOLATION_REVIEW",
+    "registered_cron": "30 11 * * 1-5",
+    "run_id": "40786589973",
+    "slot_claimed": false,
+    "status": "DEPLOYMENT_VALIDATED_NO_MARKET_HTTP",
+    "workflow_id": 400006658,
+    "workflow_state": "active"
+  },
+  "persistent_ledger_branch": "kis-regular-state",
+  "ledger_year_path": "ledger/YYYY.json",
+  "handoff_reader": "collector_v1.regular.handoff --asof YYYY-MM-DD",
+  "artifact_retention_days_configured": 90,
+  "existing_protected_files_unchanged": 881,
+  "existing_workflows_changed": [],
+  "existing_Word_schedule_changed": false,
+  "existing_Secrets_changed": false,
+  "new_credentials_created": false,
+  "market_API_calls_during_implementation": 0,
+  "external_storage_created": false,
+  "permissions": "Existing repository GITHUB_TOKEN contents:write/actions:read only; no cross-repository write or new PAT created",
+  "source_branch": "feat/kis-regular-2030",
+  "base_main": "197aa2359ead47e1399f1d8767cdc6aea43da12b",
+  "tests": {
+    "full": {
+      "passed": 411,
+      "failed": 0,
+      "seconds": 289.65
+    },
+    "final_related": {
+      "passed": 30,
+      "failed": 0,
+      "seconds": 35.67
+    },
+    "unique_verified": 412,
+    "runs_overlap": true
+  },
+  "additional_approval_required": {
+    "preferred": "Approved independent KIS account credentials and KIS_REGULAR_APP_KEY/SECRET binding, with reviewed account/token/rate policy evidence and credential identity binding",
+    "alternative": "Separately approve cross-repository shared-account lease integration and necessary least-privilege access; current snapshot run checks are not a mutex"
+  },
+  "data_publication": "NOT_PUBLISHED",
+  "application_data_reflection": "NOT_UPDATED"
+}
