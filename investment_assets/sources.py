@@ -210,6 +210,26 @@ def kis_receipt(source, receipt_path):
     return result,r,matches[0]
 
 
+def _full_kis_scope(report, receipt_report, selected):
+    """A PASS label cannot substitute for a complete pinned population."""
+    if (report.get('status'),report.get('mode'),report.get('asof'),str(report.get('run_id')),
+        report.get('target'),report.get('physical_http'),report.get('kis_validated'),
+        report.get('received_symbols'),report.get('db_json_match'),report.get('provider_finality'),
+        report.get('official_price_status')) != ('PASS','full','2026-10-26','40326538555',2349,4701,2349,2349,True,'UNVERIFIED','PENDING_KRX'):
+        raise ArchiveError('artifact_full_report_mismatch')
+    fields=('status','mode','asof','run_id','target','physical_http','population_sha256','target_symbols',
+            'kis_validated','received_symbols','db_json_match','provider_finality','official_price_status')
+    if any(report.get(k)!=receipt_report.get(k) for k in fields):raise ArchiveError('artifact_receipt_report_mismatch')
+    expected={r['symbol']:r['market'] for r in selected};rows=report.get('rows',[])
+    if len(expected)!=2349 or report.get('target_symbols')!=sorted(expected) or len(rows)!=2349:
+        raise ArchiveError('artifact_stock_population_incomplete')
+    if len({r['symbol'] for r in rows})!=2349 or {r['symbol'] for r in rows}!=set(expected):
+        raise ArchiveError('artifact_stock_population_duplicate_or_missing')
+    if any(r['market']!=expected[r['symbol']] or r.get('asof')!='2026-10-26' or r.get('kis_validation_status')!='PASS'
+           or r.get('provider_finality')!='UNVERIFIED' or r.get('official_price_status')!='PENDING_KRX' for r in rows):
+        raise ArchiveError('artifact_stock_scope_or_validation_mismatch')
+
+
 def kis_artifact(source, receipt_path, archive):
     result,receipt,meta=kis_receipt(source,receipt_path)
     archive=Path(archive); zipraw=archive.read_bytes()
@@ -224,16 +244,28 @@ def kis_artifact(source, receipt_path, archive):
         if (str(manifest['run_id']),manifest['asof'])!=('40326538555','2026-10-26') or digest(collector_encoded(manifest))!=receipt['state_manifest_sha256']:
             raise ArchiveError('artifact_manifest_identity_mismatch')
         report=json.loads((folder/'modes/full/report.json').read_bytes())
-        if report['status']!='PASS' or report['physical_http']!=4701 or report['target']!=2349:
-            raise ArchiveError('artifact_full_report_mismatch')
-        kis_manual_actions.verify_mode(folder/'modes/full',report)
         universe=json.loads((folder/'universe.json').read_bytes());selected=kis_manual.eligible(universe)
         if digest(collector_encoded(universe))!=report['population_sha256'] or len(selected)!=2349:
             raise ArchiveError('artifact_population_mismatch')
+        _full_kis_scope(report,receipt['report'],selected)
+        kis_manual_actions.verify_mode(folder/'modes/full',report)
         from collector_v1.experiment.storage import events
         ledger=events(folder/'modes/full/http.jsonl')
-        if len([e for e in ledger if e['event']=='finished' and e['status']=='received'])!=4701:
+        starts=[e for e in ledger if e['event']=='started'];ends=[e for e in ledger if e['event']=='finished']
+        if (len(starts)!=4701 or len(ends)!=4701 or [e['sequence'] for e in starts]!=list(range(1,4702))
+            or sorted(e['sequence'] for e in ends)!=list(range(1,4702))
+            or any(e.get('status')!='received' or e.get('http')!=200 for e in ends)):
             raise ArchiveError('artifact_http_ledger_mismatch')
+        from collector_v1.core import Store
+        from collector_v1.experiment import engine
+        from collector_v1.providers import task
+        from collector_v1.validation import parse
+        store=Store(folder/'modes/full');cache=engine.replay(store,1)
+        indices=[]
+        for market in ('KOSPI','KOSDAQ'):
+            evidence=cache[engine.identity(task('index','2026-10-26',round=1,market=market))]
+            indices.append(dict(**parse(store.raw(evidence),evidence)[0],observed_at=evidence['collected_at'],source_hash=evidence['source_hash']))
+        if report.get('indices')!=indices:raise ArchiveError('artifact_index_raw_mismatch')
         rows=[]
         for r in report['rows']:
             rows.append(observation('foreign_flow',r['symbol'],report['asof'],r,observed_at=r['flow_observed_at'],internal=r['kis_validation_status'],official='UNVERIFIED',finality=r['provider_finality']))

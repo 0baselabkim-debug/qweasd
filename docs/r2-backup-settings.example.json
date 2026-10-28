@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "status": "USER_SETUP_REQUIRED_NOT_A_DEPLOYMENT_CONFIG",
+  "provider": "Cloudflare R2",
+  "account_id": null,
+  "bucket": null,
+  "jurisdiction": "default",
+  "endpoint_https": null,
+  "storage_class": "STANDARD",
+  "public_access_disabled_verified": false,
+  "credential_requirements": {
+    "object_writer_access_key_id_secret_name": "R2_ACCESS_KEY_ID",
+    "object_writer_secret_access_key_secret_name": "R2_SECRET_ACCESS_KEY",
+    "scope": "Object Read & Write, one explicitly selected bucket",
+    "admin_credentials_separated_verified": false,
+    "recovery_reader": "Separate Object Read only credential for the same bucket"
+  },
+  "protection": {
+    "prefix": "investment-assets/v1/",
+    "native_r2_bucket_lock_verified": false,
+    "retention_decided_by_owner": null,
+    "s3_bucket_versioning_assumed": false,
+    "automatic_deletion_enabled": false
+  },
+  "encryption": {
+    "mode": "Client-side OpenPGP with existing recipient-pinned encryption helper",
+    "recipient_public_key_path": null,
+    "recipient_full_fingerprint": null,
+    "actual_recovery_key_roundtrip_verified": false,
+    "private_key_location": "Independent recovery machine; never supplied to this source repository"
+  },
+  "remote_roundtrip_verified": false,
+  "automatic_backup_registered": false,
+  "uploader_implemented": false
+}

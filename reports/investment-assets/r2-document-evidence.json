@@ -1,0 +1,59 @@
+{
+  "verified_at": "2026-10-28T00:05:35.503484+00:00",
+  "official_source_commit": "75dc4bfa90cd08b118a32c8dad8434a77f446c0d",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/75dc4bfa90cd08b118a32c8dad8434a77f446c0d/src/content/docs/r2/api/tokens.mdx",
+      "sha256": "ceb95935dc54568bb46815f47771fbe027cac4660b90da6045c0983457b1ccd0",
+      "bytes": 9618,
+      "status": "PINNED_SOURCE_MATCH",
+      "retrieved_at": "2026-10-27T23:59:46.762709+00:00"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/75dc4bfa90cd08b118a32c8dad8434a77f446c0d/src/content/docs/r2/buckets/bucket-locks.mdx",
+      "sha256": "49b9c4ede9e0bfbda4fd068f00ab36f7d877e7f6ea1abd6019eb99c5391b56ba",
+      "bytes": 6881,
+      "status": "PINNED_SOURCE_MATCH",
+      "retrieved_at": "2026-10-27T23:59:47.061192+00:00"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/75dc4bfa90cd08b118a32c8dad8434a77f446c0d/src/content/docs/r2/reference/data-security.mdx",
+      "sha256": "519a7fd5e611ba19335c351dd40c75e13b0cd37d6b4f1eeab22058370687a2fd",
+      "bytes": 2002,
+      "status": "PINNED_SOURCE_MATCH",
+      "retrieved_at": "2026-10-27T23:59:47.382416+00:00"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/75dc4bfa90cd08b118a32c8dad8434a77f446c0d/src/content/docs/r2/api/s3/api.mdx",
+      "sha256": "cfa565d89837b4f3ee3ff874dcc71daf86da1f62adeffd4b5fe82e3837df36e7",
+      "bytes": 68538,
+      "status": "PINNED_SOURCE_MATCH",
+      "retrieved_at": "2026-10-27T23:59:47.754536+00:00"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/75dc4bfa90cd08b118a32c8dad8434a77f446c0d/src/content/docs/r2/pricing.mdx",
+      "sha256": "f2ae176fd2a010d607d15da855e27bafc8a083c9b48ca359e154e2c593da87c3",
+      "bytes": 11452,
+      "status": "PINNED_SOURCE_MATCH",
+      "retrieved_at": "2026-10-27T23:59:48.099340+00:00"
+    }
+  ],
+  "verified_features": {
+    "s3_bucket_versioning_supported": false,
+    "native_R2_bucket_locks": true,
+    "native_bucket_lock_protects_delete_and_overwrite": true,
+    "lock_configuration_can_be_removed_by_admin": true,
+    "conditional_put_If_None_Match_supported": true,
+    "automatic_storage_encryption": "AES-256",
+    "transport_encryption": "TLS",
+    "S3_AWS_KMS_headers_not_assumed_supported": true
+  },
+  "token_guidance": {
+    "writer": "Object Read & Write scoped to one actual bucket",
+    "recovery": "Separate Object Read only credential",
+    "administration": "Not provided to daily backup process",
+    "delete_denial_by_object_token_alone": "NOT_VERIFIED; must not assume"
+  },
+  "r2_account_configuration_verified": false,
+  "external_upload_performed": false
+}

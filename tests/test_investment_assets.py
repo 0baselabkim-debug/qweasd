@@ -281,7 +281,7 @@ def test_full_artifact_adapter_positive_path_uses_synthetic_offline_responses(tm
     monkeypatch.setenv('KIS_APP_KEY','SYNTHETIC_APP_KEY');monkeypatch.setenv('KIS_APP_SECRET','SYNTHETIC_APP_SECRET')
     control=dict(schema=1,trial_id='kis-full-20261026',request_id='SYNTHETIC_ONLY',mode='full',asof='2026-10-26',previous_run=None,max_total_http=5600,not_before='2026-10-26T11:45:00+00:00',expires_at='2026-10-26T14:35:00+00:00',approval=manual.FULL_APPROVAL)
     state=tmp_path/'SYNTHETIC-state';u=universe();calls,opener=transport(u)
-    r=manual.run(state/'modes/full',control,u,'SYNTHETIC_ONLY',opener=opener)
+    r=manual.run(state/'modes/full',control,u,'40326538555',opener=opener)
     assert r['physical_http']==len(calls)==4701 and r['status']=='PASS'
     (state/'universe.json').write_bytes(encoded(u))
     manifest=dict(asof='2026-10-26',run_id='40326538555',files=runtime.inventory(state))
@@ -291,7 +291,7 @@ def test_full_artifact_adapter_positive_path_uses_synthetic_offline_responses(tm
     with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
         for p in state.rglob('*'):
             if p.is_file():z.write(p,str(p.relative_to(state)))
-    fake_receipt=dict(state_manifest_sha256=digest(encoded(manifest)))
+    fake_receipt=dict(state_manifest_sha256=digest(encoded(manifest)),report=r)
     fake_meta=dict(digest='sha256:'+digest(archive.read_bytes()))
     monkeypatch.setattr(module,'kis_receipt',lambda *a: (copy.deepcopy(bundle),fake_receipt,fake_meta))
     restored=kis_artifact(None,'SYNTHETIC',archive)

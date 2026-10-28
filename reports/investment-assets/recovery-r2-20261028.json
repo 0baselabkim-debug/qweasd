@@ -1,0 +1,252 @@
+{
+  "archive_before": {
+    "status": "PASS",
+    "prepared_uncommitted": [],
+    "generations": 11,
+    "unique_original_objects": 817,
+    "archived_observations": 2057272
+  },
+  "archive_after": {
+    "status": "PASS",
+    "prepared_uncommitted": [],
+    "generations": 11,
+    "unique_original_objects": 817,
+    "archived_observations": 2057272
+  },
+  "new_generations": 0,
+  "new_original_objects": 0,
+  "new_raw_stock_rows": 0,
+  "repeat_real_receipt_status": "ALREADY_PRESENT",
+  "invalid_zero_byte_zip_rejected": "artifact_zip_digest_mismatch",
+  "immutable_archive_inventory_unchanged": true,
+  "local_inventory_plan": {
+    "schema": 1,
+    "status": "LOCAL_INCREMENT_PLAN_NOT_REMOTE_COMPLETION",
+    "inventory_id": "4844b721b6f0a826b1c754addc723c84dea54eadfea139b2c212120674b57ad8",
+    "previous_inventory_id": null,
+    "total_generations": 11,
+    "total_logical_files": 895,
+    "local_new_logical_files": 895,
+    "new_unique_plaintext_blobs": 895,
+    "planned_plaintext_payload_bytes": 601183926,
+    "reused_plaintext_hashes": 0,
+    "remote_presence_verified": false,
+    "remote_restore_verified": false,
+    "upload_authorized": false,
+    "external_upload_performed": false,
+    "encrypted_payload_bytes": null,
+    "exclusions": [
+      "catalog.duckdb",
+      "writer.lock"
+    ],
+    "requirements": [
+      "Previous inventory is a local delta baseline, never proof of uploaded objects.",
+      "Before remote reuse, authenticate checkpoint identity and verify referenced remote ciphertext.",
+      "Encrypt each unique payload for a pinned recipient key version; retain verified ciphertext mapping.",
+      "Create payloads/checkpoints conditionally; never overwrite, delete, or move old generations.",
+      "Publish an encrypted checkpoint only after every referenced payload is verified."
+    ],
+    "inventory_path": "/workspace/investment-assets-backups/20261028-full-inventory.json",
+    "inventory_bytes": 168036,
+    "inventory_file_sha256": "5e4bff8611e882f439010a038c6b44e325aae52afe255eae0b3af93e54319b28",
+    "local_plan_written": true
+  },
+  "local_repeat_delta": {
+    "schema": 1,
+    "status": "LOCAL_INCREMENT_PLAN_NOT_REMOTE_COMPLETION",
+    "inventory_id": "4844b721b6f0a826b1c754addc723c84dea54eadfea139b2c212120674b57ad8",
+    "previous_inventory_id": "4844b721b6f0a826b1c754addc723c84dea54eadfea139b2c212120674b57ad8",
+    "total_generations": 11,
+    "total_logical_files": 895,
+    "local_new_logical_files": 0,
+    "new_unique_plaintext_blobs": 0,
+    "planned_plaintext_payload_bytes": 0,
+    "reused_plaintext_hashes": 895,
+    "remote_presence_verified": false,
+    "remote_restore_verified": false,
+    "upload_authorized": false,
+    "external_upload_performed": false,
+    "encrypted_payload_bytes": null,
+    "exclusions": [
+      "catalog.duckdb",
+      "writer.lock"
+    ],
+    "requirements": [
+      "Previous inventory is a local delta baseline, never proof of uploaded objects.",
+      "Before remote reuse, authenticate checkpoint identity and verify referenced remote ciphertext.",
+      "Encrypt each unique payload for a pinned recipient key version; retain verified ciphertext mapping.",
+      "Create payloads/checkpoints conditionally; never overwrite, delete, or move old generations.",
+      "Publish an encrypted checkpoint only after every referenced payload is verified."
+    ],
+    "inventory_path": "/workspace/investment-assets-backups/20261028-repeat-inventory.json",
+    "inventory_bytes": 168036,
+    "inventory_file_sha256": "5e4bff8611e882f439010a038c6b44e325aae52afe255eae0b3af93e54319b28",
+    "local_plan_written": true
+  },
+  "actual_backup": {
+    "path": "/workspace/investment-assets-backups/stage1-20261027.tar.gz",
+    "sha256": "4f21e3e727e02354e36b612727746c92ae8323f384dca3ab54c3c2f148ca94be",
+    "bytes": 342815089
+  },
+  "local_restore": {
+    "status": "PASS",
+    "prepared_uncommitted": [],
+    "generations": 11,
+    "unique_original_objects": 817,
+    "archived_observations": 2057272,
+    "operation": "BACKUP_RESTORED_AND_VERIFIED",
+    "destination": "/workspace/investment-assets-recovery-20261028-restored"
+  },
+  "historical_query_equal": true,
+  "protected_source_files_unchanged": 791,
+  "seconds": 36.769865195999955,
+  "external_upload_performed": false,
+  "remote_restore_verified": false,
+  "real_recipient_encryption_performed": false,
+  "market_http": 0,
+  "restored_inventory_equal": true,
+  "status": "LOCAL_RECOVERY_READINESS_VERIFIED_EXTERNAL_ACCESS_BLOCKED",
+  "checked_at": "2026-10-28T00:07:02.756857+00:00",
+  "branch": "feat/investment-asset-archive-v1",
+  "baseline_commit": "1e976cbe4190b59478863f11e1bfed1c552f1c59",
+  "original_20261026": {
+    "status": "BLOCKED_NETWORK_CONNECT_DENIED",
+    "run_id": "40326538555",
+    "artifact_id": 12658373693,
+    "expected_zip_sha256": "eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+    "official_cli_access": {
+      "checked_at": "2026-10-27T23:50:30.712024+00:00",
+      "requests": [
+        {
+          "kind": "run",
+          "returncode": 1,
+          "status_lines": [],
+          "provider_request_id_present": false,
+          "transport_forbidden": true,
+          "error_url_hosts": [
+            "api.github.com"
+          ]
+        },
+        {
+          "kind": "artifact",
+          "returncode": 1,
+          "status_lines": [],
+          "provider_request_id_present": false,
+          "transport_forbidden": true,
+          "error_url_hosts": [
+            "api.github.com"
+          ]
+        }
+      ]
+    },
+    "download": {
+      "returncode": 1,
+      "path": "/workspace/investment-assets-source-artifacts/12658373693-retry-20261028.zip",
+      "bytes": 0,
+      "transport_forbidden": true,
+      "error_hosts": [
+        "api.github.com"
+      ]
+    },
+    "storage_host_transport": {
+      "url": "https://productionresultssa1.blob.core.windows.net/",
+      "method": "HEAD",
+      "http_status": null,
+      "transport_error": "Tunnel connection failed: 403 Forbidden",
+      "meaning": "No Azure response received"
+    },
+    "proxy_connect_diagnostic": "Tunnel connection failed: 403 Forbidden; no provider HTTP response",
+    "authentication": "NOT_REVERIFIED_NO_GITHUB_RESPONSE",
+    "artifact_expiration": "NOT_REVERIFIED_CURRENT_METADATA_BLOCKED",
+    "signed_URL_expiration": "NOT_EVALUATED_NO_NEW_SIGNED_URL_OBTAINED",
+    "original_manifest_validation": "NOT_RUN",
+    "raw_stock_completeness": "NOT_RUN",
+    "raw_stock_rows_added": 0,
+    "old_receipt_only_generation_retained": true,
+    "validation_strengthened": [
+      "Pinned receipt/full report agreement",
+      "2349 distinct expected symbols, markets, date, internal status",
+      "4701 complete unique ledger sequences and received HTTP200 responses",
+      "Raw indices and DB/JSON consistency"
+    ],
+    "network_draft": {
+      "custom_domains_present": [
+        "api.github.com",
+        "productionresultssa1.blob.core.windows.net"
+      ],
+      "draft_revision": 4,
+      "live_egress_verification": "FAIL_CONNECT_403",
+      "published_configuration_activation": "UNCONFIRMED"
+    },
+    "required_action": "Review/save/Publish and apply environment network allowlist; administrator must resolve CONNECT403 if already applied. Retry official CLI only after route works; do not infer token renewal necessary without provider response."
+  },
+  "r2_preparation": {
+    "status": "READY_FOR_USER_CONFIGURATION_NOT_READY_FOR_REMOTE_BACKUP",
+    "provider": "R2 Standard private bucket",
+    "account_binding_confirmed": false,
+    "bucket_confirmed": false,
+    "object_credential_binding_confirmed": false,
+    "actual_recipient_key_confirmed": false,
+    "example_settings": "docs/r2-backup-settings.example.json",
+    "guide": "docs/investment-asset-r2-recovery.md",
+    "inventory_and_local_delta_planner_implemented": true,
+    "incremental_uploader_implemented": false,
+    "incremental_restore_engine_implemented": false,
+    "S3_bucket_versioning_supported": false,
+    "native_bucket_lock_supported": true,
+    "actual_bucket_lock_verified": false,
+    "bootstrap_backup_bytes": 342815089,
+    "bootstrap_backup_sha256": "4f21e3e727e02354e36b612727746c92ae8323f384dca3ab54c3c2f148ca94be",
+    "inventory_bytes": 168036,
+    "inventory_sha256": "5e4bff8611e882f439010a038c6b44e325aae52afe255eae0b3af93e54319b28",
+    "encrypted_upload_bytes": null,
+    "remote_uploads": 0,
+    "remote_restore": false,
+    "actual_account_or_credentials_created": false,
+    "storage_cost": "No new R2 usage created by this work; actual existing account charges unknown"
+  },
+  "tests": {
+    "related": {
+      "passed": 51,
+      "failed": 0,
+      "seconds": 26.11
+    },
+    "full_regression": {
+      "passed": 621,
+      "failed": 0,
+      "seconds": 411.07
+    },
+    "new_tests": 22,
+    "real_full_KIS_ZIP_positive_path": "NOT_RUN",
+    "synthetic_full_KIS_ZIP_positive_path": "PASS",
+    "offline_encryption_tests": "Existing synthetic recipient tests; not actual recovery-key evidence",
+    "unique_tests_verified": 621,
+    "counts_overlap_between_runs": true
+  },
+  "constraints": {
+    "market_api_calls": 0,
+    "new_schedules": 0,
+    "existing_schedule_changes": 0,
+    "existing_operating_code_changes": 0,
+    "existing_operating_data_changes": 0,
+    "main_merged": false,
+    "deployed": false,
+    "external_uploads": 0
+  },
+  "next_stage": {
+    "offline_signal_development": "CONDITIONAL_ON_EXISTING_DATA_TIME_AND_FINALITY_RESTRICTIONS",
+    "Oct26_raw_signal_validation": "BLOCKED_RAW_NOT_RESTORED",
+    "manual_R2_roundtrip": "BLOCKED_ACCOUNT_BUCKET_CREDENTIAL_RECIPIENT_SETUP",
+    "automatic_remote_backup": "NOT_READY_NO_REMOTE_ROUNDTRIP_OR_INCREMENTAL_TRANSPORT"
+  },
+  "changed_files": [
+    "investment_assets/sources.py",
+    "investment_assets/r2_plan.py",
+    "tests/test_investment_assets.py",
+    "tests/test_asset_r2_plan.py",
+    "docs/investment-asset-r2-recovery.md",
+    "docs/r2-backup-settings.example.json",
+    "reports/investment-assets/r2-document-evidence.json",
+    "reports/investment-assets/recovery-r2-20261028.json"
+  ]
+}
