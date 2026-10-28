@@ -41,9 +41,10 @@ def test_operation_times_and_no_false_manual_schedule_success():
  env['SCHEDULE']='30 9 * * 1-5';assert '18:30' in make_record(env,{},{})['planned_start_at']
  env['EVENT']='workflow_dispatch';assert make_record(env,{},{})['planned_start_at'] is None
 
-def test_only_active_daily_schedule_is_new_slots():
+def test_legacy_daily_schedule_remains_disabled():
  text=Path('.github/workflows/daily-dashboard.yml').read_text()
- assert "cron: '30 9 * * 1-5'" in text and "cron: '0 12 * * 1-5'" in text
+ assert '  workflow_dispatch:' in text and '\n  schedule:' not in text
+ assert '\n  push:' not in text and '\n  workflow_run:' not in text
  assert "cron: '30 11 * * 1-5'" not in text and "cron: '30 14 * * 1-5'" not in text
  assert 'kis-validation-auth' in text and 'cancel-in-progress: false' in text
 

@@ -92,13 +92,14 @@ def test_github_pagination_without_new_cli_flags(monkeypatch):
     assert api('unused') == [{'workflow_runs': [1]}, {'workflow_runs': [2]}]
 
 
-def test_workflow_preserves_regular_schedule_and_serialization():
+def test_workflow_preserves_disabled_schedule_and_serialization():
     base = Path(__file__).resolve().parents[1]
     daily = (base / '.github/workflows/daily-dashboard.yml').read_text()
     guard = (base / '.github/workflows/daily-start-watchdog.yml').read_text()
-    assert "- cron: '30 9 * * 1-5'" in daily and "- cron: '0 12 * * 1-5'" in daily
-    assert daily.count('- cron:') == 2
+    assert '  workflow_dispatch:' in daily and '\n  schedule:' not in daily
+    assert '\n  push:' not in daily and '\n  workflow_run:' not in daily
+    assert daily.count('- cron:') == 0
     assert 'group: kis-validation-auth' in daily and 'cancel-in-progress: false' in daily
-    assert "- cron: '45 9 * * 1-5'" in guard and "- cron: '15 10 * * 1-5'" in guard
+    assert '  workflow_dispatch:' in guard and '\n  schedule:' not in guard
     assert 'contents: read' in guard and 'actions: write' in guard
     assert 'secrets.' not in guard

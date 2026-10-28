@@ -1,0 +1,195 @@
+{
+  "source_commit": "bb8edb9d858f443cb17d6c8e180d0fc5c8d38f3b",
+  "sha256": {
+    "collector_v1/__init__.py": "32e47e9474e910bbb332af6b8bbe32ee08f56ad63676f04edc2f4b7a81149440",
+    "collector_v1/core.py": "427558284fd2456ec0dcfe50cbbf3f3d574b51192d5cdc650d31a6e5a0644689",
+    "collector_v1/providers.py": "1dd393bed05b88c1e767feb4cf73e5a1c89cd2e77da4760429ea27cdbf302eba",
+    "collector_v1/validation.py": "b75b9c3a4fb7afaaf762466a1703ecb0f43de304838ae09c1bbbb80277a486c4",
+    "collector_v1/trial.py": "834b82bde34ac5199409209f2f498bce19e49f9c6be135325eef129cc2588276",
+    "collector_v1/market_trial.py": "55184ba11c55b79d4c7448e2c64952d2c6733be3457a7589f3c0469fc3b94fd3",
+    "collector_v1/kis_manual.py": "ad326c664dbfcc41585d5351e43234ed66ffb6fe2ddfa262bd29b72f34e163a3",
+    "collector_v1/experiment/__init__.py": "c5c741bb9ea635a2770eebb23618937e292a3acec502c90bafd1f7737bab5727",
+    "collector_v1/experiment/engine.py": "eb946d795e8487979e33e9ac82ffe8443171b1f4f7a6161d44e33e26392490f8",
+    "collector_v1/experiment/storage.py": "00c7da5f551898a73f222c3df37365a278bcc4b977b331972eec477dd2331588",
+    "collector_v1/experiment/policy.py": "bd95ce13d172cb97397d7c276b19fefb0c929c1c42392eeb6c70d2aca5fb9db0",
+    "collector_v1/experiment/compare.py": "604691f7ace57b5d39475bf6dd1f31c401dae9f65ab69ced075b41a3e9bbdcb1"
+  },
+  "intentional_library_change": "kis_manual.run optional memory_session.transfer(api), default behavior unchanged",
+  "main_base": "197aa2359ead47e1399f1d8767cdc6aea43da12b",
+  "experimental_run": "40596424279",
+  "experimental_code_commit": "02e6b067d0915b79af0c295f7e5da6a1eca1c440",
+  "experiment": {
+    "status": "COMPLETE_OBSERVATION_COMPARISON",
+    "asof": "2026-10-28",
+    "run_id": "40596424279",
+    "completed_at": "2026-10-28T16:02:14.088157+00:00",
+    "rounds": [
+      {
+        "actual_job_started_at": "2026-10-28T11:01:00Z",
+        "actual_started_at": "2026-10-28T11:30:01.209465+00:00",
+        "asof": "2026-10-28",
+        "collector_command_started_at": "2026-10-28T11:01:39.807927+00:00",
+        "completed_at": "2026-10-28T13:13:38.533568+00:00",
+        "elapsed_seconds": 6217.324103,
+        "error_count": 0,
+        "exception_type": null,
+        "excluded_count": 1605,
+        "failed_http_requests": 0,
+        "final_validation_rate": 1.0,
+        "first_errors": [],
+        "first_http_at": "2026-10-28T11:30:02.908938+00:00",
+        "generation_id": "kis-evening-20261028-v1-2030",
+        "kis_validated": 2348,
+        "last_http_at": "2026-10-28T13:13:13.944995+00:00",
+        "master_rows": 3953,
+        "metrics": {
+          "counts": {
+            "DuckDB_write_and_readback": 1,
+            "JSON_generation_and_storage": 1,
+            "api:/oauth2/tokenP": 1,
+            "api:/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice": 2,
+            "api:/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice": 2348,
+            "api:/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily": 2348,
+            "internal_validation": 1,
+            "parse": 4698,
+            "preserved_response_rescan": 1,
+            "progress_reporting": 25,
+            "rate_wait": 4699,
+            "raw_compression_and_storage": 4698,
+            "source_hash": 4698
+          },
+          "seconds": {
+            "DuckDB_write_and_readback": 2.520592693999788,
+            "JSON_generation_and_storage": 0.027787664999777917,
+            "api:/oauth2/tokenP": 0.6945997219997935,
+            "api:/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice": 1.2167439429999831,
+            "api:/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice": 1434.1243425689966,
+            "api:/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily": 3669.6660180249964,
+            "internal_validation": 4.502294539000104,
+            "parse": 4.6918146399984835,
+            "preserved_response_rescan": 2.806267358000696,
+            "progress_reporting": 29.617686001000266,
+            "rate_wait": 1022.4849198740117,
+            "raw_DB_reverification": 13.383567919000598,
+            "raw_compression_and_storage": 16.481633269987924,
+            "source_hash": 0.3651230910029426
+          }
+        },
+        "official_price_status": "PENDING_KRX",
+        "physical_http": 4699,
+        "physical_retries": 0,
+        "population_sha256": "0dac951fb1d1b3538ee8236a97243d69d9b77b944b6e139f9000177aa207a27e",
+        "reason": null,
+        "received_symbols": 2348,
+        "recovered_tasks": 0,
+        "round": 1,
+        "scheduled_at": "2026-10-28T20:30:00+09:00",
+        "start_delay_seconds": 1.209465,
+        "status": "PASS",
+        "target": 2348
+      },
+      {
+        "actual_job_started_at": "2026-10-28T13:13:59Z",
+        "actual_started_at": "2026-10-28T14:30:01.701415+00:00",
+        "asof": "2026-10-28",
+        "collector_command_started_at": "2026-10-28T13:14:39.817129+00:00",
+        "completed_at": "2026-10-28T16:00:17.037924+00:00",
+        "elapsed_seconds": 5415.336509,
+        "error_count": 0,
+        "exception_type": null,
+        "excluded_count": 1605,
+        "failed_http_requests": 0,
+        "final_validation_rate": 1.0,
+        "first_errors": [],
+        "first_http_at": "2026-10-28T14:30:03.651696+00:00",
+        "generation_id": "kis-evening-20261028-v1-2330",
+        "kis_validated": 2348,
+        "last_http_at": "2026-10-28T16:00:03.013938+00:00",
+        "master_rows": 3953,
+        "metrics": {
+          "counts": {
+            "DuckDB_write_and_readback": 1,
+            "JSON_generation_and_storage": 1,
+            "api:/oauth2/tokenP": 1,
+            "api:/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice": 2,
+            "api:/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice": 2348,
+            "api:/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily": 2348,
+            "internal_validation": 1,
+            "parse": 4698,
+            "preserved_response_rescan": 1,
+            "progress_reporting": 25,
+            "rate_wait": 4699,
+            "raw_compression_and_storage": 4698,
+            "source_hash": 4698
+          },
+          "seconds": {
+            "DuckDB_write_and_readback": 1.6662845680002647,
+            "JSON_generation_and_storage": 0.027279832000203896,
+            "api:/oauth2/tokenP": 0.566373346000546,
+            "api:/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice": 0.9611615680005343,
+            "api:/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice": 1300.1858087350101,
+            "api:/uapi/domestic-stock/v1/quotations/investor-trade-by-stock-daily": 2762.1724293030047,
+            "internal_validation": 2.2321714350000548,
+            "parse": 2.7955941889858877,
+            "preserved_response_rescan": 1.4035964470003819,
+            "progress_reporting": 34.1515927570008,
+            "rate_wait": 1277.994624714005,
+            "raw_DB_reverification": 6.890725788000054,
+            "raw_compression_and_storage": 12.655096339933152,
+            "source_hash": 0.2555205829821716
+          }
+        },
+        "official_price_status": "PENDING_KRX",
+        "physical_http": 4699,
+        "physical_retries": 0,
+        "population_sha256": "0dac951fb1d1b3538ee8236a97243d69d9b77b944b6e139f9000177aa207a27e",
+        "reason": null,
+        "received_symbols": 2348,
+        "recovered_tasks": 0,
+        "round": 2,
+        "scheduled_at": "2026-10-28T23:30:00+09:00",
+        "start_delay_seconds": 1.701415,
+        "status": "PASS",
+        "target": 2348
+      }
+    ]
+  },
+  "other_repository": {
+    "repository": "0baselabkim-debug/kis-intraday-monitor",
+    "commit": "e27bc63fd420a899501c13f6cd1b05c13108fc82",
+    "mutated": false,
+    "cross_repository_mutex_present": false
+  },
+  "official_document_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/github/docs/main/content/actions/reference/workflows-and-actions/workflow-syntax.md",
+      "sha256": "50c73cf50995a0c7641988b1f72ca9e3447ce2920f4a48cb468d7765eff0b6f1"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/github/docs/main/data/reusables/repositories/actions-scheduled-workflow-example.md",
+      "sha256": "675ad618ba48c887d5a2abbc5313949e86c2edf7c18e1473b9032a7fa4e4237f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/github/docs/main/content/actions/reference/workflows-and-actions/events-that-trigger-workflows.md",
+      "sha256": "69e251c1510f84d7b0a05ff8a4146456e657f175133081213805e02b0a655f50"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/github/docs/main/data/reusables/actions/actions-group-concurrency.md",
+      "sha256": "3b099dc5cc26dfc0fe2dcf88afd9ad70f10957911bd2fbc6ba2815e8417642e9"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/github/docs/main/data/reusables/actions/schedule-delay.md",
+      "sha256": "569912134ce43127706c32290fafa64b43edc2e0d9ed9bff0d524b67ef3fb182"
+    }
+  ],
+  "checked_at": "2026-10-28T23:09:32.338717+00:00",
+  "new_credential_bindings_created": false,
+  "existing_KIS_Secrets_changed": false,
+  "legacy_assertion_corrections": [
+    "tests/test_daily_briefing.py",
+    "tests/test_daily_optimization.py",
+    "tests/test_daily_start_watchdog.py",
+    "tests/test_liquidity.py",
+    "tests/test_market_briefing.py"
+  ]
+}

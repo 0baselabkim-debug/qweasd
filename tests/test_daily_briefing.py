@@ -93,9 +93,10 @@ def test_stage_no_duplicate_day_and_failure_isolation(snapshot16,tmp_path,monkey
     with pytest.raises(ValueError):stage(new,old,'TEST')
     assert original=={p.name:p.read_bytes() for p in old.iterdir()}
 
-def test_workflow_atomic_files_and_unchanged_schedule():
+def test_workflow_atomic_files_and_disabled_schedule():
     w=Path('.github/workflows/daily-dashboard.yml').read_text()
-    assert "cron: '30 9 * * 1-5'" in w and "cron: '0 12 * * 1-5'" in w
+    assert '  workflow_dispatch:' in w and '\n  schedule:' not in w
+    assert '\n  push:' not in w and '\n  workflow_run:' not in w
     assert 'python scripts/daily_publish_transaction.py' in w
     transaction=Path('scripts/daily_publish_transaction.py').read_text()
     assert "'-m', 'scripts.stage_daily_publication'" in transaction

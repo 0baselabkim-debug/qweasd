@@ -1,0 +1,66 @@
+{
+  "status": "IMPLEMENTED_OFFLINE_VERIFIED_NOT_REGISTERED",
+  "main_base": "197aa2359ead47e1399f1d8767cdc6aea43da12b",
+  "development_branch": "feat/kis-regular-2030",
+  "default_branch": "main",
+  "workflow": ".github/workflows/kis-market-2030.yml",
+  "cron_UTC": "30 11 * * 1-5",
+  "slot_timezone": "Asia/Seoul",
+  "slot_time": "20:30",
+  "state_branch": "kis-regular-state",
+  "state_initialization": {
+    "branch": "kis-regular-state",
+    "commit": "6c9efb0b727e4f2f4af5dded37404ac5a7d1f25b",
+    "tree": "dfb136c2cf113ce4c1d2b1f5f12496923c42bc6e",
+    "format_blob": "e879ba05aaef2c2ed0c1cb3dc5bd7e993d465769",
+    "format": {
+      "schema": 1,
+      "repository": "0baselabkim-debug/qweasd",
+      "slot": "2030",
+      "policy": "atomic-slot-ownership-append-only-history"
+    },
+    "prepared_only": false,
+    "remote_branch_created": true
+  },
+  "actual_schedule_registration": "NOT_YET_VERIFIED",
+  "first_regular_collection": "NOT_RUN",
+  "market_api_calls_during_implementation": 0,
+  "new_credentials_created": false,
+  "existing_Secrets_changed": false,
+  "other_repository_mutated": false,
+  "operational_API_gate": "BLOCKED_SHARED_ACCOUNT_SAFETY_UNVERIFIED",
+  "required_additional_approval": [
+    "Issue/use reviewed independent KIS account credentials and bind KIS_REGULAR_APP_KEY/SECRET, with verified account/token/rate policy evidence",
+    "Alternative shared-account design requires separate approval for real cross-repository lease integration and relevant repository permissions; not implemented"
+  ],
+  "artifact_retention_days_configured": 90,
+  "source_storage": "Actions artifacts only; no new external store",
+  "dashboard_data_published": false,
+  "app_data_updated": false,
+  "existing_Word_2100_schedule_changed": false,
+  "existing_Word_schedule_definition": "NOT_LOCATED_IN_CURRENT_MAIN; no external scheduler writes performed",
+  "preserved_existing_files": 881,
+  "tests": {
+    "final_target": {
+      "passed": 30,
+      "failed": 0,
+      "seconds": 35.67
+    },
+    "full": {
+      "passed": 411,
+      "failed": 0,
+      "seconds": 289.65
+    },
+    "outdated_main_cron_assertions_corrected": 5,
+    "unique_tests_verified": 412,
+    "counts_overlap": true,
+    "full_preceded_last_actor_binding_test": true
+  },
+  "lint": {
+    "actionlint_version": "1.7.12",
+    "full_source_result": "Queue property unsupported by lint schema",
+    "known_schema_result": "PASS",
+    "queue_extension": "Exact max with cancel-in-progress false checked against official docs; native acceptance pending"
+  },
+  "checked_at": "2026-10-28T23:14:05.024654+00:00"
+}
