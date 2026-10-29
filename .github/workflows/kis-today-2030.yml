@@ -8,8 +8,9 @@
     "actions": "read"
   },
   "concurrency": {
-    "group": "kis-daily-20261014",
-    "cancel-in-progress": false
+    "group": "kis-validation-auth",
+    "cancel-in-progress": false,
+    "queue": "max"
   },
   "jobs": {
     "collect": {

@@ -15,8 +15,9 @@
     "contents": "read"
   },
   "concurrency": {
-    "group": "kis-samsung-sample",
-    "cancel-in-progress": false
+    "group": "kis-validation-auth",
+    "cancel-in-progress": false,
+    "queue": "max"
   },
   "jobs": {
     "sample": {

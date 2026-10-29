@@ -40,5 +40,10 @@
         }
       ]
     }
+  },
+  "concurrency": {
+    "group": "kis-validation-auth",
+    "cancel-in-progress": false,
+    "queue": "max"
   }
 }
