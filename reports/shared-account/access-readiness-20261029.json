@@ -1,0 +1,19 @@
+{
+  "status": "BLOCKED",
+  "user_approved": true,
+  "reason": "No central coordinator credential exists in monitor Secrets; its own repository GITHUB_TOKEN cannot write central qweasd. Management API is unreachable from this cloud environment; no available credential-provisioning connector.",
+  "collector_probe_run": "40874522562",
+  "collector_result": "CENTRAL_GIT_WRITE_ACQUIRE_RELEASE_PASS",
+  "monitor_probe_run": "40873564922",
+  "monitor_result": "BLOCKED_NO_CENTRAL_WRITE_PROOF",
+  "missing_monitor_secrets": [
+    "KIS_COORDINATOR_TOKEN",
+    "OPERATIONS_READ_TOKEN"
+  ],
+  "market_http": 0,
+  "oauth_issuance": 0,
+  "credentials_created": 0,
+  "main_changes": 0,
+  "schedule_changes": 0,
+  "checked_at": "2026-10-29T12:41:51.518401+00:00"
+}
