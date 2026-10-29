@@ -1,0 +1,27 @@
+name: Approved KIS shared GitHub access readiness (no KIS HTTP)
+on:
+  push:
+    branches: [fix/shared-readiness-20261029]
+    paths: [.github/trials/shared-readiness-20261029.json]
+permissions:
+  contents: write
+concurrency:
+  group: kis-shared-readiness-20261029
+  cancel-in-progress: false
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Test existing GitHub authority and publish only non-secret evidence
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          KIS_COORDINATOR_TOKEN: ${{ secrets.KIS_COORDINATOR_TOKEN }}
+          OPERATIONS_READ_TOKEN: ${{ secrets.OPERATIONS_READ_TOKEN }}
+        run: python -m scripts.coordinate_access_probe
