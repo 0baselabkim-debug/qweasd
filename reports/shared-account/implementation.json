@@ -33,7 +33,7 @@
   "oauth_issuance": 0,
   "secret_changes": 0,
   "permission_expansions": 0,
-  "main_deployments": "PENDING_REF_VERIFICATION",
+  "main_deployments": 2,
   "schedule_changes": 0,
   "schedule_cron": "30 11 * * 1-5",
   "existing_schedule_registered": true,
@@ -58,5 +58,13 @@
     "qweasd_regular": "6cb4e55829964a818e451d362de5a4e19d49fe36",
     "monitor_risk_feature": "54f119c9cbfad7a746da2d17bfa15f5dbbfc70af"
   },
-  "deployment_policy": "Only offline/metadata-verified fail-closed safeguards; both live rollout profiles remain false"
+  "deployment_policy": "Only offline/metadata-verified fail-closed safeguards; both live rollout profiles remain false",
+  "deployed_source_commits": {
+    "qweasd": "b0c75827a586853543aab82de14da38fda5404fa",
+    "kis-intraday-monitor": "b6de7f06cb565f5d68f2217f6529cfd81c8b759d"
+  },
+  "native_verification": {
+    "qweasd": "PASS:40793154658; active workflow, unchanged cron, zero market HTTP, shared rollout BLOCKED",
+    "kis-intraday-monitor": "UNVERIFIED: authenticated API host unavailable/private page 404; local341PASS; remote main ref verified"
+  }
 }

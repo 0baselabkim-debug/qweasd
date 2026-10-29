@@ -122,8 +122,8 @@ qweasd 실행 토큰은 원래 own-repo Contents write/Actions read를 사용한
 
 공유 설정의 `enabled`, 전체 행위자/양쪽 배포/실권한/실KIS검증 증거는 모두 false다.
 정기 profile의 `verified`도 false다. true 하나만으로는 세션·원격 소유권·실제
-HTTP guard를 통과할 수 없다. 양쪽 main 반영은 보류했고, 현재 cron 및 기존
-차단 상태는 그대로다. 실제 수집 성공이나 공유 운영 READY를 주장하지 않는다.
+HTTP guard를 통과할 수 없다. 검증된 안전장치를 양쪽 main에 반영했으며 cron과
+실제 수집 차단은 유지한다. 실제 수집 성공이나 공유 운영 READY를 주장하지 않는다.
 
 ## 보존과 검증 증거
 
@@ -136,3 +136,18 @@ HTTP guard를 통과할 수 없다. 양쪽 main 반영은 보류했고, 현재 c
 기존 운영 데이터·세대·DB/JSON/manifest·필터·최종성·검증 규칙은 변경하지 않았다.
 20:30 외 수집/복구 예약을 만들지 않았고 Word 브리핑 예약도 수정하지 않았다.
 dot 저장소의 실제 22:30 예약 상태는 이번 두 저장소 조사만으로 확인할 수 없다.
+
+
+최종 오프라인 결과: qweasd **447 PASS / 0 FAIL** (295.77초), 장중 **341 PASS /
+0 FAIL** (실제 socket/DNS/subprocess 사용 0건). 경쟁, 접근 실패, 만료, 소유권
+변경, 429/5xx, 중단·명시적 복구, 토큰 만료·자격 변경과 기존 회귀를 포함한다.
+장중 기존 main 자체에서 실패하던 테스트 1건은 이미 존재하는 1회 승인 기록을
+인식하도록 정정하고, 미충족 실행 안전 조건이 계속 차단하는지 검증했다.
+
+실제 배포 검증 [Run 40793154658](https://github.com/0baselabkim-debug/qweasd/actions/runs/40793154658)
+**SUCCESS**. 실행 원장의 workflow 상태 active, cron 유지, market_http=0,
+`BLOCKED_SHARED_ACCOUNT_ROLLOUT`을 재검증했다. 공유 계정 실수집 성공이 아니다.
+비공개 장중 저장소는 main Git 참조로 배포를 확인했으나, 원격 CI 결과는 API
+호스트 네트워크 차단/비공개 페이지 404로 확인 불가다. 이를 CI 실패로 단정하지
+않으며 전체 상태는 PARTIAL로 유지한다. actionlint는 장중 두 파일 PASS이며,
+qweasd는 기존 queue:max를 인식하지 못하는 버전의 한계를 별도로 기록했다.

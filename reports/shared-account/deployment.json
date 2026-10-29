@@ -1,0 +1,26 @@
+{
+  "status": "CODE_DEPLOYED_LIVE_COLLECTION_BLOCKED",
+  "checked_at": "2026-10-29T00:18:47.029401+00:00",
+  "main_refs_verified": {
+    "qweasd": "b0c75827a586853543aab82de14da38fda5404fa",
+    "kis-intraday-monitor": "b6de7f06cb565f5d68f2217f6529cfd81c8b759d"
+  },
+  "code_implementation_commits": {
+    "qweasd": "024d9e052b636ca5c5774545b9044364bbd7562b",
+    "kis-intraday-monitor": "9e3de8d3d5f482b73cb5bd6ba46aba4b8d41f633"
+  },
+  "cron": "30 11 * * 1-5",
+  "schedule_changed": false,
+  "actual_market_http": 0,
+  "oauth_issuance": 0,
+  "permissions_changed": false,
+  "secrets_changed": false,
+  "live_rollout_enabled": false,
+  "qweasd_validation_run": "40793154658",
+  "monitor_native_ci": "UNVERIFIED: private page HTTP404 and authenticated api host network denied; not classified as CI failure",
+  "first_shared_live_collection": "NOT_RUN",
+  "qweasd_native_ci": "SUCCESS",
+  "qweasd_native_job_id": "123183048206",
+  "qweasd_registration_receipt": "actions-registration-receipt.json",
+  "qweasd_operational_readiness": "BLOCKED_SHARED_ACCOUNT_ROLLOUT"
+}
