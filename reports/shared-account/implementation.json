@@ -33,7 +33,7 @@
   "oauth_issuance": 0,
   "secret_changes": 0,
   "permission_expansions": 0,
-  "main_deployments": 0,
+  "main_deployments": "PENDING_REF_VERIFICATION",
   "schedule_changes": 0,
   "schedule_cron": "30 11 * * 1-5",
   "existing_schedule_registered": true,
@@ -57,5 +57,6 @@
     "qweasd_market": "bb8edb9d858f443cb17d6c8e180d0fc5c8d38f3b",
     "qweasd_regular": "6cb4e55829964a818e451d362de5a4e19d49fe36",
     "monitor_risk_feature": "54f119c9cbfad7a746da2d17bfa15f5dbbfc70af"
-  }
+  },
+  "deployment_policy": "Only offline/metadata-verified fail-closed safeguards; both live rollout profiles remain false"
 }
