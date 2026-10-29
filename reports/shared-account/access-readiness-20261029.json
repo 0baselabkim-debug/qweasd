@@ -15,5 +15,17 @@
   "credentials_created": 0,
   "main_changes": 0,
   "schedule_changes": 0,
-  "checked_at": "2026-10-29T12:41:51.518401+00:00"
+  "checked_at": "2026-10-29T12:41:51.518401+00:00",
+  "scheduled_collection": {
+    "run_id": "40870637994",
+    "target_date": "2026-10-29",
+    "scheduled_kst": "2026-10-29T20:30:00+09:00",
+    "run_created_kst": "2026-10-29T21:06:57+09:00",
+    "blocked_kst": "2026-10-29T21:09:15.219871+09:00",
+    "status": "BLOCKED",
+    "reason": "shared_rollout_not_approved",
+    "explanation": "Runtime rollout profile remains disabled; chat authorization was received later and is not missing. Do not fabricate verification to enable it.",
+    "total_physical_http": 0,
+    "latest_complete": null
+  }
 }
