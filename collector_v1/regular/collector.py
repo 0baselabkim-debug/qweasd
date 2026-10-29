@@ -38,6 +38,8 @@ class MemorySession:
     def transfer(self,target):
         if not self.api.token or not hmac.compare_digest(self.binding,self._binding()):raise Failure('regular_memory_session_binding_changed')
         target.token=self.api.token
+        guard=getattr(self.api.budget,'guard',None)
+        if hasattr(guard,'register_api'):guard.register_api(target)
 
 
 def prepare(folder,context,guard,*,opener=None,reference=None):
@@ -54,6 +56,8 @@ def prepare(folder,context,guard,*,opener=None,reference=None):
         e=api.fetch(task('master',context['asof'],market=market));universe.extend(parse(store.raw(e),e));raw_evidence.append(e)
     selected=policy.eligible(universe)
     baseline=2*len(selected)+3 # conservative existing full budget, including possible auth
+    if context.get('mode')=='AUTHORIZED_EXCLUSIVE_RECOVERY' and 2*len(selected)+6>5600:
+        raise Failure('combined_population_budget_exceeds_5600_before_stock_requests')
     remaining=(policy.timestamp(context['expires_at'])-policy.utcnow()).total_seconds()
     if (baseline-1)*policy.INTERVAL+60>remaining:raise Failure('population_cannot_fit_remaining_execution_window')
     report=dict(status='PASS',asof=context['asof'],master_rows=len(universe),eligible=len(selected),excluded=len(universe)-len(selected),
@@ -65,7 +69,7 @@ def prepare(folder,context,guard,*,opener=None,reference=None):
     return report,universe,budget,api
 
 
-def run(folder,context,guard,*,opener=None,reference=None,phase=None):
+def run(folder,context,guard,*,opener=None,reference=None,phase=None,progress=None,progress_step=200):
     folder=Path(folder);phase=phase or (lambda _:None)
     phase('PREPARING')
     master,universe,budget,api=prepare(folder/'preparation',context,guard,opener=opener,reference=reference)
@@ -75,7 +79,7 @@ def run(folder,context,guard,*,opener=None,reference=None,phase=None):
     delay=max(0,policy.INTERVAL-(time.monotonic()-budget.last));time.sleep(delay)
     policy.window(context);guard();phase('COLLECTING')
     r=kis_manual.run(folder/'collection',policy.control(context),universe,context['run_id'],opener=opener,
-        policy=policy.RunPolicy(context,guard),memory_session=MemorySession(api))
+        policy=policy.RunPolicy(context,guard),memory_session=MemorySession(api),progress=progress,progress_step=progress_step)
     r.update(master=master,preparation_http=budget.used,total_physical_http=budget.used+r['physical_http'],
         generation_id=context['generation_id'],source_scope='KRX stock code J; index code U; NXT not observed',
         preparation_to_collection_wait_seconds=delay,collection_complete=r['status']=='PASS')

@@ -1,0 +1,58 @@
+name: Approved exclusive full-market recovery 2026-10-29
+run-name: Approved 2026-10-29 full market ${{ github.run_id }}
+on:
+  push:
+    branches: [fix/approved-market-20261029]
+    paths: [.github/trials/approved-market-20261029.json]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+  queue: max
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Offline admission and existing collector safeguards
+        run: python -m pytest -q tests/test_authorized_collection.py tests/test_regular_collector.py
+      - name: Fresh full market, same filter and validation, no KRX calls
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.regular.authorized collect
+      - name: Seal only files scanned with the in-memory provider token
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.regular.authorized seal
+      - uses: actions/upload-artifact@v4
+        id: archive
+        if: always() && hashFiles('data/kis-authorized/UPLOAD_ALLOWED') != ''
+        with:
+          name: kis-authorized-20261029-${{ github.run_id }}
+          path: |
+            data/kis-authorized/
+            !data/kis-authorized/**/writer.lock
+          retention-days: 90
+          if-no-files-found: error
+      - name: Verify stored artifact before marking provisional completion
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.archive.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.archive.outputs.artifact-digest }}
+        run: python -m collector_v1.regular.authorized finalize

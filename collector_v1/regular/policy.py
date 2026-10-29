@@ -48,6 +48,9 @@ def freeze(run,cron):
 
 def window(context,current=None):
     current=current or utcnow();start=timestamp(context['scheduled_at']);end=timestamp(context['expires_at'])
+    if context.get('mode')=='AUTHORIZED_EXCLUSIVE_RECOVERY':
+        from .authorized import validate_window
+        return validate_window(context,current)
     if context['asof']!=start.astimezone(KST).date().isoformat() or end!=start+dt.timedelta(minutes=WINDOW_MINUTES):
         raise Failure('frozen_target_or_window_mismatch')
     if not start<=current<end:raise Failure('regular_execution_window_closed')
@@ -68,10 +71,13 @@ def eligible(rows):
 
 
 def control(context):
-    return dict(schema=1,mode='full',asof=context['asof'],trial_id=context['generation_id'],
+    value=dict(schema=1,mode='full',asof=context['asof'],trial_id=context['generation_id'],
         generation_id=context['generation_id'],request_id=context['generation_id'],previous_run=None,
         max_total_http=FULL_HTTP,not_before=context['scheduled_at'],expires_at=context['expires_at'],
         approval='USER_APPROVED_REGULAR_KRX_TRADING_DAY_2030')
+    if context.get('mode')=='AUTHORIZED_EXCLUSIVE_RECOVERY':
+        value.update(not_before=context['execution_not_before'],approval='USER_APPROVED_EXCLUSIVE_FULL_MARKET_RECOVERY')
+    return value
 
 
 class RunPolicy:

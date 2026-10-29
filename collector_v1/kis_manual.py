@@ -113,7 +113,8 @@ def recover_preserved_responses(store,cache,*,asof=ASOF,generation_id=None):
         cache[key]=e;append(store.root/'tasks.jsonl',dict(task=t,status='received',evidence=e,recovery='offline_reparse'))
 
 
-def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,memory_session=None):
+def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,memory_session=None,progress_step=200):
+    if type(progress_step) is not int or not 1<=progress_step<=2000:raise Failure('invalid_progress_step')
     validator=policy.validate_control if policy else validate_control
     validator(control);asof=control['asof'];generation_id=control.get('generation_id')
     selected=policy.eligible(universe) if policy else eligible(universe)
@@ -146,7 +147,7 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
         last_progress=budget.used
         def checkpoint(force=False,phase='COLLECTING'):
             nonlocal last_progress
-            if not force and budget.used-last_progress<200:return
+            if not force and budget.used-last_progress<progress_step:return
             complete=sum(all(engine.identity(observation_task(k,symbol=r['symbol'],market=r['market'])) in cache for k in ('flow','price')) for r in selected)
             payload=dict(run_id=run_id,mode=control['mode'],asof=asof,status=phase,target=len(selected),received=complete,physical_http=budget.used,http_limit=budget.limit,task_failures=len(events(root/'failures.jsonl')),observed_at=now(),actual_started_at=started)
             store.write('progress.json',payload);last_progress=budget.used
