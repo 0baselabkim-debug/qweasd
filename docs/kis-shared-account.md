@@ -103,6 +103,11 @@ qweasd 실행 토큰은 원래 own-repo Contents write/Actions read를 사용한
 장중 실행 토큰은 own-repo 범위이며 qweasd의 중앙 상태 브랜치 쓰기가 검증되지
 않았다. 기존 `OPERATIONS_READ_TOKEN`이 쓰기 가능한지도 확인하지 않았다.
 기존 Secret을 확대하거나 새 토큰을 만들지 않았다.
+장중 live 단계에만 미래의 `KIS_COORDINATOR_TOKEN` Secret을 `GH_TOKEN`으로
+참조하도록 준비했다. 해당 Secret은 생성·설정하지 않았다. 승인 시 중앙
+qweasd만 선택한 Contents write 자격을 여기에 연결하고 실제 양쪽 runtime
+경쟁을 검증해야 한다. own-repo 작업용 GITHUB_TOKEN은 그대로이며, coordinator
+자격도 원문/아티팩트 유출 검사 대상에 포함한다.
 
 다음이 승인·검증되어야 실제 수집의 차단을 해제할 수 있다.
 
@@ -138,7 +143,7 @@ HTTP guard를 통과할 수 없다. 검증된 안전장치를 양쪽 main에 반
 dot 저장소의 실제 22:30 예약 상태는 이번 두 저장소 조사만으로 확인할 수 없다.
 
 
-최종 오프라인 결과: qweasd **447 PASS / 0 FAIL** (295.77초), 장중 **341 PASS /
+최종 오프라인 결과: qweasd **447 PASS / 0 FAIL** (295.77초), 장중 **342 PASS /
 0 FAIL** (실제 socket/DNS/subprocess 사용 0건). 경쟁, 접근 실패, 만료, 소유권
 변경, 429/5xx, 중단·명시적 복구, 토큰 만료·자격 변경과 기존 회귀를 포함한다.
 장중 기존 main 자체에서 실패하던 테스트 1건은 이미 존재하는 1회 승인 기록을
