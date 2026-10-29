@@ -85,6 +85,16 @@ class RunPolicy:
 def access_proof(config,env,current=None):
     """No secret value or derived fingerprint is ever returned or logged."""
     current=current or utcnow()
+    if config.get('mode')=='shared-account-exclusive':
+        from kis_shared.runtime import current as shared_current
+        from kis_shared.lease import Blocked
+        try:
+            session=shared_current();session.review()
+            if not session.lease or not session.lease.held:raise Blocked('shared_session_not_acquired')
+        except Blocked as exc:raise Failure('shared_account_safety_unverified_'+str(exc)) from None
+        if config.get('verified') is not True or config.get('repository')!=REPO:
+            raise Failure('shared_account_rollout_unverified')
+        return dict(status='EXCLUSIVE_SHARED_SESSION_HELD',provider_finality='UNVERIFIED')
     if config.get('mode')!='dedicated-account-reviewed' or config.get('verified') is not True:
         raise Failure('shared_KIS_account_safety_unverified')
     if config.get('repository')!=REPO or config.get('separate_account_verified') is not True:

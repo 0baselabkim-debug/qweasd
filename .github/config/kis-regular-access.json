@@ -1,10 +1,8 @@
 {
   "schema": 1,
   "repository": "0baselabkim-debug/qweasd",
-  "mode": "UNVERIFIED_SHARED_ACCOUNT",
+  "mode": "shared-account-exclusive",
   "verified": false,
-  "separate_account_verified": false,
-  "app_key_sha256": null,
   "reviewed_by": null,
   "reviewed_at": null,
   "expires_at": null,
@@ -13,5 +11,6 @@
   "token_policy_reference": null,
   "other_repository": "0baselabkim-debug/kis-intraday-monitor",
   "reviewed_other_repository_commit": "e27bc63fd420a899501c13f6cd1b05c13108fc82",
-  "reason": "Existing monitor documents shared account supervision without a technical cross-repository mutex. No independent credential/account isolation proof or shared lease is configured. Block before authentication; do not infer safety from workflow inactivity."
+  "reason": "Shared-account session integration prepared. Production rollout, GitHub runtime access and separately approved live validation remain unverified.",
+  "shared_policy": ".github/config/kis-shared-account.json"
 }

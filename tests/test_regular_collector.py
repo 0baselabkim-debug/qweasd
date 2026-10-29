@@ -189,7 +189,8 @@ def test_workflow_is_one_cron_no_wait_jobs_no_old_schedule_mutation():
     assert text.count('cron:')==1 and "cron: '30 11 * * 1-5'" in text
     assert 'queue: max' in text and 'cancel-in-progress: false' in text
     assert 'runner wait' not in text and '23:30' not in text
-    assert 'secrets.KIS_REGULAR_APP_KEY' in text and 'secrets.KIS_APP_KEY' not in text
+    assert 'secrets.KIS_APP_KEY' in text and 'secrets.KIS_REGULAR_APP_KEY' not in text
+    assert 'configured(config[\'shared_policy\'])' in Path('collector_v1/regular/runner.py').read_text()
     assert 'retention-days: 90' in text and 'ARTIFACT_DIGEST' in text
     assert "github.event_name == 'schedule'" in text
 

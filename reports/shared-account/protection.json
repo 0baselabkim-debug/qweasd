@@ -1,0 +1,20 @@
+{
+  "status": "PASS_EXISTING_SOURCE_AND_DATA_PROTECTION",
+  "baseline": "6cb4e55829964a818e451d362de5a4e19d49fe36",
+  "existing_tracked_files_unchanged": 3036,
+  "intended_changes": [
+    ".github/config/kis-regular-access.json",
+    ".github/workflows/kis-market-2030.yml",
+    "collector_v1/experiment/engine.py",
+    "collector_v1/kis_manual.py",
+    "collector_v1/providers.py",
+    "collector_v1/regular/github.py",
+    "collector_v1/regular/policy.py",
+    "collector_v1/regular/runner.py",
+    "tests/test_regular_collector.py"
+  ],
+  "unexpected_changes": [],
+  "schedule_changed": false,
+  "secrets_changed": false,
+  "operating_data_changed": false
+}

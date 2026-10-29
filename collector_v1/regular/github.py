@@ -70,7 +70,7 @@ def check_runs(client,context):
                 if other['asof']==context['asof'] and int(r['id'])<int(context['run_id']):earlier.append(str(r['id']))
             continue
         text=client.workflow(r)
-        if 'KIS_REGULAR_APP_KEY' in text or 'KIS_REGULAR_APP_SECRET' in text:raise Failure('other_workflow_uses_regular_credentials')
+        if any(name in text for name in ('KIS_REGULAR_APP_KEY','KIS_REGULAR_APP_SECRET','KIS_APP_KEY','KIS_APP_SECRET')):raise Failure('other_workflow_uses_regular_credentials')
         audit.append(dict(run_id=str(r['id']),path=r.get('path'),status=r.get('status'),scope='does_not_reference_regular_credential_names'))
     if earlier:raise Failure('earlier_active_regular_slot_owner')
     return dict(status='CURRENT_RUN_AND_LOCAL_QUEUE_RECHECKED',other_local_runs=audit)

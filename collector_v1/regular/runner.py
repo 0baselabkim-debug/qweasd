@@ -1,5 +1,6 @@
 """Scheduled collection vs deployment validation are deliberately distinct commands."""
 import argparse
+from contextlib import nullcontext
 import base64
 import datetime as dt
 import gzip
@@ -108,6 +109,8 @@ def summarize(r,c):
 
 def collect():
     from . import collector
+    from kis_shared.runtime import configured
+    from kis_shared.lease import Blocked as SharedBlocked
     store=Store(ROOT);c=context();assert_runtime_actor(c);client=GitHub();ledger=Ledger(client,c);ledger.assert_owner()
     config=json.loads(CONFIG.read_bytes());guard=RuntimeGuard(client,c,config);started=now();report={}
     try:
@@ -115,10 +118,16 @@ def collect():
         if dt.date.fromisoformat(c['asof']).weekday()>=5:
             report=dict(status='SKIPPED_WEEKEND',reason='Asia_Seoul_civil_weekend',market_http=0)
         else:
-            guard() # zero auth or market requests without reviewed isolated identity
-            r,api=collector.run(ROOT/c['generation_id'],c,guard,phase=lambda state:ledger.transition(state))
-            report=r
-            report['status']='INTERNAL_PASS' if r['status']=='INTERNAL_PASS' else r['status']
+            session=configured(config['shared_policy']) if config.get('mode')=='shared-account-exclusive' else nullcontext()
+            with session as account_session:
+                guard() # zero auth or market requests without reviewed account coordination
+                r,api=collector.run(ROOT/c['generation_id'],c,guard,phase=lambda state:ledger.transition(state))
+                report=r
+                report['status']='INTERNAL_PASS' if r['status']=='INTERNAL_PASS' else r['status']
+                if account_session is not None and r['status'] not in ('INTERNAL_PASS','SKIPPED_CLOSED'):
+                    account_session.uncertain=True
+    except SharedBlocked as e:
+        report=dict(status='BLOCKED',reason=str(e),internal_validation='NOT_PASS')
     except (Failure,Stop) as e:
         report=dict(status='BLOCKED' if isinstance(e,Failure) and any(x in e.code for x in ('unverified','isolation','credential','github_','active_regular')) else 'FAILED',
             reason=e.code if isinstance(e,Failure) else str(e),internal_validation='NOT_PASS')
@@ -156,7 +165,7 @@ def validate():
     report=dict(status='DEPLOYMENT_VALIDATED_NO_MARKET_HTTP',run_id=c['run_id'],code_commit=c['code_commit'],
         actual_default_branch='main',workflow_id=workflow['id'],workflow_state=workflow['state'],registered_cron=policy.CRON,
         default_branch_workflow_blob_sha=published['sha'],default_branch_workflow_sha256=sha(workflow_raw),
-        operational_readiness='BLOCKED_ACCOUNT_ISOLATION_REVIEW',access_profile_mode=cfg['mode'],external_run_inventory=external,
+        operational_readiness='BLOCKED_SHARED_ACCOUNT_ROLLOUT' if cfg['mode']=='shared-account-exclusive' else 'BLOCKED_ACCOUNT_ISOLATION_REVIEW',access_profile_mode=cfg['mode'],external_run_inventory=external,
         slot_claimed=False,market_http=0,first_scheduled_collection='NOT_YET_VERIFIED',
         dashboard_publication='NOT_PUBLISHED',application_reflection='NOT_UPDATED',checked_at=now())
     scan(ROOT);client.write('deployments/'+c['run_id']+'.json',report)

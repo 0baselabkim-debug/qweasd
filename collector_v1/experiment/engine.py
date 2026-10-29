@@ -34,6 +34,7 @@ class ProvisionalAPI(Providers):
                     finally:record_elapsed()
             return Response()
         super().__init__(store,budget,timed)
+        self._shared_required = opener is None
     def check_task(self,t):
         window(self.budget.round_id)
         if t['asof']!=ASOF or t['round']!=self.budget.round_id:raise Failure('experiment_generation_mismatch')

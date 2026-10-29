@@ -1,0 +1,61 @@
+{
+  "status": "PARTIAL",
+  "operational_status": "BLOCKED",
+  "branch": "feat/kis-shared-account",
+  "baselines": {
+    "qweasd": "6cb4e55829964a818e451d362de5a4e19d49fe36",
+    "kis-intraday-monitor": "e27bc63fd420a899501c13f6cd1b05c13108fc82"
+  },
+  "mechanism": "central Git branch append-only fast-forward exclusive session; no timeout takeover",
+  "shared_modules_sha256": {
+    "__init__.py": "20ad7958547a58426390934d38579c104cfd166228314be8c86b8166bc429660",
+    "git_backend.py": "d9afb4eecd4cc9714bbd6afdb7f61752653a06063492aca3a652c2ec6d59b709",
+    "lease.py": "aa0901ca2d374c36428e6129054f092dbb81a691f47d0301a0b993e4846e1cbb",
+    "run.py": "0dca5cad7db7f9ae905f732baf25c9bdbd4343e7f6ec39b13012c68eb0100a5a",
+    "runtime.py": "15cff49bcf7c761437423648dfef010a3f549012f5e358562ca13daebd59049f"
+  },
+  "qweasd_tests": "447 passed in 295.77s (0:04:55)",
+  "monitor_tests": {
+    "status": "PASS",
+    "python": "3.12.14",
+    "compiled_python_files": 36,
+    "tests": 341,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "network_audit_events": [],
+    "actual_kis_http_attempts": 0,
+    "authentication_attempts": 0,
+    "seconds": 0.781,
+    "scope": "local/mock only, not Actions or live connection"
+  },
+  "actual_kis_http": 0,
+  "oauth_issuance": 0,
+  "secret_changes": 0,
+  "permission_expansions": 0,
+  "main_deployments": 0,
+  "schedule_changes": 0,
+  "schedule_cron": "30 11 * * 1-5",
+  "existing_schedule_registered": true,
+  "live_shared_account_verified": false,
+  "remaining": [
+    "Actions runtime cross-repository Contents write not verified/approved",
+    "Legacy inline KIS workflows, PC and other account actors not all enrolled",
+    "Separately authorized minimal real KIS validation needed; token reissue effects and account-specific rate unit remain unverified",
+    "Per-request Git latency and total collection duration need measurement before claiming old performance"
+  ],
+  "protections": "Existing production data/filter/validation/briefing unchanged; both rollout configurations disabled",
+  "qweasd_original_failure_summary": "First target run:3 failures/50 pass, old isolated-secret expectations and blocked-state mapping; corrected without enabling policy. Final full suite PASS.",
+  "monitor_baseline_failure": "Unchanged main:307 passed/1 stale receipt test failed. Current test recognizes existing one-time consent while preserving unmet hard controls; final suite PASS.",
+  "production_ledger": "INITIALIZED_EMPTY_NOT_ACTIVATED",
+  "production_ledger_receipt": "central-ledger.json",
+  "lint": {
+    "monitor": "PASS actionlint 1.7.12",
+    "qweasd": "Schema-compatible copy PASS; released actionlint does not recognize existing queue:max. No full native compilation claimed on this branch."
+  },
+  "source_branches": {
+    "qweasd_market": "bb8edb9d858f443cb17d6c8e180d0fc5c8d38f3b",
+    "qweasd_regular": "6cb4e55829964a818e451d362de5a4e19d49fe36",
+    "monitor_risk_feature": "54f119c9cbfad7a746da2d17bfa15f5dbbfc70af"
+  }
+}

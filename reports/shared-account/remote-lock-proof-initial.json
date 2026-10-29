@@ -1,0 +1,28 @@
+{
+  "status": "PASS_REMOTE_METADATA_CAS_ONLY",
+  "checked_at": "2026-10-29T00:02:05.019451+00:00",
+  "central_repository": "0baselabkim-debug/qweasd",
+  "branch": "kis-shared-probe-20261029000151-c5818b",
+  "initial_commit": "300a45bcbb0e22a48981e4c28776febd42487db6",
+  "final_commit": "67ea803a21d87e400b5f58bcaf008723278b9852",
+  "results": [
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "status": "LOSER_NO_HTTP",
+      "reason": "shared_lock_race_lost_or_write_unconfirmed",
+      "market_http": 0
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "status": "WINNER_RELEASED",
+      "market_http": 0
+    }
+  ],
+  "authenticated_identity": "existing environment Git credential helper; NOT either Actions GITHUB_TOKEN",
+  "actions_cross_repository_permissions": "NOT_VERIFIED",
+  "market_http": 0,
+  "oauth_attempts": 0,
+  "production_lease_initialized": false,
+  "state_preserved": true,
+  "test_owner_ids_are_synthetic_not_Actions_runs": true
+}

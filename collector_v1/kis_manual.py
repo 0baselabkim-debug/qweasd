@@ -76,6 +76,7 @@ class ManualAPI(engine.ProvisionalAPI):
                     self.pending_error=(raw[:1000000],dict(http=exc.code,truncated=len(raw)>1000000,params=dict(urllib.parse.parse_qsl(urllib.parse.urlparse(req.full_url).query))))
                 raise
         super().__init__(store,budget,metrics,capture_error)
+        self._shared_required = opener is None
     def fetch(self,t):
         self.pending_error=None
         try:return super().fetch(t)

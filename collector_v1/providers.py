@@ -39,10 +39,16 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 class Providers:
     def __init__(self, store, budget, opener=None):
         self.store, self.budget = store, budget
+        self._shared_required = opener is None
         self.opener = opener or urllib.request.build_opener(NoRedirect()).open
         self.token = None
 
     def http(self, source, endpoint, url, params=None, headers=None, body=None, auth=False):
+        if source == 'KIS' and self._shared_required:
+            from kis_shared.runtime import current
+            from kis_shared.lease import Blocked
+            try:current().before_http(auth=auth)
+            except Blocked as exc:raise Failure(str(exc)) from None
         if params:
             url += '?' + urllib.parse.urlencode(params)
         entry = self.budget.before(source, endpoint, 'authentication' if auth else 'required_source')
@@ -79,6 +85,9 @@ class Providers:
                             headers={'Content-Type':'application/json'}, body=json.dumps(dict(grant_type='client_credentials', appkey=os.environ['KIS_APP_KEY'], appsecret=os.environ['KIS_APP_SECRET'])).encode(), auth=True)
             try:
                 self.token = json.loads(raw)['access_token']
+                if self._shared_required:
+                    from kis_shared.runtime import current
+                    current().token_response(json.loads(raw))
             except (ValueError, KeyError):
                 raise Failure('authentication_failure') from None
         raw = self.http('KIS', endpoint, BASE+endpoint, params,

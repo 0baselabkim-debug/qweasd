@@ -1,0 +1,32 @@
+{
+  "status": "PASS_REMOTE_METADATA_CAS_ONLY",
+  "checked_at": "2026-10-29T00:03:49.496280+00:00",
+  "central_repository": "0baselabkim-debug/qweasd",
+  "branch": "kis-shared-probe-20261029000338-dc9db9",
+  "initial_commit": "0b43915f2d1b01c042121987de939a89247882ba",
+  "final_commit": "704e1f629765a47391a75c7c6b6228e3a4125420",
+  "results": [
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "status": "WINNER_RELEASED",
+      "market_http": 0
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "status": "LOSER_NO_HTTP",
+      "reason": "shared_lock_race_lost_or_write_unconfirmed",
+      "market_http": 0
+    }
+  ],
+  "authenticated_identity": "existing environment Git credential helper; NOT either Actions GITHUB_TOKEN",
+  "actions_cross_repository_permissions": "NOT_VERIFIED",
+  "market_http": 0,
+  "oauth_attempts": 0,
+  "production_lease_initialized": false,
+  "state_preserved": true,
+  "test_owner_ids_are_synthetic_not_Actions_runs": true,
+  "lease_and_backend_sha256": {
+    "lease.py": "aa0901ca2d374c36428e6129054f092dbb81a691f47d0301a0b993e4846e1cbb",
+    "git_backend.py": "d9afb4eecd4cc9714bbd6afdb7f61752653a06063492aca3a652c2ec6d59b709"
+  }
+}
