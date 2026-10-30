@@ -78,7 +78,7 @@ def verify_output(directory,expected_manifest_sha256=None):
     if actual!=manifest['files']:raise ValueError('derived_manifest_file_population_or_hash_mismatch')
     market=json.loads(gzip.decompress((directory/'market.json.gz').read_bytes()))
     if market['dataset_id']!=manifest['dataset_id']:raise ValueError('derived_generation_mismatch')
-    for key in ('schema_version','source_generation_id','source_manifest_sha256','input_index_sha256','source_tree_sha256','knowledge_cutoff','code_sha256','briefing_limit'):
+    for key in ('schema_version','source_generation_id','source_manifest_sha256','input_index_sha256','source_tree_sha256','source_kind','reference_tree_sha256','knowledge_cutoff','code_sha256','briefing_limit'):
         if market.get(key)!=manifest.get(key):raise ValueError('derived_identity_mismatch')
     with duckdb.connect(str(directory/'evidence.duckdb'),read_only=True) as db:
         stored=db.execute('select source_order,stock_code,trade_date,dataset_id,payload from evidence order by source_order').fetchall()
@@ -92,18 +92,24 @@ def verify_output(directory,expected_manifest_sha256=None):
     return dict(status='PASS',records=len(records),database_json_parquet_match=True,manifest_sha256=sha(raw))
 
 
-def build(snapshot, output_root, knowledge_cutoff, limit=20):
+def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='published', reference_directory=None):
     start=time.monotonic();snapshot=Path(snapshot).resolve();output_root=Path(output_root).resolve()
     if (output_root.is_relative_to(ROOT) or ROOT.is_relative_to(output_root) or output_root.is_relative_to(snapshot) or snapshot.is_relative_to(output_root)
             or any(output_root.is_relative_to(ROOT/p) for p in ('.github','collector_v1','screener','data','tests'))):
         raise ValueError('output_must_be_independent_of_protected_operating_and_source_paths')
     if timestamp(knowledge_cutoff)>dt.datetime.now(dt.timezone.utc):raise ValueError('knowledge_cutoff_in_future')
-    source=load(snapshot,knowledge_cutoff);index=source['index']
+    if source_kind=='published':source=load(snapshot,knowledge_cutoff)
+    elif source_kind=='collector-artifact':
+        from .collector_source import load as load_collector
+        source=load_collector(snapshot,knowledge_cutoff,reference_directory)
+    else:raise ValueError('unsupported_evidence_source_kind')
+    index=source['index']
     if not 0 <= limit <= 20:raise ValueError('briefing_limit_must_be_0_to_20')
     if not source['rows']:raise ValueError('empty_source_population')
     code={str(p.relative_to(ROOT)):sha(p.read_bytes()) for folder in ('decision_evidence','decision_support') for p in sorted((ROOT/'screener'/folder).glob('*.py'))}
     identity=dict(schema_version=SCHEMA_VERSION,source_generation_id=index['dataset_id'],source_manifest_sha256=source['source_manifest_sha256'],
-        input_index_sha256=source['input_index_sha256'],source_tree_sha256=sha(encoded(source['input_file_hashes'])),knowledge_cutoff=knowledge_cutoff,code_sha256=code,briefing_limit=limit)
+        input_index_sha256=source['input_index_sha256'],source_tree_sha256=sha(encoded(source['input_file_hashes'])),source_kind=source_kind,
+        reference_tree_sha256=sha(encoded(source.get('reference_file_hashes',{}))),knowledge_cutoff=knowledge_cutoff,code_sha256=code,briefing_limit=limit)
     dataset_id='decision-evidence-v2-'+index['asof']+'-'+sha(encoded(identity))
     final=output_root/dataset_id
     if final.exists():
@@ -123,11 +129,11 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20):
             validation_status='DERIVED_WITH_METRIC_HOLDS',source_validation_status=index['validation_status'],
             provider_finality=stock['provider_finality'],stock_code=stock['symbol'],stock_name=stock['name'],market=stock['market'],exchange='KRX',
             knowledge_cutoff=knowledge_cutoff,**features,corporate_event_evidence=corporate_references(stock),
-            macro_context_reference=dict(source_file='snapshot/macro.json',source_sha256=source['input_file_hashes'].get('macro.json'),observations=source['macro']),
+            macro_context_reference=dict(source_file=source.get('macro_source_file','snapshot/macro.json'),source_sha256=source['input_file_hashes'].get('macro.json'),observations=source['macro']),
             source_references=dict(source_index_sha256=source['input_index_sha256'],source_stock_payload_sha256=sha(encoded({k:v for k,v in stock.items() if not k.startswith('_')})),
                 foreign_source_snapshot_sha256=index['source_snapshot_sha256'],price_source_ids=stock.get('metric_provenance',{}).get('price_source_ids',[]),
                 price_observed_at=stock['price_series'].get('observed_at'),source_batch_collected_at=index.get('source_collected_at'),
-                exact_foreign_request_observed_at=None,source_publication_time=source['source_publication_time'],
+                exact_foreign_request_observed_at=stock.get('metric_provenance',{}).get('foreign_observed_at'),source_publication_time=source['source_publication_time'],
                 known_latest_source_observation=source['known_source_observation_latest'],point_in_time_reproducible=False),
             automatic_order=None,investment_recommendation=None)
         row['missing_fields']=[dict(field=path,reason=value.get('reason')) for path,value in metrics_in(features) if value['value'] is None]
@@ -157,7 +163,7 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20):
     market=dict(**identity,dataset_id=dataset_id,asof=index['asof'],generated_at=generated,stocks=records,
         provider_finality=index['provider_finality'],validation_status='DERIVED_WITH_METRIC_HOLDS',historical_backtest_eligible=False,
         units={**index.get('units',{}),'concentration_and_activity':'ratio','close_location':'ratio_0_to_1','pivot_distance':'percent'},
-        calendar_provenance='PRESERVED_OPERATING_CALENDAR_AND_QUALIFIED_KIS_INDEX_SESSIONS; no synthetic weekdays or new calendar lookup')
+        calendar_provenance=source.get('calendar_provenance','PRESERVED_OPERATING_CALENDAR_AND_QUALIFIED_KIS_INDEX_SESSIONS; no synthetic weekdays or new calendar lookup'))
     staging=Path(tempfile.mkdtemp(prefix='.candidate-',dir=output_root))
     try:
         (staging/'market.json.gz').write_bytes(gzip.compress(encoded(market),mtime=0))
@@ -173,6 +179,7 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20):
             db.execute('copy evidence to ? (format parquet, compression zstd)',[str(staging/'records.parquet')])
         after={str(p.relative_to(snapshot)):sha(p.read_bytes()) for p in sorted(snapshot.rglob('*')) if p.is_file()}
         if after!=source['input_file_hashes']:raise ValueError('source_changed_during_read_only_build')
+        if any(sha(Path(p).read_bytes())!=h for p,h in source.get('reference_file_hashes',{}).items()):raise ValueError('official_reference_changed_during_build')
         files={p.name:sha(p.read_bytes()) for p in staging.iterdir() if p.is_file()}
         (staging/'manifest.json').write_bytes(encoded(dict(**identity,dataset_id=dataset_id,files=files,
             source_files_verified_unchanged=len(after),source_tree_unchanged=True)))
