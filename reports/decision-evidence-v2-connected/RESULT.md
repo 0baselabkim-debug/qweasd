@@ -120,6 +120,6 @@
 
 별도 workflow는 이 기능 브랜치의 전용 control 변경만으로 실행되며 cron/운영 Secrets/KIS 요청이 없다. 원문은 읽기만 하고 진단 결과는 별도 evidence 브랜치·독립 아티팩트에 보존한다. PR 생성은 사용자 지시에 따라 draft만 시도하며 별도 workflow의 최소 PR 권한을 사용한다. 기존 운영 workflow 권한은 바꾸지 않았다.
 
-실데이터를 검증한 코드 커밋: `7b57987b2450f949882a01213dc440d511125d97`. 이후 보고서/PR 기록 커밋은 Git 이력과 완료 응답에서 보고한다. PR 실제 결과는 `GITHUB_RESULT.json`에 기록한다. **main 병합·운영 배포·자동 브리핑 게시 없음**.
+실데이터를 검증한 코드 커밋: `7b57987b2450f949882a01213dc440d511125d97`. 이후 보고서/PR 기록 커밋은 Git 이력과 완료 응답에서 보고한다. PR 실제 결과는 **BLOCKED/미생성**이다. https://github.com/0baselabkim-debug/qweasd/actions/runs/41041192132 에서 draft 생성만 시도했으나 저장소 정책이 `GitHub Actions is not permitted to create or approve pull requests`로 거부했다. 설정을 바꾸거나 인증을 우회하지 않았다. `GITHUB_RESULT.json`에 기록했다. 변경 비교는 https://github.com/0baselabkim-debug/qweasd/compare/main...feat/decision-evidence-v2 이며 PR 링크가 아니다. PR 정책 변경에는 저장소 소유자의 별도 승인이 필요하다. **main 병합·운영 배포·자동 브리핑 게시 없음**.
 
 남은 조건은 당일 공식 자료 대조와 장기 원천 이력이다. 과거 가격 재검증 성공과 최신 거래일의 검증 완료를 구분하므로 최종 상태는 PARTIAL이다.
