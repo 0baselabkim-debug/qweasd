@@ -127,6 +127,8 @@
 ## E. GitHub 결과
 
 - 작업 브랜치: `feat/decision-evidence-v2` (main 자동 병합 없음)
-- 구현 커밋/원격 push/PR의 실제 결과는 완료 응답 및 Git 이력으로 보고한다. 새 파일만 추가했으며 main 반영은 하지 않았다.
+- 구현 커밋: `805394defc8f3eb5f202c6f2bea3211936afd799`. 기능 브랜치 원격 push PASS. 새 파일만 추가했으며 main 반영은 하지 않았다. 최종 보고 보존 커밋 SHA는 완료 응답과 Git 이력에서 확인할 수 있다.
 - 변경 파일: `screener/decision_evidence/{__init__,metrics,source,build,events,judgments}.py`, `scripts/build_decision_evidence.py`, `tests/test_decision_evidence.py`, `docs/decision-evidence-v2.md`, `reports/decision-evidence-v2/`의 본 보고서·실데이터 감사·소형 표본·manifest·가격 차이 CSV·테스트 요약.
-- 현재 반영 상태: 독립 개발/검증만 수행. 운영 수집/게시/앱 반영 없음.
+- PR 생성: **BLOCKED/실제 PR 없음**. 공식 CLI `gh pr create --draft`가 `Post https://api.github.com/graphql: Forbidden`으로 실패했다. Git 전송은 성공했으나 관리형 네트워크의 GitHub API 접근 제한은 남아 있다. 아래는 PR이 아닌 변경 비교 URL이다.
+- 변경 비교: https://github.com/0baselabkim-debug/qweasd/compare/main...feat/decision-evidence-v2
+- 현재 반영 상태: 기능 브랜치 push 완료, main/운영 수집/게시/앱 반영 없음. `GITHUB_RESULT.json`에 실제 결과를 보존했다.
