@@ -97,7 +97,7 @@ def load(root,knowledge_cutoff,reference_directory=None):
         values={d:Decimal(r['bstp_nmix_prpr']) for d,r in raw.items()}
         if any(not v.is_finite() or v<=0 for v in values.values()):raise ValueError('collector_invalid_index_value')
         calendars[market]=sorted(raw);benchmarks[market]={d:float(v) for d,v in values.items()};index_evidence[market]=e
-    rows=[];flow_holds=Counter();history_lengths=Counter();scope_issues=[]
+    rows=[];flow_holds=Counter();history_lengths=Counter();approved_dates=Counter();compared_dates=Counter()
     for current in report['rows']:
         code=current['symbol'];market=current['market'];instrument=instruments[code];days=calendars[market]
         fe=cache[identity(task('flow',ASOF,round=1,symbol=code,market=market,generation_id=GENERATION))]
@@ -121,6 +121,8 @@ def load(root,knowledge_cutoff,reference_directory=None):
         pcols=['trade_date','open','high','low','close','volume','turnover','validation_status','reasons'];pseries=[]
         for d,r in sorted(price.items()):
             q=accept_chart(r,code,d,market,pe['collected_at'],official,instrument['listing_date'],blocked=bool(barrier and d<=barrier))
+            if official.get((code,d,market)):compared_dates[d]+=1
+            if q['accepted']:approved_dates[d]+=1
             values=q['value'] or dict.fromkeys(KIS_FIELDS)
             pseries.append([d,*[values[k] for k in pcols[1:-2]],q['status'],q['reasons']])
         observed=timestamp(pe['collected_at']).astimezone(ZoneInfo('Asia/Seoul'))
@@ -142,5 +144,6 @@ def load(root,knowledge_cutoff,reference_directory=None):
         known_source_observation_latest=known.isoformat(),source_publication_time=None,historical_backtest_eligible=False,
         source_verification=dict(status='PASS_PINNED_ZIP_MANIFEST_RAW_MASTER_LEDGER_DB_JSON',proof=proof['status'],
             raw_price_history_lengths=dict(history_lengths),historical_flow_hold_counts=dict(flow_holds),
+            approved_price_bars_by_trade_date=dict(approved_dates),official_comparison_coverage_by_trade_date=dict(compared_dates),
             physical_HTTP_original=report['total_physical_http'],official_reference_max_asof=max((v['asof'] for v in official_sources.values()),default=None)),
         calendar_provenance='KIS_SAVED_SAME_GENERATION_U_INDEX_RESPONSE_DATES; not official KRX calendar; no fabricated weekdays')

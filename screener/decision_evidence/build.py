@@ -154,6 +154,8 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
         unavailable_field_reason_counts=dict(missing),price_hold_reason_observations=dict(holds),flow_transition_counts=dict(transitions),
         price_hold_reason_stocks=dict(hold_stocks),verified_contiguous_suffix_stock_counts=dict(suffixes),price_basis_stock_counts=dict(bases),
         conflict_field_counts=dict(Counter(r.get('field',r.get('reason')) for r in conflicts)),
+        official_current_stock_coverage=sum(bool(source['official'].get((s['symbol'],index['asof'],s['market']))) for s in source['rows']),
+        official_comparison_status='NOT_RUN_MISSING_SAME_DAY_KRX' if not any(source['official'].get((s['symbol'],index['asof'],s['market'])) for s in source['rows']) else 'PRESERVED_SAME_DAY_REFERENCE_COMPARED_WITH_HOLDS',
         official_price_cause_policy='Exact differences preserved; NXT, timing and adjustment causes are not inferred.',
         p0_price_coverage_improved=False,p0_limitation='No missing or conflicting price was replaced or newly approved. Additional verified history requires preserved official six-field and adjustment evidence.',
         source_known_latest_observation=source['known_source_observation_latest'],source_publication_time=source['source_publication_time'],

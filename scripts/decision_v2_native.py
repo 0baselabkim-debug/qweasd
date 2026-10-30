@@ -176,10 +176,18 @@ def price_budget(root):
     spent+=sum(r['limit'] for r in unresolved if r.get('budget_class')!='routine_reference')
     try:guard();window='OPEN'
     except ValueError as exc:window=str(exc)
+    today=dt.datetime.now(ZoneInfo('Asia/Seoul')).date().isoformat()
+    day_spent={}
+    for kind,limit in (('routine_reference',4),('daily_priority',40)):
+        used=sum(r.get('budget_class')==kind and r.get('budget_date')==today for r in requests)
+        used+=sum(r['limit'] for r in unresolved if r.get('budget_class')==kind and r.get('budget_date')==today)
+        day_spent[kind]=dict(KST_date=today,used_or_reserved=used,daily_limit=limit,remaining=limit-used,
+            maximum_per_run=2 if kind=='routine_reference' else 20,whole_8_request_batch_fits=used+len(missing)<=limit and len(missing)<=(2 if kind=='routine_reference' else 20))
     return dict(status='REVIEW_ONLY_NO_HTTP',journal_commit=ref,recorded_physical_requests=len(requests),
         existing_bootstrap_limit=TOTAL_LIMIT,existing_bootstrap_used_or_reserved=spent,remaining=TOTAL_LIMIT-spent,
         missing_reference_tasks=missing,expected_KRX_GETs=len(missing),authentication_requests=0,automatic_retries=0,
         fits_existing_total_budget=spent+len(missing)<=TOTAL_LIMIT,existing_window=window,
+        separate_existing_daily_classes=day_spent,budget_policy_source='scripts.collect_decision_prices.Budget; existing daily classes are separate from bootstrap',
         KRX_key_injected=False,actual_KRX_HTTP=0,actual_KIS_HTTP=0,
         execution_policy='No market calls in this workflow. Existing time/quota guards are preserved; no new root or budget reset.')
 

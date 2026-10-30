@@ -105,3 +105,35 @@ def test_new_loader_is_separate_from_published_input_and_never_silently_falls_ba
     p=tmp_path/'empty';p.mkdir()
     with pytest.raises(FileNotFoundError):build(p,tmp_path/'output','2026-10-30T00:00:00Z',source_kind='collector-artifact')
     assert not (tmp_path/'output').exists()
+
+
+@pytest.mark.parametrize('case,classification,confirmed',[
+ ('later_match','LATER_ORIGINAL_SIX_FIELDS_MATCH_SAVED_KRX',False),
+ ('paired_later_match','LATER_ORIGINAL_SIX_FIELDS_MATCH_SAVED_KRX',True),
+ ('unchanged','SIX_FIELD_CONFLICT_PERSISTS',False),
+ ('other_revision','LATER_PRICE_CHANGED_CONFLICT_UNRESOLVED',False)])
+def test_price_cause_requires_old_original_adjusted_witness(tmp_path,monkeypatch,case,classification,confirmed):
+    import screener.decision_evidence.price_diagnosis as d
+    from screener.decision_evidence.metrics import FIELDS
+    from screener.decision_support.evidence import KIS_FIELDS
+    old=dict(open=100,high=110,low=90,close=105,volume=10,turnover=1000)
+    official={**old,'close':106};after=official if case in ('later_match','paired_later_match') else old if case=='unchanged' else {**old,'close':107}
+    stock=dict(symbol='000720',market='KOSPI',asof='2026-10-23',price_series={'columns':['trade_date',*FIELDS],
+        'rows':[['2026-10-23',*[old[k] for k in FIELDS]]]})
+    source=dict(index={'asof':'2026-10-23','dataset_id':'old'},rows=[stock],official={('000720','2026-10-23','KOSPI'):[{'value':official,'source_id':'krx'}]})
+    monkeypatch.setattr(d,'load_published',lambda *a:source)
+    pair={'000720':{o:[dict(value=old,source_id=o,observed_at='2026-10-24T01:00:00Z')] for o in ('0','1')}} if case=='paired_later_match' else {}
+    monkeypatch.setattr(d,'paired_old_basis',lambda *a:pair)
+    class Store:
+        def __init__(self,*a):pass
+        def raw(self,e):return b'{}'
+    monkeypatch.setattr(d,'Store',Store)
+    monkeypatch.setattr(d,'replay',lambda *a,**kw:{'key':dict(source_hash='a'*64,collected_at='2026-10-30T00:00:00Z')})
+    monkeypatch.setattr(d,'identity',lambda t:'key')
+    monkeypatch.setattr(d,'read',lambda p:{'rows':[{'symbol':'000720'}]})
+    raw={v:after[k] for k,v in KIS_FIELDS.items()};raw.update(flng_cls_code='00',prtt_rate='0',revl_issu_reas='',mod_yn='N')
+    monkeypatch.setattr(d,'saved_rows',lambda *args:{'2026-10-23':raw})
+    summary,rows=d.diagnose(tmp_path,tmp_path,'2026-10-30T01:00:00Z')
+    assert rows[0]['classification']==classification
+    assert (summary['confirmed_price_vintage_revision']==1)==confirmed
+    assert rows[0]['price_approved_for_20261029'] is False and not summary['original_records_changed']
