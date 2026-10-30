@@ -1,0 +1,145 @@
+{
+  "actual_KIS_reference": {
+    "code_commit": "7bfb03e196836e792750e75d125387df44e39f41",
+    "failed_http": 0,
+    "internal_pass": 2346,
+    "physical_http": 4698,
+    "run_id": "40882669831",
+    "scope": "Earlier actual full-market algorithm under exclusive lease; not a new scheduled execution.",
+    "target": 2346
+  },
+  "credential": {
+    "declared_expires_on": "2027-01-28",
+    "expires_source": "USER_REPORTED",
+    "name": "KIS_COORDINATOR_TOKEN",
+    "review_expires_at": "2027-01-27T00:00:00+00:00"
+  },
+  "first_regular_collection": "NOT_YET_VERIFIED",
+  "native": {
+    "0baselabkim-debug/kis-intraday-monitor": {
+      "checked_at": "2026-10-30T08:17:39.842469+00:00",
+      "code_commit": "ebdf7fe91070408709367e418fd2039f13457802",
+      "drain": [
+        {
+          "at": "2026-10-30T08:16:59.295287+00:00",
+          "potential_KIS_runs": []
+        }
+      ],
+      "final_owner": null,
+      "final_sequence": 4,
+      "history": [
+        {
+          "at": "2026-10-30T08:17:03.960385+00:00",
+          "phase": "M_HOLDING"
+        },
+        {
+          "at": "2026-10-30T08:17:13.585229+00:00",
+          "phase": "M_RELEASED"
+        },
+        {
+          "at": "2026-10-30T08:17:26.942206+00:00",
+          "phase": "M_DENIED"
+        },
+        {
+          "at": "2026-10-30T08:17:39.842484+00:00",
+          "phase": "PASS"
+        }
+      ],
+      "isolated_branch": "kis-shared-probe-rollout-20261030-v2",
+      "market_http": 0,
+      "mutual_exclusion_both_directions": true,
+      "oauth_issuance": 0,
+      "phase": "PASS",
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "request_id": "shared-rollout-20261030-v2",
+      "role": "M",
+      "run_id": "41025365240",
+      "schema": 1,
+      "source": {
+        "main_commit": "2f2709dd8790b4ea79d71e972f979425d5c3f93b",
+        "runtime_source_hashes": {
+          ".github/workflows/kis-browser-validation.yml": "117c157ba816b79449751569fd1cea4d916b2c1ba758d89a6eb9772d7b0497fc",
+          ".github/workflows/kis-validation.yml": "5d9d9cb7a82988c68f777fee9c03dcfaf79c367d33240f1b9df99279ab793f16",
+          "config/bootstrap-initial-one.json": "250b35db446c18a1974b65fa328567b2212d54efe4dc4932b8a624830c68615f",
+          "config/intraday-flow-six.json": "e0b56a51d2cd5ec9e7e7fe2b9f0448b756df6552dd889e3893c22272c6eaa134",
+          "config/intraday-remaining-five.json": "07868ba8d797aad9bc7bea7ff5d234a0b04f3d9888fdc898ed77cbd219270303",
+          "config/intraday-remaining-four.json": "fc21e0e4df1a6897b9ed07d9cff4f9db1ede7f2938436d374d3730a50828f7ad",
+          "kis_probe.py": "0e5c1fc8357f0db7b7e0bd9305479ede5b374bea241b681e883a85879fdd7def",
+          "kis_shared/admission.py": "8f5305e74ff3249934af0f5ced2cb89e29dce9a742ffc6d5e8fadcdcaa5d920f",
+          "kis_shared/bootstrap.py": "5eaea5a809e3da8b3a3bde5f06b36911f707af0acc844f2f0746c9310bd3873c",
+          "kis_shared/flow.py": "bae134ebb67ae86ef50d3b88b0d5a85be9b73c6ccee08a5e4eedfc9164e39c1e",
+          "kis_shared/git_backend.py": "d9afb4eecd4cc9714bbd6afdb7f61752653a06063492aca3a652c2ec6d59b709",
+          "kis_shared/lease.py": "3cafc69dceb3f6505b7a1b54e7f19bdc105a31707ac9884e6b4cd8719f70eeac",
+          "kis_shared/remaining.py": "c508eb4edabff95e802518265b2fc11d53ad7c97b29d0d86df676378e144f9f2",
+          "kis_shared/remaining_four.py": "f78a8bd352c7ea1b8d4f5a174ae446899ba28b7363d6ca139ad4f6edcd07ec71",
+          "kis_shared/run.py": "98fdd75777c77680495eb08701005eb8c2f2bb22297d657b6d5eddfaf6beec0c",
+          "kis_shared/runtime.py": "8852f452264c90f760c0687213757bae907c54f3f3602fb432bd132b1e6aec40",
+          "scripts/actions_auth.py": "d5a328b1609054a317f69468e2359f985edb652c05f90760349be7c22d281ebb",
+          "scripts/bootstrap_trial.py": "a6269728e36a205d8ab263e0353fb217ef8efa775048b58a421a2a0ad7929305",
+          "scripts/intraday_flow_trial.py": "2c622ab4f54517e4e33f7b168d06560e78b66464760519e3f694a231afcd79c9",
+          "scripts/intraday_remaining_four.py": "cd8dd00f1367bb50c6d27e529c476c4abd17ae5f6e8a469d1ecaadb7964b55d5",
+          "scripts/intraday_remaining_trial.py": "5553ee2bf38fe392e3bd75ac34ce9697834a7b5cbb385fa66a730d5d7fa23516",
+          "stage3/live_probe.py": "f053a16f835f079c6878b841bc62b54f3a0c5695ad3c932e7697f0be05548d88"
+        }
+      }
+    },
+    "0baselabkim-debug/qweasd": {
+      "checked_at": "2026-10-30T08:17:35.559725+00:00",
+      "code_commit": "56c258c1f208ff1d5934f948d09d1ccdd0dc8427",
+      "drain": [],
+      "final_owner": null,
+      "final_sequence": 4,
+      "history": [
+        {
+          "at": "2026-10-30T08:17:07.373459+00:00",
+          "phase": "Q_DENIED"
+        },
+        {
+          "at": "2026-10-30T08:17:21.504986+00:00",
+          "phase": "Q_HOLDING"
+        },
+        {
+          "at": "2026-10-30T08:17:35.559739+00:00",
+          "phase": "PASS"
+        }
+      ],
+      "isolated_branch": "kis-shared-probe-rollout-20261030-v2",
+      "market_http": 0,
+      "mutual_exclusion_both_directions": true,
+      "oauth_issuance": 0,
+      "phase": "PASS",
+      "repository": "0baselabkim-debug/qweasd",
+      "request_id": "shared-rollout-20261030-v2",
+      "role": "Q",
+      "run_id": "41025361589",
+      "schema": 1,
+      "source": {
+        "main_commit": "43f0fd6f1ef321a3ceb8f4ed772d68876529be8a",
+        "runtime_source_hashes": {
+          ".github/workflows/kis-market-2030.yml": "6eb5035fc9b502567a2179e21a98b3912c74378b469d3ec9561c8fd1290b9bf2",
+          "collector_v1/core.py": "427558284fd2456ec0dcfe50cbbf3f3d574b51192d5cdc650d31a6e5a0644689",
+          "collector_v1/experiment/engine.py": "9c139b540250ed1b5c5faf6e1cc36e48cbe0096d26e4bdedb263d1a6fdf40d42",
+          "collector_v1/kis_manual.py": "07c30c42fb2b7d1b0a0f3f462f77bc7139240bfb9f6945e600b78b2a35e5507b",
+          "collector_v1/providers.py": "7c961c5a488953d8df9905b65d02c2ba2b499adf07cb57574304488dd61d62a9",
+          "collector_v1/regular/collector.py": "662bd63d8a070c84f0aea419ede794766c9fd3b3b54509d7f55fb55353487413",
+          "collector_v1/regular/policy.py": "588d1ca694a0e559ce29f35270d5cc0cd7da1dde60849f70cd72afcc1c6617f1",
+          "collector_v1/regular/runner.py": "ab4b544b30aba40f96ac8865f7c0d4dce180800351fb320486523818f728b896",
+          "collector_v1/validation.py": "b75b9c3a4fb7afaaf762466a1703ecb0f43de304838ae09c1bbbb80277a486c4",
+          "kis_shared/git_backend.py": "d9afb4eecd4cc9714bbd6afdb7f61752653a06063492aca3a652c2ec6d59b709",
+          "kis_shared/lease.py": "3cafc69dceb3f6505b7a1b54e7f19bdc105a31707ac9884e6b4cd8719f70eeac",
+          "kis_shared/runtime.py": "866d349d84f3e3006808b0eee87ec5eee32f089b6ec9cad902b7d95226cd56ed"
+        }
+      }
+    }
+  },
+  "official_price_status": "PENDING_KRX",
+  "provider_finality": "UNVERIFIED",
+  "provider_unknowns": [
+    "Token reissue invalidation behavior remains unverified; exclusive ownership prevents overlapping token use.",
+    "Exact provider quota scope remains unverified; both clients serialize under one lease and retain existing conservative spacing.",
+    "Provider expiry timezone remains unverified; the earliest possible civil-offset bound is enforced."
+  ],
+  "recorded_at": "2026-10-30T08:22:09.478358+00:00",
+  "request_id": "shared-rollout-20261030-v2",
+  "schema": 1
+}
