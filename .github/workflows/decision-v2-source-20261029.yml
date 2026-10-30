@@ -6,6 +6,7 @@ on:
 permissions:
   contents: write
   actions: read
+  pull-requests: write
 concurrency:
   group: independent-decision-v2-source-20261029
   cancel-in-progress: false

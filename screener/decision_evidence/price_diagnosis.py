@@ -8,7 +8,7 @@ from pathlib import Path
 from collector_v1.core import Store
 from collector_v1.providers import task
 from collector_v1.experiment.engine import replay,identity
-from screener.decision_support.evidence import encoded,sha,bar,KIS_FIELDS,read,timestamp,corporate_adjustment_pending
+from screener.decision_support.evidence import encoded,sha,bar,KIS_FIELDS,read,timestamp,corporate_adjustment_pending,accept_chart
 from .metrics import table,FIELDS
 from .source import load as load_published,differences
 from .collector_artifact import ASOF,GENERATION
@@ -33,9 +33,23 @@ def diagnose(collector_root,published_snapshot,cutoff):
     old=load_published(published_snapshot,cutoff);asof=old['index']['asof'];pairs=paired_old_basis(published_snapshot,asof)
     store=Store(Path(collector_root)/GENERATION/'collection');cache=replay(store,1,asof=ASOF,generation_id=GENERATION)
     report=read(Path(collector_root)/'report.json');current={r['symbol']:r for r in report['rows']};details=[];counts=Counter();same_date_approvals=0
+    instruments={r['symbol']:r for r in read(Path(collector_root)/GENERATION/'preparation/universe.json')}
+    cohort=Counter()
     for stock in old['rows']:
-        if not differences(stock,old['official']):continue
         code=stock['symbol'];market=stock['market'];before=table(stock['price_series']).get(asof)
+        if code in current:
+            e=cache[identity(task('price',ASOF,round=1,symbol=code,market=market,generation_id=GENERATION))]
+            history=saved_rows(json.loads(store.raw(e)),e,'price',code,market);raw=history.get(asof)
+            barriers=[d for d,v in history.items() if corporate_adjustment_pending(v)]
+            barrier=max(barriers) if barriers else None
+            approved=False
+            if raw:
+                q=accept_chart(raw,code,asof,market,e['collected_at'],old['official'],instruments[code]['listing_date'],blocked=bool(barrier and asof<=barrier))
+                approved=q['accepted'] is not None
+            was_approved=before is not None and before.get('validation_status')=='operational_crosscheck_pass' and not before.get('reasons')
+            cohort['common_stocks']+=1;cohort['before_approved']+=was_approved;cohort['later_approved']+=approved
+            cohort['newly_approved']+=approved and not was_approved;cohort['lost_approvals']+=was_approved and not approved
+        if not differences(stock,old['official']):continue
         refs=old['official'].get((code,asof,market),[]);variants={encoded(r['value']) for r in refs}
         item=dict(stock_code=code,comparison_trade_date=asof,original_generation=old['index']['dataset_id'],
             new_source_generation=GENERATION,new_observation_source_hash=None,old_price={k:before.get(k) for k in FIELDS},
@@ -43,10 +57,8 @@ def diagnose(collector_root,published_snapshot,cutoff):
         if len(variants)!=1 or not refs[0].get('value'):item['classification']='OFFICIAL_VERSIONS_CONFLICT_OR_INVALID'
         elif code not in current:item['classification']='NOT_IN_NEW_POPULATION'
         else:
-            e=cache[identity(task('price',ASOF,round=1,symbol=code,market=market,generation_id=GENERATION))]
-            raw=saved_rows(json.loads(store.raw(e)),e,'price',code,market).get(asof)
             item.update(new_observation_source_hash=e['source_hash'],observed_at=e['collected_at'],saved_KRX_price=refs[0]['value'],request_market='J_KRX',request_price_basis='1_ORIGINAL',
-                official_source_ids=[r['source_id'] for r in refs])
+                official_source_ids=[r['source_id'] for r in refs],later_same_date_strict_approved=approved)
             if raw is None:item['classification']='SAME_DATE_REOBSERVATION_MISSING'
             else:
                 try:after=bar(raw,KIS_FIELDS)
@@ -66,6 +78,7 @@ def diagnose(collector_root,published_snapshot,cutoff):
     summary=dict(status='OBSERVATION_EVIDENCE_ONLY',original_asof=asof,latest_asof=ASOF,original_conflict_stocks=len(details),
         classification_counts=dict(counts),confirmed_price_vintage_revision=sum(r['cause']=='SAME_SCOPE_ORIGINAL_PRICE_VINTAGE_REVISION_CONFIRMED' for r in details),
         later_same_date_exact_matches_without_adjustment_flags=same_date_approvals,
+        same_date_common_population_strict_approval=dict(cohort),comparison_asof=asof,
         original_records_changed=False,latest_20261029_approval_inferred=False,
         cause_policy='A later original-price match alone does not distinguish adjusted/original basis from publication revision. A paired old original/adjusted witness is required for confirmed vintage revision.',
         NXT_cause='NOT_PROVEN; official KIS sample defines J=KRX, NX=NXT, UN=integrated. Only J requests observed.',

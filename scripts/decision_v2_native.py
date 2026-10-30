@@ -49,7 +49,7 @@ def main():
     c=json.loads(CONTROL.read_bytes())
     if (os.getenv('GITHUB_REPOSITORY'),os.getenv('GITHUB_REF'),os.getenv('GITHUB_EVENT_NAME'),os.getenv('GITHUB_RUN_ATTEMPT'))!=(REPO,REF,'push','1'):
         raise ValueError('native_runtime_scope_mismatch')
-    if (c['artifact_id'],c['source_run_id'],c['zip_sha256'],c['asof'])!=(ARTIFACT,RUN,ZIP_SHA,ASOF) or c['mode'] not in ('inspect','analyze'):
+    if (c['artifact_id'],c['source_run_id'],c['zip_sha256'],c['asof'])!=(ARTIFACT,RUN,ZIP_SHA,ASOF) or c['mode'] not in ('inspect','analyze','pr'):
         raise ValueError('native_control_scope_mismatch')
     request=c['request_id']
     if not request.replace('-','').isalnum() or len(request)>80:raise ValueError('native_request_id_invalid')
@@ -57,6 +57,22 @@ def main():
     if not dt.datetime.fromisoformat(c['not_before'])<=at<dt.datetime.fromisoformat(c['expires_at']):raise ValueError('native_window_closed')
     result=dict(request_id=request,run_id=os.environ['GITHUB_RUN_ID'],code_commit=os.environ['GITHUB_SHA'],
         market_HTTP=0,oauth_HTTP=0,source_run_id=RUN,artifact_id=ARTIFACT,verified_at=at.isoformat())
+    if c['mode']=='pr':
+        # Explicit user request: create a draft only. No settings, merge or operating refs.
+        command=['gh','pr','create','--draft','--repo',REPO,'--base','main','--head','feat/decision-evidence-v2',
+            '--title','투자 분석 V2: 검증된 전체시장 아티팩트 연결과 가격 충돌 진단',
+            '--body-file','reports/decision-evidence-v2-connected/PR_BODY.md']
+        p=subprocess.run(command,capture_output=True,timeout=90)
+        text=p.stdout.decode().strip()
+        if p.returncode==0 and text.startswith('https://github.com/'+REPO+'/pull/'):
+            result.update(status='DRAFT_PR_CREATED',url=text)
+        else:
+            error=p.stderr.decode()[:1800]
+            if os.environ.get('GH_TOKEN') and os.environ['GH_TOKEN'] in error:error='credential_redacted'
+            result.update(status='DRAFT_PR_BLOCKED',reason=error)
+        publish(request+'-pr.json',result)
+        with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('# Draft PR result\n\n'+result['status']+'\n'+result.get('url',result.get('reason',''))+'\n')
+        return 0 if result['status']=='DRAFT_PR_CREATED' else 1
     publish(request+'-started.json',dict(result,status='STARTED'))
     folder=Path(tempfile.mkdtemp(prefix='decision-v2-source-'))
     try:

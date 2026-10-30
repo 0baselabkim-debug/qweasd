@@ -130,7 +130,7 @@ def test_price_cause_requires_old_original_adjusted_witness(tmp_path,monkeypatch
     monkeypatch.setattr(d,'Store',Store)
     monkeypatch.setattr(d,'replay',lambda *a,**kw:{'key':dict(source_hash='a'*64,collected_at='2026-10-30T00:00:00Z')})
     monkeypatch.setattr(d,'identity',lambda t:'key')
-    monkeypatch.setattr(d,'read',lambda p:{'rows':[{'symbol':'000720'}]})
+    monkeypatch.setattr(d,'read',lambda p:[dict(symbol='000720',listing_date='2020-01-01')] if p.name=='universe.json' else {'rows':[{'symbol':'000720'}]})
     raw={v:after[k] for k,v in KIS_FIELDS.items()};raw.update(flng_cls_code='00',prtt_rate='0',revl_issu_reas='',mod_yn='N')
     monkeypatch.setattr(d,'saved_rows',lambda *args:{'2026-10-23':raw})
     summary,rows=d.diagnose(tmp_path,tmp_path,'2026-10-30T01:00:00Z')
