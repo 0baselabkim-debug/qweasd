@@ -13,6 +13,18 @@ ASOF='2026-10-29'
 GENERATION='kis-authorized-20261029-'+RUN
 
 
+def verify_directory(root,expected_manifest_sha=MANIFEST_SHA):
+    root=Path(root);raw=(root/'manifest.json').read_bytes()
+    if sha(raw)!=expected_manifest_sha:raise ValueError('artifact_manifest_anchor_mismatch')
+    manifest=json.loads(raw);files={}
+    for p in root.rglob('*'):
+        if p.is_symlink():raise ValueError('artifact_directory_symlink')
+        if p.is_file():files[str(p.relative_to(root))]=sha(p.read_bytes())
+    expected={**manifest['files'],'manifest.json':expected_manifest_sha}
+    if files!=expected:raise ValueError('artifact_directory_population_or_hash_mismatch')
+    return files
+
+
 def extract(archive, destination, expected_sha=ZIP_SHA, expected_manifest_sha=MANIFEST_SHA):
     archive=Path(archive);destination=Path(destination)
     if archive.stat().st_size>256*1024**2 or sha(archive.read_bytes())!=expected_sha:
@@ -46,7 +58,7 @@ def inspect(root):
     from collector_v1.core import Store
     from collector_v1.experiment.engine import replay, qualify_kis, identity
     from collector_v1.providers import task
-    root=Path(root);before={str(p.relative_to(root)):sha(p.read_bytes()) for p in root.rglob('*') if p.is_file()}
+    root=Path(root);before=verify_directory(root)
     report=json.loads((root/'report.json').read_bytes());context=json.loads((root/'context.json').read_bytes())
     if (context['asof'],context['run_id'],context['generation_id'])!=(ASOF,RUN,GENERATION):raise ValueError('collector_context_mismatch')
     if (report['status'],report['target'],report['kis_validated'],report['all_http_resolved'],report['provider_finality'],report['official_price_status'])!=('INTERNAL_PASS',2346,2346,True,'UNVERIFIED','PENDING_KRX'):
