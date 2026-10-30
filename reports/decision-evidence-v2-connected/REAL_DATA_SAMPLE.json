@@ -1,0 +1,1772 @@
+[
+  {
+    "stock_code": "000720",
+    "stock_name": "현대건설",
+    "asof": "2026-10-29",
+    "source_generation_id": "kis-authorized-20261029-40882669831",
+    "foreign_flow_metrics": {
+      "change_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 15447000000
+      },
+      "day_change": {
+        "reason": null,
+        "status": "valid",
+        "value": 17231000000
+      },
+      "net_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": 26915000000
+      },
+      "net_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 138197000000
+      },
+      "net_3d": {
+        "reason": null,
+        "status": "valid",
+        "value": 46255000000
+      },
+      "net_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 61577000000
+      },
+      "net_quantity_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": 305116
+      },
+      "net_quantity_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 1497549
+      },
+      "net_quantity_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 679779
+      },
+      "positive_days_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 16
+      },
+      "previous_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 46130000000
+      },
+      "short_reversal": {
+        "reason": null,
+        "status": "valid",
+        "value": "no_sign_change"
+      }
+    },
+    "institution_flow_metrics": {
+      "net_quantity_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": -418890
+      },
+      "net_quantity_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": -1838397
+      },
+      "net_quantity_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": -728753
+      }
+    },
+    "raw_KIS_provisional_current_price": {
+      "open": 94800,
+      "high": 95400,
+      "low": 85000,
+      "close": 91100,
+      "volume": 1404017,
+      "turnover": 123754743700
+    },
+    "raw_KIS_price_is_officially_approved": false,
+    "approved_price_metrics": {
+      "atr_14": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "atr_seed_start": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "bar_swing_high_change": {
+        "reason": "two_confirmed_pivots_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "bar_swing_low_change": {
+        "reason": "two_confirmed_pivots_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "close": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_above_current_cloud": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_change_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_change_1d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_location_in_day_range": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_120_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_20_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_5_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_60_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_bar_swing_highs": {
+        "reason": "missing_40_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_bar_swing_lows": {
+        "reason": "missing_40_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_swing_highs": {
+        "reason": "missing_40_verified_sessions",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_swing_lows": {
+        "reason": "missing_40_verified_sessions",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_turnover_to_mean_20d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_turnover_to_mean_5d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_volume_to_mean_20d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_volume_to_mean_5d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "distance_to_confirmed_swing_high_pct": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "distance_to_confirmed_swing_low_pct": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_day_volume_mean_20": {
+        "reason": "no_down_days_or_incomplete_21day_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_volume_contraction": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_volume_expansion": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "gap_direction": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_10": {
+        "reason": "missing_10_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_chikou_plot_date": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_chikou_value": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_current_span_a": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_current_span_b": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_kijun_26": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_projected_span_a": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_projected_span_b": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_tenkan_9": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "intraday_range": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "intraday_range_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "large_volume_following_session": {
+        "reason": "missing_26_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_10": {
+        "reason": "missing_10_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "market_excess_20d_pp": {
+        "reason": "price_or_same_market_benchmark_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "market_excess_5d_pp": {
+        "reason": "price_or_same_market_benchmark_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_then_close_reclaim_20d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "nonoverlapping_5d_high_change": {
+        "reason": "missing_10_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "nonoverlapping_5d_low_change": {
+        "reason": "missing_10_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_breakout_close_held": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_breakout_close_lost": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "recent_high_breakout_failure": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "return_20d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "return_5d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_120": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_120_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_20_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_5_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_60_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_alignment": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "support_or_resistance_confirmed": {
+        "reason": "observed_levels_do_not_establish_support_resistance_or_stop_price",
+        "status": "unavailable",
+        "value": null
+      },
+      "swing_high_change": {
+        "reason": "two_confirmed_swings_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "swing_low_change": {
+        "reason": "two_confirmed_swings_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "turnover_5_vs_previous_20_ratio": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "up_day_volume_mean_20": {
+        "reason": "no_up_days_or_incomplete_21day_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_change_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_change_1d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_mean_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_mean_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      }
+    },
+    "data_quality": {
+      "accepted_price_rows": 36,
+      "historical_backtest_eligible": false,
+      "latest_price_verified": false,
+      "missing_calendar_price_dates": [],
+      "original_adjusted_basis": "KIS_original_option_1_no_adjustment_bridge",
+      "price_hold_reasons": {
+        "official_KRX_not_available": 4
+      },
+      "provider_finality": "UNVERIFIED",
+      "raw_price_rows": 40,
+      "scope": "KRX",
+      "stale_verified_price_used_as_current": false,
+      "verified_contiguous_price_days": 0
+    },
+    "source_references": {
+      "exact_foreign_request_observed_at": "2026-10-29T13:34:56.493465+00:00",
+      "foreign_source_snapshot_sha256": "4682801c9d88a5fb43496c55263e66402aef42f089f8987d667458d15cf8e8c7",
+      "known_latest_source_observation": "2026-10-29T15:39:59.421727+00:00",
+      "point_in_time_reproducible": false,
+      "price_observed_at": "2026-10-29T13:34:57.425111+00:00",
+      "price_source_ids": [
+        "595488aa30006bceec69c0941e281974694273ba94b67986691d49aedd579d2c"
+      ],
+      "source_batch_collected_at": "2026-10-29T15:39:59.421727+00:00",
+      "source_index_sha256": "f5583b5c86cb02b42378e566202a4b5f0b7edab560731ec949c70c95172497b1",
+      "source_publication_time": null,
+      "source_stock_payload_sha256": "7a5196aad5f29bc2fa03ef1e21501169ae3bfd6ca942051c970e882763785943"
+    }
+  },
+  {
+    "stock_code": "064400",
+    "stock_name": "LG씨엔에스",
+    "asof": "2026-10-29",
+    "source_generation_id": "kis-authorized-20261029-40882669831",
+    "foreign_flow_metrics": {
+      "change_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": -48994000000
+      },
+      "day_change": {
+        "reason": null,
+        "status": "valid",
+        "value": -43806000000
+      },
+      "net_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": -24925000000
+      },
+      "net_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 15299000000
+      },
+      "net_3d": {
+        "reason": null,
+        "status": "valid",
+        "value": -2940000000
+      },
+      "net_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": -25678000000
+      },
+      "net_quantity_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": -319900
+      },
+      "net_quantity_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 261101
+      },
+      "net_quantity_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": -345910
+      },
+      "positive_days_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 11
+      },
+      "previous_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 23316000000
+      },
+      "short_reversal": {
+        "reason": null,
+        "status": "valid",
+        "value": "to_net_selling"
+      }
+    },
+    "institution_flow_metrics": {
+      "net_quantity_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": 500597
+      },
+      "net_quantity_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 2293089
+      },
+      "net_quantity_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 1554033
+      }
+    },
+    "raw_KIS_provisional_current_price": {
+      "open": 79100,
+      "high": 80300,
+      "low": 76500,
+      "close": 77800,
+      "volume": 1432147,
+      "turnover": 112016119800
+    },
+    "raw_KIS_price_is_officially_approved": false,
+    "approved_price_metrics": {
+      "atr_14": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "atr_seed_start": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "bar_swing_high_change": {
+        "reason": "two_confirmed_pivots_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "bar_swing_low_change": {
+        "reason": "two_confirmed_pivots_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "close": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_above_current_cloud": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_change_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_change_1d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_location_in_day_range": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_120_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_20_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_5_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_60_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_bar_swing_highs": {
+        "reason": "missing_40_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_bar_swing_lows": {
+        "reason": "missing_40_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_swing_highs": {
+        "reason": "missing_40_verified_sessions",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_swing_lows": {
+        "reason": "missing_40_verified_sessions",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_turnover_to_mean_20d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_turnover_to_mean_5d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_volume_to_mean_20d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_volume_to_mean_5d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "distance_to_confirmed_swing_high_pct": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "distance_to_confirmed_swing_low_pct": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_day_volume_mean_20": {
+        "reason": "no_down_days_or_incomplete_21day_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_volume_contraction": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_volume_expansion": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "gap_direction": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_10": {
+        "reason": "missing_10_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_chikou_plot_date": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_chikou_value": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_current_span_a": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_current_span_b": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_kijun_26": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_projected_span_a": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_projected_span_b": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_tenkan_9": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "intraday_range": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "intraday_range_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "large_volume_following_session": {
+        "reason": "missing_26_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_10": {
+        "reason": "missing_10_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "market_excess_20d_pp": {
+        "reason": "price_or_same_market_benchmark_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "market_excess_5d_pp": {
+        "reason": "price_or_same_market_benchmark_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_then_close_reclaim_20d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "nonoverlapping_5d_high_change": {
+        "reason": "missing_10_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "nonoverlapping_5d_low_change": {
+        "reason": "missing_10_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_breakout_close_held": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_breakout_close_lost": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "recent_high_breakout_failure": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "return_20d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "return_5d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_120": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_120_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_20_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_5_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_60_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_alignment": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "support_or_resistance_confirmed": {
+        "reason": "observed_levels_do_not_establish_support_resistance_or_stop_price",
+        "status": "unavailable",
+        "value": null
+      },
+      "swing_high_change": {
+        "reason": "two_confirmed_swings_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "swing_low_change": {
+        "reason": "two_confirmed_swings_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "turnover_5_vs_previous_20_ratio": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "up_day_volume_mean_20": {
+        "reason": "no_up_days_or_incomplete_21day_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_change_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_change_1d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_mean_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_mean_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      }
+    },
+    "data_quality": {
+      "accepted_price_rows": 36,
+      "historical_backtest_eligible": false,
+      "latest_price_verified": false,
+      "missing_calendar_price_dates": [],
+      "original_adjusted_basis": "KIS_original_option_1_no_adjustment_bridge",
+      "price_hold_reasons": {
+        "official_KRX_not_available": 4
+      },
+      "provider_finality": "UNVERIFIED",
+      "raw_price_rows": 40,
+      "scope": "KRX",
+      "stale_verified_price_used_as_current": false,
+      "verified_contiguous_price_days": 0
+    },
+    "source_references": {
+      "exact_foreign_request_observed_at": "2026-10-29T13:34:59.474955+00:00",
+      "foreign_source_snapshot_sha256": "4682801c9d88a5fb43496c55263e66402aef42f089f8987d667458d15cf8e8c7",
+      "known_latest_source_observation": "2026-10-29T15:39:59.421727+00:00",
+      "point_in_time_reproducible": false,
+      "price_observed_at": "2026-10-29T13:35:00.272716+00:00",
+      "price_source_ids": [
+        "31d1fab1b49e786e314c552a0acebbb0378af5d15191fecd1764f12cbcd8e398"
+      ],
+      "source_batch_collected_at": "2026-10-29T15:39:59.421727+00:00",
+      "source_index_sha256": "f5583b5c86cb02b42378e566202a4b5f0b7edab560731ec949c70c95172497b1",
+      "source_publication_time": null,
+      "source_stock_payload_sha256": "4a1261b2b8af81e9cb86f0db9688cd5f6cff7b6b39974c93dde15268aa861b28"
+    }
+  },
+  {
+    "stock_code": "300080",
+    "stock_name": "플리토",
+    "asof": "2026-10-29",
+    "source_generation_id": "kis-authorized-20261029-40882669831",
+    "foreign_flow_metrics": {
+      "change_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": -1932000000
+      },
+      "day_change": {
+        "reason": null,
+        "status": "valid",
+        "value": 349000000
+      },
+      "net_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": 281000000
+      },
+      "net_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 2628000000
+      },
+      "net_3d": {
+        "reason": null,
+        "status": "valid",
+        "value": 416000000
+      },
+      "net_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 524000000
+      },
+      "net_quantity_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": 30102
+      },
+      "net_quantity_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 231675
+      },
+      "net_quantity_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 53674
+      },
+      "positive_days_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 14
+      },
+      "previous_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": 2456000000
+      },
+      "short_reversal": {
+        "reason": null,
+        "status": "valid",
+        "value": "to_net_buying"
+      }
+    },
+    "institution_flow_metrics": {
+      "net_quantity_1d": {
+        "reason": null,
+        "status": "valid",
+        "value": -56312
+      },
+      "net_quantity_20d": {
+        "reason": null,
+        "status": "valid",
+        "value": 65343
+      },
+      "net_quantity_5d": {
+        "reason": null,
+        "status": "valid",
+        "value": -128485
+      }
+    },
+    "raw_KIS_provisional_current_price": {
+      "open": 10060,
+      "high": 10060,
+      "low": 9300,
+      "close": 9370,
+      "volume": 343175,
+      "turnover": 3277158435
+    },
+    "raw_KIS_price_is_officially_approved": false,
+    "approved_price_metrics": {
+      "atr_14": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "atr_seed_start": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "bar_swing_high_change": {
+        "reason": "two_confirmed_pivots_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "bar_swing_low_change": {
+        "reason": "two_confirmed_pivots_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "close": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_above_current_cloud": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakdown_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_breakout_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_change_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_change_1d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_location_in_day_range": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_120_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_20_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_5_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "close_sma_60_deviation_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_bar_swing_highs": {
+        "reason": "missing_40_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_bar_swing_lows": {
+        "reason": "missing_40_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_swing_highs": {
+        "reason": "missing_40_verified_sessions",
+        "status": "unavailable",
+        "value": null
+      },
+      "confirmed_swing_lows": {
+        "reason": "missing_40_verified_sessions",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_turnover_to_mean_20d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_turnover_to_mean_5d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_volume_to_mean_20d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "current_volume_to_mean_5d_ratio": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "distance_to_confirmed_swing_high_pct": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "distance_to_confirmed_swing_low_pct": {
+        "reason": "missing_ratio_input",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_day_volume_mean_20": {
+        "reason": "no_down_days_or_incomplete_21day_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_volume_contraction": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "down_volume_expansion": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "gap_direction": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_10": {
+        "reason": "missing_10_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_chikou_plot_date": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_chikou_value": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_current_span_a": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_current_span_b": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_kijun_26": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_projected_span_a": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_projected_span_b": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "ichimoku_tenkan_9": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "intraday_range": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "intraday_range_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "large_volume_following_session": {
+        "reason": "missing_26_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_10": {
+        "reason": "missing_10_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "market_excess_20d_pp": {
+        "reason": "price_or_same_market_benchmark_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "market_excess_5d_pp": {
+        "reason": "price_or_same_market_benchmark_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "new_low_then_close_reclaim_20d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "nonoverlapping_5d_high_change": {
+        "reason": "missing_10_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "nonoverlapping_5d_low_change": {
+        "reason": "missing_10_consecutive_verified_bars",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_breakout_close_held": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_breakout_close_lost": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_high_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "prior_low_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "recent_high_breakout_failure": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "return_20d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "return_5d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_120": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_120_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_20_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_5_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_60": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_60_slope_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "sma_alignment": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "support_or_resistance_confirmed": {
+        "reason": "observed_levels_do_not_establish_support_resistance_or_stop_price",
+        "status": "unavailable",
+        "value": null
+      },
+      "swing_high_change": {
+        "reason": "two_confirmed_swings_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "swing_low_change": {
+        "reason": "two_confirmed_swings_missing",
+        "status": "unavailable",
+        "value": null
+      },
+      "turnover_5_vs_previous_20_ratio": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "up_day_volume_mean_20": {
+        "reason": "no_up_days_or_incomplete_21day_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume": {
+        "reason": "latest_price_not_verified",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_change_1d": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_change_1d_pct": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_mean_20": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      },
+      "volume_mean_5": {
+        "reason": "insufficient_verified_history",
+        "status": "unavailable",
+        "value": null
+      }
+    },
+    "data_quality": {
+      "accepted_price_rows": 36,
+      "historical_backtest_eligible": false,
+      "latest_price_verified": false,
+      "missing_calendar_price_dates": [],
+      "original_adjusted_basis": "KIS_original_option_1_no_adjustment_bridge",
+      "price_hold_reasons": {
+        "official_KRX_not_available": 4
+      },
+      "provider_finality": "UNVERIFIED",
+      "raw_price_rows": 40,
+      "scope": "KRX",
+      "stale_verified_price_used_as_current": false,
+      "verified_contiguous_price_days": 0
+    },
+    "source_references": {
+      "exact_foreign_request_observed_at": "2026-10-29T13:35:02.638376+00:00",
+      "foreign_source_snapshot_sha256": "4682801c9d88a5fb43496c55263e66402aef42f089f8987d667458d15cf8e8c7",
+      "known_latest_source_observation": "2026-10-29T15:39:59.421727+00:00",
+      "point_in_time_reproducible": false,
+      "price_observed_at": "2026-10-29T13:35:03.576921+00:00",
+      "price_source_ids": [
+        "aed7a93924df857efe6bec9b1bf08233fd653b3a7d5867faca3194338e784d6a"
+      ],
+      "source_batch_collected_at": "2026-10-29T15:39:59.421727+00:00",
+      "source_index_sha256": "f5583b5c86cb02b42378e566202a4b5f0b7edab560731ec949c70c95172497b1",
+      "source_publication_time": null,
+      "source_stock_payload_sha256": "d32f2bdc538f7fe9c61631cf8345b3eb5a23f3df8f30d2375c2ea27bb52b99b9"
+    }
+  }
+]
