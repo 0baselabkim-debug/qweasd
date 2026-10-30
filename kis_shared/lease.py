@@ -61,6 +61,7 @@ class Lease:
         self.identity = dict(repository=repository, run_id=str(run_id), commit=commit, id=uuid.uuid4().hex)
         self.held = False
         self.last_local_http = None
+        self.confirmed_transitions = 0
 
     def _read(self):
         revision, state = self.backend.read()
@@ -78,6 +79,7 @@ class Lease:
         _, actual = self._read()
         if actual != state:
             raise Blocked('shared_lock_write_readback_mismatch')
+        self.confirmed_transitions += 1
         return actual
 
     def acquire(self, seconds=11400):

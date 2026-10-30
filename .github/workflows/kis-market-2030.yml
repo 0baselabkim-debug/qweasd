@@ -51,7 +51,7 @@ jobs:
         if: github.event_name == 'schedule' && steps.freeze.outputs.collect == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-          # Existing shared credentials; disabled account policy still blocks before authentication.
+          # Existing credentials; native rollout evidence and the central lease guard authentication.
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
         run: python -m collector_v1.regular.runner collect
@@ -67,7 +67,9 @@ jobs:
         if: always() && hashFiles('data/kis-regular/UPLOAD_ALLOWED') != ''
         with:
           name: ${{ steps.freeze.outputs.artifact_name || format('kis-regular-diagnostic-{0}', github.run_id) }}
-          path: data/kis-regular/
+          path: |
+            data/kis-regular/
+            !data/kis-regular/**/writer.lock
           retention-days: 90
           if-no-files-found: error
       - name: Confirm stored artifact before completing the ledger or handing off data

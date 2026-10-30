@@ -90,6 +90,13 @@ class RuntimeGuard:
     def __call__(self):
         assert_runtime_actor(self.c)
         policy.window(self.c);policy.access_proof(self.config,os.environ)
+        if sum(api.budget.used for api in self.apis)>=policy.FULL_HTTP:
+            raise Failure('combined_physical_HTTP_budget_exhausted')
+        if self.config.get('mode')=='shared-account-exclusive':
+            from kis_shared.runtime import current
+            expiry=current().token_deadline
+            if expiry is not None and expiry<=policy.timestamp(self.c['expires_at'])+dt.timedelta(seconds=35):
+                raise Failure('shared_token_cannot_cover_frozen_execution_window')
         if not self.checked:
             Ledger(self.client,self.c).assert_owner();check_runs(self.client,self.c)
             self.checked=True
@@ -162,10 +169,25 @@ def validate():
     try:
         runs=client.active(cfg['other_repository']);external=dict(status='READ',active_runs=[dict(id=r['id'],status=r['status'],path=r['path']) for r in runs])
     except Failure:external=dict(status='UNREADABLE',reason='cross_repository_Actions_read_not_verified')
+    readiness='BLOCKED_SHARED_ACCOUNT_ROLLOUT' if cfg['mode']=='shared-account-exclusive' else 'BLOCKED_ACCOUNT_ISOLATION_REVIEW'
+    rollout_evidence=None
+    if cfg['mode']=='shared-account-exclusive':
+        from kis_shared.runtime import review_local_evidence
+        from kis_shared.lease import Blocked
+        shared=json.loads(Path(cfg['shared_policy']).read_bytes())
+        required=('enabled','both_repositories_deployed','all_account_actors_enrolled','github_access_tested',
+            'rate_policy_reviewed','token_policy_reviewed','real_kis_validation_approved_and_passed')
+        try:
+            if (cfg.get('verified') is True and all(shared.get(k) is True for k in required)
+                    and policy.timestamp(shared['reviewed_at'])<=policy.utcnow()<policy.timestamp(shared['expires_at'])):
+                evidence=review_local_evidence(shared,policy.REPO)
+                readiness='READY_SHARED_COORDINATION_FIRST_REGULAR_RUN_NOT_VERIFIED'
+                rollout_evidence=dict(request_id=evidence['request_id'],proof_sha256=shared['native_proof_sha256'])
+        except (Blocked,KeyError,Failure):pass
     report=dict(status='DEPLOYMENT_VALIDATED_NO_MARKET_HTTP',run_id=c['run_id'],code_commit=c['code_commit'],
         actual_default_branch='main',workflow_id=workflow['id'],workflow_state=workflow['state'],registered_cron=policy.CRON,
         default_branch_workflow_blob_sha=published['sha'],default_branch_workflow_sha256=sha(workflow_raw),
-        operational_readiness='BLOCKED_SHARED_ACCOUNT_ROLLOUT' if cfg['mode']=='shared-account-exclusive' else 'BLOCKED_ACCOUNT_ISOLATION_REVIEW',access_profile_mode=cfg['mode'],external_run_inventory=external,
+        operational_readiness=readiness,rollout_evidence=rollout_evidence,access_profile_mode=cfg['mode'],external_run_inventory=external,
         slot_claimed=False,market_http=0,first_scheduled_collection='NOT_YET_VERIFIED',
         dashboard_publication='NOT_PUBLISHED',application_reflection='NOT_UPDATED',checked_at=now())
     scan(ROOT);client.write('deployments/'+c['run_id']+'.json',report)

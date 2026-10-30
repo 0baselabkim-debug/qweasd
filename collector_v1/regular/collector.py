@@ -38,6 +38,8 @@ class MemorySession:
     def transfer(self,target):
         if not self.api.token or not hmac.compare_digest(self.binding,self._binding()):raise Failure('regular_memory_session_binding_changed')
         target.token=self.api.token
+        guard=getattr(self.api.budget,'guard',None)
+        if hasattr(guard,'register_api'):guard.register_api(target)
 
 
 def prepare(folder,context,guard,*,opener=None,reference=None):
@@ -53,6 +55,8 @@ def prepare(folder,context,guard,*,opener=None,reference=None):
     for market in ('KOSPI','KOSDAQ'):
         e=api.fetch(task('master',context['asof'],market=market));universe.extend(parse(store.raw(e),e));raw_evidence.append(e)
     selected=policy.eligible(universe)
+    if 2*len(selected)+6>policy.FULL_HTTP:
+        raise Failure('combined_population_budget_exceeds_5600_before_stock_requests')
     baseline=2*len(selected)+3 # conservative existing full budget, including possible auth
     remaining=(policy.timestamp(context['expires_at'])-policy.utcnow()).total_seconds()
     if (baseline-1)*policy.INTERVAL+60>remaining:raise Failure('population_cannot_fit_remaining_execution_window')
