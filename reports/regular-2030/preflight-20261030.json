@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-10-30T07:10:40.182285+00:00",
+  "registration": "PASS",
+  "operational_readiness": "BLOCKED",
+  "native_qweasd_inspection": {
+    "access_profile": {
+      "account_rate_policy_reference": null,
+      "evidence_reference": null,
+      "expires_at": null,
+      "mode": "shared-account-exclusive",
+      "other_repository": "0baselabkim-debug/kis-intraday-monitor",
+      "reason": "Shared-account session integration prepared. Production rollout, GitHub runtime access and separately approved live validation remain unverified.",
+      "repository": "0baselabkim-debug/qweasd",
+      "reviewed_at": null,
+      "reviewed_by": null,
+      "reviewed_other_repository_commit": "e27bc63fd420a899501c13f6cd1b05c13108fc82",
+      "schema": 1,
+      "shared_policy": ".github/config/kis-shared-account.json",
+      "token_policy_reference": null,
+      "verified": false
+    },
+    "audit_code_commit": "c6f4b09fe89d8f68ba7a0bcbffb374ffa2f5aaf2",
+    "central_lease_owner": null,
+    "cron": [
+      "30 11 * * 1-5"
+    ],
+    "default_branch": "main",
+    "inspected_at": "2026-10-30T07:04:55.222646+00:00",
+    "kis_app_key_present": true,
+    "kis_app_secret_present": true,
+    "main_commit": "b1ae57918a16f4857af865e66f4f4158294735dd",
+    "market_http": 0,
+    "next_configured_slot_kst": "2026-10-30T20:30:00+09:00",
+    "oauth_issuance": 0,
+    "operational_readiness": "BLOCKED_SHARED_ACCOUNT_ROLLOUT",
+    "other_repository_visibility": {
+      "http_status": 404,
+      "status": "UNREADABLE"
+    },
+    "production_changes": false,
+    "run_id": "41017834421",
+    "schedule_registered": true,
+    "schema": 1,
+    "shared_policy": {
+      "all_account_actors_enrolled": false,
+      "both_repositories_deployed": false,
+      "enabled": false,
+      "github_access_tested": false,
+      "rate_policy_reviewed": false,
+      "real_kis_validation_approved_and_passed": false,
+      "token_policy_reviewed": false
+    },
+    "slot_claims": 0,
+    "today_slot": null,
+    "workflow_id": 400006658,
+    "workflow_sha256": "7ef0cb631f291a44086eb713687c6362cd2620d9ffdcace4424094b9e86052fc",
+    "workflow_state": "active",
+    "yesterday_scheduled_slot": {
+      "reason": "shared_rollout_not_approved",
+      "run_id": "40870637994",
+      "status": "BLOCKED",
+      "summary": {
+        "actual_started_at": null,
+        "application_reflection": "NOT_UPDATED",
+        "artifact_storage": "NOT_CONFIRMED",
+        "asof": "2026-10-29",
+        "code_commit": "1c49414641f3ad5a8b93c3f82ce66ce19e4370d9",
+        "collection_complete": null,
+        "completed_at": "2026-10-29T12:09:14.526245+00:00",
+        "dashboard_publication": "NOT_PUBLISHED",
+        "elapsed_seconds": null,
+        "failed_http_requests": null,
+        "first_http_at": null,
+        "generation_id": "kis-regular-20261029-2030",
+        "internal_validation": "NOT_PASS",
+        "kis_validated": null,
+        "last_http_at": null,
+        "official_price_status": "PENDING_KRX",
+        "physical_http": 0,
+        "physical_retries": null,
+        "preparation_http": 0,
+        "provider_finality": "UNVERIFIED",
+        "reason": "shared_rollout_not_approved",
+        "received_symbols": null,
+        "run_id": "40870637994",
+        "scheduled_at": "2026-10-29T20:30:00+09:00",
+        "status": "BLOCKED",
+        "target": null,
+        "total_physical_http": 0,
+        "uncollected_count": null,
+        "validation_failed_count": null
+      }
+    }
+  },
+  "native_inspection_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41017834421",
+  "monitor_access_probe": {
+    "requested_branch": "fix/regular-readiness-20261030",
+    "requested_commit": "5de3ef8ff7944fcbac77c673825a79dc4c028147",
+    "current_result_observed": false,
+    "latest_evidence": {
+      "candidates": [
+        {
+          "name": "KIS_COORDINATOR_TOKEN",
+          "present": false
+        },
+        {
+          "name": "OPERATIONS_READ_TOKEN",
+          "present": false
+        },
+        {
+          "central_branch": "kis-shared-probe-actions-40873564922-1",
+          "name": "GITHUB_TOKEN",
+          "present": true,
+          "reason": "central_or_report_write_rejected_or_unconfirmed",
+          "status": "BLOCKED"
+        }
+      ],
+      "checked_at": "2026-10-29T12:28:45.929331+00:00",
+      "code_commit": "03a8fa6b0cc5756c8ab31b57afd3a049b8eaf5a8",
+      "existing_secrets_changed": false,
+      "market_http": 0,
+      "oauth_issuance": 0,
+      "permissions_expanded": false,
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "request_id": "approved-shared-access-20261029-2129",
+      "run_id": "40873564922",
+      "schema": 1,
+      "status": "BLOCKED_NO_CENTRAL_WRITE_PROOF"
+    },
+    "historical_only": true
+  },
+  "fixed_issue": {
+    "file": "tests/test_regular_collector.py",
+    "main_commit": "b1ae57918a16f4857af865e66f4f4158294735dd",
+    "before": {
+      "passed": 26,
+      "failed": 2,
+      "errors": 2
+    },
+    "after": {
+      "passed": 30,
+      "failed": 0,
+      "errors": 0,
+      "seconds": 36.76
+    },
+    "cause": "The synthetic policy clock and ManualBudget wall clock used different dates.",
+    "change": "Use the same frozen test clock for remaining_seconds. Production time guards are unchanged."
+  },
+  "operating_changes": {
+    "cron_changed": false,
+    "market_data_changed": false,
+    "kis_credentials_changed": false,
+    "word_briefing_changed": false,
+    "access_verified_forced": false
+  },
+  "expected_next_configured_slot": "2026-10-30T20:30:00+09:00",
+  "expected_current_schedule_outcome": "BLOCKED before OAuth: shared_rollout_not_approved",
+  "remaining_conditions": [
+    "Authenticated access between both repositories to the same central lease, verified with native runtime identities.",
+    "Enroll every actual KIS authentication/request path in both repositories, including supervised bootstrap paths.",
+    "Verify token expiry and request policy, bind rollout evidence to deployed source before enabling the reviewed profile."
+  ],
+  "limits": [
+    "Registration does not guarantee a start exactly at 20:30; GitHub scheduling may be delayed or omitted.",
+    "Trading-day status was not fetched during this check; the existing provider-calendar gate remains.",
+    "The environment does not expose a GitHub Secret management capability and api.github.com is outside the enforced network allowlist. No PAT or new Secret was created.",
+    "A metadata inspection run concluding success does not mean the market collector is ready or has collected data."
+  ]
+}
