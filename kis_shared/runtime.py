@@ -190,7 +190,10 @@ class AccountSession(Session):
         self.pending_http = False
 
     def __exit__(self, kind, value, traceback):
-        if kind is None and not self.uncertain and not self.pending_http:
+        # A controlled validation failure does not leave an account permanently
+        # locked after every synchronous response has closed. Hard kills never
+        # reach here, and unresolved transport outcomes retain ownership.
+        if not self.uncertain and not self.pending_http:
             self.token_deadline = None
             self.lease.release()
 

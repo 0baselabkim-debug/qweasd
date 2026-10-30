@@ -43,6 +43,13 @@ class AccountOperatingTests(unittest.TestCase):
             account.before_http(auth=True);account.http_response_closed()
         self.assertIsNone(self.backend.state['owner'])
 
+    def test_controlled_validation_failure_after_closed_response_releases(self):
+        with self.assertRaises(SystemExit):
+            with self.account() as account:
+                account.before_http(auth=True);account.http_response_closed()
+                raise SystemExit(2)
+        self.assertIsNone(self.backend.state['owner'])
+
     def test_next_request_is_forbidden_while_previous_outcome_unknown(self):
         with self.account() as account:
             account.before_http()
