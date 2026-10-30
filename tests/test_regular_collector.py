@@ -20,6 +20,8 @@ def env(monkeypatch,tmp_path):
     for key,value in [('GITHUB_REPOSITORY',policy.REPO),('GITHUB_REF','refs/heads/main'),('GITHUB_EVENT_NAME','schedule'),('GITHUB_RUN_ATTEMPT','1')]:monkeypatch.setenv(key,value)
     monkeypatch.setattr(policy,'utcnow',lambda:clock)
     monkeypatch.setattr('collector_v1.experiment.storage.time.sleep',lambda _:None)
+    monkeypatch.setattr('collector_v1.kis_manual.ManualBudget.remaining_seconds',
+        lambda self:(policy.timestamp(self.control['expires_at'])-policy.utcnow()).total_seconds())
     for name in ('KIS_APP_KEY','KIS_APP_SECRET'):monkeypatch.setenv(name,'SYNTHETIC_'+name)
     for module in ('collector_v1.providers','collector_v1.experiment.engine','collector_v1.kis_manual','collector_v1.core'):
         monkeypatch.setattr(module+'.now',lambda:clock.isoformat())
