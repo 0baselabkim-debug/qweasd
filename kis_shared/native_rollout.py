@@ -14,8 +14,8 @@ from .lease import Blocked, Lease, initial, utcnow, stamp
 
 Q='0baselabkim-debug/qweasd'
 M='0baselabkim-debug/kis-intraday-monitor'
-REQUEST='shared-rollout-20261030-v1'
-BRANCH='kis-shared-probe-rollout-20261030-v1'
+REQUEST='shared-rollout-20261030-v2'
+BRANCH='kis-shared-probe-rollout-20261030-v2'
 STATE='kis-regular-state'
 ROOT=Path(__file__).resolve().parents[1]
 COMMON=('kis_shared/runtime.py','kis_shared/lease.py','kis_shared/git_backend.py')
