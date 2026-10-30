@@ -1,0 +1,88 @@
+{
+  "checked_at": "2026-10-30T08:41:04.987587+00:00",
+  "state": "READY",
+  "first_regular_collection": "NOT_YET_VERIFIED",
+  "qweasd_deployment": {
+    "access_profile_mode": "shared-account-exclusive",
+    "actual_default_branch": "main",
+    "application_reflection": "NOT_UPDATED",
+    "checked_at": "2026-10-30T08:35:29.116662+00:00",
+    "code_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+    "dashboard_publication": "NOT_PUBLISHED",
+    "default_branch_workflow_blob_sha": "d38c61b83bad1c9d878c524e243978696a62ba73",
+    "default_branch_workflow_sha256": "6eb5035fc9b502567a2179e21a98b3912c74378b469d3ec9561c8fd1290b9bf2",
+    "external_run_inventory": {
+      "reason": "cross_repository_Actions_read_not_verified",
+      "status": "UNREADABLE"
+    },
+    "first_scheduled_collection": "NOT_YET_VERIFIED",
+    "market_http": 0,
+    "operational_readiness": "READY_SHARED_COORDINATION_FIRST_REGULAR_RUN_NOT_VERIFIED",
+    "registered_cron": "30 11 * * 1-5",
+    "rollout_evidence": {
+      "proof_sha256": "acce61e9561dbd8476117e646dcfe07bdffe596c2b0fd9535ca23646dd734815",
+      "request_id": "shared-rollout-20261030-v2"
+    },
+    "run_id": "41027170596",
+    "slot_claimed": false,
+    "status": "DEPLOYMENT_VALIDATED_NO_MARKET_HTTP",
+    "workflow_id": 400006658,
+    "workflow_state": "active"
+  },
+  "monitor_activation": {
+    "checked_at": "2026-10-30T08:25:09.070003+00:00",
+    "existing_KIS_secret_pair_present": true,
+    "first_regular_collection": "NOT_YET_VERIFIED",
+    "main_commit": "8fe527d87271d28431f14b36a233596ab3b73b18",
+    "market_http": 0,
+    "native_completed_runs": {
+      "0baselabkim-debug/kis-intraday-monitor": {
+        "conclusion": "success",
+        "head_sha": "ebdf7fe91070408709367e418fd2039f13457802",
+        "run_id": "41025365240",
+        "status": "completed"
+      },
+      "0baselabkim-debug/qweasd": {
+        "conclusion": "success",
+        "head_sha": "56c258c1f208ff1d5934f948d09d1ccdd0dc8427",
+        "run_id": "41025361589",
+        "status": "completed"
+      }
+    },
+    "native_proof_sha256": "acce61e9561dbd8476117e646dcfe07bdffe596c2b0fd9535ca23646dd734815",
+    "oauth_issuance": 0,
+    "production_gate": "PASS",
+    "repository": "0baselabkim-debug/kis-intraday-monitor",
+    "request_id": "shared-activation-20261030-v1",
+    "run_id": "41026281746",
+    "schema": 1,
+    "status": "ACTIVATION_VALIDATED_NO_KIS_HTTP"
+  },
+  "production_lease_owner": null,
+  "today_slot_claimed": false,
+  "market_http_this_setup": 0,
+  "oauth_issuance_this_setup": 0,
+  "next_configured_slot_KST": "2026-10-30T20:30:00+09:00",
+  "tests": {
+    "qweasd_full": 458,
+    "qweasd_activated_related": 77,
+    "qweasd_test_groups_overlap": true,
+    "monitor_activated_full": 531,
+    "failures": 0
+  },
+  "review_expires_at": "2027-01-27T00:00:00+00:00",
+  "qweasd_main": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "monitor_main": "8fe527d87271d28431f14b36a233596ab3b73b18",
+  "existing_operating_data_changed": false,
+  "word_schedule_changed": false,
+  "new_recurring_schedule_added": false,
+  "existing_cron": "30 11 * * 1-5",
+  "original_failed_probe": {
+    "run_id": "41020204832",
+    "cause": "Missing existing Git parent object while publishing probe report; the actual isolated lease had acquired and released successfully.",
+    "fixed_credential_probe": "41021025811"
+  },
+  "proof_request": "shared-rollout-20261030-v2",
+  "setup_market_http": 0,
+  "setup_oauth": 0
+}

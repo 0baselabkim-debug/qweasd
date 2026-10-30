@@ -81,6 +81,13 @@ def test_account_isolation_unverified_blocks_before_auth(env,monkeypatch):
     c,root=env;client=Client(c);Ledger(client,c).claim()
     monkeypatch.setattr(runner,'ROOT',root/'runtime');Store(runner.ROOT).write('context.json',c)
     monkeypatch.setattr(runner,'GitHub',lambda:client)
+    # Exercise an explicitly unverified fixture even after production activation.
+    config=json.loads(runner.CONFIG.read_bytes())
+    shared=root/'SYNTHETIC-shared-policy.json'
+    shared.write_bytes(encoded(dict(enabled=False,mode='exclusive-shared-account')))
+    config.update(verified=False,shared_policy=str(shared))
+    access=root/'SYNTHETIC-access.json';access.write_bytes(encoded(config))
+    monkeypatch.setattr(runner,'CONFIG',access)
     def forbidden(*args,**kwargs):pytest.fail('Unverified shared access must not open HTTP')
     monkeypatch.setattr('urllib.request.OpenerDirector.open',forbidden)
     assert runner.collect()==1
