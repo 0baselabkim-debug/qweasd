@@ -1,0 +1,65 @@
+{
+  "P1": {
+    "name": "수급 분석",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "기존 1/3/5/20일 금액·지속성·집중도·전환 재사용, 3일 수량 및 기관 수량 변화 통합",
+    "actual_data_or_external_status": "기존 실제 원문 전체 재계산 PASS"
+  },
+  "P2": {
+    "name": "가격·기술 구조",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "기존 SMA/ATR/극값/갭/상대강도 재사용, 지지 테스트/N자/반등·방어 후보 통합",
+    "actual_data_or_external_status": "최신 가격·SMA60/120 실제 수치 UNAVAILABLE; 검증 자료 부족"
+  },
+  "P3": {
+    "name": "기업·매크로·이벤트",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "원문 해시·pointer·공개/관측·회계기준·다중 버전 보류, 기존 문맥 별도 유지",
+    "actual_data_or_external_status": "외부 실연동 NOT_RUN"
+  },
+  "P4": {
+    "name": "평가·가설",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "30/30/15/15/10 부분 평가와 별도 일곱 검토, A/B 필수 조건 검사",
+    "actual_data_or_external_status": "실제 완전 점수 0; 결측을 채우지 않음"
+  },
+  "P5": {
+    "name": "매수·추가매수·보유·매도",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "다섯 매수/추가매수 및 다섯 보유/매도 정책, 현 진입 손익비와 원래 방어선",
+    "actual_data_or_external_status": "실제 주문 없음"
+  },
+  "P6": {
+    "name": "포트폴리오",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "사용자 확인 잔고·체결·실현/평가손익·주기별 가설·방어 이력·위험/비중 제약",
+    "actual_data_or_external_status": "실제 사용자 계좌 입력 없음; NOT_RUN"
+  },
+  "P7": {
+    "name": "GPT 판단",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "버전 지침·Responses API·검증 fact/JSON schema·통합 배치 판단과 명시적 최대 네 후보 선택",
+    "actual_data_or_external_status": "실제 OpenAI NOT_RUN; 키 주입 없음"
+  },
+  "P8": {
+    "name": "기록·복기",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "문맥 포함 불변 판단, 원래 자료/판단 해시와 별도 미래 자료 결합, 5/10/20거래일 성과·복기 축",
+    "actual_data_or_external_status": "실제 GPT 기록/실현 성과 NOT_RUN; PIT 자격 미승격"
+  },
+  "P9": {
+    "name": "브리핑",
+    "implementation_status": "구현·검증 완료",
+    "verification_scope": "OFFLINE_ONLY",
+    "implemented": "최대 스무 후보·GPT 선정 순서·보유 대응·비교·계좌·마지막 가격표, HTML/CSS/브라우저 검사",
+    "actual_data_or_external_status": "독립 출력만 생성, 운영 게시/Streamlit 반영 없음"
+  }
+}

@@ -89,11 +89,11 @@ JSON schema와 검증기는 데이터셋/날짜/종목·모든 인용 fact의 �
 
 ## 출력·브리핑·사후평가
 
-독립 세대는 market.json.gz, investment.duckdb, records.parquet, briefing.json/html, quality.json, model-journal.json, manifest.json과 실제 검증된 판단이 있을 때 decisions/를 저장한다. 전체 종목은 비후보까지 보존한다. DB 구조화 열·전체 JSON·Parquet 값과 해시를 검증한다. 기존 정상 게시본을 교체하지 않는다. 실패 출력은 독립 임시 세대의 FAILURE.json과 진단 상태로 보존한다.
+독립 세대는 market.json.gz, investment.duckdb, records.parquet, briefing.json/html, quality.json, context-at-decision.json, model-journal.json, manifest.json과 실제 검증된 판단이 있을 때 decisions/를 저장한다. 전체 종목은 비후보까지 보존한다. DB 구조화 열·전체 JSON·Parquet 값과 해시를 검증한다. 기존 정상 게시본을 교체하지 않는다. 실패 출력은 독립 임시 세대의 FAILURE.json과 진단 상태로 보존한다.
 
-브리핑은 데이터/국내외 시장/보유 대응/후보/보유 대비 비교/계좌 판단/최종 가격표 순서다. HTML 고정 col 폭·가로 스크롤·종목명 sticky·숫자 nowrap·문자열 escape를 적용한다. 가격표 뒤 설명은 없다. 새 Streamlit 또는 운영 페이지를 배포하지 않는다.
+브리핑은 데이터/국내외 시장/보유 대응/후보/보유 대비 비교/계좌 판단/최종 가격표 순서다. GPT 선정 순서·보유 판단·인용 수치를 명시한다. HTML 고정 col 폭·가로 스크롤·종목명 sticky·숫자 nowrap·문자열 escape를 적용한다. 긴 셀은 말줄임과 전체값 tooltip으로 겹침을 방지한다. 가격표 뒤 설명은 없다. 새 Streamlit 또는 운영 페이지를 배포하지 않는다.
 
-판단은 기존 immutable judgments.record를 재사용한다. mock은 SIMULATED_RECORD이며 실제 GPT 판단/실적과 구분하고 과거 자격을 승격하지 않는다. 사용자 보유/체결과 모델 의견도 별도로 보존한다.
+판단은 기존 immutable judgments.record를 재사용하며 당시 사용한 검증 문맥도 함께 저장한다. mock은 SIMULATED_RECORD이며 실제 GPT 판단/실적과 구분하고 과거 자격을 승격하지 않는다. 사용자 보유/체결과 모델 의견도 별도로 보존한다.
 
 사후평가 명령은 `scripts/evaluate_investment_v2.py`다. 원래 record SHA와 별도 미래 입력 SHA를 모두 요구한다. 미래 입력은 `investment-outcome-input-v1`, stock_code/asof, record_sha256, evidence_dataset_id/evidence_sha256, cutoff, calendar/prices/market/foreign_flows, 선택적 user_trades를 포함한다. 이미 검증된 일봉·시장·관측 시각·동일 가격 기준이 전제다. 미래 bundle의 해시만으로 제공처 진위를 증명하지 않는다.
 
