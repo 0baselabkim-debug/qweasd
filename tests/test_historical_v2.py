@@ -273,3 +273,23 @@ def test_native_derived_restore_verifies_both_triple_format_generations(syntheti
     result=restore(archive,record,tmp_path/'restored')
     assert result['evidence']['database_json_parquet_match'] and result['investment']['database_json_parquet_match']
     with pytest.raises(ValueError,match='must_be_new'):restore(archive,record,tmp_path/'restored')
+
+
+def test_finite_original_backup_preserves_digest_without_data_approval(tmp_path,monkeypatch):
+    from scripts.preserve_historical_sources import acquire
+    from types import SimpleNamespace
+    import subprocess
+    raw=b'synthetic original ZIP bytes';calls=[]
+    def run(argv,stdout,**kw):calls.append(argv);stdout.write(raw);return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(subprocess,'run',run);(tmp_path/'objects').mkdir()
+    source=dict(artifact_id='123',zip_sha256=sha(raw),bytes=len(raw))
+    r=acquire((source,tmp_path));assert r['status']=='PASS_ORIGINAL_ZIP_BYTES' and r['data_approval']=='NOT_PROMOTED'
+    assert acquire((source,tmp_path))['status']==r['status'] and len(calls)==1
+    assert (tmp_path/'objects'/(sha(raw)+'.zip')).read_bytes()==raw
+
+
+def test_original_backup_has_only_finite_feature_trigger_and_read_permissions():
+    text=Path('.github/workflows/historical-source-backup.yml').read_text()
+    assert 'contents: read' in text and 'actions: read' in text and 'secrets.' not in text
+    assert 'schedule:' not in text and 'cron:' not in text and 'kis-validation-auth' not in text
+    assert 'retention-days: 90' in text and 'compression-level: 0' in text

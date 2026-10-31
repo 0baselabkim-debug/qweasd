@@ -14,7 +14,8 @@ from screener.investment_v2.pipeline import verify_bundle
 
 def restore(archive,record,destination):
     archive=Path(archive).resolve();destination=independent(destination,[archive])
-    if any((p/'.git').exists() for p in (destination,*destination.parents)):raise ValueError('restore_destination_inside_git_checkout')
+    if any((p/'.git').is_file() or (p/'.git/HEAD').is_file() for p in (destination,*destination.parents)):
+        raise ValueError('restore_destination_inside_git_checkout')
     if destination.exists():raise ValueError('restore_destination_must_be_new')
     if file_sha(archive)!=record['archive_sha256']:raise ValueError('restore_archive_digest_mismatch')
     with tarfile.open(archive,'r:gz') as tar:
