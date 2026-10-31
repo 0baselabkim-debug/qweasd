@@ -38,7 +38,14 @@ def main():
             or c['mode']!='PRESERVE_EXISTING_ORIGINAL_ZIP_BYTES' or not dt.datetime.fromisoformat(c['not_before'])<=at<dt.datetime.fromisoformat(c['expires_at'])):raise ValueError('finite_backup_control_rejected')
     data=Path('reports/historical-v2-recovery/backup-source-anchors.json').read_bytes()
     if sha(data)!=c['source_anchors_sha256']:raise ValueError('backup_source_anchors_changed')
-    sources=json.loads(data)['sources']
+    anchors=json.loads(data);sources=anchors['sources']
+    review=Path('reports/historical-v2-recovery/credential-exposure-review.json').read_bytes()
+    if sha(review)!=anchors['credential_review_sha256'] or json.loads(review).get('status')!='PASS_NO_UNRESOLVED_CREDENTIAL_CANDIDATES':raise ValueError('source_credential_exposure_review_required')
+    metadata=subprocess.run(['gh','api','repos/0baselabkim-debug/qweasd'],capture_output=True,timeout=40)
+    if metadata.returncode:raise ValueError('repository_access_not_verified')
+    current_repository=json.loads(metadata.stdout)
+    if current_repository['id']!=anchors['repository_id'] or (anchors['repository_private'] and not current_repository['private']):raise ValueError('repository_identity_or_access_widened')
+    sources=sorted(sources,key=lambda s:s['original_expires_at'])
     if len(sources)!=274 or len({s['artifact_id'] for s in sources})!=274 or sum(s['bytes'] for s in sources)>4*1024**3:raise ValueError('finite_backup_population_or_size_changed')
     for s in sources:
         if not s['artifact_id'].isdigit() or not re.fullmatch('[0-9a-f]{64}',s['zip_sha256']):raise ValueError('backup_source_identity_invalid')
@@ -54,6 +61,7 @@ def main():
         source_anchors_sha256=c['source_anchors_sha256'],source_count=len(results),passed=len(results)-len(failed),failed=failed,
         unique_zip_objects=len(list((root/'objects').glob('*.zip'))),zip_bytes=sum(p.stat().st_size for p in (root/'objects').glob('*.zip')),
         retention_days_requested=90,permanent_backup=False,repository_access='same existing repository artifact access; no new external service',
+        repository_private=current_repository['private'],client_side_encryption=False,credential_review_sha256=anchors['credential_review_sha256'],
         provider_finality='NOT_CHANGED',market_HTTP=0,oauth_HTTP=0,OpenAI_HTTP=0)
     (root/'summary.json').write_bytes(encoded(summary))
     with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('Historical original-byte preservation\n\n```json\n'+json.dumps(summary,indent=2)+'\n```\n\nByte preservation is not market-data approval.\n')
