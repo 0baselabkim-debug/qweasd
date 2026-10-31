@@ -27,10 +27,13 @@ def digest(raw):return hashlib.sha256(raw).hexdigest()
 
 
 def github_get(path):
-    if not path.startswith('repos/'+REPO+'/') or '?' in path.split('/')[0] or any(x in path for x in ('..','\\','secrets','dispatch','cancel')):
+    path=path.rstrip('/')
+    if (path!='repos/'+REPO and not path.startswith('repos/'+REPO+'/')) or any(x in path.lower() for x in ('..','\\','secrets','dispatch','cancel')):
         raise ValueError('read_only_GitHub_destination_rejected')
     result=subprocess.run(['gh','api',path,'--method','GET'],capture_output=True,timeout=35)
-    if result.returncode:raise ValueError('read_only_GitHub_metadata_unavailable')
+    if result.returncode:
+        status=re.search(rb'HTTP (\d{3})',result.stderr)
+        raise ValueError('read_only_GitHub_metadata_unavailable:'+path+':HTTP_'+(status[1].decode() if status else 'UNKNOWN'))
     return json.loads(result.stdout)
 
 

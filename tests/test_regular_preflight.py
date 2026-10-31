@@ -85,3 +85,12 @@ def test_exact_nov2_runtime_window_does_not_roll_forward_after_midnight():
     for late in ['2026-11-02T14:20:00Z','2026-11-02T15:01:00Z','2026-11-03T00:00:00Z']:
         with pytest.raises(Failure):policy.window(c,policy.timestamp(late))
         assert c['asof']=='2026-11-02'
+
+
+@pytest.mark.parametrize('suffix',['','/'])
+def test_repository_metadata_uses_canonical_root_without_trailing_slash(monkeypatch,suffix):
+    def transport(args,**kwargs):
+        assert args[2]=='repos/'+audit.REPO
+        return subprocess.CompletedProcess(args,0,b'{"default_branch":"main"}',b'')
+    monkeypatch.setattr(audit.subprocess,'run',transport)
+    assert audit.github_get('repos/'+audit.REPO+suffix)['default_branch']=='main'
