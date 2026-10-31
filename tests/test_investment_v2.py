@@ -638,3 +638,24 @@ def test_independent_saved_market_index_does_not_require_unverified_stock_price(
     html=render(dict(dataset_id=r['dataset_id'],asof=r['asof'],source_manifest_sha256='a'*64,provider_finality='UNVERIFIED',stocks=[r]),
                 {'000720':a.assess(r,context,account)},{},context,account,[])
     assert '국내 지수 KOSPI' in html and '공식 최종 확정으로 표시하지 않습니다' in html
+
+
+def test_decision_record_retains_exact_context_used_by_model(tmp_path):
+    r=row();context=context_facts();account=p.review(None,{})
+    result=dict(status='MOCK_VALIDATED',judgment=reply(r))
+    saved=rec.record_judgment(r,a.assess(r,context,account),result,r['asof']+'T12:00:00Z',tmp_path/'decisions',account,context)
+    payload=json.loads(Path(saved['path']).read_bytes())
+    assert payload['evidence']['verified_context_at_decision']==context
+    assert sha(encoded(payload['evidence']))==payload['evidence_sha256']
+
+
+def test_briefing_displays_GPT_selection_order_holdings_judgment_and_cited_values():
+    r=full_row();context=context_facts();account=cash_account()
+    account['holdings']['000720']=dict(stock_name='합성종목',quantity=10,average_cost_krw='90',defense=None,defense_breached=False)
+    assessment=a.assess(r,context,account);judgment=reply(r);judgment['action']='HOLD'
+    result=dict(status='MOCK_VALIDATED',judgment=judgment)
+    dataset=dict(dataset_id=r['dataset_id'],asof=r['asof'],source_manifest_sha256='a'*64,provider_finality='UNVERIFIED',stocks=[r])
+    html=render(dataset,{'000720':assessment},{'000720':result},context,account,['000720'],['000720'])
+    assert 'GPT 우선 검토 순서: 합성종목 (000720)' in html
+    assert 'GPT 보유 판단 MOCK_VALIDATED · HOLD' in html and 'foreign_flow_metrics.net_5d' in html
+    assert html.endswith('</tbody></table></div></section></body></html>')

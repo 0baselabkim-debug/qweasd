@@ -11,10 +11,11 @@ from screener.decision_evidence.judgments import record, evaluate
 from screener.decision_support.evidence import encoded, sha, timestamp
 
 
-def record_judgment(row, assessment, result, decision_at, output, portfolio):
+def record_judgment(row, assessment, result, decision_at, output, portfolio, context=None):
     if result['status'] not in ('LIVE_VALIDATED', 'MOCK_VALIDATED') or not result.get('judgment'):
         return dict(status='NOT_RUN', reason='no_validated_explicit_GPT_judgment')
     evidence = {**row, 'investment_assessment': assessment,
+                'verified_context_at_decision': context or dict(status='NOT_RUN', facts=[]),
                 'user_portfolio_snapshot': portfolio, 'engine_provenance': {k: v for k, v in result.items() if k != 'judgment'}}
     if result['status'] == 'MOCK_VALIDATED':
         evidence['data_quality'] = {**row['data_quality'], 'historical_backtest_eligible': False}

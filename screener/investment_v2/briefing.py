@@ -18,6 +18,19 @@ def zone(plan):
     return text(z['low'])+' ~ '+text(z['high'])+' ('+text(plan['status'])+')' if z else 'UNAVAILABLE'
 
 
+def judgment_details(judgment):
+    parts = []
+    for field, label in (('thesis', '투자 가설'), ('counter_thesis', '반대 가설'), ('risks', '위험')):
+        for item in judgment.get(field, []):
+            parts.append('<p>'+label+'(가설): '+text(item['text'])+' · 근거 '+text(', '.join(item['fact_ids']))+'</p>')
+    if judgment.get('claims'):
+        parts.append('<ul>')
+        for claim in judgment['claims']:
+            parts.append('<li>'+text(claim['fact_id'])+': '+text(claim['value'])+' '+text(claim['unit'])+'</li>')
+        parts.append('</ul>')
+    return ''.join(parts)
+
+
 def render(dataset, assessments, judgments, context, portfolio, candidate_codes, selected_codes=None):
     by_code = {r['stock_code']: r for r in dataset['stocks']}
     held = portfolio.get('holdings', {})
@@ -50,23 +63,29 @@ def render(dataset, assessments, judgments, context, portfolio, candidate_codes,
         html.append('<p>NOT_RUN: 사용자 확인 보유 정보 없음.</p>')
     for code, p in held.items():
         html.append('<p>'+text(p['stock_name'])+' · 수량 '+text(p['quantity'])+' · 평단 '+text(p['average_cost_krw'])+' · '+text(assessments.get(code, {}).get('holding_action'))+'</p>')
+        result = judgments.get(code, dict(status='NOT_RUN'))
+        judgment = result.get('judgment') or {}
+        html.append('<p>GPT 보유 판단 '+text(result['status'])+' · '+text(judgment.get('action'))+'</p>')
+        html.append(judgment_details(judgment))
     html.append('</section><section id="candidates"><h2>4. 신규 관심 후보 선정</h2>')
     html.append('<p>검토 후보 '+str(len(candidate_codes))+'개, GPT 가설 검증을 통과한 우선 후보 '+str(len(selected))+'개. 자동 매수 목록이 아닙니다.</p>')
+    if selected:
+        html.append('<p>GPT 우선 검토 순서: '+' → '.join(text(by_code[code]['stock_name'])+' ('+text(code)+')' for code in selected)+'</p>')
     for code in candidate_codes:
         row, a = by_code[code], assessments[code]
         result = judgments.get(code, dict(status='NOT_RUN'))
         j = result.get('judgment') or {}
         html.append('<article><h3>'+text(row['stock_name'])+'</h3><p>부분 점수 '+text(a['scorecard']['partial_score'])+'/'+text(a['scorecard']['assessed_maximum'])+
                     ' · 종합 '+text(a['scorecard']['total_score'])+' · GPT '+text(result['status'])+' · 등급 '+text(j.get('grade'))+'</p>')
-        for field, label in (('thesis', '투자 가설'), ('counter_thesis', '반대 가설'), ('risks', '위험')):
-            for item in j.get(field, []):
-                html.append('<p>'+label+'(가설): '+text(item['text'])+' · 근거 '+text(', '.join(item['fact_ids']))+'</p>')
+        html.append(judgment_details(j))
         html.append('</article>')
     html.append('</section><section id="comparison"><h2>5. 기존 종목과 신규 후보 비교</h2>')
     comparisons = [c for result in judgments.values() for c in (result.get('judgment') or {}).get('holding_comparisons', [])]
     html.append('<p>'+(' · '.join(text(c['stock_code'])+': '+text(c['relative_attractiveness']) for c in comparisons) if comparisons else 'NOT_RUN: 검증된 GPT 상대 비교 없음.')+'</p></section>')
     html.append('<section id="portfolio"><h2>6. 포트폴리오 종합 판단</h2><p>상태 '+text(portfolio['status'])+' · 현금 포함 자산 '+text(portfolio.get('assets_krw'))+
                 ' · 전체 계획 위험 비율 '+text(portfolio.get('total_planned_risk_ratio'))+'</p><p>보유 최대 네 종목, 기본 비중 20~30%, 확신 30~35%, 최대 40%. 계좌 입력이 없으면 비중이나 체결을 추정하지 않습니다.</p></section>')
+    if portfolio.get('constraints'):
+        html.append('<p>계좌 제약: '+' · '.join(text(x.get('stock_code'))+': '+text(x['reason']) for x in portfolio['constraints'])+'</p>')
     # Nothing explanatory is appended after this final price table.
     html.append('<section id="prices"><h2>7. 종목별 가격대 통합표</h2><div class="table-scroll"><table aria-label="종목별 가격대" style="width:'+str(sum(w for _, w in PRICE_COLUMNS))+'px"><colgroup>')
     html.extend('<col style="width:'+str(w)+'px">' for _, w in PRICE_COLUMNS)

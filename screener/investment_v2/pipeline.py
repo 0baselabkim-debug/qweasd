@@ -128,7 +128,7 @@ def run(evidence_directory, expected_manifest_sha256, output_root, *, decision_a
                     if result.get('judgment'):
                         assessments[code]['final_grade'] = result['judgment']['grade']
                         assessments[code]['interpretation_status'] = result['status']
-                        rec = record_judgment(by_code[code], assessments[code], result, at, staging/'decisions', account)
+                        rec = record_judgment(by_code[code], assessments[code], result, at, staging/'decisions', account, context)
                         # Persist portable relative locations, not temporary absolute paths.
                         rec['path'] = str(Path(rec['path']).relative_to(staging))
                         records.append(rec)
@@ -164,6 +164,7 @@ def run(evidence_directory, expected_manifest_sha256, output_root, *, decision_a
                 official_price_status='PENDING_KRX' if not all(r['data_quality']['latest_price_verified'] for r in source['stocks']) else 'PRESERVED_CROSSCHECK_NOT_PROVIDER_FINALITY',
                 future_performance='NOT_RUN', unverified_context_not_sent_as_facts=True)
             (staging/'quality.json').write_bytes(encoded(quality))
+            (staging/'context-at-decision.json').write_bytes(encoded(context))
             (staging/'model-journal.json').write_bytes(encoded(engine.journal))
             with duckdb.connect(str(staging/'investment.duckdb')) as db:
                 db.execute('create table assessments(source_order integer,stock_code varchar primary key,trade_date date,dataset_id varchar,payload json)')
