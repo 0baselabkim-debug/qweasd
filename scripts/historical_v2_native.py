@@ -109,10 +109,12 @@ def main():
     if file_sha(root/'price-pool/bars.json.gz')!=anchors['pool_bars_sha256']:raise ValueError('native_verified_pool_values_changed')
     common=dict(price_pool={k:pool[k] for k in ['directory','manifest_sha256']},calendar=dict(file=str(cp),sha256=sha(cp.read_bytes())))
     if c['mode']=='OFFLINE_INPUT_REVALIDATION_ONLY':
+        from scripts.build_historical_outcomes import build as outcomes_build
+        outcomes = outcomes_build(root/'price-pool',pool['manifest_sha256'],cp,sha(cp.read_bytes()),now.isoformat(),output/'retrospective-price-paths')
         (output/'input-validation.json').write_bytes(encoded(dict(status='PASS_CURRENT_STRICT_INPUT_GUARDS',run_id=os.environ['GITHUB_RUN_ID'],
             code_commit=os.environ['GITHUB_SHA'],sources=[dict(artifact_id=s['artifact_id'],asof=s['asof'],complete=s['complete'],master_raw_replayed=True) for s in sources],
             official_session_days=len(calendar['days']),verified_pool_bars=pool['bars'],verified_pool_bars_sha256=file_sha(root/'price-pool/bars.json.gz'),
-            original_bytes_unchanged=True,market_HTTP=0,oauth_HTTP=0,OpenAI_HTTP=0)))
+            original_bytes_unchanged=True,retrospective_outcomes=dict(rows=outcomes['rows'],counts=outcomes['counts'],manifest_sha256=outcomes['manifest_sha256'],strategy_performance='NOT_RUN'),market_HTTP=0,oauth_HTTP=0,OpenAI_HTTP=0)))
         with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('Current strict historical input guards: PASS. Raw masters, physical budgets and failed-original states independently rechecked; no market or OAuth requests.\n')
         return
     jobs=[]

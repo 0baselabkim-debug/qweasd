@@ -315,3 +315,26 @@ def test_recovery_actual_opener_spacing_survives_variable_reservation_delay(tmp_
     b.before('KIS','/oauth2/tokenP','synthetic');clock[0]=.5;b.dispatch(opener,object(),30)
     clock[0]=1.05;b.before('KIS',Q+'investor-trade-by-stock-daily','synthetic');b.dispatch(opener,object(),30)
     assert dispatch[1]-dispatch[0]>=1.05 and len(b.dispatched)==2
+
+
+def test_outcome_writer_preserves_sources_and_requires_all_three_formats(tmp_path):
+    import duckdb
+    from scripts.build_historical_outcomes import build
+    source=tmp_path/'pool';source.mkdir();cal=tmp_path/'calendar.json'
+    days=[(dt.date(2020,1,1)+dt.timedelta(days=i)).isoformat() for i in range(21)]
+    book={'|'.join(('000720',d,'KOSPI')):dict(symbol='000720',market='KOSPI',trade_date=d,
+        value=dict(close=100+i),official_source_ids=['fixture-official'],sources=[dict(observed_at='2020-02-01T00:00:00Z')]) for i,d in enumerate(days)}
+    (source/'bars.json.gz').write_bytes(gzip.compress(encoded(book),mtime=0))
+    with duckdb.connect(str(source/'prices.duckdb')) as db:
+        db.execute('create table prices(key varchar,payload json)')
+        db.executemany('insert into prices values (?,?)',[(k,encoded(v).decode()) for k,v in book.items()])
+        db.execute('copy prices to ? (format parquet)',[str(source/'prices.parquet')])
+    manifest=dict(analysis_mode='RETROSPECTIVE_REANALYSIS',historical_backtest_eligible=False,cutoff='2020-02-01T00:00:00Z',bars=len(book),files={p.name:sha(p.read_bytes()) for p in source.iterdir()})
+    (source/'manifest.json').write_bytes(encoded(manifest));cal.write_bytes(encoded(dict(days=days,status='OFFICIAL_POSITIVE_SESSIONS_INDEPENDENTLY_CROSSCHECKED')))
+    before={str(p):p.read_bytes() for p in [*source.iterdir(),cal]};args=(source,sha(encoded(manifest)),cal,sha(cal.read_bytes()),'2020-03-01T00:00:00Z')
+    r=build(*args,tmp_path/'out');assert r['rows']==21 and r['JSON_DuckDB_Parquet_match'] and not r['point_in_time_backtest']
+    assert r['counts']['20:OBSERVED_RETROSPECTIVELY_NOT_STRATEGY_VALIDATION']==1
+    assert r['strategy_performance']=='NOT_RUN' and all(Path(p).read_bytes()==v for p,v in before.items())
+    with pytest.raises(ValueError,match='must_be_new'):build(*args,tmp_path/'out')
+    with pytest.raises(ValueError,match='calendar_anchor'):build(source,args[1],cal,'0'*64,args[4],tmp_path/'bad')
+    assert not (tmp_path/'bad').exists()
