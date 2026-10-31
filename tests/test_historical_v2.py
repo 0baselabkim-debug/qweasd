@@ -235,3 +235,41 @@ def test_native_reconstruction_has_no_market_secret_schedule_or_shared_lock():
     assert 'secrets.' not in text and 'schedule:' not in text and 'cron:' not in text
     assert 'kis-validation-auth' not in text and 'contents: read' in text
     assert "paths: ['.github/recovery/historical-v2-validation.json']" in text
+
+
+def test_spent_one_off_kis_recovery_cannot_be_rearmed(monkeypatch):
+    import runpy
+    import urllib.request
+    monkeypatch.setattr(urllib.request,'urlopen',lambda *a,**k:pytest.fail('spent allowance must not call any HTTP'))
+    with pytest.raises(SystemExit,match='allowance exhausted'):
+        runpy.run_path('scripts/recover_historical_kis.py',run_name='__main__')
+
+
+@pytest.mark.parametrize('bad',['path','symlink','duplicate'])
+def test_native_archive_restore_rejects_unsafe_entries(tmp_path,bad):
+    import tarfile
+    from scripts.restore_historical_v2 import restore
+    archive=tmp_path/'bad.tar.gz'
+    with tarfile.open(archive,'w:gz') as tar:
+        m=tarfile.TarInfo('../outside' if bad=='path' else 'data.json');m.size=0
+        if bad=='symlink':m.type=tarfile.SYMTYPE;m.linkname='/outside'
+        tar.addfile(m,io.BytesIO(b''))
+        if bad=='duplicate':tar.addfile(m,io.BytesIO(b''))
+    with pytest.raises(ValueError):restore(archive,dict(archive_sha256=sha(archive.read_bytes())),tmp_path/'new')
+    assert not (tmp_path/'new').exists()
+
+
+def test_native_derived_restore_verifies_both_triple_format_generations(synthetic_source,tmp_path):
+    import tarfile
+    from screener.decision_evidence import build as b
+    from screener.investment_v2.pipeline import run
+    from scripts.restore_historical_v2 import restore
+    source,_=synthetic_source;jobroot=tmp_path/'packed-job';e=b.build(source,jobroot/'evidence','2020-04-02T00:00:00Z')
+    i=run(e['directory'],e['validation']['manifest_sha256'],jobroot/'investment');archive=tmp_path/'job.tar.gz'
+    with tarfile.open(archive,'w:gz') as tar:
+        for f in sorted(jobroot.rglob('*')):
+            if f.is_file():tar.add(f,arcname=str(f.relative_to(jobroot)))
+    record=dict(job='synthetic',asof='2020-03-20',archive_sha256=sha(archive.read_bytes()),evidence_dataset_id=e['dataset_id'],investment_dataset_id=i['dataset_id'],evidence_validation=e['validation'],investment_validation=i['validation'])
+    result=restore(archive,record,tmp_path/'restored')
+    assert result['evidence']['database_json_parquet_match'] and result['investment']['database_json_parquet_match']
+    with pytest.raises(ValueError,match='must_be_new'):restore(archive,record,tmp_path/'restored')

@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "source_artifact_id": "12983267630",
+  "source_run_id": "41052557610",
+  "original_physical_http": 4693,
+  "approved_additional_http": 3,
+  "spent_additional_http": 3,
+  "remaining_additional_http": 0,
+  "cumulative_physical_http": 4696,
+  "original_max_total_http": 5600,
+  "recovery_run_id": "41214485473",
+  "recovery_artifact_id": "13047179366",
+  "recovery_artifact_sha256": "f0a61ffcfbc72ca260cfb3c5a444aaa6e22e5d05c9aa4f6b784235358a1231ec",
+  "http_ledger_sha256": "c9847f91f9529055acee1ad87952ea444e47151d15ea3057e5bf524348ef5a3c",
+  "status": "EXHAUSTED_STOPPED_ON_PERSISTENT_PROVIDER_CONFLICT",
+  "result": "FAIL",
+  "reason": "flow_price_conflict",
+  "future_policy": "This one-off recovery must not be rearmed. Any separately approved recovery must restore this history and reserve a new bounded allowance atomically before OAuth.",
+  "automatic_retries": 0
+}
