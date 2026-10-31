@@ -627,3 +627,14 @@ def test_GPT_does_not_invalidate_a_thesis_the_user_never_provided():
     r=full_row();account=cash_account();account['holdings']['000720']=dict(defense=None,defense_breached=False)
     context=context_facts();out=a.assess(r,context,account);j=reply(r);j['action']='THESIS_INVALIDATED'
     with pytest.raises(ValueError,match='unknown_thesis'):e.validate(j,r,out,c.facts_for(r,context),account,r['asof']+'T12:00:00Z')
+
+
+def test_independent_saved_market_index_does_not_require_unverified_stock_price():
+    r=row();r['data_quality']['latest_price_verified']=False;r['price_trend_metrics']['close']['value']=None
+    facts=c.facts_for(r,dict(facts=[]))
+    assert 'relative_strength_metrics.market_return_5d_pct' in facts
+    assert 'relative_strength_metrics.stock_return_5d_pct' not in facts
+    account=p.review(None,{});context=dict(status='NOT_RUN',facts=[])
+    html=render(dict(dataset_id=r['dataset_id'],asof=r['asof'],source_manifest_sha256='a'*64,provider_finality='UNVERIFIED',stocks=[r]),
+                {'000720':a.assess(r,context,account)},{},context,account,[])
+    assert '국내 지수 KOSPI' in html and '공식 최종 확정으로 표시하지 않습니다' in html

@@ -32,6 +32,12 @@ def render(dataset, assessments, judgments, context, portfolio, candidate_codes,
         '<p>거래일 '+text(dataset['asof'])+' · dataset '+text(dataset['dataset_id'])+' · 원천 '+text(dataset['source_manifest_sha256'])+'</p>',
         '<p>공급자 최종성 '+text(dataset.get('provider_finality'))+' · 내부 검증과 공식 최종 확정은 별개입니다. 과거 관측의 소급 변경과 자동주문은 없습니다.</p></section>',
         '<section id="macro"><h2>2. 국내외 시장 및 매크로 환경</h2>']
+    for market in ('KOSPI', 'KOSDAQ'):
+        readings = [value(r, 'relative_strength_metrics', 'market_return_5d_pct') for r in dataset['stocks'] if r['market'] == market]
+        available = {v for v in readings if v is not None}
+        result = next(iter(available)) if len(available) == 1 else None
+        html.append('<p>국내 지수 '+market+' · '+text(dataset['asof'])+' 기준 5거래일 변화 '+text(result)+
+                    '% · 보존된 공급자 지수 관측이며 공식 최종 확정으로 표시하지 않습니다.</p>')
     if context['facts']:
         html.append('<ul>')
         for fact in context['facts']:

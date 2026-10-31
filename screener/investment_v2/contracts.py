@@ -82,7 +82,8 @@ def facts_for(row, context):
             val = item['value']
             if not isinstance(val, (int, float, str, bool)):
                 continue
-            if group not in ('foreign_flow_metrics', 'institution_flow_metrics', 'flow_persistence_metrics') and not row['data_quality']['latest_price_verified']:
+            independent_index = group == 'relative_strength_metrics' and key in ('market_return_5d_pct', 'market_return_20d_pct')
+            if group not in ('foreign_flow_metrics', 'institution_flow_metrics', 'flow_persistence_metrics') and not independent_index and not row['data_quality']['latest_price_verified']:
                 continue
             unit = ('shares' if 'quantity' in key else 'KRW' if group == 'foreign_flow_metrics' and key.startswith(('net_', 'previous_', 'change_', 'day_change')) else
                     'percent' if key.endswith('_pct') else 'percentage_points' if key.endswith('_pp') else 'source_metric')
