@@ -51,7 +51,7 @@ def main():
     if not 1<=a.workers<=2:raise ValueError('offline_batch_workers_limit_two')
     config=json.loads(Path(a.jobs).read_bytes());jobs=config['jobs']
     if len({j['id'] for j in jobs})!=len(jobs):raise ValueError('duplicate_batch_job')
-    if any(j['source_kind'] not in ('historical-collector','historical-publication') for j in jobs):raise ValueError('historical_sources_only')
+    if any(j['source_kind'] not in ('historical-collector','historical-publication','historical-checkpoint') for j in jobs):raise ValueError('historical_sources_only')
     results=[]
     with concurrent.futures.ProcessPoolExecutor(max_workers=a.workers) as pool:
         for r in pool.map(execute,[(j,config) for j in jobs]):

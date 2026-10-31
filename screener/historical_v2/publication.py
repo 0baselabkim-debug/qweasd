@@ -72,7 +72,7 @@ def load(root,cutoff,reference_directory,*,proof):
     return dict(index=idx,rows=rows,calendars={market:days for market in ('KOSPI','KOSDAQ')},benchmarks=benchmarks,official=official,
         official_sources=official_sources,official_errors=errors,priority_symbols=[],macro=[],macro_source_file=None,input_file_hashes=files,
         reference_file_hashes=hashes,source_manifest_sha256=proof['manifest_sha256'],input_index_sha256=sha(encoded(proof)),
-        known_source_observation_latest=max(latest,key=timestamp) if latest else None,source_publication_time=None,historical_backtest_eligible=False,
+        known_source_observation_latest=max([*latest,*[s['observed_at'] for s in official_sources.values()]],key=timestamp) if latest or official_sources else None,source_publication_time=None,historical_backtest_eligible=False,
         source_verification=dict(status='RETROSPECTIVE_PUBLICATION_AND_VERIFIED_PRICE_POOL',collection_complete=False,original_publication_asof=m['asof'],
             historical_membership_verified=known,source_flow_validation='PUBLICATION_ONLY; exact row observation time unavailable',
             analysis_mode='RETROSPECTIVE_REANALYSIS',official_calendar_status=cal['status']),

@@ -6,6 +6,7 @@ from pathlib import Path
 import urllib.error
 import zipfile
 import pytest
+from test_decision_evidence import synthetic_source
 from screener.historical_v2.assets import inspect_zip,extract_verified,select_generation
 from screener.historical_v2.krx_recovery import check_control,collect_one,PAIRS
 from screener.decision_support.evidence import encoded,sha
@@ -189,3 +190,41 @@ def test_minimal_recovery_rate_is_dispatch_based_after_shared_reservation(tmp_pa
     b.before('KIS','/oauth2/tokenP','synthetic');current[0]+=.5
     b.before('KIS',Q+'investor-trade-by-stock-daily','synthetic')
     assert abs(waits[0]-.55)<1e-8 and current[0]>=101.05
+
+
+@pytest.mark.parametrize('kind',['historical-collector','historical-publication'])
+def test_retrospective_full_v2_e2e_labels_and_all_formats(synthetic_source,tmp_path,monkeypatch,kind):
+    from screener.decision_evidence import build as b
+    from screener.historical_v2 import collector,publication
+    from screener.investment_v2.pipeline import run,verify_bundle
+    root,out=synthetic_source;value=b.load(root,'2020-04-02T00:00:00Z')
+    value['source_verification'].update(collection_complete=True)
+    monkeypatch.setattr(collector if kind=='historical-collector' else publication,'load',lambda *a,**kw:value)
+    e=b.build(root,out,'2020-04-02T00:00:00Z',source_kind=kind,source_proof={'synthetic_test_only':True})
+    r=run(e['directory'],e['validation']['manifest_sha256'],tmp_path/'investment')
+    p=Path(r['directory']);market=json.loads(gzip.decompress((p/'market.json.gz').read_bytes()))
+    assert market['analysis_mode']=='RETROSPECTIVE_REANALYSIS' and market['stocks'][0]['analysis_mode']=='RETROSPECTIVE_REANALYSIS'
+    assert market['historical_backtest_eligible'] is False and r['quality']['OpenAI_live_HTTP']==0
+    assert '당시 투자 판단 또는 실제 매매 기록이 아닙니다' in (p/'briefing.html').read_text()
+    assert verify_bundle(p,r['validation']['manifest_sha256'])['database_json_parquet_match']
+    assert (root/'immutable').read_bytes()==b'original'
+
+
+def test_price_pool_anchor_and_corrupt_file_never_approve(tmp_path):
+    from screener.historical_v2.price_pool import load
+    manifest=dict(analysis_mode='RETROSPECTIVE_REANALYSIS',historical_backtest_eligible=False,cutoff='2020-01-01T00:00:00Z',files={'bars.json.gz':'0'*64})
+    (tmp_path/'manifest.json').write_bytes(encoded(manifest));(tmp_path/'bars.json.gz').write_bytes(b'broken')
+    with pytest.raises(ValueError,match='anchor'):load(tmp_path,'a'*64,'2020-01-02T00:00:00Z')
+    with pytest.raises(ValueError,match='hash_mismatch'):load(tmp_path,sha(encoded(manifest)),'2020-01-02T00:00:00Z')
+
+
+@pytest.mark.parametrize('kind',['hash','incomplete','duplicate_universe','overlapping_exclusions'])
+def test_legacy_checkpoint_rejects_invalid_source_before_loading_pool(tmp_path,kind):
+    from screener.historical_v2.checkpoint import load
+    b=dict(trade_date='20261015',exchange='KRX',status='complete',failures={},completed_at='2026-10-15T12:00:00Z',universe=[dict(symbol='000720')],records={'000720':{}},excluded={})
+    if kind=='incomplete':b['status']='partial'
+    if kind=='duplicate_universe':b['universe']*=2
+    if kind=='overlapping_exclusions':b['excluded']={'000720':'synthetic'}
+    raw=gzip.compress(encoded(b));(tmp_path/'bundle.json.gz').write_bytes(raw)
+    proof=dict(bundle_sha256='0'*64 if kind=='hash' else sha(raw),asof='2026-10-15')
+    with pytest.raises(ValueError):load(tmp_path,'2026-10-31T00:00:00Z',None,proof=proof)

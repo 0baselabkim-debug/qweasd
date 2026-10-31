@@ -109,6 +109,9 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
     elif source_kind=='historical-publication':
         from screener.historical_v2.publication import load as load_publication
         source=load_publication(snapshot,knowledge_cutoff,reference_directory,proof=source_proof)
+    elif source_kind=='historical-checkpoint':
+        from screener.historical_v2.checkpoint import load as load_checkpoint
+        source=load_checkpoint(snapshot,knowledge_cutoff,reference_directory,proof=source_proof)
     else:raise ValueError('unsupported_evidence_source_kind')
     index=source['index']
     if not 0 <= limit <= 20:raise ValueError('briefing_limit_must_be_0_to_20')
@@ -149,6 +152,9 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
         if source_kind.startswith('historical-'):
             row.update(analysis_mode='RETROSPECTIVE_REANALYSIS',source_collection_complete=source['source_verification']['collection_complete'])
             row['population_eligibility']=stock.get('population_eligibility','VERIFIED_SOURCE_MASTER')
+            row['source_references']['retrospective_price_pool']=source_proof.get('price_pool')
+            row['source_references']['retrospective_price_lookup']=dict(symbol=stock['symbol'],market=stock['market'],date_field='price_series.trade_date',
+                later_observations_may_be_used=True,original_observations_unchanged=True)
         for path,value in metrics_in(features):
             if value['value'] is None:missing[path+'|'+str(value.get('reason'))]+=1
             else:available[path]+=1

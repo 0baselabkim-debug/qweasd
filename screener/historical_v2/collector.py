@@ -36,6 +36,7 @@ def inspect(root, proof):
     report=read(root/proof['report_path']);folder=(root/proof['report_path']).parent
     if not folder.is_relative_to(root): raise ValueError('unsafe_report_path')
     asof=report['asof']
+    if proof.get('asof',asof)!=asof:raise ValueError('historical_proof_date_mismatch')
     if str(report['run_id'])!=str(proof['run_id']) or manifest['asof']!=asof: raise ValueError('historical_run_or_date_mismatch')
     universe=read(root/proof['universe_path']);selected={r['symbol']:r for r in universe if r['eligible']}
     if len({r['symbol'] for r in universe})!=len(universe) or report['population_sha256']!=sha(encoded(universe)):
@@ -161,7 +162,7 @@ def load(root,knowledge_cutoff,reference_directory=None,*,proof):
         coverage=dict(stocks=len(rows),KIS_internal_pass=len(r['rows']),provider_final_confirmed=0),units=dict(price='KRW',volume='shares',turnover='KRW',quantity='shares',foreign_amount='KRW; provider million x 1000000',institution_amount='UNVERIFIED'))
     return dict(index=index,rows=rows,calendars=calendars,benchmarks=benchmarks,official=official,official_sources=sources,official_errors=errors,
         priority_symbols=[],macro=[],macro_source_file=None,input_file_hashes=v['files'],reference_file_hashes=ref_hashes,
-        source_manifest_sha256=proof['manifest_sha256'],input_index_sha256=sha(encoded(r)),known_source_observation_latest=max([r['completed_at'],*pool_times],key=timestamp),
+        source_manifest_sha256=proof['manifest_sha256'],input_index_sha256=sha(encoded(r)),known_source_observation_latest=max([r['completed_at'],*pool_times,*[s['observed_at'] for s in sources.values()]],key=timestamp),
         source_publication_time=None,historical_backtest_eligible=False,
         source_verification=dict(status='PASS_RAW_MASTER_MANIFEST_DB_REPLAY',collection_complete=v['complete'],source_status=r['status'],
             target=len(v['selected']),validated=len(r['rows']),unresolved_http=v['unresolved_http'],original_physical_HTTP=v['physical_http'],
