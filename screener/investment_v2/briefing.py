@@ -1,5 +1,5 @@
 """Standalone escaped HTML. The fixed-column price table is the final section."""
-from html import escape
+from html import escape, unescape
 
 from .contracts import value
 
@@ -15,7 +15,8 @@ def text(x):
 
 def zone(plan):
     z = plan.get('entry_zone')
-    return text(z['low'])+' ~ '+text(z['high'])+' ('+text(plan['status'])+')' if z else 'UNAVAILABLE'
+    status = {'APPLICABLE_FOR_REVIEW':'검토 가능','INAPPLICABLE':'조건 미충족','UNAVAILABLE':'자료 부족'}.get(plan['status'], '검토 보류')
+    return text(z['low'])+' ~ '+text(z['high'])+' ('+status+')' if z else '확인 불가'
 
 
 def judgment_details(judgment):
@@ -39,7 +40,7 @@ def render(dataset, assessments, judgments, context, portfolio, candidate_codes,
     html = ['<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
         '<title>독립 투자 판단 브리핑</title><style>body{font-family:sans-serif;line-height:1.5} .table-scroll{overflow-x:auto;max-width:100%}',
         'table{table-layout:fixed;border-collapse:separate;border-spacing:0}th,td{padding:10px;border:1px solid #ddd;vertical-align:top;overflow-wrap:normal}',
-        '.number{white-space:nowrap;word-break:keep-all}th:first-child,td:first-child{position:sticky;left:0;background:#fff;z-index:2}',
+        '.number{white-space:nowrap;word-break:keep-all;overflow:hidden;text-overflow:ellipsis}th:first-child,td:first-child{position:sticky;left:0;background:#fff;z-index:2}',
         'thead th:first-child{z-index:3}.wrap{white-space:normal;word-break:keep-all}</style></head><body>',
         '<h1>독립 투자 판단 브리핑</h1><section id="data"><h2>1. 데이터 기준과 검증 상태</h2>',
         '<p>거래일 '+text(dataset['asof'])+' · dataset '+text(dataset['dataset_id'])+' · 원천 '+text(dataset['source_manifest_sha256'])+'</p>',
@@ -49,8 +50,8 @@ def render(dataset, assessments, judgments, context, portfolio, candidate_codes,
         readings = [value(r, 'relative_strength_metrics', 'market_return_5d_pct') for r in dataset['stocks'] if r['market'] == market]
         available = {v for v in readings if v is not None}
         result = next(iter(available)) if len(available) == 1 else None
-        html.append('<p>국내 지수 '+market+' · '+text(dataset['asof'])+' 기준 5거래일 변화 '+text(result)+
-                    '% · 보존된 공급자 지수 관측이며 공식 최종 확정으로 표시하지 않습니다.</p>')
+        html.append('<p>국내 지수 '+market+' · '+text(dataset['asof'])+' 기준 5거래일 변화 '+(text(result)+'%' if result is not None else '확인 불가')+
+                    ' · 보존된 공급자 지수 관측이며 공식 최종 확정으로 표시하지 않습니다.</p>')
     if context['facts']:
         html.append('<ul>')
         for fact in context['facts']:
@@ -115,7 +116,7 @@ def render(dataset, assessments, judgments, context, portfolio, candidate_codes,
                 text(p['upside_observation_1']), text(p['upside_observation_2']), '추세 재평가·유지 시 보유 검토',
                 text(protection), text(expected), (('기존: ' if old.get('defense') else '구조 후보: ')+text(defense)) if defense is not None else 'UNAVAILABLE',
                 text(' · '.join(p['invalidation_conditions'])), text(j.get('action') or a['holding_action'])+' · 비중 '+text(old.get('weight_ratio'))]
-        html.append('<tr>'+''.join('<td class="'+('wrap' if i in (4, 7, 11, 12) else 'number')+'">'+v+'</td>' for i, v in enumerate(cells))+'</tr>')
+        html.append('<tr>'+''.join('<td title="'+escape(unescape(v),quote=True)+'" class="'+('wrap' if i in (4, 7, 11, 12) else 'number')+'">'+v+'</td>' for i, v in enumerate(cells))+'</tr>')
     if not codes:
         html.append('<tr><td colspan="'+str(len(PRICE_COLUMNS))+'">검증된 후보·사용자 확인 보유 정보 없음. 가격을 임의 생성하지 않았습니다.</td></tr>')
     html.append('</tbody></table></div></section></body></html>')

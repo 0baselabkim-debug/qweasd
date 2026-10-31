@@ -303,6 +303,7 @@ def test_briefing_price_table_layout_escaping_and_last_section():
     context=context_facts();account=cash_account();out=a.assess(r,context,account)
     html=render(dict(dataset_id=r['dataset_id'],asof=r['asof'],source_manifest_sha256='a'*64,provider_finality='UNVERIFIED',stocks=[r]),{'000720':out},{},context,account,['000720'])
     assert 'position:sticky' in html and 'overflow-x:auto' in html and 'white-space:nowrap' in html
+    assert 'overflow:hidden;text-overflow:ellipsis' in html and 'title=' in html
     assert html.count('<col style=')==len(PRICE_COLUMNS) and '<script>' not in html
     assert html.endswith('</tbody></table></div></section></body></html>')
     assert '추세 재평가·유지 시 보유' in html
