@@ -21,7 +21,8 @@ def record_judgment(row, assessment, result, decision_at, output, portfolio, con
         evidence['data_quality'] = {**row['data_quality'], 'historical_backtest_eligible': False}
     judged = result['judgment']
     found = record(evidence, encoded(judged).decode(), decision_at, judged['invalidation'], output)
-    return dict(**found, status='SIMULATED_RECORD' if result['status'] == 'MOCK_VALIDATED' else 'GPT_RECORD',
+    return dict(**found, status=('RETROSPECTIVE_RECONSTRUCTED_RECORD' if row.get('analysis_mode')=='RETROSPECTIVE_REANALYSIS'
+                else 'SIMULATED_RECORD' if result['status'] == 'MOCK_VALIDATED' else 'GPT_RECORD'),
                 actual_model_call=result['status'] == 'LIVE_VALIDATED')
 
 

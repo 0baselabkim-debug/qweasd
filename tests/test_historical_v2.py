@@ -105,3 +105,47 @@ def test_only_explicit_control_push_and_krx_secret_no_schedule_or_kis():
     assert 'schedule:' not in text and 'cron:' not in text and 'KIS_APP' not in text
     assert "paths: ['.github/recovery/historical-krx.json']" in text
     assert 'cancel-in-progress: false' in text and 'queue: max' in text
+
+
+def test_observed_calendar_requires_exact_independent_session_set():
+    from screener.historical_v2.calendar import check_sessions
+    days=['2026-10-23','2026-10-26','2026-10-27']
+    assert check_sessions({m:days for m in ['KOSPI','KOSDAQ']},{m:days for m in ['KOSPI','KOSDAQ']})==days
+    with pytest.raises(ValueError,match='gap_or_conflict'):
+        check_sessions({m:days for m in ['KOSPI','KOSDAQ']},{m:days+['2026-10-24'] for m in ['KOSPI','KOSDAQ']})
+    with pytest.raises(ValueError,match='disagree'):
+        check_sessions({'KOSPI':days,'KOSDAQ':days[:-1]},{m:days for m in ['KOSPI','KOSDAQ']})
+
+
+def test_minimal_kis_budget_preserves_parent_and_allows_no_retry(tmp_path):
+    from screener.historical_v2.kis_recovery import RecoveryBudget
+    from collector_v1.core import Store,Failure
+    from collector_v1.providers import Q
+    b=RecoveryBudget(Store(tmp_path))
+    for endpoint in ['/oauth2/tokenP',Q+'investor-trade-by-stock-daily',Q+'inquire-daily-itemchartprice']:
+        e=b.before('KIS',endpoint,'synthetic');b.finish(e,'received',http=200)
+    assert b.used==3 and json.loads((tmp_path/'parent-budget.json').read_bytes())['original_physical_http']==4693
+    with pytest.raises(Failure):b.before('KIS','/oauth2/tokenP','retry')
+    with pytest.raises(ValueError,match='anchor'):RecoveryBudget(Store(tmp_path/'wrong'),0)
+
+
+def test_minimal_kis_checks_window_before_each_physical_dispatch(tmp_path):
+    from screener.historical_v2.kis_recovery import RecoveryBudget
+    from collector_v1.core import Store
+    def expired():raise ValueError('expired')
+    b=RecoveryBudget(Store(tmp_path),validator=expired)
+    with pytest.raises(ValueError,match='expired'):b.before('KIS','/oauth2/tokenP','synthetic')
+    assert b.used==0 and not (tmp_path/'http.jsonl').exists()
+
+
+def test_official_alphanumeric_symbol_uses_unchanged_six_field_values(tmp_path):
+    from screener.decision_support.evidence import official_rows
+    obj=dict(asof='2026-10-29',observed_at='2026-10-31T15:00:00Z',url='https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261029',
+             rows=[dict(ISU_CD='0001A0',BAS_DD='20261029',MKT_NM='KOSPI',TDD_OPNPRC='100',TDD_HGPRC='110',TDD_LWPRC='90',TDD_CLSPRC='105',ACC_TRDVOL='10',ACC_TRDVAL='1000')])
+    p=tmp_path/'official.json';p.write_bytes(encoded(obj));rows,_,errors=official_rows([p],'2026-10-29')
+    assert rows[('0001A0','2026-10-29','KOSPI')][0]['value']['close']==105 and not errors
+
+
+def test_unknown_historical_population_cannot_generate_candidates():
+    from screener.decision_evidence.build import candidates
+    assert candidates([dict(population_eligibility='UNKNOWN_HISTORICAL')],[])['returned']==0

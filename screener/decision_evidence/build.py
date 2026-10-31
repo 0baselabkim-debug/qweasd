@@ -33,6 +33,7 @@ def candidates(records, priority_symbols, limit=20):
     order = {code:i for i,code in enumerate(priority_symbols)}
     selected = []
     for position,row in enumerate(records):
+        if row.get('population_eligibility')=='UNKNOWN_HISTORICAL':continue
         get = lambda group,key:row[group].get(key,{}).get('value')
         if any(get(group,key) is None for group,key in (
                 ('foreign_flow_metrics','net_5d'),('foreign_flow_metrics','net_20d'),
@@ -105,12 +106,15 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
     elif source_kind=='historical-collector':
         from screener.historical_v2.collector import load as load_historical
         source=load_historical(snapshot,knowledge_cutoff,reference_directory,proof=source_proof)
+    elif source_kind=='historical-publication':
+        from screener.historical_v2.publication import load as load_publication
+        source=load_publication(snapshot,knowledge_cutoff,reference_directory,proof=source_proof)
     else:raise ValueError('unsupported_evidence_source_kind')
     index=source['index']
     if not 0 <= limit <= 20:raise ValueError('briefing_limit_must_be_0_to_20')
     if not source['rows']:raise ValueError('empty_source_population')
     code={str(p.relative_to(ROOT)):sha(p.read_bytes()) for folder in ('decision_evidence','decision_support') for p in sorted((ROOT/'screener'/folder).glob('*.py'))}
-    if source_kind=='historical-collector':
+    if source_kind.startswith('historical-'):
         code.update({str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in sorted((ROOT/'screener/historical_v2').glob('*.py'))})
     identity=dict(schema_version=SCHEMA_VERSION,source_generation_id=index['dataset_id'],source_manifest_sha256=source['source_manifest_sha256'],
         input_index_sha256=source['input_index_sha256'],source_tree_sha256=sha(encoded(source['input_file_hashes'])),source_kind=source_kind,
@@ -142,8 +146,9 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
                 known_latest_source_observation=source['known_source_observation_latest'],point_in_time_reproducible=False),
             automatic_order=None,investment_recommendation=None)
         row['missing_fields']=[dict(field=path,reason=value.get('reason')) for path,value in metrics_in(features) if value['value'] is None]
-        if source_kind=='historical-collector':
+        if source_kind.startswith('historical-'):
             row.update(analysis_mode='RETROSPECTIVE_REANALYSIS',source_collection_complete=source['source_verification']['collection_complete'])
+            row['population_eligibility']=stock.get('population_eligibility','VERIFIED_SOURCE_MASTER')
         for path,value in metrics_in(features):
             if value['value'] is None:missing[path+'|'+str(value.get('reason'))]+=1
             else:available[path]+=1
@@ -173,7 +178,7 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
         provider_finality=index['provider_finality'],validation_status='DERIVED_WITH_METRIC_HOLDS',historical_backtest_eligible=False,
         units={**index.get('units',{}),'concentration_and_activity':'ratio','close_location':'ratio_0_to_1','pivot_distance':'percent'},
         calendar_provenance=source.get('calendar_provenance','PRESERVED_OPERATING_CALENDAR_AND_QUALIFIED_KIS_INDEX_SESSIONS; no synthetic weekdays or new calendar lookup'))
-    if source_kind=='historical-collector':
+    if source_kind.startswith('historical-'):
         market.update(analysis_mode='RETROSPECTIVE_REANALYSIS',source_collection_complete=source['source_verification']['collection_complete'])
     staging=Path(tempfile.mkdtemp(prefix='.candidate-',dir=output_root))
     try:
@@ -186,7 +191,13 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
         (staging/'price-conflicts.csv.gz').write_bytes(gzip.compress(buffer.getvalue().encode(),mtime=0))
         with duckdb.connect(str(staging/'evidence.duckdb')) as db:
             db.execute('create table evidence(source_order integer, stock_code varchar primary key, trade_date date, dataset_id varchar, payload json)')
-            db.executemany('insert into evidence values (?,?,?,?,?)',[(i,r['stock_code'],r['asof'],dataset_id,encoded(r).decode()) for i,r in enumerate(records)])
+            if source_kind.startswith('historical-'):
+                import pandas as pd
+                frame=pd.DataFrame([(i,r['stock_code'],r['asof'],dataset_id,encoded(r).decode()) for i,r in enumerate(records)],columns=['source_order','stock_code','trade_date','dataset_id','payload'])
+                db.register('historical_batch',frame)
+                db.execute('insert into evidence select source_order,stock_code,cast(trade_date as date),dataset_id,cast(payload as json) from historical_batch')
+            else:
+                db.executemany('insert into evidence values (?,?,?,?,?)',[(i,r['stock_code'],r['asof'],dataset_id,encoded(r).decode()) for i,r in enumerate(records)])
             db.execute('copy evidence to ? (format parquet, compression zstd)',[str(staging/'records.parquet')])
         after={str(p.relative_to(snapshot)):sha(p.read_bytes()) for p in sorted(snapshot.rglob('*')) if p.is_file()}
         if after!=source['input_file_hashes']:raise ValueError('source_changed_during_read_only_build')

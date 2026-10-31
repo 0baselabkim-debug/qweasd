@@ -94,6 +94,8 @@ def run(evidence_directory, expected_manifest_sha256, output_root, *, decision_a
         code_sha256={p.name: sha(p.read_bytes()) for p in sorted(code_root.iterdir()) if p.suffix in ('.py', '.md')},
         limit=limit, engine_mode='MOCK' if engine.transport else 'LIVE' if engine.allow_live else 'NOT_RUN',
         model=engine.model, max_model_calls=engine.max_calls)
+    if source.get('analysis_mode')=='RETROSPECTIVE_REANALYSIS':
+        identity['analysis_mode']='RETROSPECTIVE_REANALYSIS'
     dataset_id = 'investment-v2-'+source['asof']+'-'+sha(encoded(identity))
     final = output_root/dataset_id
     with (output_root/'writer.lock').open('a') as lock:
@@ -143,11 +145,16 @@ def run(evidence_directory, expected_manifest_sha256, output_root, *, decision_a
                                                 usage='CONTEXT_ONLY_NOT_PROMOTED_TO_VERIFIED_FACTS_OR_SCORES'),
                          assessment=assessments[code], gpt=judgments.get(code, dict(status='NOT_RUN', reason='not_selected_for_model_review', judgment=None)))
                     for code, row in by_code.items()]
+            if source.get('analysis_mode')=='RETROSPECTIVE_REANALYSIS':
+                for row in rows: row['analysis_mode']='RETROSPECTIVE_REANALYSIS'
             market = dict(**identity, dataset_id=dataset_id, stocks=rows, provider_finality=source['provider_finality'],
                           status='GPT_REJECTED_WITH_DIAGNOSTICS' if failed else 'OFFLINE_INTEGRATED_WITH_DATA_HOLDS',
                           historical_backtest_eligible=False, operating_publication='NOT_CHANGED')
             (staging/'market.json.gz').write_bytes(gzip.compress(encoded(market), mtime=0))
-            (staging/'briefing.html').write_text(render(source, assessments, judgments, context, account, candidate_codes, selection['selected_stock_codes']))
+            html=render(source, assessments, judgments, context, account, candidate_codes, selection['selected_stock_codes'])
+            if source.get('analysis_mode')=='RETROSPECTIVE_REANALYSIS':
+                html=html.replace('<body>','<body><p role="status">RETROSPECTIVE_REANALYSIS: 사후 재분석이며 당시 투자 판단 또는 실제 매매 기록이 아닙니다.</p>',1)
+            (staging/'briefing.html').write_text(html)
             (staging/'briefing.json').write_bytes(encoded(dict(dataset_id=dataset_id, asof=source['asof'],
                 candidates=candidate_codes, maximum_candidates=20,
                 selected_by_GPT=selection['selected_stock_codes'], selection_status=selection['status'],
@@ -168,7 +175,13 @@ def run(evidence_directory, expected_manifest_sha256, output_root, *, decision_a
             (staging/'model-journal.json').write_bytes(encoded(engine.journal))
             with duckdb.connect(str(staging/'investment.duckdb')) as db:
                 db.execute('create table assessments(source_order integer,stock_code varchar primary key,trade_date date,dataset_id varchar,payload json)')
-                db.executemany('insert into assessments values(?,?,?,?,?)', [(i, r['stock_code'], r['asof'], dataset_id, encoded(r).decode()) for i, r in enumerate(rows)])
+                if source.get('analysis_mode')=='RETROSPECTIVE_REANALYSIS':
+                    import pandas as pd
+                    frame=pd.DataFrame([(i,r['stock_code'],r['asof'],dataset_id,encoded(r).decode()) for i,r in enumerate(rows)],columns=['source_order','stock_code','trade_date','dataset_id','payload'])
+                    db.register('historical_assessments',frame)
+                    db.execute('insert into assessments select source_order,stock_code,cast(trade_date as date),dataset_id,cast(payload as json) from historical_assessments')
+                else:
+                    db.executemany('insert into assessments values(?,?,?,?,?)', [(i, r['stock_code'], r['asof'], dataset_id, encoded(r).decode()) for i, r in enumerate(rows)])
                 db.execute('copy assessments to ? (format parquet, compression zstd)', [str(staging/'records.parquet')])
             if digest_tree(evidence_directory) != before:
                 raise ValueError('read_only_evidence_changed')

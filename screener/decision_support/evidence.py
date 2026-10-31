@@ -83,7 +83,7 @@ def official_rows(paths, asof):
         for r in obj['rows']:
             code=r.get('ISU_CD');key=(code,day,market)
             try:
-                if not re.fullmatch(r'\d{6}',str(code)) or r.get('BAS_DD')!=day.replace('-','') or r.get('MKT_NM') not in (market, 'KOSDAQ GLOBAL' if market=='KOSDAQ' else market):raise ValueError('official_identity_mismatch')
+                if not re.fullmatch(r'[0-9A-Z]{6}',str(code)) or r.get('BAS_DD')!=day.replace('-','') or r.get('MKT_NM') not in (market, 'KOSDAQ GLOBAL' if market=='KOSDAQ' else market):raise ValueError('official_identity_mismatch')
                 if code in seen:raise ValueError('official_duplicate_symbol')
                 seen.add(code);value=bar(r,KRX_FIELDS)
                 by_key.setdefault(key,[]).append({'value':value,'source_id':h,'observed_at':obj['observed_at']})
