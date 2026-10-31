@@ -216,10 +216,20 @@ def analyze(stock, flow_days, price_days, benchmarks):
         try:accepted[day] = bar(row, dict(zip(FIELDS, FIELDS)))
         except ValueError as error:reasons[str(error)] += 1
     foreign = flow_metrics(flow_days, amounts, quantities)
+    q3 = complete(flow_days, quantities, 3)
+    foreign['net_quantity_3d'] = metric(sum(q3) if q3 is not None else None, 'missing_quantity_observations')
     institution = flow_metrics(flow_days, {}, institutional)
     for key in institution:
         if not key.startswith('net_quantity_'):institution[key] = metric(None, 'institution_amount_unit_not_officially_confirmed')
+    iq3 = complete(flow_days, institutional, 3)
+    iqprevious = complete(flow_days, institutional, 5, 5)
+    institution['net_quantity_3d'] = metric(sum(iq3) if iq3 is not None else None, 'missing_quantity_observations')
+    institution['net_quantity_previous_5d'] = metric(sum(iqprevious) if iqprevious is not None else None, 'missing_previous_quantity_observations')
+    iq5 = institution['net_quantity_5d']['value']
+    institution['net_quantity_change_5d'] = metric(iq5-sum(iqprevious) if iq5 is not None and iqprevious is not None else None, 'missing_10_session_quantity')
     base = technical(price_days, accepted, benchmarks)
+    for field in ('open', 'high', 'low', 'turnover'):
+        base['current_'+field] = metric(accepted[asof][field] if asof in accepted else None, 'latest_price_not_verified')
     returns = {n:(base[f'return_{n}d_pct'] if n in (5,20) else observed_return(price_days, accepted,n)) for n in (1,3,5,20)}
     previous = observed_return(price_days, accepted,5,5)
     r5 = returns[5]['value']; rp5 = previous['value']; n5 = foreign['net_5d']['value']; change = foreign['change_5d']['value']

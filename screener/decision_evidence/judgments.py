@@ -1,5 +1,6 @@
 """Explicit immutable judgments and strictly future, calendar-aligned outcome evaluation."""
 import datetime as dt
+import re
 from zoneinfo import ZoneInfo
 from pathlib import Path
 from fractions import Fraction
@@ -15,7 +16,7 @@ def record(evidence, judgment, decision_at, invalidation_conditions, output):
     if not isinstance(judgment,str) or not judgment.strip():raise ValueError('explicit_GPT_judgment_required')
     at=timestamp(decision_at)
     if at>dt.datetime.now(dt.timezone.utc):raise ValueError('judgment_time_in_future')
-    if not evidence.get('stock_code') or len(evidence['stock_code'])!=6 or not evidence['stock_code'].isdigit():raise ValueError('invalid_judgment_stock_code')
+    if not isinstance(evidence.get('stock_code'),str) or not re.fullmatch(r'[0-9A-Z]{6}',evidence['stock_code']):raise ValueError('invalid_judgment_stock_code')
     dt.date.fromisoformat(evidence['asof'])
     root=Path(output).resolve()
     if root.is_relative_to(ROOT) or ROOT.is_relative_to(root):raise ValueError('judgments_must_be_independent_of_operating_repository')
