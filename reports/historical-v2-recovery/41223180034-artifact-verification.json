@@ -1,0 +1,42 @@
+{
+  "run_id": "41223180034",
+  "code_commit": "afa95b169edc41d92aa634611e0a00732b2209b7",
+  "conclusion": "success",
+  "artifact": {
+    "id": 13051300732,
+    "node_id": "MDg6QXJ0aWZhY3QxMzA1MTMwMDczMg==",
+    "name": "historical-v2-reconstruction-41223180034",
+    "size_in_bytes": 15728810,
+    "url": "https://api.github.com/repos/0baselabkim-debug/qweasd/actions/artifacts/13051300732",
+    "archive_download_url": "https://api.github.com/repos/0baselabkim-debug/qweasd/actions/artifacts/13051300732/zip",
+    "expired": false,
+    "digest": "sha256:fb2058cc2b8fe659532c14abc3126d9b2ae7c84207e8b200620b68b1baff05b5",
+    "created_at": "2026-10-31T17:17:56Z",
+    "updated_at": "2026-10-31T17:17:56Z",
+    "expires_at": "2027-01-29T17:09:55Z",
+    "workflow_run": {
+      "id": 41223180034,
+      "repository_id": 1418485164,
+      "head_repository_id": 1418485164,
+      "head_branch": "feat/decision-evidence-v2",
+      "head_sha": "afa95b169edc41d92aa634611e0a00732b2209b7"
+    }
+  },
+  "acquisition": {
+    "artifact_id": "13051300732",
+    "name": "historical-v2-reconstruction-41223180034",
+    "run_id": "41223180034",
+    "expected_zip_sha256": "fb2058cc2b8fe659532c14abc3126d9b2ae7c84207e8b200620b68b1baff05b5",
+    "metadata_bytes": 15728810,
+    "acquired_at": "2026-10-31T17:18:46.197893+00:00",
+    "status": "ZIP_DIGEST_VERIFIED_NOT_YET_DATA_APPROVED",
+    "zip_path": "/workspace/historical-v2-recovery-20261031/artifacts/sha256/fb2058cc2b8fe659532c14abc3126d9b2ae7c84207e8b200620b68b1baff05b5.zip",
+    "actual_zip_bytes": 15728810,
+    "files": 5,
+    "expanded_bytes": 39266067,
+    "manifest_paths": [
+      "retrospective-price-paths/manifest.json"
+    ],
+    "report_paths": []
+  }
+}

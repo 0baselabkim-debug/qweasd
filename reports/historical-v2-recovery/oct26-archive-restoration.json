@@ -1,0 +1,28 @@
+{
+  "status": "IMPORTED",
+  "generation_id": "47d3d5ba4732188a754f296c7fb2b9eb154fdcf2fe235278a032b83f4e992324",
+  "committed_at": "2026-10-31T14:57:25.690567+00:00",
+  "channel": "kis_full_trial",
+  "asof": "2026-10-26",
+  "archive_status": "COMPLETE_BYTES",
+  "archived_original_files": 2,
+  "archived_original_bytes": 27369847,
+  "archived_observations": 4700,
+  "source_reported_target": 2349,
+  "unknown_observation_times": 0,
+  "kinds": {
+    "foreign_flow": 2349,
+    "index_close": 2,
+    "price_original": 2349
+  },
+  "source_internal_validation": "PASS",
+  "flow_validation": "KIS_INTERNAL_PASS",
+  "price_validation": "KIS_INTERNAL_PASS_PENDING_KRX",
+  "provider_finality": "UNVERIFIED",
+  "historical_backtest_eligible": null,
+  "ingested_at": "2026-10-31T14:57:24.805519+00:00",
+  "source_available_at": "2026-10-26T14:33:22+00:00",
+  "warnings": [
+    "PENDING_KRX and UNVERIFIED retained; no official foreign-flow finality assertion."
+  ]
+}

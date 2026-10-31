@@ -1,0 +1,159 @@
+{
+  "checked_at": "2026-10-31T17:22:43.576683+00:00",
+  "repository": "0baselabkim-debug/qweasd",
+  "branch": "feat/decision-evidence-v2",
+  "main": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "tested_behavior_commit": "3906c724cc4cb1e7193adb688853af3b317510c0",
+  "runs": [
+    {
+      "run_id": "41212889496",
+      "name": "Bounded historical KRX recovery (feature only)",
+      "status": "completed",
+      "conclusion": "success",
+      "code_commit": "284d9b7ce0ee731d49f41f7b78f7dedd0e4faa74",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41212889496",
+      "artifacts": [
+        {
+          "id": 13046941824,
+          "name": "historical-krx-recovery-41212889496",
+          "digest": "sha256:ea6b47a7082ec7624b607eb9ed27b73359578bb6bae44a24c179cecd6f98475a",
+          "size_in_bytes": 40139727,
+          "expires_at": "2027-01-29T15:02:09Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": "41214485473",
+      "name": "Minimal historical KIS recovery (one failed symbol)",
+      "status": "completed",
+      "conclusion": "failure",
+      "code_commit": "6f6937173bb80c020f82d698b00b9610b898c135",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41214485473",
+      "artifacts": [
+        {
+          "id": 13047179366,
+          "name": "historical-kis-minimal-41214485473",
+          "digest": "sha256:f0a61ffcfbc72ca260cfb3c5a444aaa6e22e5d05c9aa4f6b784235358a1231ec",
+          "size_in_bytes": 54591186,
+          "expires_at": "2027-01-29T15:21:42Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": "41214719367",
+      "name": "Bounded historical KRX recovery (feature only)",
+      "status": "completed",
+      "conclusion": "failure",
+      "code_commit": "b7f1845812b8b75953c2454b4fea9bb5c7f5c3ba",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41214719367",
+      "artifacts": [
+        {
+          "id": 13046889201,
+          "name": "historical-krx-recovery-41214719367",
+          "digest": "sha256:5c185f790c720f567ba361a260832f3d12be3399c339d2fec9d286d0e27cc32c",
+          "size_in_bytes": 40140097,
+          "expires_at": "2027-01-29T15:24:38Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": "41215929380",
+      "name": "Historical V2 finite offline reconstruction",
+      "status": "completed",
+      "conclusion": "success",
+      "code_commit": "09d90af32c9c0357012f5f4e10592fd8e5a85b65",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41215929380",
+      "artifacts": [
+        {
+          "id": 13049456226,
+          "name": "historical-v2-reconstruction-41215929380",
+          "digest": "sha256:d3c082ddadcb0913e3698fcd64ee770865df8ed85f32d85f786325752a84c206",
+          "size_in_bytes": 2103658341,
+          "expires_at": "2027-01-29T15:39:58Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": "41222293255",
+      "name": "Finite historical original byte preservation",
+      "status": "completed",
+      "conclusion": "success",
+      "code_commit": "5f6567532538b94530047f0b584fcdd936aeff4f",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41222293255",
+      "artifacts": [
+        {
+          "id": 13050263098,
+          "name": "historical-original-bytes-41222293255",
+          "digest": "sha256:95524a1db242e117db4e2950cd1bdf7a8a0ab200221774312f321dcda7956242",
+          "size_in_bytes": 1841105694,
+          "expires_at": "2027-01-29T16:59:24Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": "41223015238",
+      "name": "Historical V2 finite offline reconstruction",
+      "status": "completed",
+      "conclusion": "success",
+      "code_commit": "79f330fe76b4d29666f3d316d748e8ba5f08918f",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41223015238",
+      "artifacts": [
+        {
+          "id": 13049989833,
+          "name": "historical-v2-reconstruction-41223015238",
+          "digest": "sha256:b4083f59891a68e36157f25fb414181c7c0b332153402de5b8ba270def59e5c7",
+          "size_in_bytes": 573,
+          "expires_at": "2027-01-29T17:07:56Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": "41223180034",
+      "name": "Historical V2 finite offline reconstruction",
+      "status": "completed",
+      "conclusion": "success",
+      "code_commit": "afa95b169edc41d92aa634611e0a00732b2209b7",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41223180034",
+      "artifacts": [
+        {
+          "id": 13051300732,
+          "name": "historical-v2-reconstruction-41223180034",
+          "digest": "sha256:fb2058cc2b8fe659532c14abc3126d9b2ae7c84207e8b200620b68b1baff05b5",
+          "size_in_bytes": 15728810,
+          "expires_at": "2027-01-29T17:09:55Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": "41223153353",
+      "name": "Independent investment V2 offline regression",
+      "status": "completed",
+      "conclusion": "success",
+      "code_commit": "3906c724cc4cb1e7193adb688853af3b317510c0",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41223153353",
+      "artifacts": [
+        {
+          "id": 13051805152,
+          "name": "investment-v2-offline-tests-41223153353",
+          "digest": "sha256:d447974fb2f353df89cc987554d10d445e220ee6c3d9afca54d5ae89a687e240",
+          "size_in_bytes": 13968,
+          "expires_at": "2027-01-29T17:09:35Z",
+          "expired": false
+        }
+      ]
+    }
+  ],
+  "PR": {
+    "number": 2,
+    "url": "https://github.com/0baselabkim-debug/qweasd/pull/2",
+    "draft": true,
+    "merge": "NOT_PERFORMED"
+  }
+}

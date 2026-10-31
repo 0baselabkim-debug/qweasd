@@ -1,0 +1,37 @@
+{
+  "status": "PASS_ALL_143_NATIVE_ARCHIVES_INDEPENDENTLY_RESTORED",
+  "run_id": "41215929380",
+  "artifact_id": "13049456226",
+  "zip_sha256": "d3c082ddadcb0913e3698fcd64ee770865df8ed85f32d85f786325752a84c206",
+  "zip_bytes": 2103658341,
+  "index_sha256": "902a2a4b05c3fd0ec1036ed77d4213ea65eeed95dc9ee72e17981a2904832c96",
+  "verified_jobs": 143,
+  "unique_trade_dates": 128,
+  "rows": 386757,
+  "source_complete_views": 14,
+  "source_partial_or_research_views": 129,
+  "code_sha256": "af3ce3b57e83d7273e853dfe729f02a8d092bd82fe9b94c18e4c2ad9f21f9b84",
+  "actual_restore": {
+    "status": "RESTORED_AND_VERIFIED",
+    "asof": "2026-10-26",
+    "job": "collector-12658373693",
+    "directory": "/workspace/historical-v2-recovery-20261031/native-restored-20261026",
+    "evidence": {
+      "status": "PASS",
+      "records": 2349,
+      "database_json_parquet_match": true,
+      "manifest_sha256": "f5dcc2882c629d22efb7887af73f375f4dc83f8399ab81803776faacd0d28964"
+    },
+    "investment": {
+      "status": "PASS",
+      "rows": 2349,
+      "database_json_parquet_match": true,
+      "manifest_sha256": "6f6637eae1bb0b1b15e9e46c562c4aa0f7202ba1be64f70c9473ce69d0240ce0"
+    },
+    "source_archive_unchanged": true,
+    "operating_publication": "NOT_CHANGED",
+    "market_HTTP": 0
+  },
+  "market_HTTP": 0,
+  "OpenAI_HTTP": 0
+}

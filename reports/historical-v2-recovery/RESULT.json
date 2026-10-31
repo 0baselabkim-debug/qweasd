@@ -1,0 +1,564 @@
+{
+  "status": "PARTIAL",
+  "baseline_commit": "c1c7f4744a4d106300c594cc37ce03505aa07b42",
+  "branch": "feat/decision-evidence-v2",
+  "main_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "inventory": {
+    "initial_artifacts": 271,
+    "initial_zip_bytes": 1706057185,
+    "initial_files": 123213,
+    "raw_hash_checks": 42332,
+    "git_heads": 237,
+    "git_logical_asset_paths": 418101,
+    "git_unique_blobs": 29432,
+    "observed_dates": 207,
+    "early_dates_held": 79
+  },
+  "offline_reprocessing": {
+    "status": "PASS_ALL_143_NATIVE_ARCHIVES_INDEPENDENTLY_RESTORED",
+    "run_id": "41215929380",
+    "artifact_id": "13049456226",
+    "zip_sha256": "d3c082ddadcb0913e3698fcd64ee770865df8ed85f32d85f786325752a84c206",
+    "zip_bytes": 2103658341,
+    "index_sha256": "902a2a4b05c3fd0ec1036ed77d4213ea65eeed95dc9ee72e17981a2904832c96",
+    "verified_jobs": 143,
+    "unique_trade_dates": 128,
+    "rows": 386757,
+    "source_complete_views": 14,
+    "source_partial_or_research_views": 129,
+    "code_sha256": "af3ce3b57e83d7273e853dfe729f02a8d092bd82fe9b94c18e4c2ad9f21f9b84",
+    "actual_restore": {
+      "status": "RESTORED_AND_VERIFIED",
+      "asof": "2026-10-26",
+      "job": "collector-12658373693",
+      "directory": "/workspace/historical-v2-recovery-20261031/native-restored-20261026",
+      "evidence": {
+        "status": "PASS",
+        "records": 2349,
+        "database_json_parquet_match": true,
+        "manifest_sha256": "f5dcc2882c629d22efb7887af73f375f4dc83f8399ab81803776faacd0d28964"
+      },
+      "investment": {
+        "status": "PASS",
+        "rows": 2349,
+        "database_json_parquet_match": true,
+        "manifest_sha256": "6f6637eae1bb0b1b15e9e46c562c4aa0f7202ba1be64f70c9473ce69d0240ce0"
+      },
+      "source_archive_unchanged": true,
+      "operating_publication": "NOT_CHANGED",
+      "market_HTTP": 0
+    },
+    "market_HTTP": 0,
+    "OpenAI_HTTP": 0
+  },
+  "independent_recalculation": {
+    "status": "PASS_143_INDEPENDENT_RECALCULATIONS",
+    "jobs": 143,
+    "stocks_checked": 386757,
+    "counts": {
+      "flow_windows": 4641084,
+      "current_price_fields": 787194,
+      "SMA": 207715,
+      "ATR": 97766,
+      "relative_strength": 183750
+    },
+    "source_basis": "collector/checkpoint raw API pages; publication source read-only DB; exact no indicator tolerance",
+    "details_sha256": "18b6da6cd1ac2736e127e92c81de9ef3f5c8c30ccd629c0fd4df6cb971cfc90e"
+  },
+  "original_backup": {
+    "status": "PASS_ALL_274_BACKED_UP_ORIGINAL_ZIPS_INDEPENDENTLY_VERIFIED",
+    "run_id": "41222293255",
+    "artifact_id": "13050263098",
+    "zip_sha256": "95524a1db242e117db4e2950cd1bdf7a8a0ab200221774312f321dcda7956242",
+    "zip_bytes": 1841105694,
+    "expires_at": "2027-01-29T16:59:24Z",
+    "checked_at": "2026-10-31T17:09:31.866921+00:00",
+    "actual_oct26_restore": {
+      "file": "/workspace/historical-v2-recovery-20261031/backup-restored-original-oct26.zip",
+      "sha256": "eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+      "status": "PASS_MATCHES_PRIOR_ORIGINAL_RECEIPT"
+    },
+    "external_private_backup": "NOT_RUN",
+    "market_HTTP": 0
+  },
+  "actual_provider_calls": {
+    "total": 12,
+    "KRX": 9,
+    "KIS_oauth": 1,
+    "KIS_market": 2,
+    "DART": 0,
+    "macro": 0,
+    "OpenAI": 0
+  },
+  "api_results": {
+    "krx_priority_eight": "PASS",
+    "krx_oct30": "FAIL_EMPTY_KOSPI_KOSDAQ_NOT_RUN",
+    "kis_oct30_002690": "FAIL_PERSISTENT_FLOW_PRICE_CONFLICT",
+    "kis_original_plus_recovery_http": 4696,
+    "kis_source_limit": 5600,
+    "kis_one_off_remaining": 0
+  },
+  "price_approval_by_day": [
+    {
+      "asof": "2026-10-26",
+      "artifact_id": "12658373693",
+      "target": 2349,
+      "latest_price_verified": 2341,
+      "coverage": {
+        "atr_14": 2314,
+        "latest_price_verified": 2341,
+        "return_20d_pct": 2270,
+        "return_5d_pct": 2329,
+        "sma_120": 3,
+        "sma_20": 2273,
+        "sma_5": 2333,
+        "sma_60": 3,
+        "stocks": 2349
+      }
+    },
+    {
+      "asof": "2026-10-27",
+      "artifact_id": "12728691604",
+      "target": 2349,
+      "latest_price_verified": 2342,
+      "coverage": {
+        "atr_14": 2315,
+        "latest_price_verified": 2342,
+        "return_20d_pct": 2273,
+        "return_5d_pct": 2333,
+        "sma_120": 3,
+        "sma_20": 2277,
+        "sma_5": 2336,
+        "sma_60": 3,
+        "stocks": 2349
+      }
+    },
+    {
+      "asof": "2026-10-27",
+      "artifact_id": "12738697763",
+      "target": 2349,
+      "latest_price_verified": 2342,
+      "coverage": {
+        "atr_14": 2315,
+        "latest_price_verified": 2342,
+        "return_20d_pct": 2273,
+        "return_5d_pct": 2333,
+        "sma_120": 3,
+        "sma_20": 2277,
+        "sma_5": 2336,
+        "sma_60": 3,
+        "stocks": 2349
+      }
+    },
+    {
+      "asof": "2026-10-27",
+      "artifact_id": "12751568304",
+      "target": 2349,
+      "latest_price_verified": 2342,
+      "coverage": {
+        "atr_14": 2315,
+        "latest_price_verified": 2342,
+        "return_20d_pct": 2273,
+        "return_5d_pct": 2333,
+        "sma_120": 3,
+        "sma_20": 2277,
+        "sma_5": 2336,
+        "sma_60": 3,
+        "stocks": 2349
+      }
+    },
+    {
+      "asof": "2026-10-27",
+      "artifact_id": "12764103343",
+      "target": 2349,
+      "latest_price_verified": 2342,
+      "coverage": {
+        "atr_14": 2315,
+        "latest_price_verified": 2342,
+        "return_20d_pct": 2273,
+        "return_5d_pct": 2333,
+        "sma_120": 3,
+        "sma_20": 2277,
+        "sma_5": 2336,
+        "sma_60": 3,
+        "stocks": 2349
+      }
+    },
+    {
+      "asof": "2026-10-28",
+      "artifact_id": "12819160814",
+      "target": 2348,
+      "latest_price_verified": 2340,
+      "coverage": {
+        "atr_14": 2313,
+        "latest_price_verified": 2340,
+        "return_20d_pct": 2273,
+        "return_5d_pct": 2332,
+        "sma_120": 3,
+        "sma_20": 2275,
+        "sma_5": 2335,
+        "sma_60": 3,
+        "stocks": 2348
+      }
+    },
+    {
+      "asof": "2026-10-28",
+      "artifact_id": "12831555368",
+      "target": 2348,
+      "latest_price_verified": 2340,
+      "coverage": {
+        "atr_14": 2313,
+        "latest_price_verified": 2340,
+        "return_20d_pct": 2273,
+        "return_5d_pct": 2332,
+        "sma_120": 3,
+        "sma_20": 2275,
+        "sma_5": 2335,
+        "sma_60": 3,
+        "stocks": 2348
+      }
+    },
+    {
+      "asof": "2026-10-29",
+      "artifact_id": "12910068161",
+      "target": 2346,
+      "latest_price_verified": 2336,
+      "coverage": {
+        "atr_14": 2307,
+        "latest_price_verified": 2336,
+        "return_20d_pct": 2269,
+        "return_5d_pct": 2329,
+        "sma_120": 3,
+        "sma_20": 2299,
+        "sma_5": 2330,
+        "sma_60": 3,
+        "stocks": 2346
+      }
+    },
+    {
+      "asof": "2026-10-30",
+      "artifact_id": "12983267630",
+      "target": 2343,
+      "latest_price_verified": 0,
+      "coverage": {
+        "atr_14": 0,
+        "latest_price_verified": 0,
+        "return_20d_pct": 0,
+        "return_5d_pct": 0,
+        "sma_120": 0,
+        "sma_20": 0,
+        "sma_5": 0,
+        "sma_60": 0,
+        "stocks": 2343
+      }
+    }
+  ],
+  "unresolved": [
+    "Oct30 002690 provider conflict",
+    "Oct30 KRX empty/missing official reference",
+    "10 held Oct29 prices",
+    "79 early dates missing official/session/PIT proofs",
+    "long verified history limited to 3 stocks",
+    "actual historical decisions/trades absent",
+    "GPT real calls and strategy performance NOT_RUN",
+    "automatic operational handoff NOT_DEPLOYED",
+    "permanent private external backup NOT_RUN"
+  ],
+  "operating_deployment": false,
+  "original_sources_modified": false,
+  "point_in_time_backtest": false,
+  "actual_user_trades_generated": false,
+  "strict_native_revalidation": {
+    "OpenAI_HTTP": 0,
+    "code_commit": "afa95b169edc41d92aa634611e0a00732b2209b7",
+    "market_HTTP": 0,
+    "oauth_HTTP": 0,
+    "official_session_days": 127,
+    "original_bytes_unchanged": true,
+    "retrospective_outcomes": {
+      "counts": {
+        "10:OBSERVED_RETROSPECTIVELY_NOT_STRATEGY_VALIDATION": 73010,
+        "10:UNAVAILABLE": 23567,
+        "20:OBSERVED_RETROSPECTIVELY_NOT_STRATEGY_VALIDATION": 49763,
+        "20:UNAVAILABLE": 46814,
+        "5:OBSERVED_RETROSPECTIVELY_NOT_STRATEGY_VALIDATION": 84757,
+        "5:UNAVAILABLE": 11820
+      },
+      "manifest_sha256": "dd5a77034e917ff384e4fb8da6cff48f92f39d954271b30ad8586494317e68e6",
+      "rows": 96577,
+      "strategy_performance": "NOT_RUN"
+    },
+    "run_id": "41223180034",
+    "sources": [
+      {
+        "artifact_id": "12658373693",
+        "asof": "2026-10-26",
+        "complete": true,
+        "master_raw_replayed": true
+      },
+      {
+        "artifact_id": "12728691604",
+        "asof": "2026-10-27",
+        "complete": false,
+        "master_raw_replayed": true
+      },
+      {
+        "artifact_id": "12738697763",
+        "asof": "2026-10-27",
+        "complete": true,
+        "master_raw_replayed": true
+      },
+      {
+        "artifact_id": "12751568304",
+        "asof": "2026-10-27",
+        "complete": true,
+        "master_raw_replayed": true
+      },
+      {
+        "artifact_id": "12764103343",
+        "asof": "2026-10-27",
+        "complete": true,
+        "master_raw_replayed": true
+      },
+      {
+        "artifact_id": "12819160814",
+        "asof": "2026-10-28",
+        "complete": true,
+        "master_raw_replayed": true
+      },
+      {
+        "artifact_id": "12831555368",
+        "asof": "2026-10-28",
+        "complete": true,
+        "master_raw_replayed": true
+      },
+      {
+        "artifact_id": "12910068161",
+        "asof": "2026-10-29",
+        "complete": true,
+        "master_raw_replayed": true
+      },
+      {
+        "artifact_id": "12983267630",
+        "asof": "2026-10-30",
+        "complete": false,
+        "master_raw_replayed": true
+      }
+    ],
+    "status": "PASS_CURRENT_STRICT_INPUT_GUARDS",
+    "verified_pool_bars": 96577,
+    "verified_pool_bars_sha256": "f7fd46937df910f4f5c4ecf3064f3d5669bbdbd7deb7f88a13d7cde42d627819"
+  },
+  "retrospective_price_paths": {
+    "status": "PASS_RESTORED_NATIVE_OUTCOMES",
+    "run_id": "41223180034",
+    "rows": 96577,
+    "counts": {
+      "exact_independent_price_changes": 207530,
+      "unavailable": 82201
+    },
+    "manifest_sha256": "dd5a77034e917ff384e4fb8da6cff48f92f39d954271b30ad8586494317e68e6",
+    "JSON_DuckDB_Parquet_match": true,
+    "local_native_all_rows_equal": true,
+    "actual_user_trades_generated": false,
+    "strategy_performance": "NOT_RUN",
+    "market_HTTP": 0
+  },
+  "retrospective_price_path_artifact": {
+    "id": 13051300732,
+    "node_id": "MDg6QXJ0aWZhY3QxMzA1MTMwMDczMg==",
+    "name": "historical-v2-reconstruction-41223180034",
+    "size_in_bytes": 15728810,
+    "url": "https://api.github.com/repos/0baselabkim-debug/qweasd/actions/artifacts/13051300732",
+    "archive_download_url": "https://api.github.com/repos/0baselabkim-debug/qweasd/actions/artifacts/13051300732/zip",
+    "expired": false,
+    "digest": "sha256:fb2058cc2b8fe659532c14abc3126d9b2ae7c84207e8b200620b68b1baff05b5",
+    "created_at": "2026-10-31T17:17:56Z",
+    "updated_at": "2026-10-31T17:17:56Z",
+    "expires_at": "2027-01-29T17:09:55Z",
+    "workflow_run": {
+      "id": 41223180034,
+      "repository_id": 1418485164,
+      "head_repository_id": 1418485164,
+      "head_branch": "feat/decision-evidence-v2",
+      "head_sha": "afa95b169edc41d92aa634611e0a00732b2209b7"
+    }
+  },
+  "tests": {
+    "run_id": "41223153353",
+    "code_commit": "3906c724cc4cb1e7193adb688853af3b317510c0",
+    "conclusion": "success",
+    "counts": {
+      "tests": 675,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "baseline_cases": 631,
+    "retained_baseline": 631,
+    "missing_baseline": [],
+    "new_cases": 44,
+    "artifact_id": "13051805152",
+    "artifact_zip_sha256": "d447974fb2f353df89cc987554d10d445e220ee6c3d9afca54d5ae89a687e240",
+    "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41223153353"
+  },
+  "github": {
+    "checked_at": "2026-10-31T17:22:43.576683+00:00",
+    "repository": "0baselabkim-debug/qweasd",
+    "branch": "feat/decision-evidence-v2",
+    "main": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+    "tested_behavior_commit": "3906c724cc4cb1e7193adb688853af3b317510c0",
+    "runs": [
+      {
+        "run_id": "41212889496",
+        "name": "Bounded historical KRX recovery (feature only)",
+        "status": "completed",
+        "conclusion": "success",
+        "code_commit": "284d9b7ce0ee731d49f41f7b78f7dedd0e4faa74",
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41212889496",
+        "artifacts": [
+          {
+            "id": 13046941824,
+            "name": "historical-krx-recovery-41212889496",
+            "digest": "sha256:ea6b47a7082ec7624b607eb9ed27b73359578bb6bae44a24c179cecd6f98475a",
+            "size_in_bytes": 40139727,
+            "expires_at": "2027-01-29T15:02:09Z",
+            "expired": false
+          }
+        ]
+      },
+      {
+        "run_id": "41214485473",
+        "name": "Minimal historical KIS recovery (one failed symbol)",
+        "status": "completed",
+        "conclusion": "failure",
+        "code_commit": "6f6937173bb80c020f82d698b00b9610b898c135",
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41214485473",
+        "artifacts": [
+          {
+            "id": 13047179366,
+            "name": "historical-kis-minimal-41214485473",
+            "digest": "sha256:f0a61ffcfbc72ca260cfb3c5a444aaa6e22e5d05c9aa4f6b784235358a1231ec",
+            "size_in_bytes": 54591186,
+            "expires_at": "2027-01-29T15:21:42Z",
+            "expired": false
+          }
+        ]
+      },
+      {
+        "run_id": "41214719367",
+        "name": "Bounded historical KRX recovery (feature only)",
+        "status": "completed",
+        "conclusion": "failure",
+        "code_commit": "b7f1845812b8b75953c2454b4fea9bb5c7f5c3ba",
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41214719367",
+        "artifacts": [
+          {
+            "id": 13046889201,
+            "name": "historical-krx-recovery-41214719367",
+            "digest": "sha256:5c185f790c720f567ba361a260832f3d12be3399c339d2fec9d286d0e27cc32c",
+            "size_in_bytes": 40140097,
+            "expires_at": "2027-01-29T15:24:38Z",
+            "expired": false
+          }
+        ]
+      },
+      {
+        "run_id": "41215929380",
+        "name": "Historical V2 finite offline reconstruction",
+        "status": "completed",
+        "conclusion": "success",
+        "code_commit": "09d90af32c9c0357012f5f4e10592fd8e5a85b65",
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41215929380",
+        "artifacts": [
+          {
+            "id": 13049456226,
+            "name": "historical-v2-reconstruction-41215929380",
+            "digest": "sha256:d3c082ddadcb0913e3698fcd64ee770865df8ed85f32d85f786325752a84c206",
+            "size_in_bytes": 2103658341,
+            "expires_at": "2027-01-29T15:39:58Z",
+            "expired": false
+          }
+        ]
+      },
+      {
+        "run_id": "41222293255",
+        "name": "Finite historical original byte preservation",
+        "status": "completed",
+        "conclusion": "success",
+        "code_commit": "5f6567532538b94530047f0b584fcdd936aeff4f",
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41222293255",
+        "artifacts": [
+          {
+            "id": 13050263098,
+            "name": "historical-original-bytes-41222293255",
+            "digest": "sha256:95524a1db242e117db4e2950cd1bdf7a8a0ab200221774312f321dcda7956242",
+            "size_in_bytes": 1841105694,
+            "expires_at": "2027-01-29T16:59:24Z",
+            "expired": false
+          }
+        ]
+      },
+      {
+        "run_id": "41223015238",
+        "name": "Historical V2 finite offline reconstruction",
+        "status": "completed",
+        "conclusion": "success",
+        "code_commit": "79f330fe76b4d29666f3d316d748e8ba5f08918f",
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41223015238",
+        "artifacts": [
+          {
+            "id": 13049989833,
+            "name": "historical-v2-reconstruction-41223015238",
+            "digest": "sha256:b4083f59891a68e36157f25fb414181c7c0b332153402de5b8ba270def59e5c7",
+            "size_in_bytes": 573,
+            "expires_at": "2027-01-29T17:07:56Z",
+            "expired": false
+          }
+        ]
+      },
+      {
+        "run_id": "41223180034",
+        "name": "Historical V2 finite offline reconstruction",
+        "status": "completed",
+        "conclusion": "success",
+        "code_commit": "afa95b169edc41d92aa634611e0a00732b2209b7",
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41223180034",
+        "artifacts": [
+          {
+            "id": 13051300732,
+            "name": "historical-v2-reconstruction-41223180034",
+            "digest": "sha256:fb2058cc2b8fe659532c14abc3126d9b2ae7c84207e8b200620b68b1baff05b5",
+            "size_in_bytes": 15728810,
+            "expires_at": "2027-01-29T17:09:55Z",
+            "expired": false
+          }
+        ]
+      },
+      {
+        "run_id": "41223153353",
+        "name": "Independent investment V2 offline regression",
+        "status": "completed",
+        "conclusion": "success",
+        "code_commit": "3906c724cc4cb1e7193adb688853af3b317510c0",
+        "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41223153353",
+        "artifacts": [
+          {
+            "id": 13051805152,
+            "name": "investment-v2-offline-tests-41223153353",
+            "digest": "sha256:d447974fb2f353df89cc987554d10d445e220ee6c3d9afca54d5ae89a687e240",
+            "size_in_bytes": 13968,
+            "expires_at": "2027-01-29T17:09:35Z",
+            "expired": false
+          }
+        ]
+      }
+    ],
+    "PR": {
+      "number": 2,
+      "url": "https://github.com/0baselabkim-debug/qweasd/pull/2",
+      "draft": true,
+      "merge": "NOT_PERFORMED"
+    }
+  }
+}

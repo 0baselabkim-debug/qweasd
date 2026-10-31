@@ -1,0 +1,59 @@
+{
+  "status": "PASS_EXPLICIT_TERMINAL_OWNER_RECOVERY",
+  "before_revision": "f1add46bae93ac5f82d9e22f01e7e082378adfe3",
+  "after_revision": "1a7f585b908e3983e329e1527b277a757270c7ab",
+  "before_owner": {
+    "acquired_at": "2026-10-30T12:06:44.687709+00:00",
+    "commit": "11947783e1497a21e305c81b94e0ec43f7f638fd",
+    "expires_at": "2026-10-30T15:16:44.687709+00:00",
+    "id": "9ae39ef37db14d78836ada3643228a72",
+    "repository": "0baselabkim-debug/qweasd",
+    "run_id": "41052557610"
+  },
+  "after_state": {
+    "auth_not_before": "2026-10-29T15:40:57.253258+00:00",
+    "last_auth": "2026-10-30T12:06:49.533193+00:00",
+    "last_http": "2026-10-30T12:06:49.533193+00:00",
+    "nonce": "ad46a6bb7e1e4431bb9a3cbe8cc082a0",
+    "owner": null,
+    "policy": "EXCLUSIVE_SESSION_NO_EXPIRY_TAKEOVER",
+    "schema": 1,
+    "sequence": 6
+  },
+  "proofs": {
+    "0baselabkim-debug/qweasd": {
+      "head": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+      "reviewed_source_files": 12,
+      "active": [
+        {
+          "id": 41212875517,
+          "path": ".github/workflows/investment-v2-offline.yml",
+          "status": "in_progress"
+        }
+      ]
+    },
+    "0baselabkim-debug/kis-intraday-monitor": {
+      "head": "8fe527d87271d28431f14b36a233596ab3b73b18",
+      "reviewed_source_files": 22,
+      "active": []
+    },
+    "terminal_owner": {
+      "run_id": 41052557610,
+      "commit": "11947783e1497a21e305c81b94e0ec43f7f638fd",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": [
+        {
+          "id": 124051952421,
+          "status": "completed",
+          "completed_at": "2026-10-30T14:06:24Z"
+        }
+      ]
+    },
+    "scope": "Existing reviewed two-repository enrolled Actions actors; no assertion about unknown credential users outside that approved scope."
+  },
+  "policy_changed": false,
+  "market_HTTP": 0,
+  "oauth_HTTP": 0,
+  "recovered_at": "2026-10-31T15:10:33.618289+00:00"
+}
