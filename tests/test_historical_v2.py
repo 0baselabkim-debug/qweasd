@@ -228,3 +228,10 @@ def test_legacy_checkpoint_rejects_invalid_source_before_loading_pool(tmp_path,k
     raw=gzip.compress(encoded(b));(tmp_path/'bundle.json.gz').write_bytes(raw)
     proof=dict(bundle_sha256='0'*64 if kind=='hash' else sha(raw),asof='2026-10-15')
     with pytest.raises(ValueError):load(tmp_path,'2026-10-31T00:00:00Z',None,proof=proof)
+
+
+def test_native_reconstruction_has_no_market_secret_schedule_or_shared_lock():
+    text=Path('.github/workflows/historical-v2-validation.yml').read_text()
+    assert 'secrets.' not in text and 'schedule:' not in text and 'cron:' not in text
+    assert 'kis-validation-auth' not in text and 'contents: read' in text
+    assert "paths: ['.github/recovery/historical-v2-validation.json']" in text

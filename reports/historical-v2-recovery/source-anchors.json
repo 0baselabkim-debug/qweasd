@@ -1,0 +1,2058 @@
+{
+  "schema": 1,
+  "main_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "collectors": [
+    {
+      "zip_sha256": "eef7625731b266aca24e39865a976925901bf52be746d0961c3a4f00e574c4e2",
+      "manifest_sha256": "f38a20566c6dc16f23027d2f75a623ec1a9518a1b126a8e0e5f34f781888cad6",
+      "artifact_id": "12658373693",
+      "run_id": "40326538555",
+      "report_path": "modes/full/report.json",
+      "universe_path": "universe.json",
+      "asof": "2026-10-26"
+    },
+    {
+      "zip_sha256": "a99da7a639a87b403bc10b90c4ae4a699add1ef88801ac5aa675209cfed32986",
+      "manifest_sha256": "37fa1fe7698460c34dc444436c6bd267ddb7bd8fba556497597b27a684474540",
+      "artifact_id": "12728691604",
+      "run_id": "40411772564",
+      "report_path": "collection/report.json",
+      "universe_path": "universe.json",
+      "asof": "2026-10-27"
+    },
+    {
+      "zip_sha256": "a77b9b755df5e80aa88aa9c707f9238bb35c17ee65549d28ef8c2de1fca5a753",
+      "manifest_sha256": "73e4777f64524aeeafd1a2976fed8def5f670530897a387b7130e98f05f286ac",
+      "artifact_id": "12738697763",
+      "run_id": "40411772564",
+      "report_path": "collection/report.json",
+      "universe_path": "universe.json",
+      "asof": "2026-10-27"
+    },
+    {
+      "zip_sha256": "58fc45748e04ca69438f1605441270893147e6c4925530a18d83cdec78967734",
+      "manifest_sha256": "c0173226fd166122fc53a49a75e064fe0887c1d6a77e7c033ab37a9e57367b6d",
+      "artifact_id": "12751568304",
+      "run_id": "40411772564",
+      "report_path": "collection/report.json",
+      "universe_path": "universe.json",
+      "asof": "2026-10-27"
+    },
+    {
+      "zip_sha256": "a4907eb6e9da31726cbb19a7fcfb1332fa413ee14c774acdba4d6ee3348dd5b6",
+      "manifest_sha256": "3041a41d3c17050e736382d73ee03e9edcdc3957faa86ef5284d789da4ef928d",
+      "artifact_id": "12764103343",
+      "run_id": "40411772564",
+      "report_path": "collection/report.json",
+      "universe_path": "universe.json",
+      "asof": "2026-10-27"
+    },
+    {
+      "zip_sha256": "64429fb33f5b873198014c8ef568cb46f9a2b13482c0c6a0d78006404e888e87",
+      "manifest_sha256": "a873d77f6008c4f2c10db22e0afac3d32eefcb013893d4f42616399ccca7601a",
+      "artifact_id": "12819160814",
+      "run_id": "40596424279",
+      "report_path": "collection/report.json",
+      "universe_path": "universe.json",
+      "asof": "2026-10-28"
+    },
+    {
+      "zip_sha256": "ddda2c7d7d18997659c193074647af50353f744aeabd18977a5da9c9af126c06",
+      "manifest_sha256": "f6a22ac498e682d0a79a662105e78741ec443165b9ecad784ca3ca1be006f007",
+      "artifact_id": "12831555368",
+      "run_id": "40596424279",
+      "report_path": "collection/report.json",
+      "universe_path": "universe.json",
+      "asof": "2026-10-28"
+    },
+    {
+      "zip_sha256": "4682801c9d88a5fb43496c55263e66402aef42f089f8987d667458d15cf8e8c7",
+      "manifest_sha256": "55d41a0dbb9dc3e9d2022ba676eb7039172b5914df5843c0b114f0b29710e812",
+      "artifact_id": "12910068161",
+      "run_id": "40882669831",
+      "report_path": "kis-authorized-20261029-40882669831/collection/report.json",
+      "universe_path": "kis-authorized-20261029-40882669831/preparation/universe.json",
+      "asof": "2026-10-29"
+    },
+    {
+      "zip_sha256": "590847b13fa83a0634290a2792114b71b5efc9306697a51d5d8a8c31e2f81b74",
+      "manifest_sha256": "1084d0c74765ea73693af5d54e4d9d87561813ac4586090442deefa9b4eec02e",
+      "artifact_id": "12983267630",
+      "run_id": "41052557610",
+      "report_path": "kis-regular-20261030-2030/collection/report.json",
+      "universe_path": "kis-regular-20261030-2030/preparation/universe.json",
+      "asof": "2026-10-30"
+    }
+  ],
+  "checkpoints": [
+    {
+      "asof": "2026-10-15",
+      "commit": "c6f198237fb671f55b2546c4d5f027adb8159e93",
+      "branch": "data/daily-20261015",
+      "bundle_sha256": "2dbcad39cf6245e018c3fee229bdcd923f8c98c0a860739fb14e09a8567f940a",
+      "git_blob": "8094bf07d08bd165ca73ce29e9154cb8fc8ebd3a"
+    },
+    {
+      "asof": "2026-10-16",
+      "commit": "07796f6bed3d3e9650573852f13173420497fb6d",
+      "branch": "data/daily-20261016",
+      "bundle_sha256": "486de1d69089796fd5346697c5f6d4b0c9907861b803b715bce19b4d426addd8",
+      "git_blob": "29baf4a202d688756702b16c258bcb06d03bca34"
+    },
+    {
+      "asof": "2026-10-19",
+      "commit": "ca13526e81f944d277145e4479dbb1f3f6f79e0e",
+      "branch": "data/daily-20261019",
+      "bundle_sha256": "9676b949e94797b4f1922e607055fe7d02d12c2c3698aaac84dd3e6ceddeae9c",
+      "git_blob": "3c939d4c8f932022329ad41592c0ac38638bcb4c"
+    },
+    {
+      "asof": "2026-10-20",
+      "commit": "c9e24ddc6a597233fc46da5c1e2f4eeeaa13da6b",
+      "branch": "data/daily-20261020",
+      "bundle_sha256": "789e48a73a34f925c5442c92035dbf39715a34c92f3d351b1f4b30c20860fcf4",
+      "git_blob": "2a42ac6f34000393d7a6d6d3ebbd156093cce717"
+    },
+    {
+      "asof": "2026-10-21",
+      "commit": "5ff62b062658463b9130b55576b7207b73aaf737",
+      "branch": "data/daily-20261021",
+      "bundle_sha256": "bf41cb6ea1f6fa44eb6acb1759301dce4004bbc34ad184e9b594686b24e0ab6e",
+      "git_blob": "09d3873a4eb2c7cbb452535dbf8de19614e4b2cc"
+    },
+    {
+      "asof": "2026-10-22",
+      "commit": "ab5529757a68cc3ebe7a2ae014f2db8776197362",
+      "branch": "data/daily-20261022",
+      "bundle_sha256": "7663f159e67b0c40eeb1278e2d7ef656036fd5b5af2bff4ab99b04c704fb47ac",
+      "git_blob": "29dc2d638848956979d5132160be93bdf11c123a"
+    },
+    {
+      "asof": "2026-10-23",
+      "commit": "4e1d1bb65348f7547887476f93bbd77bcb1d51cf",
+      "branch": "data/daily-20261023",
+      "bundle_sha256": "e72db3976f7bc61232530d7beff27b8cb067b25045c68b7e802912091c651cbc",
+      "git_blob": "9847e336d3beebe22c163a277fa32435178dc70c"
+    }
+  ],
+  "published_files": {
+    "dashboard.duckdb": "e1a96cae6aa6621bed55f74b077e235c66408c3149537fee4a9398075c2814bf",
+    "publication-ledger.json": "509b52578fb780f75446c5e0d4d643a1ed92cdfb6e27a91eacf8d554fc907cb0",
+    "daily-validation.json": "404c09ca65c42102be7a0e27268f42ecd34fa6b5644b0ad04c7eacf80ac3f42a",
+    "manifest.json": "4561650105fc1eefd07fa9da693ef4afb7e0d91beff88ce23c46cc6e5901ac93"
+  },
+  "reference_artifact": {
+    "artifact_id": "13046941824",
+    "zip_sha256": "ea6b47a7082ec7624b607eb9ed27b73359578bb6bae44a24c179cecd6f98475a"
+  },
+  "reference_objects": {
+    "06241bf0ec38e3ad08416893794f2575423edc3703be0b677a8070f2350f29a9": {
+      "file": "06241bf0ec38e3ad08416893794f2575423edc3703be0b677a8070f2350f29a9.json.gz",
+      "sha256": "06241bf0ec38e3ad08416893794f2575423edc3703be0b677a8070f2350f29a9",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260915",
+      "observed_at": "2026-10-22T07:10:03.068478+00:00",
+      "asof": "2026-09-15"
+    },
+    "465dc08602310533781b2a644c08466d9f227cf888da1237ac09a7d4e9cc9abe": {
+      "file": "465dc08602310533781b2a644c08466d9f227cf888da1237ac09a7d4e9cc9abe.json.gz",
+      "sha256": "465dc08602310533781b2a644c08466d9f227cf888da1237ac09a7d4e9cc9abe",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260814",
+      "observed_at": "2026-10-22T06:59:33.189447+00:00",
+      "asof": "2026-08-14"
+    },
+    "caf5e6bab1d8b8e8d8b618fa007e75e06f4b89edb91980a413583890c978e0f2": {
+      "file": "caf5e6bab1d8b8e8d8b618fa007e75e06f4b89edb91980a413583890c978e0f2.json.gz",
+      "sha256": "caf5e6bab1d8b8e8d8b618fa007e75e06f4b89edb91980a413583890c978e0f2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260507",
+      "observed_at": "2026-10-22T07:20:52.732614+00:00",
+      "asof": "2026-05-07"
+    },
+    "6a70fcf94a1cb17ea68435965bb67f281a1208213da8ffdcbb6b1962b3c7e40c": {
+      "file": "6a70fcf94a1cb17ea68435965bb67f281a1208213da8ffdcbb6b1962b3c7e40c.json.gz",
+      "sha256": "6a70fcf94a1cb17ea68435965bb67f281a1208213da8ffdcbb6b1962b3c7e40c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260820",
+      "observed_at": "2026-10-22T06:58:20.181366+00:00",
+      "asof": "2026-08-20"
+    },
+    "bbd4ffa937f39e64bb83c27c12c337646a0a23d7f84150f24c662a6bc351db77": {
+      "file": "bbd4ffa937f39e64bb83c27c12c337646a0a23d7f84150f24c662a6bc351db77.json.gz",
+      "sha256": "bbd4ffa937f39e64bb83c27c12c337646a0a23d7f84150f24c662a6bc351db77",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260616",
+      "observed_at": "2026-10-22T07:04:54.165959+00:00",
+      "asof": "2026-06-16"
+    },
+    "ef80d062f15a14b8cac116310f52f8204aee851819e4850cb1b35784d86c8101": {
+      "file": "ef80d062f15a14b8cac116310f52f8204aee851819e4850cb1b35784d86c8101.json.gz",
+      "sha256": "ef80d062f15a14b8cac116310f52f8204aee851819e4850cb1b35784d86c8101",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260723",
+      "observed_at": "2026-10-22T07:00:56.798850+00:00",
+      "asof": "2026-07-23"
+    },
+    "7bee9978b536de1ffe51b21cf30754b6a03ba1c8a0f7864638982daf2cb4a27e": {
+      "file": "7bee9978b536de1ffe51b21cf30754b6a03ba1c8a0f7864638982daf2cb4a27e.json.gz",
+      "sha256": "7bee9978b536de1ffe51b21cf30754b6a03ba1c8a0f7864638982daf2cb4a27e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260514",
+      "observed_at": "2026-10-22T07:07:14.122500+00:00",
+      "asof": "2026-05-14"
+    },
+    "1859c35b0a57797fb62b59017b4176c10d417a7380276c38e83435a6ca6fdbe2": {
+      "file": "1859c35b0a57797fb62b59017b4176c10d417a7380276c38e83435a6ca6fdbe2.json.gz",
+      "sha256": "1859c35b0a57797fb62b59017b4176c10d417a7380276c38e83435a6ca6fdbe2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260923",
+      "observed_at": "2026-10-22T07:09:45.494062+00:00",
+      "asof": "2026-09-23"
+    },
+    "c791619b2d2997d887c8eb10ae4dcc014550080393ca7ad44523fe30f4bba068": {
+      "file": "c791619b2d2997d887c8eb10ae4dcc014550080393ca7ad44523fe30f4bba068.json.gz",
+      "sha256": "c791619b2d2997d887c8eb10ae4dcc014550080393ca7ad44523fe30f4bba068",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261029",
+      "observed_at": "2026-10-31T15:04:14.866267+00:00",
+      "asof": "2026-10-29"
+    },
+    "ca68dd8c65583336f71be41204953619f9e08a5c00cce63a47625e16997106a4": {
+      "file": "ca68dd8c65583336f71be41204953619f9e08a5c00cce63a47625e16997106a4.json.gz",
+      "sha256": "ca68dd8c65583336f71be41204953619f9e08a5c00cce63a47625e16997106a4",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260616",
+      "observed_at": "2026-10-22T07:17:28.752185+00:00",
+      "asof": "2026-06-16"
+    },
+    "9764cd07bcf24b59e77c5dbc604bf04b325e59a9e84306accd41825ae299415f": {
+      "file": "9764cd07bcf24b59e77c5dbc604bf04b325e59a9e84306accd41825ae299415f.json.gz",
+      "sha256": "9764cd07bcf24b59e77c5dbc604bf04b325e59a9e84306accd41825ae299415f",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260430",
+      "observed_at": "2026-10-22T07:20:59.827238+00:00",
+      "asof": "2026-04-30"
+    },
+    "a85109343f65d4042781f35d6bdf016752732ab2a6941fbed82733fa9c7b11bf": {
+      "file": "a85109343f65d4042781f35d6bdf016752732ab2a6941fbed82733fa9c7b11bf.json.gz",
+      "sha256": "a85109343f65d4042781f35d6bdf016752732ab2a6941fbed82733fa9c7b11bf",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260527",
+      "observed_at": "2026-10-22T07:05:45.183827+00:00",
+      "asof": "2026-05-27"
+    },
+    "3978f70f660aae5d1258808cfa83acf98b37041fe862dd92cbb91cd62a006e2a": {
+      "file": "3978f70f660aae5d1258808cfa83acf98b37041fe862dd92cbb91cd62a006e2a.json.gz",
+      "sha256": "3978f70f660aae5d1258808cfa83acf98b37041fe862dd92cbb91cd62a006e2a",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261006",
+      "observed_at": "2026-10-22T07:09:28.821597+00:00",
+      "asof": "2026-10-06"
+    },
+    "d004c3f4a8c9bec97ce19235b1f89a192424201374e49a4c0451b02d7640b21c": {
+      "file": "d004c3f4a8c9bec97ce19235b1f89a192424201374e49a4c0451b02d7640b21c.json.gz",
+      "sha256": "d004c3f4a8c9bec97ce19235b1f89a192424201374e49a4c0451b02d7640b21c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260619",
+      "observed_at": "2026-10-22T07:17:21.248965+00:00",
+      "asof": "2026-06-19"
+    },
+    "98a6661166e00dc7a2130ae957a60f56a912c18b86978ad420361be340ad585c": {
+      "file": "98a6661166e00dc7a2130ae957a60f56a912c18b86978ad420361be340ad585c.json.gz",
+      "sha256": "98a6661166e00dc7a2130ae957a60f56a912c18b86978ad420361be340ad585c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260917",
+      "observed_at": "2026-10-22T07:09:59.148200+00:00",
+      "asof": "2026-09-17"
+    },
+    "650634ecddeb82f2f4ba87159098d48d4183ac5df14f21274b790fbae4b21c95": {
+      "file": "650634ecddeb82f2f4ba87159098d48d4183ac5df14f21274b790fbae4b21c95.json.gz",
+      "sha256": "650634ecddeb82f2f4ba87159098d48d4183ac5df14f21274b790fbae4b21c95",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260520",
+      "observed_at": "2026-10-22T07:19:08.178490+00:00",
+      "asof": "2026-05-20"
+    },
+    "ca3d1321aac99dcaeb3ecdb2f406e4ecf236c5ca660a5a332fbcc5147cc9ce15": {
+      "file": "ca3d1321aac99dcaeb3ecdb2f406e4ecf236c5ca660a5a332fbcc5147cc9ce15.json.gz",
+      "sha256": "ca3d1321aac99dcaeb3ecdb2f406e4ecf236c5ca660a5a332fbcc5147cc9ce15",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261016",
+      "observed_at": "2026-10-21T05:41:38.883099+00:00",
+      "asof": "2026-10-16"
+    },
+    "686358125d64faf14556cc07e02127df7f403fec000b36480b8112d6b8b59217": {
+      "file": "686358125d64faf14556cc07e02127df7f403fec000b36480b8112d6b8b59217.json.gz",
+      "sha256": "686358125d64faf14556cc07e02127df7f403fec000b36480b8112d6b8b59217",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260909",
+      "observed_at": "2026-10-22T06:57:52.940962+00:00",
+      "asof": "2026-09-09"
+    },
+    "f34e8ad17aee305737e14aa3d5e0c91921a55992dd4eb1d2700853ea57181253": {
+      "file": "f34e8ad17aee305737e14aa3d5e0c91921a55992dd4eb1d2700853ea57181253.json.gz",
+      "sha256": "f34e8ad17aee305737e14aa3d5e0c91921a55992dd4eb1d2700853ea57181253",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260902",
+      "observed_at": "2026-10-22T07:11:35.324596+00:00",
+      "asof": "2026-09-02"
+    },
+    "20c6c5436cc78dc2fac002fe554ce45f0066b5a4423711054dd2cce4fe823adf": {
+      "file": "20c6c5436cc78dc2fac002fe554ce45f0066b5a4423711054dd2cce4fe823adf.json.gz",
+      "sha256": "20c6c5436cc78dc2fac002fe554ce45f0066b5a4423711054dd2cce4fe823adf",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260916",
+      "observed_at": "2026-10-22T07:10:01.205762+00:00",
+      "asof": "2026-09-16"
+    },
+    "cdedc8275981d1aac539aa0fcc4d2d18d7c8e6011cf3c2f9a7c2ef948cd9528d": {
+      "file": "cdedc8275981d1aac539aa0fcc4d2d18d7c8e6011cf3c2f9a7c2ef948cd9528d.json.gz",
+      "sha256": "cdedc8275981d1aac539aa0fcc4d2d18d7c8e6011cf3c2f9a7c2ef948cd9528d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260908",
+      "observed_at": "2026-10-22T06:57:54.927690+00:00",
+      "asof": "2026-09-08"
+    },
+    "f6864644e6f7c671f23a4ecf85aff7b9fe53aeb81b9d628567787f8cafb137ae": {
+      "file": "f6864644e6f7c671f23a4ecf85aff7b9fe53aeb81b9d628567787f8cafb137ae.json.gz",
+      "sha256": "f6864644e6f7c671f23a4ecf85aff7b9fe53aeb81b9d628567787f8cafb137ae",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260513",
+      "observed_at": "2026-10-22T07:07:17.403559+00:00",
+      "asof": "2026-05-13"
+    },
+    "d2af0e069cff9b64f6507c83767c061ffb520ff14d5b3a92b6d369a7de3fdfe9": {
+      "file": "d2af0e069cff9b64f6507c83767c061ffb520ff14d5b3a92b6d369a7de3fdfe9.json.gz",
+      "sha256": "d2af0e069cff9b64f6507c83767c061ffb520ff14d5b3a92b6d369a7de3fdfe9",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260507",
+      "observed_at": "2026-10-22T07:07:27.232213+00:00",
+      "asof": "2026-05-07"
+    },
+    "dbd832dc2f9928eb65a542e13b2e786825ff501c6ab4b962e8ed7f109f47f75b": {
+      "file": "dbd832dc2f9928eb65a542e13b2e786825ff501c6ab4b962e8ed7f109f47f75b.json.gz",
+      "sha256": "dbd832dc2f9928eb65a542e13b2e786825ff501c6ab4b962e8ed7f109f47f75b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260706",
+      "observed_at": "2026-10-22T07:16:56.091413+00:00",
+      "asof": "2026-07-06"
+    },
+    "da7fa7bd57b3056b83c9cdadee57ccd6823b511326363f4120bc2c347814a8f1": {
+      "file": "da7fa7bd57b3056b83c9cdadee57ccd6823b511326363f4120bc2c347814a8f1.json.gz",
+      "sha256": "da7fa7bd57b3056b83c9cdadee57ccd6823b511326363f4120bc2c347814a8f1",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260812",
+      "observed_at": "2026-10-22T07:12:17.089616+00:00",
+      "asof": "2026-08-12"
+    },
+    "e612cdcea9b4e6a3831adffd84922ef7d7ed394b34eb4606a706c1b4843d1ec1": {
+      "file": "e612cdcea9b4e6a3831adffd84922ef7d7ed394b34eb4606a706c1b4843d1ec1.json.gz",
+      "sha256": "e612cdcea9b4e6a3831adffd84922ef7d7ed394b34eb4606a706c1b4843d1ec1",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260805",
+      "observed_at": "2026-10-22T07:13:41.747938+00:00",
+      "asof": "2026-08-05"
+    },
+    "258b98897558c9f719753b39738d6aa10926e5d923f9fa4857deefbff5c2e5fa": {
+      "file": "258b98897558c9f719753b39738d6aa10926e5d923f9fa4857deefbff5c2e5fa.json.gz",
+      "sha256": "258b98897558c9f719753b39738d6aa10926e5d923f9fa4857deefbff5c2e5fa",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260911",
+      "observed_at": "2026-10-22T07:10:07.980123+00:00",
+      "asof": "2026-09-11"
+    },
+    "75cf598a41fa9440baee799f2ba0ccee6900079db217745d1f140d4cd80f9150": {
+      "file": "75cf598a41fa9440baee799f2ba0ccee6900079db217745d1f140d4cd80f9150.json.gz",
+      "sha256": "75cf598a41fa9440baee799f2ba0ccee6900079db217745d1f140d4cd80f9150",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260918",
+      "observed_at": "2026-10-22T06:56:28.123774+00:00",
+      "asof": "2026-09-18"
+    },
+    "6a838b9f2a92a8ba286a962dc2f7e7fc622d35c52542e0957a8855fc99db061c": {
+      "file": "6a838b9f2a92a8ba286a962dc2f7e7fc622d35c52542e0957a8855fc99db061c.json.gz",
+      "sha256": "6a838b9f2a92a8ba286a962dc2f7e7fc622d35c52542e0957a8855fc99db061c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260724",
+      "observed_at": "2026-10-22T07:14:03.542622+00:00",
+      "asof": "2026-07-24"
+    },
+    "a51bd049d3dfa3f624c4379b584ad724d8821d70648dcea82a29dca6f4023555": {
+      "file": "a51bd049d3dfa3f624c4379b584ad724d8821d70648dcea82a29dca6f4023555.json.gz",
+      "sha256": "a51bd049d3dfa3f624c4379b584ad724d8821d70648dcea82a29dca6f4023555",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260907",
+      "observed_at": "2026-10-22T07:11:28.302317+00:00",
+      "asof": "2026-09-07"
+    },
+    "203c418ea770d021ead30c122c910c32110cdde708ef8e595cb8fb91ede24bbb": {
+      "file": "203c418ea770d021ead30c122c910c32110cdde708ef8e595cb8fb91ede24bbb.json.gz",
+      "sha256": "203c418ea770d021ead30c122c910c32110cdde708ef8e595cb8fb91ede24bbb",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260424",
+      "observed_at": "2026-10-22T07:21:09.857771+00:00",
+      "asof": "2026-04-24"
+    },
+    "a5a31b75b5cf2cc2f89dd7751a94de4f6d2fc5f1c4befd819c19f2c2160bde45": {
+      "file": "a5a31b75b5cf2cc2f89dd7751a94de4f6d2fc5f1c4befd819c19f2c2160bde45.json.gz",
+      "sha256": "a5a31b75b5cf2cc2f89dd7751a94de4f6d2fc5f1c4befd819c19f2c2160bde45",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260629",
+      "observed_at": "2026-10-22T07:17:08.549045+00:00",
+      "asof": "2026-06-29"
+    },
+    "ec8ef51426fa18e26038f511180fef95b02ba09601b14b73641203b7c77fdc70": {
+      "file": "ec8ef51426fa18e26038f511180fef95b02ba09601b14b73641203b7c77fdc70.json.gz",
+      "sha256": "ec8ef51426fa18e26038f511180fef95b02ba09601b14b73641203b7c77fdc70",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261014",
+      "observed_at": "2026-10-15T10:56:34.332560+00:00",
+      "asof": "2026-10-14"
+    },
+    "1aa8efe6b454a0555c42181d9cb0d71a043aeac7c826954fe97d5f7c382ff6c3": {
+      "file": "1aa8efe6b454a0555c42181d9cb0d71a043aeac7c826954fe97d5f7c382ff6c3.json.gz",
+      "sha256": "1aa8efe6b454a0555c42181d9cb0d71a043aeac7c826954fe97d5f7c382ff6c3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260623",
+      "observed_at": "2026-10-22T07:17:17.216172+00:00",
+      "asof": "2026-06-23"
+    },
+    "199cb6eb1a10a7fd655044b7f4562f1e636a5204a5a288bcdfe60d9ef3e0cee3": {
+      "file": "199cb6eb1a10a7fd655044b7f4562f1e636a5204a5a288bcdfe60d9ef3e0cee3.json.gz",
+      "sha256": "199cb6eb1a10a7fd655044b7f4562f1e636a5204a5a288bcdfe60d9ef3e0cee3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260604",
+      "observed_at": "2026-10-22T07:05:25.982591+00:00",
+      "asof": "2026-06-04"
+    },
+    "4b5a9c1e00f38556cee9feadaff225fc473628dc61d680b12bfa8a493b7250d0": {
+      "file": "4b5a9c1e00f38556cee9feadaff225fc473628dc61d680b12bfa8a493b7250d0.json.gz",
+      "sha256": "4b5a9c1e00f38556cee9feadaff225fc473628dc61d680b12bfa8a493b7250d0",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260605",
+      "observed_at": "2026-10-22T07:05:18.481355+00:00",
+      "asof": "2026-06-05"
+    },
+    "7e44c3448218f1166c6d088f44d69160076b1abf4f9ee12a61ad1e7a73e78065": {
+      "file": "7e44c3448218f1166c6d088f44d69160076b1abf4f9ee12a61ad1e7a73e78065.json.gz",
+      "sha256": "7e44c3448218f1166c6d088f44d69160076b1abf4f9ee12a61ad1e7a73e78065",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260608",
+      "observed_at": "2026-10-22T07:05:15.798003+00:00",
+      "asof": "2026-06-08"
+    },
+    "e9e09eb959bd444fa546f57ebe76a52e052aba30dde931b29c56b213c5c54a08": {
+      "file": "e9e09eb959bd444fa546f57ebe76a52e052aba30dde931b29c56b213c5c54a08.json.gz",
+      "sha256": "e9e09eb959bd444fa546f57ebe76a52e052aba30dde931b29c56b213c5c54a08",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260617",
+      "observed_at": "2026-10-22T07:04:51.538753+00:00",
+      "asof": "2026-06-17"
+    },
+    "9f4d158588b89684da10607f384cbfe711ef1e56fd00b98bcf04911616781dde": {
+      "file": "9f4d158588b89684da10607f384cbfe711ef1e56fd00b98bcf04911616781dde.json.gz",
+      "sha256": "9f4d158588b89684da10607f384cbfe711ef1e56fd00b98bcf04911616781dde",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260602",
+      "observed_at": "2026-10-22T07:18:51.323680+00:00",
+      "asof": "2026-06-02"
+    },
+    "334894fdd3b6c905f1b3e134361f6ed48831e7eddee2659eccf8bcb610dce198": {
+      "file": "334894fdd3b6c905f1b3e134361f6ed48831e7eddee2659eccf8bcb610dce198.json.gz",
+      "sha256": "334894fdd3b6c905f1b3e134361f6ed48831e7eddee2659eccf8bcb610dce198",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260812",
+      "observed_at": "2026-10-22T06:59:39.171541+00:00",
+      "asof": "2026-08-12"
+    },
+    "9aa42c68edeb8f41335be36ca32d6dbf96fc3769ab68f4278692c2fb6a2a6d54": {
+      "file": "9aa42c68edeb8f41335be36ca32d6dbf96fc3769ab68f4278692c2fb6a2a6d54.json.gz",
+      "sha256": "9aa42c68edeb8f41335be36ca32d6dbf96fc3769ab68f4278692c2fb6a2a6d54",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260728",
+      "observed_at": "2026-10-22T07:13:58.054626+00:00",
+      "asof": "2026-07-28"
+    },
+    "e8e35d9f752969550cc7c0e5380e870d2c2882c3894aedac1a9f5320ba4cbd2a": {
+      "file": "e8e35d9f752969550cc7c0e5380e870d2c2882c3894aedac1a9f5320ba4cbd2a.json.gz",
+      "sha256": "e8e35d9f752969550cc7c0e5380e870d2c2882c3894aedac1a9f5320ba4cbd2a",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260904",
+      "observed_at": "2026-10-22T06:57:58.734798+00:00",
+      "asof": "2026-09-04"
+    },
+    "d7c1a24c1fa392dd14dda886dc750a53ee31fe8b95029e579448cdabdd9458ef": {
+      "file": "d7c1a24c1fa392dd14dda886dc750a53ee31fe8b95029e579448cdabdd9458ef.json.gz",
+      "sha256": "d7c1a24c1fa392dd14dda886dc750a53ee31fe8b95029e579448cdabdd9458ef",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260818",
+      "observed_at": "2026-10-22T07:12:08.457573+00:00",
+      "asof": "2026-08-18"
+    },
+    "4a4a730bbd709b2d742bdd7be8f2e7f30a757e37d8632075e95a91cc50f396c0": {
+      "file": "4a4a730bbd709b2d742bdd7be8f2e7f30a757e37d8632075e95a91cc50f396c0.json.gz",
+      "sha256": "4a4a730bbd709b2d742bdd7be8f2e7f30a757e37d8632075e95a91cc50f396c0",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261008",
+      "observed_at": "2026-10-22T07:09:24.163518+00:00",
+      "asof": "2026-10-08"
+    },
+    "5882169a7b9add58d06f1dc3a687563033e375e7ded6189b14f27f79062f8c5e": {
+      "file": "5882169a7b9add58d06f1dc3a687563033e375e7ded6189b14f27f79062f8c5e.json.gz",
+      "sha256": "5882169a7b9add58d06f1dc3a687563033e375e7ded6189b14f27f79062f8c5e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260611",
+      "observed_at": "2026-10-22T07:18:37.345719+00:00",
+      "asof": "2026-06-11"
+    },
+    "bbf9d8ec8086523c2b079947e5da76778937e6ddab9ec27f72d78c6903839e92": {
+      "file": "bbf9d8ec8086523c2b079947e5da76778937e6ddab9ec27f72d78c6903839e92.json.gz",
+      "sha256": "bbf9d8ec8086523c2b079947e5da76778937e6ddab9ec27f72d78c6903839e92",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261026",
+      "observed_at": "2026-10-31T15:03:26.686215+00:00",
+      "asof": "2026-10-26"
+    },
+    "c5464c499ba3e9aebe0e34cd96647c644ecf99b1f9d299a18f1f2c325d859c3e": {
+      "file": "c5464c499ba3e9aebe0e34cd96647c644ecf99b1f9d299a18f1f2c325d859c3e.json.gz",
+      "sha256": "c5464c499ba3e9aebe0e34cd96647c644ecf99b1f9d299a18f1f2c325d859c3e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260624",
+      "observed_at": "2026-10-22T07:03:21.680518+00:00",
+      "asof": "2026-06-24"
+    },
+    "8689a9ac5771ae0736415dca3d9651df3e97b7e7486f0c7ef20a5ca727e2bb54": {
+      "file": "8689a9ac5771ae0736415dca3d9651df3e97b7e7486f0c7ef20a5ca727e2bb54.json.gz",
+      "sha256": "8689a9ac5771ae0736415dca3d9651df3e97b7e7486f0c7ef20a5ca727e2bb54",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260721",
+      "observed_at": "2026-10-22T07:01:09.383172+00:00",
+      "asof": "2026-07-21"
+    },
+    "4e46bcc35d1746360aec7f7257b17a6e65e8847133d528ea17e8205a563a1972": {
+      "file": "4e46bcc35d1746360aec7f7257b17a6e65e8847133d528ea17e8205a563a1972.json.gz",
+      "sha256": "4e46bcc35d1746360aec7f7257b17a6e65e8847133d528ea17e8205a563a1972",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260521",
+      "observed_at": "2026-10-22T07:05:52.997009+00:00",
+      "asof": "2026-05-21"
+    },
+    "9b4ec23666e77dd8008f022162c15792fc7571e7dbb3138076ebc9f93bcfd794": {
+      "file": "9b4ec23666e77dd8008f022162c15792fc7571e7dbb3138076ebc9f93bcfd794.json.gz",
+      "sha256": "9b4ec23666e77dd8008f022162c15792fc7571e7dbb3138076ebc9f93bcfd794",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261001",
+      "observed_at": "2026-10-22T06:56:12.231589+00:00",
+      "asof": "2026-10-01"
+    },
+    "018732cbb34cf4ac86907311ed031be70cba03f849a31baa2d799da9388ab98d": {
+      "file": "018732cbb34cf4ac86907311ed031be70cba03f849a31baa2d799da9388ab98d.json.gz",
+      "sha256": "018732cbb34cf4ac86907311ed031be70cba03f849a31baa2d799da9388ab98d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260928",
+      "observed_at": "2026-10-22T06:56:19.337860+00:00",
+      "asof": "2026-09-28"
+    },
+    "f049d8b15ba56474ee31c27a50a8d24db52e9aa46d7e6a7898837c6de39bd069": {
+      "file": "f049d8b15ba56474ee31c27a50a8d24db52e9aa46d7e6a7898837c6de39bd069.json.gz",
+      "sha256": "f049d8b15ba56474ee31c27a50a8d24db52e9aa46d7e6a7898837c6de39bd069",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261007",
+      "observed_at": "2026-10-22T07:09:26.405335+00:00",
+      "asof": "2026-10-07"
+    },
+    "51d1fd65d315a22e61ac5e871bd2fbe03914a9b6895f3f11ea1362ce543efdcc": {
+      "file": "51d1fd65d315a22e61ac5e871bd2fbe03914a9b6895f3f11ea1362ce543efdcc.json.gz",
+      "sha256": "51d1fd65d315a22e61ac5e871bd2fbe03914a9b6895f3f11ea1362ce543efdcc",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260929",
+      "observed_at": "2026-10-22T07:09:39.898461+00:00",
+      "asof": "2026-09-29"
+    },
+    "5bb2991b3160a1fe10a3634852f31913d393fc1179ece487d8850fb9c44a783b": {
+      "file": "5bb2991b3160a1fe10a3634852f31913d393fc1179ece487d8850fb9c44a783b.json.gz",
+      "sha256": "5bb2991b3160a1fe10a3634852f31913d393fc1179ece487d8850fb9c44a783b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261014",
+      "observed_at": "2026-10-15T10:56:37.775215+00:00",
+      "asof": "2026-10-14"
+    },
+    "d312f9d82c716c8b203fb298673d276a550abea24f5dd14c9328b453fffb549e": {
+      "file": "d312f9d82c716c8b203fb298673d276a550abea24f5dd14c9328b453fffb549e.json.gz",
+      "sha256": "d312f9d82c716c8b203fb298673d276a550abea24f5dd14c9328b453fffb549e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260626",
+      "observed_at": "2026-10-22T07:17:10.599889+00:00",
+      "asof": "2026-06-26"
+    },
+    "f2368dc1e092915dacfad2e454c96c552fd603dcd76af9ff9839a707fc0e35f5": {
+      "file": "f2368dc1e092915dacfad2e454c96c552fd603dcd76af9ff9839a707fc0e35f5.json.gz",
+      "sha256": "f2368dc1e092915dacfad2e454c96c552fd603dcd76af9ff9839a707fc0e35f5",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261027",
+      "observed_at": "2026-10-31T15:03:47.240561+00:00",
+      "asof": "2026-10-27"
+    },
+    "e5e4886255556885b5f4c725e2fdbffb7628c66876ede730d86794daa1ba9b38": {
+      "file": "e5e4886255556885b5f4c725e2fdbffb7628c66876ede730d86794daa1ba9b38.json.gz",
+      "sha256": "e5e4886255556885b5f4c725e2fdbffb7628c66876ede730d86794daa1ba9b38",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260511",
+      "observed_at": "2026-10-22T07:07:22.482669+00:00",
+      "asof": "2026-05-11"
+    },
+    "2a40d807ad1fa624f8c9a0335457a31d4cb243c7a3d93462df6940de71c1bfc5": {
+      "file": "2a40d807ad1fa624f8c9a0335457a31d4cb243c7a3d93462df6940de71c1bfc5.json.gz",
+      "sha256": "2a40d807ad1fa624f8c9a0335457a31d4cb243c7a3d93462df6940de71c1bfc5",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260612",
+      "observed_at": "2026-10-22T07:17:33.498719+00:00",
+      "asof": "2026-06-12"
+    },
+    "39c498db1212c337d0f037bb6bffb619aa14e61e4c4499debf9898ef29a32f4d": {
+      "file": "39c498db1212c337d0f037bb6bffb619aa14e61e4c4499debf9898ef29a32f4d.json.gz",
+      "sha256": "39c498db1212c337d0f037bb6bffb619aa14e61e4c4499debf9898ef29a32f4d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260715",
+      "observed_at": "2026-10-22T07:02:30.156585+00:00",
+      "asof": "2026-07-15"
+    },
+    "cce2a29cec3a1d134876340b4c86a1d8bc7f1833eb35565c31fd9199647ff637": {
+      "file": "cce2a29cec3a1d134876340b4c86a1d8bc7f1833eb35565c31fd9199647ff637.json.gz",
+      "sha256": "cce2a29cec3a1d134876340b4c86a1d8bc7f1833eb35565c31fd9199647ff637",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260618",
+      "observed_at": "2026-10-22T07:17:23.311048+00:00",
+      "asof": "2026-06-18"
+    },
+    "2e6948dcdb83428113e9d36b7577049da41528b4b4485fe19ad6c64c9cc62e16": {
+      "file": "2e6948dcdb83428113e9d36b7577049da41528b4b4485fe19ad6c64c9cc62e16.json.gz",
+      "sha256": "2e6948dcdb83428113e9d36b7577049da41528b4b4485fe19ad6c64c9cc62e16",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260428",
+      "observed_at": "2026-10-22T07:21:05.394767+00:00",
+      "asof": "2026-04-28"
+    },
+    "edf6f30fee042833a76e71eef1825593fc7a6d750d2e10d4ae8d3fc4df217fd7": {
+      "file": "edf6f30fee042833a76e71eef1825593fc7a6d750d2e10d4ae8d3fc4df217fd7.json.gz",
+      "sha256": "edf6f30fee042833a76e71eef1825593fc7a6d750d2e10d4ae8d3fc4df217fd7",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260430",
+      "observed_at": "2026-10-22T07:07:38.164771+00:00",
+      "asof": "2026-04-30"
+    },
+    "7f2dfe3b0baee93997682f25aef63a4ef071a4a2ed97c6daa4c1b403b9a5defb": {
+      "file": "7f2dfe3b0baee93997682f25aef63a4ef071a4a2ed97c6daa4c1b403b9a5defb.json.gz",
+      "sha256": "7f2dfe3b0baee93997682f25aef63a4ef071a4a2ed97c6daa4c1b403b9a5defb",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260625",
+      "observed_at": "2026-10-22T07:17:12.980183+00:00",
+      "asof": "2026-06-25"
+    },
+    "636bf574a6a0bf937fd77c8e372a39868a842067b34105baa9370c9152bed8f6": {
+      "file": "636bf574a6a0bf937fd77c8e372a39868a842067b34105baa9370c9152bed8f6.json.gz",
+      "sha256": "636bf574a6a0bf937fd77c8e372a39868a842067b34105baa9370c9152bed8f6",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260709",
+      "observed_at": "2026-10-22T07:02:43.913500+00:00",
+      "asof": "2026-07-09"
+    },
+    "6d6f3216f5eab6588718f1c5db22fa8fb0d0418a246a5ebd36c023db63750fa5": {
+      "file": "6d6f3216f5eab6588718f1c5db22fa8fb0d0418a246a5ebd36c023db63750fa5.json.gz",
+      "sha256": "6d6f3216f5eab6588718f1c5db22fa8fb0d0418a246a5ebd36c023db63750fa5",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260610",
+      "observed_at": "2026-10-22T07:05:07.859943+00:00",
+      "asof": "2026-06-10"
+    },
+    "b8931ccab0983e20e93439220bdd3549b0db48b1c8ea2d1f63310e2531971de9": {
+      "file": "b8931ccab0983e20e93439220bdd3549b0db48b1c8ea2d1f63310e2531971de9.json.gz",
+      "sha256": "b8931ccab0983e20e93439220bdd3549b0db48b1c8ea2d1f63310e2531971de9",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260922",
+      "observed_at": "2026-10-22T06:56:23.783181+00:00",
+      "asof": "2026-09-22"
+    },
+    "9263a85b86ac9ce18a69806ae87f1d0391daa048fe5f87c4fa8672deb5812326": {
+      "file": "9263a85b86ac9ce18a69806ae87f1d0391daa048fe5f87c4fa8672deb5812326.json.gz",
+      "sha256": "9263a85b86ac9ce18a69806ae87f1d0391daa048fe5f87c4fa8672deb5812326",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260422",
+      "observed_at": "2026-10-22T07:21:14.361784+00:00",
+      "asof": "2026-04-22"
+    },
+    "ff31c48072cf2b5fb36ab04cd86872c0a4517c2c8d3aa4656087d6c8658d12c1": {
+      "file": "ff31c48072cf2b5fb36ab04cd86872c0a4517c2c8d3aa4656087d6c8658d12c1.json.gz",
+      "sha256": "ff31c48072cf2b5fb36ab04cd86872c0a4517c2c8d3aa4656087d6c8658d12c1",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260512",
+      "observed_at": "2026-10-22T07:20:45.077203+00:00",
+      "asof": "2026-05-12"
+    },
+    "6499884af59487b0223b2f4c857a5c83d030e265af99dcd0b55c5bd3d3f23701": {
+      "file": "6499884af59487b0223b2f4c857a5c83d030e265af99dcd0b55c5bd3d3f23701.json.gz",
+      "sha256": "6499884af59487b0223b2f4c857a5c83d030e265af99dcd0b55c5bd3d3f23701",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260626",
+      "observed_at": "2026-10-22T07:03:14.359817+00:00",
+      "asof": "2026-06-26"
+    },
+    "04d8218461e37ca515d7bc735d2e97d7204838c524e267446cc6255fd8db4a7c": {
+      "file": "04d8218461e37ca515d7bc735d2e97d7204838c524e267446cc6255fd8db4a7c.json.gz",
+      "sha256": "04d8218461e37ca515d7bc735d2e97d7204838c524e267446cc6255fd8db4a7c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260604",
+      "observed_at": "2026-10-22T07:18:49.446898+00:00",
+      "asof": "2026-06-04"
+    },
+    "f0369734a67395dd8cd6721281f2e3606de72379c16bd74c17d2d73c92e4c492": {
+      "file": "f0369734a67395dd8cd6721281f2e3606de72379c16bd74c17d2d73c92e4c492.json.gz",
+      "sha256": "f0369734a67395dd8cd6721281f2e3606de72379c16bd74c17d2d73c92e4c492",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260911",
+      "observed_at": "2026-10-22T06:57:49.196264+00:00",
+      "asof": "2026-09-11"
+    },
+    "bac47902b4f333ac802398f123321c699769737f4e7ada9b5b72d07c03b70743": {
+      "file": "bac47902b4f333ac802398f123321c699769737f4e7ada9b5b72d07c03b70743.json.gz",
+      "sha256": "bac47902b4f333ac802398f123321c699769737f4e7ada9b5b72d07c03b70743",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260731",
+      "observed_at": "2026-10-22T07:00:01.572341+00:00",
+      "asof": "2026-07-31"
+    },
+    "e31510b769e15f00f762ef6340c6894e8d1f7e2dcb306a2b6a59a2bb63ed8459": {
+      "file": "e31510b769e15f00f762ef6340c6894e8d1f7e2dcb306a2b6a59a2bb63ed8459.json.gz",
+      "sha256": "e31510b769e15f00f762ef6340c6894e8d1f7e2dcb306a2b6a59a2bb63ed8459",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261013",
+      "observed_at": "2026-10-22T06:55:57.043471+00:00",
+      "asof": "2026-10-13"
+    },
+    "b33d95da81e27c8d5cd70cf1c3903777e2b00778060fc68da065a3932aa7b4a7": {
+      "file": "b33d95da81e27c8d5cd70cf1c3903777e2b00778060fc68da065a3932aa7b4a7.json.gz",
+      "sha256": "b33d95da81e27c8d5cd70cf1c3903777e2b00778060fc68da065a3932aa7b4a7",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260903",
+      "observed_at": "2026-10-22T06:58:00.454056+00:00",
+      "asof": "2026-09-03"
+    },
+    "386cb400cbc75f7b7440b4650b7da6b889a3b58a7fa90d1f17f2920df5e37d46": {
+      "file": "386cb400cbc75f7b7440b4650b7da6b889a3b58a7fa90d1f17f2920df5e37d46.json.gz",
+      "sha256": "386cb400cbc75f7b7440b4650b7da6b889a3b58a7fa90d1f17f2920df5e37d46",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260520",
+      "observed_at": "2026-10-22T07:05:56.213184+00:00",
+      "asof": "2026-05-20"
+    },
+    "198550197f058ffbc6f0db69d646be9ce7c784ed0a725271e0f9d7430896625e": {
+      "file": "198550197f058ffbc6f0db69d646be9ce7c784ed0a725271e0f9d7430896625e.json.gz",
+      "sha256": "198550197f058ffbc6f0db69d646be9ce7c784ed0a725271e0f9d7430896625e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260714",
+      "observed_at": "2026-10-22T07:02:33.531927+00:00",
+      "asof": "2026-07-14"
+    },
+    "b2eae9865b0a2cc40a577ef28eec14340a8338825dcecf21c52cb3dc1e09563f": {
+      "file": "b2eae9865b0a2cc40a577ef28eec14340a8338825dcecf21c52cb3dc1e09563f.json.gz",
+      "sha256": "b2eae9865b0a2cc40a577ef28eec14340a8338825dcecf21c52cb3dc1e09563f",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260707",
+      "observed_at": "2026-10-22T07:02:50.148407+00:00",
+      "asof": "2026-07-07"
+    },
+    "35d9e20420aeb08f1937398211a08e7138351f0c9dba1d44efb5e6dd71fada53": {
+      "file": "35d9e20420aeb08f1937398211a08e7138351f0c9dba1d44efb5e6dd71fada53.json.gz",
+      "sha256": "35d9e20420aeb08f1937398211a08e7138351f0c9dba1d44efb5e6dd71fada53",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260615",
+      "observed_at": "2026-10-22T07:04:57.841962+00:00",
+      "asof": "2026-06-15"
+    },
+    "420898bf61675084447bf011e4ea0ebe36f7002911f8a231e9a92b7035429deb": {
+      "file": "420898bf61675084447bf011e4ea0ebe36f7002911f8a231e9a92b7035429deb.json.gz",
+      "sha256": "420898bf61675084447bf011e4ea0ebe36f7002911f8a231e9a92b7035429deb",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260519",
+      "observed_at": "2026-10-22T07:07:03.593958+00:00",
+      "asof": "2026-05-19"
+    },
+    "f34fd63daf3187356ed2f95ed2646a8a9c002c04ebff60620c7d7945c908d2fc": {
+      "file": "f34fd63daf3187356ed2f95ed2646a8a9c002c04ebff60620c7d7945c908d2fc.json.gz",
+      "sha256": "f34fd63daf3187356ed2f95ed2646a8a9c002c04ebff60620c7d7945c908d2fc",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260508",
+      "observed_at": "2026-10-22T07:07:25.108237+00:00",
+      "asof": "2026-05-08"
+    },
+    "197166c0b6561864a8ea8ac38f49f9f1a6a3078012fb57a5207d6544a2beecac": {
+      "file": "197166c0b6561864a8ea8ac38f49f9f1a6a3078012fb57a5207d6544a2beecac.json.gz",
+      "sha256": "197166c0b6561864a8ea8ac38f49f9f1a6a3078012fb57a5207d6544a2beecac",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260528",
+      "observed_at": "2026-10-22T07:18:58.075501+00:00",
+      "asof": "2026-05-28"
+    },
+    "e6510492c7661831809c8dd09bcaac51673d972cbd73a27acdf67a6ef4a921e2": {
+      "file": "e6510492c7661831809c8dd09bcaac51673d972cbd73a27acdf67a6ef4a921e2.json.gz",
+      "sha256": "e6510492c7661831809c8dd09bcaac51673d972cbd73a27acdf67a6ef4a921e2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260914",
+      "observed_at": "2026-10-22T06:57:47.395280+00:00",
+      "asof": "2026-09-14"
+    },
+    "49bdd6730044706c3b46d1c11a86b4cface11762af12198354e873b213e9f06a": {
+      "file": "49bdd6730044706c3b46d1c11a86b4cface11762af12198354e873b213e9f06a.json.gz",
+      "sha256": "49bdd6730044706c3b46d1c11a86b4cface11762af12198354e873b213e9f06a",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260831",
+      "observed_at": "2026-10-22T06:58:05.919995+00:00",
+      "asof": "2026-08-31"
+    },
+    "1b782fe456f134381f8267495dc270a23574608ea9aef9ab9f212127fabe8647": {
+      "file": "1b782fe456f134381f8267495dc270a23574608ea9aef9ab9f212127fabe8647.json.gz",
+      "sha256": "1b782fe456f134381f8267495dc270a23574608ea9aef9ab9f212127fabe8647",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260731",
+      "observed_at": "2026-10-22T07:13:48.529447+00:00",
+      "asof": "2026-07-31"
+    },
+    "b9986d2cd903b0f8464c0f3d425d6aa819bc7693407a49842273757e0c68b160": {
+      "file": "b9986d2cd903b0f8464c0f3d425d6aa819bc7693407a49842273757e0c68b160.json.gz",
+      "sha256": "b9986d2cd903b0f8464c0f3d425d6aa819bc7693407a49842273757e0c68b160",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261016",
+      "observed_at": "2026-10-22T06:55:54.747514+00:00",
+      "asof": "2026-10-16"
+    },
+    "da09e8fb75d553f1109ce9f38c0d041f4ef101d38c1a865b587c14a1e09383f6": {
+      "file": "da09e8fb75d553f1109ce9f38c0d041f4ef101d38c1a865b587c14a1e09383f6.json.gz",
+      "sha256": "da09e8fb75d553f1109ce9f38c0d041f4ef101d38c1a865b587c14a1e09383f6",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260806",
+      "observed_at": "2026-10-22T06:59:50.463793+00:00",
+      "asof": "2026-08-06"
+    },
+    "3593fe3e3ff6560328b2a42125aaa21fca0b212b6c6d27493140f806cc97e276": {
+      "file": "3593fe3e3ff6560328b2a42125aaa21fca0b212b6c6d27493140f806cc97e276.json.gz",
+      "sha256": "3593fe3e3ff6560328b2a42125aaa21fca0b212b6c6d27493140f806cc97e276",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260804",
+      "observed_at": "2026-10-22T06:59:56.365933+00:00",
+      "asof": "2026-08-04"
+    },
+    "29c2cbc583df74996b5baba05a732c681fedda4039d439d266d0db0e3013731f": {
+      "file": "29c2cbc583df74996b5baba05a732c681fedda4039d439d266d0db0e3013731f.json.gz",
+      "sha256": "29c2cbc583df74996b5baba05a732c681fedda4039d439d266d0db0e3013731f",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260723",
+      "observed_at": "2026-10-22T07:14:07.410290+00:00",
+      "asof": "2026-07-23"
+    },
+    "5cc09130ffb1be98ad8ba13d752eb1ea4b6f4b41c30c2039ccf710586ed4a1d7": {
+      "file": "5cc09130ffb1be98ad8ba13d752eb1ea4b6f4b41c30c2039ccf710586ed4a1d7.json.gz",
+      "sha256": "5cc09130ffb1be98ad8ba13d752eb1ea4b6f4b41c30c2039ccf710586ed4a1d7",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260713",
+      "observed_at": "2026-10-22T07:02:37.008715+00:00",
+      "asof": "2026-07-13"
+    },
+    "013fdf81b9c6e3fcdd9e854aa712d38537a75edc44c94980e9cae08f3e54fdd3": {
+      "file": "013fdf81b9c6e3fcdd9e854aa712d38537a75edc44c94980e9cae08f3e54fdd3.json.gz",
+      "sha256": "013fdf81b9c6e3fcdd9e854aa712d38537a75edc44c94980e9cae08f3e54fdd3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260701",
+      "observed_at": "2026-10-22T07:03:02.916419+00:00",
+      "asof": "2026-07-01"
+    },
+    "4dd21aabcf25d3884e0f7a710a5014e594db04c2ab1dcb016cfee70dfac8759b": {
+      "file": "4dd21aabcf25d3884e0f7a710a5014e594db04c2ab1dcb016cfee70dfac8759b.json.gz",
+      "sha256": "4dd21aabcf25d3884e0f7a710a5014e594db04c2ab1dcb016cfee70dfac8759b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261012",
+      "observed_at": "2026-10-22T06:55:59.403217+00:00",
+      "asof": "2026-10-12"
+    },
+    "b48c822bfb62ff661679e3368f7ab8373d39f000bb685352d4e541049a2dddf0": {
+      "file": "b48c822bfb62ff661679e3368f7ab8373d39f000bb685352d4e541049a2dddf0.json.gz",
+      "sha256": "b48c822bfb62ff661679e3368f7ab8373d39f000bb685352d4e541049a2dddf0",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260824",
+      "observed_at": "2026-10-22T07:11:55.845733+00:00",
+      "asof": "2026-08-24"
+    },
+    "580c623c4a03c7a9a1f625a9344ffa7bdd06cb1a3d1212236ee5ead1320bdd6d": {
+      "file": "580c623c4a03c7a9a1f625a9344ffa7bdd06cb1a3d1212236ee5ead1320bdd6d.json.gz",
+      "sha256": "580c623c4a03c7a9a1f625a9344ffa7bdd06cb1a3d1212236ee5ead1320bdd6d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260819",
+      "observed_at": "2026-10-22T07:12:05.315449+00:00",
+      "asof": "2026-08-19"
+    },
+    "0444fdbf76bf5dd0d23f44838acffd51daf4267e40ae79d9288a95066994f0b1": {
+      "file": "0444fdbf76bf5dd0d23f44838acffd51daf4267e40ae79d9288a95066994f0b1.json.gz",
+      "sha256": "0444fdbf76bf5dd0d23f44838acffd51daf4267e40ae79d9288a95066994f0b1",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261020",
+      "observed_at": "2026-10-21T05:41:48.684514+00:00",
+      "asof": "2026-10-20"
+    },
+    "de36d5606df74a59498018acd6d5bd32f8e533c4c687732b60230d41cfda6c33": {
+      "file": "de36d5606df74a59498018acd6d5bd32f8e533c4c687732b60230d41cfda6c33.json.gz",
+      "sha256": "de36d5606df74a59498018acd6d5bd32f8e533c4c687732b60230d41cfda6c33",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260515",
+      "observed_at": "2026-10-22T07:19:14.531308+00:00",
+      "asof": "2026-05-15"
+    },
+    "a6b993ded70544c0e4bc93eac5c66e65668c86ee7971eefab548356cbb02a66c": {
+      "file": "a6b993ded70544c0e4bc93eac5c66e65668c86ee7971eefab548356cbb02a66c.json.gz",
+      "sha256": "a6b993ded70544c0e4bc93eac5c66e65668c86ee7971eefab548356cbb02a66c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260828",
+      "observed_at": "2026-10-22T06:58:07.998454+00:00",
+      "asof": "2026-08-28"
+    },
+    "616adc16c86696a70c44cabfaeea2abe1d0f8d7f6839bb7a98baf3644a0feb45": {
+      "file": "616adc16c86696a70c44cabfaeea2abe1d0f8d7f6839bb7a98baf3644a0feb45.json.gz",
+      "sha256": "616adc16c86696a70c44cabfaeea2abe1d0f8d7f6839bb7a98baf3644a0feb45",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260701",
+      "observed_at": "2026-10-22T07:17:04.048932+00:00",
+      "asof": "2026-07-01"
+    },
+    "ac25c0f45f01f15cd408faca1bf70051ae2d8e5dbab0d73562d4b7ff9be5786f": {
+      "file": "ac25c0f45f01f15cd408faca1bf70051ae2d8e5dbab0d73562d4b7ff9be5786f.json.gz",
+      "sha256": "ac25c0f45f01f15cd408faca1bf70051ae2d8e5dbab0d73562d4b7ff9be5786f",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261012",
+      "observed_at": "2026-10-22T07:08:04.636822+00:00",
+      "asof": "2026-10-12"
+    },
+    "bc0d606ce214a212e36505b68994c961401d49cfe13080236bc408bae2c0da4f": {
+      "file": "bc0d606ce214a212e36505b68994c961401d49cfe13080236bc408bae2c0da4f.json.gz",
+      "sha256": "bc0d606ce214a212e36505b68994c961401d49cfe13080236bc408bae2c0da4f",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260902",
+      "observed_at": "2026-10-22T06:58:02.094705+00:00",
+      "asof": "2026-09-02"
+    },
+    "2fcea71ed7a5f63c8b2bada65c5062461b6bf5a5e8bf7eba9bea75088893eea9": {
+      "file": "2fcea71ed7a5f63c8b2bada65c5062461b6bf5a5e8bf7eba9bea75088893eea9.json.gz",
+      "sha256": "2fcea71ed7a5f63c8b2bada65c5062461b6bf5a5e8bf7eba9bea75088893eea9",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261008",
+      "observed_at": "2026-10-22T06:56:02.408407+00:00",
+      "asof": "2026-10-08"
+    },
+    "fd27a58b4044ce730345760fb8768f7f869becd1cdb81dbc6b0de771f6942b1b": {
+      "file": "fd27a58b4044ce730345760fb8768f7f869becd1cdb81dbc6b0de771f6942b1b.json.gz",
+      "sha256": "fd27a58b4044ce730345760fb8768f7f869becd1cdb81dbc6b0de771f6942b1b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260612",
+      "observed_at": "2026-10-22T07:04:59.895476+00:00",
+      "asof": "2026-06-12"
+    },
+    "61db7c6dba3d809ec12f9a9332a9cc062a94d9e594d264299b67587cb4888656": {
+      "file": "61db7c6dba3d809ec12f9a9332a9cc062a94d9e594d264299b67587cb4888656.json.gz",
+      "sha256": "61db7c6dba3d809ec12f9a9332a9cc062a94d9e594d264299b67587cb4888656",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261006",
+      "observed_at": "2026-10-22T06:56:07.148543+00:00",
+      "asof": "2026-10-06"
+    },
+    "2f0c77257a49c5ddfde4bf97f6886952b4804e7bb5cb267df60a0a1d267a3b3b": {
+      "file": "2f0c77257a49c5ddfde4bf97f6886952b4804e7bb5cb267df60a0a1d267a3b3b.json.gz",
+      "sha256": "2f0c77257a49c5ddfde4bf97f6886952b4804e7bb5cb267df60a0a1d267a3b3b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260819",
+      "observed_at": "2026-10-22T06:58:22.709808+00:00",
+      "asof": "2026-08-19"
+    },
+    "37ce65db071af2d51093aa26bb1b8e898b0d98bec007fdf0671e890877093391": {
+      "file": "37ce65db071af2d51093aa26bb1b8e898b0d98bec007fdf0671e890877093391.json.gz",
+      "sha256": "37ce65db071af2d51093aa26bb1b8e898b0d98bec007fdf0671e890877093391",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260625",
+      "observed_at": "2026-10-22T07:03:18.306851+00:00",
+      "asof": "2026-06-25"
+    },
+    "11953b2dd3debec35c7e22e2d4c2bf0962d7438a07c835dbe995bbc332bc6e34": {
+      "file": "11953b2dd3debec35c7e22e2d4c2bf0962d7438a07c835dbe995bbc332bc6e34.json.gz",
+      "sha256": "11953b2dd3debec35c7e22e2d4c2bf0962d7438a07c835dbe995bbc332bc6e34",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260504",
+      "observed_at": "2026-10-22T07:07:35.043465+00:00",
+      "asof": "2026-05-04"
+    },
+    "91bf2c7a99dfe236070eb144d0d834c8bb20aa1edae801cf8b57f69ffc225738": {
+      "file": "91bf2c7a99dfe236070eb144d0d834c8bb20aa1edae801cf8b57f69ffc225738.json.gz",
+      "sha256": "91bf2c7a99dfe236070eb144d0d834c8bb20aa1edae801cf8b57f69ffc225738",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261019",
+      "observed_at": "2026-10-20T17:14:02.530735+00:00",
+      "asof": "2026-10-19"
+    },
+    "9da648492f2fa7e998d4957e5a1fa04bd209b8329e10620a313541dd6de869fd": {
+      "file": "9da648492f2fa7e998d4957e5a1fa04bd209b8329e10620a313541dd6de869fd.json.gz",
+      "sha256": "9da648492f2fa7e998d4957e5a1fa04bd209b8329e10620a313541dd6de869fd",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260617",
+      "observed_at": "2026-10-22T07:17:25.438610+00:00",
+      "asof": "2026-06-17"
+    },
+    "e2eea1413b8e78c8f2c20bc53bb033e80f593e1bcc9d9bdb8e4020aa67da1739": {
+      "file": "e2eea1413b8e78c8f2c20bc53bb033e80f593e1bcc9d9bdb8e4020aa67da1739.json.gz",
+      "sha256": "e2eea1413b8e78c8f2c20bc53bb033e80f593e1bcc9d9bdb8e4020aa67da1739",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260810",
+      "observed_at": "2026-10-22T07:12:23.848417+00:00",
+      "asof": "2026-08-10"
+    },
+    "1ac01dd42626ae5134a5dd905b7d42cbf55f29141f957273ed190252b41b8ced": {
+      "file": "1ac01dd42626ae5134a5dd905b7d42cbf55f29141f957273ed190252b41b8ced.json.gz",
+      "sha256": "1ac01dd42626ae5134a5dd905b7d42cbf55f29141f957273ed190252b41b8ced",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261021",
+      "observed_at": "2026-10-22T06:42:30.242878+00:00",
+      "asof": "2026-10-21"
+    },
+    "4a2704714ec964d36b111fe59c0aea7c3c7990581ab7e770f0cfcd2278bfbaf2": {
+      "file": "4a2704714ec964d36b111fe59c0aea7c3c7990581ab7e770f0cfcd2278bfbaf2.json.gz",
+      "sha256": "4a2704714ec964d36b111fe59c0aea7c3c7990581ab7e770f0cfcd2278bfbaf2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261023",
+      "observed_at": "2026-10-23T23:51:00.441256+00:00",
+      "asof": "2026-10-23"
+    },
+    "af70be688c4e013cc1806d991a7df015626ba2db1afa986bae5d0ab5bb1f1d45": {
+      "file": "af70be688c4e013cc1806d991a7df015626ba2db1afa986bae5d0ab5bb1f1d45.json.gz",
+      "sha256": "af70be688c4e013cc1806d991a7df015626ba2db1afa986bae5d0ab5bb1f1d45",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260708",
+      "observed_at": "2026-10-22T07:16:50.743683+00:00",
+      "asof": "2026-07-08"
+    },
+    "c1f9f873ed6db91f73e7d54b50549db5c8a20b7f75f25261ce01ae5c7ddaf47b": {
+      "file": "c1f9f873ed6db91f73e7d54b50549db5c8a20b7f75f25261ce01ae5c7ddaf47b.json.gz",
+      "sha256": "c1f9f873ed6db91f73e7d54b50549db5c8a20b7f75f25261ce01ae5c7ddaf47b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260721",
+      "observed_at": "2026-10-22T07:14:12.701060+00:00",
+      "asof": "2026-07-21"
+    },
+    "a532f60f3df2781fb7dd12f6dfb5c9353081cc91a35d1ce5c02b61e54b202fb3": {
+      "file": "a532f60f3df2781fb7dd12f6dfb5c9353081cc91a35d1ce5c02b61e54b202fb3.json.gz",
+      "sha256": "a532f60f3df2781fb7dd12f6dfb5c9353081cc91a35d1ce5c02b61e54b202fb3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260508",
+      "observed_at": "2026-10-22T07:20:49.973555+00:00",
+      "asof": "2026-05-08"
+    },
+    "8e5b6e3fe726b2e7af58c4ae49f315fbaf600b9b5d384e54c56070663faf48c8": {
+      "file": "8e5b6e3fe726b2e7af58c4ae49f315fbaf600b9b5d384e54c56070663faf48c8.json.gz",
+      "sha256": "8e5b6e3fe726b2e7af58c4ae49f315fbaf600b9b5d384e54c56070663faf48c8",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260923",
+      "observed_at": "2026-10-22T06:56:21.628151+00:00",
+      "asof": "2026-09-23"
+    },
+    "7a2d7e6c9257aca44b6ae0aa281bc1ffb91ebb2e647262cb30bc0749429263f7": {
+      "file": "7a2d7e6c9257aca44b6ae0aa281bc1ffb91ebb2e647262cb30bc0749429263f7.json.gz",
+      "sha256": "7a2d7e6c9257aca44b6ae0aa281bc1ffb91ebb2e647262cb30bc0749429263f7",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260713",
+      "observed_at": "2026-10-22T07:14:28.683460+00:00",
+      "asof": "2026-07-13"
+    },
+    "b45e72c8d405a3fe74a5c0b8e0b74fc432c8e524ac15d16e6a5290be7af7ce93": {
+      "file": "b45e72c8d405a3fe74a5c0b8e0b74fc432c8e524ac15d16e6a5290be7af7ce93.json.gz",
+      "sha256": "b45e72c8d405a3fe74a5c0b8e0b74fc432c8e524ac15d16e6a5290be7af7ce93",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260826",
+      "observed_at": "2026-10-22T06:58:12.397705+00:00",
+      "asof": "2026-08-26"
+    },
+    "6144b54fea6d0d58b1dd72f913bcd6ebde79a61d2bebcbea571438275a140d46": {
+      "file": "6144b54fea6d0d58b1dd72f913bcd6ebde79a61d2bebcbea571438275a140d46.json.gz",
+      "sha256": "6144b54fea6d0d58b1dd72f913bcd6ebde79a61d2bebcbea571438275a140d46",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260702",
+      "observed_at": "2026-10-22T07:02:59.516363+00:00",
+      "asof": "2026-07-02"
+    },
+    "ad28b0061b728e3ffbad91464e6fc818c4bd980c92d8ec7e1243efb69cbf7bdc": {
+      "file": "ad28b0061b728e3ffbad91464e6fc818c4bd980c92d8ec7e1243efb69cbf7bdc.json.gz",
+      "sha256": "ad28b0061b728e3ffbad91464e6fc818c4bd980c92d8ec7e1243efb69cbf7bdc",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260914",
+      "observed_at": "2026-10-22T07:10:05.546826+00:00",
+      "asof": "2026-09-14"
+    },
+    "06fb3c191b6c125d62cb0551be86cd91c2560de9b23686cf1effcd78a228946c": {
+      "file": "06fb3c191b6c125d62cb0551be86cd91c2560de9b23686cf1effcd78a228946c.json.gz",
+      "sha256": "06fb3c191b6c125d62cb0551be86cd91c2560de9b23686cf1effcd78a228946c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260519",
+      "observed_at": "2026-10-22T07:19:10.248419+00:00",
+      "asof": "2026-05-19"
+    },
+    "a374a3abf5badfc2f614ee698b6d7f8f1f9bfb8760f4bb05ae323b2c40d3a2a8": {
+      "file": "a374a3abf5badfc2f614ee698b6d7f8f1f9bfb8760f4bb05ae323b2c40d3a2a8.json.gz",
+      "sha256": "a374a3abf5badfc2f614ee698b6d7f8f1f9bfb8760f4bb05ae323b2c40d3a2a8",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260803",
+      "observed_at": "2026-10-22T07:13:45.480978+00:00",
+      "asof": "2026-08-03"
+    },
+    "4afc523826cae6d559a2194bfb5d1f82a87a77b35b32486a79ea929ae99536a3": {
+      "file": "4afc523826cae6d559a2194bfb5d1f82a87a77b35b32486a79ea929ae99536a3.json.gz",
+      "sha256": "4afc523826cae6d559a2194bfb5d1f82a87a77b35b32486a79ea929ae99536a3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260803",
+      "observed_at": "2026-10-22T06:59:58.541572+00:00",
+      "asof": "2026-08-03"
+    },
+    "2085d7ad27747e364ff31755774ee3686044e6454425ee499606b10367a23da9": {
+      "file": "2085d7ad27747e364ff31755774ee3686044e6454425ee499606b10367a23da9.json.gz",
+      "sha256": "2085d7ad27747e364ff31755774ee3686044e6454425ee499606b10367a23da9",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260529",
+      "observed_at": "2026-10-22T07:05:37.835610+00:00",
+      "asof": "2026-05-29"
+    },
+    "1a3587f21f26d170e3fa383205d83637cd0b5a427e445e61823cfb1131bbfd2d": {
+      "file": "1a3587f21f26d170e3fa383205d83637cd0b5a427e445e61823cfb1131bbfd2d.json.gz",
+      "sha256": "1a3587f21f26d170e3fa383205d83637cd0b5a427e445e61823cfb1131bbfd2d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260805",
+      "observed_at": "2026-10-22T06:59:52.975712+00:00",
+      "asof": "2026-08-05"
+    },
+    "9728977dccce082c12b99765e8c0cc759687c828fdd4ddcf64920a364a212cd6": {
+      "file": "9728977dccce082c12b99765e8c0cc759687c828fdd4ddcf64920a364a212cd6.json.gz",
+      "sha256": "9728977dccce082c12b99765e8c0cc759687c828fdd4ddcf64920a364a212cd6",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260818",
+      "observed_at": "2026-10-22T06:58:24.984517+00:00",
+      "asof": "2026-08-18"
+    },
+    "d16633fdc797b48ca052876ba1064c89488f3438c3b3cb8f70b4441a082403b9": {
+      "file": "d16633fdc797b48ca052876ba1064c89488f3438c3b3cb8f70b4441a082403b9.json.gz",
+      "sha256": "d16633fdc797b48ca052876ba1064c89488f3438c3b3cb8f70b4441a082403b9",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260702",
+      "observed_at": "2026-10-22T07:17:00.510177+00:00",
+      "asof": "2026-07-02"
+    },
+    "7460eba4d3e42f3dcbc74c9c4c8f5623e88e10896ca6a2f92f47a9e74a227c74": {
+      "file": "7460eba4d3e42f3dcbc74c9c4c8f5623e88e10896ca6a2f92f47a9e74a227c74.json.gz",
+      "sha256": "7460eba4d3e42f3dcbc74c9c4c8f5623e88e10896ca6a2f92f47a9e74a227c74",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260921",
+      "observed_at": "2026-10-22T07:09:52.403529+00:00",
+      "asof": "2026-09-21"
+    },
+    "1fc8fe5a4209fb8814107bfbb0cc903faf1281faa7f6f1f566ac0e471d24f670": {
+      "file": "1fc8fe5a4209fb8814107bfbb0cc903faf1281faa7f6f1f566ac0e471d24f670.json.gz",
+      "sha256": "1fc8fe5a4209fb8814107bfbb0cc903faf1281faa7f6f1f566ac0e471d24f670",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260601",
+      "observed_at": "2026-10-22T07:05:34.844292+00:00",
+      "asof": "2026-06-01"
+    },
+    "2bdc35258c942c36ca23626427e28754583230971a2490befa0a794eb64a4946": {
+      "file": "2bdc35258c942c36ca23626427e28754583230971a2490befa0a794eb64a4946.json.gz",
+      "sha256": "2bdc35258c942c36ca23626427e28754583230971a2490befa0a794eb64a4946",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260522",
+      "observed_at": "2026-10-22T07:05:50.354351+00:00",
+      "asof": "2026-05-22"
+    },
+    "02aa4a248cc0cd2b316e5c7df9384ffa0a2532836f5f459a7a99094d3ba2cc30": {
+      "file": "02aa4a248cc0cd2b316e5c7df9384ffa0a2532836f5f459a7a99094d3ba2cc30.json.gz",
+      "sha256": "02aa4a248cc0cd2b316e5c7df9384ffa0a2532836f5f459a7a99094d3ba2cc30",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260703",
+      "observed_at": "2026-10-22T07:02:56.392262+00:00",
+      "asof": "2026-07-03"
+    },
+    "7dc9e67eb2d5e4ebaa81aaa6c31c5a574564efd63fd6b8c804541e743737d434": {
+      "file": "7dc9e67eb2d5e4ebaa81aaa6c31c5a574564efd63fd6b8c804541e743737d434.json.gz",
+      "sha256": "7dc9e67eb2d5e4ebaa81aaa6c31c5a574564efd63fd6b8c804541e743737d434",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260427",
+      "observed_at": "2026-10-22T07:21:07.591394+00:00",
+      "asof": "2026-04-27"
+    },
+    "caa2ac8651f1b3b19e69a4dc1e1edfd900661c5292621da02b26a0917d859a62": {
+      "file": "caa2ac8651f1b3b19e69a4dc1e1edfd900661c5292621da02b26a0917d859a62.json.gz",
+      "sha256": "caa2ac8651f1b3b19e69a4dc1e1edfd900661c5292621da02b26a0917d859a62",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260915",
+      "observed_at": "2026-10-22T06:56:34.461718+00:00",
+      "asof": "2026-09-15"
+    },
+    "0c5e34ec3e43fa79e22bf0e2c67dce0868a001b050e689f70d213cfb310d3145": {
+      "file": "0c5e34ec3e43fa79e22bf0e2c67dce0868a001b050e689f70d213cfb310d3145.json.gz",
+      "sha256": "0c5e34ec3e43fa79e22bf0e2c67dce0868a001b050e689f70d213cfb310d3145",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260825",
+      "observed_at": "2026-10-22T06:58:14.133571+00:00",
+      "asof": "2026-08-25"
+    },
+    "e4faac2dcf9edf0256934951100d29899cf4812b3bb7814fa02904b78a583494": {
+      "file": "e4faac2dcf9edf0256934951100d29899cf4812b3bb7814fa02904b78a583494.json.gz",
+      "sha256": "e4faac2dcf9edf0256934951100d29899cf4812b3bb7814fa02904b78a583494",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260828",
+      "observed_at": "2026-10-22T07:11:42.303931+00:00",
+      "asof": "2026-08-28"
+    },
+    "9bba3300264c805faef94a28843a5f2cf12b714d359fab6bc61803c813f3f877": {
+      "file": "9bba3300264c805faef94a28843a5f2cf12b714d359fab6bc61803c813f3f877.json.gz",
+      "sha256": "9bba3300264c805faef94a28843a5f2cf12b714d359fab6bc61803c813f3f877",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260820",
+      "observed_at": "2026-10-22T07:12:02.691952+00:00",
+      "asof": "2026-08-20"
+    },
+    "85441d0bfc00c724b59ddd39ee4c50b00b00d10f7153d82fc44a32acd6257c5a": {
+      "file": "85441d0bfc00c724b59ddd39ee4c50b00b00d10f7153d82fc44a32acd6257c5a.json.gz",
+      "sha256": "85441d0bfc00c724b59ddd39ee4c50b00b00d10f7153d82fc44a32acd6257c5a",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261015",
+      "observed_at": "2026-10-15T23:04:56.692018+00:00",
+      "asof": "2026-10-15"
+    },
+    "fdf1bd094ebe149225e9fcef1fd61a4a11fbb901b4855f90c2f7fb59be3ecfc2": {
+      "file": "fdf1bd094ebe149225e9fcef1fd61a4a11fbb901b4855f90c2f7fb59be3ecfc2.json.gz",
+      "sha256": "fdf1bd094ebe149225e9fcef1fd61a4a11fbb901b4855f90c2f7fb59be3ecfc2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261029",
+      "observed_at": "2026-10-31T15:04:07.358249+00:00",
+      "asof": "2026-10-29"
+    },
+    "a351b3f4da9fc50deb31e02b667130262df37f0054656ec5551f89556a89917e": {
+      "file": "a351b3f4da9fc50deb31e02b667130262df37f0054656ec5551f89556a89917e.json.gz",
+      "sha256": "a351b3f4da9fc50deb31e02b667130262df37f0054656ec5551f89556a89917e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260904",
+      "observed_at": "2026-10-22T07:11:30.145449+00:00",
+      "asof": "2026-09-04"
+    },
+    "fcd1d5d4de18c3cccfb824e3d331906082479c3487d20636e961d6da9b09c838": {
+      "file": "fcd1d5d4de18c3cccfb824e3d331906082479c3487d20636e961d6da9b09c838.json.gz",
+      "sha256": "fcd1d5d4de18c3cccfb824e3d331906082479c3487d20636e961d6da9b09c838",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260814",
+      "observed_at": "2026-10-22T07:12:11.168522+00:00",
+      "asof": "2026-08-14"
+    },
+    "7377355c502d70b0e266c0e222f145f7179af79aa240dce17b777e58a5cf5c01": {
+      "file": "7377355c502d70b0e266c0e222f145f7179af79aa240dce17b777e58a5cf5c01.json.gz",
+      "sha256": "7377355c502d70b0e266c0e222f145f7179af79aa240dce17b777e58a5cf5c01",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260623",
+      "observed_at": "2026-10-22T07:03:25.133986+00:00",
+      "asof": "2026-06-23"
+    },
+    "68452e783ec60a9e51f119d5993170c3fc9bbdce1744bad25575c0699d75e068": {
+      "file": "68452e783ec60a9e51f119d5993170c3fc9bbdce1744bad25575c0699d75e068.json.gz",
+      "sha256": "68452e783ec60a9e51f119d5993170c3fc9bbdce1744bad25575c0699d75e068",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260930",
+      "observed_at": "2026-10-22T06:56:14.552758+00:00",
+      "asof": "2026-09-30"
+    },
+    "ea889619764c94f3af782ec954ee1ef4607becbd55d2c0dde2a9db45ac4362d9": {
+      "file": "ea889619764c94f3af782ec954ee1ef4607becbd55d2c0dde2a9db45ac4362d9.json.gz",
+      "sha256": "ea889619764c94f3af782ec954ee1ef4607becbd55d2c0dde2a9db45ac4362d9",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260529",
+      "observed_at": "2026-10-22T07:18:55.483295+00:00",
+      "asof": "2026-05-29"
+    },
+    "1bdbc4aafd3e4b13f8ef7b0fa6e405c7a085daaa2a28a636b341c1fde062e8f6": {
+      "file": "1bdbc4aafd3e4b13f8ef7b0fa6e405c7a085daaa2a28a636b341c1fde062e8f6.json.gz",
+      "sha256": "1bdbc4aafd3e4b13f8ef7b0fa6e405c7a085daaa2a28a636b341c1fde062e8f6",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260727",
+      "observed_at": "2026-10-22T07:14:01.472174+00:00",
+      "asof": "2026-07-27"
+    },
+    "6dfdf0367e9e32f4248966598dd89e7dcecb61fea01860248ca91f0cb810f726": {
+      "file": "6dfdf0367e9e32f4248966598dd89e7dcecb61fea01860248ca91f0cb810f726.json.gz",
+      "sha256": "6dfdf0367e9e32f4248966598dd89e7dcecb61fea01860248ca91f0cb810f726",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260826",
+      "observed_at": "2026-10-22T07:11:47.966794+00:00",
+      "asof": "2026-08-26"
+    },
+    "75dde8b3a6589f3a8ada7bcfe5458dfcc8f879c3bf1165b746970ce885fa4132": {
+      "file": "75dde8b3a6589f3a8ada7bcfe5458dfcc8f879c3bf1165b746970ce885fa4132.json.gz",
+      "sha256": "75dde8b3a6589f3a8ada7bcfe5458dfcc8f879c3bf1165b746970ce885fa4132",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260428",
+      "observed_at": "2026-10-22T07:07:45.392577+00:00",
+      "asof": "2026-04-28"
+    },
+    "7ac3129946a87e6ffd99b540599da63bc272ac2537966ecfa7a7f5fe399e4a42": {
+      "file": "7ac3129946a87e6ffd99b540599da63bc272ac2537966ecfa7a7f5fe399e4a42.json.gz",
+      "sha256": "7ac3129946a87e6ffd99b540599da63bc272ac2537966ecfa7a7f5fe399e4a42",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260629",
+      "observed_at": "2026-10-22T07:03:10.642082+00:00",
+      "asof": "2026-06-29"
+    },
+    "ae5cccc04e2a6d964a7112fe56b5e2775015a7a044c88845ca1763517ecf66fa": {
+      "file": "ae5cccc04e2a6d964a7112fe56b5e2775015a7a044c88845ca1763517ecf66fa.json.gz",
+      "sha256": "ae5cccc04e2a6d964a7112fe56b5e2775015a7a044c88845ca1763517ecf66fa",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260429",
+      "observed_at": "2026-10-22T07:07:40.871692+00:00",
+      "asof": "2026-04-29"
+    },
+    "90dafd2b79c2367af70d7a0229119c6bbbaede99872d47b25351253b0e50696e": {
+      "file": "90dafd2b79c2367af70d7a0229119c6bbbaede99872d47b25351253b0e50696e.json.gz",
+      "sha256": "90dafd2b79c2367af70d7a0229119c6bbbaede99872d47b25351253b0e50696e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260526",
+      "observed_at": "2026-10-22T07:05:47.925320+00:00",
+      "asof": "2026-05-26"
+    },
+    "8d7794ada7fc2ab6dcff06e3c949fd569a4ab50a6441ec5cebf658f8fd4340fd": {
+      "file": "8d7794ada7fc2ab6dcff06e3c949fd569a4ab50a6441ec5cebf658f8fd4340fd.json.gz",
+      "sha256": "8d7794ada7fc2ab6dcff06e3c949fd569a4ab50a6441ec5cebf658f8fd4340fd",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260827",
+      "observed_at": "2026-10-22T06:58:10.410729+00:00",
+      "asof": "2026-08-27"
+    },
+    "2f130ad82bde4ced438d036c85c708a4326b46a1a9c11a09a9e419c3da30f061": {
+      "file": "2f130ad82bde4ced438d036c85c708a4326b46a1a9c11a09a9e419c3da30f061.json.gz",
+      "sha256": "2f130ad82bde4ced438d036c85c708a4326b46a1a9c11a09a9e419c3da30f061",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260429",
+      "observed_at": "2026-10-22T07:21:02.565968+00:00",
+      "asof": "2026-04-29"
+    },
+    "1ae376f643b110699a45de90628947135f6bd5fef3eea2c077c5436a7b51e085": {
+      "file": "1ae376f643b110699a45de90628947135f6bd5fef3eea2c077c5436a7b51e085.json.gz",
+      "sha256": "1ae376f643b110699a45de90628947135f6bd5fef3eea2c077c5436a7b51e085",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261007",
+      "observed_at": "2026-10-22T06:56:04.793273+00:00",
+      "asof": "2026-10-07"
+    },
+    "211bb88dbe8b39b5fc54fa6d87191d93f8ca9fbf1970a28d12fb9aa67fc145b5": {
+      "file": "211bb88dbe8b39b5fc54fa6d87191d93f8ca9fbf1970a28d12fb9aa67fc145b5.json.gz",
+      "sha256": "211bb88dbe8b39b5fc54fa6d87191d93f8ca9fbf1970a28d12fb9aa67fc145b5",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260707",
+      "observed_at": "2026-10-22T07:16:53.297996+00:00",
+      "asof": "2026-07-07"
+    },
+    "b4120485ad950efa30734b59ae8ca318f59a3332661d08d5bc212454c0713fe1": {
+      "file": "b4120485ad950efa30734b59ae8ca318f59a3332661d08d5bc212454c0713fe1.json.gz",
+      "sha256": "b4120485ad950efa30734b59ae8ca318f59a3332661d08d5bc212454c0713fe1",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260910",
+      "observed_at": "2026-10-22T07:10:12.820509+00:00",
+      "asof": "2026-09-10"
+    },
+    "083c314e85d0e4b8615a4d780c601faa6b297669731362fba6554608d6739b49": {
+      "file": "083c314e85d0e4b8615a4d780c601faa6b297669731362fba6554608d6739b49.json.gz",
+      "sha256": "083c314e85d0e4b8615a4d780c601faa6b297669731362fba6554608d6739b49",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260513",
+      "observed_at": "2026-10-22T07:19:18.417608+00:00",
+      "asof": "2026-05-13"
+    },
+    "a918d3c2b17ad686a0743c98d19a3219fb602cfa90eadc4e4d425eed6f8e72f2": {
+      "file": "a918d3c2b17ad686a0743c98d19a3219fb602cfa90eadc4e4d425eed6f8e72f2.json.gz",
+      "sha256": "a918d3c2b17ad686a0743c98d19a3219fb602cfa90eadc4e4d425eed6f8e72f2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260715",
+      "observed_at": "2026-10-22T07:14:23.307466+00:00",
+      "asof": "2026-07-15"
+    },
+    "2c6e94aca455e07a9ae6d04355411d8e98e63ac90d91bda8ee1d2eaff317a6a3": {
+      "file": "2c6e94aca455e07a9ae6d04355411d8e98e63ac90d91bda8ee1d2eaff317a6a3.json.gz",
+      "sha256": "2c6e94aca455e07a9ae6d04355411d8e98e63ac90d91bda8ee1d2eaff317a6a3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260622",
+      "observed_at": "2026-10-22T07:17:19.207579+00:00",
+      "asof": "2026-06-22"
+    },
+    "a963a66b7f445dcca3acc56dd9cff7ad4f3959c2f0289a4ec63d7bd9abc874e2": {
+      "file": "a963a66b7f445dcca3acc56dd9cff7ad4f3959c2f0289a4ec63d7bd9abc874e2.json.gz",
+      "sha256": "a963a66b7f445dcca3acc56dd9cff7ad4f3959c2f0289a4ec63d7bd9abc874e2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260518",
+      "observed_at": "2026-10-22T07:07:07.129658+00:00",
+      "asof": "2026-05-18"
+    },
+    "fca234790d9bdd7ce3c8b5fdc013beb390f795c2719c30c63bfcd04cf0fca220": {
+      "file": "fca234790d9bdd7ce3c8b5fdc013beb390f795c2719c30c63bfcd04cf0fca220.json.gz",
+      "sha256": "fca234790d9bdd7ce3c8b5fdc013beb390f795c2719c30c63bfcd04cf0fca220",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260918",
+      "observed_at": "2026-10-22T07:09:57.058476+00:00",
+      "asof": "2026-09-18"
+    },
+    "059c686583d07bfd5a425f2fa13be8a15c8cc0cbc3ff04d5188e5157ecbce0ba": {
+      "file": "059c686583d07bfd5a425f2fa13be8a15c8cc0cbc3ff04d5188e5157ecbce0ba.json.gz",
+      "sha256": "059c686583d07bfd5a425f2fa13be8a15c8cc0cbc3ff04d5188e5157ecbce0ba",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260527",
+      "observed_at": "2026-10-22T07:18:59.866158+00:00",
+      "asof": "2026-05-27"
+    },
+    "1195ee4a25c1eb3b09af18fe39082aebba5a21f327074b50d5230474d44079d2": {
+      "file": "1195ee4a25c1eb3b09af18fe39082aebba5a21f327074b50d5230474d44079d2.json.gz",
+      "sha256": "1195ee4a25c1eb3b09af18fe39082aebba5a21f327074b50d5230474d44079d2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260804",
+      "observed_at": "2026-10-22T07:13:43.639973+00:00",
+      "asof": "2026-08-04"
+    },
+    "784c378ed305c54cb6290ff3ce8b6bf3ee4ef36979d6827d2af0b49b2f07c192": {
+      "file": "784c378ed305c54cb6290ff3ce8b6bf3ee4ef36979d6827d2af0b49b2f07c192.json.gz",
+      "sha256": "784c378ed305c54cb6290ff3ce8b6bf3ee4ef36979d6827d2af0b49b2f07c192",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260506",
+      "observed_at": "2026-10-22T07:20:54.632710+00:00",
+      "asof": "2026-05-06"
+    },
+    "18cbbb0b0890b4b1a8a88c54ffe9cccd12c622a05a783d134a251b0edd1e9c03": {
+      "file": "18cbbb0b0890b4b1a8a88c54ffe9cccd12c622a05a783d134a251b0edd1e9c03.json.gz",
+      "sha256": "18cbbb0b0890b4b1a8a88c54ffe9cccd12c622a05a783d134a251b0edd1e9c03",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260901",
+      "observed_at": "2026-10-22T06:58:03.857330+00:00",
+      "asof": "2026-09-01"
+    },
+    "fe1c42b89af6b588b65c127092ecc52acb48eb73dc15457457e0bc5744eb407d": {
+      "file": "fe1c42b89af6b588b65c127092ecc52acb48eb73dc15457457e0bc5744eb407d.json.gz",
+      "sha256": "fe1c42b89af6b588b65c127092ecc52acb48eb73dc15457457e0bc5744eb407d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260821",
+      "observed_at": "2026-10-22T07:11:59.292283+00:00",
+      "asof": "2026-08-21"
+    },
+    "aa2e76c4bda1d0e54d87d74cc2ff6f78a7548294f9c2a4719c8828fa940196a5": {
+      "file": "aa2e76c4bda1d0e54d87d74cc2ff6f78a7548294f9c2a4719c8828fa940196a5.json.gz",
+      "sha256": "aa2e76c4bda1d0e54d87d74cc2ff6f78a7548294f9c2a4719c8828fa940196a5",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260710",
+      "observed_at": "2026-10-22T07:14:31.290726+00:00",
+      "asof": "2026-07-10"
+    },
+    "5febb2cb7d158e9cf7257e76b6bf35f81c971eb2f021656a37db2f6a1c9db651": {
+      "file": "5febb2cb7d158e9cf7257e76b6bf35f81c971eb2f021656a37db2f6a1c9db651.json.gz",
+      "sha256": "5febb2cb7d158e9cf7257e76b6bf35f81c971eb2f021656a37db2f6a1c9db651",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260813",
+      "observed_at": "2026-10-22T07:12:14.795875+00:00",
+      "asof": "2026-08-13"
+    },
+    "1b75b94a3b92895de103fedabf3fc8e9779f29728270067f9fb7c986929c9a1a": {
+      "file": "1b75b94a3b92895de103fedabf3fc8e9779f29728270067f9fb7c986929c9a1a.json.gz",
+      "sha256": "1b75b94a3b92895de103fedabf3fc8e9779f29728270067f9fb7c986929c9a1a",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260605",
+      "observed_at": "2026-10-22T07:18:46.558252+00:00",
+      "asof": "2026-06-05"
+    },
+    "e6f06dc840499a4286f35eeb7d5cd5b51031e749ff67013ae4a8c831e6a34a6a": {
+      "file": "e6f06dc840499a4286f35eeb7d5cd5b51031e749ff67013ae4a8c831e6a34a6a.json.gz",
+      "sha256": "e6f06dc840499a4286f35eeb7d5cd5b51031e749ff67013ae4a8c831e6a34a6a",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260930",
+      "observed_at": "2026-10-22T07:09:36.622406+00:00",
+      "asof": "2026-09-30"
+    },
+    "713936f54f9fa07d695c2f19470c5df91a8befd0d7476602e61be8074133a318": {
+      "file": "713936f54f9fa07d695c2f19470c5df91a8befd0d7476602e61be8074133a318.json.gz",
+      "sha256": "713936f54f9fa07d695c2f19470c5df91a8befd0d7476602e61be8074133a318",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261022",
+      "observed_at": "2026-10-23T01:21:06.547565+00:00",
+      "asof": "2026-10-22"
+    },
+    "ef52047c1ed3dd59934e099a37ea2cf48e4541011560ced3c04b6af34596de9b": {
+      "file": "ef52047c1ed3dd59934e099a37ea2cf48e4541011560ced3c04b6af34596de9b.json.gz",
+      "sha256": "ef52047c1ed3dd59934e099a37ea2cf48e4541011560ced3c04b6af34596de9b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260916",
+      "observed_at": "2026-10-22T06:56:32.137924+00:00",
+      "asof": "2026-09-16"
+    },
+    "286259386caab9ec30edcea967ecd41e9267f923afd87c1a3bbad08f6ae222ea": {
+      "file": "286259386caab9ec30edcea967ecd41e9267f923afd87c1a3bbad08f6ae222ea.json.gz",
+      "sha256": "286259386caab9ec30edcea967ecd41e9267f923afd87c1a3bbad08f6ae222ea",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260602",
+      "observed_at": "2026-10-22T07:05:31.395593+00:00",
+      "asof": "2026-06-02"
+    },
+    "0fbfb2a2d28e157f4b3340898074c809beb0226cc3fed85c97c605d798d745e2": {
+      "file": "0fbfb2a2d28e157f4b3340898074c809beb0226cc3fed85c97c605d798d745e2.json.gz",
+      "sha256": "0fbfb2a2d28e157f4b3340898074c809beb0226cc3fed85c97c605d798d745e2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261019",
+      "observed_at": "2026-10-22T06:55:52.379717+00:00",
+      "asof": "2026-10-19"
+    },
+    "1e9327255c8f3dca25a743ff3750c748456db33b77fe4d1a6adae16261ea820d": {
+      "file": "1e9327255c8f3dca25a743ff3750c748456db33b77fe4d1a6adae16261ea820d.json.gz",
+      "sha256": "1e9327255c8f3dca25a743ff3750c748456db33b77fe4d1a6adae16261ea820d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260609",
+      "observed_at": "2026-10-22T07:05:11.034728+00:00",
+      "asof": "2026-06-09"
+    },
+    "b673c79b7bfe7a2b145681e99e973d306ce19e2bfaf2b862e58093e89ed91f82": {
+      "file": "b673c79b7bfe7a2b145681e99e973d306ce19e2bfaf2b862e58093e89ed91f82.json.gz",
+      "sha256": "b673c79b7bfe7a2b145681e99e973d306ce19e2bfaf2b862e58093e89ed91f82",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260720",
+      "observed_at": "2026-10-22T07:14:15.378691+00:00",
+      "asof": "2026-07-20"
+    },
+    "458f6f656474714a97f0627e4b20006440f4d283fb04046704743b7757b68226": {
+      "file": "458f6f656474714a97f0627e4b20006440f4d283fb04046704743b7757b68226.json.gz",
+      "sha256": "458f6f656474714a97f0627e4b20006440f4d283fb04046704743b7757b68226",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260910",
+      "observed_at": "2026-10-22T06:57:50.999920+00:00",
+      "asof": "2026-09-10"
+    },
+    "6836c6d3b4b68170d242b06de43408e746080171156a6d203b553e8d4d6b8368": {
+      "file": "6836c6d3b4b68170d242b06de43408e746080171156a6d203b553e8d4d6b8368.json.gz",
+      "sha256": "6836c6d3b4b68170d242b06de43408e746080171156a6d203b553e8d4d6b8368",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260601",
+      "observed_at": "2026-10-22T07:18:53.454406+00:00",
+      "asof": "2026-06-01"
+    },
+    "3b8e475d3d81c6959a9ea30fa2dbb4aabfd497197729009fc79d7775b70d8825": {
+      "file": "3b8e475d3d81c6959a9ea30fa2dbb4aabfd497197729009fc79d7775b70d8825.json.gz",
+      "sha256": "3b8e475d3d81c6959a9ea30fa2dbb4aabfd497197729009fc79d7775b70d8825",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260424",
+      "observed_at": "2026-10-22T07:07:50.185314+00:00",
+      "asof": "2026-04-24"
+    },
+    "96e2eaaa01353e220dd775938bd4d353bd18215364129899a622d50e595a442e": {
+      "file": "96e2eaaa01353e220dd775938bd4d353bd18215364129899a622d50e595a442e.json.gz",
+      "sha256": "96e2eaaa01353e220dd775938bd4d353bd18215364129899a622d50e595a442e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261002",
+      "observed_at": "2026-10-22T06:56:09.660921+00:00",
+      "asof": "2026-10-02"
+    },
+    "b1ffeadcfed75fc8e44cbbdeaf0a310fd1d92d6aaddd8342881864952ba0c56f": {
+      "file": "b1ffeadcfed75fc8e44cbbdeaf0a310fd1d92d6aaddd8342881864952ba0c56f.json.gz",
+      "sha256": "b1ffeadcfed75fc8e44cbbdeaf0a310fd1d92d6aaddd8342881864952ba0c56f",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261027",
+      "observed_at": "2026-10-31T15:03:40.305539+00:00",
+      "asof": "2026-10-27"
+    },
+    "04019316a856ff8e9a8b73791fd6e87f2a7f8a35fa721bba1397619c2d8a22a8": {
+      "file": "04019316a856ff8e9a8b73791fd6e87f2a7f8a35fa721bba1397619c2d8a22a8.json.gz",
+      "sha256": "04019316a856ff8e9a8b73791fd6e87f2a7f8a35fa721bba1397619c2d8a22a8",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260427",
+      "observed_at": "2026-10-22T07:07:47.876748+00:00",
+      "asof": "2026-04-27"
+    },
+    "bca206aee10419d31370bbc06cf4d2f507fd4fbafe94532fd596cb5cb85bb90c": {
+      "file": "bca206aee10419d31370bbc06cf4d2f507fd4fbafe94532fd596cb5cb85bb90c.json.gz",
+      "sha256": "bca206aee10419d31370bbc06cf4d2f507fd4fbafe94532fd596cb5cb85bb90c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261002",
+      "observed_at": "2026-10-22T07:09:31.749046+00:00",
+      "asof": "2026-10-02"
+    },
+    "77766a0183b7e2ab36a52f692c1b449dda943b9699f8a9631bf2479f039e4979": {
+      "file": "77766a0183b7e2ab36a52f692c1b449dda943b9699f8a9631bf2479f039e4979.json.gz",
+      "sha256": "77766a0183b7e2ab36a52f692c1b449dda943b9699f8a9631bf2479f039e4979",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260518",
+      "observed_at": "2026-10-22T07:19:12.197007+00:00",
+      "asof": "2026-05-18"
+    },
+    "509f867b245cf050197824cbab86f9f61b2a1d3e4d8b0436f926362cca459541": {
+      "file": "509f867b245cf050197824cbab86f9f61b2a1d3e4d8b0436f926362cca459541.json.gz",
+      "sha256": "509f867b245cf050197824cbab86f9f61b2a1d3e4d8b0436f926362cca459541",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261026",
+      "observed_at": "2026-10-31T15:03:33.747210+00:00",
+      "asof": "2026-10-26"
+    },
+    "dcc1f7168333d9f192447f0d3342bff41c07eb05af62f80a5a76dda6f7037920": {
+      "file": "dcc1f7168333d9f192447f0d3342bff41c07eb05af62f80a5a76dda6f7037920.json.gz",
+      "sha256": "dcc1f7168333d9f192447f0d3342bff41c07eb05af62f80a5a76dda6f7037920",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261022",
+      "observed_at": "2026-10-23T01:21:02.303256+00:00",
+      "asof": "2026-10-22"
+    },
+    "f8d6db9ebabdf8803069133703a550e8843b2c568005919ea606ddd20421283c": {
+      "file": "f8d6db9ebabdf8803069133703a550e8843b2c568005919ea606ddd20421283c.json.gz",
+      "sha256": "f8d6db9ebabdf8803069133703a550e8843b2c568005919ea606ddd20421283c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261023",
+      "observed_at": "2026-10-23T23:51:02.196139+00:00",
+      "asof": "2026-10-23"
+    },
+    "e9e4650d50066b3ef86a23dd4af157343b91e4a41170f33e85a1f8d11d0b7ef4": {
+      "file": "e9e4650d50066b3ef86a23dd4af157343b91e4a41170f33e85a1f8d11d0b7ef4.json.gz",
+      "sha256": "e9e4650d50066b3ef86a23dd4af157343b91e4a41170f33e85a1f8d11d0b7ef4",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260730",
+      "observed_at": "2026-10-22T07:13:51.811456+00:00",
+      "asof": "2026-07-30"
+    },
+    "778dbe11c6c3aa9b66d7e492fc99882ec705918c6b125db7ab5e927fffdb672b": {
+      "file": "778dbe11c6c3aa9b66d7e492fc99882ec705918c6b125db7ab5e927fffdb672b.json.gz",
+      "sha256": "778dbe11c6c3aa9b66d7e492fc99882ec705918c6b125db7ab5e927fffdb672b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260706",
+      "observed_at": "2026-10-22T07:02:53.531740+00:00",
+      "asof": "2026-07-06"
+    },
+    "920bf0d4542c62ccd710e637b0e9ae917bf26f0cc3d61b9e37164c3d3636fdcb": {
+      "file": "920bf0d4542c62ccd710e637b0e9ae917bf26f0cc3d61b9e37164c3d3636fdcb.json.gz",
+      "sha256": "920bf0d4542c62ccd710e637b0e9ae917bf26f0cc3d61b9e37164c3d3636fdcb",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260506",
+      "observed_at": "2026-10-22T07:07:30.989168+00:00",
+      "asof": "2026-05-06"
+    },
+    "bd6c142891adfadf72ccb3b27a012dcc0949ba25454a21cf5adbfac3d0551311": {
+      "file": "bd6c142891adfadf72ccb3b27a012dcc0949ba25454a21cf5adbfac3d0551311.json.gz",
+      "sha256": "bd6c142891adfadf72ccb3b27a012dcc0949ba25454a21cf5adbfac3d0551311",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260722",
+      "observed_at": "2026-10-22T07:01:02.060243+00:00",
+      "asof": "2026-07-22"
+    },
+    "c6f5bd9ac4e76a34c7015f76f5cd96a3bdfe2be7aaf75fe80f826189b69ca722": {
+      "file": "c6f5bd9ac4e76a34c7015f76f5cd96a3bdfe2be7aaf75fe80f826189b69ca722.json.gz",
+      "sha256": "c6f5bd9ac4e76a34c7015f76f5cd96a3bdfe2be7aaf75fe80f826189b69ca722",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260423",
+      "observed_at": "2026-10-22T07:21:12.327942+00:00",
+      "asof": "2026-04-23"
+    },
+    "f6cd2b4a17144d11a8a3ab9dc0d4f79caad196976378b89511b3243f8cd36ae3": {
+      "file": "f6cd2b4a17144d11a8a3ab9dc0d4f79caad196976378b89511b3243f8cd36ae3.json.gz",
+      "sha256": "f6cd2b4a17144d11a8a3ab9dc0d4f79caad196976378b89511b3243f8cd36ae3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260703",
+      "observed_at": "2026-10-22T07:16:58.776973+00:00",
+      "asof": "2026-07-03"
+    },
+    "48b79a41f05f20300c6f9bf0b05df4c7a9acaf473f3eea854422b4b07904062d": {
+      "file": "48b79a41f05f20300c6f9bf0b05df4c7a9acaf473f3eea854422b4b07904062d.json.gz",
+      "sha256": "48b79a41f05f20300c6f9bf0b05df4c7a9acaf473f3eea854422b4b07904062d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260928",
+      "observed_at": "2026-10-22T07:09:43.116301+00:00",
+      "asof": "2026-09-28"
+    },
+    "86f6a15df09971dd795675258f72b434b0d7fab3bab79b00c9092bb535794764": {
+      "file": "86f6a15df09971dd795675258f72b434b0d7fab3bab79b00c9092bb535794764.json.gz",
+      "sha256": "86f6a15df09971dd795675258f72b434b0d7fab3bab79b00c9092bb535794764",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260724",
+      "observed_at": "2026-10-22T07:00:49.051495+00:00",
+      "asof": "2026-07-24"
+    },
+    "ad6b7dc8805f46ecc057921e0ab90a5601e88600810a7102a7dce5bac3cdb6ef": {
+      "file": "ad6b7dc8805f46ecc057921e0ab90a5601e88600810a7102a7dce5bac3cdb6ef.json.gz",
+      "sha256": "ad6b7dc8805f46ecc057921e0ab90a5601e88600810a7102a7dce5bac3cdb6ef",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261028",
+      "observed_at": "2026-10-31T15:04:00.917312+00:00",
+      "asof": "2026-10-28"
+    },
+    "2f6c5fe70f832705210e1db5a48ac744376c67a8dd1b4e0ad52be0c2aefe0704": {
+      "file": "2f6c5fe70f832705210e1db5a48ac744376c67a8dd1b4e0ad52be0c2aefe0704.json.gz",
+      "sha256": "2f6c5fe70f832705210e1db5a48ac744376c67a8dd1b4e0ad52be0c2aefe0704",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261013",
+      "observed_at": "2026-10-22T07:08:02.245693+00:00",
+      "asof": "2026-10-13"
+    },
+    "b501d6c332862d7ea20049a61b148f73d9b6a0a26ad34b97a0435244cbcd2e27": {
+      "file": "b501d6c332862d7ea20049a61b148f73d9b6a0a26ad34b97a0435244cbcd2e27.json.gz",
+      "sha256": "b501d6c332862d7ea20049a61b148f73d9b6a0a26ad34b97a0435244cbcd2e27",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260522",
+      "observed_at": "2026-10-22T07:19:04.185860+00:00",
+      "asof": "2026-05-22"
+    },
+    "8036d58dec99b76456883a6db8780438cee0d66443217e66e132f824d06ec49e": {
+      "file": "8036d58dec99b76456883a6db8780438cee0d66443217e66e132f824d06ec49e.json.gz",
+      "sha256": "8036d58dec99b76456883a6db8780438cee0d66443217e66e132f824d06ec49e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260901",
+      "observed_at": "2026-10-22T07:11:37.294490+00:00",
+      "asof": "2026-09-01"
+    },
+    "9141d0ab0626b30ce06b6f54cdef392d518356ec0401d60d8ce8ef0f7d1ecfaf": {
+      "file": "9141d0ab0626b30ce06b6f54cdef392d518356ec0401d60d8ce8ef0f7d1ecfaf.json.gz",
+      "sha256": "9141d0ab0626b30ce06b6f54cdef392d518356ec0401d60d8ce8ef0f7d1ecfaf",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260921",
+      "observed_at": "2026-10-22T06:56:25.811129+00:00",
+      "asof": "2026-09-21"
+    },
+    "f4f3c9ebd0bd0e4de6784db96babd841e66c6073060c6aafd51d45020a34d925": {
+      "file": "f4f3c9ebd0bd0e4de6784db96babd841e66c6073060c6aafd51d45020a34d925.json.gz",
+      "sha256": "f4f3c9ebd0bd0e4de6784db96babd841e66c6073060c6aafd51d45020a34d925",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261001",
+      "observed_at": "2026-10-22T07:09:34.142670+00:00",
+      "asof": "2026-10-01"
+    },
+    "295e68181f1528db10bba5a96af5877c1baaf0c3961727724c939a6bc56e8066": {
+      "file": "295e68181f1528db10bba5a96af5877c1baaf0c3961727724c939a6bc56e8066.json.gz",
+      "sha256": "295e68181f1528db10bba5a96af5877c1baaf0c3961727724c939a6bc56e8066",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260526",
+      "observed_at": "2026-10-22T07:19:02.465286+00:00",
+      "asof": "2026-05-26"
+    },
+    "740d8674f5532fc585debc6247df048bb83ff3943a5ac38cea5218632586ba1d": {
+      "file": "740d8674f5532fc585debc6247df048bb83ff3943a5ac38cea5218632586ba1d.json.gz",
+      "sha256": "740d8674f5532fc585debc6247df048bb83ff3943a5ac38cea5218632586ba1d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260610",
+      "observed_at": "2026-10-22T07:18:40.398675+00:00",
+      "asof": "2026-06-10"
+    },
+    "b43122684bc524295d3d7d034c9167763dc719ce05219c5d3b0eb2285a8d5aab": {
+      "file": "b43122684bc524295d3d7d034c9167763dc719ce05219c5d3b0eb2285a8d5aab.json.gz",
+      "sha256": "b43122684bc524295d3d7d034c9167763dc719ce05219c5d3b0eb2285a8d5aab",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260807",
+      "observed_at": "2026-10-22T06:59:48.434810+00:00",
+      "asof": "2026-08-07"
+    },
+    "7f555a3d3666cf95f7c241de1177f13ee734f4698b29f9b57b08dc1d5df23f25": {
+      "file": "7f555a3d3666cf95f7c241de1177f13ee734f4698b29f9b57b08dc1d5df23f25.json.gz",
+      "sha256": "7f555a3d3666cf95f7c241de1177f13ee734f4698b29f9b57b08dc1d5df23f25",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260624",
+      "observed_at": "2026-10-22T07:17:15.191081+00:00",
+      "asof": "2026-06-24"
+    },
+    "e1a96f5c66b335bd221953313557f30cc1cea927ff0f41f4bcd8e663269ef365": {
+      "file": "e1a96f5c66b335bd221953313557f30cc1cea927ff0f41f4bcd8e663269ef365.json.gz",
+      "sha256": "e1a96f5c66b335bd221953313557f30cc1cea927ff0f41f4bcd8e663269ef365",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260720",
+      "observed_at": "2026-10-22T07:01:15.191219+00:00",
+      "asof": "2026-07-20"
+    },
+    "0942c64cc7572cda50976df99b6cd1b85bfae21c8729707fd0a9e7959158c7f7": {
+      "file": "0942c64cc7572cda50976df99b6cd1b85bfae21c8729707fd0a9e7959158c7f7.json.gz",
+      "sha256": "0942c64cc7572cda50976df99b6cd1b85bfae21c8729707fd0a9e7959158c7f7",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260611",
+      "observed_at": "2026-10-22T07:05:04.060312+00:00",
+      "asof": "2026-06-11"
+    },
+    "8488e6c25b1e0ad672c89903bf25ea71e53f9f61ebe6f4701104c89f7f20be0c": {
+      "file": "8488e6c25b1e0ad672c89903bf25ea71e53f9f61ebe6f4701104c89f7f20be0c.json.gz",
+      "sha256": "8488e6c25b1e0ad672c89903bf25ea71e53f9f61ebe6f4701104c89f7f20be0c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260929",
+      "observed_at": "2026-10-22T06:56:16.976780+00:00",
+      "asof": "2026-09-29"
+    },
+    "34f77a0213e80c628343e00f184b8fcd3d72be26a68f63e7048ac62b9629f8c5": {
+      "file": "34f77a0213e80c628343e00f184b8fcd3d72be26a68f63e7048ac62b9629f8c5.json.gz",
+      "sha256": "34f77a0213e80c628343e00f184b8fcd3d72be26a68f63e7048ac62b9629f8c5",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260608",
+      "observed_at": "2026-10-22T07:18:44.506961+00:00",
+      "asof": "2026-06-08"
+    },
+    "f05eec05aa876aea068a92794865abe662daee33d2ea6cf960dc920ffd470d6d": {
+      "file": "f05eec05aa876aea068a92794865abe662daee33d2ea6cf960dc920ffd470d6d.json.gz",
+      "sha256": "f05eec05aa876aea068a92794865abe662daee33d2ea6cf960dc920ffd470d6d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260806",
+      "observed_at": "2026-10-22T07:13:38.566918+00:00",
+      "asof": "2026-08-06"
+    },
+    "ce6a4ae84fd281d0f1a7f65fee363ea93a1b0daebe3f128cf1700eb555c2d101": {
+      "file": "ce6a4ae84fd281d0f1a7f65fee363ea93a1b0daebe3f128cf1700eb555c2d101.json.gz",
+      "sha256": "ce6a4ae84fd281d0f1a7f65fee363ea93a1b0daebe3f128cf1700eb555c2d101",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260722",
+      "observed_at": "2026-10-22T07:14:09.488574+00:00",
+      "asof": "2026-07-22"
+    },
+    "8ae4bdf2ecdf0f1ebafc04e2d4c0848ecf5ffb09e760bca87c273a001394ea0e": {
+      "file": "8ae4bdf2ecdf0f1ebafc04e2d4c0848ecf5ffb09e760bca87c273a001394ea0e.json.gz",
+      "sha256": "8ae4bdf2ecdf0f1ebafc04e2d4c0848ecf5ffb09e760bca87c273a001394ea0e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260811",
+      "observed_at": "2026-10-22T06:59:42.013388+00:00",
+      "asof": "2026-08-11"
+    },
+    "f53cedf7fa0b5077b59184294e28e42935f67f2221d1064e68aef1c9e18a7fa4": {
+      "file": "f53cedf7fa0b5077b59184294e28e42935f67f2221d1064e68aef1c9e18a7fa4.json.gz",
+      "sha256": "f53cedf7fa0b5077b59184294e28e42935f67f2221d1064e68aef1c9e18a7fa4",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260511",
+      "observed_at": "2026-10-22T07:20:47.494405+00:00",
+      "asof": "2026-05-11"
+    },
+    "644a8ba6aaea22e04e14897bb0a247678d64501b58c6d08c41654747706c3d6b": {
+      "file": "644a8ba6aaea22e04e14897bb0a247678d64501b58c6d08c41654747706c3d6b.json.gz",
+      "sha256": "644a8ba6aaea22e04e14897bb0a247678d64501b58c6d08c41654747706c3d6b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260630",
+      "observed_at": "2026-10-22T07:03:06.613161+00:00",
+      "asof": "2026-06-30"
+    },
+    "8427fb577a3b6c03a48984098c29f214bda27f34eff4d927a658110c484ad33d": {
+      "file": "8427fb577a3b6c03a48984098c29f214bda27f34eff4d927a658110c484ad33d.json.gz",
+      "sha256": "8427fb577a3b6c03a48984098c29f214bda27f34eff4d927a658110c484ad33d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260716",
+      "observed_at": "2026-10-22T07:02:27.512759+00:00",
+      "asof": "2026-07-16"
+    },
+    "f37f56d0d6d83db4643f3a2e4d1c84a0836aeb642ce60493dccb373e7712a934": {
+      "file": "f37f56d0d6d83db4643f3a2e4d1c84a0836aeb642ce60493dccb373e7712a934.json.gz",
+      "sha256": "f37f56d0d6d83db4643f3a2e4d1c84a0836aeb642ce60493dccb373e7712a934",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260714",
+      "observed_at": "2026-10-22T07:14:25.910861+00:00",
+      "asof": "2026-07-14"
+    },
+    "37d38bfb115a005791681a3ca4816aa7e7160d2fa0983a031d3c341da5a6f72f": {
+      "file": "37d38bfb115a005791681a3ca4816aa7e7160d2fa0983a031d3c341da5a6f72f.json.gz",
+      "sha256": "37d38bfb115a005791681a3ca4816aa7e7160d2fa0983a031d3c341da5a6f72f",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260908",
+      "observed_at": "2026-10-22T07:10:24.031642+00:00",
+      "asof": "2026-09-08"
+    },
+    "5322a8ae5eb02b04b29a9c634246278215bd692f7e1ba1375160572e25013512": {
+      "file": "5322a8ae5eb02b04b29a9c634246278215bd692f7e1ba1375160572e25013512.json.gz",
+      "sha256": "5322a8ae5eb02b04b29a9c634246278215bd692f7e1ba1375160572e25013512",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260727",
+      "observed_at": "2026-10-22T07:00:40.402446+00:00",
+      "asof": "2026-07-27"
+    },
+    "7c1e7fe8460f87f116bcf17fa6df707809220911d2a3dc65ed9e6fe0180a8aa3": {
+      "file": "7c1e7fe8460f87f116bcf17fa6df707809220911d2a3dc65ed9e6fe0180a8aa3.json.gz",
+      "sha256": "7c1e7fe8460f87f116bcf17fa6df707809220911d2a3dc65ed9e6fe0180a8aa3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260709",
+      "observed_at": "2026-10-22T07:16:48.054029+00:00",
+      "asof": "2026-07-09"
+    },
+    "beddfde5cf4bf2f064bc9073a595fee54e1c9e4d81cf1baf0cc64b9733314222": {
+      "file": "beddfde5cf4bf2f064bc9073a595fee54e1c9e4d81cf1baf0cc64b9733314222.json.gz",
+      "sha256": "beddfde5cf4bf2f064bc9073a595fee54e1c9e4d81cf1baf0cc64b9733314222",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261028",
+      "observed_at": "2026-10-31T15:03:53.618591+00:00",
+      "asof": "2026-10-28"
+    },
+    "50b945840829abc565338b449f6ccaa64911b7eeee50fd63cc6af31736735015": {
+      "file": "50b945840829abc565338b449f6ccaa64911b7eeee50fd63cc6af31736735015.json.gz",
+      "sha256": "50b945840829abc565338b449f6ccaa64911b7eeee50fd63cc6af31736735015",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260810",
+      "observed_at": "2026-10-22T06:59:45.115531+00:00",
+      "asof": "2026-08-10"
+    },
+    "c03c5fe1d65280f21f8aa684a6b33620581f71f025a493721f8131888386f46e": {
+      "file": "c03c5fe1d65280f21f8aa684a6b33620581f71f025a493721f8131888386f46e.json.gz",
+      "sha256": "c03c5fe1d65280f21f8aa684a6b33620581f71f025a493721f8131888386f46e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260514",
+      "observed_at": "2026-10-22T07:19:16.484083+00:00",
+      "asof": "2026-05-14"
+    },
+    "9de05fbb38ecae64eaa861d69b17e23ba183f3cde00fdd68745960d0a4a8377c": {
+      "file": "9de05fbb38ecae64eaa861d69b17e23ba183f3cde00fdd68745960d0a4a8377c.json.gz",
+      "sha256": "9de05fbb38ecae64eaa861d69b17e23ba183f3cde00fdd68745960d0a4a8377c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260903",
+      "observed_at": "2026-10-22T07:11:32.997193+00:00",
+      "asof": "2026-09-03"
+    },
+    "40c567ec283278d9720eea1df2ce1eac2157337963f0878dfa00179392eb879b": {
+      "file": "40c567ec283278d9720eea1df2ce1eac2157337963f0878dfa00179392eb879b.json.gz",
+      "sha256": "40c567ec283278d9720eea1df2ce1eac2157337963f0878dfa00179392eb879b",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260831",
+      "observed_at": "2026-10-22T07:11:39.874173+00:00",
+      "asof": "2026-08-31"
+    },
+    "9aa192494c2c29af72716373aac6b770b5a70aebbbaf26ddd6d8f94cf43fd13d": {
+      "file": "9aa192494c2c29af72716373aac6b770b5a70aebbbaf26ddd6d8f94cf43fd13d.json.gz",
+      "sha256": "9aa192494c2c29af72716373aac6b770b5a70aebbbaf26ddd6d8f94cf43fd13d",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260619",
+      "observed_at": "2026-10-22T07:03:31.895054+00:00",
+      "asof": "2026-06-19"
+    },
+    "c82f835fb595e1c86548c3628347d8826fd8f6b9e9c0888b898a5b86ff6b8c98": {
+      "file": "c82f835fb595e1c86548c3628347d8826fd8f6b9e9c0888b898a5b86ff6b8c98.json.gz",
+      "sha256": "c82f835fb595e1c86548c3628347d8826fd8f6b9e9c0888b898a5b86ff6b8c98",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260728",
+      "observed_at": "2026-10-22T07:00:31.965239+00:00",
+      "asof": "2026-07-28"
+    },
+    "53cda92021abe78cef508e5661c03b842026862999a46a06dc70be2bc9f17174": {
+      "file": "53cda92021abe78cef508e5661c03b842026862999a46a06dc70be2bc9f17174.json.gz",
+      "sha256": "53cda92021abe78cef508e5661c03b842026862999a46a06dc70be2bc9f17174",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260917",
+      "observed_at": "2026-10-22T06:56:30.286570+00:00",
+      "asof": "2026-09-17"
+    },
+    "398357c5b5255d78e2c8e466b92838822a246580d629d54a039f1c4c210a8a4a": {
+      "file": "398357c5b5255d78e2c8e466b92838822a246580d629d54a039f1c4c210a8a4a.json.gz",
+      "sha256": "398357c5b5255d78e2c8e466b92838822a246580d629d54a039f1c4c210a8a4a",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260515",
+      "observed_at": "2026-10-22T07:07:10.745312+00:00",
+      "asof": "2026-05-15"
+    },
+    "53eb8feec3f1fbf84ac1bb3b37dec5414a30dd7487f521c264dbc8d3a64fc425": {
+      "file": "53eb8feec3f1fbf84ac1bb3b37dec5414a30dd7487f521c264dbc8d3a64fc425.json.gz",
+      "sha256": "53eb8feec3f1fbf84ac1bb3b37dec5414a30dd7487f521c264dbc8d3a64fc425",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260528",
+      "observed_at": "2026-10-22T07:05:41.702822+00:00",
+      "asof": "2026-05-28"
+    },
+    "ad49edc0c80a7d8b6a0233b617756cf495b57362b3659e989d7b2671b5a5bf38": {
+      "file": "ad49edc0c80a7d8b6a0233b617756cf495b57362b3659e989d7b2671b5a5bf38.json.gz",
+      "sha256": "ad49edc0c80a7d8b6a0233b617756cf495b57362b3659e989d7b2671b5a5bf38",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261015",
+      "observed_at": "2026-10-15T23:04:59.382357+00:00",
+      "asof": "2026-10-15"
+    },
+    "4d6575acd989d7a2d054357c1d16d70e06418cdabeea56fc9c7609a079d11bca": {
+      "file": "4d6575acd989d7a2d054357c1d16d70e06418cdabeea56fc9c7609a079d11bca.json.gz",
+      "sha256": "4d6575acd989d7a2d054357c1d16d70e06418cdabeea56fc9c7609a079d11bca",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260618",
+      "observed_at": "2026-10-22T07:04:49.122045+00:00",
+      "asof": "2026-06-18"
+    },
+    "5410049ce5c8ae789f54e9763feab55798c31af042dad00b652448b3445070e3": {
+      "file": "5410049ce5c8ae789f54e9763feab55798c31af042dad00b652448b3445070e3.json.gz",
+      "sha256": "5410049ce5c8ae789f54e9763feab55798c31af042dad00b652448b3445070e3",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260807",
+      "observed_at": "2026-10-22T07:13:35.443801+00:00",
+      "asof": "2026-08-07"
+    },
+    "e0c1d355d7f492d9ed4b0952df07786906a9d6047e71c1a56ea474432ea9da19": {
+      "file": "e0c1d355d7f492d9ed4b0952df07786906a9d6047e71c1a56ea474432ea9da19.json.gz",
+      "sha256": "e0c1d355d7f492d9ed4b0952df07786906a9d6047e71c1a56ea474432ea9da19",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260813",
+      "observed_at": "2026-10-22T06:59:36.402962+00:00",
+      "asof": "2026-08-13"
+    },
+    "e5ac8c7e0d4d0c84cda5ec3e1a28d886f11426892264166ec820176fabf142ad": {
+      "file": "e5ac8c7e0d4d0c84cda5ec3e1a28d886f11426892264166ec820176fabf142ad.json.gz",
+      "sha256": "e5ac8c7e0d4d0c84cda5ec3e1a28d886f11426892264166ec820176fabf142ad",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260811",
+      "observed_at": "2026-10-22T07:12:19.150988+00:00",
+      "asof": "2026-08-11"
+    },
+    "15752cfeebe257e501a212e7807a57ec3284c72035588f9b9bc570feaaa07a72": {
+      "file": "15752cfeebe257e501a212e7807a57ec3284c72035588f9b9bc570feaaa07a72.json.gz",
+      "sha256": "15752cfeebe257e501a212e7807a57ec3284c72035588f9b9bc570feaaa07a72",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260630",
+      "observed_at": "2026-10-22T07:17:06.214004+00:00",
+      "asof": "2026-06-30"
+    },
+    "450c2796b71928d4bde5e2168cf9ad7e4f8077d8b95e8f1fad79ba6ae6f0a149": {
+      "file": "450c2796b71928d4bde5e2168cf9ad7e4f8077d8b95e8f1fad79ba6ae6f0a149.json.gz",
+      "sha256": "450c2796b71928d4bde5e2168cf9ad7e4f8077d8b95e8f1fad79ba6ae6f0a149",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260909",
+      "observed_at": "2026-10-22T07:10:18.616774+00:00",
+      "asof": "2026-09-09"
+    },
+    "4500d785df26f7a6a704243401037b9df4f7e04382615846ebdc599d97d58016": {
+      "file": "4500d785df26f7a6a704243401037b9df4f7e04382615846ebdc599d97d58016.json.gz",
+      "sha256": "4500d785df26f7a6a704243401037b9df4f7e04382615846ebdc599d97d58016",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260710",
+      "observed_at": "2026-10-22T07:02:39.929018+00:00",
+      "asof": "2026-07-10"
+    },
+    "ee432ccfe7c0d9a7bb8c2e99ec446c134d7f3e52b8fc60aaf2794ff87ddbccf5": {
+      "file": "ee432ccfe7c0d9a7bb8c2e99ec446c134d7f3e52b8fc60aaf2794ff87ddbccf5.json.gz",
+      "sha256": "ee432ccfe7c0d9a7bb8c2e99ec446c134d7f3e52b8fc60aaf2794ff87ddbccf5",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260708",
+      "observed_at": "2026-10-22T07:02:47.426668+00:00",
+      "asof": "2026-07-08"
+    },
+    "17b846c890f9086d99a94a22cb76c5be7d0967e16ef789edd7cc2703aa2cb8d2": {
+      "file": "17b846c890f9086d99a94a22cb76c5be7d0967e16ef789edd7cc2703aa2cb8d2.json.gz",
+      "sha256": "17b846c890f9086d99a94a22cb76c5be7d0967e16ef789edd7cc2703aa2cb8d2",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260907",
+      "observed_at": "2026-10-22T06:57:56.855990+00:00",
+      "asof": "2026-09-07"
+    },
+    "2236ed8cf9cde718f95fb1cd1aebc0f6d0e04c544c3b19bce0d302d5a7003659": {
+      "file": "2236ed8cf9cde718f95fb1cd1aebc0f6d0e04c544c3b19bce0d302d5a7003659.json.gz",
+      "sha256": "2236ed8cf9cde718f95fb1cd1aebc0f6d0e04c544c3b19bce0d302d5a7003659",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260504",
+      "observed_at": "2026-10-22T07:20:57.288765+00:00",
+      "asof": "2026-05-04"
+    },
+    "c24d6f9362f02224387c4d7b4d7430ce50a9432263abd3409979b1174eed2b5e": {
+      "file": "c24d6f9362f02224387c4d7b4d7430ce50a9432263abd3409979b1174eed2b5e.json.gz",
+      "sha256": "c24d6f9362f02224387c4d7b4d7430ce50a9432263abd3409979b1174eed2b5e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260521",
+      "observed_at": "2026-10-22T07:19:06.172849+00:00",
+      "asof": "2026-05-21"
+    },
+    "5936f8e6db615099e18337583a97f7875009bada19cb5404ad7cc3357f24a96a": {
+      "file": "5936f8e6db615099e18337583a97f7875009bada19cb5404ad7cc3357f24a96a.json.gz",
+      "sha256": "5936f8e6db615099e18337583a97f7875009bada19cb5404ad7cc3357f24a96a",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260423",
+      "observed_at": "2026-10-22T07:07:53.581922+00:00",
+      "asof": "2026-04-23"
+    },
+    "079b760613882066be60b28905562b64b4ed8a1e62baadb639e8e75f96fe1629": {
+      "file": "079b760613882066be60b28905562b64b4ed8a1e62baadb639e8e75f96fe1629.json.gz",
+      "sha256": "079b760613882066be60b28905562b64b4ed8a1e62baadb639e8e75f96fe1629",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260730",
+      "observed_at": "2026-10-22T07:00:09.447071+00:00",
+      "asof": "2026-07-30"
+    },
+    "142aec32ce2d73b5dcdb783bada1c6a0f68f25290631e98a8f30d5f476d95e9c": {
+      "file": "142aec32ce2d73b5dcdb783bada1c6a0f68f25290631e98a8f30d5f476d95e9c.json.gz",
+      "sha256": "142aec32ce2d73b5dcdb783bada1c6a0f68f25290631e98a8f30d5f476d95e9c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260922",
+      "observed_at": "2026-10-22T07:09:48.575805+00:00",
+      "asof": "2026-09-22"
+    },
+    "4c706172364df6e367d45d06f69895ec380d88d6bba6b52dceff4ea91f87d549": {
+      "file": "4c706172364df6e367d45d06f69895ec380d88d6bba6b52dceff4ea91f87d549.json.gz",
+      "sha256": "4c706172364df6e367d45d06f69895ec380d88d6bba6b52dceff4ea91f87d549",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261020",
+      "observed_at": "2026-10-22T06:55:50.172202+00:00",
+      "asof": "2026-10-20"
+    },
+    "5b6cb2204739d4daeb80276ed42313c036d5eb4c5b3db436672beb7786b5c1c0": {
+      "file": "5b6cb2204739d4daeb80276ed42313c036d5eb4c5b3db436672beb7786b5c1c0.json.gz",
+      "sha256": "5b6cb2204739d4daeb80276ed42313c036d5eb4c5b3db436672beb7786b5c1c0",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260609",
+      "observed_at": "2026-10-22T07:18:42.626417+00:00",
+      "asof": "2026-06-09"
+    },
+    "34a12382863d193d3375799e445e3022817cf90b1f201180e599a246f60fbd80": {
+      "file": "34a12382863d193d3375799e445e3022817cf90b1f201180e599a246f60fbd80.json.gz",
+      "sha256": "34a12382863d193d3375799e445e3022817cf90b1f201180e599a246f60fbd80",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260827",
+      "observed_at": "2026-10-22T07:11:44.127113+00:00",
+      "asof": "2026-08-27"
+    },
+    "9312a35b06d4e121def8cf5e209b5fdc5ef3d4dd74f22fc81b9dad0e1cdbcd1c": {
+      "file": "9312a35b06d4e121def8cf5e209b5fdc5ef3d4dd74f22fc81b9dad0e1cdbcd1c.json.gz",
+      "sha256": "9312a35b06d4e121def8cf5e209b5fdc5ef3d4dd74f22fc81b9dad0e1cdbcd1c",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260512",
+      "observed_at": "2026-10-22T07:07:20.049191+00:00",
+      "asof": "2026-05-12"
+    },
+    "531021b6fd88e5f16a0bffb8848df162bdad13304593a2e92f7197a7b96c5e8e": {
+      "file": "531021b6fd88e5f16a0bffb8848df162bdad13304593a2e92f7197a7b96c5e8e.json.gz",
+      "sha256": "531021b6fd88e5f16a0bffb8848df162bdad13304593a2e92f7197a7b96c5e8e",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260824",
+      "observed_at": "2026-10-22T06:58:16.474564+00:00",
+      "asof": "2026-08-24"
+    },
+    "a6fa810e71f8bca06184f3fbbed9aaf32760f6b09c7aa801c22b0646d2e4aaee": {
+      "file": "a6fa810e71f8bca06184f3fbbed9aaf32760f6b09c7aa801c22b0646d2e4aaee.json.gz",
+      "sha256": "a6fa810e71f8bca06184f3fbbed9aaf32760f6b09c7aa801c22b0646d2e4aaee",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260729",
+      "observed_at": "2026-10-22T07:00:23.041604+00:00",
+      "asof": "2026-07-29"
+    },
+    "1f35d4e6d4d4928cc1d0f8eebe4fb2b5c8085be6456bd8947286f53f6aaecdb7": {
+      "file": "1f35d4e6d4d4928cc1d0f8eebe4fb2b5c8085be6456bd8947286f53f6aaecdb7.json.gz",
+      "sha256": "1f35d4e6d4d4928cc1d0f8eebe4fb2b5c8085be6456bd8947286f53f6aaecdb7",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260825",
+      "observed_at": "2026-10-22T07:11:53.516866+00:00",
+      "asof": "2026-08-25"
+    },
+    "9e2e1fccefa991084fe83087df6f031f263ab936572d99b717401e6a38370adf": {
+      "file": "9e2e1fccefa991084fe83087df6f031f263ab936572d99b717401e6a38370adf.json.gz",
+      "sha256": "9e2e1fccefa991084fe83087df6f031f263ab936572d99b717401e6a38370adf",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260422",
+      "observed_at": "2026-10-22T07:07:56.350774+00:00",
+      "asof": "2026-04-22"
+    },
+    "1194d5b61b043ed666959aff7f4844b158a1b2f9c8edbf2712d0732878e6f270": {
+      "file": "1194d5b61b043ed666959aff7f4844b158a1b2f9c8edbf2712d0732878e6f270.json.gz",
+      "sha256": "1194d5b61b043ed666959aff7f4844b158a1b2f9c8edbf2712d0732878e6f270",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260821",
+      "observed_at": "2026-10-22T06:58:18.293417+00:00",
+      "asof": "2026-08-21"
+    },
+    "f3180a7d114e4a2a9b82d136b4c4134f05ca64754b229bd5d1785ba560e137f0": {
+      "file": "f3180a7d114e4a2a9b82d136b4c4134f05ca64754b229bd5d1785ba560e137f0.json.gz",
+      "sha256": "f3180a7d114e4a2a9b82d136b4c4134f05ca64754b229bd5d1785ba560e137f0",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260729",
+      "observed_at": "2026-10-22T07:13:55.616456+00:00",
+      "asof": "2026-07-29"
+    },
+    "95d91e48379ce9df42c333610b3dfc87c501041adff199f028c4edae016fadf6": {
+      "file": "95d91e48379ce9df42c333610b3dfc87c501041adff199f028c4edae016fadf6.json.gz",
+      "sha256": "95d91e48379ce9df42c333610b3dfc87c501041adff199f028c4edae016fadf6",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260716",
+      "observed_at": "2026-10-22T07:14:18.277036+00:00",
+      "asof": "2026-07-16"
+    },
+    "b8700fd6be3427199e15432f03a5a13ed6176812e37ab686f96bf0774993cbc0": {
+      "file": "b8700fd6be3427199e15432f03a5a13ed6176812e37ab686f96bf0774993cbc0.json.gz",
+      "sha256": "b8700fd6be3427199e15432f03a5a13ed6176812e37ab686f96bf0774993cbc0",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20260615",
+      "observed_at": "2026-10-22T07:17:31.389523+00:00",
+      "asof": "2026-06-15"
+    },
+    "14793d71062b9ca2a557df1ffe33d0f69c8e4889178d28e46e324c558aea9a83": {
+      "file": "14793d71062b9ca2a557df1ffe33d0f69c8e4889178d28e46e324c558aea9a83.json.gz",
+      "sha256": "14793d71062b9ca2a557df1ffe33d0f69c8e4889178d28e46e324c558aea9a83",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20260622",
+      "observed_at": "2026-10-22T07:03:28.810450+00:00",
+      "asof": "2026-06-22"
+    },
+    "57301e8da04cda2ff9da4086be1c8bdf81e10631688cbbc2c04292af4187b923": {
+      "file": "57301e8da04cda2ff9da4086be1c8bdf81e10631688cbbc2c04292af4187b923.json.gz",
+      "sha256": "57301e8da04cda2ff9da4086be1c8bdf81e10631688cbbc2c04292af4187b923",
+      "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261021",
+      "observed_at": "2026-10-22T06:42:33.347086+00:00",
+      "asof": "2026-10-21"
+    }
+  },
+  "session_days": [
+    "2026-04-22",
+    "2026-04-23",
+    "2026-04-24",
+    "2026-04-27",
+    "2026-04-28",
+    "2026-04-29",
+    "2026-04-30",
+    "2026-05-04",
+    "2026-05-06",
+    "2026-05-07",
+    "2026-05-08",
+    "2026-05-11",
+    "2026-05-12",
+    "2026-05-13",
+    "2026-05-14",
+    "2026-05-15",
+    "2026-05-18",
+    "2026-05-19",
+    "2026-05-20",
+    "2026-05-21",
+    "2026-05-22",
+    "2026-05-26",
+    "2026-05-27",
+    "2026-05-28",
+    "2026-05-29",
+    "2026-06-01",
+    "2026-06-02",
+    "2026-06-04",
+    "2026-06-05",
+    "2026-06-08",
+    "2026-06-09",
+    "2026-06-10",
+    "2026-06-11",
+    "2026-06-12",
+    "2026-06-15",
+    "2026-06-16",
+    "2026-06-17",
+    "2026-06-18",
+    "2026-06-19",
+    "2026-06-22",
+    "2026-06-23",
+    "2026-06-24",
+    "2026-06-25",
+    "2026-06-26",
+    "2026-06-29",
+    "2026-06-30",
+    "2026-07-01",
+    "2026-07-02",
+    "2026-07-03",
+    "2026-07-06",
+    "2026-07-07",
+    "2026-07-08",
+    "2026-07-09",
+    "2026-07-10",
+    "2026-07-13",
+    "2026-07-14",
+    "2026-07-15",
+    "2026-07-16",
+    "2026-07-20",
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23",
+    "2026-07-24",
+    "2026-07-27",
+    "2026-07-28",
+    "2026-07-29",
+    "2026-07-30",
+    "2026-07-31",
+    "2026-08-03",
+    "2026-08-04",
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-07",
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12",
+    "2026-08-13",
+    "2026-08-14",
+    "2026-08-18",
+    "2026-08-19",
+    "2026-08-20",
+    "2026-08-21",
+    "2026-08-24",
+    "2026-08-25",
+    "2026-08-26",
+    "2026-08-27",
+    "2026-08-28",
+    "2026-08-31",
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-07",
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-06",
+    "2026-10-07",
+    "2026-10-08",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23",
+    "2026-10-26",
+    "2026-10-27",
+    "2026-10-28",
+    "2026-10-29"
+  ],
+  "pool_bars_sha256": "f7fd46937df910f4f5c4ecf3064f3d5669bbdbd7deb7f88a13d7cde42d627819"
+}

@@ -1,0 +1,41 @@
+name: Historical V2 finite offline reconstruction
+on:
+  push:
+    branches: [feat/decision-evidence-v2]
+    paths: ['.github/recovery/historical-v2-validation.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: historical-v2-offline-${{ github.ref }}
+  cancel-in-progress: false
+  queue: max
+jobs:
+  reconstruct:
+    if: github.repository == '0baselabkim-debug/qweasd' && github.ref == 'refs/heads/feat/decision-evidence-v2'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: f36ab970428564e7569ae37d61f2cfa3f644e119
+          path: preserved-main
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Revalidate existing sources and reproduce every preserved session offline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/historical_v2_native.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: historical-v2-reconstruction-${{ github.run_id }}
+          path: ${{ runner.temp }}/historical-results
+          retention-days: 90
+          if-no-files-found: error
