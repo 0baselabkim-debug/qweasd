@@ -20,6 +20,42 @@ from screener.decision_support.evidence import read,sha,encoded,timestamp,accept
 from . import MODE,VERSION
 
 
+def source_complete(report,rows,target,started,finished):
+    """A failed original generation can never be promoted by row counts alone."""
+    return (report.get('status') in ('PASS','INTERNAL_PASS') and rows==target and started==finished
+            and len(report.get('indices',[]))==2)
+
+
+def master_replay(root,folder,universe,proof):
+    from collector_v1.validation import parse
+    hashes={}
+    if (folder.parent/'preparation').is_dir():
+        from collector_v1.regular.collector import verify
+        top=read(root/'report.json');preparation=read(folder.parent/'preparation/requests.json')
+        physical=sum(e['event']=='started' for e in events(folder/'http.jsonl'))+len(preparation)
+        if top.get('total_physical_http')!=physical or physical>5600:raise ValueError('historical_combined_preparation_HTTP_budget_mismatch')
+        verify(folder.parent,read(root/'context.json'),top)
+        source=folder.parent/'preparation';evidence=[read(p) for p in (source/'observations').glob('*.json')]
+    elif (root/'seed').is_dir():
+        source=root/'seed';evidence=[read(p) for p in (source/'observations').glob('*.json')]
+    else:
+        source=Path(proof.get('external_master_directory','/__missing_historical_master__'))
+        if not source.is_dir():raise ValueError('external_master_raw_proof_required')
+        receipt=read(root/'master-receipt.json');evidence=receipt['evidence']
+    store=Store(source);recovered=[];markets=[]
+    for e in evidence:
+        raw=store.raw(e)
+        if e['task']['asof']!=read(root/proof['report_path'])['asof']:raise ValueError('master_source_date_mismatch')
+        if e['task']['kind']=='master':recovered.extend(parse(raw,e));markets.append(e['task']['market'])
+        elif e['task']['kind']=='calendar':parse(raw,e)
+        else:raise ValueError('unexpected_master_evidence_kind')
+        for p in (source/'raw'/(e['source_hash']+'.gz'),source/'observations'/(sha(encoded(e))+'.json')):
+            hashes[str(p.resolve())]=sha(p.read_bytes())
+    if sorted(markets)!=['KOSDAQ','KOSPI'] or sorted(recovered,key=lambda r:(r['market'],r['symbol']))!=sorted(universe,key=lambda r:(r['market'],r['symbol'])):
+        raise ValueError('historical_master_raw_universe_mismatch')
+    return hashes
+
+
 def inspect(root, proof):
     root=Path(root).resolve()
     if not proof or not {'zip_sha256','manifest_sha256','artifact_id','run_id','report_path','universe_path'}<=proof.keys():
@@ -39,14 +75,17 @@ def inspect(root, proof):
     if proof.get('asof',asof)!=asof:raise ValueError('historical_proof_date_mismatch')
     if str(report['run_id'])!=str(proof['run_id']) or manifest['asof']!=asof: raise ValueError('historical_run_or_date_mismatch')
     universe=read(root/proof['universe_path']);selected={r['symbol']:r for r in universe if r['eligible']}
+    if any(type(r['eligible']) is not bool for r in universe):raise ValueError('historical_master_eligibility_type_invalid')
     if len({r['symbol'] for r in universe})!=len(universe) or report['population_sha256']!=sha(encoded(universe)):
         raise ValueError('historical_master_duplicate_or_hash_mismatch')
     if report['target']!=len(selected) or report['target_symbols']!=sorted(selected): raise ValueError('historical_population_mismatch')
+    master_hashes=master_replay(root,folder,universe,proof)
     journal=events(folder/'tasks.jsonl')
     if not journal: raise ValueError('historical_tasks_missing')
     first=journal[0]['task'];generation=first.get('generation_id');round_id=first['round']
     store=Store(folder);cache=replay(store,round_id,asof=asof,generation_id=generation)
     rows=report['rows']
+    if report.get('kis_validated')!=len(rows):raise ValueError('historical_report_validation_count_mismatch')
     if len({r['symbol'] for r in rows})!=len(rows): raise ValueError('historical_report_duplicate_symbol')
     for row in rows:
         if selected.get(row['symbol'],{}).get('market')!=row['market']: raise ValueError('historical_symbol_market_mismatch')
@@ -57,19 +96,22 @@ def inspect(root, proof):
         actual=db.execute('select symbol,payload from observations').fetchall()
     if len(actual)!=len(rows) or {s:json.loads(v) for s,v in actual}!={r['symbol']:r for r in rows}: raise ValueError('historical_DB_JSON_mismatch')
     http=events(folder/'http.jsonl');starts=[e for e in http if e['event']=='started'];ends=[e for e in http if e['event']=='finished']
+    if type(report.get('http_limit')) is not int or not 1<=report['http_limit']<=5600 or len(starts)>report['http_limit']:
+        raise ValueError('historical_original_http_budget_exceeded')
     if len(starts)!=report['physical_http'] or [e['sequence'] for e in starts]!=list(range(1,len(starts)+1)):
         raise ValueError('historical_http_journal_mismatch')
     if len({e['sequence'] for e in ends})!=len(ends) or not {e['sequence'] for e in ends}<={e['sequence'] for e in starts}: raise ValueError('historical_http_end_mismatch')
-    complete=len(rows)==len(selected) and len(starts)==len(ends) and len(report.get('indices',[]))==2
-    if report['status']=='PASS' and not complete: raise ValueError('incomplete_generation_marked_PASS')
+    complete=source_complete(report,len(rows),len(selected),len(starts),len(ends))
+    if report['status'] in ('PASS','INTERNAL_PASS') and not complete: raise ValueError('incomplete_generation_marked_PASS')
     return dict(report=report,selected=selected,store=store,cache=cache,round_id=round_id,generation_id=generation,
-                files=files,complete=complete,physical_http=len(starts),unresolved_http=len(starts)-len(ends))
+                files=files,complete=complete,physical_http=len(starts),unresolved_http=len(starts)-len(ends),master_reference_hashes=master_hashes)
 
 
 def load(root,knowledge_cutoff,reference_directory=None,*,proof):
     root=Path(root).resolve();v=inspect(root,proof);r=v['report'];asof=r['asof'];cutoff=timestamp(knowledge_cutoff)
     if timestamp(r['completed_at'])>cutoff: raise ValueError('source_completed_after_cutoff')
     official,sources,errors,ref_hashes=references(reference_directory,cutoff,asof=asof)
+    ref_hashes.update(v['master_reference_hashes'])
     pool={};pool_used=Counter();pool_times=[];pool_by_stock={}
     if proof.get('price_pool'):
         from .price_pool import load as load_pool

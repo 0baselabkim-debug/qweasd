@@ -293,3 +293,25 @@ def test_original_backup_has_only_finite_feature_trigger_and_read_permissions():
     assert 'contents: read' in text and 'actions: read' in text and 'secrets.' not in text
     assert 'schedule:' not in text and 'cron:' not in text and 'kis-validation-auth' not in text
     assert 'retention-days: 90' in text and 'compression-level: 0' in text
+
+
+@pytest.mark.parametrize('status,expected',[('PASS',True),('INTERNAL_PASS',True),('FAIL',False),('BLOCKED',False)])
+def test_failed_source_never_becomes_complete_from_row_counts(status,expected):
+    from screener.historical_v2.collector import source_complete
+    report=dict(status=status,indices=[{},{}])
+    assert source_complete(report,10,10,23,23) is expected
+    assert source_complete(report,9,10,23,23) is False
+    assert source_complete(report,10,10,23,22) is False
+
+
+def test_recovery_actual_opener_spacing_survives_variable_reservation_delay(tmp_path):
+    from screener.historical_v2.kis_recovery import RecoveryBudget
+    from collector_v1.core import Store
+    from collector_v1.providers import Q
+    clock=[0.0];dispatch=[]
+    def sleep(n):clock[0]+=n
+    def opener(request,timeout):dispatch.append(clock[0]);clock[0]+=.1;return object()
+    b=RecoveryBudget(Store(tmp_path),clock=lambda:clock[0],sleep=sleep)
+    b.before('KIS','/oauth2/tokenP','synthetic');clock[0]=.5;b.dispatch(opener,object(),30)
+    clock[0]=1.05;b.before('KIS',Q+'investor-trade-by-stock-daily','synthetic');b.dispatch(opener,object(),30)
+    assert dispatch[1]-dispatch[0]>=1.05 and len(b.dispatched)==2

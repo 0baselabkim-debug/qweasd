@@ -26,6 +26,7 @@ class RecoveryBudget:
         if previous!=4693:raise ValueError('previous_physical_budget_anchor_mismatch')
         self.store=store;self.previous=previous;self.used=0;self.finished=set();self.endpoints=set();self.validator=validator
         self.clock=clock;self.sleep=sleep;self.last_dispatch=None
+        self.last_opener_return=None;self.dispatched=set()
         self.store.write('parent-budget.json',dict(source_artifact=SOURCE_ARTIFACT,source_zip_sha256=SOURCE_ZIP_SHA,
             original_physical_http=previous,original_max_total_http=5600,new_max_http=3,reset=False))
     def before(self,source,endpoint,reason):
@@ -45,6 +46,19 @@ class RecoveryBudget:
     def finish(self,entry,status,**metadata):
         if entry['sequence'] in self.finished:raise Failure('duplicate_recovery_http_finish')
         self.finished.add(entry['sequence']);journal_append(self.store.root/'http.jsonl',dict(event='finished',sequence=entry['sequence'],status=status,completed_at=now(),**metadata))
+    def dispatch(self,opener,request,timeout):
+        # Waiting from the previous opener's RETURN is conservative even when
+        # shared Git reservations or journal fsync happen at different speeds.
+        # The old recovery attempt's sub-1.05s gap is not relabelled as fixed.
+        if self.last_opener_return is not None:
+            self.sleep(max(0,1.05-(self.clock()-self.last_opener_return)))
+        if self.validator:self.validator()
+        if self.used in self.dispatched:raise Failure('duplicate_recovery_dispatch')
+        self.dispatched.add(self.used);at=now()
+        try:return opener(request,timeout=timeout)
+        finally:
+            self.last_opener_return=self.clock()
+            journal_append(self.store.root/'http.jsonl',dict(event='dispatched',sequence=self.used,dispatched_at=at,opener_returned_at=now()))
 
 
 def control(c,at=None):
@@ -86,7 +100,7 @@ def main(control_path):
             api=Providers(store,budget)
             original_opener=api.opener
             def preserve_failure(request,timeout):
-                try:return original_opener(request,timeout=timeout)
+                try:return budget.dispatch(original_opener,request,timeout)
                 except urllib.error.HTTPError as error:
                     if not request.full_url.endswith('/oauth2/tokenP'):
                         try:body=error.read(1000000)
@@ -116,7 +130,8 @@ def main(control_path):
     except Exception as error:
         result.update(status='FAIL',reason=getattr(error,'code',str(error) if isinstance(error,ValueError) else type(error).__name__))
     finally:
-        result.update(new_physical_http=budget.used,cumulative_physical_http=4693+budget.used,completed_at=now())
+        result.update(new_physical_http=len(budget.dispatched),reserved_physical_budget=budget.used,
+            unknown_or_undispatched_reservations=budget.used-len(budget.dispatched),cumulative_physical_http=4693+budget.used,completed_at=now())
         store.write('report.json',result)
         inventory={str(p.relative_to(output)):sha(p.read_bytes()) for p in output.rglob('*') if p.is_file()}
         (output/'manifest.json').write_bytes(encoded(dict(files=inventory,asof=ASOF,generation_id=generation)))

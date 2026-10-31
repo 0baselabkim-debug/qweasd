@@ -62,7 +62,7 @@ def main():
     c=json.loads(Path('.github/recovery/historical-v2-validation.json').read_bytes())
     now=dt.datetime.now(dt.timezone.utc)
     if (os.getenv('GITHUB_REPOSITORY')!=REPO or os.getenv('GITHUB_REF')!='refs/heads/feat/decision-evidence-v2'
-            or os.getenv('GITHUB_RUN_ATTEMPT')!='1' or c['mode']!='OFFLINE_REPRODUCE_ALL_PRESERVED_SESSIONS'
+            or os.getenv('GITHUB_RUN_ATTEMPT')!='1' or c['mode'] not in ('OFFLINE_REPRODUCE_ALL_PRESERVED_SESSIONS','OFFLINE_INPUT_REVALIDATION_ONLY')
             or not dt.datetime.fromisoformat(c['not_before'])<=now<dt.datetime.fromisoformat(c['expires_at'])):raise ValueError('finite_offline_control_rejected')
     anchors=Path('reports/historical-v2-recovery/source-anchors.json').read_bytes()
     if sha(anchors)!=c['anchors_sha256']:raise ValueError('native_source_anchors_changed')
@@ -88,11 +88,19 @@ def main():
             p=refs/(h+'.json.gz');p.write_bytes(raw);found[h]=dict(permitted[h],file=p.name)
     if set(found)!=set(permitted):raise ValueError('reference_population_missing_or_changed')
     (refs/'source-manifest.json').write_bytes(encoded(dict(references=found,auxiliary={})))
-    sources=[]
+    sources=[];masters={}
     for a in anchors['collectors']:
         path=root/(a['artifact_id']+'.zip');download('actions/artifacts/'+a['artifact_id']+'/zip',path)
         folder=root/'collectors'/a['artifact_id'];extract_verified(path,a['zip_sha256'],folder)
         proof={k:a[k] for k in ['artifact_id','run_id','zip_sha256','manifest_sha256','report_path','universe_path']}
+        if (folder/'master-receipt.json').exists():
+            origin=json.loads((folder/'restoration.json').read_bytes());identifier=str(origin['artifact_id'])
+            meta=next((m for m in anchors.get('master_artifacts',[]) if m['artifact_id']==identifier),None)
+            if meta is None or meta['zip_sha256']!=origin['zip_sha256']:raise ValueError('native_master_origin_anchor_missing')
+            if identifier not in masters:
+                mzip=root/('master-'+identifier+'.zip');download('actions/artifacts/'+identifier+'/zip',mzip)
+                md=root/'masters'/identifier;extract_verified(mzip,meta['zip_sha256'],md);masters[identifier]=md
+            proof['external_master_directory']=str(masters[identifier])
         verified=inspect(folder,proof)
         sources.append(dict(artifact_id=a['artifact_id'],asof=a['asof'],directory=str(folder),proof=proof,status='INTEGRITY_PASS',complete=verified['complete']))
     calendar=calendar_build(refs,source,sources)
@@ -100,6 +108,13 @@ def main():
     cp=root/'session-calendar.json';cp.write_bytes(encoded(calendar));pool=pool_build(sources,refs,root/'price-pool',now.isoformat(),legacy_snapshot=source)
     if file_sha(root/'price-pool/bars.json.gz')!=anchors['pool_bars_sha256']:raise ValueError('native_verified_pool_values_changed')
     common=dict(price_pool={k:pool[k] for k in ['directory','manifest_sha256']},calendar=dict(file=str(cp),sha256=sha(cp.read_bytes())))
+    if c['mode']=='OFFLINE_INPUT_REVALIDATION_ONLY':
+        (output/'input-validation.json').write_bytes(encoded(dict(status='PASS_CURRENT_STRICT_INPUT_GUARDS',run_id=os.environ['GITHUB_RUN_ID'],
+            code_commit=os.environ['GITHUB_SHA'],sources=[dict(artifact_id=s['artifact_id'],asof=s['asof'],complete=s['complete'],master_raw_replayed=True) for s in sources],
+            official_session_days=len(calendar['days']),verified_pool_bars=pool['bars'],verified_pool_bars_sha256=file_sha(root/'price-pool/bars.json.gz'),
+            original_bytes_unchanged=True,market_HTTP=0,oauth_HTTP=0,OpenAI_HTTP=0)))
+        with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('Current strict historical input guards: PASS. Raw masters, physical budgets and failed-original states independently rechecked; no market or OAuth requests.\n')
+        return
     jobs=[]
     for s in sources:
         proof=dict(s['proof'],asof=s['asof'],price_pool=common['price_pool'])
