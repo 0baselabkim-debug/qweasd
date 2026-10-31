@@ -6,6 +6,7 @@ from pathlib import Path
 import urllib.request
 import urllib.error
 import subprocess
+import time
 from collector_v1.core import Store,encoded,sha,now,Failure
 from collector_v1.providers import Providers,task,Q
 from collector_v1.experiment.storage import events,append as journal_append
@@ -21,9 +22,10 @@ SYMBOL='002690'
 
 
 class RecoveryBudget:
-    def __init__(self,store,previous=4693,validator=None):
+    def __init__(self,store,previous=4693,validator=None,*,clock=time.monotonic,sleep=time.sleep):
         if previous!=4693:raise ValueError('previous_physical_budget_anchor_mismatch')
         self.store=store;self.previous=previous;self.used=0;self.finished=set();self.endpoints=set();self.validator=validator
+        self.clock=clock;self.sleep=sleep;self.last_dispatch=None
         self.store.write('parent-budget.json',dict(source_artifact=SOURCE_ARTIFACT,source_zip_sha256=SOURCE_ZIP_SHA,
             original_physical_http=previous,original_max_total_http=5600,new_max_http=3,reset=False))
     def before(self,source,endpoint,reason):
@@ -32,6 +34,10 @@ class RecoveryBudget:
             raise Failure('recovery_endpoint_not_authorized')
         if self.used>=3 or self.previous+self.used>=5600:raise Failure('recovery_physical_budget_exhausted')
         if endpoint in self.endpoints:raise Failure('recovery_duplicate_endpoint_retry_forbidden')
+        if self.last_dispatch is not None:self.sleep(max(0,1.05-(self.clock()-self.last_dispatch)))
+        if self.validator:self.validator()
+        if self.last_dispatch is not None and self.clock()-self.last_dispatch<1.05-1e-9:raise Failure('recovery_physical_interval_not_elapsed')
+        self.last_dispatch=self.clock()
         self.endpoints.add(endpoint)
         self.used+=1
         e=dict(event='started',sequence=self.used,cumulative_sequence=self.previous+self.used,endpoint=endpoint,reason=reason,started_at=now())

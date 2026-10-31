@@ -21,6 +21,7 @@ from screener.decision_support.evidence import sha, encoded
 
 REF = 'refs/heads/evidence/decision-price-source'
 PAIRS = [(f'2026-10-{d}',m) for d in (26,27,28,29) for m in ('KOSPI','KOSDAQ')]
+FOLLOWUP_PAIRS = [('2026-10-30',m) for m in ('KOSPI','KOSDAQ')]
 
 
 def git(*args, data=None, env=None):
@@ -32,8 +33,10 @@ def git(*args, data=None, env=None):
 def check_control(c, at=None):
     at = at or dt.datetime.now(dt.timezone.utc)
     start,end = (dt.datetime.fromisoformat(c[k]) for k in ('not_before','expires_at'))
-    if (c.get('approval')!='USER_APPROVED_HISTORICAL_RECOVERY' or c.get('pairs')!=[list(p) for p in PAIRS]
-            or c.get('max_http')!=8 or start.tzinfo is None or end.tzinfo is None
+    permitted=(c.get('pairs')==[list(p) for p in PAIRS] and c.get('max_http')==8) or (
+        c.get('pairs')==[list(p) for p in FOLLOWUP_PAIRS] and c.get('max_http')==2 and c.get('priority_eight_completed_run')=='41212889496')
+    if (c.get('approval')!='USER_APPROVED_HISTORICAL_RECOVERY' or not permitted
+            or start.tzinfo is None or end.tzinfo is None
             or not 0 < (end-start).total_seconds() <= 600 or not start <= at < end):
         raise ValueError('historical_reference_control_invalid_or_expired')
     local = at.astimezone(ZoneInfo('Asia/Seoul'))
@@ -114,19 +117,20 @@ def main(control_path):
     if not (root/'requests.json').is_file(): raise ValueError('previous_physical_journal_required')
     head=git('rev-parse','FETCH_HEAD')
     if head!=c['previous_evidence_head']: raise ValueError('previous_evidence_anchor_changed')
-    budget=Budget(root,limit=8,seconds=600)
+    limit=c['max_http'];pairs=c['pairs'];budget=Budget(root,limit=limit,seconds=600)
     prior=json.loads((root/'requests.json').read_bytes())
     if len(prior['requests'])!=c['previous_recorded_http']: raise ValueError('journal_count_anchor_changed')
     if any(x['status']=='reserved' for x in prior.get('leases',{}).values()): raise ValueError('unresolved_other_request_reservation')
     spent=sum(x.get('budget_class')=='daily_priority' and x.get('budget_date')==budget.budget_date for x in prior['requests'])
-    if spent+8>40: raise ValueError('priority_day_budget_exceeded')
-    budget.state.setdefault('leases',{})[budget.lease_id]=dict(status='reserved',limit=8,reserved_at=now(),budget_class='daily_priority',budget_date=budget.budget_date,initial_recorded_count=budget.initial)
+    if spent+limit>40: raise ValueError('priority_day_budget_exceeded')
+    if limit==2 and any(not cached(root,f'krx:{market}:{day}') for day,market in PAIRS):raise ValueError('priority_eight_not_preserved')
+    budget.state.setdefault('leases',{})[budget.lease_id]=dict(status='reserved',limit=limit,reserved_at=now(),budget_class='daily_priority',budget_date=budget.budget_date,initial_recorded_count=budget.initial)
     save(budget.path,budget.state);head=append(root,head)
-    result=dict(schema=1,run_id=os.getenv('GITHUB_RUN_ID'),status='STARTED',planned_http=8,physical_http=0,results=[],automatic_retries=0)
+    result=dict(schema=1,run_id=os.getenv('GITHUB_RUN_ID'),status='STARTED',planned_http=limit,physical_http=0,results=[],automatic_retries=0)
     try:
         credential=os.environ.get('KRX_API_KEY')
         if not credential: raise ValueError('KRX_credential_not_bound')
-        for day,market in PAIRS:
+        for day,market in pairs:
             check_control(c);operating_clear()
             status=collect_one(day,market,root,budget,credential)
             result['results'].append(dict(asof=day,market=market,status=status))

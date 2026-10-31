@@ -7,6 +7,8 @@ on:
       - 'screener/decision_evidence/**'
       - 'screener/historical_v2/**'
       - 'scripts/recover_historical_krx.py'
+      - 'scripts/recover_historical_kis.py'
+      - 'scripts/reprocess_historical_v2.py'
       - 'tests/test_historical_v2.py'
       - 'scripts/*investment*v2*.py'
       - 'tests/test_investment_v2.py'

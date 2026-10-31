@@ -149,3 +149,43 @@ def test_official_alphanumeric_symbol_uses_unchanged_six_field_values(tmp_path):
 def test_unknown_historical_population_cannot_generate_candidates():
     from screener.decision_evidence.build import candidates
     assert candidates([dict(population_eligibility='UNKNOWN_HISTORICAL')],[])['returned']==0
+
+
+def test_retrospective_paths_do_not_create_trades_or_backtest_eligibility():
+    from screener.historical_v2.outcomes import path
+    days=[(dt.date(2020,1,1)+dt.timedelta(days=i)).isoformat() for i in range(25)]
+    # Explicit synthetic calendar, not a production weekday/holiday generator.
+    cal=dict(status='OFFICIAL_POSITIVE_SESSIONS_INDEPENDENTLY_CROSSCHECKED',days=days)
+    bars={d:dict(symbol='000720',market='KOSPI',trade_date=d,value=dict(close=100+i),official_source_ids=['synthetic'],sources=[dict(observed_at='2020-02-01T00:00:00Z')]) for i,d in enumerate(days)}
+    r=path('000720','KOSPI',days[0],cal,bars,'2020-03-01T00:00:00Z')
+    assert r['actual_user_trade'] is None and r['historical_backtest_eligible'] is False
+    assert r['outcomes']['20']['gross_price_change_pct']==20
+    assert path('000720','KOSPI',days[0],cal,bars,'2020-01-01T00:00:00Z')['outcomes']['5']['status']=='UNAVAILABLE'
+    del bars[days[2]]
+    assert path('000720','KOSPI',days[0],cal,bars,'2020-03-01T00:00:00Z')['outcomes']['20']['status']=='UNAVAILABLE'
+
+
+def test_source_adapter_requires_external_proof_and_manifest_anchor(tmp_path):
+    from screener.historical_v2.collector import inspect
+    with pytest.raises(ValueError,match='acquisition_proof'):inspect(tmp_path,{})
+
+
+def test_recovery_followup_is_only_october30_two_references(monkeypatch):
+    from screener.historical_v2.krx_recovery import FOLLOWUP_PAIRS
+    monkeypatch.setenv('GITHUB_REF','refs/heads/feat/decision-evidence-v2');monkeypatch.setenv('GITHUB_RUN_ATTEMPT','1')
+    c=control();c.update(pairs=[list(p) for p in FOLLOWUP_PAIRS],max_http=2,priority_eight_completed_run='41212889496')
+    check_control(c,dt.datetime.fromisoformat('2026-10-31T15:05:00Z'))
+    c['priority_eight_completed_run']='unknown'
+    with pytest.raises(ValueError):check_control(c,dt.datetime.fromisoformat('2026-10-31T15:05:00Z'))
+
+
+def test_minimal_recovery_rate_is_dispatch_based_after_shared_reservation(tmp_path):
+    from screener.historical_v2.kis_recovery import RecoveryBudget
+    from collector_v1.core import Store
+    from collector_v1.providers import Q
+    current=[100.0];waits=[]
+    def sleep(n):waits.append(n);current[0]+=n
+    b=RecoveryBudget(Store(tmp_path),clock=lambda:current[0],sleep=sleep)
+    b.before('KIS','/oauth2/tokenP','synthetic');current[0]+=.5
+    b.before('KIS',Q+'investor-trade-by-stock-daily','synthetic')
+    assert abs(waits[0]-.55)<1e-8 and current[0]>=101.05
