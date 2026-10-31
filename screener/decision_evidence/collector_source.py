@@ -14,18 +14,18 @@ from screener.decision_support.evidence import (encoded,sha,read,timestamp,date,
 from .collector_artifact import inspect,ASOF,RUN,GENERATION,ZIP_SHA,MANIFEST_SHA
 
 
-def saved_rows(obj, evidence, kind, symbol, market):
+def saved_rows(obj, evidence, kind, symbol, market, *, asof=ASOF, generation_id=GENERATION, round_id=1):
     p=evidence['params'];t=evidence['task']
     expected={'FID_COND_MRKT_DIV_CODE':'U' if kind=='index' else 'J',
         'FID_INPUT_ISCD':('0001' if market=='KOSPI' else '1001') if kind=='index' else symbol}
-    if kind=='flow':expected.update(FID_INPUT_DATE_1=ASOF.replace('-',''),FID_ORG_ADJ_PRC='',FID_ETC_CLS_CODE='')
+    if kind=='flow':expected.update(FID_INPUT_DATE_1=asof.replace('-',''),FID_ORG_ADJ_PRC='',FID_ETC_CLS_CODE='')
     else:
-        expected.update(FID_INPUT_DATE_2=ASOF.replace('-',''),FID_PERIOD_DIV_CODE='D',
-            FID_INPUT_DATE_1=(dt.date.fromisoformat(ASOF)-dt.timedelta(days=60)).strftime('%Y%m%d'))
+        expected.update(FID_INPUT_DATE_2=asof.replace('-',''),FID_PERIOD_DIV_CODE='D',
+            FID_INPUT_DATE_1=(dt.date.fromisoformat(asof)-dt.timedelta(days=60)).strftime('%Y%m%d'))
         if kind=='price':expected['FID_ORG_ADJ_PRC']='1'
     endpoint=Q+{'flow':'investor-trade-by-stock-daily','price':'inquire-daily-itemchartprice','index':'inquire-daily-indexchartprice'}[kind]
     if (obj.get('rt_cd')!='0' or p!=expected or evidence['endpoint']!=endpoint or
-            t!=task(kind,ASOF,round=1,market=market,generation_id=GENERATION,**({'symbol':symbol} if kind!='index' else {}))):
+            t!=task(kind,asof,round=round_id,market=market,**({'generation_id':generation_id} if generation_id else {}),**({'symbol':symbol} if kind!='index' else {}))):
         raise ValueError('collector_response_request_binding_mismatch')
     if kind=='price' and obj.get('output1',{}).get('stck_shrn_iscd')!=symbol:raise ValueError('collector_price_symbol_mismatch')
     rows=obj.get('output2')
@@ -33,10 +33,10 @@ def saved_rows(obj, evidence, kind, symbol, market):
     result={}
     for row in rows:
         day=date(row['stck_bsop_date'])
-        if day in result or day>ASOF:raise ValueError('collector_history_duplicate_or_future_date')
+        if day in result or day>asof:raise ValueError('collector_history_duplicate_or_future_date')
         if kind!='flow' and row['stck_bsop_date']<p['FID_INPUT_DATE_1']:raise ValueError('collector_history_outside_requested_window')
         result[day]=row
-    if ASOF not in result:raise ValueError('collector_current_date_missing')
+    if asof not in result:raise ValueError('collector_current_date_missing')
     return result
 
 
@@ -64,7 +64,7 @@ def flow_observation(raw,price):
         reasons=reasons,institution_reasons=inst['reasons'])
 
 
-def references(directory, cutoff):
+def references(directory, cutoff, *, asof=ASOF):
     if directory is None:return {},{},[],{}
     directory=Path(directory);manifest=read(directory/'source-manifest.json');paths=[];hashes={str((directory/'source-manifest.json').resolve()):sha((directory/'source-manifest.json').read_bytes())}
     for group in ('references','auxiliary'):
@@ -76,7 +76,7 @@ def references(directory, cutoff):
             if h!=value['sha256']:raise ValueError('preserved_official_hash_mismatch')
             if timestamp(value['observed_at'])>cutoff:continue
             paths.append(path);hashes[str(path)]=h
-    official,sources,errors=official_rows(list(set(paths)),ASOF)
+    official,sources,errors=official_rows(list(set(paths)),asof)
     return official,sources,errors,hashes
 
 

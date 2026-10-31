@@ -92,7 +92,7 @@ def verify_output(directory,expected_manifest_sha256=None):
     return dict(status='PASS',records=len(records),database_json_parquet_match=True,manifest_sha256=sha(raw))
 
 
-def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='published', reference_directory=None):
+def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='published', reference_directory=None, source_proof=None):
     start=time.monotonic();snapshot=Path(snapshot).resolve();output_root=Path(output_root).resolve()
     if (output_root.is_relative_to(ROOT) or ROOT.is_relative_to(output_root) or output_root.is_relative_to(snapshot) or snapshot.is_relative_to(output_root)
             or any(output_root.is_relative_to(ROOT/p) for p in ('.github','collector_v1','screener','data','tests'))):
@@ -102,11 +102,16 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
     elif source_kind=='collector-artifact':
         from .collector_source import load as load_collector
         source=load_collector(snapshot,knowledge_cutoff,reference_directory)
+    elif source_kind=='historical-collector':
+        from screener.historical_v2.collector import load as load_historical
+        source=load_historical(snapshot,knowledge_cutoff,reference_directory,proof=source_proof)
     else:raise ValueError('unsupported_evidence_source_kind')
     index=source['index']
     if not 0 <= limit <= 20:raise ValueError('briefing_limit_must_be_0_to_20')
     if not source['rows']:raise ValueError('empty_source_population')
     code={str(p.relative_to(ROOT)):sha(p.read_bytes()) for folder in ('decision_evidence','decision_support') for p in sorted((ROOT/'screener'/folder).glob('*.py'))}
+    if source_kind=='historical-collector':
+        code.update({str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in sorted((ROOT/'screener/historical_v2').glob('*.py'))})
     identity=dict(schema_version=SCHEMA_VERSION,source_generation_id=index['dataset_id'],source_manifest_sha256=source['source_manifest_sha256'],
         input_index_sha256=source['input_index_sha256'],source_tree_sha256=sha(encoded(source['input_file_hashes'])),source_kind=source_kind,
         reference_tree_sha256=sha(encoded(source.get('reference_file_hashes',{}))),knowledge_cutoff=knowledge_cutoff,code_sha256=code,briefing_limit=limit)
@@ -137,6 +142,8 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
                 known_latest_source_observation=source['known_source_observation_latest'],point_in_time_reproducible=False),
             automatic_order=None,investment_recommendation=None)
         row['missing_fields']=[dict(field=path,reason=value.get('reason')) for path,value in metrics_in(features) if value['value'] is None]
+        if source_kind=='historical-collector':
+            row.update(analysis_mode='RETROSPECTIVE_REANALYSIS',source_collection_complete=source['source_verification']['collection_complete'])
         for path,value in metrics_in(features):
             if value['value'] is None:missing[path+'|'+str(value.get('reason'))]+=1
             else:available[path]+=1
@@ -166,6 +173,8 @@ def build(snapshot, output_root, knowledge_cutoff, limit=20, *, source_kind='pub
         provider_finality=index['provider_finality'],validation_status='DERIVED_WITH_METRIC_HOLDS',historical_backtest_eligible=False,
         units={**index.get('units',{}),'concentration_and_activity':'ratio','close_location':'ratio_0_to_1','pivot_distance':'percent'},
         calendar_provenance=source.get('calendar_provenance','PRESERVED_OPERATING_CALENDAR_AND_QUALIFIED_KIS_INDEX_SESSIONS; no synthetic weekdays or new calendar lookup'))
+    if source_kind=='historical-collector':
+        market.update(analysis_mode='RETROSPECTIVE_REANALYSIS',source_collection_complete=source['source_verification']['collection_complete'])
     staging=Path(tempfile.mkdtemp(prefix='.candidate-',dir=output_root))
     try:
         (staging/'market.json.gz').write_bytes(gzip.compress(encoded(market),mtime=0))
