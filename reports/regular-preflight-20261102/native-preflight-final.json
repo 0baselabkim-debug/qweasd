@@ -1,0 +1,66 @@
+{
+  "status": "PASS_READ_ONLY_CONFIGURATION",
+  "errors": [],
+  "target": "2026-11-02",
+  "scheduled_KST": "2026-11-02T20:30:00+09:00",
+  "scheduled_UTC": "2026-11-02T11:30:00+00:00",
+  "expires_KST": "2026-11-02T23:20:00+09:00",
+  "generation_id": "kis-regular-20261102-2030",
+  "main_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "workflow": ".github/workflows/kis-market-2030.yml",
+  "workflow_state": "active",
+  "cron": "30 11 * * 1-5",
+  "repository_default_branch": "main",
+  "secret_presence": {
+    "KIS_APP_KEY": true,
+    "KIS_APP_SECRET": true
+  },
+  "reviewed_runtime_files": 12,
+  "runtime_hash_failures": [],
+  "shared_owner": null,
+  "shared_sequence": 9,
+  "target_slot_status": "UNCLAIMED",
+  "prior_slots": {
+    "2026-10-29/2030": "BLOCKED",
+    "2026-10-30/2030": "FAILED"
+  },
+  "active_runs": [
+    {
+      "run_id": 41254701865,
+      "path": ".github/workflows/regular-preflight-20261102.yml",
+      "status": "in_progress"
+    },
+    {
+      "run_id": 41254487895,
+      "path": ".github/workflows/investment-v2-offline.yml",
+      "status": "in_progress"
+    },
+    {
+      "run_id": 41254671960,
+      "path": ".github/workflows/investment-v2-offline.yml",
+      "status": "pending"
+    }
+  ],
+  "slot_claimed": false,
+  "lease_changed": false,
+  "token_issued": false,
+  "provider_HTTP": 0,
+  "oauth_HTTP": 0,
+  "market_HTTP": 0,
+  "KRX_official_target_day_confirmation": "NOT_VERIFIED_BY_THIS_AUDIT",
+  "actual_authentication": "NOT_RUN",
+  "actual_collection": "NOT_RUN",
+  "artifact_publication": "NOT_PUBLISHED",
+  "warnings": [
+    "The workflow event must be schedule; workflow_dispatch validates deployment only.",
+    "Provider calendar is KIS, not a KRX official closure notice.",
+    "Current empty ownership does not guarantee no competing owner at the scheduled time."
+  ],
+  "run_id": "41254701865",
+  "audit_commit": "f61f5da50358f8f6683313f2d2fcc18eb44cef46",
+  "state_revisions": {
+    "kis-shared-account-state": "7110690ce6139d416a9039ed6d56fb11ff4251b5",
+    "kis-regular-state": "76b64984f617d2be7b9ee5d3fa5b730f9c0335d4"
+  },
+  "checked_at": "2026-10-31T23:59:14.222428+00:00"
+}

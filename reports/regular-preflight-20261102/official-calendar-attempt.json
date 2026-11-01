@@ -1,0 +1,28 @@
+{
+  "status": "UNCONFIRMED_OFFICIAL_FUTURE_SESSION",
+  "target": "2026-11-02",
+  "source_kind": "KRX_OFFICIAL_WEBSITE_NOT_MARKET_API",
+  "url": "https://www.krx.co.kr/main/main.jsp",
+  "retrieved_at": "2026-10-31T23:55:11.582579+00:00",
+  "http_status": 200,
+  "bytes": 1411,
+  "sha256": "1767b2a2c12de1f6858ed26e995d91a8a32707555516cd76241fdb8e0c5f83de",
+  "observed": "IP access block page with /res/pc/img/img_ipblock.png; not a trading calendar",
+  "other_paths": [
+    {
+      "url": "https://global.krx.co.kr/",
+      "status": 403
+    },
+    {
+      "url": "https://global.krx.co.kr/main/contents.do?menuNo=100017",
+      "status": 403
+    },
+    {
+      "url": "https://global.krx.co.kr/contents/GLB/06/0601/0601010000/GLB0601010000.jsp",
+      "status": 404
+    }
+  ],
+  "conclusion": "Cannot certify November 2 as a KRX session from acquired official evidence; existing runtime will query KIS provider holiday endpoint. No market API was called.",
+  "KIS_HTTP": 0,
+  "KRX_market_HTTP": 0
+}

@@ -1,0 +1,27 @@
+{
+  "run_id": "41052557610",
+  "artifact_id": "12983267630",
+  "zip_sha256": "590847b13fa83a0634290a2792114b71b5efc9306697a51d5d8a8c31e2f81b74",
+  "asof": "2026-10-30",
+  "status": "FAILED",
+  "target": 2343,
+  "internal_validated": 2342,
+  "physical_http": 4693,
+  "actual_started_at": "2026-10-30T12:06:57.067217+00:00",
+  "pipeline_started_at": "2026-10-30T12:06:44.452415+00:00",
+  "completed_at": "2026-10-30T14:06:01.644866+00:00",
+  "elapsed_seconds": 7144.577649,
+  "failed_symbols": [
+    {
+      "details": null,
+      "reason": "flow_price_conflict",
+      "symbol": "002690"
+    }
+  ],
+  "min_ledger_started_gap_seconds": 1.054622,
+  "ledger_gap_under_1_05": 0,
+  "spacing_evidence": "logged start timestamps, not independent packet dispatch timestamps",
+  "operating_collector_parquet": "NOT_PRODUCED; independent V2 validates JSON/DB/Parquet",
+  "provider_HTTP_added": 0,
+  "manifest_files_verified": 9401
+}

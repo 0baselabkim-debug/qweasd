@@ -1,0 +1,308 @@
+{
+  "default_main_workflows": [
+    {
+      "path": ".github/workflows/adjustment-consistency.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/corporate-refresh.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/daily-briefing.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/daily-dashboard.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/daily-optimization-probe.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/daily-saved-recovery.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/daily-start-watchdog.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/dashboard-check.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/dashboard-live-check.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/decision-price-evidence.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/decision-support.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/full-market-experiment.yml",
+      "registered_state": "disabled_manually",
+      "cron": [
+        "0 10 26 10 *",
+        "0 13 26 10 *",
+        "0 16 26 10 *",
+        "0 19 26 10 *",
+        "*/15 10-22 26 10 *",
+        "0 0,1 27 10 *"
+      ],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-20-validation.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-connectivity.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-dashboard-export.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-enrich-collect.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-field-docs.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-finality-probe.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-five-status.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-history-probe.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-market-2030.yml",
+      "registered_state": "active",
+      "cron": [
+        "30 11 * * 1-5"
+      ],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-missing-analysis.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-reference-probe.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-samsung-sample.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-saved-status.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/kis-today-2030.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/liquidity-recovery.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/macro-refresh.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/market-scope-probe.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/sector-membership-probe.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": false,
+      "central_wrapper_in_workflow": false
+    },
+    {
+      "path": ".github/workflows/sector-support.yml",
+      "registered_state": "active",
+      "cron": [],
+      "references_KIS_secret_names": true,
+      "central_wrapper_in_workflow": false
+    }
+  ],
+  "registered_but_absent_on_main": [
+    {
+      "path": ".github/workflows/briefing-20261016.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/collector-v1-trial.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/decision-v2-source-20261029.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/full-market-clock.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "path": ".github/workflows/full-market-controller.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "path": ".github/workflows/historical-kis-recovery.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/historical-krx-recovery.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/historical-source-backup.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/historical-v2-validation.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/investment-v2-offline.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/kis-approved-market-20261029.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/kis-manual-now-20261030.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/kis-manual-validation.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/kis-regular-preflight.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/kis-shared-native-proof.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/kis-shared-readiness.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/market-20261027.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/market-20261028-evening.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/regular-preflight-20261102.yml",
+      "state": "active"
+    }
+  ]
+}

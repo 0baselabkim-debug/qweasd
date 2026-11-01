@@ -1,0 +1,55 @@
+{
+  "full_regression": {
+    "run_id": "41254671960",
+    "code_commit": "60f300f857c8fe5267c9de74802b157f66a2c4cd",
+    "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41254671960",
+    "conclusion": "success",
+    "counts": {
+      "tests": 694,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "baseline_cases": 675,
+    "retained_baseline": 675,
+    "removed_baseline": [],
+    "new_cases": 19,
+    "artifact": {
+      "id": 13063250332,
+      "name": "investment-v2-offline-tests-41254671960",
+      "digest": "sha256:b75a7b383f5f7cafc64e451c9710931600404b5c3b4c81fa52304a8e82bb2a2c",
+      "size_in_bytes": 14263,
+      "expires_at": "2027-01-29T23:58:02Z"
+    },
+    "artifact_zip_verified": true,
+    "junit_sha256": "23328e31128cedab85786dfbec25932b61a6b63322defab6dea0bad108a4a1a6",
+    "actual_provider_HTTP": 0
+  },
+  "local_baseline": {
+    "v2_baseline": {
+      "tests": 675,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "retained_prior_cases": 675,
+    "prior_cases": 675,
+    "removed_prior_cases": [],
+    "operating_main": {
+      "tests": 77,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "new_preflight": {
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "actual_provider_HTTP": 0
+  },
+  "main_operating_subset_note": "77 cases overlap the full suite; do not add them again",
+  "actual_market_HTTP": 0,
+  "actual_oauth_HTTP": 0
+}

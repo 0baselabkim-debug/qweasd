@@ -1,0 +1,29 @@
+{
+  "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule",
+  "retrieved_at": "2026-11-01T00:02:28.215246+00:00",
+  "http": 200,
+  "sha256": "bf1bd9806b7e4fad7ff34fe3ca010bfbc5e8bbbbced6d6f4c9ddb685174d2776",
+  "bytes": 1076298,
+  "excerpts": [
+    {
+      "term": "only run on the default branch",
+      "excerpt": " workflow to run at a different time of the hour. This event will only trigger a workflow run if the workflow file exists on the default branch. Scheduled workflows will only run on the default branch. In a public repository, scheduled workflows are automatically disabled when no repository activity has occurred in 60 days. For information on re-enabling a disabled workflow, see Disabling and enabling a workflow . The schedule event allows you to trigger a workflow at a scheduled time. Example: on: schedule: - cron"
+    },
+    {
+      "term": "latest commit on the default branch",
+      "excerpt": "efault, scheduled workflows run in UTC. You can optionally specify a timezone using an IANA timezone string for timezone-aware scheduling. Scheduled workflows run on the latest commit on the default branch. The shortest interval you can run scheduled workflows is once every 5 minutes. Note For schedules that set timezone to a time zone that observes daylight saving time (DST), during DST spring-forward transitions, scheduled workflows in skipped hours advance to the next valid time. For example, a 2:30 AM schedule "
+    },
+    {
+      "term": "UTC",
+      "excerpt": "cheduled time. Example: on: schedule: - cron: \"15 4,5 * * *\" Use POSIX cron syntax to schedule workflows to run at specific times. By default, scheduled workflows run in UTC. You can optionally specify a timezone using an IANA timezone string for timezone-aware scheduling. Scheduled workflows run on the latest commit on the default branch. The shortest interval you can run scheduled workflows is once every 5 minutes. Note For schedules that set timezone to a time zone that observes daylight saving time (DST), durin"
+    },
+    {
+      "term": "delayed",
+      "excerpt": "dule Webhook event payload Activity types GITHUB_SHA GITHUB_REF Not applicable Not applicable Last commit on default branch Default branch Note The schedule event can be delayed during periods of high loads of GitHub Actions workflow runs. High load times include the start of every hour. If the load is sufficiently high enough, some queued jobs may be dropped. To decrease the chance of delay, schedule your workflow to run at a different time of the hour. This event will only trigger a workflow run if the workflow f"
+    },
+    {
+      "term": "60 days",
+      "excerpt": "heduled workflows will only run on the default branch. In a public repository, scheduled workflows are automatically disabled when no repository activity has occurred in 60 days. For information on re-enabling a disabled workflow, see Disabling and enabling a workflow . The schedule event allows you to trigger a workflow at a scheduled time. Example: on: schedule: - cron: \"15 4,5 * * *\" Use POSIX cron syntax to schedule workflows to run at specific times. By default, scheduled workflows run in UTC. You can optional"
+    }
+  ]
+}
