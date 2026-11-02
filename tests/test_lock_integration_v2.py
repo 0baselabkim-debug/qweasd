@@ -107,3 +107,30 @@ def test_unconsumed_reservation_cannot_be_replaced(setup):
     session,backend,clock,_=setup;session.acquire_lease();session.before_http(auth=True)
     clock.sleep(120)
     with pytest.raises(Blocked,match='unresolved'):session.before_http()
+
+
+def coordination_only(setup,actor):
+    session,backend,clock,env=setup;backend.native_proof=False;env['GITHUB_REPOSITORY']=actor
+    session.config=dict(schema=2,enabled=True,mode='exclusive-shared-account',participants=list(REPOSITORIES),live_activation_approved=True,activation_reference='SYNTHETIC_OPS_APPROVAL',
+        all_participants_deployed=True,all_account_actors_enrolled=True,github_access_tested=True,rate_policy_reviewed=True,token_policy_reviewed=True,native_lock_proof_passed=True,
+        operator_account_coordination_approved=True,operator_live_validation_approved=False,review_reference='SYNTHETIC',rate_reference='SYNTHETIC',token_reference='SYNTHETIC',permissions_reference='SYNTHETIC',reviewed_at=clock().isoformat(),expires_at=(clock()+dt.timedelta(minutes=10)).isoformat())
+    return session,backend
+
+def test_account_enrollment_without_live_grant_has_no_auth_reservation(setup):
+    session,backend=coordination_only(setup,REPOSITORIES[2])
+    with session:
+        with pytest.raises(Blocked,match='live_HTTP_not_approved'):session.before_http(auth=True)
+        assert backend.state['last_auth'] is None
+    assert backend.state['owner'] is None
+
+def test_revoking_live_grant_after_reservation_stops_physical_dispatch(setup):
+    session,backend=coordination_only(setup,REPOSITORIES[2]);session.config['operator_live_validation_approved']=True
+    with session:
+        session.before_http(auth=True);session.config['operator_live_validation_approved']=False
+        with pytest.raises(Blocked,match='live_HTTP_not_approved'):session.authorize_network(True)
+        session.http_response_closed()
+
+def test_existing_collector_account_grant_does_not_require_new_live_test_grant(setup):
+    session,backend=coordination_only(setup,REPOSITORIES[0])
+    with session:session.before_http(auth=True);session.http_response_closed()
+    assert backend.state['owner'] is None

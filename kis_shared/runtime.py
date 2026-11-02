@@ -87,7 +87,7 @@ class Session:
                 raise Blocked('v2_three_party_activation_not_approved')
         if c.get('enabled') is not True or c.get('mode') != 'exclusive-shared-account':
             raise Blocked('shared_rollout_not_approved')
-        required = (('all_participants_deployed','all_account_actors_enrolled','github_access_tested','rate_policy_reviewed','token_policy_reviewed','native_lock_proof_passed','operator_live_validation_approved') if c.get('schema')==2 else ('both_repositories_deployed', 'all_account_actors_enrolled', 'github_access_tested', 'rate_policy_reviewed', 'token_policy_reviewed', 'real_kis_validation_approved_and_passed'))
+        required = (('all_participants_deployed','all_account_actors_enrolled','github_access_tested','rate_policy_reviewed','token_policy_reviewed','native_lock_proof_passed','operator_account_coordination_approved') if c.get('schema')==2 else ('both_repositories_deployed', 'all_account_actors_enrolled', 'github_access_tested', 'rate_policy_reviewed', 'token_policy_reviewed', 'real_kis_validation_approved_and_passed'))
         if any(c.get(k) is not True for k in required):
             raise Blocked('shared_rollout_evidence_incomplete')
         if not all(isinstance(c.get(k), str) and c[k].strip() for k in
@@ -153,7 +153,16 @@ class Session:
         with self.reservation_lock:
             return self._reserve_http(auth=auth,interval=interval)
 
+    def check_http_approval(self):
+        # Account enrollment/metadata coordination is independently approved.
+        # The third participant still requires a separate live-call grant.
+        if (not getattr(self.backend,'native_proof',False) and self.config.get('schema')==2
+                and self.env.get('GITHUB_REPOSITORY')==REPOSITORIES[2]
+                and self.config.get('operator_live_validation_approved') is not True):
+            raise Blocked('shared_new_participant_live_HTTP_not_approved')
+
     def _reserve_http(self, *, auth=False, interval=1.05):
+        self.check_http_approval()
         if self.network_inflight or self.uncertain or self.dispatch_ticket is not None:
             raise Blocked('shared_prior_HTTP_outcome_unresolved')
         self.review()
@@ -212,6 +221,7 @@ class Session:
             self.transport_pending = None
 
     def authorize_network(self,auth):
+        self.check_http_approval()
         if not auth and self.token_deadline is None:raise Blocked('shared_market_token_expiry_unverified')
         self.check()
         if not self.network_inflight:

@@ -25,16 +25,16 @@
   "permissions_reference": null,
   "reviewed_at": null,
   "expires_at": null,
-  "native_proof_file": "reports/kis-lock-v2/native-proof.json",
-  "native_proof_sha256": "64505a0beccbbc38ca67902dafdc8d3aea6c0aa5200b0925b274497977a60317",
+  "native_proof_file": "reports/kis-lock-v3/native-premerge.json",
+  "native_proof_sha256": "bfb9212827e68c36371a89c8941fc9c190ada8278fc064d41316c9d926876cb2",
   "runtime_source_hashes": {
     "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
     "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
     "kis_shared/run.py": "0dca5cad7db7f9ae905f732baf25c9bdbd4343e7f6ec39b13012c68eb0100a5a",
     "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
-    "kis_shared/worker.py": "71fb2b1f2e68fcd7e94a95c41dde7a03468393a1ad2bf08377df9ce2f4877c9d",
+    "kis_shared/worker.py": "7dda4429ac5dc932ac0518ca4a0b4bb0854b44978349357d83dd5c46b7392c2b",
     "kis_shared/legacy.py": "75baba93b8cfcdd66516304e523a47b40b786533ecc7852bcf4a8112e3490b28",
-    "kis_shared/runtime.py": "75bb6ba6707850e0dad115e44b4a1b8ed8ad4a7c8716c9a9f2e93f8971b26c41",
+    "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
     "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
     "scripts/kis_public_client.py": "2adbb750402aad842e76858dd67ef7e9a0617b560530d60b641bb634cbfda845",
     "collector_v1/providers.py": "bc079685d8229d74bbcd7a61aaa01df92c1e484f8c21d42a155ef27e88cffcaf",
@@ -55,5 +55,6 @@
   "symbols": [
     "000720"
   ],
-  "actual_market_calls_authorized": false
+  "actual_market_calls_authorized": false,
+  "operator_account_coordination_approved": false
 }

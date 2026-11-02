@@ -137,7 +137,7 @@ def main(argv=None):
             if args.fault!='none' or args.proof_root or args.barrier or args.release_file or args.legacy_client:raise Blocked('native_controls_forbidden_in_live_mode')
             # Gate before credential access, local Git initialization or claim.
             cfg=json.loads(Path(args.config).read_bytes()) if args.config else {}
-            if cfg.get('schema')!=2 or cfg.get('actual_market_calls_authorized') is not True or os.environ.get('ENABLE_LIVE_KIS_VALIDATION','false')!='true' or cfg.get('enabled') is not True or cfg.get('ENABLE_LIVE_KIS_VALIDATION') is not True:
+            if cfg.get('operator_live_validation_approved') is not True or cfg.get('schema')!=2 or cfg.get('actual_market_calls_authorized') is not True or os.environ.get('ENABLE_LIVE_KIS_VALIDATION','false')!='true' or cfg.get('enabled') is not True or cfg.get('ENABLE_LIVE_KIS_VALIDATION') is not True:
                 raise Blocked('live_validation_disabled_before_credentials')
             if os.environ.get('GITHUB_REPOSITORY')!=ROLES[args.role] or cfg.get('request_id')!=args.request_id or cfg.get('max_http')!=2 or cfg.get('symbols')!=['000720']:
                 raise Blocked('live_actor_scope_or_budget_unapproved')
