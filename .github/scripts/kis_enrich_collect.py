@@ -1,4 +1,9 @@
 """Resumable market-only collection. Historical mode must be explicitly dispatched."""
+from pathlib import Path as _AccountPath
+import sys as _account_sys
+_account_sys.path.insert(0,str(_AccountPath(__file__).resolve().parents[2]))
+from kis_shared.boundary import install as _install_account_boundary
+_install_account_boundary()
 import argparse,concurrent.futures,datetime as dt,gzip,json,os,re,threading,time,urllib.error,urllib.parse,urllib.request
 from pathlib import Path
 import duckdb
@@ -11,6 +16,7 @@ for s in SECRETS:
 assert all(SECRETS)
 lock=threading.Lock();interval=.6 if MODE=='quotes' else 1.05;last=0;metrics=[]
 def request(path,params=None,tr=None,body=None):
+    raise RuntimeError('BLOCKED_retired_legacy_KIS_transport_use_reviewed_Session_client')
     global last,interval
     for attempt in range(3):
         with lock:

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "request_id": "full-20261029-user-approved-exclusive",
+  "state": "RELEASED",
+  "asof": "2026-10-29",
+  "purpose": "USER_APPROVED_FULL_MARKET_COLLECTION_AFTER_REGULAR_ZERO_HTTP_BLOCK",
+  "collector_repository": "0baselabkim-debug/qweasd",
+  "release_policy": "EXPLICIT_AFTER_COLLECTOR_TERMINAL_AND_ALL_HTTP_RESOLVED",
+  "automatic_expiry_release": false,
+  "existing_runs": "FINISH_NATURALLY_NO_CANCELLATION",
+  "secrets_changed": false,
+  "release_proof": {
+    "repository": "0baselabkim-debug/qweasd",
+    "run_id": "40882669831",
+    "status": "completed",
+    "conclusion": "success",
+    "all_http_resolved": true,
+    "central_owner_released": true,
+    "artifact_digest": "sha256:4682801c9d88a5fb43496c55263e66402aef42f089f8987d667458d15cf8e8c7",
+    "verified_at": "2026-10-29T15:41:01.385462+00:00"
+  }
+}

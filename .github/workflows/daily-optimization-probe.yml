@@ -32,7 +32,7 @@ jobs:
             exit 0
           fi
           sleep 65
-          python scripts/probe_daily_optimization.py ${{ inputs.mode == 'optimized' && '--optimized' || '' }}
+          python -m kis_shared.legacy --script scripts/probe_daily_optimization.py -- ${{ inputs.mode == 'optimized' && '--optimized' || '' }}
       - name: Preserve read-only evidence
         if: always()
         run: |

@@ -1,0 +1,325 @@
+{
+  "scope": "39 reviewed executable entrypoint families, not infinite possible Python call graphs; actual production main is not patched until approved merge",
+  "counts": {
+    "PROTECTED": 28,
+    "DISABLED": 11
+  },
+  "total": 39,
+  "routes": [
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "collector_v1/regular/runner.py",
+      "line": 117,
+      "entrypoint": "def collect",
+      "status": "PROTECTED",
+      "call_chain": "configured Session → collector.prepare/run → Providers.http → physical fence"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "collector_v1/providers.py",
+      "line": 48,
+      "entrypoint": "def http",
+      "status": "PROTECTED",
+      "call_chain": "current.before_http → budget.before → urllib audit → owner check → closed response"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "collector_v1/experiment/engine.py",
+      "line": 15,
+      "entrypoint": "class ProvisionalAPI",
+      "status": "PROTECTED",
+      "call_chain": "Providers.http inherited; default opener guarded; real injected openers fenced"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "collector_v1/kis_manual.py",
+      "line": 64,
+      "entrypoint": "class ManualAPI",
+      "status": "PROTECTED",
+      "call_chain": "ProvisionalAPI → Providers.http; source generation/budget checks retained"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "collector_v1/trial.py",
+      "line": 233,
+      "entrypoint": "def main",
+      "status": "PROTECTED",
+      "call_chain": "historical CLI → Providers.http; no installed Session means zero KIS HTTP"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "collector_v1/market_trial.py",
+      "line": 231,
+      "entrypoint": "def main",
+      "status": "PROTECTED",
+      "call_chain": "historical CLI → Providers.http; no installed Session means zero KIS HTTP"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/kis_public_client.py",
+      "line": 24,
+      "entrypoint": "class KIS",
+      "status": "PROTECTED",
+      "call_chain": "captured Session+budget → full-request RLock+thread ContextVar → per-attempt ownership → physical fence"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/kis_public_client.py",
+      "line": 21,
+      "entrypoint": "def open_request",
+      "status": "PROTECTED",
+      "call_chain": "unconditionally installed physical fence; direct helper without Session denied"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "kis_shared/legacy.py",
+      "line": 17,
+      "entrypoint": "def main",
+      "status": "PROTECTED",
+      "call_chain": "explicit wrapper → configured Session → allowlisted runpy script; no production policy bypass"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "kis_shared/worker.py",
+      "line": 48,
+      "entrypoint": "def raw_request",
+      "status": "PROTECTED",
+      "call_chain": "default-off schema2 account Session → request budget+fixed scope → no redirect → owner recheck"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/collect_daily_snapshot.py",
+      "line": 1,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/collect_decision_prices.py",
+      "line": 23,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/recover_liquidity.py",
+      "line": 10,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/collect_macro.py",
+      "line": 38,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/collect_sector_support.py",
+      "line": 5,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/probe_adjusted_consistency.py",
+      "line": 4,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/probe_daily_optimization.py",
+      "line": 5,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/probe_market_scope.py",
+      "line": 4,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/refresh_decision_prices.py",
+      "line": 5,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": "scripts/verify_calendar_rehearsal.py",
+      "line": 5,
+      "entrypoint": "KIS",
+      "status": "PROTECTED",
+      "call_chain": "reviewed legacy wrapper (workflow KIS modes) → bound KIS client; direct unwrapped invocation denied before OAuth; read-only cached modes stay lock-free"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/scripts/kis_enrich_collect.py",
+      "line": 18,
+      "entrypoint": "def request",
+      "status": "DISABLED",
+      "call_chain": "historical raw KIS helper raises before transport; read-only GitHub/export helper retained and physical fence installed"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/scripts/kis_history_probe.py",
+      "line": 19,
+      "entrypoint": "def call",
+      "status": "DISABLED",
+      "call_chain": "historical raw KIS helper raises before transport; read-only GitHub/export helper retained and physical fence installed"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/scripts/kis_collect_once.py",
+      "line": 158,
+      "entrypoint": "def api",
+      "status": "DISABLED",
+      "call_chain": "historical raw KIS helper raises before transport; read-only GitHub/export helper retained and physical fence installed"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/scripts/kis_missing_analysis.py",
+      "line": 81,
+      "entrypoint": "def api",
+      "status": "DISABLED",
+      "call_chain": "historical raw KIS helper raises before transport; read-only GitHub/export helper retained and physical fence installed"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/workflows/kis-20-validation.yml",
+      "line": 33,
+      "entrypoint": "BLOCKED",
+      "status": "DISABLED",
+      "call_chain": "retired inline job has if:false plus first-statement SystemExit before HTTP; trigger definitions unchanged"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/workflows/kis-connectivity.yml",
+      "line": 29,
+      "entrypoint": "BLOCKED",
+      "status": "DISABLED",
+      "call_chain": "retired inline job has if:false plus first-statement SystemExit before HTTP; trigger definitions unchanged"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/workflows/kis-finality-probe.yml",
+      "line": 33,
+      "entrypoint": "BLOCKED",
+      "status": "DISABLED",
+      "call_chain": "retired inline job has if:false plus first-statement SystemExit before HTTP; trigger definitions unchanged"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/workflows/kis-five-status.yml",
+      "line": 31,
+      "entrypoint": "BLOCKED",
+      "status": "DISABLED",
+      "call_chain": "retired inline job has if:false plus first-statement SystemExit before HTTP; trigger definitions unchanged"
+    },
+    {
+      "repository": "0baselabkim-debug/qweasd",
+      "path": ".github/workflows/kis-samsung-sample.yml",
+      "line": 34,
+      "entrypoint": "BLOCKED",
+      "status": "DISABLED",
+      "call_chain": "retired inline job has if:false plus first-statement SystemExit before HTTP; trigger definitions unchanged"
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "path": "scripts/actions_auth.py",
+      "line": 38,
+      "entrypoint": "class Broker",
+      "status": "PROTECTED",
+      "call_chain": "real monitor OAuth Broker → admission → Session before_http → durable auth journal → physical fence → expiry"
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "path": "stage3/live_probe.py",
+      "line": 143,
+      "entrypoint": "class HttpAdapter",
+      "status": "PROTECTED",
+      "call_chain": "guard+Session → durable task reservation → NoRedirect opener → physical fence → closed response"
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "path": "kis_shared/run.py",
+      "line": 15,
+      "entrypoint": "def main",
+      "status": "PROTECTED",
+      "call_chain": "formal/initial/flow/remaining policies → central account Session → actual module"
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "path": "kis_shared/bootstrap.py",
+      "line": 56,
+      "entrypoint": "class Session",
+      "status": "PROTECTED",
+      "call_chain": "AccountSession central ledger → stricter local fixed-scope policy → physical Session delegation"
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "path": "kis_shared/flow.py",
+      "line": 18,
+      "entrypoint": "class Session",
+      "status": "PROTECTED",
+      "call_chain": "bootstrap Session subclass → same account + local scope/budget"
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "path": "kis_shared/remaining.py",
+      "line": 19,
+      "entrypoint": "class Session",
+      "status": "PROTECTED",
+      "call_chain": "bootstrap Session subclass → same account + local scope/budget"
+    },
+    {
+      "repository": "0baselabkim-debug/kis-intraday-monitor",
+      "path": "kis_shared/remaining_four.py",
+      "line": 18,
+      "entrypoint": "class Session",
+      "status": "PROTECTED",
+      "call_chain": "bootstrap Session subclass → same account + local scope/budget"
+    },
+    {
+      "repository": "0baselabkim-debug/investment-integrated-dev",
+      "path": "kis_shared/worker.py",
+      "line": 127,
+      "entrypoint": "def main",
+      "status": "PROTECTED",
+      "call_chain": "separate explicit default-off worker → schema2 three-participant policy → common GitBackend central ledger → Session → read-only bounded HTTP"
+    },
+    {
+      "repository": "0baselabkim-debug/investment-integrated-dev",
+      "path": "integrated/adapters.py",
+      "line": 4,
+      "entrypoint": "class LiveKIS",
+      "status": "DISABLED",
+      "call_chain": "analysis process keeps deny-all audit guard; this old adapter cannot perform live HTTP"
+    },
+    {
+      "repository": "0baselabkim-debug/investment-integrated-dev",
+      "path": "integrated/kis_ready/runtime.py",
+      "line": 58,
+      "entrypoint": "class PreparedSession",
+      "status": "DISABLED",
+      "call_chain": "isolated memory/model rehearsal only; no production transport"
+    }
+  ],
+  "bypass": 0,
+  "unknown": 0,
+  "actual_KIS_HTTP": 0
+}

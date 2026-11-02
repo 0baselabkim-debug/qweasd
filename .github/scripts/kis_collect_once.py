@@ -1,6 +1,11 @@
 """2026-10-14 KRX foreign-flow collection, authorized before finality verification.
 No account/order endpoints. No application DB writes. No live calls before 20:30 KST.
 """
+from pathlib import Path as _AccountPath
+import sys as _account_sys
+_account_sys.path.insert(0,str(_AccountPath(__file__).resolve().parents[2]))
+from kis_shared.boundary import install as _install_account_boundary
+_install_account_boundary()
 import collections
 import csv
 import datetime as dt
@@ -151,6 +156,7 @@ def universe():
     return selected, excluded, sources
 
 def api(path, headers, body=None):
+    raise RuntimeError('BLOCKED_retired_legacy_KIS_transport_use_reviewed_Session_client')
     global LAST_CALL
     time.sleep(max(0, 1.05 - (time.monotonic() - LAST_CALL)))
     LAST_CALL = time.monotonic()

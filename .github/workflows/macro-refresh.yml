@@ -22,7 +22,7 @@ jobs:
           ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python scripts/collect_macro.py
+        run: python -m kis_shared.legacy --script scripts/collect_macro.py --
       - name: Retrieve official market statistics specification
         run: |
           python - <<'PY'

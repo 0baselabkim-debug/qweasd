@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt pytest
-      - run: python -m pytest -q tests/test_market_budget.py tests/test_legacy_kis_admission.py tests/test_kis_shared_integration.py tests/test_regular_collector.py --junitxml=legacy-admission-tests.xml
+      - run: python -m pytest -q tests/test_market_budget.py tests/test_legacy_kis_admission.py tests/test_kis_shared_integration.py tests/test_regular_collector.py tests/test_lock_integration_v2.py --junitxml=legacy-admission-tests.xml
       - uses: actions/upload-artifact@v4
         if: always()
         with:

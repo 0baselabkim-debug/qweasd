@@ -1,4 +1,9 @@
 """Ten-symbol, read-only KRX history probe. Never query an account or order endpoint."""
+from pathlib import Path as _AccountPath
+import sys as _account_sys
+_account_sys.path.insert(0,str(_AccountPath(__file__).resolve().parents[2]))
+from kis_shared.boundary import install as _install_account_boundary
+_install_account_boundary()
 import base64, gzip, json, os, re, statistics, time, urllib.request, urllib.parse, urllib.error
 from pathlib import Path
 
@@ -12,6 +17,7 @@ last = 0
 metrics = []
 
 def call(path, params=None, tr=None, body=None):
+    raise RuntimeError('BLOCKED_retired_legacy_KIS_transport_use_reviewed_Session_client')
     global last
     for attempt in range(3):
         time.sleep(max(0,1.05-(time.monotonic()-last)))

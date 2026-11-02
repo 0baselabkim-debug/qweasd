@@ -47,3 +47,54 @@ def test_legacy_auth_headers_are_never_forwarded_across_redirects():
 def test_legacy_read_only_endpoint_restrictions(monkeypatch,path,body):
     setup(monkeypatch);api=object.__new__(KIS)
     with pytest.raises(ValueError):api.request(path,body=body)
+
+
+def test_legacy_thread_preserves_original_session_and_request_budget(monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    from kis_shared.runtime import current
+    from scripts.kis_public_client import REQUEST_BUDGET
+    setup(monkeypatch);shared=Mock();budget=Mock()
+    monkeypatch.setattr('scripts.kis_public_client.account_session',lambda:shared)
+    responses=[dict(access_token='TEST_TOKEN'),dict(rt_cd='0')]
+    def fetch(req,timeout):
+        assert current() is shared and REQUEST_BUDGET.get() is budget
+        return Reply(json.dumps(responses.pop(0)).encode())
+    monkeypatch.setattr('scripts.kis_public_client.open_request',fetch)
+    marker=REQUEST_BUDGET.set(budget)
+    try:
+        api=KIS()
+        with ThreadPoolExecutor(1) as pool:pool.submit(api.request,'/uapi/domestic-stock/v1/quotations/inquire-price',{},'TEST').result()
+    finally:REQUEST_BUDGET.reset(marker)
+    assert budget.before_http.call_count==2
+
+
+def test_low_level_legacy_helper_also_requires_session_before_network(monkeypatch):
+    import urllib.request
+    from scripts.kis_public_client import open_request
+    transport=Mock();monkeypatch.setattr(urllib.request.HTTPSHandler,'https_open',transport)
+    with pytest.raises(Blocked,match='session_not_installed'):
+        open_request(urllib.request.Request('https://openapi.koreainvestment.com:9443/oauth2/tokenP',data=b'{}'),30)
+    transport.assert_not_called()
+
+
+def test_historical_inline_kis_bodies_are_hard_disabled():
+    import ast
+    from pathlib import Path
+    root=Path(__file__).resolve().parents[1]
+    for name in ('kis-20-validation','kis-connectivity','kis-finality-probe','kis-five-status','kis-samsung-sample'):
+        workflow=json.loads((root/'.github/workflows'/f'{name}.yml').read_bytes())
+        bodies=[step['run'] for job in workflow['jobs'].values() for step in job['steps'] if any(marker in step.get('run','') for marker in ('openapi.koreainvestment','oauth2/token'))]
+        assert len(bodies)==1
+        source=bodies[0].split("<<'PY'\n",1)[1].rsplit('\nPY',1)[0]
+        tree=ast.parse(source)
+        assert isinstance(tree.body[0],ast.Raise) and isinstance(tree.body[0].exc,ast.Call) and tree.body[0].exc.func.id=='SystemExit'
+
+
+def test_retired_github_helpers_block_before_every_kis_transport():
+    import ast
+    from pathlib import Path
+    root=Path(__file__).resolve().parents[1]
+    for name,function in [('kis_enrich_collect','request'),('kis_history_probe','call'),('kis_collect_once','api'),('kis_missing_analysis','api')]:
+        tree=ast.parse((root/'.github/scripts'/f'{name}.py').read_text())
+        node=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==function)
+        assert isinstance(node.body[0],ast.Raise)

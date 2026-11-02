@@ -1,6 +1,11 @@
 """Market-data-only KIS transport; credentials and tokens never enter results."""
 import json, os, threading, time, urllib.error, urllib.parse, urllib.request
 from contextvars import ContextVar
+import sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from kis_shared.boundary import install as _install_account_boundary
+_install_account_boundary()
 
 REQUEST_BUDGET = ContextVar("kis_physical_request_budget", default=None)
 
@@ -20,7 +25,8 @@ class KIS:
     physical_budget_supported = True
     def __init__(self, interval=1.05):
         self.key=os.environ['KIS_APP_KEY']; self.secret=os.environ['KIS_APP_SECRET']
-        self.token=None; self.interval=interval; self.last=0.; self.lock=threading.Lock(); self.metrics=[]
+        self.token=None; self.interval=interval; self.last=0.; self.lock=threading.RLock(); self.metrics=[]
+        self._account=account_session(); self._budget=REQUEST_BUDGET.get()
         d=self.request('/oauth2/tokenP',body={'grant_type':'client_credentials','appkey':self.key,'appsecret':self.secret})
         self.token=d.get('access_token')
         if not self.token: raise RuntimeError('KIS authentication failed')
@@ -30,6 +36,18 @@ class KIS:
             raise ValueError('Market-data endpoint only')
         if '..' in path or '?' in path or '#' in path or (body is not None and path!='/oauth2/tokenP'):
             raise ValueError('Read-only endpoint and exact path required')
+        from kis_shared.runtime import _current
+        from kis_shared.lease import Blocked
+        with self.lock:
+            existing=_current.get()
+            if existing is not None and existing is not self._account:
+                raise Blocked('legacy_client_cannot_switch_account_session')
+            marker=_current.set(self._account);budget_marker=REQUEST_BUDGET.set(self._budget)
+            try:return self._request(path,params,tr,body)
+            finally:
+                REQUEST_BUDGET.reset(budget_marker);_current.reset(marker)
+
+    def _request(self,path,params=None,tr=None,body=None):
         shared=account_session()  # Fail before authentication, even with an injected opener.
         for attempt in range(3):
             with self.lock:

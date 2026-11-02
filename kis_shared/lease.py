@@ -8,7 +8,8 @@ import datetime as dt
 import re
 import uuid
 
-REPOSITORIES = ('0baselabkim-debug/qweasd', '0baselabkim-debug/kis-intraday-monitor')
+LEGACY_REPOSITORIES = ('0baselabkim-debug/qweasd', '0baselabkim-debug/kis-intraday-monitor')
+REPOSITORIES = LEGACY_REPOSITORIES + ('0baselabkim-debug/investment-integrated-dev',)
 UTC = dt.timezone.utc
 
 
@@ -54,10 +55,12 @@ def validate(state):
 
 
 class Lease:
-    def __init__(self, backend, repository, run_id, commit, *, clock=utcnow):
+    def __init__(self, backend, repository, run_id, commit, *, clock=utcnow, scope_id=None):
         if repository not in REPOSITORIES or not str(run_id).isdigit() or not re.fullmatch('[0-9a-f]{40}', commit):
             raise Blocked('shared_actor_invalid')
         self.backend, self.clock = backend, clock
+        if scope_id is not None and (not isinstance(scope_id,str) or not re.fullmatch(r"[A-Za-z0-9_.:-]{1,128}",scope_id)):raise Blocked("shared_scope_id_invalid")
+        self.scope_id=scope_id
         self.identity = dict(repository=repository, run_id=str(run_id), commit=commit, id=uuid.uuid4().hex)
         self.held = False
         self.last_local_http = None
@@ -89,6 +92,12 @@ class Lease:
         if state['owner'] is not None:
             reason = 'shared_lock_expired_requires_review' if stamp(state['owner']['expires_at']) <= self.clock() else 'shared_lock_busy'
             raise Blocked(reason)
+        if self.scope_id is not None:
+            scopes=state.setdefault('request_scopes',{})
+            key=self.identity['repository']+'/'+self.scope_id
+            if key in scopes:raise Blocked('shared_request_scope_already_claimed')
+            if len(scopes)>=10000:raise Blocked('shared_scope_catalog_review_required')
+            scopes[key]=dict(run_id=self.identity['run_id'],commit=self.identity['commit'])
         at = self.clock()
         state['owner'] = dict(self.identity, acquired_at=at.isoformat(), expires_at=(at+dt.timedelta(seconds=seconds)).isoformat())
         self._write(revision, state)
