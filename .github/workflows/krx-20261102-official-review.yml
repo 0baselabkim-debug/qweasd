@@ -1,0 +1,33 @@
+name: Bounded official KRX review 2026-11-02
+on:
+  push:
+    branches: [feat/krx-20261102-official-review]
+    paths: [.github/trials/krx-20261102-official-review.json]
+permissions:
+  contents: read
+concurrency:
+  group: krx-official-review-20261102-once
+  cancel-in-progress: false
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline bounded capture checks
+        run: python -m unittest discover -s official_review -p 'test_*.py'
+      - name: Preserve at most two official KRX responses; no KIS access
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+        run: python official_review/capture.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: krx-official-review-20261102-${{ github.run_id }}
+          path: ${{ runner.temp }}/krx-official-review
+          retention-days: 90
+          if-no-files-found: error
