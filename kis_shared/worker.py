@@ -221,6 +221,10 @@ def main(argv=None):
         result.update(status='BLOCKED_OR_FAILED',reason=reason,lease_released=False if session is None else not bool(session.lease and session.lease.held))
     result.update(mode=args.mode,simulated_dispatches=len(calls),simulated_endpoints=calls,actual_KIS_HTTP=0 if args.mode=='native-proof' else len(calls),
         account_repository=ROLES[args.role],central_contract='0baselabkim-debug/qweasd:kis-shared-account-state:lease.json')
+    # A successful token endpoint may reuse an existing provider token. Report
+    # physical OAuth attempts; do not infer actual token issuance from HTTP 200.
+    result['actual_OAuth_HTTP']=0 if args.mode=='native-proof' else calls.count(AUTH)
+    result['oauth_issuance']=0 if args.mode=='native-proof' else 'NOT_INFERRED'
     if session is not None:
         session._worker_token=None;session._worker_sensitive=()
     if created:(output/'result.json').write_bytes(encoded(result))

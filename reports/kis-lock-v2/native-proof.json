@@ -23,7 +23,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -50,7 +51,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/kis-intraday-monitor",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -77,7 +79,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -104,7 +107,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         },
         {
           "status": "BLOCKED_OR_FAILED",
@@ -117,7 +121,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/kis-intraday-monitor",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -143,7 +148,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/kis-intraday-monitor",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         },
         {
           "status": "BLOCKED_OR_FAILED",
@@ -156,7 +162,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -182,7 +189,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         },
         {
           "status": "BLOCKED_OR_FAILED",
@@ -195,7 +203,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -207,7 +216,7 @@
       "results": [
         {
           "status": "BLOCKED_OR_FAILED",
-          "role": "eod",
+          "role": "intraday",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
           "reason": "shared_lock_race_lost_or_write_unconfirmed",
@@ -215,8 +224,9 @@
           "mode": "native-proof",
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
-          "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         },
         {
           "status": "BLOCKED_OR_FAILED",
@@ -229,11 +239,12 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         },
         {
           "status": "PASS_NATIVE_PROOF",
-          "role": "intraday",
+          "role": "eod",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
@@ -246,8 +257,9 @@
             "/oauth2/tokenP",
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
-          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -268,7 +280,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -276,7 +289,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "43fcaa5e2e6548e1b351b7e1d051d194",
+        "id": "c4a608753b6449b598690b33ef041a94",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1008"
       }
@@ -297,7 +310,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -318,7 +332,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -339,7 +354,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -364,7 +380,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -395,7 +412,8 @@
             "/oauth2/tokenP"
           ],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -403,7 +421,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "db2e9192ca52471bb2d831c6ff0f34df",
+        "id": "04b86a83d1874dc6883ed385d7180093",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1013"
       }
@@ -425,7 +443,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "71302da4926942e99215a69e7b5ef1d5",
+        "id": "13a4f08fd8aa4827a75f88b58bda285d",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1014"
       }
@@ -446,7 +464,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -479,7 +498,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         },
         {
           "status": "BLOCKED_OR_FAILED",
@@ -492,7 +512,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -518,7 +539,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         },
         {
           "status": "BLOCKED_OR_FAILED",
@@ -531,7 +553,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -545,14 +568,15 @@
           "status": "BLOCKED_OR_FAILED",
           "role": "integrated",
           "actual_KIS_HTTP": 0,
-          "oauth_issuance": 0,
+          "oauth_issuance": "NOT_INFERRED",
           "reason": "live_validation_disabled_before_credentials",
           "lease_released": false,
           "mode": "live",
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -567,14 +591,15 @@
           "status": "BLOCKED_OR_FAILED",
           "role": "intraday",
           "actual_KIS_HTTP": 0,
-          "oauth_issuance": 0,
+          "oauth_issuance": "NOT_INFERRED",
           "reason": "live_validation_disabled_before_credentials",
           "lease_released": false,
           "mode": "live",
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/kis-intraday-monitor",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -596,7 +621,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -604,7 +630,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "f42a6d8719fb48a2b152b2d1b6437515",
+        "id": "7cc17ec89fa34cd5bb0b502f5e8f0013",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1019"
       }
@@ -625,7 +651,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -633,7 +660,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "5adc1298626444ffabf31b8e55dd91f9",
+        "id": "4710681a6efe41a4ab719af6658d8b3c",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1020"
       }
@@ -657,7 +684,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -665,7 +693,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "5764e47a848b475fb776499963e89fdc",
+        "id": "7c418c3e9cbe4a3794e2d70141ae6012",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1021"
       }
@@ -689,7 +717,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -697,7 +726,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "a278838a74c54c5ba78f6adf09d324a7",
+        "id": "34ad65609cf242249e9d647a49de36be",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1022"
       }
@@ -723,7 +752,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -745,7 +775,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0
@@ -771,7 +802,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -793,7 +825,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -815,7 +848,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -823,7 +857,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "0679211db2c149488ceb5f96d4dc2f85",
+        "id": "19236688f995434eb30f196be53146c2",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1026"
       }
@@ -844,7 +878,8 @@
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
           "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -852,7 +887,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "c9a1ca05e7c74f5bb8088496295d1a6d",
+        "id": "7772defbde7c43ebacf98f56ccaedad1",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1027"
       }
@@ -878,7 +913,8 @@
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
           "account_repository": "0baselabkim-debug/qweasd",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json"
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
         }
       ],
       "actual_KIS_HTTP": 0,
@@ -912,7 +948,7 @@
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
       "kis_shared/runtime.py": "6471425cbbc990754af6af57325c0d1a578868b845892e7c9003f3ed6f14d720",
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
-      "kis_shared/worker.py": "64a05ba7357a58baeeaa0e5237c4bf14c80fe07c98124c69d81ea6aed03af09b"
+      "kis_shared/worker.py": "71fb2b1f2e68fcd7e94a95c41dde7a03468393a1ad2bf08377df9ce2f4877c9d"
     },
     "intraday": {
       "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
@@ -920,7 +956,7 @@
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
       "kis_shared/runtime.py": "6471425cbbc990754af6af57325c0d1a578868b845892e7c9003f3ed6f14d720",
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
-      "kis_shared/worker.py": "64a05ba7357a58baeeaa0e5237c4bf14c80fe07c98124c69d81ea6aed03af09b"
+      "kis_shared/worker.py": "71fb2b1f2e68fcd7e94a95c41dde7a03468393a1ad2bf08377df9ce2f4877c9d"
     },
     "integrated": {
       "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
@@ -928,7 +964,7 @@
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
       "kis_shared/runtime.py": "6471425cbbc990754af6af57325c0d1a578868b845892e7c9003f3ed6f14d720",
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
-      "kis_shared/worker.py": "64a05ba7357a58baeeaa0e5237c4bf14c80fe07c98124c69d81ea6aed03af09b"
+      "kis_shared/worker.py": "71fb2b1f2e68fcd7e94a95c41dde7a03468393a1ad2bf08377df9ce2f4877c9d"
     }
   },
   "runtime_source_hashes": {
@@ -937,7 +973,7 @@
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
       "kis_shared/run.py": "0dca5cad7db7f9ae905f732baf25c9bdbd4343e7f6ec39b13012c68eb0100a5a",
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
-      "kis_shared/worker.py": "64a05ba7357a58baeeaa0e5237c4bf14c80fe07c98124c69d81ea6aed03af09b",
+      "kis_shared/worker.py": "71fb2b1f2e68fcd7e94a95c41dde7a03468393a1ad2bf08377df9ce2f4877c9d",
       "kis_shared/legacy.py": "75baba93b8cfcdd66516304e523a47b40b786533ecc7852bcf4a8112e3490b28",
       "kis_shared/runtime.py": "6471425cbbc990754af6af57325c0d1a578868b845892e7c9003f3ed6f14d720",
       "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
@@ -962,7 +998,7 @@
       "kis_shared/run.py": "98fdd75777c77680495eb08701005eb8c2f2bb22297d657b6d5eddfaf6beec0c",
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
       "kis_shared/watchlist.py": "629dd5e11bc70cca7639209920a65745639a9fdd6490fd2405f273a9bc4a2cab",
-      "kis_shared/worker.py": "64a05ba7357a58baeeaa0e5237c4bf14c80fe07c98124c69d81ea6aed03af09b",
+      "kis_shared/worker.py": "71fb2b1f2e68fcd7e94a95c41dde7a03468393a1ad2bf08377df9ce2f4877c9d",
       "kis_shared/recurring.py": "d04e5e1de060cb4ad88669b3c0c9d812b24087f5e9184e4d10b1be2ffc6a0db2",
       "kis_shared/remaining_four.py": "f78a8bd352c7ea1b8d4f5a174ae446899ba28b7363d6ca139ad4f6edcd07ec71",
       "kis_shared/bootstrap.py": "bb70298582705b09bd47ca66bc66a72dcc8e283ae3ead45ab10ce4b062a951cf",
@@ -975,7 +1011,7 @@
       "kis_shared/boundary.py": "213cabe48df72af9ece9a7c035ad1dce172b190a5c7ab3c3912a3b1255fc5e0e",
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
-      "kis_shared/worker.py": "64a05ba7357a58baeeaa0e5237c4bf14c80fe07c98124c69d81ea6aed03af09b",
+      "kis_shared/worker.py": "71fb2b1f2e68fcd7e94a95c41dde7a03468393a1ad2bf08377df9ce2f4877c9d",
       "kis_shared/runtime.py": "6471425cbbc990754af6af57325c0d1a578868b845892e7c9003f3ed6f14d720",
       "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30"
     }

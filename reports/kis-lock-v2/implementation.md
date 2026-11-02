@@ -20,7 +20,7 @@
 
 별도 `python -I kis_shared/worker.py` 프로세스만 명시적 실조회 경로다. 기본 비활성화이며 활성화에는 schema2, 사용자 승인 상태, 세 참여자 배포/권한/정책 기록, 소스와 실제 proof SHA256 일치, 실행 주체, 고정 요청 ID, 15분 이하 시간창, 000720 한 종목 및 HTTP 최대 2회를 모두 요구한다. 원자적 request scope가 중앙 원장에 남아 새 출력 폴더나 프로세스로 예산을 초기화하지 못한다. OAuth 응답은 파일로 저장하지 않으며 토큰은 메모리에서만 사용한다. 주문, 자동 재시도, 운영 DB 갱신은 없다.
 
-`kis-limited-validation.yml`은 신규 개발 저장소에서만 준비한 수동 workflow다. enable 기본 false이고, enable=true라도 제안 정책이 disabled이므로 현재 API 호출은 차단된다. 이 workflow는 현재 실행하지 않았으며 운영 기본 브랜치에 등록됐다고 보고하지 않는다.
+`docs/templates/kis-limited-validation.yml`은 신규 개발 저장소에만 준비한 미등록 수동 workflow 템플릿이다. 기존 개발 workflow의 Secrets 비참조 가드를 유지하기 위해 활성 workflow 경로에 두지 않는다. enable 기본 false이고, enable=true라도 제안 정책이 disabled이므로 현재 API 호출은 차단된다. 이 템플릿은 현재 등록·실행하지 않았으며 운영 기본 브랜치에 등록됐다고 보고하지 않는다.
 
 기존 schema1 정책은 제3 저장소를 거부한다. 새 schema2 제안 파일의 enabled/승인/배포/권한 플래그는 false다. 단순 verified=true로 차단을 없애지 않는다. 기존 활성 정책과 Secrets 값은 수정하지 않았다.
 
@@ -34,7 +34,7 @@
 
 CI의 `bundled_proof.py`는 권한 확대 없이 해시 고정된 실제 클라이언트 소스 스냅샷으로 동일 경합을 반복한다. 스냅샷 manifest와 출처 기준 커밋을 보존하며 코드 under test의 공통 core를 사용한다. bundled proof를 운영 활성화 증거로 사용할 수 없고, 활성화 검사는 `actual_source_trees` proof만 받는다.
 
-로컬: 신규 통합 383 PASS, 장중 553 PASS 및 별도 219 subtest PASS. 장중 deny-network runner 531 PASS/네트워크 감사 이벤트 0. 장후 기존 전체 실행은 490 PASS(수집 시점의 테스트 집합), 이후 추가 구형 경로 검사 12 PASS. 최신 전체 테스트 수와 GitHub CI 상태는 `github-verification.json`의 실제 실행 결과를 우선한다. Native 33개는 pytest 합계에 중복 합산하지 않는다.
+로컬: 신규 통합 383 PASS, 장중 553 PASS 및 별도 219 subtest PASS. 장중 deny-network runner 531 PASS/네트워크 감사 이벤트 0. 장후 기존 전체 실행은 490 PASS(수집 시점의 테스트 집합), 이후 추가 구형 경로 검사 12 PASS. 최신 전체 테스트 수와 GitHub CI 상태는 PR check의 실제 코드 버전 및 CI 아티팩트 JUnit을 우선한다. Native 33개는 pytest 합계에 중복 합산하지 않는다.
 
 ## PR 의존성과 운영 반영 순서
 
