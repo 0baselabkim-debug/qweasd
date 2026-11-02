@@ -9,6 +9,7 @@ import hashlib
 import io
 import json
 import os
+import re
 from pathlib import Path
 import sys
 import time
@@ -64,8 +65,30 @@ def raw_request(path,params=None,body=None):
         session.uncertain=True;raise Blocked('worker_HTTP_outcome_unknown_no_retry') from None
     if len(raw)>2_000_000:raise Blocked('worker_response_size_rejected')
     session.check()
+    if path!=AUTH:preserve_market_response(session,raw,status)
     if status!=200:raise Blocked('worker_HTTP_failed_no_retry')
     return raw
+
+def validate_quote(raw):
+    try:
+        value=json.loads(raw)
+        if value.get('rt_cd')!='0' or not isinstance(value.get('output'),dict):raise ValueError()
+        output=value['output'];code=output.get('stck_shrn_iscd')
+        if code is not None and code!='000720':raise ValueError()
+        fields=('stck_prpr','stck_oprc','stck_hgpr','stck_lwpr','acml_vol','acml_tr_pbmn')
+        if any(not isinstance(output.get(k),str) or not re.fullmatch(r'[0-9]+',output[k]) for k in fields):raise ValueError()
+        if int(output['stck_hgpr']) and int(output['stck_lwpr']) and int(output['stck_hgpr'])<int(output['stck_lwpr']):raise ValueError()
+        return dict(response_schema='PASS',response_symbol='CONFIRMED' if code is not None else 'REQUEST_BOUND_ONLY',
+            provider_business_date='UNAVAILABLE' if 'stck_bsop_date' not in output else output['stck_bsop_date'],official_price_status='PENDING_KRX')
+    except (ValueError,TypeError,AttributeError,KeyError):raise Blocked('worker_quote_provider_or_schema_rejected') from None
+
+def preserve_market_response(session,raw,status):
+    for value in (session.env['KIS_APP_KEY'],session.env['KIS_APP_SECRET'],*getattr(session,'_worker_sensitive',())):
+        if value.encode() in raw:raise Blocked('worker_credential_echo_not_saved')
+    root=session.validation_root
+    with (root/'market-response.bin').open('xb') as file:file.write(raw)
+    with (root/'market-response-meta.json').open('x') as file:
+        json.dump(dict(http_status=status,sha256=sha(raw),bytes=len(raw),observed_at=session.clock().isoformat(),request_symbol='000720',requested_market='J',provider_finality='UNVERIFIED'),file)
 
 def collect(role,root):
     session=current()
@@ -121,8 +144,9 @@ def collect(role,root):
     # No provider date/scope/finality or trading approval is inferred here.
     for value in (session.env['KIS_APP_KEY'],session.env['KIS_APP_SECRET'],*getattr(session,'_worker_sensitive',())):
         if value.encode() in raw:raise Blocked('worker_credential_echo_not_saved')
+    schema=validate_quote(raw)
     (root/'response.bin').write_bytes(raw)
-    return dict(source_sha256=sha(raw),validation='STRUCTURE_ONLY_UNVERIFIED',official_price_status='PENDING_KRX')
+    return dict(**schema,source_sha256=sha(raw),validation='STRUCTURE_ONLY_UNVERIFIED')
 
 def main(argv=None):
     p=argparse.ArgumentParser();p.add_argument('--mode',choices=['native-proof','live'],default='live')
@@ -186,7 +210,7 @@ def main(argv=None):
                 calls.append(parts.path)
             sys.addaudithook(dispatch_audit)
         if args.fault=='no-session':urllib.request.urlopen('https://openapi.koreainvestment.com:9443'+AUTH,data=b'{}')
-        session=Session(cfg,backend=backend,env=env,clock=clock);session.legacy_client=args.legacy_client;session.proof_fault=args.fault
+        session=Session(cfg,backend=backend,env=env,clock=clock);session.legacy_client=args.legacy_client;session.proof_fault=args.fault;session.validation_root=output
         if args.fault=='ledger-delay':
             # Actual subprocess deadline: a stalled Git executable, local proof only.
             import subprocess

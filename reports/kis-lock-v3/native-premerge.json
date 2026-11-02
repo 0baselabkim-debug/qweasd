@@ -12,9 +12,12 @@
           "role": "eod",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -40,9 +43,12 @@
           "role": "intraday",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -68,9 +74,12 @@
           "role": "integrated",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -96,9 +105,12 @@
           "role": "eod",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -137,9 +149,12 @@
           "role": "intraday",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -178,9 +193,12 @@
           "role": "integrated",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -216,6 +234,20 @@
       "results": [
         {
           "status": "BLOCKED_OR_FAILED",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_race_lost_or_write_unconfirmed",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        },
+        {
+          "status": "BLOCKED_OR_FAILED",
           "role": "intraday",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
@@ -229,27 +261,16 @@
           "actual_OAuth_HTTP": 0
         },
         {
-          "status": "BLOCKED_OR_FAILED",
+          "status": "PASS_NATIVE_PROOF",
           "role": "integrated",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
-          "reason": "shared_lock_race_lost_or_write_unconfirmed",
-          "lease_released": true,
-          "mode": "native-proof",
-          "simulated_dispatches": 0,
-          "simulated_endpoints": [],
-          "account_repository": "0baselabkim-debug/investment-integrated-dev",
-          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
-          "actual_OAuth_HTTP": 0
-        },
-        {
-          "status": "PASS_NATIVE_PROOF",
-          "role": "eod",
-          "actual_KIS_HTTP": 0,
-          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -257,7 +278,7 @@
             "/oauth2/tokenP",
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
-          "account_repository": "0baselabkim-debug/qweasd",
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
           "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
           "actual_OAuth_HTTP": 0
         }
@@ -289,7 +310,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "6ae22360fed141a6beab66a8a05583a7",
+        "id": "b07678687ccd4cd780ba6be4807ec819",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1008"
       }
@@ -421,7 +442,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "fafdcadc9f1640a09f7da2aa31eee657",
+        "id": "0b823db506484b169078531c484e2b7d",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1013"
       }
@@ -443,7 +464,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "d350f2a0991e48ecb8b65dc1f95e4722",
+        "id": "f007a51af5344732874b6572d6bfcccd",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1014"
       }
@@ -487,9 +508,12 @@
           "role": "eod",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -528,9 +552,12 @@
           "role": "eod",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -630,7 +657,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "94f2bdba74a945668c26bdc9b6c6c8a1",
+        "id": "f86b17d79e5b4cf9b9198d37d1ca5c3f",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1019"
       }
@@ -660,7 +687,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "2d45f528469049f18e2a0a4f900caed0",
+        "id": "e0c401ab29284a7f9ec6f86121e974b8",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1020"
       }
@@ -693,7 +720,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "a0311c70ebfc4259b921e5d4c3ea8045",
+        "id": "07a2ee5833064f73b7b8f65c99272927",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1021"
       }
@@ -726,7 +753,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "633d113ec7cc4658ab3af463d069aacc",
+        "id": "fb5592b6738640c997b29387829a900f",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1022"
       }
@@ -741,9 +768,12 @@
           "role": "integrated",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -791,9 +821,12 @@
           "role": "eod",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -857,7 +890,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "e73cffbd0f964f9abf31a4923a9825cf",
+        "id": "37703dd5fa984c60a6ec57d1746f7e92",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1026"
       }
@@ -887,7 +920,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "8ff99f7419084b858f0a86ec953874f5",
+        "id": "6db54881fcec4497a1f6f89db6488997",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1027"
       }
@@ -902,9 +935,12 @@
           "role": "eod",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
           "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
           "validation": "STRUCTURE_ONLY_UNVERIFIED",
-          "official_price_status": "PENDING_KRX",
           "lease_released": true,
           "mode": "native-proof",
           "simulated_dispatches": 2,
@@ -948,7 +984,7 @@
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
       "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
-      "kis_shared/worker.py": "7dda4429ac5dc932ac0518ca4a0b4bb0854b44978349357d83dd5c46b7392c2b"
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0"
     },
     "intraday": {
       "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
@@ -956,7 +992,7 @@
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
       "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
-      "kis_shared/worker.py": "7dda4429ac5dc932ac0518ca4a0b4bb0854b44978349357d83dd5c46b7392c2b"
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0"
     },
     "integrated": {
       "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
@@ -964,7 +1000,7 @@
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
       "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
-      "kis_shared/worker.py": "7dda4429ac5dc932ac0518ca4a0b4bb0854b44978349357d83dd5c46b7392c2b"
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0"
     }
   },
   "runtime_source_hashes": {
@@ -973,7 +1009,7 @@
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
       "kis_shared/run.py": "0dca5cad7db7f9ae905f732baf25c9bdbd4343e7f6ec39b13012c68eb0100a5a",
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
-      "kis_shared/worker.py": "7dda4429ac5dc932ac0518ca4a0b4bb0854b44978349357d83dd5c46b7392c2b",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
       "kis_shared/legacy.py": "75baba93b8cfcdd66516304e523a47b40b786533ecc7852bcf4a8112e3490b28",
       "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
       "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
@@ -998,7 +1034,7 @@
       "kis_shared/run.py": "98fdd75777c77680495eb08701005eb8c2f2bb22297d657b6d5eddfaf6beec0c",
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
       "kis_shared/watchlist.py": "629dd5e11bc70cca7639209920a65745639a9fdd6490fd2405f273a9bc4a2cab",
-      "kis_shared/worker.py": "7dda4429ac5dc932ac0518ca4a0b4bb0854b44978349357d83dd5c46b7392c2b",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
       "kis_shared/recurring.py": "d04e5e1de060cb4ad88669b3c0c9d812b24087f5e9184e4d10b1be2ffc6a0db2",
       "kis_shared/remaining_four.py": "f78a8bd352c7ea1b8d4f5a174ae446899ba28b7363d6ca139ad4f6edcd07ec71",
       "kis_shared/bootstrap.py": "2e8120c50aa675f2b30ad43a6188f8fe8888fd84be4a21a5aad822acd441dce8",
@@ -1011,7 +1047,7 @@
       "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
       "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
       "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
-      "kis_shared/worker.py": "7dda4429ac5dc932ac0518ca4a0b4bb0854b44978349357d83dd5c46b7392c2b",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
       "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
       "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30"
     }

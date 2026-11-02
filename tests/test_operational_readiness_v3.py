@@ -53,3 +53,25 @@ def test_GitHub_route_guard_never_accepts_market_or_secret_mutations(monkeypatch
     for path,method,body in [('https://openapi.koreainvestment.com:9443/oauth2/tokenP','POST',None),('repos/'+r.CENTRAL+'/actions/secrets','POST',{}),('repos/'+r.CENTRAL+'/git/refs','POST',dict(ref='refs/heads/main'))]:
         with pytest.raises(r.Blocked):r.gh(path,method,body)
     process.assert_not_called()
+
+
+def quote_payload():
+    return dict(rt_cd='0',output=dict(stck_shrn_iscd='000720',stck_prpr='100',stck_oprc='99',stck_hgpr='101',stck_lwpr='98',acml_vol='1000',acml_tr_pbmn='100000'))
+@pytest.mark.parametrize('kind',['business_error','empty','missing','non_integer','wrong_symbol','invalid_range'])
+def test_limited_quote_never_accepts_provider_errors_or_invalid_evidence(kind):
+    from kis_shared.worker import validate_quote
+    value=quote_payload()
+    if kind=='business_error':value['rt_cd']='1'
+    if kind=='empty':value['output']={}
+    if kind=='missing':value['output'].pop('acml_vol')
+    if kind=='non_integer':value['output']['acml_vol']='1.5'
+    if kind=='wrong_symbol':value['output']['stck_shrn_iscd']='005930'
+    if kind=='invalid_range':value['output']['stck_hgpr']='97'
+    with pytest.raises(r.Blocked):validate_quote(json.dumps(value).encode())
+def test_limited_quote_retains_unverified_finality_and_unknown_date():
+    from kis_shared.worker import validate_quote
+    result=validate_quote(json.dumps(quote_payload()).encode());assert result['official_price_status']=='PENDING_KRX' and result['provider_business_date']=='UNAVAILABLE'
+def test_limited_quote_missing_symbol_is_explicitly_request_bound_only():
+    from kis_shared.worker import validate_quote
+    value=quote_payload();value['output'].pop('stck_shrn_iscd')
+    assert validate_quote(json.dumps(value).encode())['response_symbol']=='REQUEST_BOUND_ONLY'
