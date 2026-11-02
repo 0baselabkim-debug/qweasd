@@ -6,6 +6,7 @@ import hmac
 import json
 import os
 import time
+import threading
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from .lease import Blocked, Lease, stamp, utcnow, REPOSITORIES, LEGACY_REPOSITORIES
@@ -69,6 +70,7 @@ class Session:
         self.dispatch_ticket = None
         self.network_inflight = False
         self.transport_pending = None
+        self.reservation_lock = threading.RLock()
 
     def review(self):
         c = self.config
@@ -148,7 +150,11 @@ class Session:
         return self.lease.check()
 
     def before_http(self, *, auth=False, interval=1.05):
-        if self.network_inflight or self.uncertain:
+        with self.reservation_lock:
+            return self._reserve_http(auth=auth,interval=interval)
+
+    def _reserve_http(self, *, auth=False, interval=1.05):
+        if self.network_inflight or self.uncertain or self.dispatch_ticket is not None:
             raise Blocked('shared_prior_HTTP_outcome_unresolved')
         self.review()
         if self.lease is None:
@@ -200,9 +206,10 @@ class Session:
 
     def http_response_closed(self):
         """Only called after the synchronous response is known closed."""
-        self.network_inflight = False
-        self.dispatch_ticket = None
-        self.transport_pending = None
+        with self.reservation_lock:
+            self.network_inflight = False
+            self.dispatch_ticket = None
+            self.transport_pending = None
 
     def authorize_network(self,auth):
         if not auth and self.token_deadline is None:raise Blocked('shared_market_token_expiry_unverified')

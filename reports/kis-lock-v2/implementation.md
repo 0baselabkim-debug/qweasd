@@ -10,7 +10,7 @@
 * 실제 Git expected-parent, 일반 push의 non-fast-forward 거절, 원격 readback을 사용한다. force push, 자동 초기화, TTL 만료만으로 소유권 이전은 없다.
 * OAuth와 시장 요청 모두 요청 직전 소유자·실행 ID·커밋·만료·정책을 다시 검사한다. 실패한 조회나 알 수 없는 응답도 인증 예산과 불명 상태에 반영한다. 알 수 없는 결과/소유권 변경 이후 요청을 재시도하지 않는다.
 * urllib 감사 훅으로 사용자 지정 opener와 보조 helper에도 보호를 적용한다. 승인된 urllib dispatch가 없는 저수준 HTTP 전송, 주문/POST 시장 조회, 리다이렉트에 의한 자격 전송을 차단한다. 메모리만 사용하는 테스트 응답은 네트워크 성공의 증거로 사용하지 않는다.
-* 구형 KIS 클라이언트는 Session과 요청 예산을 생성 시 고정한다. 작업 스레드에 두 ContextVar를 전달하고 전체 요청을 RLock으로 직렬화한다. 수집 모집단·원천 계산·검증 기준은 바꾸지 않는다.
+* 구형 KIS 클라이언트는 Session과 요청 예산을 생성 시 고정한다. 작업 스레드에 두 ContextVar를 전달하고 전체 요청을 RLock으로 직렬화한다. Session 자체의 요청 예약과 물리 전송 승인을 같은 임계 구역으로 묶어 여러 클라이언트가 한 Session에서 동시에 인증 예산을 확보하지 못하게 한다. 수집 모집단·원천 계산·검증 기준은 바꾸지 않는다.
 * 정상 보조 workflow의 KIS 실행만 명시적 `kis_shared.legacy` 래퍼로 연결했다. 캐시/공식 자료 읽기 모드는 잠금 없이 유지한다. 별도 계정이나 앱키는 필요하지 않다.
 * `.github/scripts`의 구형 HTTP helper 4개와 inline 진단 workflow 5개는 퇴역 경로로 차단했다. 5개 구형 inline job의 개발 코드에는 if:false와 즉시 중단을 함께 두었다. 기존 20:30 수집 및 장중 workflow의 예약·활성 설정은 건드리지 않았다.
 
@@ -34,7 +34,7 @@
 
 CI의 `bundled_proof.py`는 권한 확대 없이 해시 고정된 실제 클라이언트 소스 스냅샷으로 동일 경합을 반복한다. 스냅샷 manifest와 출처 기준 커밋을 보존하며 코드 under test의 공통 core를 사용한다. bundled proof를 운영 활성화 증거로 사용할 수 없고, 활성화 검사는 `actual_source_trees` proof만 받는다.
 
-로컬: 신규 통합 383 PASS, 장중 553 PASS 및 별도 219 subtest PASS. 장중 deny-network runner 531 PASS/네트워크 감사 이벤트 0. 장후 기존 전체 실행은 490 PASS(수집 시점의 테스트 집합), 이후 추가 구형 경로 검사 12 PASS. 최신 전체 테스트 수와 GitHub CI 상태는 PR check의 실제 코드 버전 및 CI 아티팩트 JUnit을 우선한다. Native 33개는 pytest 합계에 중복 합산하지 않는다.
+로컬: 신규 통합 385 PASS, 장중 555 PASS 및 별도 219 subtest PASS. 장중 deny-network runner 531 PASS/네트워크 감사 이벤트 0. 장후 기존 전체 실행은 490 PASS(수집 시점의 테스트 집합), 이후 추가 구형 경로 검사 12 PASS. 최신 전체 테스트 수와 GitHub CI 상태는 PR check의 실제 코드 버전 및 CI 아티팩트 JUnit을 우선한다. Native 33개는 pytest 합계에 중복 합산하지 않는다.
 
 ## PR 의존성과 운영 반영 순서
 

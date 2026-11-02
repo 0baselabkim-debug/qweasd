@@ -90,3 +90,20 @@ def test_real_credential_environment_cannot_use_native_gate(setup):
 def test_schema_two_flags_alone_cannot_activate(setup):
     session,backend,clock,env=setup;backend.native_proof=False;session.config={'schema':2,'enabled':True}
     with pytest.raises(Blocked,match='activation_not_approved'):session.review()
+
+
+def test_two_threads_cannot_both_reserve_oauth(setup):
+    from concurrent.futures import ThreadPoolExecutor
+    import threading
+    session,backend,clock,_=setup;session.acquire_lease();start=threading.Barrier(2)
+    def request():
+        start.wait()
+        try:session.before_http(auth=True);return True
+        except Blocked:return False
+    with ThreadPoolExecutor(2) as pool:result=list(pool.map(lambda _:request(),range(2)))
+    assert sum(result)==1 and backend.state['sequence']==2
+
+def test_unconsumed_reservation_cannot_be_replaced(setup):
+    session,backend,clock,_=setup;session.acquire_lease();session.before_http(auth=True)
+    clock.sleep(120)
+    with pytest.raises(Blocked,match='unresolved'):session.before_http()

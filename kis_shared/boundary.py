@@ -27,15 +27,16 @@ def authorize(url,headers=None,body=None,method=None,*,transport=False):
     if not allowed or '..' in parsed.path:raise Blocked('KIS_order_or_unreviewed_endpoint_rejected')
     from .runtime import current
     session=current();identity=(method,parsed.path,parsed.query)
-    if transport:
-        # A raw low-level request lacks the reviewed urllib dispatch and budget.
-        if getattr(session,'transport_pending',None)!=identity:
-            raise Blocked('KIS_unreviewed_low_level_transport_rejected')
-        session.transport_pending=None;session.check()
-    else:
-        if getattr(session,'transport_pending',None) is not None:
-            raise Blocked('KIS_second_dispatch_before_response_closed')
-        session.authorize_network(auth);session.transport_pending=identity
+    with session.reservation_lock:
+        if transport:
+            # A raw low-level request lacks the reviewed urllib dispatch and budget.
+            if getattr(session,'transport_pending',None)!=identity:
+                raise Blocked('KIS_unreviewed_low_level_transport_rejected')
+            session.transport_pending=None;session.check()
+        else:
+            if getattr(session,'transport_pending',None) is not None:
+                raise Blocked('KIS_second_dispatch_before_response_closed')
+            session.authorize_network(auth);session.transport_pending=identity
 
 def install():
     global _installed
