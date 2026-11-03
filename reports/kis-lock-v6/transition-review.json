@@ -1,0 +1,16 @@
+{
+  "scope": "ACCOUNT_COORDINATION_ONLY",
+  "core_already_deployed_on_three_mains": true,
+  "baseline_mains": {
+    "qweasd": "4b256c4f3",
+    "monitor": "21f08a946",
+    "integrated": "67a0cea"
+  },
+  "source_coverage_must_not_narrow": true,
+  "legacy_real_KIS_approval_preserved_historical_not_new_test": true,
+  "new_KIS_HTTP_approval": false,
+  "wire_lease_schema": 1,
+  "approval_policy_schema": 2,
+  "rollback": "Restore backed-up schema1 policies via reviewed ordinary commits; new active policy removed/disabled; old proof files retained and live runtime core unchanged",
+  "old_new_mixed_policy_safe": "Same three-actor lease validator and exclusive Git CAS; new participant HTTP always blocked"
+}

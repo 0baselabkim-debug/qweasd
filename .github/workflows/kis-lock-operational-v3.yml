@@ -22,6 +22,21 @@
           ],
           "default": "inspect",
           "required": true
+        },
+        "hold_seconds": {
+          "type": "number",
+          "default": 2,
+          "required": false
+        },
+        "expected_owner_repository": {
+          "type": "string",
+          "default": "",
+          "required": false
+        },
+        "expected_owner_run_id": {
+          "type": "string",
+          "default": "",
+          "required": false
         }
       }
     }
@@ -99,7 +114,10 @@
           "env": {
             "GH_TOKEN": "${{ github.token }}",
             "KIS_APP_KEY_PRESENT": "${{ secrets.KIS_APP_KEY != '' }}",
-            "KIS_APP_SECRET_PRESENT": "${{ secrets.KIS_APP_SECRET != '' }}"
+            "KIS_APP_SECRET_PRESENT": "${{ secrets.KIS_APP_SECRET != '' }}",
+            "PROBE_HOLD_SECONDS": "${{ inputs.hold_seconds || '2' }}",
+            "EXPECTED_OWNER_REPOSITORY": "${{ inputs.expected_owner_repository || '' }}",
+            "EXPECTED_OWNER_RUN_ID": "${{ inputs.expected_owner_run_id || '' }}"
           },
           "run": "python -I .github/scripts/kis_lock_operational_readiness_v3.py --mode probe --output \"$RUNNER_TEMP/kis-lock-v3/probe.json\""
         },
