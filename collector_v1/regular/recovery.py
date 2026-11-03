@@ -140,6 +140,7 @@ def terminal_proof(client,owner,at=None):
         and job.get('head_sha')==SOURCE_SHA and job.get('status')=='completed' and job.get('completed_at')
         and job.get('runner_group_name')=='GitHub Actions' and 'ubuntu-latest' in job.get('labels',[]),'source_worker_unverified')
     require(all(s.get('status')=='completed' for s in job.get('steps',[])) and job.get('steps'),'source_steps_not_terminal')
+    require(job.get('started_at') and stamp(job['started_at'])<=stamp(owner['acquired_at'])<=stamp(job['completed_at']),'lease_outside_source_job')
     require(at>=stamp(job['completed_at'])+dt.timedelta(seconds=120),'worker_termination_grace')
     again=client.run(SOURCE_RUN)
     require(all(again.get(k)==run.get(k) for k in ('id','head_sha','run_attempt','status','conclusion','updated_at')),'run_changed')
@@ -147,6 +148,7 @@ def terminal_proof(client,owner,at=None):
     # failure, no external request workers, all hosted jobs ended; retain its cost.
     return dict(repository=REPO,run_id=SOURCE_RUN,commit=SOURCE_SHA,status='completed',all_workers_stopped=True,
         external_issuers_stopped=True,attempt=1,job_id=str(job['id']),checked_at=at.isoformat(),
+        job_started_at=job['started_at'],job_completed_at=job['completed_at'],
         evidence_basis='source ZIP manifest/raw/complete auth+GET-only failure; exact pinned synchronous source; terminal hosted job; expiry+grace')
 
 

@@ -87,7 +87,7 @@ class Client:
  def __init__(self):
   self.changed=False;self.calls=0
   self.run_value=dict(id=int(r.SOURCE_RUN),head_sha=r.SOURCE_SHA,run_attempt=1,status='completed',path=r.policy.WORKFLOW,conclusion='failure',updated_at='2026-11-03T12:29:53Z')
-  self.job=dict(id=125907375199,run_attempt=1,run_id=int(r.SOURCE_RUN),head_sha=r.SOURCE_SHA,status='completed',completed_at='2026-11-03T12:29:53Z',runner_group_name='GitHub Actions',labels=['ubuntu-latest'],steps=[dict(status='completed')])
+  self.job=dict(id=125907375199,run_attempt=1,run_id=int(r.SOURCE_RUN),head_sha=r.SOURCE_SHA,status='completed',started_at='2026-11-03T12:07:45Z',completed_at='2026-11-03T12:29:53Z',runner_group_name='GitHub Actions',labels=['ubuntu-latest'],steps=[dict(status='completed')])
  def run(self,_):
   self.calls+=1;v=copy.deepcopy(self.run_value)
   if self.changed and self.calls>1:v['run_attempt']=2
