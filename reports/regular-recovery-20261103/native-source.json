@@ -248,7 +248,7 @@
         },
         {
           "status": "BLOCKED_OR_FAILED",
-          "role": "intraday",
+          "role": "integrated",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
           "reason": "shared_lock_race_lost_or_write_unconfirmed",
@@ -256,13 +256,13 @@
           "mode": "native-proof",
           "simulated_dispatches": 0,
           "simulated_endpoints": [],
-          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
           "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
           "actual_OAuth_HTTP": 0
         },
         {
           "status": "PASS_NATIVE_PROOF",
-          "role": "integrated",
+          "role": "intraday",
           "actual_KIS_HTTP": 0,
           "oauth_issuance": 0,
           "response_schema": "PASS",
@@ -278,7 +278,7 @@
             "/oauth2/tokenP",
             "/uapi/domestic-stock/v1/quotations/inquire-price"
           ],
-          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
           "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
           "actual_OAuth_HTTP": 0
         }
@@ -310,7 +310,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "68d64b4e73c243f4b5634c656adab1b6",
+        "id": "32bc624b2b6c449699693c19d3b044fb",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1008"
       }
@@ -442,7 +442,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "785f285ce9d44e0baa7e580e30ea1ad9",
+        "id": "a6d280d7418246f0a0733aec723b4065",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1013"
       }
@@ -464,7 +464,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "0ae2c82a5c96410d8272488b8cfc92f7",
+        "id": "89588a9944a24e1a987e30885bf286bd",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1014"
       }
@@ -657,7 +657,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "2e12c8d6a4f34c24906ef520a0a31bcb",
+        "id": "ebd0fd2e5f8a40ff9e72741e167199fc",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1019"
       }
@@ -687,7 +687,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "8db0b9f36d1a4daa820d3247d9dff97d",
+        "id": "96e0966d032c41b58c28ad625ab326af",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1020"
       }
@@ -720,7 +720,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "9ac9b1aca41c44bd9ba74ac2579bb7c0",
+        "id": "4fd09694a48040a08189f8d5698ed486",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1021"
       }
@@ -753,7 +753,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "e960216fa2334611af36406a69e226c0",
+        "id": "c099ea8904c34143a88b62ff2d06a9e4",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1022"
       }
@@ -890,7 +890,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "799c170b2bdc4b3b9ac041297c4d5960",
+        "id": "26bc5a384393444e85361181612d9c7e",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1026"
       }
@@ -920,7 +920,7 @@
         "acquired_at": "2026-11-03T10:00:00+00:00",
         "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "expires_at": "2026-11-03T13:10:00+00:00",
-        "id": "19ef88da8b21453d8865b875e22b7751",
+        "id": "1e83740f31f840d09a39d8fa5d3c0aa0",
         "repository": "0baselabkim-debug/investment-integrated-dev",
         "run_id": "1027"
       }
@@ -1029,7 +1029,7 @@
       "collector_v1/core.py": "427558284fd2456ec0dcfe50cbbf3f3d574b51192d5cdc650d31a6e5a0644689",
       "collector_v1/regular/policy.py": "588d1ca694a0e559ce29f35270d5cc0cd7da1dde60849f70cd72afcc1c6617f1",
       "collector_v1/validation.py": "b75b9c3a4fb7afaaf762466a1703ecb0f43de304838ae09c1bbbb80277a486c4",
-      "collector_v1/regular/recovery.py": "9da72cf3a47ae45e349062d6cc55783c6eee3cd5f96199218d64c8d9e1b81128",
+      "collector_v1/regular/recovery.py": "7b452018d2554a15746a0028ff69e7571e6a8da3a67f438863868eccb9b3426b",
       ".github/workflows/kis-regular-recovery-20261103.yml": "86d335e18c350438a819890b4ee53e1a1f4a8aa357bd13d880c459e3eb6f574d",
       ".github/workflows/kis-regular-recovery-offline.yml": "98bfbda08922ffe4621547b4d59764935e17ae342475397bfb0807a30589d287"
     },

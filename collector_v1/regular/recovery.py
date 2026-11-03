@@ -132,7 +132,8 @@ def terminal_proof(client,owner,at=None):
     require(run.get('head_sha')==SOURCE_SHA and run.get('run_attempt')==1 and run.get('status')=='completed'
         and run.get('path')==policy.WORKFLOW and run.get('conclusion')=='failure','source_run_not_terminal_attempt1')
     attempt=client.request(f'repos/{REPO}/actions/runs/{SOURCE_RUN}/attempts/1')
-    require(all(attempt.get(k)==run.get(k) for k in ('id','head_sha','run_attempt','status','conclusion','updated_at')),'attempt_conflict')
+    bindings=('id','head_sha','run_attempt','status','conclusion','path','workflow_id','check_suite_id','created_at','run_started_at')
+    require(all(run.get(k) is not None and attempt.get(k)==run[k] for k in bindings),'attempt_conflict')
     jobs=client.request(f'repos/{REPO}/actions/runs/{SOURCE_RUN}/attempts/1/jobs?per_page=100')
     require(jobs.get('total_count')==len(jobs.get('jobs',[]))==1,'source_jobs_incomplete')
     job=jobs['jobs'][0]
@@ -142,13 +143,20 @@ def terminal_proof(client,owner,at=None):
     require(all(s.get('status')=='completed' for s in job.get('steps',[])) and job.get('steps'),'source_steps_not_terminal')
     require(job.get('started_at') and stamp(job['started_at'])<=stamp(owner['acquired_at'])<=stamp(job['completed_at']),'lease_outside_source_job')
     require(at>=stamp(job['completed_at'])+dt.timedelta(seconds=120),'worker_termination_grace')
+    # GitHub's run and attempt views have distinct metadata update timestamps.
+    # Bind execution identity/status exactly, then recheck EACH view unchanged.
+    require(run.get('updated_at') and attempt.get('updated_at') and
+        stamp(job['completed_at'])<=stamp(run['updated_at'])<=at and
+        stamp(job['completed_at'])<=stamp(attempt['updated_at'])<=at,'terminal_metadata_time_invalid')
     again=client.run(SOURCE_RUN)
     require(all(again.get(k)==run.get(k) for k in ('id','head_sha','run_attempt','status','conclusion','updated_at')),'run_changed')
+    attempt_again=client.request(f'repos/{REPO}/actions/runs/{SOURCE_RUN}/attempts/1')
+    require(all(attempt_again.get(k)==attempt.get(k) for k in bindings+('updated_at',)),'attempt_changed')
     # The immutable source has a known complete OAuth, synchronous read-only GET
     # failure, no external request workers, all hosted jobs ended; retain its cost.
     return dict(repository=REPO,run_id=SOURCE_RUN,commit=SOURCE_SHA,status='completed',all_workers_stopped=True,
         external_issuers_stopped=True,attempt=1,job_id=str(job['id']),checked_at=at.isoformat(),
-        job_started_at=job['started_at'],job_completed_at=job['completed_at'],
+        job_started_at=job['started_at'],job_completed_at=job['completed_at'],run_updated_at=run['updated_at'],attempt_updated_at=attempt['updated_at'],
         evidence_basis='source ZIP manifest/raw/complete auth+GET-only failure; exact pinned synchronous source; terminal hosted job; expiry+grace')
 
 

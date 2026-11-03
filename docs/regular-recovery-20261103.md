@@ -46,3 +46,11 @@ Scanned raw/partial/complete output gets a90day artifact. Finalization downloads
 that actual stored ZIP, verifies digest/CRC/file manifest, and records
 COMPLETE_PROVISIONAL only with2348 verified rows, DB/JSON equality and budget
 compliance. An unsuccessful generation cannot replace a successful publication.
+
+Actual GitHub read-only preflight found the completed Run metadata updated_at
+12:29:53Z and its attempt1 view updated_at12:29:54Z. These are distinct metadata
+update clocks, not different executions. Execution/run/attempt/path/check-suite/
+workflow/start identities and completed failure status must match exactly; each
+view's own updated_at must remain stable on a fresh second read and cannot
+precede the terminal Job or be in the future. This real owner proof passed
+without changing the original190minute expiry or60second quarantine.

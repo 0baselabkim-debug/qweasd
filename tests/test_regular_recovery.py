@@ -86,7 +86,7 @@ def test_control_extra_fields_rejected():
 class Client:
  def __init__(self):
   self.changed=False;self.calls=0
-  self.run_value=dict(id=int(r.SOURCE_RUN),head_sha=r.SOURCE_SHA,run_attempt=1,status='completed',path=r.policy.WORKFLOW,conclusion='failure',updated_at='2026-11-03T12:29:53Z')
+  self.run_value=dict(id=int(r.SOURCE_RUN),head_sha=r.SOURCE_SHA,run_attempt=1,status='completed',path=r.policy.WORKFLOW,conclusion='failure',updated_at='2026-11-03T12:29:53Z',workflow_id=400006658,check_suite_id=112815500208,created_at='2026-11-03T12:07:41Z',run_started_at='2026-11-03T12:07:41Z')
   self.job=dict(id=125907375199,run_attempt=1,run_id=int(r.SOURCE_RUN),head_sha=r.SOURCE_SHA,status='completed',started_at='2026-11-03T12:07:45Z',completed_at='2026-11-03T12:29:53Z',runner_group_name='GitHub Actions',labels=['ubuntu-latest'],steps=[dict(status='completed')])
  def run(self,_):
   self.calls+=1;v=copy.deepcopy(self.run_value)
@@ -207,3 +207,25 @@ def test_real_prefix_resumes_only_missing_price_with_mocked_wire(restored,tmp_pa
  assert (folder/'http.jsonl').read_bytes().startswith(before)
  assert (source/r.GENERATION/'collection/http.jsonl').read_bytes()==before
  assert result['rows'][0]['close']==flow['close'] and result['db_json_match']
+
+
+def test_actual_GitHub_distinct_metadata_timestamps_require_stable_execution_views():
+ class Views(Client):
+  def request(self,path):
+   value=super().request(path)
+   if '/attempts/1' in path and '/jobs?' not in path:value['updated_at']='2026-11-03T12:29:54Z'
+   return value
+ proof=r.terminal_proof(Views(),OWNER,START)
+ assert proof['run_updated_at']=='2026-11-03T12:29:53Z' and proof['attempt_updated_at']=='2026-11-03T12:29:54Z'
+ class Changed(Views):
+  def request(self,path):
+   value=super().request(path)
+   if '/attempts/1' in path and '/jobs?' not in path:value['check_suite_id']=99
+   return value
+ with pytest.raises(Failure,match='attempt_conflict'):r.terminal_proof(Changed(),OWNER,START)
+ class Unstable(Views):
+  def request(self,path):
+   value=super().request(path)
+   if '/attempts/1' in path and '/jobs?' not in path and self.calls>1:value['updated_at']='2026-11-03T12:29:55Z'
+   return value
+ with pytest.raises(Failure,match='attempt_changed'):r.terminal_proof(Unstable(),OWNER,START)
