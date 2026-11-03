@@ -120,3 +120,17 @@ def test_latest_prefix_resumes_only_missing_price_with_mocked_wire(restored,tmp_
  assert result['rows'][0]['close']==flow['close'] and result['db_json_match']
 
  assert any(p['physical_http']==2442 and p['status']=='COLLECTING' for p in seen)
+
+@pytest.mark.parametrize('inflight,ticket,transport,uncertain,expected',[
+ (False,None,None,False,'NORMAL_OWNED_RELEASE'),
+ (True,None,None,False,'KEEP_UNRESOLVED'),
+ (False,False,None,False,'KEEP_UNRESOLVED'),
+ (False,None,('reserved',),False,'KEEP_UNRESOLVED'),
+ (False,None,None,True,'KEEP_UNRESOLVED')])
+def test_known_closed_failure_can_only_use_normal_self_release(inflight,ticket,transport,uncertain,expected):
+ from types import SimpleNamespace
+ session=SimpleNamespace(network_inflight=inflight,dispatch_ticket=ticket,transport_pending=transport,uncertain=uncertain)
+ api=SimpleNamespace(token='SYNTHETIC_TOKEN')
+ assert r.prepare_owned_release(session,[api],'FAIL')==expected
+ assert api.token is None
+ if expected=='KEEP_UNRESOLVED':assert session.uncertain

@@ -255,6 +255,18 @@ class ResumePolicy:
         self.apis.append(api) # One fresh OAuth, journaled in the restored physical ledger.
 
 
+def prepare_owned_release(session,apis,status):
+    """Only this session's normal exit may release known-closed HTTP.
+
+    Unknown/pending transport remains quarantined; no other owner is touched.
+    """
+    pending=(session.network_inflight or session.dispatch_ticket is not None
+        or session.transport_pending is not None)
+    if status!='PASS' and pending:session.uncertain=True
+    for api in apis:api.token=None
+    return 'KEEP_UNRESOLVED' if pending or session.uncertain else 'NORMAL_OWNED_RELEASE'
+
+
 def collect():
     c=check_control(read_control());client=GitHub();run=actor(c,client);store=Store(ROOT);receipt=store.read('recovery-receipt.json')
     require(receipt and receipt['status']=='RECOVERED_STOPPED_OWNER' and receipt['new_run_id']==str(run['id'])
@@ -282,8 +294,7 @@ def collect():
         with configured('.github/config/kis-shared-account.json') as session:
             result=kis_manual.run(folder/'collection',control,universe,str(run['id']),policy=guard,memory_session=guard,resume_review=review,
                 progress=progress)
-            if result['status']!='PASS':session.uncertain=True
-            for api in guard.apis:api.token=None
+            result['lock_disposition']=prepare_owned_release(session,guard.apis,result['status'])
         old=Store(ROOT/'source'/GENERATION/'preparation').read('master.json')
         result.update(master=old,preparation_http=4,total_physical_http=4+result['physical_http'],generation_id=GENERATION,
             collection_complete=result['status']=='PASS',internal_validation='PASS' if result['status']=='PASS' else 'FAIL',

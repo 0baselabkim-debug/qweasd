@@ -33,3 +33,11 @@ All old sources remain immutable and every partial/complete result is archived
 for90days. Failure cannot replace the last published good dataset. PENDING_KRX
 and UNVERIFIED finality remain. A control-only push after successful latest
 full offline CI is required; re-runs and request-ID resets are rejected.
+
+Live progress is persisted after the first two new physical requests and then
+at normal200-request checkpoints. The existing Source-bound CAS lease remains
+separate from this diagnostic ledger. Only the session's ordinary owner-checked
+release is allowed when all HTTP is known closed and tokens have been discarded,
+even if the dataset is incomplete. Pending/unknown transport or dispatch tickets
+retain ownership; no TTL is shortened and no other owner's lock is released.
+The full source review and zero-network Native proof are refreshed accordingly.
