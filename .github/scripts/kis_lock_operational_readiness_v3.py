@@ -17,9 +17,34 @@ import time
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
 from kis_shared.git_backend import GitBackend,BRANCH
 from kis_shared.lease import Lease,Blocked,REPOSITORIES,validate
-from kis_shared.runtime import review_local_evidence
+from kis_shared.runtime import review_local_evidence,Session
 CENTRAL='0baselabkim-debug/qweasd'
 CONTROL='.github/lock-v3/readiness.json'
+ACTIVE_POLICIES={REPOSITORIES[0]:'.github/config/kis-shared-account.json',
+                 REPOSITORIES[1]:'config/shared-account.json',
+                 REPOSITORIES[2]:'.github/config/kis-shared-account.json'}
+
+def active_policy_review(root,env):
+    path=ACTIVE_POLICIES[env['GITHUB_REPOSITORY']]
+    if not (root/path).exists():return dict(active_policy_status='NOT_REGISTERED')
+    config=json.loads((root/path).read_bytes())
+    review_local_evidence(config,env['GITHUB_REPOSITORY'])
+    # Source/approval contract only. Actual KIS values are deliberately NOT loaded.
+    policy_env={**env,'KIS_APP_KEY':'PRESENCE_ONLY_NO_PROVIDER_AUTH',
+                    'KIS_APP_SECRET':'PRESENCE_ONLY_NO_PROVIDER_AUTH'}
+    session=Session(config,env=policy_env);session.review()
+    new_http_blocked=False
+    try:session.check_http_approval()
+    except Blocked:new_http_blocked=True
+    if config.get('schema')==2 and env['GITHUB_REPOSITORY']==REPOSITORIES[2] and not new_http_blocked:
+        raise Blocked('readiness_new_participant_HTTP_must_stay_disabled')
+    return dict(active_policy_status='SOURCE_BOUND_APPROVED',active_policy_path=path,
+        active_policy_schema=config['schema'],active_policy_sha256=hashlib.sha256((root/path).read_bytes()).hexdigest(),
+        approval_source_count=len(config['runtime_source_hashes']),
+        active_policy_participants=config.get('participants',list(REPOSITORIES[:2])),
+        new_participant_HTTP_blocked=new_http_blocked,
+        provider_credential_binding='PRESENCE_SURROGATE_POLICY_REVIEW_NOT_PROVIDER_AUTH')
+
 
 def deny_network(event,args):
     if event in ('socket.connect','socket.getaddrinfo','socket.gethostbyname','socket.sendto','http.client.connect'):
@@ -59,6 +84,7 @@ def inspect(root,env,api=gh,backend_type=GitBackend):
     review_local_evidence(cfg,report['repository']);report['candidate_source_hashes_valid']=True
     report['schema2_candidate_participants']=cfg['participants'];report['live_validation_enabled']=cfg['ENABLE_LIVE_KIS_VALIDATION']
     report['candidate_activated']=cfg['enabled']
+    if all(report['credential_presence'].values()):report.update(active_policy_review(root,env))
     report['status']='PASS_READONLY' if not report['blockers'] else 'BLOCKED'
     return report
 
@@ -71,17 +97,47 @@ def probe(root,env,control,report,api=gh,backend_type=GitBackend,lease_type=Leas
     # the recorded idle production revision. No production ref is ever updated.
     backend=backend_type(Path(env['RUNNER_TEMP'])/'v3-probe.git',branch=branch)
     _,before=backend.read()
-    if before['owner'] is not None:
+    if before['owner'] is not None and not env.get('EXPECTED_OWNER_REPOSITORY'):
         # An occupied isolated test is a valid collision; do not steal or reset.
         report.update(status='BLOCKED_PROBE_BUSY',probe_branch=branch,contender_HTTP=0)
         return report
+    hold_text=env.get('PROBE_HOLD_SECONDS','2')
+    expected_repo=env.get('EXPECTED_OWNER_REPOSITORY','')
+    expected_run=env.get('EXPECTED_OWNER_RUN_ID','')
+    if not str(hold_text).isdigit() or not 0<=int(hold_text)<=120:
+        raise Blocked('readiness_hold_duration_rejected')
+    if bool(expected_repo)!=bool(expected_run) or (expected_repo and
+            (expected_repo not in REPOSITORIES or not expected_run.isdigit())):
+        raise Blocked('readiness_expected_owner_rejected')
     lease=lease_type(backend,env['GITHUB_REPOSITORY'],env['GITHUB_RUN_ID'],env['GITHUB_SHA'])
-    lease.acquire(seconds=120)
-    report.update(probe_branch=branch,probe_owner_confirmed=lease.check()['owner']['repository']==env['GITHUB_REPOSITORY'])
-    time.sleep(2)
-    lease.release();_,after=backend.read()
+    if expected_repo:
+        _,state=backend.read();owner=state['owner']
+        if not owner or (owner['repository'],owner['run_id'])!=(expected_repo,expected_run):
+            raise Blocked('readiness_expected_holder_not_current_no_write')
+        try:lease.acquire(seconds=120)
+        except Blocked as error:
+            if str(error)!='shared_lock_busy':raise
+            report.update(status='PASS_CONFLICT_BLOCKED',probe_branch=branch,
+                expected_owner_repository=expected_repo,expected_owner_run_id=expected_run,
+                contender_acquired=False,contender_HTTP=0,oauth_reservations=0,market_reservations=0)
+            return report
+        else:
+            lease.release()
+            raise Blocked('readiness_holder_finished_before_collision_no_KIS')
+    hold=int(hold_text);lease.acquire(seconds=max(120,hold+120))
+    try:
+        report.update(probe_branch=branch,probe_owner_confirmed=lease.check()['owner']['repository']==env['GITHUB_REPOSITORY'])
+        deadline=time.monotonic()+hold
+        while time.monotonic()<deadline:
+            time.sleep(min(5,max(0,deadline-time.monotonic())))
+            lease.check()
+    finally:
+        if lease.held:lease.release()
+    _,after=backend.read()
     if after['owner'] is not None:raise Blocked('readiness_probe_release_not_verified')
-    report.update(status='PASS_PROBE',probe_final_owner=None,confirmed_transitions=lease.confirmed_transitions,probe_sequence_before=before['sequence'],probe_sequence_after=after['sequence'],oauth_reservations=0,market_reservations=0)
+    report.update(status='PASS_PROBE',probe_final_owner=None,confirmed_transitions=lease.confirmed_transitions,
+        hold_seconds=hold,probe_sequence_before=before['sequence'],probe_sequence_after=after['sequence'],
+        oauth_reservations=0,market_reservations=0)
     return report
 
 def main(argv=None):

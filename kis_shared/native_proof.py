@@ -139,7 +139,8 @@ class Proof:
                 'integrated':[]}[role]) if (root/name).exists()]
             # Preserve every previously approved live source boundary. Narrowing
             # the old source map during a security rollout is not permitted.
-            active=root/('.github/config/kis-shared-account.json' if role=='eod' else 'config/shared-account.json')
+            names += [root/p for p in ['.github/scripts/kis_lock_operational_readiness_v3.py','.github/workflows/kis-lock-operational-v3.yml','.github/workflows/kis-limited-validation.yml'] if (root/p).exists()]
+            active=root/('config/shared-account.json' if role=='intraday' else '.github/config/kis-shared-account.json')
             if active.exists():
                 for approved in json.loads(active.read_bytes()).get('runtime_source_hashes',{}):
                     source=(root/approved).resolve()
