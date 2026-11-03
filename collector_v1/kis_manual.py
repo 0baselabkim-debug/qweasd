@@ -113,7 +113,7 @@ def recover_preserved_responses(store,cache,*,asof=ASOF,generation_id=None):
         cache[key]=e;append(store.root/'tasks.jsonl',dict(task=t,status='received',evidence=e,recovery='offline_reparse'))
 
 
-def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,memory_session=None):
+def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,memory_session=None,resume_review=None):
     validator=policy.validate_control if policy else validate_control
     validator(control);asof=control['asof'];generation_id=control.get('generation_id')
     selected=policy.eligible(universe) if policy else eligible(universe)
@@ -136,7 +136,8 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
         attempts={};store.blocked_tasks=set()
         for e in events(root/'failures.jsonl'):
             k=engine.identity(e['task']);attempts[k]=max(attempts.get(k,0),e['attempt'])
-            if not e.get('retryable',True) and k not in cache:store.blocked_tasks.add(k)
+            if not e.get('retryable',True) and k not in cache:
+                if resume_review is None or not resume_review.permits(e):store.blocked_tasks.add(k)
         budget=ManualBudget(store,control,metrics,run_id,validator=validator);api=ManualAPI(store,budget,metrics,opener);api.allowed={r['symbol'] for r in selected}
         if memory_session is not None:memory_session.transfer(api)
         previous=store.read('report.json',{});metrics.seconds.update(previous.get('metrics',{}).get('seconds',{}));metrics.counts.update(previous.get('metrics',{}).get('counts',{}));started=previous.get('actual_started_at') or now();wall=time.monotonic();errors=[]
@@ -169,6 +170,7 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
                     if attempts.get(engine.identity(t),0)>=6:continue
                     try:engine.fetch_task(t,api,budget,cache,attempts,metrics);health_streak=0;checkpoint()
                     except Failure as exc:
+                        if getattr(policy,'stop_on_unknown',False) and (exc.code=='network_failure' or exc.code.startswith('shared_')):raise
                         if exc.code in ('authentication_failure','network_policy_denied','token_expired','provider_rate_limit','http_429','credential_echo','local_storage_unavailable'):raise
                         failed.append(t)
                         if exc.code in ('network_failure','KIS_response_rejected') or exc.code.startswith('http_5'):health_streak+=1
