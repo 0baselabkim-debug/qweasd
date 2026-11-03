@@ -134,3 +134,12 @@ def test_known_closed_failure_can_only_use_normal_self_release(inflight,ticket,t
  assert r.prepare_owned_release(session,[api],'FAIL')==expected
  assert api.token is None
  if expected=='KEEP_UNRESOLVED':assert session.uncertain
+
+@pytest.mark.parametrize('rejection,expected',[(False,'KEEP_UNRESOLVED'),(True,'NORMAL_OWNED_RELEASE')])
+def test_unknown_oauth_is_quarantined_even_after_response_closed(rejection,expected):
+ from types import SimpleNamespace
+ session=SimpleNamespace(network_inflight=False,dispatch_ticket=None,transport_pending=None,uncertain=False,auth_used=True,token_deadline=None)
+ api=SimpleNamespace(token='SYNTHETIC_TOKEN')
+ assert r.prepare_owned_release(session,[api],'FAIL',known_auth_rejection=rejection)==expected
+ assert api.token is None
+ assert session.uncertain==(not rejection)

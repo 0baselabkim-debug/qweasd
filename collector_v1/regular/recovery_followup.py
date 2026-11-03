@@ -255,14 +255,16 @@ class ResumePolicy:
         self.apis.append(api) # One fresh OAuth, journaled in the restored physical ledger.
 
 
-def prepare_owned_release(session,apis,status):
+def prepare_owned_release(session,apis,status,*,known_auth_rejection=False):
     """Only this session's normal exit may release known-closed HTTP.
 
     Unknown/pending transport remains quarantined; no other owner is touched.
     """
+    auth_unknown=(getattr(session,'auth_used',False) and getattr(session,'token_deadline',None) is None
+        and not known_auth_rejection)
     pending=(session.network_inflight or session.dispatch_ticket is not None
-        or session.transport_pending is not None)
-    if status!='PASS' and pending:session.uncertain=True
+        or session.transport_pending is not None or auth_unknown)
+    if pending:session.uncertain=True
     for api in apis:api.token=None
     return 'KEEP_UNRESOLVED' if pending or session.uncertain else 'NORMAL_OWNED_RELEASE'
 
@@ -294,7 +296,11 @@ def collect():
         with configured('.github/config/kis-shared-account.json') as session:
             result=kis_manual.run(folder/'collection',control,universe,str(run['id']),policy=guard,memory_session=guard,resume_review=review,
                 progress=progress)
-            result['lock_disposition']=prepare_owned_release(session,guard.apis,result['status'])
+            last=guard.apis[0].budget.entries[-1] if guard.apis and guard.apis[0].budget.entries else {}
+            known_rejection=(last.get('event')=='finished' and last.get('status')=='http_failure'
+                and last.get('http') in (401,403)
+                and guard.apis[0].budget.current.get('endpoint')=='/oauth2/tokenP')
+            result['lock_disposition']=prepare_owned_release(session,guard.apis,result['status'],known_auth_rejection=known_rejection)
         old=Store(ROOT/'source'/GENERATION/'preparation').read('master.json')
         result.update(master=old,preparation_http=4,total_physical_http=4+result['physical_http'],generation_id=GENERATION,
             collection_complete=result['status']=='PASS',internal_validation='PASS' if result['status']=='PASS' else 'FAIL',
