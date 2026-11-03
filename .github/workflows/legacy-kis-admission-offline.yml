@@ -1,0 +1,28 @@
+name: Legacy KIS admission offline regression
+on:
+  workflow_dispatch:
+  push:
+    branches: [fix/legacy-kis-admission-v1]
+  pull_request:
+    paths: [scripts/kis_public_client.py, tests/test_legacy_kis_admission.py, tests/test_market_budget.py]
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt pytest
+      - run: python -m pytest -q --junitxml=legacy-admission-tests.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: legacy-kis-admission-${{ github.run_id }}
+          path: legacy-admission-tests.xml
+          retention-days: 14

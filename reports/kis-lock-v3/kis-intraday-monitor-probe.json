@@ -1,0 +1,39 @@
+{
+  "status": "PASS_PROBE",
+  "actual_KIS_HTTP": 0,
+  "actual_OAuth_HTTP": 0,
+  "production_lease_mutations": 0,
+  "repository": "0baselabkim-debug/kis-intraday-monitor",
+  "run_id": "41545335889",
+  "code_commit": "8ae6facb12265b77d31224830bffd1a52a5c6953",
+  "central_repository": "0baselabkim-debug/qweasd",
+  "state_branch": "kis-shared-account-state",
+  "credential_presence": {
+    "KIS_APP_KEY": true,
+    "KIS_APP_SECRET": true,
+    "central_GitHub_token": true
+  },
+  "blockers": [],
+  "central_repo_read": true,
+  "central_actions_read": true,
+  "production_lease_revision": "5042ac0499c09aca639eb53ecc76845bb03b276d",
+  "production_lease_sha256": "88932dffba3d6267b95c9e0ad6e7f234b0b05ea8d7e8356cae279c71ca488a5a",
+  "production_lease_schema": 1,
+  "production_owner": null,
+  "candidate_source_hashes_valid": true,
+  "schema2_candidate_participants": [
+    "0baselabkim-debug/qweasd",
+    "0baselabkim-debug/kis-intraday-monitor",
+    "0baselabkim-debug/investment-integrated-dev"
+  ],
+  "live_validation_enabled": false,
+  "candidate_activated": false,
+  "probe_branch": "kis-shared-probe-v3-20261102-operational",
+  "probe_owner_confirmed": true,
+  "probe_final_owner": null,
+  "confirmed_transitions": 2,
+  "probe_sequence_before": 14,
+  "probe_sequence_after": 16,
+  "oauth_reservations": 0,
+  "market_reservations": 0
+}

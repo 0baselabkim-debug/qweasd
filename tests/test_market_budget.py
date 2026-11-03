@@ -1,5 +1,6 @@
 """Physical transport and resumable evidence, independent of production credentials."""
-import copy, io, json
+import copy, io, json, urllib.error
+from unittest.mock import Mock
 import pytest
 from test_dashboard import history
 from scripts.kis_public_client import KIS
@@ -13,19 +14,23 @@ class Reply(io.BytesIO):
 def transport(monkeypatch,responses):
     monkeypatch.setenv('KIS_APP_KEY','test-key');monkeypatch.setenv('KIS_APP_SECRET','test-secret')
     monkeypatch.setattr('scripts.kis_public_client.time.sleep',lambda _:None)
+    # This suite isolates physical budget accounting; shared admission has its
+    # own fail-closed regression tests and is never bypassed by the real client.
+    monkeypatch.setattr('scripts.kis_public_client.account_session',lambda:Mock())
     calls=[]
     def send(request,**kw):
         calls.append(request.full_url.split('?')[0])
         value=responses.pop(0)
         if isinstance(value,Exception):raise value
         return Reply(value)
-    monkeypatch.setattr('scripts.kis_public_client.urllib.request.urlopen',send)
+    monkeypatch.setattr('scripts.kis_public_client.open_request',send)
     return calls
 
 PATH='/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice'
 
 def test_physical_cap_includes_lazy_auth_and_every_retry(monkeypatch):
-    calls=transport(monkeypatch,[{'access_token':'test-token'},OSError('offline'),{'rt_cd':'0','output2':[]}])
+    retryable=urllib.error.HTTPError('https://example.invalid',429,'bounded test',{},io.BytesIO(b'{}'))
+    calls=transport(monkeypatch,[{'access_token':'test-token'},retryable,{'rt_cd':'0','output2':[]}])
     b=BoundedAPI(LazyAPI(KIS),max_calls=3)
     b.request(PATH,{},'test')
     assert len(calls)==b.used==3 and b.reserved==3
@@ -42,7 +47,8 @@ def test_unused_retry_slots_do_not_exhaust_budget(monkeypatch):
     with pytest.raises(RecoveryBudget):b.request(PATH,{},'test')
 
 def test_auth_retry_failure_and_renewal_are_capped(monkeypatch):
-    calls=transport(monkeypatch,[OSError('offline')]*3)
+    errors=[urllib.error.HTTPError('https://example.invalid',429,'bounded test',{},io.BytesIO(b'{}')) for _ in range(3)]
+    calls=transport(monkeypatch,errors)
     b=BoundedAPI(LazyAPI(KIS),max_calls=2)
     with pytest.raises(RecoveryBudget):b.request(PATH,{},'test')
     assert len(calls)==2 and all(x['kind']=='authentication' for x in b.physical)

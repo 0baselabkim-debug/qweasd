@@ -27,7 +27,7 @@ jobs:
         env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python -u scripts/collect_sector_support.py
+        run: python -u -m kis_shared.legacy --script scripts/collect_sector_support.py --
       - name: Save checkpoint on a data branch
         if: always()
         run: |

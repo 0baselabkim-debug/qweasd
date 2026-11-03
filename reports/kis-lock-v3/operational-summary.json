@@ -1,0 +1,47 @@
+{
+  "status": "BLOCKED",
+  "reason": "missing integrated Actions bindings and unconfirmed obsolete queued run termination",
+  "main_heads": {
+    "qweasd": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+    "kis-intraday-monitor": "8fe527d87271d28431f14b36a233596ab3b73b18",
+    "investment-integrated-dev": "0939b9e5bba7c90fda2096f159a0766eb676bf58"
+  },
+  "production_state_unchanged": {
+    "lease": true,
+    "ledger": true
+  },
+  "production_lease_mutations": 0,
+  "isolated_probe_lease_transitions": 4,
+  "actual_KIS_HTTP": 0,
+  "actual_OAuth_HTTP": 0,
+  "actual_KRX_HTTP": 0,
+  "actual_OpenAI_HTTP": 0,
+  "actual_Telegram_HTTP": 0,
+  "secret_changes": 0,
+  "schedule_changes": 0,
+  "operating_data_changes": 0,
+  "MERGE_COMPLETE": false,
+  "OPERATIONAL_LOCK_VERIFIED": false,
+  "READY_FOR_LIMITED_LIVE_TEST": false,
+  "BLOCKED_BY_OFFICIAL_DATA": true,
+  "official_price_approved": 0,
+  "PENDING_KRX": 2348,
+  "approved_buy_candidates": 0,
+  "queued_legacy_run": 40811582221,
+  "ordinary_cancel_status": 409,
+  "force_cancel_status": 409,
+  "new_participant_bindings": {
+    "KIS_APP_KEY": false,
+    "KIS_APP_SECRET": false,
+    "central_GitHub_token": false
+  },
+  "new_repo_secret_public_key_access": 403,
+  "existing_operating_policy": "schema1 retained; all current source hashes and proof digest match",
+  "schema2_activation": "not applied",
+  "native_scenarios_pass": 33,
+  "post_merge_regression": "NOT_RUN_NO_MERGE",
+  "probe_runs": {
+    "qweasd": "41545127108",
+    "kis-intraday-monitor": "41545335889"
+  }
+}

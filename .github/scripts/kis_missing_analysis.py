@@ -1,4 +1,9 @@
 """Read-only diagnosis of the 113 missing records; never changes collection data."""
+from pathlib import Path as _AccountPath
+import sys as _account_sys
+_account_sys.path.insert(0,str(_AccountPath(__file__).resolve().parents[2]))
+from kis_shared.boundary import install as _install_account_boundary
+_install_account_boundary()
 import base64, collections, datetime as dt, gzip, hashlib, io, json, os, re
 import statistics, sys, time, urllib.error, urllib.parse, urllib.request, zipfile
 from pathlib import Path
@@ -74,6 +79,7 @@ def inspect():
 
 LAST = 0.0
 def api(path, headers, body=None):
+    raise RuntimeError('BLOCKED_retired_legacy_KIS_transport_use_reviewed_Session_client')
     global LAST
     time.sleep(max(0, 1.05 - (time.monotonic() - LAST)))
     LAST = time.monotonic(); started = stamp()

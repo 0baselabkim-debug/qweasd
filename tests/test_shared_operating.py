@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 from kis_shared import runtime
-from kis_shared.lease import Blocked, REPOSITORIES
+from kis_shared.lease import Blocked, REPOSITORIES, LEGACY_REPOSITORIES
 import test_kis_shared as shared_fixtures
 
 
@@ -87,7 +87,7 @@ class AccountOperatingTests(unittest.TestCase):
             hashes={'transport.py':hashlib.sha256(source.read_bytes()).hexdigest()}
             proof=dict(request_id='SYNTHETIC',native={repo:dict(repository=repo,phase='PASS',request_id='SYNTHETIC',
                 market_http=0,oauth_issuance=0,final_owner=None,mutual_exclusion_both_directions=True,
-                final_sequence=4,source=dict(runtime_source_hashes=hashes)) for repo in REPOSITORIES})
+                final_sequence=4,source=dict(runtime_source_hashes=hashes)) for repo in LEGACY_REPOSITORIES})
             raw=json.dumps(proof).encode();(root/'proof.json').write_bytes(raw)
             cfg=dict(native_proof_file='proof.json',native_proof_sha256=hashlib.sha256(raw).hexdigest(),runtime_source_hashes=hashes)
             with patch.object(runtime,'__file__',str(root/'kis_shared/runtime.py')):

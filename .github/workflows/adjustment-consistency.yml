@@ -16,7 +16,7 @@ jobs:
       - env:
           KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
           KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
-        run: python scripts/probe_adjusted_consistency.py
+        run: python -m kis_shared.legacy --script scripts/probe_adjusted_consistency.py --
       - run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

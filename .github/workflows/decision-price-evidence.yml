@@ -83,7 +83,11 @@ jobs:
         run: |
           # Keep the existing shared-auth cooldown for bounded KIS refreshes.
           if [ "$MODE" = pilot ] || [ "$MODE" = daily-refresh ]; then sleep 65; fi
-          python scripts/collect_decision_prices.py "$MODE"
+          if [ "$MODE" = "pilot" ] || [ "$MODE" = "daily-refresh" ]; then
+            python -m kis_shared.legacy --script scripts/collect_decision_prices.py -- "$MODE"
+          else
+            python scripts/collect_decision_prices.py "$MODE"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

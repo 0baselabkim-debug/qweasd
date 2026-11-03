@@ -8,6 +8,8 @@ import urllib.parse
 import urllib.request
 from .core import Failure, now, sha
 from zoneinfo import ZoneInfo
+from kis_shared.boundary import install as _install_account_boundary
+_install_account_boundary()
 
 BASE = 'https://openapi.koreainvestment.com:9443'
 Q = '/uapi/domestic-stock/v1/quotations/'
@@ -59,9 +61,16 @@ class Providers:
                 status = r.status
             if len(raw) > 40_000_000:
                 raise Failure('response_size_exceeded')
+            if source=='KIS' and self._shared_required:
+                from kis_shared.runtime import current
+                current().http_response_closed()
             self.budget.finish(entry, 'received', http=status, response_hash=None if auth else sha(raw))
             return raw
         except urllib.error.HTTPError as e:
+            e.close()
+            if source=='KIS' and self._shared_required:
+                from kis_shared.runtime import current
+                current().http_response_closed()
             self.budget.finish(entry, 'http_failure', http=e.code)
             raise Failure('authentication_failure' if e.code in (401,403) else 'http_'+str(e.code), e.code in (408,429) or e.code >= 500) from None
         except urllib.error.URLError as exc:

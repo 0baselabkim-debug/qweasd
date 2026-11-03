@@ -1,0 +1,120 @@
+{
+  "name": "KIS central lock V3 operational readiness (NO KIS HTTP)",
+  "on": {
+    "push": {
+      "branches": [
+        "fix/legacy-kis-admission-v1",
+        "main"
+      ],
+      "paths": [
+        ".github/workflows/kis-lock-operational-v3.yml",
+        ".github/scripts/kis_lock_operational_readiness_v3.py",
+        ".github/lock-v3/readiness.json"
+      ]
+    },
+    "workflow_dispatch": {
+      "inputs": {
+        "mode": {
+          "type": "choice",
+          "options": [
+            "inspect",
+            "probe"
+          ],
+          "default": "inspect",
+          "required": true
+        }
+      }
+    }
+  },
+  "permissions": {
+    "contents": "read",
+    "actions": "read"
+  },
+  "jobs": {
+    "inspect": {
+      "if": "github.event_name == 'push' || github.event_name == 'workflow_dispatch'",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 5,
+      "permissions": {
+        "contents": "read",
+        "actions": "read"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@v4",
+          "with": {
+            "persist-credentials": false
+          }
+        },
+        {
+          "uses": "actions/setup-python@v5",
+          "with": {
+            "python-version": "3.12"
+          }
+        },
+        {
+          "name": "GitHub only; no KIS credential values or market transport",
+          "env": {
+            "GH_TOKEN": "${{ github.token }}",
+            "KIS_APP_KEY_PRESENT": "${{ secrets.KIS_APP_KEY != '' }}",
+            "KIS_APP_SECRET_PRESENT": "${{ secrets.KIS_APP_SECRET != '' }}"
+          },
+          "run": "python -I .github/scripts/kis_lock_operational_readiness_v3.py --mode inspect --output \"$RUNNER_TEMP/kis-lock-v3/inspect.json\""
+        },
+        {
+          "uses": "actions/upload-artifact@v4",
+          "if": "always()",
+          "with": {
+            "name": "kis-lock-v3-inspect-${{ github.run_id }}-${{ github.run_attempt }}",
+            "path": "${{ runner.temp }}/kis-lock-v3/",
+            "retention-days": 14,
+            "if-no-files-found": "error"
+          }
+        }
+      ]
+    },
+    "probe": {
+      "if": "success() && ((github.event_name == 'workflow_dispatch' && inputs.mode == 'probe') || (github.event_name == 'push' && github.ref != 'refs/heads/main' && contains(github.event.head_commit.message, '[lock-v3-probe]')))",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 5,
+      "permissions": {
+        "contents": "write",
+        "actions": "read"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@v4",
+          "with": {
+            "persist-credentials": false
+          }
+        },
+        {
+          "uses": "actions/setup-python@v5",
+          "with": {
+            "python-version": "3.12"
+          }
+        },
+        {
+          "name": "GitHub only; no KIS credential values or market transport",
+          "env": {
+            "GH_TOKEN": "${{ github.token }}",
+            "KIS_APP_KEY_PRESENT": "${{ secrets.KIS_APP_KEY != '' }}",
+            "KIS_APP_SECRET_PRESENT": "${{ secrets.KIS_APP_SECRET != '' }}"
+          },
+          "run": "python -I .github/scripts/kis_lock_operational_readiness_v3.py --mode probe --output \"$RUNNER_TEMP/kis-lock-v3/probe.json\""
+        },
+        {
+          "uses": "actions/upload-artifact@v4",
+          "if": "always()",
+          "with": {
+            "name": "kis-lock-v3-probe-${{ github.run_id }}-${{ github.run_attempt }}",
+            "path": "${{ runner.temp }}/kis-lock-v3/",
+            "retention-days": 14,
+            "if-no-files-found": "error"
+          }
+        }
+      ],
+      "needs": "inspect"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "status": "BLOCKED",
+  "actual_KIS_HTTP": 0,
+  "actual_OAuth_HTTP": 0,
+  "production_lease_mutations": 0,
+  "repository": "0baselabkim-debug/investment-integrated-dev",
+  "run_id": "41544297780",
+  "code_commit": "1fa4013f42dfe25366cfaad23a487a6c56567f9a",
+  "central_repository": "0baselabkim-debug/qweasd",
+  "state_branch": "kis-shared-account-state",
+  "credential_presence": {
+    "KIS_APP_KEY": false,
+    "KIS_APP_SECRET": false,
+    "central_GitHub_token": false
+  },
+  "blockers": [
+    "MISSING_KIS_APP_KEY",
+    "MISSING_KIS_APP_SECRET",
+    "MISSING_central_GitHub_token"
+  ]
+}

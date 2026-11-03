@@ -1,0 +1,73 @@
+{
+  "qweasd": {
+    "parent_main": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+    "base_merge_tree_conflict_free": true,
+    "new_live_source_hashes": {
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/run.py": "0dca5cad7db7f9ae905f732baf25c9bdbd4343e7f6ec39b13012c68eb0100a5a",
+      "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
+      "kis_shared/legacy.py": "75baba93b8cfcdd66516304e523a47b40b786533ecc7852bcf4a8112e3490b28",
+      "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+      "scripts/kis_public_client.py": "2adbb750402aad842e76858dd67ef7e9a0617b560530d60b641bb634cbfda845",
+      "collector_v1/providers.py": "bc079685d8229d74bbcd7a61aaa01df92c1e484f8c21d42a155ef27e88cffcaf",
+      "collector_v1/kis_manual.py": "07c30c42fb2b7d1b0a0f3f462f77bc7139240bfb9f6945e600b78b2a35e5507b",
+      "collector_v1/experiment/engine.py": "9c139b540250ed1b5c5faf6e1cc36e48cbe0096d26e4bdedb263d1a6fdf40d42",
+      "collector_v1/regular/runner.py": "ab4b544b30aba40f96ac8865f7c0d4dce180800351fb320486523818f728b896",
+      "collector_v1/regular/collector.py": "662bd63d8a070c84f0aea419ede794766c9fd3b3b54509d7f55fb55353487413",
+      ".github/scripts/kis_enrich_collect.py": "d50f71f1563e3a225f7f161bc7e4ae1441cb5ff88008051be55256833ff52701",
+      ".github/scripts/kis_history_probe.py": "54b183d25ebae413f329a94da1be076b3cb26a0a0e5e4c8d7acab9896db03af1",
+      ".github/scripts/kis_collect_once.py": "598c906618a26c41a434031452d73a37bc45a8c9d5500efedd16f5878aaeb6a6",
+      ".github/scripts/kis_missing_analysis.py": "aa6b5b7234b6622ff613b91437f5111665094a47f3443adb79f1ee9989290272"
+    },
+    "actual_post_merge_main": null,
+    "activation": "BLOCKED_BY_MISSING_NEW_PARTICIPANT_BINDINGS_AND_UNDRAINED_OLD_RUN",
+    "schema2_policy_enabled": false,
+    "new_participant_live_HTTP_enabled": false
+  },
+  "kis-intraday-monitor": {
+    "parent_main": "8fe527d87271d28431f14b36a233596ab3b73b18",
+    "base_merge_tree_conflict_free": true,
+    "new_live_source_hashes": {
+      "kis_shared/flow.py": "bae134ebb67ae86ef50d3b88b0d5a85be9b73c6ccee08a5e4eedfc9164e39c1e",
+      "kis_shared/snapshots.py": "2472f7cabe9c2c234e32d0167aa4e04dfe897fa0e512e96c3984f89db2913f21",
+      "kis_shared/remaining.py": "c508eb4edabff95e802518265b2fc11d53ad7c97b29d0d86df676378e144f9f2",
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/admission.py": "8f5305e74ff3249934af0f5ced2cb89e29dce9a742ffc6d5e8fadcdcaa5d920f",
+      "kis_shared/run.py": "98fdd75777c77680495eb08701005eb8c2f2bb22297d657b6d5eddfaf6beec0c",
+      "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
+      "kis_shared/watchlist.py": "629dd5e11bc70cca7639209920a65745639a9fdd6490fd2405f273a9bc4a2cab",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
+      "kis_shared/recurring.py": "d04e5e1de060cb4ad88669b3c0c9d812b24087f5e9184e4d10b1be2ffc6a0db2",
+      "kis_shared/remaining_four.py": "f78a8bd352c7ea1b8d4f5a174ae446899ba28b7363d6ca139ad4f6edcd07ec71",
+      "kis_shared/bootstrap.py": "2e8120c50aa675f2b30ad43a6188f8fe8888fd84be4a21a5aad822acd441dce8",
+      "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+      "scripts/actions_auth.py": "d5a328b1609054a317f69468e2359f985edb652c05f90760349be7c22d281ebb",
+      "stage3/live_probe.py": "dbfe7713b2b643dd140364df5d86afdcf04f2d9ed8d27ded3e67f96a7b321b12"
+    },
+    "actual_post_merge_main": null,
+    "activation": "BLOCKED_BY_MISSING_NEW_PARTICIPANT_BINDINGS_AND_UNDRAINED_OLD_RUN",
+    "schema2_policy_enabled": false,
+    "new_participant_live_HTTP_enabled": false
+  },
+  "investment-integrated-dev": {
+    "parent_main": "0939b9e5bba7c90fda2096f159a0766eb676bf58",
+    "base_merge_tree_conflict_free": true,
+    "new_live_source_hashes": {
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
+      "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30"
+    },
+    "actual_post_merge_main": null,
+    "activation": "BLOCKED_BY_MISSING_NEW_PARTICIPANT_BINDINGS_AND_UNDRAINED_OLD_RUN",
+    "schema2_policy_enabled": false,
+    "new_participant_live_HTTP_enabled": false
+  }
+}

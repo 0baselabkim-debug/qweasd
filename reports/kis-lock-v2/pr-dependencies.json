@@ -1,0 +1,224 @@
+{
+  "observed_at": "2026-11-02T22:39:37.107673+00:00",
+  "phase": "PR snapshots before final evidence commit; latest source/CI in PR checks",
+  "prs": [
+    {
+      "baseRefName": "main",
+      "headRefName": "fix/legacy-kis-admission-v1",
+      "headRefOid": "37b5fd2148ced3ae348ad2422d0e195acdaef480",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 4,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41538474526/job/125596255704",
+          "name": "offline",
+          "startedAt": "2026-11-02T22:34:59Z",
+          "status": "IN_PROGRESS",
+          "workflowName": "Legacy KIS admission offline regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41538467850/job/125596236085",
+          "name": "offline",
+          "startedAt": "2026-11-02T22:34:58Z",
+          "status": "IN_PROGRESS",
+          "workflowName": "Legacy KIS admission offline regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:35:38Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41538474653/job/125596256234",
+          "name": "native",
+          "startedAt": "2026-11-02T22:34:59Z",
+          "status": "COMPLETED",
+          "workflowName": "KIS three-party native lock proof (zero KIS HTTP)"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:35:39Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41538467754/job/125596235733",
+          "name": "native",
+          "startedAt": "2026-11-02T22:34:57Z",
+          "status": "COMPLETED",
+          "workflowName": "KIS three-party native lock proof (zero KIS HTTP)"
+        }
+      ],
+      "url": "https://github.com/0baselabkim-debug/qweasd/pull/4",
+      "repository": "0baselabkim-debug/qweasd"
+    },
+    {
+      "baseRefName": "main",
+      "headRefName": "feat/krx-20261102-official-review",
+      "headRefOid": "9503c61c996f11f4dfe61d6073e40d6a8eab7463",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 3,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T15:20:19Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41470482900/job/125362432144",
+          "name": "preserve",
+          "startedAt": "2026-11-02T15:19:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Bounded official KRX review 2026-11-02"
+        }
+      ],
+      "url": "https://github.com/0baselabkim-debug/qweasd/pull/3",
+      "repository": "0baselabkim-debug/qweasd"
+    },
+    {
+      "baseRefName": "main",
+      "headRefName": "feat/integrated-v1",
+      "headRefOid": "9ed6c057c319e4ca3b1642cd647d9281d1c665ab",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 1,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/0baselabkim-debug/investment-integrated-dev/actions/runs/41538476162/job/125596979587",
+          "name": "replay",
+          "startedAt": "2026-11-02T22:36:28Z",
+          "status": "IN_PROGRESS",
+          "workflowName": "Read-only real artifact replay and upstream V2 comparison"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/0baselabkim-debug/investment-integrated-dev/actions/runs/41538467111/job/125596532331",
+          "name": "replay",
+          "startedAt": "2026-11-02T22:35:31Z",
+          "status": "IN_PROGRESS",
+          "workflowName": "Read-only real artifact replay and upstream V2 comparison"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:38:09Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/investment-integrated-dev/actions/runs/41538476193/job/125596601385",
+          "name": "offline",
+          "startedAt": "2026-11-02T22:35:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Independent offline integration validation"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:38:17Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/investment-integrated-dev/actions/runs/41538467127/job/125596552140",
+          "name": "offline",
+          "startedAt": "2026-11-02T22:35:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Independent offline integration validation"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:35:28Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/investment-integrated-dev/actions/runs/41538476176/job/125596260018",
+          "name": "native",
+          "startedAt": "2026-11-02T22:34:59Z",
+          "status": "COMPLETED",
+          "workflowName": "KIS three-party native lock proof (zero KIS HTTP)"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:35:29Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/investment-integrated-dev/actions/runs/41538467105/job/125596233588",
+          "name": "native",
+          "startedAt": "2026-11-02T22:34:58Z",
+          "status": "COMPLETED",
+          "workflowName": "KIS three-party native lock proof (zero KIS HTTP)"
+        }
+      ],
+      "url": "https://github.com/0baselabkim-debug/investment-integrated-dev/pull/1",
+      "repository": "0baselabkim-debug/investment-integrated-dev"
+    },
+    {
+      "baseRefName": "main",
+      "headRefName": "feat/kis-lock-integration-v2",
+      "headRefOid": "6231d4436cf49d2cd50661d896ab481ace7cf594",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 23,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:35:24Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/kis-intraday-monitor/actions/runs/41538473991/job/125596254742",
+          "name": "native",
+          "startedAt": "2026-11-02T22:34:58Z",
+          "status": "COMPLETED",
+          "workflowName": "KIS three-party native lock proof (zero KIS HTTP)"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:35:38Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/kis-intraday-monitor/actions/runs/41538466513/job/125596236333",
+          "name": "native",
+          "startedAt": "2026-11-02T22:34:58Z",
+          "status": "COMPLETED",
+          "workflowName": "KIS three-party native lock proof (zero KIS HTTP)"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:35:21Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/kis-intraday-monitor/actions/runs/41538473991/job/125596254384",
+          "name": "regression",
+          "startedAt": "2026-11-02T22:34:59Z",
+          "status": "COMPLETED",
+          "workflowName": "KIS three-party native lock proof (zero KIS HTTP)"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-02T22:35:35Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/0baselabkim-debug/kis-intraday-monitor/actions/runs/41538466513/job/125596235896",
+          "name": "regression",
+          "startedAt": "2026-11-02T22:34:57Z",
+          "status": "COMPLETED",
+          "workflowName": "KIS three-party native lock proof (zero KIS HTTP)"
+        }
+      ],
+      "url": "https://github.com/0baselabkim-debug/kis-intraday-monitor/pull/23",
+      "repository": "0baselabkim-debug/kis-intraday-monitor"
+    }
+  ],
+  "qweasd_comparisons": {
+    "3": {
+      "exit_code": 0,
+      "overlap": [],
+      "note": "base committed security changes plus explicit current-file overlap check; no main merge performed"
+    },
+    "2": {
+      "exit_code": 0,
+      "overlap": [],
+      "note": "base committed security changes plus explicit current-file overlap check; no main merge performed"
+    }
+  },
+  "preferred_order": [
+    "drain pre-fence runners after approval",
+    "qweasd PR4 + monitor PR23 with reviewed source-bound two-party policy",
+    "integrated PR1 deploy",
+    "read-only credential/permissions proof",
+    "source-bound schema2 activation and separately approved limited live test"
+  ],
+  "krx_pr3_dependency": false
+}

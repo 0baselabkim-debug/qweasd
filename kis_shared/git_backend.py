@@ -16,8 +16,13 @@ BRANCH = 'kis-shared-account-state'
 
 
 class GitBackend:
-    def __init__(self, directory, *, branch=BRANCH, remote=CENTRAL):
-        if remote != CENTRAL or not re.fullmatch(r'kis-shared-(account-state|probe-[a-z0-9-]+)', branch):
+    def __init__(self, directory, *, branch=BRANCH, remote=CENTRAL, proof_root=None):
+        self.native_proof = proof_root is not None
+        if self.native_proof:
+            root=Path(proof_root).resolve();target=Path(remote).resolve()
+            if not root.is_relative_to('/tmp') or not target.is_relative_to(root) or not Path(directory).resolve().is_relative_to(root) or not re.fullmatch(r'kis-shared-probe-[a-z0-9-]+',branch):
+                raise Blocked('native_proof_local_destination_required')
+        if (not self.native_proof and remote != CENTRAL) or not re.fullmatch(r'kis-shared-(account-state|probe-[a-z0-9-]+)', branch):
             raise Blocked('shared_ledger_destination_rejected')
         self.directory = Path(directory)
         self.branch, self.remote = branch, remote
@@ -31,6 +36,8 @@ class GitBackend:
             p = subprocess.run(['git', '-c', 'credential.helper=!gh auth git-credential',
                 '-c', 'user.name=KIS shared coordinator', '-c', 'user.email=kis-shared@users.noreply.github.com',
                 *args], cwd=cwd or self.directory, input=data, capture_output=True, timeout=60)
+        except PermissionError:
+            raise
         except (OSError, subprocess.TimeoutExpired):
             raise Blocked('shared_git_transport_unavailable_outcome_unknown') from None
         if p.returncode and not reject:

@@ -36,7 +36,7 @@ jobs:
           RECOVERY_LIMIT: ${{ inputs.limit || 6 }}
         run: |
           sleep 65
-          timeout 600 python scripts/recover_liquidity.py --limit "$RECOVERY_LIMIT" --symbols "$RECOVERY_SYMBOLS"
+          timeout 600 python -m kis_shared.legacy --script scripts/recover_liquidity.py -- --limit "$RECOVERY_LIMIT" --symbols "$RECOVERY_SYMBOLS"
       - name: Prepare coherent date-specific liquidity evidence
         id: prepare
         run: python scripts/publish_liquidity.py

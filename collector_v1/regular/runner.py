@@ -182,7 +182,7 @@ def validate():
                     and policy.timestamp(shared['reviewed_at'])<=policy.utcnow()<policy.timestamp(shared['expires_at'])):
                 evidence=review_local_evidence(shared,policy.REPO)
                 readiness='READY_SHARED_COORDINATION_FIRST_REGULAR_RUN_NOT_VERIFIED'
-                rollout_evidence=dict(request_id=evidence['request_id'],proof_sha256=shared['native_proof_sha256'])
+                rollout_evidence=dict(request_id=evidence.get('request_id'),proof_kind=evidence.get('proof_kind','legacy_native'),proof_sha256=shared['native_proof_sha256'])
         except (Blocked,KeyError,Failure):pass
     report=dict(status='DEPLOYMENT_VALIDATED_NO_MARKET_HTTP',run_id=c['run_id'],code_commit=c['code_commit'],
         actual_default_branch='main',workflow_id=workflow['id'],workflow_state=workflow['state'],registered_cron=policy.CRON,
