@@ -137,6 +137,14 @@ class Proof:
                 'eod':['scripts/kis_public_client.py','collector_v1/providers.py','collector_v1/kis_manual.py','collector_v1/experiment/engine.py','collector_v1/regular/runner.py','collector_v1/regular/collector.py','.github/scripts/kis_enrich_collect.py','.github/scripts/kis_history_probe.py','.github/scripts/kis_collect_once.py','.github/scripts/kis_missing_analysis.py'],
                 'intraday':['scripts/actions_auth.py','stage3/live_probe.py'],
                 'integrated':[]}[role]) if (root/name).exists()]
+            # Preserve every previously approved live source boundary. Narrowing
+            # the old source map during a security rollout is not permitted.
+            active=root/('.github/config/kis-shared-account.json' if role=='eod' else 'config/shared-account.json')
+            if active.exists():
+                for approved in json.loads(active.read_bytes()).get('runtime_source_hashes',{}):
+                    source=(root/approved).resolve()
+                    if not source.is_relative_to(root) or not source.is_file():raise RuntimeError('approved_source_missing')
+                    names.append(source)
             runtime_hashes[REPOSITORIES[list(self.roots).index(role)]]={str(path.relative_to(root)):digest(path) for path in names if path.name not in ('native_proof.py','bundled_proof.py')}
         # Retain all per-process outputs and complete local Git history for inspection.
         import shutil

@@ -1,5 +1,6 @@
 name: KIS three-party native lock proof (zero KIS HTTP)
 on:
+  workflow_dispatch:
   push:
     branches: [fix/legacy-kis-admission-v1]
   pull_request:

@@ -1,5 +1,6 @@
 name: Legacy KIS admission offline regression
 on:
+  workflow_dispatch:
   push:
     branches: [fix/legacy-kis-admission-v1]
   pull_request:

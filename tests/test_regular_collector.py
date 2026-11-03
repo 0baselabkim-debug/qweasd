@@ -289,3 +289,25 @@ def test_copied_context_cannot_authorize_another_run_or_manual_event(env,monkeyp
     with pytest.raises(Failure,match='actor_binding'):runner.assert_runtime_actor(c)
     monkeypatch.setenv('GITHUB_RUN_ID',c['run_id']);monkeypatch.setenv('GITHUB_EVENT_NAME','workflow_dispatch')
     with pytest.raises(Failure,match='actor_binding'):runner.assert_runtime_actor(c)
+
+
+def test_deployment_validation_accepts_source_tree_proof_without_legacy_request_id(env,monkeypatch):
+    import base64
+    from kis_shared import runtime
+    c,root=env
+    class DeployClient(Client):
+        def request(self,path,*args,**kwargs):
+            if '/actions/workflows/' in path:return dict(id=1,state='active',path=policy.WORKFLOW)
+            if '/contents/' in path:return dict(content=base64.b64encode(Path(policy.WORKFLOW).read_bytes()).decode(),sha='b'*40)
+            raise AssertionError(path)
+    client=DeployClient(c);monkeypatch.setattr(runner,'ROOT',root/'deploy');Store(runner.ROOT).write('context.json',c)
+    monkeypatch.setattr(runner,'GitHub',lambda:client)
+    cfg=json.loads(runner.CONFIG.read_bytes());shared=json.loads(Path(cfg['shared_policy']).read_bytes());shared.update(reviewed_at='2026-10-28T00:00:00+00:00',expires_at='2026-11-28T00:00:00+00:00')
+    sp=root/'shared.json';sp.write_bytes(encoded(shared));cfg['shared_policy']=str(sp)
+    cp=root/'access.json';cp.write_bytes(encoded(cfg));monkeypatch.setattr(runner,'CONFIG',cp)
+    monkeypatch.setattr(runtime,'review_local_evidence',lambda *a:dict(proof_kind='actual_source_trees',status='PASS'))
+    assert runner.validate()==0
+    r=Store(runner.ROOT).read('report.json')
+    assert r['operational_readiness']=='READY_SHARED_COORDINATION_FIRST_REGULAR_RUN_NOT_VERIFIED'
+    assert r['rollout_evidence']['request_id'] is None and r['rollout_evidence']['proof_sha256']==shared['native_proof_sha256']
+    assert r['market_http']==0 and r['slot_claimed'] is False

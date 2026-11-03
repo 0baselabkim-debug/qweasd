@@ -1,0 +1,29 @@
+{
+  "stage": "EXISTING_TWO_ACTOR_SECURITY_PATCH",
+  "third_participant_enrolled": false,
+  "third_live_enabled": false,
+  "lease_schema": 1,
+  "active_policy_schema": 1,
+  "source_coverage_narrowed": false,
+  "source_proof": "reports/kis-lock-v4/native-premerge.json",
+  "mixed_old_new_protocol": "reports/kis-lock-v4/mixed-protocol-proof.json",
+  "main_offline_liveness_run": 41551747569,
+  "orphan_run": {
+    "id": 40811582221,
+    "actual_repository": "0baselabkim-debug/kis-intraday-monitor",
+    "metadata_status": "queued",
+    "jobs": 0,
+    "check_runs": 0,
+    "check_suite_started_at": null,
+    "billable": {},
+    "same_concurrency_offline_success": true,
+    "classification": "PRE_DISPATCH_ORPHAN_NOT_CURRENT_EXECUTOR_OR_LEASE_HOLDER",
+    "terminal_status_claimed": false,
+    "metadata_repair_status": "UNRESOLVED_GITHUB_API_INCONSISTENCY"
+  },
+  "scope_approval": "User V4 explicitly permits independently verified existing eod/intraday security patches; no KIS HTTP authorized",
+  "no_automatic_live_after_merge": true,
+  "minimum_request_interval": 1.05,
+  "existing_HTTP_budget": 5600,
+  "live_KIS_calls": 0
+}
