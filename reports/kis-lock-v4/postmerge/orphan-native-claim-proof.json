@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "old_source": "ec4aa5c549c11416ce07deb37a57c93bca6b3380",
+  "rows": [
+    {
+      "module": "scripts.bootstrap_trial",
+      "claim_ref": "refs/tags/kis-bootstrap-initial-one-v1",
+      "status": "PASS_BLOCKED_BEFORE_OAUTH",
+      "reason": "trial_previously_claimed_or_visibility_unknown",
+      "requests": [
+        [
+          "GET",
+          "/repos/0baselabkim-debug/kis-intraday-monitor/git/ref/tags/kis-initial-one-v1"
+        ],
+        [
+          "GET",
+          "/repos/0baselabkim-debug/kis-intraday-monitor/git/ref/tags/kis-initial-six-v1"
+        ],
+        [
+          "GET",
+          "/repos/0baselabkim-debug/kis-intraday-monitor/git/ref/tags/kis-bootstrap-initial-one-v1"
+        ]
+      ],
+      "KIS_HTTP": 0
+    },
+    {
+      "module": "scripts.intraday_flow_trial",
+      "claim_ref": "refs/tags/kis-intraday-flow-six-v1",
+      "status": "PASS_BLOCKED_BEFORE_OAUTH",
+      "reason": "trial_previously_claimed_or_visibility_unknown",
+      "requests": [
+        [
+          "GET",
+          "/repos/0baselabkim-debug/kis-intraday-monitor/git/ref/tags/kis-intraday-flow-six-v1"
+        ]
+      ],
+      "KIS_HTTP": 0
+    }
+  ],
+  "actual_KIS_HTTP": 0,
+  "production_mutations": 0,
+  "limitation": "Actual historical claim_once methods; exact path/status/body substituted with current authenticated GitHub GET snapshots; no Secrets loaded"
+}

@@ -1,0 +1,79 @@
+{
+  "checked_at": "2026-11-03T00:56:05.809258+00:00",
+  "repositories": {
+    "qweasd": {
+      "main": "4b256c4f3e383aeadc040e9a0a67d0ca09e29ac7",
+      "active_schema": 1,
+      "approved_sources": 22,
+      "source_hashes_valid": true,
+      "source_proof_sha256": "7de21d923cf6ad8593ed3f1b2e91f5d719c69cdf90c321c0286a53e02fc0161b",
+      "third_participant_live_enabled": false,
+      "operational_data_changes": [],
+      "schedules_unchanged": true,
+      "schedules": {
+        ".github/workflows/full-market-experiment.yml": [
+          {
+            "cron": "0 10 26 10 *"
+          },
+          {
+            "cron": "0 13 26 10 *"
+          },
+          {
+            "cron": "0 16 26 10 *"
+          },
+          {
+            "cron": "0 19 26 10 *"
+          },
+          {
+            "cron": "*/15 10-22 26 10 *"
+          },
+          {
+            "cron": "0 0,1 27 10 *"
+          }
+        ],
+        ".github/workflows/kis-market-2030.yml": [
+          {
+            "cron": "30 11 * * 1-5"
+          }
+        ]
+      }
+    },
+    "kis-intraday-monitor": {
+      "main": "21f08a94646b16c144e79d20083ba1a0caafce12",
+      "active_schema": 1,
+      "approved_sources": 28,
+      "source_hashes_valid": true,
+      "source_proof_sha256": "7de21d923cf6ad8593ed3f1b2e91f5d719c69cdf90c321c0286a53e02fc0161b",
+      "third_participant_live_enabled": false,
+      "operational_data_changes": [],
+      "schedules_unchanged": true,
+      "schedules": {
+        ".github/workflows/intraday-monitor-plan.yml": [
+          {
+            "cron": "0 1-6 * * 1-5"
+          }
+        ]
+      }
+    },
+    "investment-integrated-dev": {
+      "main": "0939b9e5bba7c90fda2096f159a0766eb676bf58",
+      "unmodified": true,
+      "third_participant_enrolled": false
+    }
+  },
+  "lease": {
+    "unchanged": true,
+    "blob_sha": "9a11747a527c4c840eec2dd9ea4e07d21888044f",
+    "owner": null
+  },
+  "regular_ledger": {
+    "unchanged": true,
+    "blob_sha": "911e4f34a1e835054c58a84f77b2f110825d8d5d",
+    "owner": null
+  },
+  "production_lease_revision": "5042ac0499c09aca639eb53ecc76845bb03b276d",
+  "actual_KIS_HTTP": 0,
+  "actual_OAuth_HTTP": 0,
+  "secrets_mutations": 0,
+  "operational_schedule_mutations": 0
+}
