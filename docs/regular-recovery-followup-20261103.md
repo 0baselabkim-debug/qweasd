@@ -41,3 +41,11 @@ release is allowed when all HTTP is known closed and tokens have been discarded,
 even if the dataset is incomplete. Pending/unknown transport or dispatch tickets
 retain ownership; no TTL is shortened and no other owner's lock is released.
 The full source review and zero-network Native proof are refreshed accordingly.
+
+This explicitly approved resume may preserve further partial progress when the
+old response-time estimate no longer predicts completion before09:00. Ordinary
+new full collections keep the capacity rejection. This profile alone records a
+bounded-resume capacity plan and continues missing requests within the unchanged
+HTTP time/target/budget guards; all2348 eligible stocks remain the target. Partial
+rows still force FAIL/FAILED_PRESERVED. This adds no time extension, new market
+date, quota expansion, relaxed qualification or full-completion claim.

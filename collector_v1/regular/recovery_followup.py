@@ -240,6 +240,7 @@ class ResumeReview:
 class ResumePolicy:
     stop_on_unknown=True
     initial_progress_http_interval=2
+    bounded_resume=True # Preserve partial progress; hard HTTP date/time/budget guards still apply.
     eligible=staticmethod(policy.eligible)
     def __init__(self,c,context):self.c,self.context,self.apis=c,context,[]
     def validate_control(self,value,current=None):

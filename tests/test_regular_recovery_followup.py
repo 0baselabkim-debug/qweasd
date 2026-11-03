@@ -143,3 +143,12 @@ def test_unknown_oauth_is_quarantined_even_after_response_closed(rejection,expec
  assert r.prepare_owned_release(session,[api],'FAIL',known_auth_rejection=rejection)==expected
  assert api.token is None
  assert session.uncertain==(not rejection)
+
+
+def test_new_full_runs_keep_capacity_guard_bounded_resume_cannot_claim_completion():
+ with pytest.raises(Failure,match='manual_insufficient_time_for_population'):
+  kis_manual.capacity_plan(7000,5000)
+ p=kis_manual.capacity_plan(7000,5000,bounded_resume=True)
+ assert p==dict(projected_seconds=7000,available_seconds=5000,projected_complete_within_window=False,bounded_resume=True)
+ assert r.ResumePolicy.bounded_resume is True
+ with pytest.raises(Failure):r.check_control(control(),dt.datetime(2026,11,4,0,tzinfo=dt.timezone.utc))
