@@ -4,13 +4,13 @@
   "mode": "shared-account-exclusive",
   "verified": true,
   "reviewed_by": "Codex: V4 user-authorized existing two-participant security deployment",
-  "reviewed_at": "2026-11-03T00:34:00+00:00",
+  "reviewed_at": "2026-11-03T00:36:45.402315+00:00",
   "expires_at": "2027-01-27T00:00:00+00:00",
-  "evidence_reference": "reports/kis-lock-v4/native-premerge.json; reports/kis-lock-v4/mixed-protocol-proof.json; kis-intraday-monitor PR23 merged e86ec7f148f284988289f7325aa28e97b4448957",
+  "evidence_reference": "reports/kis-lock-v4/native-premerge.json; reports/kis-lock-v4/mixed-protocol-proof.json; monitor PR23/PR24 main 21f08a94646b16c144e79d20083ba1a0caafce12; no-call probe Run41553991763 PASS",
   "account_rate_policy_reference": "docs/shared-account-operating-20261030.md",
   "token_policy_reference": "docs/shared-account-operating-20261030.md",
   "other_repository": "0baselabkim-debug/kis-intraday-monitor",
-  "reviewed_other_repository_commit": "e86ec7f148f284988289f7325aa28e97b4448957",
+  "reviewed_other_repository_commit": "21f08a94646b16c144e79d20083ba1a0caafce12",
   "reason": "Existing two-actor source-bound security policy retained; third participant and live validation remain disabled. No new KIS HTTP performed.",
   "shared_policy": ".github/config/kis-shared-account.json"
 }
