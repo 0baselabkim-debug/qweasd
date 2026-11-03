@@ -24,7 +24,13 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: python -m pip install -r requirements.txt pytest==9.1.1
-      - name: Offline recovery safeguards before any credentials
+      - name: Read approved original for offline safeguards without KIS credentials
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/0baselabkim-debug/qweasd/actions/artifacts/13230751197/zip > "$RUNNER_TEMP/regular-source.zip"
+      - name: Offline recovery safeguards before any KIS credentials
+        env:
+          REGULAR_SOURCE_ZIP: ${{ runner.temp }}/regular-source.zip
         run: python -m pytest -q tests/test_regular_recovery.py
       - name: Restore original and prove stopped owner without KIS credentials
         env:
