@@ -2,7 +2,7 @@ name: Nov3 regular recovery offline safeguards (NO KIS HTTP)
 on:
   push:
     branches: [recovery/regular-20261103]
-    paths-ignore: [.github/trials/regular-recovery-20261103.json]
+    paths-ignore: [.github/trials/regular-recovery-20261103.json, .github/trials/regular-recovery-followup-20261103.json]
   pull_request:
     paths: ['collector_v1/regular/recovery.py', 'collector_v1/kis_manual.py', 'tests/test_regular_recovery.py', '.github/workflows/kis-regular-recovery*.yml']
 permissions:
@@ -25,9 +25,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api repos/0baselabkim-debug/qweasd/actions/artifacts/13230751197/zip > "$RUNNER_TEMP/regular-source.zip"
+      - name: Read-only latest partial for follow-up integrity tests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/0baselabkim-debug/qweasd/actions/artifacts/13255235841/zip > "$RUNNER_TEMP/regular-followup-source.zip"
       - name: Full regression without KIS credentials
         env:
           REGULAR_SOURCE_ZIP: ${{ runner.temp }}/regular-source.zip
+          REGULAR_FOLLOWUP_SOURCE_ZIP: ${{ runner.temp }}/regular-followup-source.zip
         run: python -m pytest -q --junitxml="$RUNNER_TEMP/recovery-full.xml"
       - if: always()
         uses: actions/upload-artifact@v4

@@ -38,6 +38,21 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
+def network_diagnostics(error,phase):
+    """Class/errno only: never exception text, URLs, headers, tokens or bodies."""
+    allowed={'URLError','TimeoutError','ConnectionError','ConnectionResetError','ConnectionAbortedError',
+        'BrokenPipeError','OSError','SSLError','SSLCertVerificationError','gaierror','herror','RemoteDisconnected','IncompleteRead'}
+    def name(value):
+        n=type(value).__name__
+        return n if n in allowed else 'NetworkError'
+    reason=getattr(error,'reason',None)
+    code=getattr(reason if isinstance(reason,BaseException) else error,'errno',None)
+    result=dict(exception_class=name(error),phase=phase)
+    if isinstance(reason,BaseException):result['reason_class']=name(reason)
+    if type(code) is int and -65536<=code<=65536:result['errno']=code
+    return result
+
+
 class Providers:
     def __init__(self, store, budget, opener=None):
         self.store, self.budget = store, budget
@@ -54,9 +69,12 @@ class Providers:
         if params:
             url += '?' + urllib.parse.urlencode(params)
         entry = self.budget.before(source, endpoint, 'authentication' if auth else 'required_source')
+        phase='request_setup'
         try:
             req = urllib.request.Request(url, headers=headers or {}, data=body)
+            phase='connect_or_response_headers'
             with self.opener(req, timeout=30) as r:
+                phase='response_read'
                 raw = r.read(40_000_001)
                 status = r.status
             if len(raw) > 40_000_000:
@@ -76,10 +94,10 @@ class Providers:
         except urllib.error.URLError as exc:
             denied='Tunnel connection failed: 403' in str(exc.reason)
             code='network_policy_denied' if denied else 'network_failure'
-            self.budget.finish(entry, code)
+            self.budget.finish(entry, code,network=network_diagnostics(exc,phase))
             raise Failure(code, not denied) from None
-        except (OSError, TimeoutError):
-            self.budget.finish(entry, 'network_failure')
+        except (OSError, TimeoutError) as exc:
+            self.budget.finish(entry, 'network_failure',network=network_diagnostics(exc,phase))
             raise Failure('network_failure', True) from None
         except Failure:
             self.budget.finish(entry, 'response_rejected')

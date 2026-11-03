@@ -113,6 +113,13 @@ def recover_preserved_responses(store,cache,*,asof=ASOF,generation_id=None):
         cache[key]=e;append(store.root/'tasks.jsonl',dict(task=t,status='received',evidence=e,recovery='offline_reparse'))
 
 
+def pending_projection(tasks,cache,metrics):
+    """Estimate only missing HTTP, preserving cached successful observations."""
+    endpoints={'flow':'investor-trade-by-stock-daily','price':'inquire-daily-itemchartprice'}
+    return sum(max(1.05,metrics.seconds.get('api:'+Q+endpoints[t['kind']],0)/max(metrics.counts.get('api:'+Q+endpoints[t['kind']],0),1))
+        for t in tasks if engine.identity(t) not in cache)
+
+
 def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,memory_session=None,resume_review=None):
     validator=policy.validate_control if policy else validate_control
     validator(control);asof=control['asof'];generation_id=control.get('generation_id')
@@ -161,7 +168,7 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
             for t in common+tasks(probes):engine.fetch_task(t,api,budget,cache,attempts,metrics)
             for row in probes:qualify(row,cache,store)
             if rest:
-                projected=sum(max(1.05,metrics.seconds.get('api:'+Q+suffix,0)/max(metrics.counts.get('api:'+Q+suffix,0),1)) for suffix in ('investor-trade-by-stock-daily','inquire-daily-itemchartprice'))*len(rest)+60
+                projected=pending_projection(tasks(rest),cache,metrics)+60
                 if projected>budget.remaining_seconds():raise Failure('manual_insufficient_time_for_population')
             pending=tasks(rest);health_streak=0;circuit_trips=0
             for recovery_pass in range(2):

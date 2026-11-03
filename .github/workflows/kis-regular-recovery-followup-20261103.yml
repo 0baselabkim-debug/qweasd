@@ -1,0 +1,71 @@
+name: User approved Nov3 remainder follow-up (1217 preserved)
+on:
+  push:
+    branches: [recovery/regular-20261103]
+    paths: [.github/trials/regular-recovery-followup-20261103.json]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: kis-validation-auth
+  cancel-in-progress: false
+  queue: max
+jobs:
+  resume:
+    if: contains(github.event.head_commit.message, '[execute-regular-followup]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Read approved original for offline safeguards without KIS credentials
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/0baselabkim-debug/qweasd/actions/artifacts/13255235841/zip > "$RUNNER_TEMP/regular-followup-source.zip"
+      - name: Offline recovery safeguards before any KIS credentials
+        env:
+          REGULAR_FOLLOWUP_SOURCE_ZIP: ${{ runner.temp }}/regular-followup-source.zip
+        run: python -m pytest -q tests/test_regular_recovery_followup.py
+      - name: Restore original and prove stopped owner without KIS credentials
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m collector_v1.regular.recovery_followup prepare
+      - name: Respect existing190minute lease and grace, then verified CAS recovery
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -u -m collector_v1.regular.recovery_followup wait
+      - name: Resume missing tasks with cumulative5600 limit and original raw reuse
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -u -m collector_v1.regular.recovery_followup collect
+      - name: Preserve scanned partial or complete state
+        if: always()
+        env:
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: python -m collector_v1.regular.recovery_followup seal
+      - uses: actions/upload-artifact@v4
+        id: archive
+        if: always() && hashFiles('data/kis-regular-recovery-followup-20261103/UPLOAD_ALLOWED') != ''
+        with:
+          name: kis-regular-recovery-followup-20261103-${{ github.run_id }}
+          path: |
+            data/kis-regular-recovery-followup-20261103/
+            !data/kis-regular-recovery-followup-20261103/**/writer.lock
+          retention-days: 90
+          if-no-files-found: error
+      - name: Verify stored artifact before marking recovery complete
+        if: always() && steps.archive.outputs.artifact-id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.archive.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.archive.outputs.artifact-digest }}
+        run: python -m collector_v1.regular.recovery_followup finalize
