@@ -1,5 +1,5 @@
 """Pinned second partial, real raw verification, zero provider network."""
-import copy,datetime as dt,json,os,urllib.error
+import copy,datetime as dt,json,os,urllib.error,shutil
 from pathlib import Path
 import pytest
 from collector_v1.regular import recovery_followup as r
@@ -78,3 +78,45 @@ def test_one_shot_workflow_does_not_change_regular_schedule():
  assert '[execute-regular-followup]' in w and 'schedule:' not in w
  assert 'recovery_followup wait' in w and 'recovery_followup collect' in w
  assert 'cron: \'30 11 * * 1-5\'' in Path('.github/workflows/kis-market-2030.yml').read_text()
+
+
+def test_latest_prefix_resumes_only_missing_price_with_mocked_wire(restored,tmp_path,monkeypatch):
+ from collector_v1 import kis_manual
+ from collector_v1.providers import task
+ from collector_v1.validation import parse
+ _,source,proof=restored;folder=tmp_path/'collection';shutil.copytree(source/r.GENERATION/'collection',folder)
+ store=r.Evidence(folder,Metrics());cache=r.engine.replay(store,1,asof=r.ASOF,generation_id=r.GENERATION)
+ universe=Store(source/r.GENERATION/'preparation').read('universe.json');selected=[x for x in universe if x['symbol']=='060900'];assert len(selected)==1
+ flow_task=task('flow',r.ASOF,round=1,symbol='060900',market='KOSDAQ',generation_id=r.GENERATION)
+ flow=parse(store.raw(cache[r.engine.identity(flow_task)]),cache[r.engine.identity(flow_task)])[0]
+ before=(folder/'http.jsonl').read_bytes();calls=[]
+ for key in ('KIS_APP_KEY','KIS_APP_SECRET'):monkeypatch.setenv(key,'SYNTHETIC_ONLY')
+ monkeypatch.setattr('collector_v1.kis_manual.time.sleep',lambda _:None)
+ # Freeze the synthetic transport test's remaining time; real window guards are tested separately.
+ monkeypatch.setattr(kis_manual.ManualBudget,'remaining_seconds',lambda self:3600)
+ class Policy:
+  eligible=staticmethod(lambda _:selected)
+  validate_control=staticmethod(lambda _:None)
+  stop_on_unknown=True
+  initial_progress_http_interval=2
+ class Response:
+  status=200
+  def __init__(self,value):self.value=encoded(value)
+  def __enter__(self):return self
+  def __exit__(self,*args):pass
+  def read(self,n):return self.value
+ def wire(req,timeout):
+  calls.append(req.full_url)
+  if req.full_url.endswith('/oauth2/tokenP'):return Response(dict(access_token='SYNTHETIC_TOKEN'))
+  assert 'inquire-daily-itemchartprice' in req.full_url and 'FID_INPUT_ISCD=060900' in req.full_url
+  return Response(dict(rt_cd='0',output1=dict(stck_shrn_iscd='060900'),output2=[dict(stck_bsop_date='20261103',stck_oprc=str(flow['close']),stck_hgpr=str(flow['close']),stck_lwpr=str(flow['close']),stck_clpr=str(flow['close']),acml_vol=str(flow['volume']),acml_tr_pbmn=str(flow['turnover']),mod_yn='N')]))
+ c=dict(schema=1,mode='full',asof=r.ASOF,trial_id=r.GENERATION,generation_id=r.GENERATION,request_id='SYNTHETIC_RESUME',previous_run=r.SOURCE_RUN,max_total_http=5600,not_before=control()['not_before'],expires_at=control()['expires_at'],approval=control()['approval'])
+ seen=[]
+ result=kis_manual.run(folder,c,universe,'999',opener=wire,progress=seen.append,policy=Policy(),resume_review=r.ResumeReview(dict(status='RECOVERED_STOPPED_OWNER',source=proof)))
+ assert result['status']=='PASS' and result['target']==1 and result['kis_validated']==1
+ assert len(calls)==2 and result['physical_http_this_run']==2 and result['physical_http']==2442
+ assert (folder/'http.jsonl').read_bytes().startswith(before)
+ assert (source/r.GENERATION/'collection/http.jsonl').read_bytes()==before
+ assert result['rows'][0]['close']==flow['close'] and result['db_json_match']
+
+ assert any(p['physical_http']==2442 and p['status']=='COLLECTING' for p in seen)

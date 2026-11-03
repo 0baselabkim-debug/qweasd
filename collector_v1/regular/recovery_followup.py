@@ -239,6 +239,7 @@ class ResumeReview:
 
 class ResumePolicy:
     stop_on_unknown=True
+    initial_progress_http_interval=2
     eligible=staticmethod(policy.eligible)
     def __init__(self,c,context):self.c,self.context,self.apis=c,context,[]
     def validate_control(self,value,current=None):
@@ -270,10 +271,17 @@ def collect():
     config=json.loads(Path('.github/config/kis-shared-account.json').read_bytes())
     os.environ['KIS_VALIDATION_REQUEST_ID']=c['request_id']
     result={};session=None
+    def progress(payload):
+        print(json.dumps(dict(stage='RESUMED_COLLECTION',**payload)),flush=True)
+        record,version=client.contents(state_path(c))
+        require(record['new_run_id']==str(run['id']) and record['new_commit']==run['head_sha'],'progress_owner_changed')
+        record.update(status='COLLECTING',live_progress=payload,cumulative_http=4+payload['physical_http'],
+            market_http_this_run=payload['physical_http']-2440)
+        client.write(state_path(c),record,sha=version)
     try:
         with configured('.github/config/kis-shared-account.json') as session:
             result=kis_manual.run(folder/'collection',control,universe,str(run['id']),policy=guard,memory_session=guard,resume_review=review,
-                progress=lambda p:print(json.dumps(dict(stage='RESUMED_COLLECTION',**p)),flush=True))
+                progress=progress)
             if result['status']!='PASS':session.uncertain=True
             for api in guard.apis:api.token=None
         old=Store(ROOT/'source'/GENERATION/'preparation').read('master.json')

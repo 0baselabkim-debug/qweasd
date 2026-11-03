@@ -154,7 +154,8 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
         last_progress=budget.used
         def checkpoint(force=False,phase='COLLECTING'):
             nonlocal last_progress
-            if not force and budget.used-last_progress<200:return
+            interval=getattr(policy,'initial_progress_http_interval',200) if last_progress==budget.initial else 200
+            if not force and budget.used-last_progress<interval:return
             complete=sum(all(engine.identity(observation_task(k,symbol=r['symbol'],market=r['market'])) in cache for k in ('flow','price')) for r in selected)
             payload=dict(run_id=run_id,mode=control['mode'],asof=asof,status=phase,target=len(selected),received=complete,physical_http=budget.used,http_limit=budget.limit,task_failures=len(events(root/'failures.jsonl')),observed_at=now(),actual_started_at=started)
             store.write('progress.json',payload);last_progress=budget.used

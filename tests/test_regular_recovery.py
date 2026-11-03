@@ -185,6 +185,8 @@ def test_real_prefix_resumes_only_missing_price_with_mocked_wire(restored,tmp_pa
  before=(folder/'http.jsonl').read_bytes();calls=[]
  for key in ('KIS_APP_KEY','KIS_APP_SECRET'):monkeypatch.setenv(key,'SYNTHETIC_ONLY')
  monkeypatch.setattr('collector_v1.kis_manual.time.sleep',lambda _:None)
+ # Freeze the synthetic transport test's remaining time; real window guards are tested separately.
+ monkeypatch.setattr(kis_manual.ManualBudget,'remaining_seconds',lambda self:3600)
  class Policy:
   eligible=staticmethod(lambda _:selected)
   validate_control=staticmethod(lambda _:None)
