@@ -54,6 +54,7 @@ def check_control(c,at=None,*,allow_wait=False):
     at=at or dt.datetime.now(UTC)
     require(set(c)=={'schema','enabled','approval','source_run','artifact_id','artifact_sha256','asof','generation_id','max_total_http','request_id','expected_revision','reviewed_code_commit','offline_ci_run','not_before','expires_at'},'control_schema')
     require(all(isinstance(c.get(k),str) and re.fullmatch('[0-9a-f]{40}',c[k]) for k in ('expected_revision','reviewed_code_commit')) and str(c.get('offline_ci_run','')).isdigit(),'code_review_binding_missing')
+    require(type(c.get('schema')) is int and type(c.get('artifact_id')) is int and type(c.get('max_total_http')) is int,'control_numeric_types')
     require(c.get('schema')==1 and c.get('enabled') is True and
         c.get('approval')=='USER_APPROVED_RECOVER_AND_RESUME_NOV3_2026','explicit_approval_missing')
     require((c.get('source_run'),c.get('artifact_id'),c.get('artifact_sha256'),c.get('asof'),c.get('generation_id'),c.get('max_total_http'))==
@@ -71,7 +72,7 @@ def actor(c,client):
         and os.environ.get('GITHUB_EVENT_NAME')=='push' and os.environ.get('GITHUB_RUN_ATTEMPT')=='1','actor_or_attempt_invalid')
     run=client.run(os.environ['GITHUB_RUN_ID'])
     require(run.get('path')==WORKFLOW and run.get('head_sha')==os.environ.get('GITHUB_SHA')
-        and run.get('event')=='push' and run.get('status')=='in_progress','actual_run_mismatch')
+        and run.get('event')=='push' and run.get('status')=='in_progress' and run.get('run_attempt')==1,'actual_run_mismatch')
     review_local_evidence(json.loads(Path('.github/config/kis-shared-account.json').read_bytes()),REPO)
     ci=client.run(c['offline_ci_run'])
     require(ci.get('status')=='completed' and ci.get('conclusion')=='success' and ci.get('head_sha')==c['reviewed_code_commit']
@@ -257,6 +258,7 @@ def collect():
             result=kis_manual.run(folder/'collection',control,universe,str(run['id']),policy=guard,memory_session=guard,resume_review=review,
                 progress=lambda p:print(json.dumps(dict(stage='RESUMED_COLLECTION',**p)),flush=True))
             if result['status']!='PASS':session.uncertain=True
+            for api in guard.apis:api.token=None
         old=Store(ROOT/'source'/GENERATION/'preparation').read('master.json')
         result.update(master=old,preparation_http=4,total_physical_http=4+result['physical_http'],generation_id=GENERATION,
             collection_complete=result['status']=='PASS',internal_validation='PASS' if result['status']=='PASS' else 'FAIL',
