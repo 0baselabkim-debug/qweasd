@@ -113,7 +113,22 @@ def recover_preserved_responses(store,cache,*,asof=ASOF,generation_id=None):
         cache[key]=e;append(store.root/'tasks.jsonl',dict(task=t,status='received',evidence=e,recovery='offline_reparse'))
 
 
-def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,memory_session=None):
+def pending_projection(tasks,cache,metrics):
+    """Estimate only missing HTTP, preserving cached successful observations."""
+    endpoints={'flow':'investor-trade-by-stock-daily','price':'inquire-daily-itemchartprice'}
+    return sum(max(1.05,metrics.seconds.get('api:'+Q+endpoints[t['kind']],0)/max(metrics.counts.get('api:'+Q+endpoints[t['kind']],0),1))
+        for t in tasks if engine.identity(t) not in cache)
+
+
+def capacity_plan(projected,available,*,bounded_resume=False):
+    bounded_resume=bounded_resume is True
+    plan=dict(projected_seconds=projected,available_seconds=available,
+        projected_complete_within_window=projected<=available,bounded_resume=bounded_resume)
+    if projected>available and bounded_resume is not True:raise Failure('manual_insufficient_time_for_population')
+    return plan
+
+
+def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,memory_session=None,resume_review=None):
     validator=policy.validate_control if policy else validate_control
     validator(control);asof=control['asof'];generation_id=control.get('generation_id')
     selected=policy.eligible(universe) if policy else eligible(universe)
@@ -136,17 +151,19 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
         attempts={};store.blocked_tasks=set()
         for e in events(root/'failures.jsonl'):
             k=engine.identity(e['task']);attempts[k]=max(attempts.get(k,0),e['attempt'])
-            if not e.get('retryable',True) and k not in cache:store.blocked_tasks.add(k)
+            if not e.get('retryable',True) and k not in cache:
+                if resume_review is None or not resume_review.permits(e):store.blocked_tasks.add(k)
         budget=ManualBudget(store,control,metrics,run_id,validator=validator);api=ManualAPI(store,budget,metrics,opener);api.allowed={r['symbol'] for r in selected}
         if memory_session is not None:memory_session.transfer(api)
         previous=store.read('report.json',{});metrics.seconds.update(previous.get('metrics',{}).get('seconds',{}));metrics.counts.update(previous.get('metrics',{}).get('counts',{}));started=previous.get('actual_started_at') or now();wall=time.monotonic();errors=[]
         common=[observation_task('index',market=m) for m in ('KOSPI','KOSDAQ')]
         probes=[r for r in selected if r['symbol'] in TARGETS];rest=[r for r in selected if r['symbol'] not in TARGETS]
         tasks=lambda rows:[observation_task(k,symbol=r['symbol'],market=r['market']) for r in rows for k in ('flow','price')]
-        last_progress=budget.used
+        last_progress=budget.used;capacity=None
         def checkpoint(force=False,phase='COLLECTING'):
             nonlocal last_progress
-            if not force and budget.used-last_progress<200:return
+            interval=getattr(policy,'initial_progress_http_interval',200) if last_progress==budget.initial else 200
+            if not force and budget.used-last_progress<interval:return
             complete=sum(all(engine.identity(observation_task(k,symbol=r['symbol'],market=r['market'])) in cache for k in ('flow','price')) for r in selected)
             payload=dict(run_id=run_id,mode=control['mode'],asof=asof,status=phase,target=len(selected),received=complete,physical_http=budget.used,http_limit=budget.limit,task_failures=len(events(root/'failures.jsonl')),observed_at=now(),actual_started_at=started)
             store.write('progress.json',payload);last_progress=budget.used
@@ -160,8 +177,8 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
             for t in common+tasks(probes):engine.fetch_task(t,api,budget,cache,attempts,metrics)
             for row in probes:qualify(row,cache,store)
             if rest:
-                projected=sum(max(1.05,metrics.seconds.get('api:'+Q+suffix,0)/max(metrics.counts.get('api:'+Q+suffix,0),1)) for suffix in ('investor-trade-by-stock-daily','inquire-daily-itemchartprice'))*len(rest)+60
-                if projected>budget.remaining_seconds():raise Failure('manual_insufficient_time_for_population')
+                projected=pending_projection(tasks(rest),cache,metrics)+60
+                capacity=capacity_plan(projected,budget.remaining_seconds(),bounded_resume=getattr(policy,'bounded_resume',False))
             pending=tasks(rest);health_streak=0;circuit_trips=0
             for recovery_pass in range(2):
                 failed=[]
@@ -169,6 +186,8 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
                     if attempts.get(engine.identity(t),0)>=6:continue
                     try:engine.fetch_task(t,api,budget,cache,attempts,metrics);health_streak=0;checkpoint()
                     except Failure as exc:
+                        if getattr(policy,'bounded_resume',False) is True and exc.code.endswith('_outside_manual_window'):raise
+                        if getattr(policy,'stop_on_unknown',False) and (exc.code=='network_failure' or exc.code.startswith('shared_')):raise
                         if exc.code in ('authentication_failure','network_policy_denied','token_expired','provider_rate_limit','http_429','credential_echo','local_storage_unavailable'):raise
                         failed.append(t)
                         if exc.code in ('network_failure','KIS_response_rejected') or exc.code.startswith('http_5'):health_streak+=1
@@ -193,7 +212,7 @@ def run(root,control,universe,run_id,opener=None,progress=None,*,policy=None,mem
         status='PASS' if len(rows)==len(selected) and len(indices)==2 and not errors else 'FAIL'
         report=dict(schema=1,mode=control['mode'],asof=asof,trial_id=control['trial_id'],request_id=control['request_id'],run_id=run_id,status=status,target=len(selected),kis_validated=len(rows),official_accepted=0,official_price_status='PENDING_KRX',provider_finality='UNVERIFIED',rows=rows,indices=indices,errors=errors,
                     actual_started_at=started,completed_at=now(),elapsed_seconds=(dt.datetime.fromisoformat(now())-dt.datetime.fromisoformat(started)).total_seconds(),this_run_seconds=time.monotonic()-wall,
-                    physical_http=budget.used,physical_http_this_run=budget.used-budget.initial,http_limit=budget.limit,retries=sum(max(0,n-1) for n in attempts.values()),metrics=metrics.result(),population_sha256=binding['population_sha256'],target_symbols=sorted(api.allowed),
+                    physical_http=budget.used,physical_http_this_run=budget.used-budget.initial,http_limit=budget.limit,retries=sum(max(0,n-1) for n in attempts.values()),metrics=metrics.result(),population_sha256=binding['population_sha256'],target_symbols=sorted(api.allowed),capacity_plan=capacity,
                     first_http_at=min((e['started_at'] for e in budget.entries if e['event']=='started'),default=None),last_http_at=max((e['completed_at'] for e in budget.entries if e['event']=='finished'),default=None))
         import duckdb
         db_begin=time.monotonic()

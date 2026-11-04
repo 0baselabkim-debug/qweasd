@@ -103,6 +103,8 @@ def fetch_task(t,api,budget,cache,attempts,metrics):
             if not retryable:
                 api.store.blocked_tasks=getattr(api.store,'blocked_tasks',set())|{key}
             append(api.store.root/'failures.jsonl',dict(task=t,status='failed',reason=code,retryable=retryable,attempt=attempts[key],observed_at=now()))
+            if getattr(api,'stop_on_unknown',False) and (code=='network_failure' or code.startswith('shared_')):
+                raise Failure(code) from None
             if code=='token_expired' and getattr(api,'reauth_count',0)<1:
                 if budget.remaining_seconds()<=90:raise Stop('no_time_for_safe_reauthentication')
                 begin=time.monotonic();time.sleep(60);metrics.add('reauth_backoff',time.monotonic()-begin)

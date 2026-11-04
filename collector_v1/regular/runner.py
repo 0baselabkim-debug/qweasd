@@ -34,7 +34,7 @@ def scan(root,apis=()):
         if any(x.encode() in raw for x in values):raise Failure('credential_in_regular_output')
 
 
-def inventory(root):return {str(p.relative_to(root)):sha(p.read_bytes()) for p in sorted(Path(root).rglob('*')) if p.is_file() and p.name not in ('manifest.json','writer.lock')}
+def inventory(root):return {str(p.relative_to(root)):sha(p.read_bytes()) for p in sorted(Path(root).rglob('*')) if p.is_file() and p!=Path(root)/'manifest.json' and p.name!='writer.lock'}
 
 
 def verify_manifest(root):
@@ -48,7 +48,7 @@ def context():
 
 
 def assert_runtime_actor(c):
-    expected={'GITHUB_REPOSITORY':policy.REPO,'GITHUB_REF':'refs/heads/main','GITHUB_EVENT_NAME':'schedule',
+    expected={'GITHUB_REPOSITORY':policy.REPO,'GITHUB_REF':'refs/heads/main','GITHUB_EVENT_NAME':c.get('trigger','schedule'),
               'GITHUB_RUN_ATTEMPT':'1','GITHUB_RUN_ID':c['run_id'],'GITHUB_SHA':c['code_commit']}
     if any(os.getenv(k)!=v for k,v in expected.items()):raise Failure('regular_runtime_actor_binding_mismatch')
 
@@ -61,32 +61,51 @@ def freeze():
     if run.get('path')!=policy.WORKFLOW or run.get('head_sha')!=os.getenv('GITHUB_SHA'):raise Failure('regular_workflow_or_code_mismatch')
     event=os.environ['GITHUB_EVENT_NAME'];store=Store(ROOT)
     if event not in ('schedule','push','workflow_dispatch'):raise Failure('unsupported_regular_event')
-    if event!='schedule':
+    inputs=json.loads(os.environ.get('REGULAR_INPUTS_JSON','{}') or '{}')
+    operation=inputs.get('operation','validate') if event=='workflow_dispatch' else ('start' if event=='schedule' else 'validate')
+    if operation not in ('validate','start','resume'):raise Failure('unknown_manual_operation')
+    if event=='workflow_dispatch' and operation=='resume':
+        from .operator import freeze_resume
+        return freeze_resume(run,inputs)
+    if event!='schedule' and operation!='start':
         c=dict(mode='VALIDATION_ONLY',run_id=str(run['id']),code_commit=run['head_sha'],artifact_name='kis-regular-deployment-'+str(run['id']))
-        store.write('context.json',c);output(collect=False,artifact_name=c['artifact_name']);return 0
-    c=policy.freeze(run,os.environ.get('REQUESTED_CRON',''));c['mode']='SCHEDULED_COLLECTION';c['artifact_name']=c['generation_id']+'-run-'+c['run_id']
+        store.write('context.json',c);output(collect=False,operation='validate',artifact_name=c['artifact_name']);return 0
+    if event=='workflow_dispatch':c=policy.manual_start(run,inputs)
+    else:c=policy.freeze(run,os.environ.get('REQUESTED_CRON',''));c['mode']='SCHEDULED_COLLECTION'
+    c['artifact_name']=c['generation_id']+'-run-'+c['run_id']
+    c['schedule_lag_seconds']=(policy.timestamp(c['run_created_at'])-policy.timestamp(c['scheduled_at'])).total_seconds()
+    c['execution_operation']='start'
+    output(operation='start')
     store.write('context.json',c)
     ledger=Ledger(client,c)
     previous=ledger.current()
     if previous:
         store.write('report.json',dict(status='DUPLICATE_NOT_COLLECTED',prior_status=previous['status'],prior_run=previous['context']['run_id'],market_http=0))
         output(collect=False,artifact_name=c['artifact_name']);return 0
-    # This job already holds kis-validation-auth; inventory is read again now.
-    check_runs(client,c)
-    claimed,record=ledger.claim()
-    store.write('claim.json',dict(claimed=claimed,owner=record['context']['run_id'],prior_status=record['status']))
-    if claimed:
-        try:policy.window(c)
-        except Failure as e:
-            ledger.transition('BLOCKED',reason=e.code)
-            store.write('report.json',dict(status='BLOCKED',reason=e.code,asof=c['asof'],market_http=0))
-            claimed=False
-    output(collect=claimed,artifact_name=c['artifact_name']);return 0
+    # Local Actions serialization is not the account-wide lease. Do not burn a
+    # daily slot if dependency installation or shared-account acquisition fails.
+    check_runs(client,c);policy.window(c)
+    from .operator import attest
+    attest(c,None)
+    store.write('claim.json',dict(claimed=False,claim_deferred_until_account=True))
+    output(collect=True,artifact_name=c['artifact_name']);return 0
+
+
+def claim_for_collection(ledger,c):
+    current=ledger.current()
+    if current and current['context']==c and current['status'] not in TERMINAL:
+        claimed,record=True,current
+    else:claimed,record=ledger.claim()
+    Store(ROOT).write('claim.json',dict(claimed=claimed,owner=record['context']['run_id'],prior_status=record['status']))
+    if not claimed:raise Failure('duplicate_regular_slot_no_market_calls')
+    ledger.assert_owner()
 
 
 class RuntimeGuard:
     def __init__(self,client,c,config):self.client,self.c,self.config=client,c,config;self.checked=False;self.apis=[]
-    def register_api(self,api):self.apis.append(api)
+    def register_api(self,api):
+        api.stop_on_unknown=True
+        self.apis.append(api)
     def __call__(self):
         assert_runtime_actor(self.c)
         policy.window(self.c);policy.access_proof(self.config,os.environ)
@@ -105,9 +124,9 @@ class RuntimeGuard:
 def summarize(r,c):
     keys=('status','internal_validation','target','received_symbols','kis_validated','physical_http','preparation_http','total_physical_http',
         'failed_http_requests','physical_retries','actual_started_at','first_http_at','last_http_at','completed_at','elapsed_seconds',
-        'reason','collection_complete')
+        'reason','collection_complete','lock_disposition')
     result={k:r.get(k) for k in keys};result.update(asof=c['asof'],generation_id=c['generation_id'],run_id=c['run_id'],code_commit=c['code_commit'],
-        scheduled_at=c['scheduled_at'],provider_finality='UNVERIFIED',official_price_status='PENDING_KRX',
+        scheduled_at=c['scheduled_at'],schedule_lag_seconds=c.get('schedule_lag_seconds'),execution_operation=c.get('execution_operation','start'),trigger=c.get('trigger','schedule'),provider_finality='UNVERIFIED',official_price_status='PENDING_KRX',
         artifact_storage='NOT_CONFIRMED',dashboard_publication='NOT_PUBLISHED',application_reflection='NOT_UPDATED')
     result['uncollected_count']=len(r['uncollected_symbols']) if 'uncollected_symbols' in r else None
     result['validation_failed_count']=len(r['validation_failed_symbols']) if 'validation_failed_symbols' in r else None
@@ -116,23 +135,28 @@ def summarize(r,c):
 
 def collect():
     from . import collector
-    from kis_shared.runtime import configured
+    from .session_cleanup import controlled_session,discard_for_normal_exit
     from kis_shared.lease import Blocked as SharedBlocked
-    store=Store(ROOT);c=context();assert_runtime_actor(c);client=GitHub();ledger=Ledger(client,c);ledger.assert_owner()
+    store=Store(ROOT);c=context();assert_runtime_actor(c);client=GitHub();ledger=Ledger(client,c)
+    os.environ['KIS_VALIDATION_REQUEST_ID']=c.get('request_id',c['generation_id'])
     config=json.loads(CONFIG.read_bytes());guard=RuntimeGuard(client,c,config);started=now();report={}
     try:
         policy.window(c)
         if dt.date.fromisoformat(c['asof']).weekday()>=5:
+            claim_for_collection(ledger,c)
             report=dict(status='SKIPPED_WEEKEND',reason='Asia_Seoul_civil_weekend',market_http=0)
         else:
-            session=configured(config['shared_policy']) if config.get('mode')=='shared-account-exclusive' else nullcontext()
+            session=controlled_session(config['shared_policy'],guard.apis) if config.get('mode')=='shared-account-exclusive' else nullcontext()
             with session as account_session:
+                # Re-read and CAS the daily ledger only after the account lease.
+                check_runs(client,c);claim_for_collection(ledger,c)
+                from .operator import attest
+                attest(c,account_session)
                 guard() # zero auth or market requests without reviewed account coordination
                 r,api=collector.run(ROOT/c['generation_id'],c,guard,phase=lambda state:ledger.transition(state))
                 report=r
                 report['status']='INTERNAL_PASS' if r['status']=='INTERNAL_PASS' else r['status']
-                if account_session is not None and r['status'] not in ('INTERNAL_PASS','SKIPPED_CLOSED'):
-                    account_session.uncertain=True
+                if account_session is not None:report['lock_disposition']=discard_for_normal_exit(account_session,guard.apis)
     except SharedBlocked as e:
         report=dict(status='BLOCKED',reason=str(e),internal_validation='NOT_PASS')
     except (Failure,Stop) as e:
@@ -151,7 +175,16 @@ def collect():
         store.write('report.json',report);scan(ROOT,guard.apis)
         summary=summarize(report,c)
         state=report['status'] if report['status'] in TERMINAL or report['status']=='INTERNAL_PASS' else 'FAILED'
-        ledger.transition(state,summary=summary,reason=report.get('reason'))
+        owned=ledger.current()
+        if owned and owned['context']==c and owned['status'] not in TERMINAL:
+            ledger.transition(state,summary=summary,reason=report.get('reason'))
+        else:
+            # Immutable attempt diagnostics; no daily claim and no provider calls.
+            path='attempts/'+c['run_id']+'.json'
+            try:client.contents(path)
+            except APIError as e:
+                if e.status!=404:raise
+                client.write(path,dict(context=c,summary=summary,slot_claimed=False))
         store.write('summary.json',summary)
     return 0 if report['status'] in ('INTERNAL_PASS','SKIPPED_CLOSED','SKIPPED_WEEKEND') else 1
 
@@ -190,6 +223,9 @@ def validate():
         operational_readiness=readiness,rollout_evidence=rollout_evidence,access_profile_mode=cfg['mode'],external_run_inventory=external,
         slot_claimed=False,market_http=0,first_scheduled_collection='NOT_YET_VERIFIED',
         dashboard_publication='NOT_PUBLISHED',application_reflection='NOT_UPDATED',checked_at=now())
+    from .status import inspect_slot
+    report['slot_health']=inspect_slot(client,policy.utcnow().astimezone(policy.KST).date().isoformat())
+    report['message']='VALIDATION ONLY: no collection. Select start or resume with explicit approval for market HTTP.'
     scan(ROOT);client.write('deployments/'+c['run_id']+'.json',report)
     Store(ROOT).write('report.json',report);return 0
 
@@ -209,7 +245,7 @@ def seal():
 
 def finalize():
     store=Store(ROOT);c=context();r=store.read('report.json',{})
-    if not c or c.get('mode')!='SCHEDULED_COLLECTION':return 0
+    if not c or c.get('mode') not in ('SCHEDULED_COLLECTION','MANUAL_COLLECTION'):return 0
     assert_runtime_actor(c)
     client=GitHub();ledger=Ledger(client,c);record=ledger.current()
     if not record or record['context']!=c:return 0 # duplicate did not acquire ownership
