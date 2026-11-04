@@ -1,0 +1,37 @@
+name: Regular operations regression (NO KIS HTTP)
+on:
+  push:
+    branches: [fix/kis-regular-operations-v1]
+  pull_request:
+    paths: ['collector_v1/**', 'tests/test_regular_operations*.py', '.github/workflows/kis-market-2030.yml', '.github/config/kis-shared-account*.json']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Preserved source for synthetic-attestation tests only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/0baselabkim-debug/qweasd/actions/artifacts/13230751197/zip > "$RUNNER_TEMP/regular-source.zip"
+      - name: Full regression without KIS credentials
+        env:
+          REGULAR_SOURCE_ZIP: ${{ runner.temp }}/regular-source.zip
+        run: python -m pytest -q --junitxml="$RUNNER_TEMP/regular-operations.xml"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: regular-operations-regression-${{ github.run_id }}
+          path: ${{ runner.temp }}/regular-operations.xml
+          retention-days: 14
+          if-no-files-found: error

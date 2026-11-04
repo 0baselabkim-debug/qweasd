@@ -1,0 +1,87 @@
+{
+  "scope": "REGULAR_OPERATIONS_V1",
+  "baseline_main": "63cced65c50d9533a8d3ed46dcdcc21448dc012e",
+  "changed_production_schedule": false,
+  "cron": "30 11 * * 1-5",
+  "causes": [
+    {
+      "kind": "GITHUB_SCHEDULE_CREATION_DELAY",
+      "evidence": [
+        {
+          "run_id": "41443026572",
+          "delay_seconds": 2652
+        },
+        {
+          "run_id": "41633101454",
+          "delay_seconds": 2261
+        }
+      ],
+      "underlying_service_cause": "UNKNOWN; no GitHub internal scheduler telemetry",
+      "mitigation": "record lag; explicit approved start; cron has no exact-start SLA"
+    },
+    {
+      "kind": "UNKNOWN_TRANSPORT",
+      "evidence": [
+        {
+          "run_id": "41633101454",
+          "symbol": "009290"
+        },
+        {
+          "run_id": "41649661831",
+          "symbol": "060900"
+        }
+      ],
+      "underlying_network_cause": "UNKNOWN; original journals discarded exception class/errno/phase",
+      "mitigation": "safe class/errno/phase diagnostics; immediate stop; no unknown-outcome retries"
+    },
+    {
+      "kind": "OVERBROAD_LEASE_RETENTION",
+      "mitigation": "known-closed work scans secrets, discards in-memory tokens and uses normal owner-checked release; unknown request/auth stays quarantined"
+    },
+    {
+      "kind": "MANUAL_DISPATCH_VALIDATION_ONLY",
+      "mitigation": "explicit validate/start/resume inputs; default and ordinary push remain no-market validation"
+    },
+    {
+      "kind": "SLOT_CLAIM_BEFORE_ACCOUNT_ACQUISITION",
+      "mitigation": "claim date slot after shared-account lease; CAS recheck before provider calls; preserve zero-call attempt separately"
+    }
+  ],
+  "recovered_generation": {
+    "asof": "2026-11-03",
+    "run_id": "41729957501",
+    "artifact_id": 13281691568,
+    "artifact_sha256": "8ae1df79ff05068168be331815a07a5ddc95f0faa23edc3abe9d05c049ac77e9",
+    "target": 2348,
+    "validated": 2348,
+    "total_physical_http": 4706,
+    "internal_validation": "PASS",
+    "provider_finality": "UNVERIFIED",
+    "official_price_status": "PENDING_KRX",
+    "independent_raw_DB_JSON_verification": "PASS"
+  },
+  "limits": [
+    "No exact GitHub schedule creation guarantee",
+    "Explicit source-bound resume only; unknown OAuth/dangling hard-kill/incomplete source require incident review",
+    "No extra recurring recovery schedule",
+    "No official KRX finality implied",
+    "90-day Actions artifact expiry remains"
+  ],
+  "native_proof": {
+    "path": "reports/regular-operations-v1/native-source.json",
+    "passed": 33,
+    "failed": 0,
+    "actual_KIS_HTTP": 0
+  },
+  "unchanged_protocol_files": {
+    "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+    "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+    "kis_shared/lease.py": "5c503c2d9d34876b3d74c87e2c6ac5f657eaa48e34089eafca143f0792c3090c",
+    "kis_shared/runtime.py": "94de343b829b26d8af5b8b093dfce9aa9f5709235da8e86b7167b5f2341c6f98",
+    "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+    "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0"
+  },
+  "new_market_or_OAuth_calls": 0,
+  "operating_data_changes": 0,
+  "secrets_changes": 0
+}

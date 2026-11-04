@@ -199,9 +199,10 @@ def test_workflow_is_one_cron_no_wait_jobs_no_old_schedule_mutation():
     assert 'queue: max' in text and 'cancel-in-progress: false' in text
     assert 'runner wait' not in text and '23:30' not in text
     assert 'secrets.KIS_APP_KEY' in text and 'secrets.KIS_REGULAR_APP_KEY' not in text
-    assert 'configured(config[\'shared_policy\'])' in Path('collector_v1/regular/runner.py').read_text()
+    assert "controlled_session(config['shared_policy'],guard.apis)" in Path('collector_v1/regular/runner.py').read_text()
+    assert 'with configured(path) as session:' in Path('collector_v1/regular/session_cleanup.py').read_text()
     assert 'retention-days: 90' in text and 'ARTIFACT_DIGEST' in text
-    assert "github.event_name == 'schedule'" in text
+    assert "steps.freeze.outputs.operation == 'start'" in text
 
 
 def test_end_to_end_artifact_gate_and_atomic_consumer_handoff(env,monkeypatch):

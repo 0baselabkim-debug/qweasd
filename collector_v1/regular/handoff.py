@@ -17,7 +17,13 @@ def by_date(client,asof):
         return dict(status='NOT_READY_FOR_REQUESTED_DATE',requested_asof=asof)
     r=doc.get('slots',{}).get(asof+'/2030')
     if not r or r.get('status')!='COMPLETE_PROVISIONAL':
-        return dict(status='NOT_READY_FOR_REQUESTED_DATE',requested_asof=asof,collector_status=r.get('status') if r else 'NO_RUN')
+        original_status=r.get('status') if r else 'NO_RUN'
+        try:r,_=client.contents('recovered/'+asof+'.json')
+        except APIError as e:
+            if e.status!=404:raise
+            r=None
+        if not r or r.get('status')!='COMPLETE_PROVISIONAL':
+            return dict(status='NOT_READY_FOR_REQUESTED_DATE',requested_asof=asof,collector_status=original_status)
     c=r['context'];s=r['summary'];a=r['artifact']
     if c['asof']!=asof or s.get('internal_validation')!='PASS' or not a.get('digest') or type(s.get('target')) is not int or s['target']<=0 or s['target']!=s.get('kis_validated'):
         raise Failure('regular_handoff_inconsistent')

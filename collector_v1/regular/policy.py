@@ -46,6 +46,18 @@ def freeze(run,cron):
     return result
 
 
+
+def manual_start(run,inputs):
+    if run.get('event')!='workflow_dispatch' or inputs.get('approval')!='USER_APPROVED_REGULAR_START':raise Failure('manual_start_explicit_approval_required')
+    if any(inputs.get(k) for k in ('source_run','not_before','expires_at')):raise Failure('manual_start_uses_regular_window_only')
+    at=timestamp(run['created_at']).astimezone(KST)
+    if inputs.get('asof')!=at.date().isoformat():raise Failure('manual_start_must_target_current_KST_date')
+    if not re.fullmatch('[A-Za-z0-9_-]{8,80}',inputs.get('request_id','')):raise Failure('manual_request_id_invalid')
+    synthetic=dict(run,event='schedule')
+    c=freeze(synthetic,CRON);c.update(trigger='workflow_dispatch',mode='MANUAL_COLLECTION',request_id=inputs['request_id'])
+    window(c)
+    return c
+
 def window(context,current=None):
     current=current or utcnow();start=timestamp(context['scheduled_at']);end=timestamp(context['expires_at'])
     if context['asof']!=start.astimezone(KST).date().isoformat() or end!=start+dt.timedelta(minutes=WINDOW_MINUTES):
@@ -69,12 +81,13 @@ def eligible(rows):
 
 def control(context):
     return dict(schema=1,mode='full',asof=context['asof'],trial_id=context['generation_id'],
-        generation_id=context['generation_id'],request_id=context['generation_id'],previous_run=None,
+        generation_id=context['generation_id'],request_id=context.get('request_id',context['generation_id']),previous_run=None,
         max_total_http=FULL_HTTP,not_before=context['scheduled_at'],expires_at=context['expires_at'],
         approval='USER_APPROVED_REGULAR_KRX_TRADING_DAY_2030')
 
 
 class RunPolicy:
+    stop_on_unknown=True
     def __init__(self,context,guard,clock=None):self.context,self.guard,self.clock=context,guard,clock or utcnow
     eligible=staticmethod(eligible)
     def validate_control(self,value,current=None):

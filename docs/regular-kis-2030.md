@@ -1,3 +1,9 @@
+> Current operational update (2026-11-04): shared schema2 enrollment and original
+> credential reuse are deployed. The historical UNVERIFIED_SHARED_ACCOUNT and
+> independent-account discussion below is retained as history, not current setup.
+> See [regular operations V1](regular-operations-v1.md) and actual config/main CI
+> for explicit manual modes, verified recovery and remaining scheduler limits.
+
 # KIS 정규 전체시장 잠정 관측 — KRX 거래일 20:30 KST
 
 ## 실행과 등록
