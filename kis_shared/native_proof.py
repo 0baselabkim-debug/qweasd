@@ -146,7 +146,7 @@ class Proof:
                     source=(root/approved).resolve()
                     if not source.is_relative_to(root) or not source.is_file():raise RuntimeError('approved_source_missing')
                     names.append(source)
-            runtime_hashes[REPOSITORIES[list(self.roots).index(role)]]={str(path.relative_to(root)):digest(path) for path in names if path.name not in ('native_proof.py','bundled_proof.py')}
+            runtime_hashes[REPOSITORIES[list(self.roots).index(role)]]={str(path.relative_to(root)):digest(path) for path in names if str(path.relative_to(root)) not in ('kis_shared/native_proof.py','kis_shared/bundled_proof.py')}
         # Retain all per-process outputs and complete local Git history for inspection.
         import shutil
         shutil.copytree(self.temp,self.output/'isolated-git-and-worker-evidence')
