@@ -1,0 +1,1166 @@
+{
+  "proof_kind": "actual_source_trees",
+  "status": "PASS",
+  "scenarios": [
+    {
+      "scenario": "01_eod_alone",
+      "expected": "success+release",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "02_intraday_alone",
+      "expected": "success+release",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "intraday",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "03_integrated_alone",
+      "expected": "success+release",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "04_eod_blocks_intraday",
+      "expected": "owner completes; competitor 0 HTTP",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        },
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "intraday",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_busy",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "05_intraday_blocks_integrated",
+      "expected": "owner completes; competitor 0 HTTP",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "intraday",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        },
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_busy",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "06_integrated_blocks_eod",
+      "expected": "owner completes; competitor 0 HTTP",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        },
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_busy",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "07_three_process_race",
+      "expected": "exactly one winner, two losers with 0 HTTP",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "intraday",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_race_lost_or_write_unconfirmed",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        },
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_race_lost_or_write_unconfirmed",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        },
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "08_expired_before_oauth",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_expired_or_request_would_overrun",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "089a227621dd4372bf1ae2bb7ed92ce5",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1008"
+      }
+    },
+    {
+      "scenario": "09_owner_lost_before_dispatch",
+      "expected": "ownership/ledger failure before OAuth: 0 HTTP",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_owner_changed",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "10_ledger_unavailable",
+      "expected": "ownership/ledger failure before OAuth: 0 HTTP",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_git_operation_failed",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "11_ledger_timeout",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_git_transport_unavailable_outcome_unknown",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "12_owner_change_after_unknown_http",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "worker_HTTP_outcome_unknown_no_retry",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1012"
+      }
+    },
+    {
+      "scenario": "13_oauth_failure_no_retry",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "worker_HTTP_failed_no_retry",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 1,
+          "simulated_endpoints": [
+            "/oauth2/tokenP"
+          ],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "38487689dec94350bd9b7f3ec26d9193",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1013"
+      }
+    },
+    {
+      "scenario": "14_abrupt_exit_keeps_owner",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PROCESS_EXIT",
+          "returncode": 71,
+          "actual_KIS_HTTP": 0,
+          "simulated_dispatches": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "3b7ec11803d940689c5a470111e9cd0b",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1014"
+      }
+    },
+    {
+      "scenario": "15_old_lease_not_reused",
+      "expected": "retained owner blocks new process",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_busy",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "16_nonowner_release",
+      "expected": "no foreign release",
+      "status": "PASS",
+      "results": [],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "17_schedule_manual_same_actor",
+      "expected": "owner completes; competitor 0 HTTP",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        },
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_busy",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "18_regular_blocks_new_live_worker",
+      "expected": "owner completes; competitor 0 HTTP",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        },
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_lock_busy",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "19_default_cli_live_disabled",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": "NOT_INFERRED",
+          "reason": "live_validation_disabled_before_credentials",
+          "lease_released": false,
+          "mode": "live",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "20_no_credentials_no_live_dispatch",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "intraday",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": "NOT_INFERRED",
+          "reason": "live_validation_disabled_before_credentials",
+          "lease_released": false,
+          "mode": "live",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/kis-intraday-monitor",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "21_order_endpoint_denied",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "AttributeError",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "7d68470ee7694d8f9a45fd424998041b",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1019"
+      }
+    },
+    {
+      "scenario": "22_unreserved_opener_denied",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_market_token_expiry_unverified",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "9f57be4d605342658996c6481ff95ae8",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1020"
+      }
+    },
+    {
+      "scenario": "23_redirect_denied",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "worker_HTTP_failed_no_retry",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "1f9e2491cff147d8a32d177dc0e25908",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1021"
+      }
+    },
+    {
+      "scenario": "24_429_no_automatic_retry",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "worker_HTTP_failed_no_retry",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "abd68537855e4adb89ddbd8bdd4c98d9",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1022"
+      }
+    },
+    {
+      "scenario": "25a_initial_scope",
+      "expected": "success+release",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "25b_process_restart_scope_not_reset",
+      "expected": "same request cannot reset budget",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_request_scope_already_claimed",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "26_real_legacy_client",
+      "expected": "success+release",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "27_no_session_oauth_denied",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_session_not_installed_no_live_http",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "28_token_expired_denied",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "shared_token_lifetime_insufficient",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "9735849bfab04408a5d1b5dbc146eba9",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1026"
+      }
+    },
+    {
+      "scenario": "29_raw_httpclient_denied",
+      "expected": "fail closed, bounded dispatch",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "BLOCKED_OR_FAILED",
+          "role": "integrated",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "reason": "native_proof_real_network_forbidden",
+          "lease_released": false,
+          "mode": "native-proof",
+          "simulated_dispatches": 0,
+          "simulated_endpoints": [],
+          "account_repository": "0baselabkim-debug/investment-integrated-dev",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": {
+        "acquired_at": "2026-11-03T10:00:00+00:00",
+        "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expires_at": "2026-11-03T13:10:00+00:00",
+        "id": "5f09ff21e07544ee9b9ff4572ae723da",
+        "repository": "0baselabkim-debug/investment-integrated-dev",
+        "run_id": "1027"
+      }
+    },
+    {
+      "scenario": "32_legacy_worker_thread_retains_session",
+      "expected": "success+release",
+      "status": "PASS",
+      "results": [
+        {
+          "status": "PASS_NATIVE_PROOF",
+          "role": "eod",
+          "actual_KIS_HTTP": 0,
+          "oauth_issuance": 0,
+          "response_schema": "PASS",
+          "response_symbol": "CONFIRMED",
+          "provider_business_date": "UNAVAILABLE",
+          "official_price_status": "PENDING_KRX",
+          "source_sha256": "7c39f1c3650c744a8a5d16ed381a7f0a44d381a2a1500f69d14a7a21b4d3d788",
+          "validation": "STRUCTURE_ONLY_UNVERIFIED",
+          "lease_released": true,
+          "mode": "native-proof",
+          "simulated_dispatches": 2,
+          "simulated_endpoints": [
+            "/oauth2/tokenP",
+            "/uapi/domestic-stock/v1/quotations/inquire-price"
+          ],
+          "account_repository": "0baselabkim-debug/qweasd",
+          "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+          "actual_OAuth_HTTP": 0
+        }
+      ],
+      "actual_KIS_HTTP": 0,
+      "final_owner": null
+    },
+    {
+      "scenario": "30_explicit_stopped_owner_recovery",
+      "expected": "requires terminal proof, quarantine and exact revision",
+      "status": "PASS",
+      "results": [],
+      "actual_KIS_HTTP": 0
+    },
+    {
+      "scenario": "31_identical_common_protocol",
+      "expected": "identical three-party core on all actors",
+      "status": "PASS",
+      "results": [],
+      "actual_KIS_HTTP": 0
+    }
+  ],
+  "counts": {
+    "PASS": 33
+  },
+  "actual_KIS_HTTP": 0,
+  "oauth_issuance": 0,
+  "production_ledger_mutations": 0,
+  "common_source_hashes": {
+    "eod": {
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/lease.py": "3ce00630adcc6d52ee8315664091fbbb387100d6dafe25f9f8b2341cf2903d7a",
+      "kis_shared/runtime.py": "945eb9f65ba2ff50d9fffbeb06c703c9df7e7dd0b125542f340c5135e298bbdb",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0"
+    },
+    "intraday": {
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/lease.py": "3ce00630adcc6d52ee8315664091fbbb387100d6dafe25f9f8b2341cf2903d7a",
+      "kis_shared/runtime.py": "945eb9f65ba2ff50d9fffbeb06c703c9df7e7dd0b125542f340c5135e298bbdb",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0"
+    },
+    "integrated": {
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/lease.py": "3ce00630adcc6d52ee8315664091fbbb387100d6dafe25f9f8b2341cf2903d7a",
+      "kis_shared/runtime.py": "945eb9f65ba2ff50d9fffbeb06c703c9df7e7dd0b125542f340c5135e298bbdb",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0"
+    }
+  },
+  "runtime_source_hashes": {
+    "0baselabkim-debug/qweasd": {
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/run.py": "0dca5cad7db7f9ae905f732baf25c9bdbd4343e7f6ec39b13012c68eb0100a5a",
+      "kis_shared/lease.py": "3ce00630adcc6d52ee8315664091fbbb387100d6dafe25f9f8b2341cf2903d7a",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
+      "kis_shared/legacy.py": "75baba93b8cfcdd66516304e523a47b40b786533ecc7852bcf4a8112e3490b28",
+      "kis_shared/runtime.py": "945eb9f65ba2ff50d9fffbeb06c703c9df7e7dd0b125542f340c5135e298bbdb",
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+      "scripts/kis_public_client.py": "2adbb750402aad842e76858dd67ef7e9a0617b560530d60b641bb634cbfda845",
+      "collector_v1/providers.py": "b190991a3732765ec2714f7e1728f897ac59b23f35a0510dee6c414360c6c380",
+      "collector_v1/kis_manual.py": "bebc706e1cbc2794f64128cb99c8bd481d342deeaf2495cb27eb5d43819f7b98",
+      "collector_v1/experiment/engine.py": "b8ec4d59829f20b815167a5c9c8d8f2eda2272d74f6532d0fd6638d209b23213",
+      "collector_v1/regular/runner.py": "d4ede66bd391f3f49d2ce6c7d25b52a256168415235a8c049e7a5e488c2baa6d",
+      "collector_v1/regular/collector.py": "662bd63d8a070c84f0aea419ede794766c9fd3b3b54509d7f55fb55353487413",
+      ".github/scripts/kis_enrich_collect.py": "d50f71f1563e3a225f7f161bc7e4ae1441cb5ff88008051be55256833ff52701",
+      ".github/scripts/kis_history_probe.py": "54b183d25ebae413f329a94da1be076b3cb26a0a0e5e4c8d7acab9896db03af1",
+      ".github/scripts/kis_collect_once.py": "598c906618a26c41a434031452d73a37bc45a8c9d5500efedd16f5878aaeb6a6",
+      ".github/scripts/kis_missing_analysis.py": "aa6b5b7234b6622ff613b91437f5111665094a47f3443adb79f1ee9989290272",
+      ".github/scripts/kis_lock_operational_readiness_v3.py": "187f8f4b95eb78c5ea10ce1099e4392ffb47e509dbd68aeb82133a41a3beb6a8",
+      ".github/workflows/kis-lock-operational-v3.yml": "1e2540078fab3924dc346dd6271495089b5d1be046ddcf3090fd64096528f46e",
+      ".github/workflows/kis-market-2030.yml": "442e23863c4a2812fe351dcc2b893ee29b78425caf131d7da6050f8b9971b103",
+      ".github/workflows/kis-regular-operations-offline.yml": "0943b82fcd82e8bf40ba64c5e98a67e6f13731850b372ebd844d26fedb0e4ce6",
+      "collector_v1/core.py": "427558284fd2456ec0dcfe50cbbf3f3d574b51192d5cdc650d31a6e5a0644689",
+      "collector_v1/regular/github.py": "6db152e2f8f94c8a73d854a29591f00e2d1352d07d328c4bf5f7ebb50834b7f2",
+      "collector_v1/regular/handoff.py": "e2fdb98c16977416a094259ab80bf1e6d03bb836ab446824d0e541e8e0d79f86",
+      "collector_v1/regular/ledger.py": "aeedee1666136eb5e46527f23127791ef3441bad59902da01dab068bd35b4dc3",
+      "collector_v1/regular/operator.py": "e494fee415bce9a6123821029e030a6e50a4e1a42e281a9581d196724d9f29ff",
+      "collector_v1/regular/policy.py": "b09f42d7bb953a2c7285d1dc63aa53e248c5cd00e8c248b40a742b86af836545",
+      "collector_v1/regular/routing.py": "b188a52e3371ad0b81a05783101f33bd41abb745fc7e1d2a0463d2159a4d5fa7",
+      "collector_v1/regular/session_cleanup.py": "8d4b25793a34d37e2ceeea1f6481324cbb24cd4af56ea500b4afe88b1a47a4fa",
+      "collector_v1/regular/status.py": "147ac999d8c9aaa639b6e1d41d4e7a1a806fddcc6c03467c52f89760210f80e4",
+      "collector_v1/validation.py": "b75b9c3a4fb7afaaf762466a1703ecb0f43de304838ae09c1bbbb80277a486c4"
+    },
+    "0baselabkim-debug/kis-intraday-monitor": {
+      "kis_shared/flow.py": "bae134ebb67ae86ef50d3b88b0d5a85be9b73c6ccee08a5e4eedfc9164e39c1e",
+      "kis_shared/snapshots.py": "2472f7cabe9c2c234e32d0167aa4e04dfe897fa0e512e96c3984f89db2913f21",
+      "kis_shared/remaining.py": "c508eb4edabff95e802518265b2fc11d53ad7c97b29d0d86df676378e144f9f2",
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/admission.py": "8f5305e74ff3249934af0f5ced2cb89e29dce9a742ffc6d5e8fadcdcaa5d920f",
+      "kis_shared/run.py": "98fdd75777c77680495eb08701005eb8c2f2bb22297d657b6d5eddfaf6beec0c",
+      "kis_shared/lease.py": "3ce00630adcc6d52ee8315664091fbbb387100d6dafe25f9f8b2341cf2903d7a",
+      "kis_shared/watchlist.py": "629dd5e11bc70cca7639209920a65745639a9fdd6490fd2405f273a9bc4a2cab",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
+      "kis_shared/recurring.py": "d04e5e1de060cb4ad88669b3c0c9d812b24087f5e9184e4d10b1be2ffc6a0db2",
+      "kis_shared/remaining_four.py": "f78a8bd352c7ea1b8d4f5a174ae446899ba28b7363d6ca139ad4f6edcd07ec71",
+      "kis_shared/bootstrap.py": "2e8120c50aa675f2b30ad43a6188f8fe8888fd84be4a21a5aad822acd441dce8",
+      "kis_shared/runtime.py": "945eb9f65ba2ff50d9fffbeb06c703c9df7e7dd0b125542f340c5135e298bbdb",
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+      "scripts/actions_auth.py": "d5a328b1609054a317f69468e2359f985edb652c05f90760349be7c22d281ebb",
+      "stage3/live_probe.py": "dbfe7713b2b643dd140364df5d86afdcf04f2d9ed8d27ded3e67f96a7b321b12",
+      ".github/scripts/kis_lock_operational_readiness_v3.py": "187f8f4b95eb78c5ea10ce1099e4392ffb47e509dbd68aeb82133a41a3beb6a8",
+      ".github/workflows/kis-lock-operational-v3.yml": "a6ea972cae4e6b5a7dda28ae56d1b09ad32ac8bd2f0bdb395ef5c56604ae0e5f",
+      ".github/workflows/kis-browser-validation.yml": "117c157ba816b79449751569fd1cea4d916b2c1ba758d89a6eb9772d7b0497fc",
+      ".github/workflows/kis-validation.yml": "5d9d9cb7a82988c68f777fee9c03dcfaf79c367d33240f1b9df99279ab793f16",
+      "config/bootstrap-initial-one.json": "250b35db446c18a1974b65fa328567b2212d54efe4dc4932b8a624830c68615f",
+      "config/intraday-flow-six.json": "e0b56a51d2cd5ec9e7e7fe2b9f0448b756df6552dd889e3893c22272c6eaa134",
+      "config/intraday-remaining-five.json": "07868ba8d797aad9bc7bea7ff5d234a0b04f3d9888fdc898ed77cbd219270303",
+      "config/intraday-remaining-four.json": "fc21e0e4df1a6897b9ed07d9cff4f9db1ede7f2938436d374d3730a50828f7ad",
+      "kis_probe.py": "0e5c1fc8357f0db7b7e0bd9305479ede5b374bea241b681e883a85879fdd7def",
+      "scripts/bootstrap_trial.py": "a6269728e36a205d8ab263e0353fb217ef8efa775048b58a421a2a0ad7929305",
+      "scripts/intraday_flow_trial.py": "2c622ab4f54517e4e33f7b168d06560e78b66464760519e3f694a231afcd79c9",
+      "scripts/intraday_remaining_four.py": "cd8dd00f1367bb50c6d27e529c476c4abd17ae5f6e8a469d1ecaadb7964b55d5",
+      "scripts/intraday_remaining_trial.py": "5553ee2bf38fe392e3bd75ac34ce9697834a7b5cbb385fa66a730d5d7fa23516"
+    },
+    "0baselabkim-debug/investment-integrated-dev": {
+      "kis_shared/boundary.py": "3202326584950821ebb2439db83181a03bc8f0cf7b1e4c2adcafc870b8e63b4b",
+      "kis_shared/git_backend.py": "70a152dd6553bcb6ea52dcdb1a707b9ee9ecd2b14caabee18890dc34827c7b53",
+      "kis_shared/journaled_limited_v9.py": "d1ae1acb493872253de80660030e6548e44667886ba8ea685510426b858b50da",
+      "kis_shared/lease.py": "3ce00630adcc6d52ee8315664091fbbb387100d6dafe25f9f8b2341cf2903d7a",
+      "kis_shared/worker.py": "43197405ec0f175e73e1b40ba0b598125348f85345ab37fae8f2fb17a3b61ad0",
+      "kis_shared/recovery_v9.py": "cbbdf8ad9751e36cb348049bd8a893e27f5e7e4fdbeb74b8822960176f00afd4",
+      "kis_shared/runtime.py": "945eb9f65ba2ff50d9fffbeb06c703c9df7e7dd0b125542f340c5135e298bbdb",
+      "kis_shared/limited.py": "628fc083c4b422b79d8d82d9f370630a1ea020cb0ecb75d1974ec28f238b59ca",
+      "kis_shared/recovery_github_v9.py": "3d0329529481e7ffa724af2bbb668535b38a02808a60162dcff37e301dc7b82d",
+      "kis_shared/__init__.py": "d524291a860bc8917aa40993e10247834f586ac37a3ab6a449d99beccb873c30",
+      ".github/scripts/kis_lock_operational_readiness_v3.py": "187f8f4b95eb78c5ea10ce1099e4392ffb47e509dbd68aeb82133a41a3beb6a8",
+      ".github/workflows/kis-lock-operational-v3.yml": "4016a994cd700de3146fa285b56a5e4dc525cbd4c5f8875d9de58e0b0a3869ab",
+      ".github/workflows/kis-limited-validation.yml": "798a4b1f10ac5cb0cd449058e90b4b4a31346ed857ca651dcad08b6d97b380c8",
+      ".github/config/integrated-regular.json": "92038352a8131421b7dae8f2532de639a11c73ff675650fc4b9e01dcead099bb",
+      ".github/workflows/integrated-regular-2030.yml": "6e4574620a53218a73692a523c36cb2892bc2945dbdea48609b260238fe0c65b",
+      ".github/workflows/integrated-regular-handover.yml": "b7f2c11c37271401fcd0ba7db977f6e0a12c06f32f13b19e99c29b93564a56d2",
+      ".github/workflows/integrated-regular-offline.yml": "958468902a1c0c15975b522e4fefd989289d84645f3f5ad54ddd0374126c5c24",
+      ".github/workflows/integrated-regular-proof.yml": "72450c93f6326d477040885382a518ae0e43ce9408cc85cfe5bb406448ee259e",
+      ".github/workflows/kis-limited-offline-v8.yml": "82b581936ab280b56cd2bd0fd07fae7b4c713cf2dc08b6d2d7d5d0f1cfe94da8",
+      ".github/workflows/kis-recovery-offline-v9.yml": "ad623d5051765248503ec26ea94086e800eb61fe2762d175fcc65355ca9491f5",
+      ".github/workflows/kis-recovery-probe-v9.yml": "d7d0b32ea4716b4e0b800985ffa1f6f9adc2d638744def0b9b516f2426859420",
+      ".github/workflows/kis-recovery-v9.yml": "423f4c37bf8a0985e2884444ba71ee3ef7d8d2a4f316a464c9a5bb702c8d2e0d",
+      "regular_live/__init__.py": "d5f2e88a5830c362c091111b5083819ae0d025b02cb26c884b0918bcde65a7cf",
+      "regular_live/analysis_input.py": "d55fc49d1b600e277dfa85291d5be9c64c0cb8880599b1d8f33b7a4c1dff2696",
+      "regular_live/analyze.py": "254a8a911472fb987c1d7a21b433c9379877933a6b5a3dfd3816b6a02dd32368",
+      "regular_live/control.py": "b1310fc41399ff52b517808d55a33d4512cc2c3d3b51549bc614f51a67bfb048",
+      "regular_live/entry.py": "626ce3e8e6d2cee4bc5c839c9e434034e4b14b2e1a95bb4c8ac4dbf4d2cece91",
+      "regular_live/github.py": "4865c8824c1915ba4639f0fcb5c8177fb9024605a4ffbadf7d6e303ff7e72aad",
+      "regular_live/handover_dispatch.py": "6ad0bf9bb09d56bab3c3aea4e4f1063dc262460cc4834942a801d901e6adea17",
+      "regular_live/inspect.py": "f406682a7a74995390e1c6912257a9ec72f44683de219c35b702412ff379fb44",
+      "regular_live/native_proof.py": "ba54772dc4c5950463a6537a498db770db0e48c5ac515129f7f91aad857300eb",
+      "regular_live/native_wire_cases.py": "1dc1821dc61634b4fc1a2a58997235705ab85fc61b5eeef950726331c3fb6e41",
+      "regular_live/policy.py": "cae6cad5a4748212eca7e146e8172abc8bbd6c92477e01d45d1be4bd221af1ac",
+      "regular_live/prestart.py": "5f246a777de471d6b09ff5f9825d962be56162eb44cda138b0aadc50fbedd1f0",
+      "regular_live/process_proof.py": "a6a021d85901dd94d7ae59edbf11fff59e4b924c33c908c71049fc9e0a2811d7",
+      "regular_live/recovery.py": "b73a58aa52cfc3541b1a5d7724e461ce6282014444c43f87e4da5f05fac57cfc",
+      "regular_live/recovery_entry.py": "f31540f2f5dfc9655b1d0a9c81d091064b261068bf4e97e016661df1b4d914ff",
+      "regular_live/runner.py": "ab55392cb98b578711c0871ccfe67bbc8f7b2f9a1b696a09ec9dfc31ecfcb7d6",
+      "regular_live/session.py": "c11db2e95c0c3681b9fc6793ba712a1cc50660bd24396ac28156802047b580f5",
+      "regular_runtime/.github/scripts/kis-master-layouts.json": "cc6d5b00f87804f7bd2a303df205f7360b5ffe5d20d645c706a25a4993cb8e8e",
+      "regular_runtime/__init__.py": "6421f60e19e5b2f87ad19918d3bf01fe1110aa6ec11bfcccb711d6a65197f72d",
+      "regular_runtime/collector_v1/__init__.py": "32e47e9474e910bbb332af6b8bbe32ee08f56ad63676f04edc2f4b7a81149440",
+      "regular_runtime/collector_v1/core.py": "630f880c9be3be77dd0857e2fa3231996e6d7776de22a5476ae9f6c3b77dc640",
+      "regular_runtime/collector_v1/experiment/__init__.py": "c5c741bb9ea635a2770eebb23618937e292a3acec502c90bafd1f7737bab5727",
+      "regular_runtime/collector_v1/experiment/compare.py": "604691f7ace57b5d39475bf6dd1f31c401dae9f65ab69ced075b41a3e9bbdcb1",
+      "regular_runtime/collector_v1/experiment/engine.py": "b8ec4d59829f20b815167a5c9c8d8f2eda2272d74f6532d0fd6638d209b23213",
+      "regular_runtime/collector_v1/experiment/policy.py": "bd95ce13d172cb97397d7c276b19fefb0c929c1c42392eeb6c70d2aca5fb9db0",
+      "regular_runtime/collector_v1/experiment/storage.py": "00c7da5f551898a73f222c3df37365a278bcc4b977b331972eec477dd2331588",
+      "regular_runtime/collector_v1/kis_manual.py": "7037a046a7251d98fa44f2fc89b47ab50a2a352049ad6f9f91b8d04ccc61f6c0",
+      "regular_runtime/collector_v1/market_trial.py": "55184ba11c55b79d4c7448e2c64952d2c6733be3457a7589f3c0469fc3b94fd3",
+      "regular_runtime/collector_v1/providers.py": "3b8eefdda6f6c3367bb6cd0cf2013f2dd7d3ca21598d032d7443bde01cd58294",
+      "regular_runtime/collector_v1/regular/__init__.py": "d702c029cc5a37e43149990dfc415aadecfd3c49e808611a07d83d683903fa51",
+      "regular_runtime/collector_v1/regular/collector.py": "ba0b3c95e61f56d22ad78cd483e9437825ee20496e04a37a95a2c3ae5be25c41",
+      "regular_runtime/collector_v1/regular/github.py": "6db152e2f8f94c8a73d854a29591f00e2d1352d07d328c4bf5f7ebb50834b7f2",
+      "regular_runtime/collector_v1/regular/handoff.py": "e2fdb98c16977416a094259ab80bf1e6d03bb836ab446824d0e541e8e0d79f86",
+      "regular_runtime/collector_v1/regular/ledger.py": "aeedee1666136eb5e46527f23127791ef3441bad59902da01dab068bd35b4dc3",
+      "regular_runtime/collector_v1/regular/operator.py": "e494fee415bce9a6123821029e030a6e50a4e1a42e281a9581d196724d9f29ff",
+      "regular_runtime/collector_v1/regular/policy.py": "b09f42d7bb953a2c7285d1dc63aa53e248c5cd00e8c248b40a742b86af836545",
+      "regular_runtime/collector_v1/regular/routing.py": "b188a52e3371ad0b81a05783101f33bd41abb745fc7e1d2a0463d2159a4d5fa7",
+      "regular_runtime/collector_v1/regular/runner.py": "d4ede66bd391f3f49d2ce6c7d25b52a256168415235a8c049e7a5e488c2baa6d",
+      "regular_runtime/collector_v1/regular/session_cleanup.py": "8d4b25793a34d37e2ceeea1f6481324cbb24cd4af56ea500b4afe88b1a47a4fa",
+      "regular_runtime/collector_v1/regular/status.py": "147ac999d8c9aaa639b6e1d41d4e7a1a806fddcc6c03467c52f89760210f80e4",
+      "regular_runtime/collector_v1/trial.py": "834b82bde34ac5199409209f2f498bce19e49f9c6be135325eef129cc2588276",
+      "regular_runtime/collector_v1/validation.py": "c6e725e1e54f427b5b35ca65b960e80712ee7d67eea6a6151f5f1766ce5b6818",
+      "regular_runtime/screener/__init__.py": "c0184e84c8abc019e2704ab08d950a618ce9f27b67516f6ddf65f150a77b0221",
+      "regular_runtime/screener/corporate.py": "f6db09442a3215143728818a8ea2ab70c5d37a1882e46cbfa5bdf7d2a4ac9f43",
+      "regular_runtime/screener/decision_support/__init__.py": "13c2e049e25bfe5d755478b26bfd203dfed03fc31c7326e3d7197291215ca19b",
+      "regular_runtime/screener/decision_support/evidence.py": "2b9087b3528dc6eb5cd4f85dd0a000f6c90d825cad7dd2b59788065fe1d13356",
+      "regular_runtime/screener/financials.py": "7e6bbf8ca2b89d8c8bb7c8fccbb2f3179e5e5c4febf47072df6d52fbe23b4205",
+      "regular_runtime/screener/liquidity_quality.py": "9d21dab680b6a347cee07bb4c2583b6e6da4164a67f76578c8c384a9db8489db",
+      "regular_runtime/screener/macro.py": "491aa9323b01e94fec1cd58c86d42e91f0c0239cc4a463e3876a4bd3bb35db2b",
+      "regular_runtime/scripts/__init__.py": "a16ca46d544aa6fbf54fad80e5958b296d678e2c70b924215f72499ae3105de4",
+      "regular_runtime/scripts/market_io.py": "e0fb33768f5668157232e16f499e91269fc8d9dccc35f2cc05d51642959b7902",
+      "regular_runtime/scripts/market_reference.py": "b793e3d1edafad2b8ef66ae8f8fcfc78724a26c161047c2a74b0197bff348c3a",
+      "regular_runtime/source-manifest.json": "08b562510f846dc90863073b917ab923fd3ae6a0022e0ca704dbbe8e1f0cd39a",
+      "reports/kis-lock-v8/limited-safety.json": "2c2bfdaf369938c6ea93893cb13b4be70645ed2e5534a40fa2ed53cb0ee3ec81",
+      "reports/kis-lock-v9/recovery-safety.json": "82a0cccd6896d22161907a63b97b03d32ad9c5cf2224587c69a120ba4ae5f9fc",
+      "scripts/kis_limited_validation_v8.py": "d725f7231adf00b26011cab1130f1ad851c732464c2f54d32ea45b36a68dc0b6",
+      "scripts/kis_recovery_dispatch_v9.py": "b13b8dd9c548c776525823fdb89a62b140e70a50e03a18f24773d303d76e29ac",
+      "scripts/kis_recovery_probe_v9.py": "0d53590c9d29366f13369debe3108fa72d1cfe9b149159eb24db96b66db92e9e",
+      "scripts/kis_recovery_v9.py": "8617b6ea148b04a8e72c04b25da53eafec8a36ab923a2063aa556cefe18ca92d",
+      "scripts/limited_lease_native_v8.py": "4312fc48b096bedad38fae84f0e0507da169b3fb01f3f22a6c00afbd50109a54",
+      "scripts/recovery_entrypoints_native_v9.py": "f63b9a7e76ccaee826f302e72dc55ed20a53771ec864611f2d04387041ad6ada",
+      "scripts/recovery_native_v9.py": "abd13fff1203bae6f6bd698f0fea25cb3ff8b07a8c937a2dbb6652bac1b89e1c",
+      "regular_live/interruption.py": "71b75f8fb69d8b9a6af15deb09fcbeef0610d710c8203a80c76d7688e675278a",
+      "regular_live/recollect.py": "0070a72ca763e7fabde46792ae78015c51a8e5eb063dfe371984772606d95253",
+      "regular_live/fresh_native.py": "a2ababbbe023913351c155fd92a4f3119fae4d33e212d2049b7bfb8a2614d927",
+      "regular_live/no_deadline_native.py": "26d4a138e67fb09f40f768ded82db2da7f36a57a2ab08925dff337efb0c48e40"
+    }
+  },
+  "central_contract": "0baselabkim-debug/qweasd:kis-shared-account-state:lease.json",
+  "proof_limit": "real separate CLI processes, GitBackend/Session/clients; only final HTTPS transport simulated; GitHub credentials and KIS integration NOT_RUN"
+}

@@ -4,7 +4,7 @@ on:
   push:
     branches: [fix/legacy-kis-admission-v1]
   pull_request:
-    paths: [scripts/kis_public_client.py, tests/test_legacy_kis_admission.py, tests/test_market_budget.py]
+    paths: [scripts/kis_public_client.py, tests/test_legacy_kis_admission.py, tests/test_market_budget.py, kis_shared/**, tests/test_collection_lease.py, .github/config/kis-shared-account*.json]
 permissions:
   contents: read
 jobs:
