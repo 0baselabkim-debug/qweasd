@@ -248,3 +248,23 @@ def test_freeze_and_resume_metadata_import_before_dependency_install():
  result=subprocess.run([sys.executable,'-S','-c',
   'import collector_v1.regular.runner; import collector_v1.regular.operator; import sys; assert "duckdb" not in sys.modules'],capture_output=True,text=True)
  assert result.returncode==0,result.stderr
+
+
+@pytest.mark.parametrize('change,expected',[
+ ({},'READY_INTERNAL_PROVISIONAL'),
+ ({'expires_at':'2020-01-01T00:00:00Z'},'ARTIFACT_EXPIRED_OR_EXPIRATION_UNVERIFIED'),
+ ({'wrong_target':True},'BLOCKED')])
+def test_completed_recovery_handoff_keeps_original_failure_immutable(change,expected,monkeypatch):
+ monkeypatch.setattr(policy,'utcnow',lambda:policy.timestamp('2026-11-04T00:00:00Z'))
+ from collector_v1.regular.ledger import Ledger
+ c=context('2026-11-03');client=Client(c);ledger=Ledger(client,c)
+ ledger.claim();ledger.transition('FAILED',reason='SYNTHETIC_TRANSPORT')
+ original=copy.deepcopy(client.docs['ledger/2026.json'])
+ s=dict(internal_validation='PASS',target=2348,kis_validated=2347 if change.get('wrong_target') else 2348,
+        provider_finality='UNVERIFIED',official_price_status='PENDING_KRX')
+ a=dict(digest='sha256:'+'b'*64,expires_at=change.get('expires_at','2027-01-01T00:00:00Z'))
+ client.docs['recovered/2026-11-03.json']=dict(status='COMPLETE_PROVISIONAL',context=c,summary=s,artifact=a)
+ if expected=='BLOCKED':
+  with pytest.raises(Failure):handoff.by_date(client,c['asof'])
+ else:assert handoff.by_date(client,c['asof'])['status']==expected
+ assert client.docs['ledger/2026.json']==original
