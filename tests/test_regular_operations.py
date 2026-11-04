@@ -119,15 +119,19 @@ def test_resume_window_never_changes_target_or_exceeds170minutes():
 
 
 def test_actual_workflow_has_explicit_modes_and_no_extra_cron():
- import yaml
- w=yaml.load(Path('.github/workflows/kis-market-2030.yml').read_text(),Loader=yaml.BaseLoader)
- assert w['on']['schedule']==[{'cron':'30 11 * * 1-5'}]
- assert w['on']['workflow_dispatch']['inputs']['operation']['default']=='validate'
- assert w['on']['workflow_dispatch']['inputs']['operation']['options']==['validate','start','resume']
- assert w['concurrency']['cancel-in-progress']=='false'
+ import re
  text=Path('.github/workflows/kis-market-2030.yml').read_text()
+ # No optional YAML package in the production preflight. GitHub parses the
+ # workflow itself; these assertions inspect its exact operating contract.
+ assert re.findall(r"^    - cron: '([^']+)'$",text,re.M)==['30 11 * * 1-5']
+ assert text.count('cron:')==1
+ operation=text.split('      operation:\n',1)[1].split('      asof:\n',1)[0]
+ assert '        default: validate\n' in operation
+ assert '        options: [validate, start, resume]\n' in operation
+ assert '  cancel-in-progress: false\n' in text
  assert text.index('operator wait')<text.index('operator collect')
  assert "steps.freeze.outputs.operation == 'start'" in text
+
 
 
 class TerminalClient:
