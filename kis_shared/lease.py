@@ -46,7 +46,14 @@ def validate(state):
         if o is not None:
             if (o['repository'] not in REPOSITORIES or not o['run_id'].isdigit()
                     or not re.fullmatch('[0-9a-f]{40}', o['commit'])
-                    or not re.fullmatch('[0-9a-f]{32}', o['id'])
+                    or not re.fullmatch('[0-9a-f]{32}', o['id'])):
+                raise ValueError()
+            stamp(o['acquired_at'])
+            if o.get('lease_policy') == 'OWNER_RELEASE_OR_VERIFIED_TERMINATION':
+                if (o['expires_at'] is not None or o['repository'] != REPOSITORIES[2]
+                        or o.get('purpose') != 'REGULAR_FULL_MARKET_2030_V1'):
+                    raise ValueError()
+            elif (o.get('lease_policy') is not None
                     or not 0 < (stamp(o['expires_at'])-stamp(o['acquired_at'])).total_seconds() <= 11400):
                 raise ValueError()
     except (ValueError, KeyError, TypeError):
@@ -85,12 +92,13 @@ class Lease:
         self.confirmed_transitions += 1
         return actual
 
-    def acquire(self, seconds=11400):
-        if type(seconds) is not int or not 30 <= seconds <= 11400:
+    def acquire(self, seconds=11400, *, purpose=None):
+        open_collection = seconds is None and purpose == 'REGULAR_FULL_MARKET_2030_V1' and self.identity['repository'] == REPOSITORIES[2]
+        if not open_collection and (type(seconds) is not int or not 30 <= seconds <= 11400):
             raise Blocked('shared_lease_duration_invalid')
         revision, state = self._read()
         if state['owner'] is not None:
-            reason = 'shared_lock_expired_requires_review' if stamp(state['owner']['expires_at']) <= self.clock() else 'shared_lock_busy'
+            reason = 'shared_lock_expired_requires_review' if state['owner']['expires_at'] is not None and stamp(state['owner']['expires_at']) <= self.clock() else 'shared_lock_busy'
             raise Blocked(reason)
         if self.scope_id is not None:
             scopes=state.setdefault('request_scopes',{})
@@ -99,7 +107,9 @@ class Lease:
             if len(scopes)>=10000:raise Blocked('shared_scope_catalog_review_required')
             scopes[key]=dict(run_id=self.identity['run_id'],commit=self.identity['commit'])
         at = self.clock()
-        state['owner'] = dict(self.identity, acquired_at=at.isoformat(), expires_at=(at+dt.timedelta(seconds=seconds)).isoformat())
+        state['owner'] = dict(self.identity, acquired_at=at.isoformat(), expires_at=None if open_collection else (at+dt.timedelta(seconds=seconds)).isoformat())
+        if open_collection:
+            state['owner'].update(lease_policy='OWNER_RELEASE_OR_VERIFIED_TERMINATION',purpose=purpose)
         self._write(revision, state)
         self.held = True
         return self.check()
@@ -110,7 +120,7 @@ class Lease:
         if not self.held or not owner or any(owner.get(k) != v for k,v in self.identity.items()):
             raise Blocked('shared_lock_owner_changed')
         at = self.clock()
-        if at < stamp(owner['acquired_at']) or at+dt.timedelta(seconds=request_seconds) >= stamp(owner['expires_at']):
+        if at < stamp(owner['acquired_at']) or (owner['expires_at'] is not None and at+dt.timedelta(seconds=request_seconds) >= stamp(owner['expires_at'])):
             raise Blocked('shared_lock_expired_or_request_would_overrun')
         return state
 
@@ -172,12 +182,21 @@ class Lease:
         owner = state['owner']
         if revision != expected_revision or not owner:
             raise Blocked('shared_recovery_revision_changed')
-        if self.clock() < stamp(owner['expires_at'])+dt.timedelta(seconds=60):
+        if owner['expires_at'] is not None and self.clock() < stamp(owner['expires_at'])+dt.timedelta(seconds=60):
             raise Blocked('shared_recovery_quarantine_not_elapsed')
         proof = verify_terminal(copy.deepcopy(owner))
         if (proof.get('repository'), str(proof.get('run_id')), proof.get('commit'), proof.get('status'),
                 proof.get('all_workers_stopped'), proof.get('external_issuers_stopped')) != (
                 owner['repository'], owner['run_id'], owner['commit'], 'completed', True, True):
             raise Blocked('shared_recovery_terminal_owner_unverified')
+        if owner['expires_at'] is None:
+            if (proof.get('requests_closed') is not True or proof.get('budget_preserved') is not True
+                    or proof.get('quarantine_elapsed') is not True):
+                raise Blocked('shared_open_lease_recovery_request_safety_unverified')
+            state['last_http'] = self.clock().isoformat()
+            cooldown = self.clock()+dt.timedelta(seconds=60)
+            if state['auth_not_before']:
+                cooldown = max(cooldown,stamp(state['auth_not_before']))
+            state['auth_not_before'] = cooldown.isoformat()
         state['owner'] = None
         self._write(revision, state)

@@ -115,7 +115,7 @@ class Session:
                 (('GITHUB_REPOSITORY','repository'),('GITHUB_RUN_ID','run_id'),('GITHUB_SHA','commit'))):
             raise Blocked('shared_runtime_actor_changed')
 
-    def acquire_lease(self, seconds=11400):
+    def acquire_lease(self, seconds=11400, *, purpose=None):
         """Acquire the account lease independently of the entrypoint context."""
         self.review()
         if self.lease is not None:
@@ -128,7 +128,7 @@ class Session:
         backend = self.backend or GitBackend(Path(self.env['RUNNER_TEMP'])/'kis-account-lease.git')
         self.lease = Lease(backend, self.env['GITHUB_REPOSITORY'], self.env['GITHUB_RUN_ID'],
                            self.env['GITHUB_SHA'], clock=self.clock, scope_id=self.env.get('KIS_VALIDATION_REQUEST_ID'))
-        self.lease.acquire(seconds=seconds)
+        self.lease.acquire(seconds=seconds,purpose=purpose)
         return self
 
     def __enter__(self):

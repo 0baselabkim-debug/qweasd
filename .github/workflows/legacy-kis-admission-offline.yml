@@ -4,9 +4,10 @@ on:
   push:
     branches: [fix/legacy-kis-admission-v1]
   pull_request:
-    paths: [scripts/kis_public_client.py, tests/test_legacy_kis_admission.py, tests/test_market_budget.py]
+    paths: [scripts/kis_public_client.py, tests/test_legacy_kis_admission.py, tests/test_market_budget.py, kis_shared/**, tests/test_collection_lease.py, .github/config/kis-shared-account*.json]
 permissions:
   contents: read
+  actions: read
 jobs:
   offline:
     runs-on: ubuntu-latest
@@ -18,8 +19,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -r requirements.txt pytest
-      - run: python -m pytest -q --junitxml=legacy-admission-tests.xml
+      - run: python -m pip install -r requirements.txt pytest==9.1.1
+      - name: Preserved source for existing full-regression fixtures (no provider calls)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/0baselabkim-debug/qweasd/actions/artifacts/13230751197/zip > "$RUNNER_TEMP/regular-source.zip"
+      - name: Full regression with the same preserved source as regular-operations CI
+        env:
+          REGULAR_SOURCE_ZIP: ${{ runner.temp }}/regular-source.zip
+        run: python -m pytest -q --junitxml=legacy-admission-tests.xml
       - uses: actions/upload-artifact@v4
         if: always()
         with:
