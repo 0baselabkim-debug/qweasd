@@ -32,7 +32,7 @@ class GitHub:
     def write(self,path,value,sha=None):
         raw=encoded(value)
         if len(raw)>900000:raise Failure('ledger_year_size_limit_requires_review')
-        for key in ('GH_TOKEN','GITHUB_TOKEN','KIS_APP_KEY','KIS_APP_SECRET'):
+        for key in ('GH_TOKEN','GITHUB_TOKEN','KIS_APP_KEY','KIS_APP_SECRET','OWNER_API_TOKEN','KIS_COORDINATOR_TOKEN'):
             if os.getenv(key) and os.environ[key].encode() in raw:raise Failure('credential_in_github_ledger')
         body=dict(message='regular collector ledger: '+path,content=base64.b64encode(raw).decode(),branch=policy.STATE_BRANCH)
         if sha is not None:body['sha']=sha

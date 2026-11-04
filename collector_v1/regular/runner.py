@@ -25,7 +25,7 @@ def output(**values):
 
 
 def scan(root,apis=()):
-    values=[os.environ[k] for k in ('GH_TOKEN','GITHUB_TOKEN','KIS_APP_KEY','KIS_APP_SECRET','KIS_REGULAR_APP_KEY','KIS_REGULAR_APP_SECRET') if os.getenv(k)]
+    values=[os.environ[k] for k in ('GH_TOKEN','GITHUB_TOKEN','KIS_APP_KEY','KIS_APP_SECRET','KIS_REGULAR_APP_KEY','KIS_REGULAR_APP_SECRET','OWNER_API_TOKEN','KIS_COORDINATOR_TOKEN') if os.getenv(k)]
     values += [a.token for a in apis if a and a.token]
     for p in Path(root).rglob('*'):
         if not p.is_file():continue
@@ -60,9 +60,13 @@ def freeze():
     run=client.run(os.environ['GITHUB_RUN_ID'])
     if run.get('path')!=policy.WORKFLOW or run.get('head_sha')!=os.getenv('GITHUB_SHA'):raise Failure('regular_workflow_or_code_mismatch')
     event=os.environ['GITHUB_EVENT_NAME'];store=Store(ROOT)
-    if event not in ('schedule','push','workflow_dispatch'):raise Failure('unsupported_regular_event')
+    if event not in ('schedule','push','workflow_dispatch','repository_dispatch'):raise Failure('unsupported_regular_event')
     inputs=json.loads(os.environ.get('REGULAR_INPUTS_JSON','{}') or '{}')
-    operation=inputs.get('operation','validate') if event=='workflow_dispatch' else ('start' if event=='schedule' else 'validate')
+    dispatch=None
+    if event=='repository_dispatch':
+        dispatch=json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_bytes())
+        if dispatch.get('action') not in ('verified-regular-prestart-handover','regular-handover-readiness'):raise Failure('unapproved_regular_dispatch_type')
+    operation=inputs.get('operation','validate') if event=='workflow_dispatch' else ('start' if event=='schedule' or (dispatch and dispatch['action']=='verified-regular-prestart-handover') else 'validate')
     if operation not in ('validate','start','resume'):raise Failure('unknown_manual_operation')
     if event=='workflow_dispatch' and operation=='resume':
         from .operator import freeze_resume
@@ -71,15 +75,25 @@ def freeze():
         c=dict(mode='VALIDATION_ONLY',run_id=str(run['id']),code_commit=run['head_sha'],artifact_name='kis-regular-deployment-'+str(run['id']))
         store.write('context.json',c);output(collect=False,operation='validate',artifact_name=c['artifact_name']);return 0
     if event=='workflow_dispatch':c=policy.manual_start(run,inputs)
+    elif event=='repository_dispatch':c=policy.handover_start(run,dispatch.get('client_payload',{}))
     else:c=policy.freeze(run,os.environ.get('REQUESTED_CRON',''));c['mode']='SCHEDULED_COLLECTION'
     c['artifact_name']=c['generation_id']+'-run-'+c['run_id']
     c['schedule_lag_seconds']=(policy.timestamp(c['run_created_at'])-policy.timestamp(c['scheduled_at'])).total_seconds()
     c['execution_operation']='start'
     output(operation='start')
+    from . import routing
+    selected=routing.bind(client,c,policy.REPO,config=json.loads(Path('.github/config/kis-shared-account.json').read_bytes()))
+    if event=='repository_dispatch':
+        route,_=client.contents(routing.PATH);proof=route.get('prestart_handover',{})
+        if not (proof.get('source_run')==c['handover_source_run'] and proof.get('artifact_digest')==c['handover_source_digest']
+                and proof.get('verified_zero_http') is True and proof.get('all_workers_stopped') is True):raise Failure('handover_not_anchored_in_central_proof')
     store.write('context.json',c)
+    if not selected:
+        store.write('report.json',dict(status='NOT_SELECTED_NO_COLLECTION',selected_repository=c['routing_actor'],asof=c['asof'],market_http=0))
+        output(collect=False,artifact_name=c['artifact_name']);return 0
     ledger=Ledger(client,c)
     previous=ledger.current()
-    if previous:
+    if previous and previous.get('status')!='PRESTART_RELEASED':
         store.write('report.json',dict(status='DUPLICATE_NOT_COLLECTED',prior_status=previous['status'],prior_run=previous['context']['run_id'],market_http=0))
         output(collect=False,artifact_name=c['artifact_name']);return 0
     # Local Actions serialization is not the account-wide lease. Do not burn a
@@ -117,6 +131,8 @@ class RuntimeGuard:
             if expiry is not None and expiry<=policy.timestamp(self.c['expires_at'])+dt.timedelta(seconds=35):
                 raise Failure('shared_token_cannot_cover_frozen_execution_window')
         if not self.checked:
+            from .routing import recheck
+            recheck(self.client,self.c,policy.REPO)
             Ledger(self.client,self.c).assert_owner();check_runs(self.client,self.c)
             self.checked=True
 
@@ -149,6 +165,8 @@ def collect():
             session=controlled_session(config['shared_policy'],guard.apis) if config.get('mode')=='shared-account-exclusive' else nullcontext()
             with session as account_session:
                 # Re-read and CAS the daily ledger only after the account lease.
+                from .routing import recheck
+                recheck(client,c,policy.REPO,config_path=config.get('shared_policy'))
                 check_runs(client,c);claim_for_collection(ledger,c)
                 from .operator import attest
                 attest(c,account_session)

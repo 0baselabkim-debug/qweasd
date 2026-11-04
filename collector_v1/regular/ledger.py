@@ -4,7 +4,7 @@ from ..core import Failure
 from .github import APIError
 from . import policy
 
-TERMINAL={'FAILED','BLOCKED','SKIPPED_CLOSED','SKIPPED_WEEKEND','COMPLETE_PROVISIONAL','ARTIFACT_UNCONFIRMED'}
+TERMINAL={'FAILED','BLOCKED','SKIPPED_CLOSED','SKIPPED_WEEKEND','COMPLETE_PROVISIONAL','ARTIFACT_UNCONFIRMED','PRESTART_RELEASED'}
 
 
 class Ledger:
@@ -23,8 +23,19 @@ class Ledger:
     def current(self):return self.load()[0]['slots'].get(self.key)
     def claim(self):
         data,sha=self.load()
-        if self.key in data['slots']:return False,data['slots'][self.key]
+        previous=data['slots'].get(self.key)
+        if previous:
+            if previous.get('status')!='PRESTART_RELEASED':return False,previous
+            proof=previous.get('prestart_handover',{})
+            if (proof.get('schema')!='verified-zero-http-handover-v1' or proof.get('total_physical_http')!=0
+                    or proof.get('source_run')!=previous['context']['run_id']
+                    or proof.get('all_workers_stopped') is not True or proof.get('central_owner_clear') is not True
+                    or proof.get('source_artifact_verified') is not True
+                    or proof.get('successor_repository')!=self.context.get('source_repository',policy.REPO)
+                    or proof.get('asof')!=self.context['asof']):raise Failure('prestart_handover_proof_invalid')
+            if len(previous.get('previous_attempts',[]))>=3:raise Failure('prestart_handover_attempt_limit')
         record=dict(context=copy.deepcopy(self.context),status='CLAIMED',history=[dict(at=policy.utcnow().isoformat(),status='CLAIMED')])
+        if previous:record['previous_attempts']=[*previous.get('previous_attempts',[]),{k:v for k,v in previous.items() if k!='previous_attempts'}]
         data['slots'][self.key]=record
         try:self.client.write(self.path,data,sha)
         except APIError as e:

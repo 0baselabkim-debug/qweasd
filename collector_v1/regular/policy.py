@@ -58,6 +58,14 @@ def manual_start(run,inputs):
     window(c)
     return c
 
+def handover_start(run,payload):
+    if run.get('event')!='repository_dispatch' or payload.get('approval')!='USER_APPROVED_ZERO_HTTP_HANDOVER':raise Failure('handover_explicit_approval_required')
+    required={'asof','request_id','approval','source_run','source_artifact_digest'}
+    if set(payload)!=required or not str(payload.get('source_run','')).isdigit() or not re.fullmatch('[0-9a-f]{64}',payload.get('source_artifact_digest','')):raise Failure('handover_payload_invalid')
+    c=manual_start(dict(run,event='workflow_dispatch'),dict(asof=payload['asof'],request_id=payload['request_id'],approval='USER_APPROVED_REGULAR_START'))
+    c.update(trigger='repository_dispatch',handover_source_run=str(payload['source_run']),handover_source_digest=payload['source_artifact_digest'])
+    return c
+
 def window(context,current=None):
     current=current or utcnow();start=timestamp(context['scheduled_at']);end=timestamp(context['expires_at'])
     if context['asof']!=start.astimezone(KST).date().isoformat() or end!=start+dt.timedelta(minutes=WINDOW_MINUTES):
