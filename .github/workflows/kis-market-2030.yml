@@ -3,6 +3,8 @@ run-name: KIS regular 20:30 ${{ github.event_name }} run ${{ github.run_id }}
 on:
   schedule:
     - cron: '30 11 * * 1-5'
+  repository_dispatch:
+    types: [verified-regular-prestart-handover, regular-handover-readiness]
   workflow_dispatch:
     inputs:
       operation:

@@ -1,7 +1,7 @@
 name: Regular operations regression (NO KIS HTTP)
 on:
   push:
-    branches: [fix/kis-regular-operations-v1]
+    branches: [fix/kis-regular-operations-v1, fix/regular-slot-routing-20261104]
   pull_request:
     paths: ['collector_v1/**', 'tests/test_regular_operations*.py', '.github/workflows/kis-market-2030.yml', '.github/config/kis-shared-account*.json']
 permissions:
