@@ -1,0 +1,74 @@
+{
+  "capture": {
+    "actual_KIS_HTTP": 0,
+    "actual_OAuth_HTTP": 0,
+    "asof": "2026-11-04",
+    "automatic_retries": 0,
+    "code_commit": "5f1dc7e68c06a38e288dd6cc543b61d262b42904",
+    "control_asof": "2026-10-29",
+    "credential_present": true,
+    "max_http": 4,
+    "official_prices_approved": 0,
+    "operating_writes": 0,
+    "physical_KRX_HTTP": 4,
+    "request_id": "krx-20261104-20261105-51940e8f",
+    "run_id": "41996717492",
+    "sources": [
+      {
+        "asof": "2026-10-29",
+        "http": 200,
+        "market": "KOSPI",
+        "observed_at": "2026-11-05T08:44:16.288446+00:00",
+        "raw_file": "67189ee813d49ab2cf1728089ed56d3104f5ae5545409be7053cd9e6114733bf.bin",
+        "raw_sha256": "67189ee813d49ab2cf1728089ed56d3104f5ae5545409be7053cd9e6114733bf",
+        "row_count": 940,
+        "status": "OFFICIAL_RESPONSE_RECEIVED_NOT_YET_COMPARED",
+        "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261029"
+      },
+      {
+        "asof": "2026-11-04",
+        "http": 200,
+        "market": "KOSPI",
+        "observed_at": "2026-11-05T08:44:19.405482+00:00",
+        "raw_file": "5791334a4b66a716ce4ad897671acc306eb984ecd92e345b38747e728e55cca9.bin",
+        "raw_sha256": "5791334a4b66a716ce4ad897671acc306eb984ecd92e345b38747e728e55cca9",
+        "row_count": 938,
+        "status": "OFFICIAL_RESPONSE_RECEIVED_NOT_YET_COMPARED",
+        "url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd?basDd=20261104"
+      },
+      {
+        "asof": "2026-10-29",
+        "http": 200,
+        "market": "KOSDAQ",
+        "observed_at": "2026-11-05T08:44:22.879556+00:00",
+        "raw_file": "9cd700b517e430b43d886e01571bf1938fa0defe89ae75e9a14a504361037fde.bin",
+        "raw_sha256": "9cd700b517e430b43d886e01571bf1938fa0defe89ae75e9a14a504361037fde",
+        "row_count": 1825,
+        "status": "OFFICIAL_RESPONSE_RECEIVED_NOT_YET_COMPARED",
+        "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261029"
+      },
+      {
+        "asof": "2026-11-04",
+        "http": 200,
+        "market": "KOSDAQ",
+        "observed_at": "2026-11-05T08:44:26.328248+00:00",
+        "raw_file": "97d280716bf4ec8a3ee39295a992e96bd428820ae6b08837fb9149bf15cc397c.bin",
+        "raw_sha256": "97d280716bf4ec8a3ee39295a992e96bd428820ae6b08837fb9149bf15cc397c",
+        "row_count": 1831,
+        "status": "OFFICIAL_RESPONSE_RECEIVED_NOT_YET_COMPARED",
+        "url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd?basDd=20261104"
+      }
+    ],
+    "status": "TARGET_RESPONSES_PRESERVED_NOT_YET_COMPARED"
+  },
+  "artifact": {
+    "repository": "0baselabkim-debug/qweasd",
+    "run_id": "41996717492",
+    "artifact_id": "13400468073",
+    "zip_sha256": "8bc5264b4f010e6db2cd0e660c4ab01d5bb3978ea73e79475f420e1ad6c2aa9c",
+    "capture_manifest_sha256": "67d1e3f29ec4a32785a4809001fe168e15bf850efc2e7d999a14f13d3caed444",
+    "code_commit": "5f1dc7e68c06a38e288dd6cc543b61d262b42904",
+    "artifact_expires_at": "2027-02-03T08:43:49Z"
+  },
+  "scope": "RAW_OFFICIAL_RESPONSE_NOT_PRICE_APPROVAL"
+}
