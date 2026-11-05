@@ -98,9 +98,15 @@ def capture(root,control,credential,*,opener,pause=time.sleep):
 def main():
     # The GitHub credential is used only for official read-only run-history checks.
     if os.environ.get('GITHUB_REF')!='refs/heads/'+BRANCH:raise SystemExit('feature_branch_only')
-    url=f'https://api.github.com/repos/{REPO}/actions/workflows/{WORKFLOW}/runs?branch={BRANCH}&per_page=100'
-    request=urllib.request.Request(url,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
-    with urllib.request.urlopen(request,timeout=25) as response:runs=json.load(response)
+    headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'}
+    run_id=os.environ['GITHUB_RUN_ID']
+    if not run_id.isdigit():raise SystemExit('invalid_run_id')
+    with urllib.request.urlopen(urllib.request.Request(f'https://api.github.com/repos/{REPO}/actions/runs/{run_id}',headers=headers),timeout=25) as response:
+        current=json.load(response)
+    if current['path']!='.github/workflows/'+WORKFLOW:raise SystemExit('workflow_path_mismatch')
+    workflow_id=current['workflow_id']
+    url=f'https://api.github.com/repos/{REPO}/actions/workflows/{workflow_id}/runs?branch={BRANCH}&per_page=100'
+    with urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=25) as response:runs=json.load(response)
     actor(os.environ,runs)
     control=json.loads(Path('.github/trials/krx-official-nov4-review.json').read_bytes())
     report=capture(Path(os.environ['RUNNER_TEMP'])/'krx-official-nov4-review',control,os.environ.get('KRX_API_KEY'),
