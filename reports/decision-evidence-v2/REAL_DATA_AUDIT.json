@@ -1,0 +1,226 @@
+{
+  "status": "PASS_WITH_EXPLICIT_SOURCE_AND_METRIC_HOLDS",
+  "base_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "source_asof": "2026-10-23",
+  "source_generation_id": "decision-v1-2026-10-23-a25b083d11ff46c95014f8036b3103cc6937e8e0c62c4e3a398b53b7c3a65df9",
+  "source_created_at": "2026-10-26T05:52:42.548153+00:00",
+  "generated_at": "2026-10-30T09:32:29.497293+00:00",
+  "knowledge_cutoff": "2026-10-30T08:00:00+00:00",
+  "source_publication_time": null,
+  "newer_collection_raw_access": {
+    "run_id": "40882669831",
+    "status": "BLOCKED",
+    "endpoint": "https://api.github.com/repos/0baselabkim-debug/qweasd/actions/runs/40882669831/artifacts",
+    "reason": "managed_network_Forbidden",
+    "raw_inspected": false
+  },
+  "independent_build": {
+    "dataset_id": "decision-evidence-v2-2026-10-23-9cb03f8d54b7b930f856e3ea8bf961d4b41750f507bf4416f04f10ee5d4703e6",
+    "directory": "/workspace/decision-evidence-output/decision-evidence-v2-2026-10-23-9cb03f8d54b7b930f856e3ea8bf961d4b41750f507bf4416f04f10ee5d4703e6",
+    "idempotent": false,
+    "validation": {
+      "status": "PASS",
+      "records": 2426,
+      "database_json_parquet_match": true,
+      "manifest_sha256": "6e5e32f76758547071aae020369bf338094acbc455e6054cb38672df370f3701"
+    },
+    "elapsed_seconds": 39.92772980299196,
+    "bytes": 195292803,
+    "coverage": {
+      "stocks": 2426,
+      "latest_price_verified": 209,
+      "sma_5": 131,
+      "sma_20": 111,
+      "sma_60": 0,
+      "sma_120": 0,
+      "atr_14": 114,
+      "return_5d_pct": 129,
+      "return_20d_pct": 111
+    },
+    "briefing_candidates": 20
+  },
+  "input_source_manifest_sha256": "0a23c61b3c84703f5617f19334464a9c1d9203c86d2d9a0ee08b2dac3c3d9037",
+  "input_files_verified_unchanged": 743,
+  "source_tree_sha256": "dddc68cd049e4f46e8e41d45f2c1ee243276f2785efc5fb536e1068fa8ad90f9",
+  "output_files": {
+    "records.parquet": {
+      "bytes": 2210261,
+      "sha256": "ca0382dc80333bc409cc5e37b7eac7683ef3fdf26541c2cd87a2bd6c29a692e7"
+    },
+    "price-conflicts.csv.gz": {
+      "bytes": 90462,
+      "sha256": "72b36dc0f36acd43f052b87a53907d2a39c0afdac35e1018d7a908dad69409a2"
+    },
+    "market.json.gz": {
+      "bytes": 11720495,
+      "sha256": "db8f6ef2b49ebb1e579b584ccd35e60df38d1b7411430e97c4e5b0ce9f1530d5"
+    },
+    "briefing.json": {
+      "bytes": 92366,
+      "sha256": "943effc523c9bfe864c8158a9d735f8b4c59b21d310c9e2d4fe723444008f570"
+    },
+    "manifest.json": {
+      "bytes": 2277,
+      "sha256": "6e5e32f76758547071aae020369bf338094acbc455e6054cb38672df370f3701"
+    },
+    "quality.json": {
+      "bytes": 23150,
+      "sha256": "a173cb5d11fcb6943611a67c3e6053d286c1927a00dcb937bd645ae3c28b0af3"
+    },
+    "evidence.duckdb": {
+      "bytes": 181153792,
+      "sha256": "cb2005171e6c6e8a0384df0553634bd5c946d41aac02afe49563ede953fd902f"
+    }
+  },
+  "derived_price_coverage": {
+    "atr_14": 114,
+    "latest_price_verified": 209,
+    "return_20d_pct": 111,
+    "return_5d_pct": 129,
+    "sma_120": 0,
+    "sma_20": 111,
+    "sma_5": 131,
+    "sma_60": 0,
+    "stocks": 2426
+  },
+  "latest_price_conflict_stock_count": 2217,
+  "latest_price_conflict_field_rows": 6157,
+  "latest_price_conflict_field_counts": {
+    "close": 2057,
+    "high": 654,
+    "low": 286,
+    "turnover": 1580,
+    "volume": 1580
+  },
+  "historical_price_hold_reason_stocks": {
+    "KIS_KRX_six_field_conflict": 2233,
+    "chart_date_or_listing_mismatch": 1,
+    "corporate_action_adjustment_unverified": 87,
+    "historical_adjustment_basis_unverified": 3,
+    "no_trade_or_invalid_volume_turnover": 100,
+    "official_KRX_not_available": 1,
+    "official_reference_conflict_or_invalid": 100,
+    "operating_snapshot_price_version_conflict": 2420
+  },
+  "historical_price_hold_reason_observations": {
+    "KIS_KRX_six_field_conflict": 2871,
+    "chart_date_or_listing_mismatch": 34,
+    "corporate_action_adjustment_unverified": 88,
+    "historical_adjustment_basis_unverified": 237,
+    "no_trade_or_invalid_volume_turnover": 957,
+    "official_KRX_not_available": 34,
+    "official_reference_conflict_or_invalid": 957,
+    "operating_snapshot_price_version_conflict": 35291
+  },
+  "verified_contiguous_suffix_stock_counts": {
+    "0": 2217,
+    "1": 55,
+    "10": 2,
+    "11": 1,
+    "12": 2,
+    "13": 1,
+    "14": 1,
+    "15": 1,
+    "17": 1,
+    "19": 1,
+    "2": 9,
+    "21": 2,
+    "22": 2,
+    "23": 2,
+    "27": 1,
+    "28": 1,
+    "29": 1,
+    "3": 8,
+    "30": 1,
+    "31": 2,
+    "33": 99,
+    "4": 6,
+    "5": 2,
+    "6": 4,
+    "7": 2,
+    "8": 1,
+    "9": 1
+  },
+  "price_basis_stock_counts": {
+    "KIS_adjusted_equals_official_KRX_original": 6,
+    "KIS_adjusted_option_0": 2420
+  },
+  "coverage": {
+    "foreign_5": 2420,
+    "foreign_20": 2413,
+    "institution_quantity_1": 2426,
+    "institution_quantity_5": 2339,
+    "institution_quantity_20": 2323,
+    "positive_days_5": 2420,
+    "concentration_5": 1015,
+    "exact_streak": 2425,
+    "turnover_intensity_5": 61,
+    "market_excess_5": 129,
+    "market_excess_20": 111,
+    "ichimoku_current_b": 3,
+    "event_verified": 0,
+    "financial_context": 2403,
+    "macro_observations": 11
+  },
+  "flow_transition_counts": {
+    "None": 10,
+    "buying_continuing": 8,
+    "buying_slowing": 474,
+    "buying_strengthening": 208,
+    "new_net_buying": 323,
+    "new_net_selling": 713,
+    "selling_continuing": 7,
+    "selling_easing": 325,
+    "selling_expanding": 295,
+    "zero_net_flow": 63
+  },
+  "candidate_eligible": 71,
+  "candidate_returned": 20,
+  "independent_recalculation_checks": {
+    "foreign_window_checks": 9704,
+    "institution_quantity_window_checks": 7278,
+    "concentration_checks": 2426,
+    "positive_day_checks": 4852,
+    "legacy_technical_value_checks": 172246
+  },
+  "legacy_technical_values_changed": 0,
+  "provider_finality": "UNVERIFIED",
+  "historical_backtest_eligible": false,
+  "extra_KIS_market_calls": 0,
+  "extra_KIS_OAuth_calls": 0,
+  "extra_external_market_calls": 0,
+  "actual_GPT_judgments_created": 0,
+  "storage_projection": {
+    "assumed_sessions_per_year": 252,
+    "full_formats_bytes_per_year": 49213786356,
+    "compressed_market_and_parquet_bytes_per_year": 3510550512,
+    "basis": "one independent generation per session of same measured size; estimate, not observed annual usage",
+    "external_backup": false
+  },
+  "source_known_latest_observation": "2026-10-26T05:52:42.548153+00:00",
+  "operating_code_modified": false,
+  "workflows_modified": false,
+  "schedules_modified": false,
+  "secrets_or_lock_policy_modified": false,
+  "main_merged": false,
+  "operating_publication": false,
+  "final_code_hashes_match_output": true,
+  "manifest_anchor_verification": {
+    "status": "PASS",
+    "records": 2426,
+    "database_json_parquet_match": true,
+    "manifest_sha256": "6e5e32f76758547071aae020369bf338094acbc455e6054cb38672df370f3701"
+  },
+  "real_idempotence_verification": {
+    "dataset_id": "decision-evidence-v2-2026-10-23-9cb03f8d54b7b930f856e3ea8bf961d4b41750f507bf4416f04f10ee5d4703e6",
+    "directory": "/workspace/decision-evidence-output/decision-evidence-v2-2026-10-23-9cb03f8d54b7b930f856e3ea8bf961d4b41750f507bf4416f04f10ee5d4703e6",
+    "idempotent": true,
+    "validation": {
+      "status": "PASS",
+      "records": 2426,
+      "database_json_parquet_match": true,
+      "manifest_sha256": "6e5e32f76758547071aae020369bf338094acbc455e6054cb38672df370f3701"
+    }
+  },
+  "monitor_main_verified_unchanged": "8fe527d87271d28431f14b36a233596ab3b73b18"
+}

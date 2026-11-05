@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-31T17:20:01.990183+00:00",
+  "main_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "monitor_main_commit": "8fe527d87271d28431f14b36a233596ab3b73b18",
+  "operating_paths_unchanged_from_baseline": {
+    "snapshot": true,
+    "collector_v1": true,
+    "kis_shared": true,
+    ".github/config": true,
+    ".github/workflows/kis-market-2030.yml": true
+  },
+  "regular_workflow": {
+    "state": "active",
+    "cron": "30 11 * * 1-5",
+    "timezone": "UTC",
+    "next_slot_KST": "2026-11-02T20:30:00+09:00",
+    "trading_day": "existing runtime calendar guard; not a guarantee of provider data completeness",
+    "first_regular_success": "NOT_VERIFIED"
+  },
+  "shared_lease": {
+    "revision": "7110690ce6139d416a9039ed6d56fb11ff4251b5",
+    "owner": null,
+    "policy": "EXCLUSIVE_SESSION_NO_EXPIRY_TAKEOVER",
+    "sequence": 9
+  },
+  "regular_state_revision": "76b64984f617d2be7b9ee5d3fa5b730f9c0335d4",
+  "oct30_state_entries": [],
+  "oct30_regular_slot_status": "FAILED",
+  "oct30_regular_failure_reason": null,
+  "oct30_regular_generation_id": "kis-regular-20261030-2030",
+  "secrets_changed": false,
+  "operational_deployment": false,
+  "notes": [
+    "Existing lease recovery and recovery-run acquire/release are recorded, not a policy change.",
+    "No Word/DOT schedule changed; external DOT scheduler was not independently inspected."
+  ]
+}

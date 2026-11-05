@@ -1,0 +1,59 @@
+{
+  "documents": [
+    {
+      "source": "official koreainvestment/open-trading-api repository",
+      "git_commit": "3a9be59a3ed8745720dc3aa9d584bdf3b7830362",
+      "sha256": "429f45248678d60a67990da1760af5965597201a3f9b790fb27a34e1fcfb2c06",
+      "url": "https://github.com/koreainvestment/open-trading-api/blob/3a9be59a3ed8745720dc3aa9d584bdf3b7830362/examples_llm/domestic_stock/inquire_daily_itemchartprice/inquire_daily_itemchartprice.py",
+      "observed_at": "2026-10-30T10:27:19.115751+00:00",
+      "relevant_lines": [
+        {
+          "line": 36,
+          "text": "실전계좌/모의계좌의 경우, 한 번의 호출에 최대 100건까지 확인 가능합니다."
+        },
+        {
+          "line": 40,
+          "text": "fid_cond_mrkt_div_code (str): [필수] 조건 시장 분류 코드 (ex. J:KRX, NX:NXT, UN:통합)"
+        },
+        {
+          "line": 45,
+          "text": "fid_org_adj_prc (str): [필수] 수정주가 원주가 가격 여부 (ex. 0:수정주가 1:원주가)"
+        },
+        {
+          "line": 61,
+          "text": "raise ValueError(\"fid_cond_mrkt_div_code is required (e.g. 'J:KRX, NX:NXT, UN:통합')\")"
+        },
+        {
+          "line": 76,
+          "text": "raise ValueError(\"fid_org_adj_prc is required (e.g. '0:수정주가 1:원주가')\")"
+        }
+      ]
+    },
+    {
+      "source": "official koreainvestment/open-trading-api repository",
+      "git_commit": "3a9be59a3ed8745720dc3aa9d584bdf3b7830362",
+      "sha256": "9553012ddcec94cd165f48ae193f1056768d25e2e27e85fbd3e07c12f1df4c22",
+      "url": "https://github.com/koreainvestment/open-trading-api/blob/3a9be59a3ed8745720dc3aa9d584bdf3b7830362/examples_llm/domestic_stock/investor_trade_by_stock_daily/investor_trade_by_stock_daily.py",
+      "observed_at": "2026-10-30T10:27:19.115901+00:00",
+      "relevant_lines": [
+        {
+          "line": 43,
+          "text": "fid_cond_mrkt_div_code (str): J:KRX, NX:NXT, UN:통합"
+        }
+      ]
+    },
+    {
+      "source": "official koreainvestment/open-trading-api repository",
+      "git_commit": "3a9be59a3ed8745720dc3aa9d584bdf3b7830362",
+      "sha256": "eac2a5b896782acd1fe64f5634feb455ed05559238098705f3a1cc5a40364afd",
+      "url": "https://github.com/koreainvestment/open-trading-api/blob/3a9be59a3ed8745720dc3aa9d584bdf3b7830362/examples_llm/domestic_stock/inquire_daily_indexchartprice/inquire_daily_indexchartprice.py",
+      "observed_at": "2026-10-30T10:27:19.116018+00:00",
+      "relevant_lines": []
+    }
+  ],
+  "old_saved_market_request_count": {
+    "J": 2426
+  },
+  "scope_interpretation": "J requests KRX. This does not prove an undocumented provider inclusion bug never occurred.",
+  "corporate_event_policy": "A flag is evidence of a hold, not proof of a particular split/rights/ex-dividend event or adjustment formula."
+}

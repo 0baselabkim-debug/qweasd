@@ -1,0 +1,40 @@
+name: Finite November 2 regular preflight (no provider HTTP)
+on:
+  push:
+    branches: [feat/decision-evidence-v2]
+    paths: ['.github/readiness/regular-20261102.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: readonly-regular-preflight-20261102
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: f36ab970428564e7569ae37d61f2cfa3f644e119
+          path: operating-main
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Inspect deployment and existing secret availability as booleans only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREFLIGHT_KIS_APP_KEY_PRESENT: ${{ secrets.KIS_APP_KEY != '' }}
+          PREFLIGHT_KIS_APP_SECRET_PRESENT: ${{ secrets.KIS_APP_SECRET != '' }}
+        run: python scripts/preflight_regular_20261102.py --operating-tree operating-main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: regular-preflight-20261102-${{ github.run_id }}
+          path: ${{ runner.temp }}/regular-preflight-20261102
+          retention-days: 90
+          if-no-files-found: error

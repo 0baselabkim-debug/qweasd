@@ -1,0 +1,67 @@
+{
+  "baseline_head": "e989458aa35fa390aa2f232bd0dec3e8b54bb012",
+  "baseline_working_tree_clean": true,
+  "baseline_test_record_rechecked": {
+    "tests": 539,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "related_remote_heads": {
+    "main": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+    "feat/decision-support": "17ba83718b814aeb3aeb14746b9aca266e9206af",
+    "feat/investment-asset-archive-v1": "f13e2fa144fca7e5a14f482e8e7ec2205b58b6f2",
+    "feat/market-data-collector-v1": "bb8edb9d858f443cb17d6c8e180d0fc5c8d38f3b"
+  },
+  "branch_review": "Existing decision_support supplies verified calculations; archive branch supplies independent archival tooling, not a completed judgment/portfolio engine. No other branch merged.",
+  "price_recovery_record": {
+    "same_date": "2026-10-23",
+    "common_population": 2313,
+    "before_approved": 105,
+    "after_approved": 2305,
+    "new_approved": 2200,
+    "latest_asof": "2026-10-29",
+    "latest_approved": 0,
+    "record": "reports/decision-evidence-v2-connected/RESULT.md",
+    "latest_price_status": "PENDING_KRX"
+  },
+  "initial_status": {
+    "P1": {
+      "status": "구현했으나 통합 검증 미완료",
+      "detail": "Most amount/persistence/concentration implemented; missing 3-session quantities and institutional non-overlapping quantity change."
+    },
+    "P2": {
+      "status": "구현했으나 통합 검증 미완료",
+      "detail": "Verified SMA/ATR/extrema/gap/relative strength implemented; support-test, plan and reversal/N-shape consumer not integrated. Latest verified price unavailable."
+    },
+    "P3": {
+      "status": "인터페이스만 존재",
+      "detail": "Preserved corporate/macro context and event/consensus contracts; external timestamps/actual feeds unavailable."
+    },
+    "P4": {
+      "status": "미구현",
+      "detail": "No independent requested stock-level 30/30/15/15/10 scoring and separate seven checks."
+    },
+    "P5": {
+      "status": "미구현",
+      "detail": "No integrated five buy/add or five hold/sell policies and current-entry risk plans."
+    },
+    "P6": {
+      "status": "미구현",
+      "detail": "No user-confirmed account/holding/fill/defense event ledger."
+    },
+    "P7": {
+      "status": "미구현",
+      "detail": "No OpenAI adapter, versioned prompt or grounded batch candidate selection."
+    },
+    "P8": {
+      "status": "구현했으나 통합 검증 미완료",
+      "detail": "Immutable record and guarded future evaluation functions implemented; no structured engine/account/review integration."
+    },
+    "P9": {
+      "status": "인터페이스만 존재",
+      "detail": "Existing maximum-20 quantitative summary; no complete account/candidate final-price HTML briefing."
+    }
+  },
+  "additional_market_API_calls": 0
+}

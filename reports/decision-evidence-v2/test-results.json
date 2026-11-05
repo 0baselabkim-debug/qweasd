@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "total": 521,
+  "passed": 521,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "new_decision_evidence_tests": 62,
+  "existing_regression_tests": 459,
+  "elapsed_seconds": 347.91,
+  "command": "python -m pytest -q --junitxml=/workspace/decision-evidence-release-tests.xml",
+  "focused_final_command": "python -m pytest tests/test_decision_evidence.py -q",
+  "focused_passed": 62,
+  "unit_fixture_policy": "synthetic fixtures only in tests and temporary directories; actual 2426-stock validation separately audited",
+  "real_data_audit": "REAL_DATA_AUDIT.json",
+  "KIS_market_HTTP": 0,
+  "KIS_OAuth_HTTP": 0,
+  "new_financial_or_disclosure_HTTP": 0,
+  "source_unchanged_files": 743,
+  "operating_workflow_changes": [],
+  "shared_account_changes": [],
+  "operating_publication": false
+}

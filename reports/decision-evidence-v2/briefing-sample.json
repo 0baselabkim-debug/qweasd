@@ -1,0 +1,740 @@
+{
+  "asof": "2026-10-23",
+  "dataset_id": "decision-evidence-v2-2026-10-23-9cb03f8d54b7b930f856e3ea8bf961d4b41750f507bf4416f04f10ee5d4703e6",
+  "eligible_candidates": 71,
+  "investment_recommendations_generated": false,
+  "maximum": 20,
+  "order_basis": "EXISTING_PUBLISHED_BRIEFING_THEN_STABLE_INPUT_ORDER_NO_NEW_SCORE",
+  "returned": 3,
+  "schema_version": "decision-evidence-v2.1",
+  "stocks": [
+    {
+      "candidate_types": [
+        "flow_sign_change_watch"
+      ],
+      "data_quality": {
+        "accepted_price_rows": 33,
+        "historical_backtest_eligible": false,
+        "latest_price_verified": true,
+        "missing_calendar_price_dates": [
+          "2026-08-18",
+          "2026-08-19",
+          "2026-08-20",
+          "2026-08-21"
+        ],
+        "original_adjusted_basis": "KIS_adjusted_option_0",
+        "price_hold_reasons": {
+          "operating_snapshot_price_version_conflict": 8
+        },
+        "provider_finality": "UNVERIFIED",
+        "raw_price_rows": 41,
+        "scope": "KRX",
+        "stale_verified_price_used_as_current": false,
+        "verified_contiguous_price_days": 33
+      },
+      "flow_persistence_metrics": {
+        "consecutive_net_buy_days": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        },
+        "consecutive_net_buy_days_lower_bound": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        },
+        "max_positive_day_share_5d": {
+          "reason": "net_flow_not_positive_or_incomplete",
+          "status": "unavailable",
+          "value": null
+        },
+        "net_5d_to_turnover_ratio": {
+          "reason": "net_flow_not_positive",
+          "status": "unavailable",
+          "value": null
+        },
+        "positive_days_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": 3
+        },
+        "positive_days_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 1
+        },
+        "transition": {
+          "reason": null,
+          "status": "valid",
+          "value": "new_net_selling"
+        }
+      },
+      "foreign_flow_metrics": {
+        "change_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": -2000000
+        },
+        "net_1d": {
+          "reason": null,
+          "status": "valid",
+          "value": -1000000
+        },
+        "net_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": -6000000
+        },
+        "net_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": -2000000
+        },
+        "previous_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        }
+      },
+      "full_evidence_lookup": {
+        "file": "market.json.gz",
+        "stock_code": "071850"
+      },
+      "institution_amount_status": "unavailable_unit_not_verified",
+      "institution_flow_metrics": {
+        "net_quantity_1d": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        },
+        "net_quantity_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        },
+        "net_quantity_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        }
+      },
+      "missing_fields": [
+        {
+          "field": "observation_tags.recent_event_detected",
+          "reason": "exact_time_verified_event_feed_not_connected"
+        }
+      ],
+      "price_return_20d_pct": {
+        "reason": null,
+        "status": "valid",
+        "value": -0.2448979591836764
+      },
+      "price_return_5d_pct": {
+        "reason": null,
+        "status": "valid",
+        "value": 1.7485428809325576
+      },
+      "recent_event_detected": {
+        "reason": "exact_time_verified_event_feed_not_connected",
+        "status": "unavailable",
+        "value": null
+      },
+      "relative_strength_metrics": {
+        "industry_excess_20d_pp": {
+          "reason": "official_industry_index_unavailable",
+          "status": "unavailable",
+          "value": null
+        },
+        "industry_excess_5d_pp": {
+          "reason": "official_industry_index_unavailable",
+          "status": "unavailable",
+          "value": null
+        },
+        "market_excess_20d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 9.869060451377498
+        },
+        "market_excess_5d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 7.170168991302717
+        },
+        "market_return_20d_pct": {
+          "exact_ratio": {
+            "denominator": "83627",
+            "numerator": "-845800"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": -10.113958410561182
+        },
+        "market_return_5d_pct": {
+          "exact_ratio": {
+            "denominator": "39739",
+            "numerator": "-215450"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": -5.421626110370165
+        },
+        "previous_5d_market_excess_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 10.182263327438504
+        },
+        "stock_return_20d_pct": {
+          "reason": null,
+          "status": "valid",
+          "value": -0.2448979591836764
+        },
+        "stock_return_5d_pct": {
+          "reason": null,
+          "status": "valid",
+          "value": 1.7485428809325576
+        }
+      },
+      "source_references": {
+        "exact_foreign_request_observed_at": null,
+        "foreign_source_snapshot_sha256": "e1a96cae6aa6621bed55f74b077e235c66408c3149537fee4a9398075c2814bf",
+        "known_latest_source_observation": "2026-10-26T05:52:42.548153+00:00",
+        "point_in_time_reproducible": false,
+        "price_observed_at": "2026-10-23T10:35:38.011721+00:00",
+        "price_source_ids": [
+          "e72db3976f7bc61232530d7beff27b8cb067b25045c68b7e802912091c651cbc"
+        ],
+        "source_batch_collected_at": "2026-10-23T11:19:31.501793+00:00",
+        "source_index_sha256": "cf2975c9d3eb053783b0341d31b9e054ea5b73b82adaf39092a5ba088f8d367e",
+        "source_publication_time": null,
+        "source_stock_payload_sha256": "78603ac7d0adaf913a50cfb585687b078209ebdcf30ccd814d3a51432e7ce4e2"
+      },
+      "stock_code": "071850",
+      "stock_name": "캐스텍코리아",
+      "total_missing_metric_count": 47,
+      "volume_liquidity_metrics": {
+        "current_turnover_to_mean_5d_ratio": {
+          "exact_ratio": {
+            "denominator": "76589862",
+            "numerator": "40269985"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.5257874077381155
+        },
+        "current_volume_to_mean_20d_ratio": {
+          "exact_ratio": {
+            "denominator": "202151",
+            "numerator": "133340"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.6596059381353543
+        },
+        "current_volume_to_mean_5d_ratio": {
+          "exact_ratio": {
+            "denominator": "64308",
+            "numerator": "33335"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.5183647446662935
+        },
+        "down_volume_expansion": {
+          "reason": null,
+          "status": "valid",
+          "value": false
+        }
+      }
+    },
+    {
+      "candidate_types": [
+        "flow_leading_reversal_watch_hypothesis"
+      ],
+      "data_quality": {
+        "accepted_price_rows": 33,
+        "historical_backtest_eligible": false,
+        "latest_price_verified": true,
+        "missing_calendar_price_dates": [
+          "2026-08-18",
+          "2026-08-19",
+          "2026-08-20",
+          "2026-08-21"
+        ],
+        "original_adjusted_basis": "KIS_adjusted_option_0",
+        "price_hold_reasons": {
+          "no_trade_or_invalid_volume_turnover": 8,
+          "official_reference_conflict_or_invalid": 8,
+          "operating_snapshot_price_version_conflict": 8
+        },
+        "provider_finality": "UNVERIFIED",
+        "raw_price_rows": 41,
+        "scope": "KRX",
+        "stale_verified_price_used_as_current": false,
+        "verified_contiguous_price_days": 33
+      },
+      "flow_persistence_metrics": {
+        "consecutive_net_buy_days": {
+          "reason": null,
+          "status": "valid",
+          "value": 1
+        },
+        "consecutive_net_buy_days_lower_bound": {
+          "reason": null,
+          "status": "valid",
+          "value": 1
+        },
+        "max_positive_day_share_5d": {
+          "exact_ratio": {
+            "denominator": "73",
+            "numerator": "36"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.4931506849315068
+        },
+        "net_5d_to_turnover_ratio": {
+          "exact_ratio": {
+            "denominator": "23896177",
+            "numerator": "2500000"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.1046192451621027
+        },
+        "positive_days_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": 10
+        },
+        "positive_days_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 3
+        },
+        "transition": {
+          "reason": null,
+          "status": "valid",
+          "value": "buying_strengthening"
+        }
+      },
+      "foreign_flow_metrics": {
+        "change_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 23000000
+        },
+        "net_1d": {
+          "reason": null,
+          "status": "valid",
+          "value": 14000000
+        },
+        "net_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": 28000000
+        },
+        "net_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 50000000
+        },
+        "previous_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 27000000
+        }
+      },
+      "full_evidence_lookup": {
+        "file": "market.json.gz",
+        "stock_code": "175250"
+      },
+      "institution_amount_status": "unavailable_unit_not_verified",
+      "institution_flow_metrics": {
+        "net_quantity_1d": {
+          "reason": null,
+          "status": "valid",
+          "value": -76
+        },
+        "net_quantity_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": -142
+        },
+        "net_quantity_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        }
+      },
+      "missing_fields": [
+        {
+          "field": "observation_tags.recent_event_detected",
+          "reason": "exact_time_verified_event_feed_not_connected"
+        }
+      ],
+      "price_return_20d_pct": {
+        "reason": null,
+        "status": "valid",
+        "value": -17.097532314923626
+      },
+      "price_return_5d_pct": {
+        "reason": null,
+        "status": "valid",
+        "value": -8.018252933507174
+      },
+      "recent_event_detected": {
+        "reason": "exact_time_verified_event_feed_not_connected",
+        "status": "unavailable",
+        "value": null
+      },
+      "relative_strength_metrics": {
+        "industry_excess_20d_pp": {
+          "reason": "official_industry_index_unavailable",
+          "status": "unavailable",
+          "value": null
+        },
+        "industry_excess_5d_pp": {
+          "reason": "official_industry_index_unavailable",
+          "status": "unavailable",
+          "value": null
+        },
+        "market_excess_20d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": -6.983573904362451
+        },
+        "market_excess_5d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": -2.596626823137015
+        },
+        "market_return_20d_pct": {
+          "exact_ratio": {
+            "denominator": "83627",
+            "numerator": "-845800"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": -10.113958410561182
+        },
+        "market_return_5d_pct": {
+          "exact_ratio": {
+            "denominator": "39739",
+            "numerator": "-215450"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": -5.421626110370165
+        },
+        "previous_5d_market_excess_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 2.7823524054807662
+        },
+        "stock_return_20d_pct": {
+          "reason": null,
+          "status": "valid",
+          "value": -17.097532314923626
+        },
+        "stock_return_5d_pct": {
+          "reason": null,
+          "status": "valid",
+          "value": -8.018252933507174
+        }
+      },
+      "source_references": {
+        "exact_foreign_request_observed_at": null,
+        "foreign_source_snapshot_sha256": "e1a96cae6aa6621bed55f74b077e235c66408c3149537fee4a9398075c2814bf",
+        "known_latest_source_observation": "2026-10-26T05:52:42.548153+00:00",
+        "point_in_time_reproducible": false,
+        "price_observed_at": "2026-10-23T10:49:55.007418+00:00",
+        "price_source_ids": [
+          "e72db3976f7bc61232530d7beff27b8cb067b25045c68b7e802912091c651cbc"
+        ],
+        "source_batch_collected_at": "2026-10-23T11:19:31.501793+00:00",
+        "source_index_sha256": "cf2975c9d3eb053783b0341d31b9e054ea5b73b82adaf39092a5ba088f8d367e",
+        "source_publication_time": null,
+        "source_stock_payload_sha256": "1135e68d2b2289a8a12798755e0c2478ebe572007bdefd21c91f25edbd64afeb"
+      },
+      "stock_code": "175250",
+      "stock_name": "아이큐어",
+      "total_missing_metric_count": 42,
+      "volume_liquidity_metrics": {
+        "current_turnover_to_mean_5d_ratio": {
+          "exact_ratio": {
+            "denominator": "95584708",
+            "numerator": "73003165"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.7637536016744436
+        },
+        "current_volume_to_mean_20d_ratio": {
+          "exact_ratio": {
+            "denominator": "789077",
+            "numerator": "349600"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.4430492841636494
+        },
+        "current_volume_to_mean_5d_ratio": {
+          "exact_ratio": {
+            "denominator": "2367",
+            "numerator": "1900"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.8027038445289396
+        },
+        "down_volume_expansion": {
+          "reason": null,
+          "status": "valid",
+          "value": false
+        }
+      }
+    },
+    {
+      "candidate_types": [
+        "flow_sign_change_watch"
+      ],
+      "data_quality": {
+        "accepted_price_rows": 33,
+        "historical_backtest_eligible": false,
+        "latest_price_verified": true,
+        "missing_calendar_price_dates": [
+          "2026-08-18",
+          "2026-08-19",
+          "2026-08-20",
+          "2026-08-21"
+        ],
+        "original_adjusted_basis": "KIS_adjusted_option_0",
+        "price_hold_reasons": {
+          "no_trade_or_invalid_volume_turnover": 5,
+          "official_reference_conflict_or_invalid": 5,
+          "operating_snapshot_price_version_conflict": 8
+        },
+        "provider_finality": "UNVERIFIED",
+        "raw_price_rows": 41,
+        "scope": "KRX",
+        "stale_verified_price_used_as_current": false,
+        "verified_contiguous_price_days": 33
+      },
+      "flow_persistence_metrics": {
+        "consecutive_net_buy_days": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        },
+        "consecutive_net_buy_days_lower_bound": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        },
+        "max_positive_day_share_5d": {
+          "reason": "net_flow_not_positive_or_incomplete",
+          "status": "unavailable",
+          "value": null
+        },
+        "net_5d_to_turnover_ratio": {
+          "reason": "net_flow_not_positive",
+          "status": "unavailable",
+          "value": null
+        },
+        "positive_days_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": 7
+        },
+        "positive_days_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 1
+        },
+        "transition": {
+          "reason": null,
+          "status": "valid",
+          "value": "new_net_selling"
+        }
+      },
+      "foreign_flow_metrics": {
+        "change_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": -82000000
+        },
+        "net_1d": {
+          "reason": null,
+          "status": "valid",
+          "value": -27000000
+        },
+        "net_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": -37000000
+        },
+        "net_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": -55000000
+        },
+        "previous_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": 27000000
+        }
+      },
+      "full_evidence_lookup": {
+        "file": "market.json.gz",
+        "stock_code": "286750"
+      },
+      "institution_amount_status": "unavailable_unit_not_verified",
+      "institution_flow_metrics": {
+        "net_quantity_1d": {
+          "reason": null,
+          "status": "valid",
+          "value": 0
+        },
+        "net_quantity_20d": {
+          "reason": null,
+          "status": "valid",
+          "value": -2185
+        },
+        "net_quantity_5d": {
+          "reason": null,
+          "status": "valid",
+          "value": -2185
+        }
+      },
+      "missing_fields": [
+        {
+          "field": "observation_tags.recent_event_detected",
+          "reason": "exact_time_verified_event_feed_not_connected"
+        }
+      ],
+      "price_return_20d_pct": {
+        "reason": null,
+        "status": "valid",
+        "value": 13.883299798792748
+      },
+      "price_return_5d_pct": {
+        "reason": null,
+        "status": "valid",
+        "value": 2.9090909090909056
+      },
+      "recent_event_detected": {
+        "reason": "exact_time_verified_event_feed_not_connected",
+        "status": "unavailable",
+        "value": null
+      },
+      "relative_strength_metrics": {
+        "industry_excess_20d_pp": {
+          "reason": "official_industry_index_unavailable",
+          "status": "unavailable",
+          "value": null
+        },
+        "industry_excess_5d_pp": {
+          "reason": "official_industry_index_unavailable",
+          "status": "unavailable",
+          "value": null
+        },
+        "market_excess_20d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 23.997258209353923
+        },
+        "market_excess_5d_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 8.330717019461066
+        },
+        "market_return_20d_pct": {
+          "exact_ratio": {
+            "denominator": "83627",
+            "numerator": "-845800"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": -10.113958410561182
+        },
+        "market_return_5d_pct": {
+          "exact_ratio": {
+            "denominator": "39739",
+            "numerator": "-215450"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": -5.421626110370165
+        },
+        "previous_5d_market_excess_pp": {
+          "reason": null,
+          "status": "valid",
+          "value": 19.836956069439978
+        },
+        "stock_return_20d_pct": {
+          "reason": null,
+          "status": "valid",
+          "value": 13.883299798792748
+        },
+        "stock_return_5d_pct": {
+          "reason": null,
+          "status": "valid",
+          "value": 2.9090909090909056
+        }
+      },
+      "source_references": {
+        "exact_foreign_request_observed_at": null,
+        "foreign_source_snapshot_sha256": "e1a96cae6aa6621bed55f74b077e235c66408c3149537fee4a9398075c2814bf",
+        "known_latest_source_observation": "2026-10-26T05:52:42.548153+00:00",
+        "point_in_time_reproducible": false,
+        "price_observed_at": "2026-10-23T11:00:03.080157+00:00",
+        "price_source_ids": [
+          "e72db3976f7bc61232530d7beff27b8cb067b25045c68b7e802912091c651cbc"
+        ],
+        "source_batch_collected_at": "2026-10-23T11:19:31.501793+00:00",
+        "source_index_sha256": "cf2975c9d3eb053783b0341d31b9e054ea5b73b82adaf39092a5ba088f8d367e",
+        "source_publication_time": null,
+        "source_stock_payload_sha256": "c9da6956d5afd8439376db5df5bcdf106f23a7c212699d70a052e523f77d2cfe"
+      },
+      "stock_code": "286750",
+      "stock_name": "나노실리칸첨단소재",
+      "total_missing_metric_count": 47,
+      "volume_liquidity_metrics": {
+        "current_turnover_to_mean_5d_ratio": {
+          "exact_ratio": {
+            "denominator": "1278732343",
+            "numerator": "869397030"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.6798897632950541
+        },
+        "current_volume_to_mean_20d_ratio": {
+          "exact_ratio": {
+            "denominator": "427749",
+            "numerator": "616450"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 1.4411488980687273
+        },
+        "current_volume_to_mean_5d_ratio": {
+          "exact_ratio": {
+            "denominator": "428121",
+            "numerator": "308225"
+          },
+          "reason": null,
+          "status": "valid",
+          "value": 0.7199483323639813
+        },
+        "down_volume_expansion": {
+          "reason": null,
+          "status": "valid",
+          "value": false
+        }
+      }
+    }
+  ],
+  "sample_only": true,
+  "full_briefing_returned": 20
+}

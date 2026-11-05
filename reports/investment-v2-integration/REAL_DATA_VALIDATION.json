@@ -1,0 +1,133 @@
+{
+  "source_run": "40882669831",
+  "source_artifact_id": "12910068161",
+  "source_zip_sha256": "4682801c9d88a5fb43496c55263e66402aef42f089f8987d667458d15cf8e8c7",
+  "raw_manifest_sha256": "55d41a0dbb9dc3e9d2022ba676eb7039172b5914df5843c0b114f0b29710e812",
+  "asof": "2026-10-29",
+  "evidence_generation": {
+    "dataset_id": "decision-evidence-v2-2026-10-29-1c9f4944e21f531dd8d4d2ff25635618149c78e8a772bef49c4c1448d9ec6d2b",
+    "directory": "/workspace/investment-v2-integration-20261031/evidence/decision-evidence-v2-2026-10-29-1c9f4944e21f531dd8d4d2ff25635618149c78e8a772bef49c4c1448d9ec6d2b",
+    "idempotent": false,
+    "validation": {
+      "status": "PASS",
+      "records": 2346,
+      "database_json_parquet_match": true,
+      "manifest_sha256": "101cee6b7c109eeefe63621a7758a10972a517e3f47180032763886150071908"
+    },
+    "elapsed_seconds": 102.07260786700044,
+    "bytes": 174679823,
+    "coverage": {
+      "stocks": 2346,
+      "latest_price_verified": 0,
+      "sma_5": 0,
+      "sma_20": 0,
+      "sma_60": 0,
+      "sma_120": 0,
+      "atr_14": 0,
+      "return_5d_pct": 0,
+      "return_20d_pct": 0
+    },
+    "briefing_candidates": 0
+  },
+  "investment_generation": {
+    "status": "OFFLINE_INTEGRATED_WITH_DATA_HOLDS",
+    "dataset_id": "investment-v2-2026-10-29-c4d0f4a8a9395a8cb747f4e96576db2f18938588f8ea81bf3155ca965fb69535",
+    "directory": "/workspace/investment-v2-integration-20261031/assessment/investment-v2-2026-10-29-c4d0f4a8a9395a8cb747f4e96576db2f18938588f8ea81bf3155ca965fb69535",
+    "idempotent": false,
+    "validation": {
+      "status": "PASS",
+      "rows": 2346,
+      "database_json_parquet_match": true,
+      "manifest_sha256": "d3b520f9d734d216fff511d3e4ebe6dc490d5134ecfee4f368d35948b86932c3"
+    },
+    "quality": {
+      "dataset_id": "investment-v2-2026-10-29-c4d0f4a8a9395a8cb747f4e96576db2f18938588f8ea81bf3155ca965fb69535",
+      "asof": "2026-10-29",
+      "source_population": 2346,
+      "analysis_population": 2346,
+      "source_verification": {
+        "status": "PASS",
+        "records": 2346,
+        "database_json_parquet_match": true,
+        "manifest_sha256": "101cee6b7c109eeefe63621a7758a10972a517e3f47180032763886150071908"
+      },
+      "source_unchanged": true,
+      "candidates": 0,
+      "latest_price_verified": 0,
+      "complete_scorecards": 0,
+      "partial_scorecards": 2346,
+      "context_status": "NOT_RUN",
+      "context_holds": [],
+      "OpenAI_live_HTTP": 0,
+      "OpenAI_mock_requests": 0,
+      "market_HTTP": 0,
+      "engine_failed": false,
+      "provider_finality": "UNVERIFIED",
+      "official_price_status": "PENDING_KRX",
+      "future_performance": "NOT_RUN",
+      "unverified_context_not_sent_as_facts": true
+    },
+    "bytes": 41263975
+  },
+  "independent_raw_checks": {
+    "status": "PASS_RAW_RECALCULATION_AND_INTEGRATION",
+    "source": {
+      "stock_population_match": true,
+      "stocks": 2346,
+      "foreign_window_checks": 9384,
+      "foreign_available": {
+        "1": 2346,
+        "3": 2344,
+        "5": 2342,
+        "20": 2317
+      },
+      "latest_price_approved": 0,
+      "approval_scope": "exact_KRX_six_fields_only",
+      "institution_quantity_checks": 7038,
+      "source_generation_id": "kis-authorized-20261029-40882669831",
+      "historical_backtest_eligible": false
+    },
+    "extra_quantity_and_change_checks": 9384,
+    "original_files_unchanged": 9413,
+    "evidence": {
+      "status": "PASS",
+      "records": 2346,
+      "database_json_parquet_match": true,
+      "manifest_sha256": "101cee6b7c109eeefe63621a7758a10972a517e3f47180032763886150071908"
+    },
+    "investment": {
+      "status": "PASS",
+      "rows": 2346,
+      "database_json_parquet_match": true,
+      "manifest_sha256": "d3b520f9d734d216fff511d3e4ebe6dc490d5134ecfee4f368d35948b86932c3"
+    },
+    "market_API_calls": 0
+  },
+  "final_output_code_files_match_current_commit": true,
+  "investment_output_files": {
+    "briefing.html": "924c68cbe3a1a35a1a83bfd5a5dbcf90d157cb5392e4ddf512079589abd7655f",
+    "briefing.json": "4eb72128daec7f13c6264dd859766a8acbe4505ea86427df2c76f50e35bfa002",
+    "context-at-decision.json": "8c70e6903bf15c36ddfa98f054dd7d2d196ae00b2931f44c8a4894067f14acbb",
+    "investment.duckdb": "c0956ca3800061bef196d30193c4fc6457b80ed92dcf053aab249888f41776fe",
+    "market.json.gz": "aebe879b1f24af2d9a090ff826426e86691e29a7fb9a745c38430af3cfa0c709",
+    "model-journal.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "quality.json": "057954b01ee1aac905b1c83da2523ee4066d2a9c7d6d37d157acf72bf3219a37",
+    "records.parquet": "944a994c09ec25723c8a08fcccb4e66f64a02e9fb476432cffceaa1ebcfca11a"
+  },
+  "official_alphanumeric_symbols_preserved": 32,
+  "three_session_quantity_availability": {
+    "foreign_flow_metrics": 2344,
+    "institution_flow_metrics": 2346
+  },
+  "known_score_maximum_distribution": {
+    "35": 2317,
+    "25": 15,
+    "20": 10,
+    "10": 4
+  },
+  "GPT_actual_judgments": 0,
+  "actual_user_portfolio_inputs": false,
+  "actual_future_performance": "NOT_RUN",
+  "output_location": "LOCAL_WORKSPACE_ONLY_NOT_OPERATING_PUBLICATION",
+  "new_external_backup_uploaded": false
+}

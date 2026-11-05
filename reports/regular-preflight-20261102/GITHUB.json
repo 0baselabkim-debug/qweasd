@@ -1,0 +1,98 @@
+{
+  "checked_at": "2026-11-01T00:14:06.742330+00:00",
+  "branch": "feat/decision-evidence-v2",
+  "base": "main",
+  "baseline": "b81b99cc3c3ae8acda3eb3fe9fc506ac90f87f0d",
+  "tested_behavior_commit": "60f300f857c8fe5267c9de74802b157f66a2c4cd",
+  "native_audit_commit": "f61f5da50358f8f6683313f2d2fcc18eb44cef46",
+  "main_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "PR": {
+    "number": 2,
+    "html_url": "https://github.com/0baselabkim-debug/qweasd/pull/2",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "mergeable": true,
+    "mergeable_state": "clean"
+  },
+  "regression": {
+    "run_id": "41254671960",
+    "code_commit": "60f300f857c8fe5267c9de74802b157f66a2c4cd",
+    "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41254671960",
+    "conclusion": "success",
+    "counts": {
+      "tests": 694,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "baseline_cases": 675,
+    "retained_baseline": 675,
+    "removed_baseline": [],
+    "new_cases": 19,
+    "artifact": {
+      "id": 13063250332,
+      "name": "investment-v2-offline-tests-41254671960",
+      "digest": "sha256:b75a7b383f5f7cafc64e451c9710931600404b5c3b4c81fa52304a8e82bb2a2c",
+      "size_in_bytes": 14263,
+      "expires_at": "2027-01-29T23:58:02Z"
+    },
+    "artifact_zip_verified": true,
+    "junit_sha256": "23328e31128cedab85786dfbec25932b61a6b63322defab6dea0bad108a4a1a6",
+    "actual_provider_HTTP": 0
+  },
+  "read_only_native_runs": [
+    {
+      "phase": "initial",
+      "run": {
+        "id": 41254548199,
+        "head_sha": "5605313fc1cb893a2fe20b08b0473bcfef6bc5d3",
+        "event": "push",
+        "path": ".github/workflows/regular-preflight-20261102.yml",
+        "status": "completed",
+        "conclusion": "failure",
+        "html_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41254548199",
+        "created_at": "2026-10-31T23:56:03Z",
+        "updated_at": "2026-10-31T23:56:50Z"
+      },
+      "artifacts": [
+        {
+          "id": 13062317611,
+          "name": "regular-preflight-20261102-41254548199",
+          "digest": "sha256:554521f6a963a169998ed89e1cec95020f43f541b40c0ddcabb1c2bd1cc5d74a",
+          "size_in_bytes": 284,
+          "expires_at": "2027-01-29T23:56:03Z",
+          "expired": false
+        }
+      ],
+      "downloaded_zip_sha256_verified": true
+    },
+    {
+      "phase": "final",
+      "run": {
+        "id": 41254701865,
+        "head_sha": "f61f5da50358f8f6683313f2d2fcc18eb44cef46",
+        "event": "push",
+        "path": ".github/workflows/regular-preflight-20261102.yml",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41254701865",
+        "created_at": "2026-10-31T23:58:30Z",
+        "updated_at": "2026-10-31T23:59:18Z"
+      },
+      "artifacts": [
+        {
+          "id": 13062772261,
+          "name": "regular-preflight-20261102-41254701865",
+          "digest": "sha256:ac03ada70de05043e4742d0f00f49721f33a17a4a269c150010601991eb3d900",
+          "size_in_bytes": 1151,
+          "expires_at": "2027-01-29T23:58:31Z",
+          "expired": false
+        }
+      ],
+      "downloaded_zip_sha256_verified": true
+    }
+  ],
+  "merge": "NOT_PERFORMED",
+  "deployment": "NOT_PERFORMED"
+}

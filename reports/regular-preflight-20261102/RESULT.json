@@ -1,0 +1,303 @@
+{
+  "status": "PARTIAL",
+  "automatic_collection_configuration": "READY_NO_CURRENT_BLOCKER_FOUND",
+  "target": "2026-11-02",
+  "scheduled_at_KST": "2026-11-02T20:30:00+09:00",
+  "scheduled_at_UTC": "2026-11-02T11:30:00+00:00",
+  "window_end_KST": "2026-11-02T23:20:00+09:00",
+  "cron": "30 11 * * 1-5",
+  "main_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+  "initial_feature": "b81b99cc3c3ae8acda3eb3fe9fc506ac90f87f0d",
+  "native_configuration_audit": {
+    "status": "PASS_READ_ONLY_CONFIGURATION",
+    "errors": [],
+    "target": "2026-11-02",
+    "scheduled_KST": "2026-11-02T20:30:00+09:00",
+    "scheduled_UTC": "2026-11-02T11:30:00+00:00",
+    "expires_KST": "2026-11-02T23:20:00+09:00",
+    "generation_id": "kis-regular-20261102-2030",
+    "main_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+    "workflow": ".github/workflows/kis-market-2030.yml",
+    "workflow_state": "active",
+    "cron": "30 11 * * 1-5",
+    "repository_default_branch": "main",
+    "secret_presence": {
+      "KIS_APP_KEY": true,
+      "KIS_APP_SECRET": true
+    },
+    "reviewed_runtime_files": 12,
+    "runtime_hash_failures": [],
+    "shared_owner": null,
+    "shared_sequence": 9,
+    "target_slot_status": "UNCLAIMED",
+    "prior_slots": {
+      "2026-10-29/2030": "BLOCKED",
+      "2026-10-30/2030": "FAILED"
+    },
+    "active_runs": [
+      {
+        "run_id": 41254701865,
+        "path": ".github/workflows/regular-preflight-20261102.yml",
+        "status": "in_progress"
+      },
+      {
+        "run_id": 41254487895,
+        "path": ".github/workflows/investment-v2-offline.yml",
+        "status": "in_progress"
+      },
+      {
+        "run_id": 41254671960,
+        "path": ".github/workflows/investment-v2-offline.yml",
+        "status": "pending"
+      }
+    ],
+    "slot_claimed": false,
+    "lease_changed": false,
+    "token_issued": false,
+    "provider_HTTP": 0,
+    "oauth_HTTP": 0,
+    "market_HTTP": 0,
+    "KRX_official_target_day_confirmation": "NOT_VERIFIED_BY_THIS_AUDIT",
+    "actual_authentication": "NOT_RUN",
+    "actual_collection": "NOT_RUN",
+    "artifact_publication": "NOT_PUBLISHED",
+    "warnings": [
+      "The workflow event must be schedule; workflow_dispatch validates deployment only.",
+      "Provider calendar is KIS, not a KRX official closure notice.",
+      "Current empty ownership does not guarantee no competing owner at the scheduled time."
+    ],
+    "run_id": "41254701865",
+    "audit_commit": "f61f5da50358f8f6683313f2d2fcc18eb44cef46",
+    "state_revisions": {
+      "kis-shared-account-state": "7110690ce6139d416a9039ed6d56fb11ff4251b5",
+      "kis-regular-state": "76b64984f617d2be7b9ee5d3fa5b730f9c0335d4"
+    },
+    "checked_at": "2026-10-31T23:59:14.222428+00:00"
+  },
+  "official_session_confirmation": {
+    "status": "UNCONFIRMED_OFFICIAL_FUTURE_SESSION",
+    "target": "2026-11-02",
+    "source_kind": "KRX_OFFICIAL_WEBSITE_NOT_MARKET_API",
+    "url": "https://www.krx.co.kr/main/main.jsp",
+    "retrieved_at": "2026-10-31T23:55:11.582579+00:00",
+    "http_status": 200,
+    "bytes": 1411,
+    "sha256": "1767b2a2c12de1f6858ed26e995d91a8a32707555516cd76241fdb8e0c5f83de",
+    "observed": "IP access block page with /res/pc/img/img_ipblock.png; not a trading calendar",
+    "other_paths": [
+      {
+        "url": "https://global.krx.co.kr/",
+        "status": 403
+      },
+      {
+        "url": "https://global.krx.co.kr/main/contents.do?menuNo=100017",
+        "status": 403
+      },
+      {
+        "url": "https://global.krx.co.kr/contents/GLB/06/0601/0601010000/GLB0601010000.jsp",
+        "status": 404
+      }
+    ],
+    "conclusion": "Cannot certify November 2 as a KRX session from acquired official evidence; existing runtime will query KIS provider holiday endpoint. No market API was called.",
+    "KIS_HTTP": 0,
+    "KRX_market_HTTP": 0
+  },
+  "existing_regression_local": {
+    "v2_baseline": {
+      "tests": 675,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "retained_prior_cases": 675,
+    "prior_cases": 675,
+    "removed_prior_cases": [],
+    "operating_main": {
+      "tests": 77,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "new_preflight": {
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "actual_provider_HTTP": 0
+  },
+  "source_bound_file_counts": {
+    "qweasd": 12,
+    "kis_intraday_monitor": 22
+  },
+  "calls": {
+    "KIS_market": 0,
+    "KIS_OAuth": 0,
+    "KRX_market": 0,
+    "OpenAI": 0
+  },
+  "operating_collector": {
+    "population": "fresh target-day official KOSPI/KOSDAQ master; not a constant",
+    "baseline_HTTP": "2*N+6 including preparation and OAuth",
+    "physical_HTTP_limit": 5600,
+    "min_interval_seconds": 1.05,
+    "artifacts_requested_retention_days": 90,
+    "formats": [
+      "JSON",
+      "DuckDB"
+    ],
+    "validation": "INTERNAL_PASS/COMPLETE_PROVISIONAL != official finality",
+    "provider_finality": "UNVERIFIED",
+    "official_price_status": "PENDING_KRX"
+  },
+  "v2": {
+    "actual_preserved_replay": {
+      "status": "RESTORED_AND_VERIFIED",
+      "asof": "2026-10-29",
+      "job": "collector-12910068161",
+      "directory": "/workspace/preflight-20261102/v2-realdata-oct29-restored",
+      "evidence": {
+        "status": "PASS",
+        "records": 2346,
+        "database_json_parquet_match": true,
+        "manifest_sha256": "dfd8d79c87e00072eaa70014304d1806d71779385a84cb55f16366d3eb18fb46"
+      },
+      "investment": {
+        "status": "PASS",
+        "rows": 2346,
+        "database_json_parquet_match": true,
+        "manifest_sha256": "4da2f523f285a18ed464e8099c5a6390267fb1ba87259319494e88bfc81e82c1"
+      },
+      "source_archive_unchanged": true,
+      "operating_publication": "NOT_CHANGED",
+      "market_HTTP": 0,
+      "asof_verified": "2026-10-29",
+      "future_target": "2026-11-02",
+      "future_target_data": "NOT_YET_COLLECTED",
+      "not_substituted_for_nov2": true,
+      "provider_HTTP_added": 0
+    },
+    "future_nov2_artifact": "NOT_YET_COLLECTED",
+    "explicit_proof_adapter": "generic historical-collector; strict asof/master/budget/DB replay, RETROSPECTIVE_REANALYSIS, false historical eligibility",
+    "automatic_handoff_deployed": false,
+    "GPT_live": "NOT_RUN"
+  },
+  "changes": {
+    "main": false,
+    "cron": false,
+    "Secrets": false,
+    "shared_policy": false,
+    "shared_lease": false,
+    "regular_ledger": false,
+    "operating_data": false,
+    "dashboard": false,
+    "monitor": false,
+    "orders": false
+  },
+  "remaining": [
+    "Official November 2 KRX session evidence unavailable due website access denial; runtime source remains KIS provider calendar",
+    "No actual OAuth or market connectivity test permitted or executed",
+    "First regular schedule data collection at current main remains unverified",
+    "Queued competitor, future stale lease, provider data conflict, GitHub delay/drop can still block or fail a future execution",
+    "Operating output has no Parquet; independent V2 generates and checks all three formats",
+    "Current-judgment/automatic V2 publication path not deployed; retrospective validation must not be relabeled as actual investment judgment"
+  ],
+  "tests": {
+    "full_regression": {
+      "run_id": "41254671960",
+      "code_commit": "60f300f857c8fe5267c9de74802b157f66a2c4cd",
+      "url": "https://github.com/0baselabkim-debug/qweasd/actions/runs/41254671960",
+      "conclusion": "success",
+      "counts": {
+        "tests": 694,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "baseline_cases": 675,
+      "retained_baseline": 675,
+      "removed_baseline": [],
+      "new_cases": 19,
+      "artifact": {
+        "id": 13063250332,
+        "name": "investment-v2-offline-tests-41254671960",
+        "digest": "sha256:b75a7b383f5f7cafc64e451c9710931600404b5c3b4c81fa52304a8e82bb2a2c",
+        "size_in_bytes": 14263,
+        "expires_at": "2027-01-29T23:58:02Z"
+      },
+      "artifact_zip_verified": true,
+      "junit_sha256": "23328e31128cedab85786dfbec25932b61a6b63322defab6dea0bad108a4a1a6",
+      "actual_provider_HTTP": 0
+    },
+    "local_baseline": {
+      "v2_baseline": {
+        "tests": 675,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "retained_prior_cases": 675,
+      "prior_cases": 675,
+      "removed_prior_cases": [],
+      "operating_main": {
+        "tests": 77,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "new_preflight": {
+        "tests": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "actual_provider_HTTP": 0
+    },
+    "main_operating_subset_note": "77 cases overlap the full suite; do not add them again",
+    "actual_market_HTTP": 0,
+    "actual_oauth_HTTP": 0
+  },
+  "operating_snapshot": {
+    "checked_at": "2026-11-01T00:11:00.240296+00:00",
+    "main_commit": "f36ab970428564e7569ae37d61f2cfa3f644e119",
+    "monitor_main_commit": "8fe527d87271d28431f14b36a233596ab3b73b18",
+    "regular_state_revision": "76b64984f617d2be7b9ee5d3fa5b730f9c0335d4",
+    "shared_state_revision": "7110690ce6139d416a9039ed6d56fb11ff4251b5",
+    "unchanged_since_task_start": true,
+    "protected_paths_unchanged": {
+      "collector_v1": true,
+      "kis_shared": true,
+      "snapshot": true,
+      ".github/config": true,
+      ".github/workflows/kis-market-2030.yml": true,
+      "screener": true
+    },
+    "workflow": {
+      "id": 400006658,
+      "path": ".github/workflows/kis-market-2030.yml",
+      "state": "active",
+      "updated_at": "2026-10-30T23:30:45.000+09:00"
+    },
+    "branch_relation": {
+      "main_only_commits": 0,
+      "feature_only_commits": 42
+    },
+    "PR": {
+      "number": 2,
+      "html_url": "https://github.com/0baselabkim-debug/qweasd/pull/2",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable": true,
+      "mergeable_state": "clean"
+    },
+    "feature_head_at_check": "f61f5da50358f8f6683313f2d2fcc18eb44cef46",
+    "actual_KIS_HTTP": 0,
+    "actual_KRX_market_HTTP": 0,
+    "actual_oauth_HTTP": 0,
+    "Secrets_changed": false,
+    "schedule_changed": false,
+    "shared_policy_changed": false,
+    "operating_deployment": false
+  }
+}
