@@ -1,0 +1,34 @@
+name: Bounded November4 official KRX review
+on:
+  push:
+    branches: [feat/krx-official-nov4-review]
+    paths: [.github/trials/krx-official-nov4-review.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: krx-official-credential-read-only-review
+  cancel-in-progress: false
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Offline capture guards
+        run: python -m unittest discover -s official_review -p 'test_*.py'
+      - name: At most four KRX GETs; no KIS access or automatic retries
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+        run: python official_review/capture.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: krx-official-nov4-review-${{ github.run_id }}
+          path: ${{ runner.temp }}/krx-official-nov4-review
+          retention-days: 90
+          if-no-files-found: error
